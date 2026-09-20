@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Installation__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The installation this pallet is for.</description>
+    <label>Installation</label>
+    <referenceTo>Installation__c</referenceTo>
+    <relationshipLabel>Panel Batches</relationshipLabel>
+    <relationshipName>Panel_Batches</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

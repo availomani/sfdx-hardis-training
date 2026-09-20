@@ -1,0 +1,128 @@
+---
+# Manual updates in in job step "Login & Process Deployment" below:
+# - variables for additional branches: add SFDX_CLIENT_ID / KEY variables
+# - To use slack notifications, you can also define SLACK_TOKEN and SLACK_CHANNEL_ID
+#   - For branch scoped messages, add SLACK_CHANNEL_ID_ + branch name (ex: SLACK_CHANNEL_ID_INTEGRATION, SLACK_CHANNEL_ID_UAT)
+
+on:
+  pull_request:
+    # Add your major branches names here
+    branches:
+      - main
+      - preprod
+      - uat
+      - integration
+permissions: read-all
+name: Simulate Deployment (sfdx-hardis)
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  check_deployment:
+    # This repository holds the course; the learner's fork is where it runs.
+    # The upstream repository has no Salesforce org and no credentials, so the
+    # deployment jobs would fail on every content Pull Request and teach nothing.
+    # Every fork runs them normally.
+    if: github.repository != 'hardisgroupcom/sfdx-hardis-training'
+    runs-on: ubuntu-latest
+    # Job runs in sfdx-hardis docker image, that includes Salesforce CLI and all required plugins & dependencies.
+    # You can use latest, beta or a version number (ex: v7.23.0), and pin a version if you need reproducible runs.
+    # Images are also mirrored on Docker Hub, if your infrastructure can only pull from docker.io: hardisgroupcom/sfdx-hardis-ubuntu:latest
+    # To use coding agents for auto-fix of deployment errors, use image ghcr.io/hardisgroupcom/sfdx-hardis-ubuntu-with-agents:latest
+    container: ghcr.io/hardisgroupcom/sfdx-hardis-ubuntu:latest
+    name: Simulate Deployment to Major Org
+    permissions:
+      pull-requests: write # Allows sfdx-hardis to post deployment status comments on the Pull Request
+      issues: write
+      contents: read
+      # To allow coding agents to push auto-fix branches and create Pull Requests,
+      # replace "contents: read" above by "contents: write"
+    steps:
+      # Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0 # Fetch all branches
+      # Login & check deploy with test classes & code coverage
+      - name: Login & Simulate deployment
+        if: ${{ !startsWith(github.head_ref, 'auto-fix/') &&
+          !startsWith(github.ref_name, 'auto-fix/') }}
+        env:
+          # Levels 1 and 2 of this training use SFDX_AUTH_URL_INTEGRATION and SFDX_AUTH_URL_UAT,
+          # a shortcut that is acceptable only for throwaway scratch orgs. Lab 3.1 replaces
+          # them with the JWT secrets below and deletes them.
+          SFDX_AUTH_URL_INTEGRATION: ${{ secrets.SFDX_AUTH_URL_INTEGRATION }}
+          SFDX_AUTH_URL_UAT: ${{ secrets.SFDX_AUTH_URL_UAT }}
+          SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
+          SFDX_AUTH_URL_MAIN: ${{ secrets.SFDX_AUTH_URL_MAIN }}
+          SFDX_CLIENT_ID_INTEGRATION: ${{ secrets.SFDX_CLIENT_ID_INTEGRATION}}
+          SFDX_CLIENT_KEY_INTEGRATION: ${{ secrets.SFDX_CLIENT_KEY_INTEGRATION}}
+          SFDX_CLIENT_ID_UAT: ${{ secrets.SFDX_CLIENT_ID_UAT}}
+          SFDX_CLIENT_KEY_UAT: ${{ secrets.SFDX_CLIENT_KEY_UAT}}
+          SFDX_CLIENT_ID_PREPROD: ${{ secrets.SFDX_CLIENT_ID_PREPROD}}
+          SFDX_CLIENT_KEY_PREPROD: ${{ secrets.SFDX_CLIENT_KEY_PREPROD}}
+          SFDX_CLIENT_ID_MAIN: ${{ secrets.SFDX_CLIENT_ID_MAIN}}
+          SFDX_CLIENT_KEY_MAIN: ${{ secrets.SFDX_CLIENT_KEY_MAIN}}
+          SFDX_AUTH_URL_TECHNICAL_ORG: ${{ secrets.SFDX_AUTH_URL_TECHNICAL_ORG }}
+          SFDX_DEPLOY_WAIT_MINUTES: ${{ vars.SFDX_DEPLOY_WAIT_MINUTES || '120' }}
+          SFDX_TEST_WAIT_MINUTES: ${{ vars.SFDX_TEST_WAIT_MINUTES || '120' }}
+          CI_COMMIT_REF_NAME: ${{ github.event.pull_request.base.ref }} # Defines the target branch of the PR
+          ORG_ALIAS: ${{ github.event.pull_request.base.ref }} # Defines the target branch of the PR
+          CONFIG_BRANCH: ${{ github.event.pull_request.base.ref }} # Defines the target branch of the PR
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Uncomment to allow coding agents to push auto-fix branches and create Pull Requests
+          # (also requires "contents: write" in the permissions above, the sfdx-hardis-ubuntu-with-agents image, and an AI API key below)
+          # CI_SFDX_HARDIS_GITHUB_PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          SLACK_CHANNEL_ID_INTEGRATION: ${{ secrets.SLACK_CHANNEL_ID_INTEGRATION }}
+          NOTIF_EMAIL_ADDRESS: ${{ secrets.NOTIF_EMAIL_ADDRESS }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Uncomment to provide API keys for coding agent auto-fix of deployment errors
+          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Uncomment to customize coding agent behavior
+          # SFDX_HARDIS_CODING_AGENT_MODEL: "sonnet" # Override the model used by the agent
+          # SFDX_HARDIS_CODING_AGENT_MAX_TURNS: "30" # Limit the number of agentic turns
+          FORCE_COLOR: "1"
+          SFDX_DISABLE_FLOW_DIFF: false # Set to true to disable Flow doc during CI/CD
+        run: |
+          echo "Simulate SFDX deployment using Hardis against \"$CONFIG_BRANCH\""
+          # Optional: allow coding agents to git push and create PRs (safe no-op if token is missing)
+          if [ -n "${CI_SFDX_HARDIS_GITHUB_PUSH_TOKEN:-}" ]; then
+            git config user.email "sfdx-hardis-bot@cloudity.com"
+            git config user.name "sfdx-hardis Bot"
+            GITHUB_HOST=$(echo "${GITHUB_SERVER_URL:-https://github.com}" | sed -E 's#^https?://##')
+            git remote set-url origin "https://x-access-token:${CI_SFDX_HARDIS_GITHUB_PUSH_TOKEN}@${GITHUB_HOST}/${GITHUB_REPOSITORY}.git"
+            echo "[sfdx-hardis] GitHub push/PR auth enabled for coding agents"
+          else
+            echo "[sfdx-hardis] Skipping coding-agent GitHub auth setup: CI_SFDX_HARDIS_GITHUB_PUSH_TOKEN is not set"
+          fi
+          # The job runs in a container, and the checkout the runner made is owned
+          # by a different uid than the one git runs as here. Git then refuses the
+          # repository ("detected dubious ownership"), every git read fails, and
+          # sfdx-hardis cannot find which Pull Requests the merge carried: it
+          # reports "No deployment actions defined" and deploys without running
+          # them, green. Declaring the workspace safe is the supported fix.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          sf hardis:auth:login
+          # TEMPORARY, remove once the fix of hardisgroupcom/sfdx-hardis#2206 is
+          # released: when a job authenticates with SFDX_AUTH_URL rather than JWT,
+          # the login does not pass --set-default, and the next command stops with
+          # "NoDefaultEnvError: No default environment found". Setting it from a
+          # separate process writes the config file, which the in-process call the
+          # hook makes does not.
+          sf config set target-org="$ORG_ALIAS"
+          sf hardis:project:deploy:smart --check
+
+      # Upload sfdx-hardis reports, including the complete deployment result JSON
+      - name: Archive sfdx-hardis reports
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sfdx-hardis reports
+          path: hardis-report

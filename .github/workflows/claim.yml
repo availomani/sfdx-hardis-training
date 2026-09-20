@@ -1,0 +1,182 @@
+---
+# Badge claim audit.
+#
+# FIVE RULES. Read them before changing anything in this file.
+#
+#  1. NEVER execute anything from the learner's clone. No npm install, no npm run,
+#     no build, no script of theirs. The audit only reads files and git history,
+#     using code from THIS repository.
+#  2. NEVER give this workflow a Salesforce secret. It has no business touching an
+#     org. Its permissions are contents:write and issues:write, nothing more.
+#  3. Every issue field is untrusted input. Validate it, and never interpolate it
+#     into a shell command: everything below goes through the environment.
+#  4. Bound the clone: blob filter, depth, size and timeout, so a hostile
+#     repository cannot exhaust the runner.
+#  5. Serialise with a concurrency group. Two claims landing together both commit
+#     to main, and without serialisation the second push is rejected.
+#
+# The learner's code is never checked out into the workspace: it is cloned into a
+# temporary directory and read. That is what keeps this simple, and it is why the
+# workflow runs on `issues` rather than on `pull_request_target`.
+
+name: Audit a badge claim
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions: read-all
+
+concurrency:
+  group: badge-claims
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Clone, audit, answer
+    if: contains(github.event.issue.labels.*.name, 'badge-claim')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Checkout the training repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Parse and validate the claim
+        id: claim
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        run: node scripts/badges/parse-claim.mjs >> "$GITHUB_OUTPUT"
+
+      - name: Reject an unusable claim
+        if: steps.claim.outputs.valid != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REASON: ${{ steps.claim.outputs.reason }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          printf '%s\n' "$REASON" > /tmp/comment.md
+          gh issue comment "$ISSUE" --body-file /tmp/comment.md
+          gh issue edit "$ISSUE" --add-label needs-work
+          exit 0
+
+      # Rule 4: shallow, blob-filtered, size-capped, time-capped.
+      - name: Clone the learner repository, read only
+        if: steps.claim.outputs.valid == 'true'
+        id: clone
+        env:
+          REPO_URL: ${{ steps.claim.outputs.repo }}
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/learner
+          if ! timeout 300 git clone --filter=blob:none --no-tags "$REPO_URL" /tmp/learner/repo 2>/tmp/clone.log; then
+            echo "cloned=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git -C /tmp/learner/repo fetch --filter=blob:none --no-tags origin '+refs/heads/*:refs/remotes/origin/*' || true
+          SIZE=$(du -sm /tmp/learner/repo | cut -f1)
+          if [ "$SIZE" -gt 512 ]; then
+            echo "cloned=false" >> "$GITHUB_OUTPUT"
+            echo "The repository is larger than 512 MB." > /tmp/clone.log
+            exit 0
+          fi
+          echo "cloned=true" >> "$GITHUB_OUTPUT"
+
+      - name: Report a repository that could not be read
+        if: steps.claim.outputs.valid == 'true' && steps.clone.outputs.cloned != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO_URL: ${{ steps.claim.outputs.repo }}
+        run: |
+          {
+            echo "## The repository could not be read"
+            echo
+            echo "\`$REPO_URL\` could not be cloned anonymously. The usual causes are:"
+            echo
+            echo "- the repository is private: make it public, then edit this issue to run the audit again"
+            echo "- the URL has a typo"
+            echo "- the repository was deleted or renamed"
+            echo
+            echo "_Nothing was read from your account, and no credential was used._"
+          } > /tmp/comment.md
+          gh issue comment "$ISSUE" --body-file /tmp/comment.md
+          gh issue edit "$ISSUE" --add-label needs-work
+
+      # Rule 1: only this repository's code runs, and it only reads the clone.
+      - name: Audit
+        if: steps.clone.outputs.cloned == 'true'
+        id: audit
+        continue-on-error: true
+        env:
+          LEVEL: ${{ steps.claim.outputs.level }}
+          HANDLE: ${{ steps.claim.outputs.handle }}
+          REPO_URL: ${{ steps.claim.outputs.repo }}
+        run: |
+          node scripts/verify/audit.mjs \
+            --level "$LEVEL" \
+            --dir /tmp/learner/repo \
+            --handle "$HANDLE" \
+            --repo "$REPO_URL" \
+            --json /tmp/audit.json > /tmp/report.md
+          echo "passed=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Award the badge
+        if: steps.clone.outputs.cloned == 'true' && steps.audit.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          TRAILBLAZER: ${{ steps.claim.outputs.trailblazer }}
+          HANDLE: ${{ steps.claim.outputs.handle }}
+        run: |
+          # The badge shows the GitHub display name; an account without one shows its login
+          FULL_NAME=$(gh api "users/$HANDLE" --jq '.name // ""' 2>/dev/null || true)
+          node scripts/badges/render.mjs --audit /tmp/audit.json --issue "$ISSUE" --trailblazer "$TRAILBLAZER" --name "$FULL_NAME"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add badges
+          if git diff --cached --quiet; then
+            echo "Nothing changed in badges/"
+          else
+            git commit -m "badge: level $(node -p "require('/tmp/audit.json').level") for $(node -p "require('/tmp/audit.json').handle")"
+            # Rule 5: another claim may have committed while this one ran
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                pushed=true
+                break
+              fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((attempt * 5))
+            done
+            if [ "$pushed" != "true" ]; then
+              echo "The badge could not be pushed after 5 attempts: the issue stays open."
+              exit 1
+            fi
+          fi
+          {
+            cat /tmp/report.md
+            echo
+            echo "Your badge page: https://hardisgroupcom.github.io/sfdx-hardis-training/badges/$(node -p "require('/tmp/audit.json').handle")/"
+          } > /tmp/comment.md
+          gh issue comment "$ISSUE" --body-file /tmp/comment.md
+          gh issue edit "$ISSUE" --remove-label needs-work || true
+          gh issue close "$ISSUE" --reason completed
+
+      - name: Report what did not verify
+        if: steps.clone.outputs.cloned == 'true' && steps.audit.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE" --body-file /tmp/report.md
+          gh issue edit "$ISSUE" --add-label needs-work

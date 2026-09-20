@@ -1,0 +1,31 @@
+{
+  "id": "us-017-sign-off",
+  "title": "US-017 Record who signed an installation off",
+  "usedBy": "Lab 2.1",
+  "levels": [2],
+  "description": "Romain adds a Signed Off By field on Installation, on the layout and granted to managers. This is the work that was merged into integration while you were away, and that your org does not have yet.",
+  "branch": "training/mate-us-017-sign-off",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-017 Record who signed an installation off\n\nAdds Signed_Off_By__c on Installation, on the Installation layout, granted on\nHelios_Delivery_Manager. Crews were writing the name into the notes field.",
+  "prTitle": "US-017 Record who signed an installation off",
+  "prBody": "Crews have been writing the sign-off name into the notes field, where nobody can report on it.\n\n- New field `Installation__c.Signed_Off_By__c`\n- On the Installation layout, under Crew Notes\n- `Helios_Delivery_Manager`: read and edit\n\nStory: US-017 in BACKLOG.md",
+  "nextStep": "Merge it into integration. Lab 2.1 then brings it down into your own org with a backpromote.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Signed_Off_By__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "layoutField": "Signed_Off_By__c",
+      "after": "Crew_Notes__c"
+    }
+  ]
+}

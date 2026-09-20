@@ -1,0 +1,10 @@
+# The generators write LF. Without this, a Windows checkout gets CRLF and
+# "node scripts/build/universe.mjs --check" reports drift on every generated
+# file, for a difference nobody made.
+* text=auto eol=lf
+
+*.png binary
+*.woff2 binary
+*.svg text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf

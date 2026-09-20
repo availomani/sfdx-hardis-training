@@ -1,0 +1,73 @@
+{#-
+  Giscus comments, backed by GitHub Discussions on hardisgroupcom/sfdx-hardis-training.
+  Zensical ships an empty partials/comments.html stub that partials/content.html
+  includes at the end of the page content, so overriding that file here (through
+  theme.custom_dir) is the supported way to add a comment widget. Same setup as
+  the product documentation site.
+
+  One discussion is created lazily per page, matched on the page path, in the
+  "Q&A" category: a comment on a lab is usually somebody stuck on a step, and an
+  answerable category lets the thread carry the answer that unblocked them.
+
+  data-loading="lazy" keeps the iframe out of the page until the reader scrolls
+  near it. Built eagerly, it is a cross-origin frame appended at the bottom of a
+  long page that renders a comment box of its own once the reader is signed in
+  to GitHub, and a frame that takes focus takes the scroll position with it: the
+  lab opens at its comments instead of its title. Lazy also means a reader who
+  never reaches the bottom never loads giscus at all.
+
+  Comments show on every page. Add "comments: false" to a page front matter to
+  hide the widget on that page.
+-#}
+{% if not (page.meta and page.meta.comments == false) %}
+  <h2 id="__comments">Questions and comments</h2>
+  <script src="https://giscus.app/client.js"
+          data-repo="hardisgroupcom/sfdx-hardis-training"
+          data-repo-id="R_kgDOUcjgQw"
+          data-category="Q&amp;A"
+          data-category-id="DIC_kwDOUcjgQ84DF-lC"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+  <script>
+    // Keep the Giscus iframe in sync with the palette toggle. It is a
+    // cross-origin frame, so its theme can only be changed by postMessage.
+    (function () {
+      if (window.__giscusThemeSync) {
+        return;
+      }
+      window.__giscusThemeSync = true;
+      var giscusTheme = function () {
+        var scheme = document.body.getAttribute("data-md-color-scheme");
+        return scheme === "slate" ? "dark" : "light";
+      };
+      var apply = function () {
+        var frame = document.querySelector("iframe.giscus-frame");
+        if (frame && frame.contentWindow) {
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: giscusTheme() } } },
+            "https://giscus.app"
+          );
+        }
+      };
+      new MutationObserver(apply).observe(document.body, {
+        attributes: true,
+        attributeFilter: ["data-md-color-scheme"]
+      });
+      window.addEventListener("message", function (event) {
+        if (event.origin === "https://giscus.app") {
+          apply();
+        }
+      });
+    })();
+  </script>
+{% endif %}

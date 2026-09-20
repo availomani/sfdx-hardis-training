@@ -1,0 +1,36 @@
+# Extend from shared sfdx-hardis Mega-Linter configuration :)
+EXTENDS:
+  - https://raw.githubusercontent.com/hardisgroupcom/sfdx-hardis/main/config/sfdx-hardis.mega-linter-config.yml
+
+# Generated files. scripts/build/universe.mjs writes them from
+# training-universe.json and the lab front matter, and CI fails when they drift
+# from what it produces. A formatter rewriting them would make that check fail
+# forever, for a difference nobody made.
+FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifest\.json$|^labs/link-map\.en\.md$|^mkdocs-nav\.yml$|^site-src/|^megalinter-reports/)
+
+# jscpd's minTokens is raised to 120 in .jscpd.json. That file is schema
+# validated and rejects a comment key, so the reason lives here: every script in
+# this repository opens with the same preamble (the ESM imports, fileURLToPath,
+# HERE and ROOT), and at the default of 50 tokens that preamble was the only
+# thing the detector ever found.
+
+# The only CSS here styles the documentation site on top of the theme Zensical
+# ships, so every selector and custom property it touches is the theme's, not
+# ours: stylelint asks us to rename things we do not own.
+DISABLE_LINTERS:
+  - CSS_STYLELINT
+
+# The Salesforce Code Analyzer is for the Apex and the metadata of the Helios
+# app. Pointed at the whole repository it reads the site stylesheet as if it were
+# an Aura component and asks for SLDS design tokens in it.
+SALESFORCE_SFDX_SCANNER_APEX_ARGUMENTS: --workspace force-app
+SALESFORCE_SFDX_SCANNER_AURA_ARGUMENTS: --workspace force-app
+SALESFORCE_SFDX_SCANNER_LWC_ARGUMENTS: --workspace force-app
+
+# trivy and grype download their vulnerability database on every run, and when
+# the download is refused they fail the whole check of a Pull Request that changed
+# nothing they scan. They still run and report; they no longer block a merge on a
+# network error.
+DISABLE_ERRORS_LINTERS:
+  - REPOSITORY_GRYPE
+  - REPOSITORY_TRIVY

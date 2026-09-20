@@ -1,0 +1,22 @@
+# Code Analyzer configuration for the Flow rules, used by the Mega-Linter job.
+#
+# Mega-Linter looks for a file of this exact name at the root of the repository
+# and falls back to its own when there is none, which is why the override below
+# does not live in code-analyzer.yml with the rest.
+
+engines:
+  flow:
+    disable_engine: false
+
+rules:
+  flow:
+    # Installation Crew Warning creates a Task and then ticks Crew Warning Sent
+    # on the record that triggered it. The rule is right that a before-save flow
+    # is the cheap way to write your own record, and a before-save flow cannot
+    # create the Task, which is the whole point of the story. Two flows on the
+    # same object would cost more than they save here.
+    #
+    # Silenced with a reason, which is the only acceptable way to silence a rule:
+    # anybody reading this file can see the decision and argue with it.
+    SameRecordUpdate:
+      severity: Info

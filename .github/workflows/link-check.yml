@@ -1,0 +1,44 @@
+---
+# Every URL the labs and the link map point at, checked.
+#
+# A renamed sfdx-hardis documentation page is the most likely way this course
+# rots, and it rots silently: the lab still reads fine, the link 404s. This
+# catches it on every change and once a month regardless.
+name: Check the links
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "labs/**"
+      - "README.md"
+      - ".github/workflows/link-check.yml"
+  pull_request:
+    paths:
+      - "labs/**"
+      - "README.md"
+  schedule:
+    # Monthly, so a page renamed upstream is found without anybody touching this repo
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  links:
+    name: Every documentation and Trailhead link
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Regenerate the link map
+        run: node scripts/build/universe.mjs
+
+      - name: Check
+        run: node scripts/verify/check-links.mjs

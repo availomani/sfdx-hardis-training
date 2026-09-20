@@ -1,0 +1,305 @@
+{
+  "anonymization-config": {
+    "gate": "anonymization-config"
+  },
+  "anonymization-config-edit": {
+    "gate": "anonymization-config"
+  },
+  "backpromote": {
+    "gate": "backpromote"
+  },
+  "backpromote-deploy-failed": {
+    "gate": "backpromote"
+  },
+  "backpromote-loading": {
+    "gate": "backpromote"
+  },
+  "backpromote-merge-all": {
+    "gate": "backpromote"
+  },
+  "backpromote-preparing": {
+    "gate": "backpromote"
+  },
+  "backpromote-result": {
+    "gate": "backpromote"
+  },
+  "backpromote-resumed": {
+    "gate": "backpromote"
+  },
+  "backpromote-running": {
+    "gate": "backpromote"
+  },
+  "backpromote-token-missing": {
+    "gate": "backpromote"
+  },
+  "backpromote-what": {
+    "gate": "backpromote"
+  },
+  "command-runner-completed": {
+    "gate": "command-runner"
+  },
+  "command-runner-multiselect": {
+    "gate": "command-runner"
+  },
+  "command-runner-question": {
+    "gate": "command-runner"
+  },
+  "configure-auth-branch": {
+    "gate": "configure-auth"
+  },
+  "configure-auth-completed": {
+    "gate": "configure-auth"
+  },
+  "configure-auth-variables": {
+    "gate": "configure-auth"
+  },
+  "data-workbench": {
+    "gate": "data-workbench"
+  },
+  "devops-pipeline": {
+    "gate": "devops-pipeline"
+  },
+  "documentation-workbench": {
+    "gate": "documentation-workbench"
+  },
+  "extension-config": {
+    "gate": "extension-config"
+  },
+  "files-workbench": {
+    "gate": "files-workbench"
+  },
+  "git-merge-conflicts": {
+    "gate": "git-merge"
+  },
+  "git-merge-editor": {
+    "gate": "git-merge"
+  },
+  "git-merge-editor-accepted": {
+    "gate": "git-merge"
+  },
+  "git-merge-pick": {
+    "gate": "git-merge"
+  },
+  "git-palette-fetch": {
+    "gate": "git-merge"
+  },
+  "git-palette-merge": {
+    "gate": "git-merge"
+  },
+  "git-retrofit-pick": {
+    "gate": "git-retrofit"
+  },
+  "installed-packages": {
+    "gate": "installed-packages"
+  },
+  "metadata-retriever": {
+    "gate": "metadata-retriever"
+  },
+  "metadata-retriever-recent-changes": {
+    "gate": "metadata-retriever-recent-changes"
+  },
+  "metadata-retriever-selected": {
+    "gate": "metadata-retriever-recent-changes"
+  },
+  "monitoring-config": {
+    "gate": "monitoring-config"
+  },
+  "org-monitoring": {
+    "gate": "org-monitoring"
+  },
+  "org-select-alias": {
+    "gate": "org-select-alias"
+  },
+  "orgs-manager": {
+    "gate": "orgs-manager"
+  },
+  "orgs-manager-actions": {
+    "gate": "orgs-manager-actions"
+  },
+  "package-no-overwrite": {
+    "gate": "pipeline-menus"
+  },
+  "package-no-overwrite-add-type": {
+    "gate": "pipeline-menus"
+  },
+  "package-no-overwrite-edit": {
+    "gate": "pipeline-menus"
+  },
+  "package-xml": {
+    "gate": "pipeline-menus"
+  },
+  "pipeline-action-editors-base": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-branch-modal": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-branch-modal-actions": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-branch-modal-base": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-cards": {
+    "gate": "pipeline-cards"
+  },
+  "pipeline-cards-before": {
+    "gate": "pipeline-cards"
+  },
+  "pipeline-config": {
+    "gate": "pipeline-config"
+  },
+  "pipeline-config-branch": {
+    "gate": "pipeline-config-branch"
+  },
+  "pipeline-config-branch-edit": {
+    "gate": "pipeline-config-branch-edit"
+  },
+  "pipeline-config-deployment": {
+    "gate": "pipeline-config-deployment"
+  },
+  "pipeline-edit-action": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-edit-action-apex": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-command": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-data": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-manual": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-publish-community": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-remove-packagexml-items": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-schedule-batch": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-target-orgs-exclude": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-edit-action-target-orgs-include": {
+    "gate": "pipeline-action-editors"
+  },
+  "pipeline-packages-menu": {
+    "gate": "pipeline-menus"
+  },
+  "pipeline-pr-actions-empty": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-pr-actions-list": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-pr-modal": {
+    "gate": "pipeline-modals"
+  },
+  "pipeline-settings-menu": {
+    "gate": "pipeline-menus"
+  },
+  "pipeline-workflow-cards": {
+    "gate": "pipeline-modals"
+  },
+  "promotion-branch-modal": {
+    "gate": "promotion"
+  },
+  "promotion-pipeline": {
+    "gate": "promotion"
+  },
+  "promotion-pr-modal": {
+    "gate": "promotion"
+  },
+  "promotion-settings": {
+    "gate": "promotion"
+  },
+  "setup": {
+    "gate": "setup"
+  },
+  "sidebar": {
+    "gate": "sidebar"
+  },
+  "sidebar-commands-advanced": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-collapsed": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-custom-menu": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-custom-menu-2": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-custom-menu-3": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-misc": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-org-operations": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-packaging": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-commands-setup": {
+    "gate": "sidebar-commands"
+  },
+  "sidebar-dependencies": {
+    "gate": "sidebar-dependencies"
+  },
+  "source-control-retrieved": {
+    "gate": "source-control-retrieved"
+  },
+  "user-activateinvalid-completed": {
+    "gate": "user-activateinvalid"
+  },
+  "user-activateinvalid-multiselect": {
+    "gate": "user-activateinvalid"
+  },
+  "welcome": {
+    "gate": "welcome"
+  },
+  "welcome-custom-menu": {
+    "gate": "welcome-custom-menu"
+  },
+  "welcome-custom-menu-2": {
+    "gate": "welcome-custom-menu-2"
+  },
+  "welcome-custom-menu-3": {
+    "gate": "welcome-custom-menu-3"
+  },
+  "work-new-completed": {
+    "gate": "work-new"
+  },
+  "work-new-org": {
+    "gate": "work-new"
+  },
+  "work-new-org-type": {
+    "gate": "work-new"
+  },
+  "work-new-story-name": {
+    "gate": "work-new"
+  },
+  "work-new-story-type": {
+    "gate": "work-new"
+  },
+  "work-new-target-branch": {
+    "gate": "work-new"
+  },
+  "work-save-commit-ready": {
+    "gate": "work-save"
+  },
+  "work-save-completed": {
+    "gate": "work-save"
+  },
+  "work-save-package-xml": {
+    "gate": "work-save"
+  }
+}

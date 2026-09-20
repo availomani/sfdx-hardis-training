@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+<!--
+  The banner above the header, on every page.
+
+  The course is written and has been walked end to end against real orgs, and it
+  is now in QA: what it needs is learners running it and saying where it breaks.
+  The comment box at the bottom of every page is where that goes, so the banner
+  points at it rather than at an issue tracker nobody opens mid-lab.
+
+  The link is the anchor the comments partial puts on every page. The widget
+  loads when the reader reaches it, so following the link loads it too.
+
+  Remove this file, and theme.custom_dir from course-site.yml, when the course
+  is released. Keep the folder: the comments partial lives in it.
+-->
+{% block announce %}
+  <strong>This course is in QA.</strong> It is complete and has been run end to end, and now it
+  needs you. If a step does not work, or the screen does not match what the page says, please
+  <a href="#__comments">leave a comment at the bottom of that page</a>. That is the fastest way to
+  get it fixed, and it helps the next person too.
+{% endblock %}

@@ -1,0 +1,688 @@
+{
+  "$comment": "Single source of truth for the Helios Energy fiction. Never edit generated files by hand: run 'node scripts/build/universe.mjs' instead.",
+  "version": 1,
+  "course": {
+    "name": "Salesforce DevOps with sfdx-hardis",
+    "site": "https://hardisgroupcom.github.io/sfdx-hardis-training",
+    "upstreamRepo": "hardisgroupcom/sfdx-hardis-training",
+    "docSite": "https://sfdx-hardis.cloudity.com",
+    "trailheadOwner": "nvuillamy"
+  },
+  "company": {
+    "name": "Helios Energy",
+    "pitch": "Helios Energy installs residential solar panels in southern Europe. Sales runs on Salesforce, and the delivery crews track every installation in a custom app called Helios Delivery.",
+    "app": "Helios Delivery",
+    "objects": [
+      {
+        "api": "Installation__c",
+        "label": "Installation",
+        "role": "master, one per customer site"
+      },
+      {
+        "api": "Panel_Batch__c",
+        "label": "Panel Batch",
+        "role": "child of Installation, one per pallet of panels delivered"
+      }
+    ],
+    "permissionSets": [
+      {
+        "api": "Helios_Delivery_Crew",
+        "label": "Helios Delivery Crew",
+        "role": "field crews: read installations, edit their own"
+      },
+      {
+        "api": "Helios_Delivery_Manager",
+        "label": "Helios Delivery Manager",
+        "role": "planners: full access plus the scheduler"
+      }
+    ]
+  },
+  "cast": [
+    {
+      "handle": "victor",
+      "name": "Victor Squeeker",
+      "role": "Release manager. Left the company between Level 2 and Level 3, which is why the pipeline is yours now."
+    },
+    {
+      "handle": "mariia",
+      "name": "Mariia Pyvovarchuk",
+      "role": "Senior contributor. Merges before you do, on the files you touched."
+    },
+    {
+      "handle": "romain",
+      "name": "Romain Panda",
+      "role": "Contributor, works on the quoting side of the app."
+    },
+    {
+      "handle": "you",
+      "name": "You",
+      "role": "New joiner in Level 1, trusted contributor in Level 2, release manager in Level 3."
+    }
+  ],
+  "orgs": [
+    {
+      "alias": "helios-prod",
+      "label": "Helios Production",
+      "role": "the one Developer Edition org a learner signs up for: the Dev Hub that creates the scratch orgs, and from Level 3 the production stand-in, target of the main branch",
+      "kind": "developer-edition",
+      "neededFrom": 1,
+      "branch": "main",
+      "branchFrom": 3,
+      "seed": "full+drift"
+    },
+    {
+      "alias": "helios-dev",
+      "label": "Helios Dev",
+      "role": "your own development org, a scratch org",
+      "kind": "scratch",
+      "neededFrom": 1,
+      "branch": null,
+      "seed": "full"
+    },
+    {
+      "alias": "helios-integration",
+      "label": "Helios Integration",
+      "role": "shared integration org, a scratch org, target of the integration branch",
+      "kind": "scratch",
+      "neededFrom": 1,
+      "branch": "integration",
+      "branchFrom": 1,
+      "seed": "full"
+    },
+    {
+      "alias": "helios-uat",
+      "label": "Helios UAT",
+      "role": "user acceptance org, a scratch org, target of the uat branch",
+      "kind": "scratch",
+      "neededFrom": 1,
+      "branch": "uat",
+      "branchFrom": 1,
+      "seed": "full"
+    },
+    {
+      "alias": "helios-preprod",
+      "label": "Helios Preprod",
+      "role": "pre-production org, a second Developer Edition signup, target of the preprod branch",
+      "kind": "developer-edition",
+      "neededFrom": 3,
+      "branch": "preprod",
+      "branchFrom": 3,
+      "seed": "full"
+    }
+  ],
+  "branches": {
+    "majors": ["integration", "uat", "preprod", "main"],
+    "training": [
+      {
+        "name": "training/start-level-1",
+        "purpose": "the state a Level 1 learner starts from"
+      },
+      {
+        "name": "training/start-level-2",
+        "purpose": "integration as it stands after Level 1"
+      },
+      {
+        "name": "training/start-level-3",
+        "purpose": "the fork after Level 2: app and the integration to uat pipeline, no preprod, no main pipeline, no JWT"
+      },
+      {
+        "name": "training/mate-us-018-crew-capacity",
+        "purpose": "Mariia work, conflicts with your Level 2 branch"
+      },
+      {
+        "name": "training/mate-us-019-quote-pdf",
+        "purpose": "Romain work, collides with US-018 on a Permission Set"
+      },
+      {
+        "name": "training/mate-us-020-apex-refactor",
+        "purpose": "Mariia refactor, fails the deployment check"
+      }
+    ]
+  },
+  "userStories": [
+    {
+      "id": "US-014",
+      "level": 1,
+      "lab": 3,
+      "author": "you",
+      "title": "Show the crew how many panels a job needs",
+      "story": "As a delivery crew member, I want to see the number of panels required on the installation record, so that I load the right quantity on the van.",
+      "acceptance": [
+        "A Panels Required field exists on Installation",
+        "It is visible to the crew permission set",
+        "Planners can fill it in",
+        "It appears on the Installation record page"
+      ],
+      "branch": "features/US-014-panels-required",
+      "metadata": [
+        "Installation__c.Panels_Required__c",
+        "Helios_Delivery_Crew",
+        "Helios_Delivery_Manager"
+      ]
+    },
+    {
+      "id": "US-016",
+      "level": 1,
+      "lab": 7,
+      "author": "you",
+      "title": "Let the crew leave notes on an installation",
+      "story": "As a delivery crew member, I want a free text notes field and a list view of the installations still open, so that I hand over cleanly to the next shift.",
+      "acceptance": [
+        "A Crew Notes field exists on Installation",
+        "An Open Installations list view exists, for every user",
+        "The crew permission set grants the field"
+      ],
+      "branch": "features/US-016-crew-notes",
+      "metadata": [
+        "Installation__c.Crew_Notes__c",
+        "Installation__c listView Open_Installations",
+        "Helios_Delivery_Crew"
+      ]
+    },
+    {
+      "id": "US-017",
+      "level": 2,
+      "lab": 1,
+      "author": "romain",
+      "title": "Record who signed an installation off",
+      "story": "As a delivery manager, I want the name of whoever signed the installation off, so that I can call them when the customer rings back.",
+      "acceptance": [
+        "The field is on the layout",
+        "Managers can read and write it"
+      ],
+      "branch": "training/mate-us-017-sign-off",
+      "metadata": [
+        "Installation__c.Signed_Off_By__c",
+        "Helios_Delivery_Manager"
+      ]
+    },
+    {
+      "id": "US-018",
+      "level": 2,
+      "lab": 7,
+      "author": "mariia",
+      "title": "Cap the crew size a planner can assign",
+      "story": "As a planner, I want the assignment flow to refuse a crew larger than the installation allows, so that we stop over-staffing small jobs.",
+      "acceptance": [
+        "Installation_Assign_Crew checks the cap",
+        "Planners can override it"
+      ],
+      "branch": "training/mate-us-018-crew-capacity",
+      "metadata": ["Installation_Assign_Crew flow", "Helios_Delivery_Manager"]
+    },
+    {
+      "id": "US-019",
+      "level": 2,
+      "lab": 9,
+      "author": "romain",
+      "title": "Generate a quote PDF from an opportunity",
+      "story": "As a sales rep, I want a button that generates the quote PDF, so that I stop rebuilding it in a spreadsheet.",
+      "acceptance": ["The permission is granted to managers"],
+      "branch": "training/mate-us-019-quote-pdf",
+      "metadata": ["Helios_Delivery_Manager"]
+    },
+    {
+      "id": "US-052",
+      "level": 3,
+      "lab": 2,
+      "author": "mariia",
+      "title": "The Installation layout in two columns",
+      "story": "As a planner, I want the Information section of an installation to use both of its columns, so that I see the whole installation without scrolling.",
+      "acceptance": [
+        "The crew capacity cap is in the second column of the Information section",
+        "Every field that was on the layout is still on it"
+      ],
+      "branch": "training/mate-us-052-layout-columns",
+      "metadata": ["Installation__c-Installation Layout"]
+    },
+    {
+      "id": "US-020",
+      "level": 3,
+      "lab": 4,
+      "author": "mariia",
+      "title": "Refactor InstallationScheduler",
+      "story": "As a developer, I want the scheduler split into testable methods, so that we stop being afraid of it.",
+      "acceptance": ["Behaviour unchanged", "Coverage above the threshold"],
+      "branch": "training/mate-us-020-apex-refactor",
+      "metadata": ["InstallationScheduler"],
+      "failsCheck": true
+    },
+    {
+      "id": "US-021",
+      "level": 2,
+      "lab": 2,
+      "author": "you",
+      "title": "Warn the planner when a crew is too small",
+      "story": "As a planner, I want one warning on the installation when the assigned crew is smaller than the panels need, so that I fix it before the van leaves, and not a new task every time I save.",
+      "acceptance": [
+        "The existing Installation Crew Warning flow compares the crew with the panels",
+        "The warning is sent once"
+      ],
+      "branch": "features/US-021-crew-size-warning",
+      "metadata": [
+        "Installation__c.Crew_Warning_Sent__c",
+        "Installation_Crew_Warning flow"
+      ],
+      "seededFailure": "The flow is published without the new field it reads, so the deployment check fails on a field that exists in the developer org and nowhere else"
+    },
+    {
+      "id": "US-024",
+      "level": 2,
+      "lab": 3,
+      "author": "you",
+      "title": "Crew size becomes mandatory",
+      "story": "As a planner, I want Crew Size to be mandatory on every installation, so that no job is scheduled without a crew.",
+      "acceptance": [
+        "Crew Size is required",
+        "Existing records are backfilled with the default of 2, by a batch that holds on any volume"
+      ],
+      "branch": "features/US-024-crew-size-required",
+      "metadata": ["Installation__c.Crew_Size__c", "CrewSizeBackfillBatch"],
+      "seededFailure": "The permission sets still grant field level security on the field, which a required field cannot have, so the deployment fails on them. Once that is fixed the deployment goes green and silently makes the 30 installations with no crew size unsaveable, because Salesforce enforces a required field on save rather than on the data already there"
+    },
+    {
+      "id": "US-026",
+      "level": 2,
+      "lab": 4,
+      "author": "you",
+      "title": "Crew capacity reference data and nightly recalculation",
+      "story": "As a planner, I want capacity rules per crew type and a nightly job that recalculates them, so that the planning board is right every morning and I get a summary of it in my inbox.",
+      "acceptance": [
+        "12 Crew Capacity records exist in every org",
+        "The batch is scheduled nightly",
+        "The planner receives the morning summary email"
+      ],
+      "branch": "features/US-026-crew-capacity-data",
+      "metadata": ["Crew_Capacity__c", "CrewCapacityBatch"],
+      "seededFailure": "The feature is silently inert after deployment because the reference records and the schedule exist in no org"
+    },
+    {
+      "id": "US-027",
+      "level": 2,
+      "lab": 5,
+      "author": "you",
+      "title": "Check several installations against panel availability at once",
+      "story": "As a planner, I want to check a list of installations against panel availability in one go, so that I can fill a week of planning without opening every record.",
+      "acceptance": [
+        "InstallationScheduler returns the installations that can take a crew on a given day",
+        "Coverage stays above the threshold"
+      ],
+      "branch": "features/US-027-schedule-by-availability",
+      "metadata": ["InstallationScheduler", "InstallationSchedulerTest"],
+      "seededFailure": "The obvious implementation queries inside its loop, which PMD warns about, and the new branch has no test, which drops coverage below the threshold and blocks the deployment"
+    },
+    {
+      "id": "US-033",
+      "level": 2,
+      "lab": 6,
+      "author": "you",
+      "title": "Crews can read the panel batch cost",
+      "story": "As a delivery crew member, I want to see the cost of the batch I am installing, so that I report damage with the right value.",
+      "acceptance": ["The crew can read Panel Batch Cost"],
+      "branch": "features/US-033-batch-cost-visibility",
+      "metadata": ["Panel_Batch__c.Cost__c", "Helios_Delivery_Crew"],
+      "seededFailure": "The permission was granted on a Profile that overwrite management protects, so the deployment is green and the permission is missing"
+    },
+    {
+      "id": "US-034",
+      "level": 2,
+      "lab": 7,
+      "author": "you",
+      "title": "Flat roofs need a crew of at least three",
+      "story": "As a planner, I want the assignment flow to put at least three people on a flat roof, so that the ballast is carried safely.",
+      "acceptance": [
+        "Installation_Assign_Crew raises the crew on flat roofs",
+        "Mariia's crew cap from US-018 still wins when the two disagree"
+      ],
+      "branch": "features/US-034-crew-override",
+      "metadata": ["Installation_Assign_Crew flow", "Helios_Delivery_Manager"],
+      "seededFailure": "Mariia US-018 merged first and touched the same flow and the same permission set"
+    },
+    {
+      "id": "US-038",
+      "level": 2,
+      "lab": 8,
+      "author": "you",
+      "title": "Tidy the Installation layout",
+      "story": "As a planner, I want Crew Size above Install Date on the installation layout, so that I see the staffing before the date.",
+      "acceptance": [
+        "Crew Size sits above Install Date on the Installation layout"
+      ],
+      "branch": "features/US-038-installation-notes-tidy",
+      "metadata": ["Installation__c-Installation Layout"],
+      "seededFailure": "None. The lab is about publishing far too much and recovering from it"
+    },
+    {
+      "id": "US-041",
+      "level": 2,
+      "lab": 9,
+      "author": "you",
+      "title": "Installation handover checklist",
+      "story": "As a planner, I want a handover checklist on the installation with its reference items, so that a job is only closed when the checklist is complete.",
+      "acceptance": [
+        "A Handover_Item__c object exists",
+        "10 reference checklist items are loaded in every org",
+        "The existing close check also blocks on an incomplete checklist"
+      ],
+      "branch": "features/US-041-handover-checklist",
+      "metadata": [
+        "Handover_Item__c",
+        "Installation_Close_Check flow",
+        "Helios_Delivery_Crew"
+      ],
+      "seededFailure": "Combines the dependency error of US-021, the data action of US-026 and a conflict with a teammate branch"
+    },
+    {
+      "id": "US-045",
+      "level": 3,
+      "lab": 7,
+      "author": "romain",
+      "title": "Cancelled installations can no longer be back-dated",
+      "story": "As a planner, I want to back-date an installation I cancel to the day it was called off, so that the week can be closed.",
+      "acceptance": [
+        "Cancelled installations are exempt from the date rule, like completed ones",
+        "The rule still refuses to move a planned installation into the past"
+      ],
+      "branch": "fix/US-045-installation-date-hotfix",
+      "metadata": ["Installation_Date_Not_Past validation rule"],
+      "seededFailure": "The date validation rule exempts Completed installations and not Cancelled ones, so every back-dated cancellation is refused"
+    },
+    {
+      "id": "US-046",
+      "level": 3,
+      "lab": 7,
+      "author": "you",
+      "title": "Needs Reinspection status, added in production by an admin",
+      "story": "As the release manager, I want the status an admin added in production to be in the repository, so that the next release does not take it away from the planners.",
+      "acceptance": [
+        "Needs Reinspection is a value of Installation__c.Status__c on integration",
+        "Nothing else from production came with it"
+      ],
+      "branch": "retrofit/US-046-needs-reinspection",
+      "metadata": ["Installation__c.Status__c"]
+    },
+    {
+      "id": "US-055",
+      "level": 3,
+      "lab": 10,
+      "author": "romain",
+      "title": "Install Date says which day it means",
+      "story": "As a crew lead, I want Install Date to say whether it is the day we go on site or the day the panels arrive, so that nobody drives to an empty site.",
+      "acceptance": ["Install Date has a help text naming the day it means"],
+      "branch": "training/mate-us-055-install-date-help",
+      "metadata": ["Installation__c.Install_Date__c"]
+    },
+    {
+      "id": "US-056",
+      "level": 3,
+      "lab": 3,
+      "author": "romain",
+      "title": "Show the panels each crew member has to lay",
+      "story": "As a planner, I want to see how many panels each person of the crew has to lay, so that I stop working it out in my head.",
+      "acceptance": [
+        "A Crew Workload formula on Installation",
+        "On the layout, readable by managers"
+      ],
+      "branch": "training/mate-us-056-crew-workload",
+      "metadata": [
+        "Installation__c.Crew_Workload__c",
+        "Installation__c-Installation Layout",
+        "Helios_Delivery_Manager"
+      ],
+      "seededFailure": "A .forceignore wildcard added in the same Pull Request matches the new field, so no deployment sends it, and the layout and the permission set that use it are refused"
+    }
+  ],
+  "pullRequests": [
+    {
+      "number": 1,
+      "title": "US-018 Cap the crew size a planner can assign",
+      "author": "mariia",
+      "source": "training/mate-us-018-crew-capacity",
+      "target": "integration",
+      "checkState": "success",
+      "usedBy": ["lab-2-7", "lab-3-3", "lab-3-5"]
+    },
+    {
+      "number": 2,
+      "title": "US-019 Generate a quote PDF from an opportunity",
+      "author": "romain",
+      "source": "training/mate-us-019-quote-pdf",
+      "target": "integration",
+      "checkState": "success",
+      "usedBy": ["lab-2-9", "lab-3-5"]
+    },
+    {
+      "number": 3,
+      "title": "US-020 Refactor InstallationScheduler",
+      "author": "mariia",
+      "source": "training/mate-us-020-apex-refactor",
+      "target": "integration",
+      "checkState": "failure",
+      "usedBy": ["lab-3-5"]
+    }
+  ],
+  "data": {
+    "accounts": 40,
+    "contacts": 60,
+    "opportunities": 25,
+    "installations": 30,
+    "panelBatches": 80
+  },
+  "levels": [
+    {
+      "level": 1,
+      "slug": "level-1-contributor-basics",
+      "name": "Contributor basics",
+      "duration": "about 2 h",
+      "prerequisite": null,
+      "badge": "sfdx-hardis Contributor Basics",
+      "star": "hardisgroupcom/sfdx-hardis",
+      "labs": [
+        {
+          "lab": 1,
+          "slug": "1-1-install-vs-code-and-sfdx-hardis",
+          "title": "Install VS Code, Git and sfdx-hardis",
+          "description": "Install Git, Node.js, VS Code and the sfdx-hardis extension, then let its Setup panel install the Salesforce CLI and plugins without typing a command.",
+          "time": "15 min"
+        },
+        {
+          "lab": 2,
+          "slug": "1-2-create-your-dev-hub-scratch-orgs-and-pipeline",
+          "title": "Create your Dev Hub, scratch orgs and CI/CD pipeline",
+          "description": "Sign up for one free Salesforce Developer Edition org, then let one click create a Dev Hub, three scratch orgs, your GitHub fork and its CI/CD pipeline.",
+          "time": "30 min"
+        },
+        {
+          "lab": 3,
+          "slug": "1-3-start-a-user-story-on-a-git-branch",
+          "title": "Start a User Story on its own Git branch",
+          "description": "Take your first ticket from the backlog and create its Git branch and development org with the New User Story button of the sfdx-hardis VS Code extension.",
+          "time": "10 min"
+        },
+        {
+          "lab": 4,
+          "slug": "1-4-build-a-custom-field-in-your-org",
+          "title": "Build a custom field in your Salesforce org",
+          "description": "Create a custom field, grant it through a permission set and add it to the page layout in Salesforce Setup, in your own development scratch org.",
+          "time": "15 min"
+        },
+        {
+          "lab": 5,
+          "slug": "1-5-retrieve-commit-and-publish-your-changes",
+          "title": "Retrieve, commit and publish your Salesforce changes",
+          "description": "Bring your org changes into Git with the sfdx-hardis Metadata Retriever, stage only the files of your story, commit, and publish your branch.",
+          "time": "20 min"
+        },
+        {
+          "lab": 6,
+          "slug": "1-6-pull-request-deployment-check-and-merge",
+          "title": "Open a Pull Request, pass the deployment check, merge",
+          "description": "Open a GitHub Pull Request, read the sfdx-hardis deployment check and its comment, merge, and watch CI/CD deploy your change to the integration org.",
+          "time": "20 min"
+        },
+        {
+          "lab": 7,
+          "slug": "1-7-capstone-deliver-a-user-story-on-your-own",
+          "title": "Capstone: deliver a User Story on your own",
+          "description": "Deliver a Salesforce User Story end to end with no step-by-step: branch, build, retrieve, commit, Pull Request and deployment with sfdx-hardis.",
+          "time": "25 min"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "slug": "level-2-contributor-advanced",
+      "name": "Contributor advanced",
+      "duration": "about 4 h",
+      "prerequisite": 1,
+      "badge": "sfdx-hardis Contributor Advanced",
+      "star": "oxsecurity/megalinter",
+      "labs": [
+        {
+          "lab": 1,
+          "slug": "2-1-backpromote-your-teammates-work",
+          "title": "Backpromote: catch your org up with the team",
+          "description": "Your development org is behind integration. Bring in the stories your teammates merged with the sfdx-hardis Backpromote panel, keeping your own work.",
+          "time": "15 min"
+        },
+        {
+          "lab": 2,
+          "slug": "2-2-fix-a-missing-dependency-deployment-error",
+          "title": "Fix a deployment error caused by a missing dependency",
+          "description": "Update an existing Salesforce flow, then read a failing Pull Request deployment check properly and add the field the package forgot.",
+          "time": "25 min"
+        },
+        {
+          "lab": 3,
+          "slug": "2-3-fix-broken-records-with-an-apex-deployment-action",
+          "title": "Fix broken records with an Apex deployment action",
+          "description": "Making a field required deploys green and breaks existing records. Fix them with a batch Apex deployment action that scales to millions of records.",
+          "time": "30 min"
+        },
+        {
+          "lab": 4,
+          "slug": "2-4-ship-reference-data-and-a-batch-with-deployment-actions",
+          "title": "Ship reference data and a batch with deployment actions",
+          "description": "A green deployment is not a working feature. Ship reference data, a scheduled Apex batch and a manual step as sfdx-hardis deployment actions.",
+          "time": "30 min"
+        },
+        {
+          "lab": 5,
+          "slug": "2-5-pass-code-quality-and-apex-test-coverage",
+          "title": "Pass the code quality gate and Apex test coverage",
+          "description": "Fix a PMD warning and the Apex code coverage that block your Pull Request, and run the same checks from VS Code before you push.",
+          "time": "30 min"
+        },
+        {
+          "lab": 6,
+          "slug": "2-6-permission-sets-and-profiles",
+          "title": "Permission sets, profiles and why a grant disappears",
+          "description": "A permission granted on a Profile vanishes after a green deployment. Learn how sfdx-hardis cleans profiles, and grant access with a permission set.",
+          "time": "25 min"
+        },
+        {
+          "lab": 7,
+          "slug": "2-7-resolve-a-git-merge-conflict",
+          "title": "Resolve a Git merge conflict with a teammate",
+          "description": "A teammate merged first on the same flow and permission set. Resolve both Git conflicts in VS Code without losing anybody's work.",
+          "time": "35 min"
+        },
+        {
+          "lab": 8,
+          "slug": "2-8-recover-from-committing-the-wrong-metadata",
+          "title": "Recover from committing the wrong metadata",
+          "description": "You published far more than your story. See what it does to a Pull Request, and recover with the two sfdx-hardis ways out.",
+          "time": "20 min"
+        },
+        {
+          "lab": 9,
+          "slug": "2-9-capstone-deliver-a-user-story-that-has-it-all",
+          "title": "Capstone: deliver a User Story that has it all",
+          "description": "Deliver one Salesforce User Story with a dependency to check, a data deployment action and a teammate on the same permission set, with no step-by-step.",
+          "time": "30 min"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "slug": "level-3-release-manager",
+      "name": "Release Manager",
+      "duration": "about 6 h",
+      "prerequisite": 2,
+      "badge": "sfdx-hardis Release Manager",
+      "star": "hardisgroupcom/vscode-sfdx-hardis",
+      "labs": [
+        {
+          "lab": 1,
+          "slug": "3-1-configure-the-pipeline-up-to-production",
+          "title": "Configure the CI/CD pipeline up to production",
+          "description": "Extend a two-stage Salesforce pipeline to production: branches, protections, and each org configured and authenticated with JWT by Add/Configure Org.",
+          "time": "75 min"
+        },
+        {
+          "lab": 2,
+          "slug": "3-2-review-a-contributor-pull-request",
+          "title": "Review and merge a contributor Pull Request",
+          "description": "Review a teammate's Salesforce Pull Request as a release manager: find what the deployment check missed, request a change, and merge.",
+          "time": "25 min"
+        },
+        {
+          "lab": 3,
+          "slug": "3-3-deploy-to-integration-and-read-the-log",
+          "title": "Read the deployment log, and what .forceignore hides from it",
+          "description": "Read an sfdx-hardis deployment log properly, then review a Pull Request whose .forceignore wildcard keeps its own field out of every deployment.",
+          "time": "25 min"
+        },
+        {
+          "lab": 4,
+          "slug": "3-4-merge-colliding-pull-requests",
+          "title": "Three Pull Requests collide: choose the merge order",
+          "description": "Decide the order three Pull Requests are merged in when two change the same file and one fails its check, as a Salesforce release manager.",
+          "time": "35 min"
+        },
+        {
+          "lab": 5,
+          "slug": "3-5-promote-to-uat-and-write-release-notes",
+          "title": "Promote to UAT and write the release notes",
+          "description": "Protect what UAT keeps for itself with package-no-overwrite, promote integration to UAT, read its deployment actions and write the release notes.",
+          "time": "35 min"
+        },
+        {
+          "lab": 6,
+          "slug": "3-6-release-to-production-and-read-dora-metrics",
+          "title": "Release to production and read your DORA metrics",
+          "description": "Release through preprod to your production org, verify it, then measure deployment frequency, lead time and failure rate with a DORA report.",
+          "time": "35 min"
+        },
+        {
+          "lab": 7,
+          "slug": "3-7-hotfix-and-retrofit",
+          "title": "Production is broken: hotfix and retrofit",
+          "description": "Ship a Salesforce hotfix from preprod to production when a validation rule formula breaks production, then retrofit it back down into integration.",
+          "time": "35 min"
+        },
+        {
+          "lab": 8,
+          "slug": "3-8-monitor-your-production-org",
+          "title": "Monitor your production org",
+          "description": "Set up nightly sfdx-hardis monitoring on your Salesforce production org, read its first report, and decide which alerts are worth receiving.",
+          "time": "35 min"
+        },
+        {
+          "lab": 9,
+          "slug": "3-9-generate-the-project-documentation",
+          "title": "Generate the Salesforce project documentation",
+          "description": "Generate readable documentation of an undocumented Salesforce org with sfdx-hardis: objects, flows, Apex and permissions, from the sources in Git.",
+          "time": "20 min"
+        },
+        {
+          "lab": 10,
+          "slug": "3-10-capstone-run-a-weekly-release-cycle",
+          "title": "Capstone: run a weekly release cycle",
+          "description": "Run a full week as a Salesforce release manager with no step-by-step: review, integrate, promote to UAT, release to production and measure.",
+          "time": "45 min"
+        }
+      ]
+    }
+  ]
+}

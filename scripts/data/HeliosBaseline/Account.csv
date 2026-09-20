@@ -1,0 +1,41 @@
+Name,Type,Industry,BillingCity,BillingCountry,Phone,Description
+Sevilla Housing 01,Customer - Channel,Construction,Sevilla,Spain,+34 939 183 479,Seeded by the sfdx-hardis training. Not a real customer.
+Sevilla Energy Coop 02,Customer - Direct,Real Estate,Sevilla,Spain,+34 989 287 720,Seeded by the sfdx-hardis training. Not a real customer.
+Athina Villas 03,Customer - Direct,Construction,Athina,Greece,+34 938 384 613,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Terraces 04,Customer - Channel,Construction,Bari,Italy,+34 935 427 711,Seeded by the sfdx-hardis training. Not a real customer.
+Sevilla Terraces 05,Customer - Channel,Real Estate,Sevilla,Spain,+34 979 468 868,Seeded by the sfdx-hardis training. Not a real customer.
+Marseille Housing 06,Customer - Direct,Energy,Marseille,France,+34 922 448 321,Seeded by the sfdx-hardis training. Not a real customer.
+Faro Terraces 07,Prospect,Energy,Faro,Portugal,+34 980 954 960,Seeded by the sfdx-hardis training. Not a real customer.
+Malaga Estates 08,Prospect,Construction,Malaga,Spain,+34 916 385 877,Seeded by the sfdx-hardis training. Not a real customer.
+Valencia Terraces 09,Customer - Direct,Construction,Valencia,Spain,+34 995 809 126,Seeded by the sfdx-hardis training. Not a real customer.
+Lisboa Residences 10,Customer - Direct,Real Estate,Lisboa,Portugal,+34 988 486 857,Seeded by the sfdx-hardis training. Not a real customer.
+Perpignan Residences 11,Prospect,Energy,Perpignan,France,+34 977 310 176,Seeded by the sfdx-hardis training. Not a real customer.
+Sevilla Residences 12,Prospect,Real Estate,Sevilla,Spain,+34 945 815 718,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Properties 13,Prospect,Real Estate,Bari,Italy,+34 926 431 277,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Residences 14,Customer - Channel,Energy,Bari,Italy,+34 993 744 481,Seeded by the sfdx-hardis training. Not a real customer.
+Lisboa Homes 15,Prospect,Construction,Lisboa,Portugal,+34 988 515 485,Seeded by the sfdx-hardis training. Not a real customer.
+Cagliari Residences 16,Customer - Direct,Real Estate,Cagliari,Italy,+34 963 545 110,Seeded by the sfdx-hardis training. Not a real customer.
+Montpellier Housing 17,Prospect,Real Estate,Montpellier,France,+34 982 172 365,Seeded by the sfdx-hardis training. Not a real customer.
+Thessaloniki Rooftops 18,Prospect,Construction,Thessaloniki,Greece,+34 975 707 172,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Properties 19,Customer - Direct,Energy,Bari,Italy,+34 946 940 446,Seeded by the sfdx-hardis training. Not a real customer.
+Palermo Solar Club 20,Customer - Direct,Real Estate,Palermo,Italy,+34 911 558 644,Seeded by the sfdx-hardis training. Not a real customer.
+Faro Estates 21,Prospect,Construction,Faro,Portugal,+34 913 954 279,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Homes 22,Prospect,Energy,Bari,Italy,+34 936 496 831,Seeded by the sfdx-hardis training. Not a real customer.
+Athina Energy Coop 23,Customer - Channel,Construction,Athina,Greece,+34 950 133 411,Seeded by the sfdx-hardis training. Not a real customer.
+Montpellier Residences 24,Prospect,Construction,Montpellier,France,+34 939 863 723,Seeded by the sfdx-hardis training. Not a real customer.
+Faro Energy Coop 25,Prospect,Real Estate,Faro,Portugal,+34 985 272 408,Seeded by the sfdx-hardis training. Not a real customer.
+Montpellier Homes 26,Customer - Channel,Real Estate,Montpellier,France,+34 919 402 494,Seeded by the sfdx-hardis training. Not a real customer.
+Faro Housing 27,Customer - Channel,Construction,Faro,Portugal,+34 937 119 722,Seeded by the sfdx-hardis training. Not a real customer.
+Malaga Villas 28,Customer - Channel,Energy,Malaga,Spain,+34 910 341 940,Seeded by the sfdx-hardis training. Not a real customer.
+Valencia Villas 29,Customer - Channel,Real Estate,Valencia,Spain,+34 970 454 720,Seeded by the sfdx-hardis training. Not a real customer.
+Montpellier Properties 30,Customer - Direct,Real Estate,Montpellier,France,+34 965 687 971,Seeded by the sfdx-hardis training. Not a real customer.
+Lisboa Residences 31,Customer - Channel,Real Estate,Lisboa,Portugal,+34 976 974 961,Seeded by the sfdx-hardis training. Not a real customer.
+Malaga Terraces 32,Customer - Direct,Construction,Malaga,Spain,+34 972 585 862,Seeded by the sfdx-hardis training. Not a real customer.
+Bari Residences 33,Prospect,Energy,Bari,Italy,+34 912 375 655,Seeded by the sfdx-hardis training. Not a real customer.
+Cagliari Homes 34,Customer - Direct,Energy,Cagliari,Italy,+34 925 139 132,Seeded by the sfdx-hardis training. Not a real customer.
+Montpellier Rooftops 35,Customer - Channel,Energy,Montpellier,France,+34 950 177 533,Seeded by the sfdx-hardis training. Not a real customer.
+Palermo Villas 36,Customer - Direct,Real Estate,Palermo,Italy,+34 914 337 186,Seeded by the sfdx-hardis training. Not a real customer.
+Athina Housing 37,Customer - Direct,Construction,Athina,Greece,+34 964 779 232,Seeded by the sfdx-hardis training. Not a real customer.
+Lisboa Housing 38,Prospect,Construction,Lisboa,Portugal,+34 992 201 498,Seeded by the sfdx-hardis training. Not a real customer.
+Thessaloniki Estates 39,Prospect,Construction,Thessaloniki,Greece,+34 996 473 248,Seeded by the sfdx-hardis training. Not a real customer.
+Cagliari Terraces 40,Customer - Channel,Construction,Cagliari,Italy,+34 991 800 524,Seeded by the sfdx-hardis training. Not a real customer.

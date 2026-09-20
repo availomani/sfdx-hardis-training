@@ -1,0 +1,5 @@
+{
+  "_comment": "What a Level 3 learner starts from: everything Level 2 delivers, on top of Level 1. Applied over training/start-level-2 by scripts/build/start-branches.mjs. Taken from a real run of Levels 1 and 2, so a reset lands exactly where the labs leave a learner, US-019 included: the Level 2 capstone merges it.",
+  "message": "chore: the state a level 3 learner starts from\n\nEverything Level 2 delivers, on top of Level 1: US-021 with the warning flow\nsent once and the Crew_Warning_Sent__c field it reads, US-024 with the required Crew Size and its\nbackfill batch, US-026 with the Crew Capacity object, the nightly batch and\nthe three deployment actions, US-027 with the query out of the loop and its tests,\nUS-033 with the batch cost on the permission set, Mariia's US-018 cap merged with\nthe US-034 flat roof rule, the US-038 layout tidy, and the US-041 handover\nchecklist with its reference data and close check.",
+  "deletes": []
+}

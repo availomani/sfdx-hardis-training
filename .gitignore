@@ -1,0 +1,55 @@
+# Salesforce
+.sfdx/
+.sf/
+.localdevserver/
+deploy-options.json
+*.dup
+
+# sfdx-hardis
+config/user/
+hardis-report/
+.cache/
+time-logs/
+# What SFDMU writes next to a data workspace on every load
+scripts/data/*/target/
+scripts/data/*/logs/
+scripts/data/*/source/
+scripts/data/*/reports/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Site build (assembled by scripts/build/site.mjs)
+site/
+
+# Linter output. MegaLinter writes it into the workspace on every run, and a
+# committed copy makes "git diff --check" fail on the trailing whitespace inside
+# the CSV reports.
+megalinter-reports/
+site-src/
+.zensical/
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# Your own progress record, written by Check my work. It is yours, not the project's.
+.training-progress.json
+
+# The lines sfdx-hardis expects in every project. Without them, the release manager
+# commands of Level 3 stop to offer an upgrade of this file.
+tmp/
+**/__tests__/**
+**/cleanDataServices/
+**/siteDotComSites/*.site
+**/data/**/source/**
+**/data/**/target/**
+force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml
+
+# The Helios project documentation of Lab 3.9 and the DORA report of Lab 3.6:
+# generated on demand, never committed
+docs/
+mkdocs.yml

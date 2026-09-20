@@ -1,0 +1,174 @@
+# The configuration of this course site. It is not named mkdocs.yml on purpose: the repository is
+# also the Helios Salesforce project, and Lab 3.9 generates the project documentation, whose
+# mkdocs.yml is the project's own. Build with: python -m zensical build -f course-site.yml
+site_name: Salesforce DevOps with sfdx-hardis
+site_description: Free hands-on Salesforce DevOps training in three levels, from your first Pull Request to owning the CI/CD pipeline, with sfdx-hardis and VS Code
+site_url: https://hardisgroupcom.github.io/sfdx-hardis-training/
+repo_url: https://github.com/hardisgroupcom/sfdx-hardis-training
+repo_name: hardisgroupcom/sfdx-hardis-training
+edit_uri: edit/main/labs/
+copyright: Cloudity and friends
+
+# The site is assembled by scripts/build/site.mjs, which copies labs/<locale>/,
+# the assets, the backlog and the badge pages into site-src/. The source of
+# truth stays plain markdown under labs/.
+docs_dir: site-src
+
+# Theme, palette, fonts and extensions follow the product documentation site
+# (https://sfdx-hardis.cloudity.com), so the course reads as part of the same
+# product. The one deliberate difference is the lead colour: the product leads
+# with Cloudity blue and accents in purple, the course swaps them. Details and
+# the self-hosted fonts live in site-theme/stylesheets/extra.css, which
+# scripts/build/site.mjs copies to site-src/theme/.
+theme:
+  name: material
+  # Holds the Giscus comment widget every page ends with, and the banner that
+  # says the course is in QA and asks for comments. Delete main.html when the
+  # course is released, and keep the folder for the comments.
+  custom_dir: site-overrides
+  language: en
+  font: false
+  features:
+    - content.action.edit
+    - content.code.copy
+    - content.tabs.link
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  logo: theme/images/cloudity-text-logo-white.svg
+  favicon: theme/images/cloudity-logo.svg
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      # background, foreground and colors mirror the product site's palette entries.
+      # Zensical 0.0.57 accepts them and emits nothing from them, on both sites: the
+      # stylesheet is what paints the page. They stay so the two configs read alike.
+      background: "#FFFFFF"
+      foreground: "#001135"
+      colors:
+        primary: "#660FF2"
+        accent: "#0053FF"
+        link: "#660FF2"
+        header: "#660FF2"
+        nav: "#FFFFFF"
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      background: "#0A0620"
+      foreground: "#FFFFFF"
+      colors:
+        primary: "#A87BFF"
+        accent: "#4D8BFF"
+        link: "#A87BFF"
+        header: "#1B0A3F"
+        nav: "#160C30"
+
+plugins:
+  - glightbox
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:zensical.extensions.emoji.twemoji
+      emoji_generator: !!python/name:zensical.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: site-src
+      restrict_base_path: false
+  - mdx_truly_sane_lists
+  - toc:
+      permalink: true
+
+extra_css:
+  - theme/stylesheets/extra.css
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
+  - theme/javascripts/tables.js
+  # The theme wraps every picture in a glightbox link but ships no viewer with
+  # it, so a click used to leave the lab and land on a bare PNG. This opens it
+  # over the page instead. See site-theme/javascripts/lightbox.js.
+  - theme/javascripts/lightbox.js
+  # A guard: the template puts nothing after the footer, so anything found
+  # there came from a page swap that went wrong. See after-footer.js.
+  - theme/javascripts/after-footer.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/hardisgroupcom/sfdx-hardis
+      name: sfdx-hardis on GitHub
+    - icon: fontawesome/solid/book
+      link: https://sfdx-hardis.cloudity.com/
+      name: sfdx-hardis documentation
+  generator: false
+
+nav:
+  # Lab entries carry no title on purpose: an entry without one takes the page's
+  # own heading, so there is one source of truth and nothing to keep in step by
+  # hand. Six of these had drifted from their pages before that rule.
+  - Home: index.md
+  - "Level 1 - Contributor basics":
+      - Start here: en/level-1-contributor-basics/index.md
+      - en/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis.md
+      - en/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md
+      - en/level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch.md
+      - en/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org.md
+      - en/level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md
+      - en/level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md
+      - en/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md
+  - "Level 2 - Contributor advanced":
+      - Start here: en/level-2-contributor-advanced/index.md
+      - en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
+      - en/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error.md
+      - en/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md
+      - en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md
+      - en/level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage.md
+      - en/level-2-contributor-advanced/2-6-permission-sets-and-profiles.md
+      - en/level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md
+      - en/level-2-contributor-advanced/2-8-recover-from-committing-the-wrong-metadata.md
+      - en/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all.md
+  - "Level 3 - Release Manager":
+      - Start here: en/level-3-release-manager/index.md
+      - en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
+      - en/level-3-release-manager/3-2-review-a-contributor-pull-request.md
+      - en/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md
+      - en/level-3-release-manager/3-4-merge-colliding-pull-requests.md
+      - en/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md
+      - en/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics.md
+      - en/level-3-release-manager/3-7-hotfix-and-retrofit.md
+      - en/level-3-release-manager/3-8-monitor-your-production-org.md
+      - en/level-3-release-manager/3-9-generate-the-project-documentation.md
+      - en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+  - Backlog: BACKLOG.md
+  - Badges: badges/index.md
+  - Link map: labs/link-map.en.md

@@ -1,0 +1,39 @@
+{
+  "id": "us-056-crew-workload",
+  "title": "US-056 Show the panels each crew member has to lay",
+  "usedBy": "Lab 3.3",
+  "levels": [3],
+  "description": "Romain adds a Crew Workload formula on Installation, on the layout and granted to managers. He also added a line to .forceignore to keep his scratch test fields out of the repository, and its wildcard matches the field of his own story.",
+  "branch": "training/mate-us-056-crew-workload",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-056 Show the panels each crew member has to lay\n\nCrew_Workload__c formula on Installation, on the layout, granted on\nHelios_Delivery_Manager. .forceignore keeps my scratch test fields out.",
+  "prTitle": "US-056 Show the panels each crew member has to lay",
+  "prBody": "Planners compare the panels with the crew size in their head. This computes it.\n\n- New formula field `Installation__c.Crew_Workload__c`: panels required divided by crew size\n- On the Installation layout, after Crew Size\n- `Helios_Delivery_Manager`: read\n- `.forceignore`: my scratch test fields stay out of the repository\n\nStory: US-056 in BACKLOG.md",
+  "nextStep": "Wait for its checks, and read why the deployment check fails. Lab 3.3 part 2.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Crew_Workload__c",
+        "editable": false,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "layoutField": "Crew_Workload__c",
+      "after": "Crew_Size__c",
+      "behavior": "Readonly"
+    },
+    {
+      "file": ".forceignore",
+      "replace": {
+        "from": "**/standardValueSets/*\n",
+        "to": "**/standardValueSets/*\n\n# My scratch test fields, never versioned (Romain)\n**/objects/Installation__c/fields/Crew_W*.field-meta.xml\n"
+      }
+    }
+  ]
+}

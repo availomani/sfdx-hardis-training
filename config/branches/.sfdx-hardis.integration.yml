@@ -1,0 +1,13 @@
+# Which org the integration branch deploys to, and where its work goes next.
+# Set up my training environment fills targetUsername and instanceUrl with your own
+# scratch org in Lab 1.2, and mergeTargets with uat. Edited from VS Code: DevOps
+# Pipeline panel, gear menu > Pipeline Settings, scope Branch: integration.
+#
+# Levels 1 and 2 authenticate CI with the SFDX_AUTH_URL_INTEGRATION repository secret,
+# a shortcut for throwaway training orgs only. Lab 3.1 replaces it with an External
+# Client App and JWT.
+
+targetUsername: ""
+instanceUrl: ""
+
+mergeTargets: []

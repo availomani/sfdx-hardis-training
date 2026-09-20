@@ -1,0 +1,26 @@
+{
+  "id": "us-056-crew-workload-fix",
+  "title": "US-056 Romain names his test field exactly in .forceignore",
+  "usedBy": "Lab 3.3",
+  "levels": [3],
+  "description": "Romain answers your review: the wildcard goes, and .forceignore names his one test field exactly, so it cannot match anything else.",
+  "branch": "training/mate-us-056-crew-workload",
+  "continues": true,
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-056 Name the one test field exactly in .forceignore\n\nThe Crew_W* wildcard also matched Crew_Workload__c, the field of this story,\nso the deployment never sent it.",
+  "prTitle": "US-056 Show the panels each crew member has to lay",
+  "prBody": "",
+  "nextStep": "The check runs again on the new commit. Merge it when it is green.",
+  "patches": [
+    {
+      "file": ".forceignore",
+      "replace": {
+        "from": "**/objects/Installation__c/fields/Crew_W*.field-meta.xml",
+        "to": "**/objects/Installation__c/fields/Crew_Workload_Test__c.field-meta.xml"
+      }
+    }
+  ]
+}

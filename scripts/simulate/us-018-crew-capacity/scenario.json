@@ -1,0 +1,31 @@
+{
+  "id": "us-018-crew-capacity",
+  "title": "US-018 Cap the crew size a planner can assign",
+  "usedBy": "Lab 2.7 and Lab 3.4",
+  "levels": [2, 3],
+  "description": "Mariia adds a crew capacity cap to the assignment flow, with the field, the permission it needs, and the field on the Installation layout.",
+  "branch": "training/mate-us-018-crew-capacity",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-018 Cap the crew size a planner can assign\n\nAdds Crew_Capacity_Cap__c on Installation and a decision in Installation_Assign_Crew\nthat brings an over-sized crew back down to the cap. Granted on Helios_Delivery_Manager.\nMoved the cap onto the Installation layout.",
+  "prTitle": "US-018 Cap the crew size a planner can assign",
+  "prBody": "Planners have been assigning crews larger than the installation can take, and the crews end up\nin each other's way on small roofs.\n\nThis adds `Crew_Capacity_Cap__c` on Installation, and a decision in `Installation_Assign_Crew`\nthat brings the crew back down to the cap when a planner goes over it.\n\n- New field `Installation__c.Crew_Capacity_Cap__c`\n- `Installation_Assign_Crew`: new `Crew Over Cap` decision after the status assignment\n- `Helios_Delivery_Manager`: read and edit on the new field\n- Installation layout: the cap added\n\nStory: US-018 in BACKLOG.md",
+  "nextStep": "Review it, then merge it into integration. Lab 2.7 then builds your own change on top and meets the conflict.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Crew_Capacity_Cap__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "layoutField": "Crew_Capacity_Cap__c",
+      "after": "Crew_Size__c"
+    }
+  ]
+}

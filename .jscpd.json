@@ -1,0 +1,21 @@
+{
+  "threshold": 1,
+  "reporters": ["html", "markdown"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/megalinter-reports/**",
+    "**/site/**",
+    "**/site-src/**",
+    "scripts/simulate/**",
+    "scripts/start-states/**",
+    "scripts/apex/samples/**",
+    "**/*.json",
+    "**/*.svg",
+    "**/*.md",
+    "**/*.yml",
+    "**/*.xml",
+    "**/*.csv"
+  ],
+  "minTokens": 120
+}

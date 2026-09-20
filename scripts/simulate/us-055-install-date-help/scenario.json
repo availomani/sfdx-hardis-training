@@ -1,0 +1,25 @@
+{
+  "id": "us-055-install-date-help",
+  "title": "US-055 Install Date says which day it means",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Romain adds a help text to Install Date: planners enter the day the panels arrive, crews read it as the day they go on site.",
+  "branch": "training/mate-us-055-install-date-help",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-055 Install Date says which day it means\n\nPlanners were entering the day the panels arrive. The help text says it is the\nday the crew goes on site.",
+  "prTitle": "US-055 Install Date says which day it means",
+  "prBody": "Planners enter the day the panels arrive in Install Date, and crews read it as the day they go on site.\n\n- `Installation__c.Install_Date__c`: a help text that says which day it is\n\nStory: US-055 in BACKLOG.md",
+  "nextStep": "Review it with the four questions of Lab 3.2, then merge it. Lab 3.10, Monday.",
+  "patches": [
+    {
+      "file": "force-app/main/default/objects/Installation__c/fields/Install_Date__c.field-meta.xml",
+      "replace": {
+        "from": "    <description>The day the crew is expected on site.</description>\n",
+        "to": "    <description>The day the crew is expected on site.</description>\n    <inlineHelpText>The day the crew goes on site, not the day the panels arrive.</inlineHelpText>\n"
+      }
+    }
+  ]
+}

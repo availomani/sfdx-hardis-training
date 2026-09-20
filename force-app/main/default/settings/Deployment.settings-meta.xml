@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DeploymentSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Lab 2.4 schedules CrewCapacityBatch. From then on, every deployment that
+         carries that class meets "This schedulable class has jobs pending or in
+         progress" and fails, in every org where the job is scheduled. This is the
+         Setup switch that allows it, and a project with scheduled Apex needs it. -->
+    <doesSkipAsyncApexValidation>true</doesSkipAsyncApexValidation>
+</DeploymentSettings>

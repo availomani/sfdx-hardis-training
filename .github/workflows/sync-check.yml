@@ -1,0 +1,54 @@
+---
+# The backstop for what the sfdx-hardis training skills miss.
+#
+# Skills catch what people remember to route through them. This catches the rest:
+# a documentation page renamed upstream, a command that no longer exists, a
+# generated file somebody edited by hand.
+#
+# Seeding a throwaway Developer Edition org from scratch cannot run here, because
+# it needs an org nobody can provision from CI. That rehearsal stays a manual step,
+# and this job says so rather than pretending.
+name: Monthly consistency check
+
+on:
+  schedule:
+    - cron: "0 5 8 * *"
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  consistency:
+    name: Generated files, links, and the command list
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: The generated files are up to date and the fiction is consistent
+        run: node scripts/build/universe.mjs --check
+
+      - name: Every link resolves
+        run: node scripts/verify/check-links.mjs
+
+      # "Reset this level" resets to these branches, so a release that forgets
+      # to publish them ships a rescue command that cannot rescue anybody, and a
+      # stale one drops a learner into a state the labs no longer describe.
+      - name: The reset branches are published and current
+        if: github.repository == 'hardisgroupcom/sfdx-hardis-training'
+        run: node scripts/build/start-branches.mjs --check
+
+      - name: Every command a lab relies on still exists
+        run: |
+          npm install --global @salesforce/cli >/dev/null 2>&1
+          echo y | sf plugins install sfdx-hardis >/dev/null 2>&1
+          node scripts/verify/check-commands.mjs
+
+      - name: Translations behind their source
+        run: node scripts/i18n/check-translations.mjs

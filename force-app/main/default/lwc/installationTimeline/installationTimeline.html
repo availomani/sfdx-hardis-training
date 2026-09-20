@@ -1,0 +1,20 @@
+<template>
+  <lightning-card title="Panel delivery timeline" icon-name="custom:custom19">
+    <div class="slds-var-m-around_medium">
+      <template lwc:if={hasRows}>
+        <lightning-datatable
+          key-field="id"
+          data={rows}
+          columns={columns}
+          hide-checkbox-column
+        ></lightning-datatable>
+      </template>
+      <template lwc:elseif={error}>
+        <p class="slds-text-color_error">{error}</p>
+      </template>
+      <template lwc:else>
+        <p class="slds-text-color_weak">No panel batch is booked for this installation yet.</p>
+      </template>
+    </div>
+  </lightning-card>
+</template>

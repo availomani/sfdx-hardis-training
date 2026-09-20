@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Installation_Date_Not_Past</fullName>
+    <active>true</active>
+    <description>A planner cannot move an installation into the past. Completed jobs are exempt, and the rule stays quiet on insert so the training data can be loaded.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(Install_Date__c),
+  Install_Date__c &lt; TODAY(),
+  NOT(ISPICKVAL(Status__c, &quot;Completed&quot;))
+)</errorConditionFormula>
+    <errorDisplayField>Install_Date__c</errorDisplayField>
+    <errorMessage>The install date cannot be moved into the past. Pick today or a later day.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,33 @@
+{
+  "id": "us-052-layout-columns",
+  "title": "US-052 The Installation layout in two columns",
+  "usedBy": "Lab 3.2",
+  "levels": [3],
+  "description": "Mariia moves the crew capacity cap to the empty second column of the Installation layout, so the first column stops scrolling. Total Capacity (kW) goes missing on the way, which no check catches and a review should.",
+  "branch": "training/mate-us-052-layout-columns",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-052 The Installation layout in two columns\n\nThe crew capacity cap moves to the second column of the Information section,\nwhich was empty, so planners see the whole installation without scrolling.",
+  "prTitle": "US-052 The Installation layout in two columns",
+  "prBody": "Planners scroll the Information section of every installation, and its second column is empty.\n\n- Installation layout: the crew capacity cap moves to the second column\n\nStory: US-052 in BACKLOG.md",
+  "nextStep": "Review it before you merge it: Lab 3.2 steps 2 to 5.",
+  "patches": [
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "removeLayoutField": "Crew_Capacity_Cap__c"
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "removeLayoutField": "Total_Capacity_kW__c"
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "replace": {
+        "from": "        </layoutColumns>\n        <layoutColumns/>\n        <style>TwoColumnsTopToBottom</style>",
+        "to": "        </layoutColumns>\n        <layoutColumns>\n            <layoutItems>\n                <behavior>Edit</behavior>\n                <field>Crew_Capacity_Cap__c</field>\n            </layoutItems>\n        </layoutColumns>\n        <style>TwoColumnsTopToBottom</style>"
+      }
+    }
+  ]
+}

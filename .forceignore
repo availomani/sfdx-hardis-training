@@ -1,0 +1,25 @@
+# Local artifacts, never versioned
+**/jsconfig.json
+**/.eslintrc.json
+**/.eslintrc.js
+**/lwc/.eslintrc.json
+**/profilePasswordPolicies/*
+**/appMenus/AppSwitcher.appMenu-meta.xml
+**/settings/*
+# except this one: it allows deployments while a scheduled Apex job exists,
+# which Lab 2.4 creates and every later deployment needs
+!**/settings/Deployment.settings-meta.xml
+**/networks/*
+**/siteDotComSites/*
+**/objectTranslations/*
+**/standardValueSets/*
+
+# The lines sfdx-hardis expects in every project. Without them, the release manager
+# commands of Level 3 stop to offer an upgrade of this file.
+**/appMenu/**
+**/appSwitcher/**
+**/connectedApps/**
+**/certs/**
+**/profilePasswordPolicies/**
+**/__tests__/**
+**SfdxHardisDeferSharingRecalc**

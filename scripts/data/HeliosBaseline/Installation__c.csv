@@ -1,0 +1,31 @@
+External_Id__c,Account__r.Name,Status__c,Install_Date__c,Roof_Type__c,Crew_Size__c,Total_Capacity_kW__c
+HEL-INST-001,Marseille Housing 06,Completed,2025-11-04,Slate,,11.80
+HEL-INST-002,Perpignan Residences 11,Completed,2025-09-20,Slate,,6.40
+HEL-INST-003,Cagliari Residences 16,Completed,2025-10-07,Metal,,8.60
+HEL-INST-004,Faro Estates 21,Completed,2025-11-06,Metal,,6.50
+HEL-INST-005,Montpellier Homes 26,Completed,2025-10-10,Tile,,5.70
+HEL-INST-006,Lisboa Residences 31,Completed,2025-09-20,Metal,,5.80
+HEL-INST-007,Palermo Villas 36,Completed,2025-10-29,Tile,,13.00
+HEL-INST-008,Sevilla Housing 01,Completed,2025-09-21,Slate,,10.60
+HEL-INST-009,Marseille Housing 06,In Progress,2026-01-22,Slate,,10.50
+HEL-INST-010,Perpignan Residences 11,In Progress,2026-03-09,Metal,,7.00
+HEL-INST-011,Cagliari Residences 16,In Progress,2026-03-23,Metal,,3.70
+HEL-INST-012,Faro Estates 21,In Progress,2026-02-09,Tile,,4.70
+HEL-INST-013,Montpellier Homes 26,Scheduled,2026-02-13,Flat,,6.40
+HEL-INST-014,Lisboa Residences 31,Scheduled,2026-03-17,Flat,,6.70
+HEL-INST-015,Palermo Villas 36,Scheduled,2026-02-11,Slate,,12.50
+HEL-INST-016,Sevilla Housing 01,Scheduled,2026-03-20,Tile,,8.40
+HEL-INST-017,Marseille Housing 06,Scheduled,2026-01-26,Tile,,5.50
+HEL-INST-018,Perpignan Residences 11,Scheduled,2026-02-05,Metal,,4.10
+HEL-INST-019,Cagliari Residences 16,Scheduled,2026-02-28,Tile,,11.80
+HEL-INST-020,Faro Estates 21,Scheduled,2026-03-03,Flat,,14.00
+HEL-INST-021,Montpellier Homes 26,Planned,2026-02-18,Metal,,12.30
+HEL-INST-022,Lisboa Residences 31,Planned,2026-03-24,Tile,,4.30
+HEL-INST-023,Palermo Villas 36,Planned,2026-03-07,Flat,,9.10
+HEL-INST-024,Sevilla Housing 01,Planned,2026-02-05,Flat,,7.00
+HEL-INST-025,Marseille Housing 06,Planned,2026-04-06,Flat,,3.10
+HEL-INST-026,Perpignan Residences 11,Planned,2026-02-07,Tile,,10.80
+HEL-INST-027,Cagliari Residences 16,Planned,2026-01-25,Slate,,12.30
+HEL-INST-028,Faro Estates 21,Planned,2026-02-24,Metal,,8.10
+HEL-INST-029,Montpellier Homes 26,Planned,2026-03-25,Tile,,11.20
+HEL-INST-030,Lisboa Residences 31,Planned,2026-03-07,Flat,,5.80

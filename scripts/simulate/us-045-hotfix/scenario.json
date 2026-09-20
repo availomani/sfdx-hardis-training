@@ -1,0 +1,18 @@
+{
+  "id": "us-045-hotfix",
+  "title": "US-045 Hotfix: cancelled installations can be back-dated again",
+  "usedBy": "Lab 3.7",
+  "levels": [3],
+  "description": "Friday, 17:30. Planners cannot close the week: every back-dated cancellation is refused. Romain fixes the validation rule on a branch cut from preprod, which holds what production runs, and opens the hotfix Pull Request into preprod.",
+  "branch": "fix/US-045-installation-date-hotfix",
+  "from": "preprod",
+  "base": "preprod",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-045 Cancelled installations can no longer be back-dated\n\nInstallation_Date_Not_Past exempted Completed installations and not Cancelled\nones. A cancelled installation is finished work too.",
+  "prTitle": "US-045 Hotfix: cancelled installations can be back-dated again",
+  "prBody": "Production is refusing every back-dated cancellation, and the planners cannot close the week.\n\n- `Installation_Date_Not_Past`: Cancelled is exempt, like Completed\n\nCut from `preprod`, so it carries what production runs and nothing that waits in integration.\n\nStory: US-045 in BACKLOG.md",
+  "nextStep": "Review it and merge it into preprod, then release preprod to main. Lab 3.7 steps 3 and 4."
+}

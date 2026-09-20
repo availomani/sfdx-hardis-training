@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Helios_Delivery</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <custom>true</custom>
+    <layoutAssignments>
+        <layout>Installation__c-Installation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Panel_Batch__c-Panel Batch Layout</layout>
+    </layoutAssignments>
+    <tabVisibilities>
+        <tab>Installation__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Panel_Batch__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <userLicense>Salesforce</userLicense>
+</Profile>
