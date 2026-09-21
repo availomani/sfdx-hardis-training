@@ -39,6 +39,8 @@ const PAGES = [
   "/en/level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict/",
   "/en/level-3-release-manager/3-7-hotfix-and-retrofit/",
   "/en/level-3-release-manager/",
+  "/fr/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline/",
+  "/fr/level-3-release-manager/",
 ];
 
 /** And one with a hash, which must land on the heading rather than the top. */

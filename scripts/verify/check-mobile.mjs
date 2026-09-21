@@ -32,6 +32,12 @@ const PAGES = [
   "en/level-2-contributor-advanced/index.html",
   "en/level-3-release-manager/index.html",
   "BACKLOG/index.html",
+  // The same pages in French: a translated table has longer words in the same
+  // columns, which is how a five-column table starts overflowing
+  "fr/index.html",
+  "fr/level-1-contributor-basics/index.html",
+  "fr/level-2-contributor-advanced/index.html",
+  "fr/level-3-release-manager/index.html",
 ];
 
 const PHONE = { width: 412, height: 915 };

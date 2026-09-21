@@ -6,7 +6,7 @@ EXTENDS:
 # training-universe.json and the lab front matter, and CI fails when they drift
 # from what it produces. A formatter rewriting them would make that check fail
 # forever, for a difference nobody made.
-FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifest\.json$|^labs/link-map\.en\.md$|^mkdocs-nav\.yml$|^site-src/|^megalinter-reports/)
+FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifest\.json$|^labs/link-map\.[a-z]{2}(-[A-Z]{2})?\.md$|^mkdocs-nav\.yml$|^site-src/|^megalinter-reports/)
 
 # jscpd's minTokens is raised to 120 in .jscpd.json. That file is schema
 # validated and rejects a comment key, so the reason lives here: every script in

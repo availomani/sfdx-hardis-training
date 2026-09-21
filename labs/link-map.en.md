@@ -2,7 +2,7 @@
 
 # Link map (English)
 
-Every URL the three Trailmixes and the labs point at. `link-check.yml` reads this file,
+Every URL the Trailmixes and the labs point at. `link-check.yml` reads this file,
 so a renamed documentation page fails CI here rather than surprising a learner.
 
 ## Level 1 - Contributor basics

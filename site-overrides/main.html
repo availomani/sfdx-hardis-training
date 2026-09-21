@@ -11,12 +11,27 @@
   The link is the anchor the comments partial puts on every page. The widget
   loads when the reader reaches it, so following the link loads it too.
 
+  It is written in the language of the page: page.url is the path inside the
+  site, so a page of labs/fr/ starts with "fr/". The test is a slice rather than
+  a startswith: Zensical's template engine is not Jinja2 and has no such method,
+  and a template error here fails the whole build. English is the fallback, as it
+  is everywhere else here: a locale nobody has written a banner for gets the
+  English one rather than no banner.
+
   Remove this file, and theme.custom_dir from course-site.yml, when the course
   is released. Keep the folder: the comments partial lives in it.
 -->
 {% block announce %}
-  <strong>This course is in QA.</strong> It is complete and has been run end to end, and now it
-  needs you. If a step does not work, or the screen does not match what the page says, please
-  <a href="#__comments">leave a comment at the bottom of that page</a>. That is the fastest way to
-  get it fixed, and it helps the next person too.
+  {% if page and page.url and page.url[:3] == 'fr/' %}
+    <strong>Ce cours est en phase de relecture.</strong> Il est complet et a été déroulé de bout en
+    bout, et maintenant il a besoin de vous. Si une étape ne fonctionne pas, ou si l'écran ne
+    correspond pas à ce que dit la page, merci de
+    <a href="#__comments">laisser un commentaire en bas de cette page</a>. C'est le moyen le plus
+    rapide de faire corriger le problème, et cela aide la personne suivante.
+  {% else %}
+    <strong>This course is in QA.</strong> It is complete and has been run end to end, and now it
+    needs you. If a step does not work, or the screen does not match what the page says, please
+    <a href="#__comments">leave a comment at the bottom of that page</a>. That is the fastest way to
+    get it fixed, and it helps the next person too.
+  {% endif %}
 {% endblock %}

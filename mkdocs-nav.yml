@@ -35,3 +35,38 @@ nav:
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
   - Link map: labs/link-map.en.md
+  - "Français":
+      - Accueil: fr/index.md
+      - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
+          - Commencer ici: fr/level-1-contributor-basics/index.md
+          - "Lab 1.1 - Installer VS Code, Git et sfdx-hardis": fr/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis.md
+          - "Lab 1.2 - Créer votre Dev Hub, vos scratch orgs et votre pipeline CI/CD": fr/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md
+          - "Lab 1.3 - Démarrer une User Story sur sa propre branche Git": fr/level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch.md
+          - "Lab 1.4 - Construire un champ personnalisé dans votre org Salesforce": fr/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org.md
+          - "Lab 1.5 - Récupérer, commiter et publier vos modifications Salesforce": fr/level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md
+          - "Lab 1.6 - Ouvrir une Pull Request, passer le contrôle de déploiement, merger": fr/level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md
+          - "Lab 1.7 - Épreuve finale : livrer une User Story tout seul": fr/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md
+      - "Niveau 2 - Contributeur Salesforce DevOps avancé":
+          - Commencer ici: fr/level-2-contributor-advanced/index.md
+          - "Lab 2.1 - Backpromote : remettre votre org au niveau de l'équipe": fr/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
+          - "Lab 2.2 - Corriger une erreur de déploiement due à une dépendance manquante": fr/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error.md
+          - "Lab 2.3 - Réparer des enregistrements cassés avec une deployment action Apex": fr/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md
+          - "Lab 2.4 - Livrer des données de référence et un batch avec des deployment actions": fr/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md
+          - "Lab 2.5 - Passer la barrière de qualité de code et la couverture de tests Apex": fr/level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage.md
+          - "Lab 2.6 - Permission sets, profils, et pourquoi une autorisation disparaît": fr/level-2-contributor-advanced/2-6-permission-sets-and-profiles.md
+          - "Lab 2.7 - Résoudre un conflit de merge Git avec un collègue": fr/level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md
+          - "Lab 2.8 - Se remettre d'avoir commité la mauvaise métadonnée": fr/level-2-contributor-advanced/2-8-recover-from-committing-the-wrong-metadata.md
+          - "Lab 2.9 - Épreuve finale : livrer une User Story qui a tout": fr/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all.md
+      - "Niveau 3 - Release manager Salesforce DevOps":
+          - Commencer ici: fr/level-3-release-manager/index.md
+          - "Lab 3.1 - Configurer le pipeline CI/CD jusqu'à la production": fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
+          - "Lab 3.2 - Relire et merger la Pull Request d'un contributeur": fr/level-3-release-manager/3-2-review-a-contributor-pull-request.md
+          - "Lab 3.3 - Lire le log de déploiement, et ce que .forceignore lui cache": fr/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md
+          - "Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge": fr/level-3-release-manager/3-4-merge-colliding-pull-requests.md
+          - "Lab 3.5 - Promouvoir en UAT et écrire les notes de version": fr/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md
+          - "Lab 3.6 - Livrer en production et lire vos métriques DORA": fr/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics.md
+          - "Lab 3.7 - La production est cassée : hotfix et retrofit": fr/level-3-release-manager/3-7-hotfix-and-retrofit.md
+          - "Lab 3.8 - Monitorer votre org de production": fr/level-3-release-manager/3-8-monitor-your-production-org.md
+          - "Lab 3.9 - Générer la documentation du projet Salesforce": fr/level-3-release-manager/3-9-generate-the-project-documentation.md
+          - "Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire": fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+      - Plan des liens: labs/link-map.fr.md

@@ -76,3 +76,5 @@ memory.
 ## Start
 
 [Level 1 - Contributor basics](level-1-contributor-basics/index.md){ .md-button .md-button--primary }
+
+[Lire ce cours en français](../fr/index.md)

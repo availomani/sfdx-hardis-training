@@ -67,7 +67,15 @@ const problems = [];
 const referenced = new Set();
 let checked = 0;
 
-for (const file of walk(path.join(LABS, "en"))) {
+// Every locale, not only English: the pill numbers are the one part of a lab a
+// translation must carry over untouched, and a translator dropping a **(3)** is
+// exactly the kind of mistake nothing else catches.
+const localeDirs = fs
+  .readdirSync(LABS, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && /^[a-z]{2}(-[A-Z]{2})?$/.test(entry.name))
+  .map((entry) => path.join(LABS, entry.name));
+
+for (const file of localeDirs.flatMap((dir) => walk(dir))) {
   const rel = path.relative(ROOT, file).replace(/\\/g, "/");
   const lines = fs.readFileSync(file, "utf8").split("\n");
 
