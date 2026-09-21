@@ -48,6 +48,8 @@ const SITES = [
 const GOOGLE = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com/;
 const COLLECT = /\/g\/collect/;
 const PLACEHOLDER = "G-XXXXXXXXXX";
+// Long enough for the slowest page view seen so far, which took nine seconds
+const PAGE_VIEW_TIMEOUT_MS = 30000;
 
 const args = process.argv.slice(2).filter((a) => a !== "--local");
 const local = process.argv.includes("--local");
@@ -78,7 +80,14 @@ async function serveLocalBuild() {
   return { url: `http://127.0.0.1:${server.address().port}/`, close: () => server.close() };
 }
 
-/** Loads the page, then follows one internal link without reloading. */
+/**
+ * Loads the page, then follows one internal link without reloading.
+ *
+ * Each page view is waited for rather than slept over. GA4 does not send one the moment
+ * it is asked to: the page view of a page reached by an instant navigation has been seen
+ * arriving nine seconds after the click on the live course site, and a fixed delay short
+ * enough to be pleasant was reporting that site as counting nothing.
+ */
 async function inspect(browser, url) {
   const page = await browser.newPage();
   const requests = [];
@@ -87,8 +96,17 @@ async function inspect(browser, url) {
     if (GOOGLE.test(r.url())) requests.push({ at: phase, url: r.url() });
   });
 
+  /** Resolves as soon as this phase has sent a page view, or after PAGE_VIEW_TIMEOUT_MS. */
+  const waitForPageView = async (of) => {
+    const deadline = Date.now() + PAGE_VIEW_TIMEOUT_MS;
+    while (Date.now() < deadline) {
+      if (requests.some((r) => r.at === of && COLLECT.test(r.url))) return;
+      await page.waitForTimeout(500);
+    }
+  };
+
   await page.goto(url, { waitUntil: "networkidle" });
-  await page.waitForTimeout(3000);
+  await waitForPageView("landing");
   const landing = requests.filter((r) => r.at === "landing");
 
   phase = "navigation";
@@ -110,7 +128,7 @@ async function inspect(browser, url) {
     if (link) link.click();
     return link ? link.href : null;
   });
-  if (href) await page.waitForTimeout(6000);
+  if (href) await waitForPageView("navigation");
   const navigation = requests.filter((r) => r.at === "navigation");
   const instant = href ? await page.evaluate(() => window.__instantMarker === true) : false;
   // A page that carries no content block is the 404 page, so there was no second page to count

@@ -136,7 +136,8 @@ extra:
   # Check it with: node scripts/verify/check-analytics.mjs
   analytics:
     provider: google
-    # TODO replace with the measurement id of the course data stream
+    # The course data stream. The product documentation is the other stream of the
+    # same property, so the two can be read together or apart.
     property: G-SE20CZ58E1
 
   # The language selector in the header. Each entry points at the home page of
