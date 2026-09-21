@@ -123,6 +123,22 @@ extra_javascript:
   - theme/javascripts/after-footer.js
 
 extra:
+  # Google Analytics, on the course's own data stream inside the sfdx-hardis
+  # property, so the course and the product documentation can be read together
+  # or apart. The theme emits the tag, sends the page view of the page the
+  # reader lands on, and sends one more on every instant navigation.
+  #
+  # Do not move this into extra_javascript as a hand written gtag.js. The
+  # product site did that and lost the first page view of every session: such a
+  # script only subscribes to location$, which is a plain Subject and stays
+  # silent for the page that is already open.
+  #
+  # Check it with: node scripts/verify/check-analytics.mjs
+  analytics:
+    provider: google
+    # TODO replace with the measurement id of the course data stream
+    property: G-SE20CZ58E1
+
   # The language selector in the header. Each entry points at the home page of
   # that language, not at the translation of the page being read: the theme has
   # no way to know whether a given page exists in the other language, and a link
