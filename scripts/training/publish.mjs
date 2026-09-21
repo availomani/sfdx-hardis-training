@@ -100,9 +100,14 @@ export default async function publish(args) {
   const bodyFile = path.join(ROOT, ".training-pr-body.md");
   fs.writeFileSync(bodyFile, body, "utf8");
   let opened = false;
+  let prUrl = null;
   if (hasGh() && slug) {
     for (let attempt = 1; attempt <= 3 && !opened; attempt++) {
-      opened = run("gh", ["pr", "create", "--repo", slug, "--base", BASE, "--head", branch, "--title", message, "--body-file", bodyFile]).code === 0;
+      // Captured: the address of the Pull Request is what the learner opens
+      // next, and what gh prints goes nowhere they can see in the panel
+      const pr = run("gh", ["pr", "create", "--repo", slug, "--base", BASE, "--head", branch, "--title", message, "--body-file", bodyFile], { capture: true, quiet: true });
+      opened = pr.code === 0;
+      prUrl = (pr.stdout || "").match(/https:\/\/\S+\/pull\/\d+/)?.[0] || null;
       if (!opened && attempt < 3) {
         run(process.execPath, ["-e", "const t = Date.now(); while (Date.now() - t < 2000) {}"], { quiet: true });
       }
@@ -114,6 +119,7 @@ export default async function publish(args) {
     info(`  Open it yourself: ${c.cyan(`https://github.com/${slug}/compare/${BASE}...${branch}?expand=1`)}`);
   } else {
     ok(`Pull Request opened into ${BASE}`);
+    info(`  ${c.cyan(prUrl || `https://github.com/${slug}/pulls`)}`);
   }
 
   // Back on integration: the configuration comes back to it with the merge

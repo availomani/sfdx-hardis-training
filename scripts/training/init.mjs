@@ -88,6 +88,33 @@ function currentHandle() {
   return user?.login || null;
 }
 
+/**
+ * A commit needs a name and an email, and a machine that has never made one has
+ * neither. VS Code cannot set them, and this course sends nobody to a terminal,
+ * so the GitHub account gh is signed in as fills them in.
+ *
+ * In this clone only, never with --global: nothing outside the course changes.
+ * The address is the noreply one GitHub gives every account, so a learner's real
+ * address never ends up in a public commit they did not think about.
+ */
+function ensureGitIdentity() {
+  const configured = (key) => gitOut(["config", "--get", key]) !== "";
+  if (configured("user.name") && configured("user.email")) {
+    return;
+  }
+  const user = ghJson(["api", "user"]);
+  if (!user?.login) {
+    warn("Git has no name and email yet, and your GitHub account could not be read to fill them in.");
+    info("  Your first commit will be refused. Sign in to GitHub again, then click this command again.");
+    return;
+  }
+  const name = user.name || user.login;
+  const email = `${user.id}+${user.login}@users.noreply.github.com`;
+  run("git", ["config", "user.name", name], { quiet: true, capture: true });
+  run("git", ["config", "user.email", email], { quiet: true, capture: true });
+  ok(`Your commits in this folder are made as ${c.bold(name)} <${email}>.`);
+}
+
 // ------------------------------------------------------------ the Dev Hub org
 /**
  * The Developer Edition org the learner connected, when there is nothing to choose.
@@ -655,12 +682,13 @@ export default async function init(args) {
   info(c.dim("already there, and nobody asks a new contributor to build them on their first day."));
   info("");
 
-  ensureGh();
+  await ensureGh();
   const handle = currentHandle();
   if (!handle) {
     abort("Could not read your GitHub account.", "Click Set up my training environment again.");
   }
   info(`Signed in to GitHub as ${c.bold(handle)}.`);
+  ensureGitIdentity();
 
   const orgs = connectedOrgs().filter((o) => o.connected);
   if (orgs.filter((o) => !o.isScratch).length === 0) {

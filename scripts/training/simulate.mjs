@@ -230,10 +230,10 @@ export default async function simulate(args) {
     // GitHub needs a moment after a push before its API can see the new branch.
     // Asked too soon it answers "No commits between <base> and <head>", which
     // reads like the push failed when it did not. Three tries, two seconds apart,
-    // has been enough every time. The command writes straight to the terminal,
-    // so its message cannot be inspected here: any failure is retried, and the
-    // fallback below still covers a Pull Request that genuinely already exists.
-    let pr = { code: 1, stderr: "" };
+    // has been enough every time. Captured rather than written straight out: the
+    // address of the Pull Request is the one line the learner needs next, and
+    // what gh prints goes nowhere they can see when this runs in the panel.
+    let pr = { code: 1, stdout: "", stderr: "" };
     for (let attempt = 1; attempt <= 3; attempt++) {
       pr = run("gh", [
         "pr", "create",
@@ -244,7 +244,7 @@ export default async function simulate(args) {
         "--head", scenario.branch,
         "--title", scenario.prTitle,
         "--body-file", bodyFile
-      ]);
+      ], { capture: true, quiet: true });
       if (pr.code === 0) {
         break;
       }
@@ -264,6 +264,8 @@ export default async function simulate(args) {
       info(`  Check: ${c.cyan(`https://github.com/${slug}/pulls`)}`);
     } else {
       ok("Pull Request opened");
+      const url = (pr.stdout || "").match(/https:\/\/\S+\/pull\/\d+/);
+      info(`  ${c.cyan(url ? url[0] : `https://github.com/${slug}/pulls`)}`);
     }
   }
 

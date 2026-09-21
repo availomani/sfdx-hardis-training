@@ -231,6 +231,13 @@ binary**. Acceptez les valeurs par défaut de l'installeur.
 Vous n'aurez jamais à lancer `gh` vous-même. La commande de l'étape 5 s'en sert et vous connecte via
 votre navigateur la première fois qu'elle en a besoin.
 
+!!! tip "À quoi ressemble la connexion"
+    La première exécution s'arrête sur une ligne du genre `Your one-time code is 5989-F9D9`, et
+    ouvre [github.com/login/device](https://github.com/login/device) dans votre navigateur. Saisissez
+    ce code là-bas, approuvez la connexion, et revenez : la commande repart toute seule, et ne
+    redemandera plus rien. Si le navigateur ne s'est pas ouvert, l'adresse est affichée juste sous
+    le code.
+
 !!! note "Celle-ci est pour le cours, et pour GitHub"
     Elle est là pour qu'un seul clic puisse vous remettre un pipeline qui marche au lieu d'une
     douzaine de formulaires. Rien d'autre dans le cours n'en a besoin, et rien dans sfdx-hardis non

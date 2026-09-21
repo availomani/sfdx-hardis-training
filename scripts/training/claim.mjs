@@ -105,7 +105,7 @@ export default async function claim(args) {
   }
 
   // ------------------------------------------------------------- the account
-  ensureGh();
+  await ensureGh();
 
   const slug = repoSlug();
   if (!slug) {

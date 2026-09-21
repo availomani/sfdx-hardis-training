@@ -143,6 +143,29 @@ export function log(message, type = "log") {
 }
 
 /**
+ * The panel draws text, number, select and multiselect questions, and nothing
+ * else. A confirm sent as one arrives with no Yes and no No: the learner gets a
+ * sentence, a Cancel and a Validate, and Validate answers an empty object, which
+ * every caller reads as "no". So a confirm becomes the two-choice select it
+ * already is, which is exactly what the CLI sends (reformatQuestions, in
+ * sfdx-hardis src/common/utils/prompts.ts).
+ */
+function forPanel(prompt) {
+  if (prompt.type !== "confirm") {
+    return prompt;
+  }
+  const yes = prompt.initial !== false;
+  return {
+    ...prompt,
+    type: "select",
+    choices: [
+      { title: "Yes", value: true, selected: yes },
+      { title: "No", value: false, selected: !yes }
+    ]
+  };
+}
+
+/**
  * Asks the question in the panel and waits for the answer. `prompt` is a
  * prompts-style definition: { type, name, message, choices, initial }.
  * Resolves to undefined when the panel is gone, so the caller can fall back.
@@ -151,6 +174,7 @@ export async function ask(prompt) {
   if (!isActive()) {
     return undefined;
   }
+  const question = forPanel(prompt);
   const answer = await new Promise((resolve) => {
     const timer = setTimeout(() => resolve(undefined), ANSWER_TIMEOUT_MS);
     pendingAnswer = (value) => {
@@ -158,10 +182,10 @@ export async function ask(prompt) {
       pendingAnswer = null;
       resolve(value);
     };
-    send({ event: "prompts", prompts: [prompt] });
+    send({ event: "prompts", prompts: [question] });
   });
   const value =
-    answer && typeof answer === "object" && prompt.name in answer ? answer[prompt.name] : answer;
+    answer && typeof answer === "object" && question.name in answer ? answer[question.name] : answer;
   // What the panel sends when the learner dismisses the question. Every caller
   // treats it the way the CLI does: the command stops there.
   if (value === CANCELLED || (Array.isArray(value) && value[0] === CANCELLED)) {

@@ -218,6 +218,12 @@ defaults.
 You never have to run `gh` yourself. The command in step 5 uses it and signs you in through your
 browser the first time it needs to.
 
+!!! tip "What the sign-in looks like"
+    The first run stops on a line like `Your one-time code is 5989-F9D9`, and opens
+    [github.com/login/device](https://github.com/login/device) in your browser. Type that code
+    there, approve the sign-in, and come back: the command carries on by itself, and never asks
+    again. If the browser did not open, the address is printed right under the code.
+
 !!! note "This one is for the course, and for GitHub"
     It is here so that one click can hand you a working pipeline instead of a dozen forms. Nothing
     else in the course needs it, and nothing in sfdx-hardis does: this project happens to live on

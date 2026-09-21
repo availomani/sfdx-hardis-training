@@ -45,7 +45,9 @@ export function printResults(results, handle, commit, { record = false } = {}) {
       }
       if (record) {
         const line = receiptLine(r.rule, handle, commit);
-        console.log(c.green(`      ${line}`));
+        // info(), not console.log(): the receipt is the one line of this command
+        // worth keeping, and the panel only shows what goes through info()
+        info(c.green(`      ${line}`));
         recordReceipt({ id: r.rule.id, line, at: new Date().toISOString() });
       }
     } else {

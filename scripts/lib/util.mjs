@@ -92,11 +92,15 @@ export function run(command, args, options = {}) {
   const pretty = `${command} ${args.join(" ")}`;
   if (!options.quiet) {
     console.log(c.dim(`    $ ${pretty}`));
+    // The panel gets the line too: what the child prints goes to an output
+    // channel nobody has open, so without this a deploy or a scratch org is
+    // several silent minutes in a panel that looks stuck.
+    panel.log(`$ ${pretty}`, "log");
   }
   // On Windows the Salesforce CLI and the GitHub CLI are .cmd shims, which only
   // run through a shell. Node deprecates passing an argument array together with
   // shell:true, so the line is quoted here and handed over as a single string.
-  const spawnCommand = WINDOWS ? [command, ...args.map(quoteArg)].join(" ") : command;
+  const spawnCommand = WINDOWS ? [quoteArg(command), ...args.map(quoteArg)].join(" ") : command;
   const spawnArgs = WINDOWS ? [] : args;
   const res = spawnSync(spawnCommand, spawnArgs, {
     cwd: options.cwd || ROOT,
@@ -121,7 +125,7 @@ export function run(command, args, options = {}) {
  * because three commands writing to one terminal at once is unreadable.
  */
 export function runAsync(command, args, options = {}) {
-  const spawnCommand = WINDOWS ? [command, ...args.map(quoteArg)].join(" ") : command;
+  const spawnCommand = WINDOWS ? [quoteArg(command), ...args.map(quoteArg)].join(" ") : command;
   const spawnArgs = WINDOWS ? [] : args;
   return new Promise((resolve) => {
     const child = spawn(spawnCommand, spawnArgs, {
@@ -135,6 +139,64 @@ export function runAsync(command, args, options = {}) {
     child.stderr.on("data", (chunk) => (stderr += chunk));
     child.on("error", (error) => resolve({ code: 1, stdout, stderr: stderr + error.message }));
     child.on("close", (code) => resolve({ code: code === null ? 1 : code, stdout, stderr }));
+  });
+}
+
+/**
+ * The same as run(), streaming what the child prints to the panel as well as to
+ * the console, line by line.
+ *
+ * run() hands the child the console this process has. In a terminal that is
+ * exactly right. In the Command Runner panel it goes to an output channel
+ * nobody has open, so a command whose output the learner has to read, like the
+ * one-time code of the GitHub sign-in, comes through here instead.
+ *
+ * stdin is /dev/null on purpose: there is no terminal behind the panel, and a
+ * child that asks a question there would wait for ever instead of failing.
+ */
+export function runStreamed(command, args, options = {}) {
+  if (!options.quiet) {
+    console.log(c.dim(`    $ ${command} ${args.join(" ")}`));
+  }
+  const spawnCommand = WINDOWS ? [quoteArg(command), ...args.map(quoteArg)].join(" ") : command;
+  const spawnArgs = WINDOWS ? [] : args;
+  return new Promise((resolve) => {
+    const child = spawn(spawnCommand, spawnArgs, {
+      cwd: options.cwd || ROOT,
+      shell: WINDOWS,
+      env: { ...process.env, ...(options.env || {}) },
+      stdio: ["ignore", "pipe", "pipe"]
+    });
+    let output = "";
+    let pending = "";
+    const emit = (line) => {
+      // eslint-disable-next-line no-control-regex
+      const clean = line.replace(/\u001b\[[0-9;]*m/g, "").trimEnd();
+      if (clean.trim() === "") {
+        return;
+      }
+      panel.log(clean, "log");
+      if (options.onLine) {
+        options.onLine(clean);
+      }
+    };
+    const consume = (chunk) => {
+      const text = chunk.toString();
+      output += text;
+      process.stdout.write(text);
+      pending += text;
+      const lines = pending.split(/\r?\n/);
+      pending = lines.pop();
+      lines.forEach(emit);
+    };
+    child.stdout.on("data", consume);
+    child.stderr.on("data", consume);
+    child.on("error", (error) => resolve({ code: 1, output: output + error.message }));
+    child.on("close", (code) => {
+      emit(pending);
+      pending = "";
+      resolve({ code: code === null ? 1 : code, output });
+    });
   });
 }
 
@@ -173,15 +235,44 @@ function cancelled(message) {
   process.exit(1);
 }
 
+/**
+ * The extension started this command in its Command Runner panel, not in a
+ * terminal. There is a stdin, because that is what spawn() gives a child, but
+ * nobody ever writes to it: a readline on it waits for ever, and the learner
+ * watches a panel that has stopped for no visible reason. So when the command
+ * comes from the panel, the panel is the only place a question can go.
+ */
+const FROM_PANEL = Boolean(process.env.SFDX_HARDIS_WEBSOCKET);
+
 function isInteractive() {
   if (process.env.TRAINING_NO_PROMPT === "true") {
     return false;
   }
-  // The panel asks the question in VS Code, so no terminal is needed
-  return panel.isActive() || (process.stdin.isTTY && !process.env.CI);
+  if (FROM_PANEL) {
+    return panel.isActive();
+  }
+  return process.stdin.isTTY && !process.env.CI;
+}
+
+/** Started from the panel, and the panel is not listening any more. */
+function panelGone() {
+  return FROM_PANEL && !panel.isActive() && process.env.TRAINING_NO_PROMPT !== "true";
+}
+
+/** Stops on a question nothing can display, rather than on a stdin nothing answers. */
+function abortPanelGone(message) {
+  abort(
+    `This question has nowhere to go: ${String(message).replace(/\s+/g, " ").trim()}`,
+    "The panel closed, or VS Code was reloaded while it was open. Click the command again in the Training menu."
+  );
 }
 
 async function ask(question) {
+  if (FROM_PANEL) {
+    // Every caller asks the panel first, so this is only ever reached once the
+    // panel is gone. Reading stdin here would hang the command for ever.
+    abortPanelGone(question);
+  }
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   const answer = await new Promise((resolve) => rl.question(question, resolve));
   rl.close();
@@ -211,6 +302,9 @@ export async function select(message, choices, preselected) {
     return choices[0].value;
   }
   if (!isInteractive()) {
+    if (panelGone()) {
+      abortPanelGone(message);
+    }
     // Naming the answers this very question accepts, rather than an example
     // from another command that does not apply here
     abort(
@@ -238,6 +332,10 @@ export async function select(message, choices, preselected) {
       return picked;
     }
   }
+  if (FROM_PANEL) {
+    // The panel was listening when the question was asked and is not any more
+    abortPanelGone(message);
+  }
   console.log("");
   console.log(c.bold(message));
   choices.forEach((ch, i) => {
@@ -260,6 +358,9 @@ export async function input(message, initial = "") {
       info(`${message} ${c.green(initial)}`);
       return initial;
     }
+    if (panelGone()) {
+      abortPanelGone(message);
+    }
     abort(`${message} needs an answer, and this terminal cannot ask for one.`);
   }
   if (panel.isActive()) {
@@ -275,6 +376,9 @@ export async function input(message, initial = "") {
       return initial;
     }
   }
+  if (FROM_PANEL) {
+    abortPanelGone(message);
+  }
   for (;;) {
     const answer = await ask(c.bold(message) + (initial ? c.dim(` [${initial}] `) : " "));
     if (answer) {
@@ -289,6 +393,10 @@ export async function input(message, initial = "") {
 
 export async function confirm(message, defaultYes = false) {
   if (!isInteractive()) {
+    if (panelGone()) {
+      // Never silently: the answer decides whether the command acts at all
+      abortPanelGone(message);
+    }
     return defaultYes;
   }
   if (panel.isActive()) {
@@ -300,6 +408,9 @@ export async function confirm(message, defaultYes = false) {
       info(`${message} ${answered ? "yes" : "no"}`);
       return answered === true || answered === "true";
     }
+  }
+  if (FROM_PANEL) {
+    abortPanelGone(message);
   }
   const suffix = defaultYes ? " [Y/n] " : " [y/N] ";
   const answer = (await ask(c.bold(message + suffix))).toLowerCase();
@@ -449,13 +560,61 @@ export function hasGh() {
   return run("gh", ["--version"], { capture: true, quiet: true }).code === 0;
 }
 
+/** True when gh already holds a GitHub account. */
+function ghSignedIn() {
+  return run("gh", ["auth", "status"], { capture: true, quiet: true }).code === 0;
+}
+
+/** The page the device sign-in asks for, and the shape of the code it prints. */
+const GH_DEVICE_URL = "https://github.com/login/device";
+const GH_ONE_TIME_CODE = /\b([A-Z0-9]{4}-[A-Z0-9]{4})\b/;
+
+/**
+ * The web sign-in of gh, run so that the panel can carry it.
+ *
+ * gh with a terminal prints the one-time code there and opens the browser
+ * itself. Started from the panel it has no terminal: it still prints the code
+ * and then waits for the browser, but the code lands in an output channel the
+ * learner is not looking at, so the panel looks frozen on a question nobody can
+ * see. The code is lifted out of its output and shown in the panel instead, and
+ * the page is opened here.
+ */
+async function ghAuthLogin() {
+  const args = ["auth", "login", "--hostname", "github.com", "--git-protocol", "https", "--web"];
+  if (!panel.isActive()) {
+    info(c.dim("    A browser window opens. Answer GitHub.com, HTTPS, and sign in there."));
+    info("");
+    return run("gh", args).code;
+  }
+  let shown = false;
+  const res = await runStreamed("gh", args, {
+    quiet: true,
+    onLine: (line) => {
+      const match = line.match(GH_ONE_TIME_CODE);
+      if (!match || shown) {
+        return;
+      }
+      shown = true;
+      warn(`Your one-time code is ${c.bold(match[1])}`);
+      info("  A browser opens on GitHub. Type that code there and approve the sign-in,");
+      info("  then come back here: this command carries on by itself.");
+      info(`  If the browser did not open: ${c.cyan(GH_DEVICE_URL)}`);
+      openUrl(GH_DEVICE_URL);
+    }
+  });
+  if (!shown) {
+    warn("GitHub did not give a sign-in code.");
+  }
+  return res.code;
+}
+
 /**
  * gh, installed and signed in. Both are worth telling apart: the fixes differ.
  *
  * Signing in happens here rather than in a message telling somebody to type a
  * command: this course never sends anybody to a terminal.
  */
-export function ensureGh() {
+export async function ensureGh() {
   if (!hasGh()) {
     abort(
       "The GitHub CLI (gh) is not installed.",
@@ -465,21 +624,23 @@ export function ensureGh() {
       ].join("\n  ")
     );
   }
-  if (run("gh", ["auth", "status"], { capture: true, quiet: true }).code === 0) {
+  if (ghSignedIn()) {
     return;
   }
 
   info("");
   info("You are not signed in to GitHub yet, so let us do that first.");
-  info(c.dim("    A browser window opens. Answer GitHub.com, HTTPS, and sign in there."));
-  info("");
-  const login = run("gh", ["auth", "login", "--hostname", "github.com", "--git-protocol", "https", "--web"]);
-  if (login.code !== 0 || run("gh", ["auth", "status"], { capture: true, quiet: true }).code !== 0) {
+  const code = await ghAuthLogin();
+  if (code !== 0 || !ghSignedIn()) {
     abort(
       "The GitHub sign-in did not finish.",
-      "Click the command again and complete the sign-in in the browser it opens."
+      "Click the command again: a new code is given, and the sign-in starts over."
     );
   }
+  // gh only offers to hand git its credentials when it has a terminal to ask in.
+  // Without this, the first push of the course stops on a password nobody typed,
+  // which is not something a Source Control panel can answer.
+  run("gh", ["auth", "setup-git", "--hostname", "github.com"], { capture: true, quiet: true });
   ok("Signed in to GitHub.");
 }
 
