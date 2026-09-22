@@ -385,9 +385,13 @@ emit("training-manifest.json", manifest());
 // from the pages, so there is one source of truth for them; these few words
 // have no page to take them from.
 const NAV_LABELS = {
-  en: { home: "Home", start: "Start here", linkMap: "Link map" },
-  fr: { home: "Accueil", start: "Commencer ici", linkMap: "Plan des liens" }
+  en: { home: "Home", start: "Start here", help: "Help", linkMap: "Link map" },
+  fr: { home: "Accueil", start: "Commencer ici", help: "Aide", linkMap: "Plan des liens" }
 };
+
+// The product documentation, which is not part of this site and is written once,
+// in English. It sits with the backlog and the badges at the end of every menu.
+const DOC_SITE_ENTRY = `  - sfdx-hardis documentation: ${DOC}/`;
 
 /**
  * The navigation, one flat course per locale.
@@ -400,8 +404,9 @@ const NAV_LABELS = {
  * on the same page in the other language.
  *
  * English comes first because it is the reference, and its home page is the
- * home page of the site. The backlog and the badges come last and are in no
- * language: they are written once, in English, and they show in every menu.
+ * home page of the site. The product documentation, the backlog and the badges
+ * come last and are in no language: they are written once, in English, and they
+ * show in every menu.
  *
  * Lab entries carry no title in course-site.yml: an entry without one takes the
  * page's own heading, so there is one source of truth. They carry one here,
@@ -424,8 +429,10 @@ function nav() {
         lines.push(`      - "${title}": ${locale}/${level.slug}/${lab.slug}.md`);
       }
     }
+    lines.push(`  - ${labels.help}: ${locale}/help.md`);
     lines.push(`  - ${labels.linkMap}: ${locale}/link-map.md`);
   }
+  lines.push(DOC_SITE_ENTRY);
   lines.push("  - Backlog: BACKLOG.md");
   lines.push("  - Badges: badges/index.md");
   return lines.join("\n") + "\n";

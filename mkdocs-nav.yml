@@ -32,6 +32,7 @@ nav:
       - "Lab 3.8 - Monitor your production org": en/level-3-release-manager/3-8-monitor-your-production-org.md
       - "Lab 3.9 - Generate the Salesforce project documentation": en/level-3-release-manager/3-9-generate-the-project-documentation.md
       - "Lab 3.10 - Capstone: run a weekly release cycle": en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+  - Help: en/help.md
   - Link map: en/link-map.md
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
@@ -66,6 +67,8 @@ nav:
       - "Lab 3.8 - Monitorer votre org de production": fr/level-3-release-manager/3-8-monitor-your-production-org.md
       - "Lab 3.9 - Générer la documentation du projet Salesforce": fr/level-3-release-manager/3-9-generate-the-project-documentation.md
       - "Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire": fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+  - Aide: fr/help.md
   - Plan des liens: fr/link-map.md
+  - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/
   - Backlog: BACKLOG.md
   - Badges: badges/index.md

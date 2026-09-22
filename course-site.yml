@@ -234,6 +234,7 @@ nav:
       - en/level-3-release-manager/3-8-monitor-your-production-org.md
       - en/level-3-release-manager/3-9-generate-the-project-documentation.md
       - en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+  - Help: en/help.md
   - Link map: en/link-map.md
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
@@ -268,6 +269,8 @@ nav:
       - fr/level-3-release-manager/3-8-monitor-your-production-org.md
       - fr/level-3-release-manager/3-9-generate-the-project-documentation.md
       - fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+  - Aide: fr/help.md
   - Plan des liens: fr/link-map.md
+  - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
