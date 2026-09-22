@@ -1,0 +1,31 @@
+{
+  "recipient": "nvuillam",
+  "badges": [
+    {
+      "type": "Achievement",
+      "level": 3,
+      "name": "sfdx-hardis Release Manager",
+      "description": "Owns the pipeline, the releases, the hotfixes and the monitoring.",
+      "issuer": {
+        "name": "Cloudity",
+        "url": "https://cloudity.com",
+        "course": "https://hardisgroupcom.github.io/sfdx-hardis-training"
+      },
+      "issuedOn": "2026-09-22",
+      "evidence": [
+        {
+          "type": "Repository",
+          "url": "https://github.com/nvuillam/sfdx-hardis-training.git"
+        },
+        {
+          "type": "ClaimIssue",
+          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/8"
+        }
+      ],
+      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillam-level-3.svg",
+      "checksPassed": 23,
+      "checksTotal": 23
+    }
+  ],
+  "trailblazer": "nvuillam"
+}
