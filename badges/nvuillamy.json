@@ -24,7 +24,9 @@
       ],
       "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillamy-level-3.svg",
       "checksPassed": 23,
-      "checksTotal": 23
+      "checksTotal": 23,
+      "bannerImage": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/banner-level-3.svg",
+      "superbadge": true
     }
   ],
   "trailblazer": "nvuillamy",

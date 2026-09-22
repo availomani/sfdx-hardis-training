@@ -142,8 +142,45 @@ for (const file of pages) {
   }
 }
 
+// The badge records are read by other sites: the Trailhead Banner project asks
+// one for a Trailblazer username and draws what it points at. Both pictures of
+// each badge have to be there, the full one and the banner one.
+let badgeImages = 0;
+const recordsDir = path.join(SITE, "badges");
+if (fs.existsSync(recordsDir) && SITE_URL) {
+  for (const file of fs.readdirSync(recordsDir)) {
+    if (!file.endsWith(".json")) {
+      continue;
+    }
+    let record;
+    try {
+      record = JSON.parse(fs.readFileSync(path.join(recordsDir, file), "utf8"));
+    } catch (error) {
+      problems.push(`/badges/${file} is not readable JSON: ${error.message}`);
+      continue;
+    }
+    for (const badge of record.badges || []) {
+      for (const key of ["image", "bannerImage"]) {
+        const url = badge[key];
+        if (!url) {
+          problems.push(`/badges/${file} level ${badge.level} has no ${key}`);
+          continue;
+        }
+        if (!url.startsWith(SITE_URL)) {
+          problems.push(`/badges/${file} -> ${url} (${key} is not on this site)`);
+          continue;
+        }
+        badgeImages++;
+        if (!fs.existsSync(path.join(SITE, url.slice(SITE_URL.length)))) {
+          problems.push(`/badges/${file} -> ${url} (${key}, no such file)`);
+        }
+      }
+    }
+  }
+}
+
 console.log(
-  `${pages.length} page(s), ${references} local asset reference(s), ${links_checked} internal link(s), ${cards} share card(s).`
+  `${pages.length} page(s), ${references} local asset reference(s), ${links_checked} internal link(s), ${cards} share card(s), ${badgeImages} badge image(s) in records.`
 );
 
 if (problems.length > 0) {

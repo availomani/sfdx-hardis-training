@@ -9,8 +9,9 @@
  * until this runs. Nothing else changes: the records, the file names and the
  * URLs they publish stay exactly as they were, only the pictures are rewritten.
  *
- * It also redraws what is made of those badges: the card a share of a badge page
- * shows, the card of the course, and the icon of the site. Run it after any
+ * It also redraws what is made of those badges: the banner version of each
+ * level, the card a share of a badge page shows, the card of the course, and the
+ * icon of the site. Run it after any
  * template change, together with scripts/badges/examples.mjs, which does the
  * same for the three examples the home page shows.
  */
@@ -19,6 +20,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { renderSvg } from "./badge-svg.mjs";
 import { writeCards, writeIcon } from "./social.mjs";
+import { stampRecords, writeBanners } from "./banners.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BADGES = path.resolve(HERE, "..", "..", "badges");
@@ -51,6 +53,12 @@ for (const file of fs.readdirSync(BADGES)) {
   }
 }
 console.log(`${count} badge image(s) redrawn.`);
+
+for (const file of writeBanners()) {
+  console.log(file);
+}
+const stamped = stampRecords();
+console.log(`Banner badges redrawn, ${stamped.length} record(s) updated.`);
 
 console.log(`Icon: ${writeIcon()}`);
 console.log("Cards:");

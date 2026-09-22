@@ -35,6 +35,7 @@ import { fileURLToPath } from "url";
 import { parseArgs } from "../lib/util.mjs";
 import { LEVELS, renderSvg } from "./badge-svg.mjs";
 import { writeCardFor } from "./social.mjs";
+import { bannerUrl, writeBanners } from "./banners.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
@@ -178,6 +179,11 @@ record.badges.push({
     { type: "ClaimIssue", url: args.issue ? `https://github.com/${UPSTREAM}/issues/${args.issue}` : null }
   ].filter((item) => item.url),
   image: `${SITE}/badges/img/${key}-level-${level}.svg`,
+  // The same award drawn for a Trailhead banner: one file per level, shared by
+  // every holder, because nothing in it is personal. See banners.mjs.
+  bannerImage: bannerUrl(level),
+  // Release Manager sits on top of the other two, which is what a superbadge is
+  superbadge: definition.superbadge === true,
   checksPassed: audit.passed,
   checksTotal: audit.total
 });
@@ -188,6 +194,10 @@ fs.writeFileSync(recordPath, JSON.stringify(record, null, 2) + "\n", "utf8");
 // record on every site build, once per language, so a badge claimed before a
 // language existed gains its page in it without anybody touching the claim, and
 // the words of that page live with the other translations, in i18n/<locale>.json.
+
+// The three banner badges, in case a level was added or the template changed
+// since the last claim. No browser needed: they are SVG like the badge itself.
+writeBanners();
 
 // The card a share of the badge page shows. Best effort on purpose: it needs a
 // browser, and a claim must not fail because one could not be installed. When it
