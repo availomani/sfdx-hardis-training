@@ -3,6 +3,33 @@
   "badges": [
     {
       "type": "Achievement",
+      "level": 1,
+      "name": "sfdx-hardis Contributor Basics",
+      "description": "Delivers a User Story through a Pull Request, end to end.",
+      "issuer": {
+        "name": "Cloudity",
+        "url": "https://cloudity.com",
+        "course": "https://hardisgroupcom.github.io/sfdx-hardis-training"
+      },
+      "issuedOn": "2026-09-22",
+      "evidence": [
+        {
+          "type": "Repository",
+          "url": "https://github.com/nvuillam/sfdx-hardis-training.git"
+        },
+        {
+          "type": "ClaimIssue",
+          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/21"
+        }
+      ],
+      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillamy-level-1.svg",
+      "bannerImage": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/banner-level-1.svg",
+      "superbadge": false,
+      "checksPassed": 6,
+      "checksTotal": 6
+    },
+    {
+      "type": "Achievement",
       "level": 3,
       "name": "sfdx-hardis Release Manager",
       "description": "Owns the pipeline, the releases, the hotfixes and the monitoring.",
