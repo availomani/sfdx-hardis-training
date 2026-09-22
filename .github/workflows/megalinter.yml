@@ -3,10 +3,14 @@
 # More info at https://megalinter.io
 name: Mega-Linter
 on:
-  push: # Comment this line to trigger action only on pull-requests (not recommended if you don't pay for GH Actions)
-  # Trigger mega-linter at every push. Action will also be visible from Pull Requests to master
+  # `push` on every branch plus `pull_request` meant two runs on the same commit
+  # for any branch with an open Pull Request. Both apply fixes and both hold
+  # contents:write, so they raced on the checkout and one died with "your local
+  # changes would be overwritten", a red cross with nothing behind it.
+  push:
+    branches: [main]
   pull_request:
-    branches: [master, main]
+    branches: [main]
 
 env: # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
@@ -17,7 +21,10 @@ env: # Comment env block if you do not want to apply fixes
 permissions: read-all
 
 concurrency:
-  group: ${{ github.ref }}-${{ github.workflow }}
+  # Keyed on the branch, not on github.ref, which is refs/heads/<branch> for a
+  # push and refs/pull/<n>/merge for a pull_request: two names for one commit
+  # put the two runs in different groups and neither cancelled the other.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:

@@ -88,7 +88,8 @@ La première ligne sous l'en-tête indique **Automatically selected target branc
 `integration` comme seule branche qu'un contributeur a le droit de cibler, dans
 `availableTargetBranches`. Le [Lab 3.1](../level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md) ajoute `preprod`, là où démarrent les correctifs urgents, et à
 partir de là la commande demande, en proposant les deux. Sous cette ligne, la première vraie question
-attend déjà, avec ses deux réponses **(2)** et **(3)** : l'étape suivante parle d'elles.
+attend déjà. Deux de ses réponses, **(2)** et **(3)**, sont celles entre lesquelles vous choisissez :
+l'étape suivante parle d'elles.
 
 ![La première question de New User Story, sous la ligne qui nomme la branche cible](../../_assets/annotated/vscode/work-new-story-type.png)
 
@@ -101,6 +102,10 @@ suivante le relit.
 improvement** **(2)** : US-014 ajoute quelque chose qui n'était pas là. **Fix: correct something that
 is broken** **(3)** sert à corriger quelque chose de déjà livré. Les deux réponses sont formulées par
 ce projet, dans `branchPrefixChoices`.
+
+La troisième réponse, **Retrofit**, est celle du release manager. Elle fait redescendre un hotfix de
+production dans le pipeline, et le [Lab 3.7](../level-3-release-manager/3-7-hotfix-and-retrofit.md)
+est l'endroit où elle sert. Ici, n'y touchez pas.
 
 La réponse devient la première partie du nom de votre branche, `features/` ou `fix/`, pour que
 quiconque regarde la liste des branches voie d'un coup d'œil quel genre de travail est en cours.

@@ -80,12 +80,14 @@ sur le point d'y ajouter.
 | Help Text      | `Ask the planner if this is empty.`                           |
 | Required       | **non**                                                       |
 
-Sur l'écran de sécurité au niveau des champs, laissez tous les profils décochés et cliquez sur
-**Next**. Vous allez accorder ce champ par un permission set, pas par un profil, et le [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
+L'écran de sécurité au niveau des champs arrive avec **Visible** déjà coché pour presque tous les
+profils. Décochez-les : la case dans l'en-tête de la colonne **Visible** bascule toute la colonne,
+donc cliquez une fois pour tout cocher et une seconde fois pour ne rien laisser coché. Cliquez
+ensuite sur **Next**. Vous allez accorder ce champ par un permission set, pas par un profil, et le [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
 explique pourquoi cette distinction compte plus qu'il n'y paraît.
 
-Sur l'écran de présentation de page, cochez **Installation Layout** pour que le champ apparaisse sur
-l'enregistrement.
+Sur l'écran de présentation de page, **Installation Layout** est déjà coché, et c'est ce qui met le
+champ sur l'enregistrement. Laissez-le tel quel.
 
 Cliquez sur **Save**.
 

@@ -256,8 +256,15 @@ That is one full delivery loop. Every story for the rest of your life on this pr
 ## If it goes wrong
 
 **The checks never start.**
-Actions are still disabled on your fork (`github.com/my-username/sfdx-hardis-training`). Run **Training: Level 1 > Set up my training environment**
-again: it turns them on, and tells you what to click if GitHub will not let it.
+Actions are still disabled on your fork (`github.com/my-username/sfdx-hardis-training`). GitHub hides
+that switch behind a banner no command can reach: open the **Actions** tab of your fork and click
+**I understand my workflows, go ahead and enable them**. Re-running **Set up my training
+environment** will not do it for you, because there is no API behind that banner.
+
+Your branch was pushed while they were off, so nothing ran on it. **Push it again**, with one more
+commit on the branch, and both checks start. Reopening the Pull Request is not enough on its own:
+that re-runs the deployment check, while Mega-Linter runs on the push, and the merge stays blocked
+on the check that never came.
 
 **The check fails at authentication:** *No authentication found for org integration*.
 The secret is missing, misnamed, or truncated. It must be named exactly

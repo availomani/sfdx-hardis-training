@@ -22,10 +22,12 @@
           "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/8"
         }
       ],
-      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillam-level-3.svg",
+      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillamy-level-3.svg",
       "checksPassed": 23,
       "checksTotal": 23
     }
   ],
-  "trailblazer": "nvuillam"
+  "trailblazer": "nvuillamy",
+  "name": "Nicolas Vuillamy",
+  "trailblazerName": "Nicolas Vuillamy"
 }

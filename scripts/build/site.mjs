@@ -12,7 +12,8 @@
  *   site-theme/**                  -> site-src/theme/**
  *   BACKLOG.md                     -> site-src/BACKLOG.md
  *   training-universe.json stories -> site-src/BACKLOG/US-nnn.md and US-nnn.json
- *   badges/<handle>.md             -> site-src/badges/<handle>.md
+ *   badges/<trailblazer>.md        -> site-src/badges/<trailblazer>.md
+ *   badges/<trailblazer>.json      -> site-src/badges/<trailblazer>.json (read by other sites)
  *
  *   node scripts/build/site.mjs
  */
@@ -301,14 +302,65 @@ for (const name of fs.readdirSync(path.join(ROOT, "labs"))) {
 const badgesDir = path.join(ROOT, "badges");
 const badgePages = copyTree(badgesDir, path.join(OUT, "badges"), (name) => name.endsWith(".md") && !name.startsWith("_"));
 copyTree(path.join(badgesDir, "img"), path.join(OUT, "badges", "img"), (name) => name.endsWith(".svg"));
+// The records are published as they are, at /badges/<trailblazer>.json, so that
+// anything holding a Trailblazer username can ask what that person earned with
+// one GET. The Trailhead Banner project is the reason this exists. GitHub Pages
+// serves them with Access-Control-Allow-Origin: *, so a browser can read them.
+const badgeRecords = copyTree(badgesDir, path.join(OUT, "badges"), (name) => name.endsWith(".json") && !name.startsWith("_"));
 
-const handles = fs.existsSync(badgesDir)
-  ? fs
-    .readdirSync(badgesDir)
-    .filter((name) => name.endsWith(".json"))
-    .map((name) => name.replace(/\.json$/, ""))
-    .sort()
-  : [];
+// One row per badge holder, read from the records the claim wrote. The name and
+// the Trailblazer username are stored there on purpose: the site build never
+// calls the Trailblazer API, so a build is not at the mercy of it being up, and
+// a badge keeps reading right if a profile later goes private.
+const holders = (fs.existsSync(badgesDir)
+  ? fs.readdirSync(badgesDir).filter((name) => name.endsWith(".json"))
+  : []
+)
+  .map((file) => {
+    // The file name is the Trailblazer username: it keys the page, the record
+    // and the images. The GitHub handle is inside, as the recipient.
+    const key = file.replace(/\.json$/, "");
+    let record = {};
+    try {
+      record = JSON.parse(fs.readFileSync(path.join(badgesDir, file), "utf8"));
+    } catch (error) {
+      console.warn(`badges/${file} could not be read, listing it by its key: ${error.message}`);
+    }
+    const badges = Array.isArray(record.badges) ? record.badges : [];
+    const highest = badges.reduce((best, badge) => (best === null || badge.level > best.level ? badge : best), null);
+    const trimmed = (value) => (typeof value === "string" && value.trim() ? value.trim() : null);
+    return {
+      key,
+      // A record written before names were stored has only its key
+      name: trimmed(record.name) || key,
+      recipient: trimmed(record.recipient),
+      trailblazer: trimmed(record.trailblazer) || key,
+      highest
+    };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }) || a.key.localeCompare(b.key));
+
+const holderRows = [
+  "| | Name | Highest badge | GitHub | Trailblazer |",
+  "|---|---|---|---|---|",
+  ...holders.map((holder) => {
+    // An <img> and not markdown: the badge is drawn 320 square, and a table cell
+    // wants a thumbnail. Plain HTML sizes it without depending on an extension.
+    const image = holder.highest
+      ? `<img src="img/${holder.key}-level-${holder.highest.level}.svg" alt="${holder.highest.name}" width="72"/>`
+      : "";
+    const trailblazer = holder.trailblazer
+      ? `[${holder.trailblazer}](https://www.salesforce.com/trailblazer/${holder.trailblazer})`
+      : "";
+    const github = holder.recipient
+      ? `[@${holder.recipient}](https://github.com/${holder.recipient})`
+      : "";
+    return (
+      `| ${image} | [${holder.name}](${holder.key}.md) | ${holder.highest ? holder.highest.name : ""} ` +
+      `| ${github} | ${trailblazer} |`
+    );
+  })
+].join("\n");
 
 const badgeIndex = [
   frontMatter({
@@ -321,9 +373,7 @@ const badgeIndex = [
   "It is a badge, not a certification: there is no exam here. What it says is that a job read the",
   "person's public repository and found the work.",
   "",
-  handles.length === 0
-    ? "Nobody has claimed a badge yet. Be the first."
-    : handles.map((handle) => `- [${handle}](${handle}.md)`).join("\n"),
+  holders.length === 0 ? "Nobody has claimed a badge yet. Be the first." : holderRows,
   "",
   "## Claim yours",
   "",
@@ -337,9 +387,23 @@ const badgeIndex = [
   `You can also [open a claim issue](https://github.com/${universe.course.upstreamRepo}/issues/new/choose) by hand,`,
   "with your level, your Trailblazer username, the URL of your public fork and the receipt lines",
   "printed by **Check my work**.",
+  "",
+  "## Reading a badge from another site",
+  "",
+  "Every badge is also published as JSON, keyed by Trailblazer username, so a tool that knows",
+  "somebody's Trailblazer username can ask what they earned here without an index or an API key:",
+  "",
+  "```",
+  `${universe.course.site}/badges/<trailblazer-username>.json`,
+  "```",
+  "",
+  "It answers `404` when that person has no badge. The document holds the recipient's GitHub handle,",
+  "their name, and one entry per badge with its level, its date, the number of checks that passed and",
+  "the URL of its image. These files are served with `Access-Control-Allow-Origin: *`, so a page in a",
+  "browser can read them directly.",
   ""
 ].join("\n");
 fs.mkdirSync(path.join(OUT, "badges"), { recursive: true });
 fs.writeFileSync(path.join(OUT, "badges", "index.md"), badgeIndex, "utf8");
 
-console.log(`site-src assembled: ${pages} lab page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePages} badge page(s), ${locales.length} locale(s)`);
+console.log(`site-src assembled: ${pages} lab page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePages} badge page(s), ${badgeRecords} badge record(s), ${locales.length} locale(s)`);

@@ -80,11 +80,14 @@ to it.
 | Help Text      | `Ask the planner if this is empty.`                           |
 | Required       | **no**                                                        |
 
-On the field-level security screen, leave every profile unticked and click **Next**. You are going
-to grant this through a permission set, not a profile, and [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) is about why that
+The field-level security screen arrives with **Visible** already ticked for nearly every profile.
+Clear them: the checkbox in the **Visible** column header toggles the whole column, so click it once
+to tick everything and again to leave nothing ticked. Then click **Next**. You are going to grant
+this through a permission set, not a profile, and [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) is about why that
 distinction matters more than it looks.
 
-On the page layout screen, tick **Installation Layout** so the field appears on the record.
+On the page layout screen, **Installation Layout** is already ticked, which is what puts the field on
+the record. Leave it.
 
 Click **Save**.
 

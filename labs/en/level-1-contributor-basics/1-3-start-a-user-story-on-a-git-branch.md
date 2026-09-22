@@ -82,8 +82,8 @@ The first line under the header reads **Automatically selected target branch is 
 **(1)**. It is not a question, because there is nothing to choose: this project declares
 `integration` as the only branch a contributor may target, in `availableTargetBranches`. [Lab 3.1](../level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md)
 adds `preprod`, where urgent fixes start, and from then on the command asks, offering both.
-Under that line, the first real question already waits, with its two answers **(2)** and **(3)**:
-the next step is about them.
+Under that line, the first real question already waits. Two of its answers, **(2)** and **(3)**, are
+the ones you choose between: the next step is about them.
 
 ![The first question of New User Story, under the line naming the target branch](../../_assets/annotated/vscode/work-new-story-type.png)
 
@@ -96,6 +96,10 @@ step reads it back.
 improvement** **(2)**: US-014 adds something that was not there. **Fix: correct something that is
 broken** **(3)** is for correcting something already delivered. Both answers are worded by this
 project, in `branchPrefixChoices`.
+
+The third answer, **Retrofit**, is the release manager's. It brings a production hotfix back down
+into the pipeline, and [Lab 3.7](../level-3-release-manager/3-7-hotfix-and-retrofit.md) is where it
+is used. Leave it alone here.
 
 The answer becomes the first part of your branch name, `features/` or `fix/`, so anybody looking
 at the list of branches can see at a glance what kind of work is in flight.

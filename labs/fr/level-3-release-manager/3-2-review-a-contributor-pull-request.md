@@ -46,7 +46,7 @@ qu'on ne peut pas automatiser. Une revue après le merge est un audit : la modif
 
 ### 1. Recevoir la Pull Request de Mariia
 
-**Training: Level 3** **(1)** > **Simulate my teammates**, depuis la Welcome page, et choisissez
+**Training: Level 3** > **Simulate my teammates**, depuis la Welcome page, et choisissez
 **US-052 The Installation layout in two columns**.
 
 ![Le menu Training du niveau 3 sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)

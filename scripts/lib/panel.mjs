@@ -37,6 +37,26 @@ export function isActive() {
  * the acknowledgement does not arrive: in every one of those the caller keeps
  * its console output and its terminal questions.
  */
+/**
+ * What the panel calls each command, so a learner reads the thing they clicked
+ * rather than `training.mjs init`. The command line stays one hover away.
+ *
+ * Same wording as the Training menu entries in config/.sfdx-hardis.yml: the
+ * menu and the running command have to agree, or clicking one and reading the
+ * other is a puzzle.
+ */
+const LABELS = {
+  init: "Set up my training environment",
+  status: "Where am I?",
+  seed: "Set up one of my training orgs",
+  check: "Check my work",
+  claim: "Claim my badge",
+  simulate: "Simulate my teammates",
+  publish: "Publish my pipeline configuration",
+  reset: "Reset this level",
+  teardown: "Clean up a training org"
+};
+
 export async function connect(command) {
   if (!ADDRESS || typeof WebSocket === "undefined") {
     return false;
@@ -119,6 +139,11 @@ export async function connect(command) {
   if (ready !== "ui-lwc") {
     close("skipped");
     return false;
+  }
+  // Optional, and only understood by a recent extension: an older one ignores
+  // the event and keeps showing the command line, which is what it did before.
+  if (LABELS[command]) {
+    send({ event: "commandLabel", label: LABELS[command] });
   }
   return true;
 }

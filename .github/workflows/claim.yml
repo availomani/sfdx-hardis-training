@@ -14,6 +14,9 @@
 #     repository cannot exhaust the runner.
 #  5. Serialise with a concurrency group. Two claims landing together both commit
 #     to main, and without serialisation the second push is rejected.
+#  6. Ask for the site build after committing a badge. A push made with
+#     GITHUB_TOKEN never triggers a workflow, so nothing else will, and the badge
+#     page this workflow links to would not exist.
 #
 # The learner's code is never checked out into the workspace: it is cloned into a
 # temporary directory and read. That is what keeps this simple, and it is why the
@@ -23,7 +26,13 @@ name: Audit a badge claim
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    # `labeled` matters: the issue form asks for the badge-claim label, and GitHub
+    # drops a label the repository does not define, silently. A claim that arrives
+    # without it is skipped by the job condition below and nobody is ever told.
+    # With `labeled`, adding the label by hand re-runs the audit.
+    # The label itself must exist in the repository. It is not versioned with this
+    # file, so if badge claims stop being audited, check that first.
+    types: [opened, edited, reopened, labeled]
 
 permissions: read-all
 
@@ -40,6 +49,9 @@ jobs:
     permissions:
       contents: write
       issues: write
+      # To start the site build below. A push made with GITHUB_TOKEN never
+      # triggers a workflow, so the badge has to ask for the build explicitly.
+      actions: write
     steps:
       - name: Checkout the training repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -66,7 +78,10 @@ jobs:
         run: |
           printf '%s\n' "$REASON" > /tmp/comment.md
           gh issue comment "$ISSUE" --body-file /tmp/comment.md
-          gh issue edit "$ISSUE" --add-label needs-work
+          # `|| true`: the label is not versioned with this file. A repository
+          # that does not define it used to fail this step AFTER the comment was
+          # posted, so the learner was told what to fix and the run went red.
+          gh issue edit "$ISSUE" --add-label needs-work || true
           exit 0
 
       # Rule 4: shallow, blob-filtered, size-capped, time-capped.
@@ -110,7 +125,7 @@ jobs:
             echo "_Nothing was read from your account, and no credential was used._"
           } > /tmp/comment.md
           gh issue comment "$ISSUE" --body-file /tmp/comment.md
-          gh issue edit "$ISSUE" --add-label needs-work
+          gh issue edit "$ISSUE" --add-label needs-work || true
 
       # Rule 1: only this repository's code runs, and it only reads the clone.
       - name: Audit
@@ -136,18 +151,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           ISSUE: ${{ github.event.issue.number }}
           TRAILBLAZER: ${{ steps.claim.outputs.trailblazer }}
+          TRAILBLAZER_NAME: ${{ steps.claim.outputs.trailblazer_name }}
           HANDLE: ${{ steps.claim.outputs.handle }}
         run: |
-          # The badge shows the GitHub display name; an account without one shows its login
+          # The name on the badge: the Trailblazer profile first, read when the
+          # claim was validated, then the GitHub display name, then the handle.
           FULL_NAME=$(gh api "users/$HANDLE" --jq '.name // ""' 2>/dev/null || true)
-          node scripts/badges/render.mjs --audit /tmp/audit.json --issue "$ISSUE" --trailblazer "$TRAILBLAZER" --name "$FULL_NAME"
+          node scripts/badges/render.mjs --audit /tmp/audit.json --issue "$ISSUE" \
+            --trailblazer "$TRAILBLAZER" --trailblazer-name "$TRAILBLAZER_NAME" --name "$FULL_NAME"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add badges
           if git diff --cached --quiet; then
             echo "Nothing changed in badges/"
           else
-            git commit -m "badge: level $(node -p "require('/tmp/audit.json').level") for $(node -p "require('/tmp/audit.json').handle")"
+            git commit -m "badge: level $(node -p "require('/tmp/audit.json').level") for $TRAILBLAZER ($(node -p "require('/tmp/audit.json').handle"))"
             # Rule 5: another claim may have committed while this one ran
             pushed=false
             for attempt in 1 2 3 4 5; do
@@ -163,10 +181,21 @@ jobs:
               exit 1
             fi
           fi
+          # GitHub does not start a workflow from a push made with GITHUB_TOKEN,
+          # so the commit above never reached the site build and the badge page
+          # linked below stayed a 404 until somebody happened to push to main.
+          # workflow_dispatch is the documented exception to that rule.
+          if ! gh workflow run "Build and publish the training site" --ref "${GITHUB_REF_NAME}"; then
+            echo "The site build could not be started: the badge is committed, so the page appears on the next build."
+          fi
           {
             cat /tmp/report.md
             echo
-            echo "Your badge page: https://hardisgroupcom.github.io/sfdx-hardis-training/badges/$(node -p "require('/tmp/audit.json').handle")/"
+            # Keyed by the Trailblazer username, not the GitHub handle
+            echo "Your badge page: https://hardisgroupcom.github.io/sfdx-hardis-training/badges/$TRAILBLAZER/"
+            echo
+            echo "It is also readable as JSON, which is what lets other sites show this badge:"
+            echo "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/$TRAILBLAZER.json"
           } > /tmp/comment.md
           gh issue comment "$ISSUE" --body-file /tmp/comment.md
           gh issue edit "$ISSUE" --remove-label needs-work || true
@@ -179,4 +208,4 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}
         run: |
           gh issue comment "$ISSUE" --body-file /tmp/report.md
-          gh issue edit "$ISSUE" --add-label needs-work
+          gh issue edit "$ISSUE" --add-label needs-work || true

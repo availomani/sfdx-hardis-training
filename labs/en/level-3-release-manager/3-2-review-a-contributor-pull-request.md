@@ -46,7 +46,7 @@ every org after it.
 
 ### 1. Receive Mariia's Pull Request
 
-**Training: Level 3** **(1)** > **Simulate my teammates**, from the Welcome page, and pick **US-052
+**Training: Level 3** > **Simulate my teammates**, from the Welcome page, and pick **US-052
 The Installation layout in two columns**.
 
 ![The Level 3 training menu on the Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)

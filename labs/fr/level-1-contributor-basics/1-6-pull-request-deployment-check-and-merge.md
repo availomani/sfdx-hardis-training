@@ -269,9 +269,16 @@ projet, sera cette boucle.
 ## En cas de problème
 
 **Les contrôles ne démarrent jamais.**
-Actions est encore désactivé sur votre fork (`github.com/my-username/sfdx-hardis-training`).
-Relancez **Training: Level 1 > Set up my training environment** : il les active, et vous dit sur quoi
-cliquer si GitHub ne le laisse pas faire.
+Actions est encore désactivé sur votre fork (`github.com/my-username/sfdx-hardis-training`). GitHub
+cache cet interrupteur derrière une bannière qu'aucune commande ne peut atteindre : ouvrez l'onglet
+**Actions** de votre fork et cliquez sur **I understand my workflows, go ahead and enable them**.
+Relancer **Set up my training environment** ne le fera pas à votre place : il n'y a pas d'API
+derrière cette bannière.
+
+Votre branche a été poussée pendant qu'ils étaient désactivés, donc rien ne s'est exécuté dessus.
+**Poussez-la à nouveau**, avec un commit de plus sur la branche, et les deux contrôles démarrent.
+Rouvrir la Pull Request ne suffit pas : cela relance le contrôle de déploiement, alors que
+Mega-Linter s'exécute au push, et le merge reste bloqué sur le contrôle qui n'est jamais venu.
 
 **Le contrôle échoue à l'authentification :** *No authentication found for org integration*.
 Le secret manque, est mal nommé, ou est tronqué. Il doit s'appeler exactement

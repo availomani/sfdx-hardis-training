@@ -12,12 +12,53 @@ import {
   ROOT, c, title, info, ok, warn, fail, abort, universe, readProgress, writeProgress,
   gitOut, repoSlug, githubHandle, run, select, input, confirm, ensureGh, openUrl
 } from "../lib/util.mjs";
+import { fetchTrailblazerProfile } from "../badges/trailblazer.mjs";
 import { makeContext, rulesForLevel } from "../verify/rules.mjs";
 import { runRules } from "../verify/check.mjs";
 
 /** The repository a level asks you to star, and what it is. */
 function starOf(levelDef) {
   return levelDef.star || null;
+}
+
+/**
+ * The Trailblazer username, checked against the real profile before the claim
+ * is opened.
+ *
+ * The suggestion is the GitHub handle, which for most people is not their
+ * Trailblazer username: accepting it unchecked is how a badge ends up linking to
+ * a profile that does not exist. The audit refuses such a claim anyway, so
+ * catching it here saves a round trip through an issue.
+ *
+ * Three tries, then it goes through: an API that answers "no" for a name that is
+ * really there must not be able to stop somebody claiming what they earned, and
+ * the audit says the same thing again with more room to explain it.
+ */
+async function askTrailblazer(suggestion) {
+  let value = suggestion;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const answer = (await input("\n  Your Trailblazer username, shown on your badge page:", value)).trim();
+    const profile = await fetchTrailblazerProfile(answer);
+    if (profile.state === "public") {
+      info(c.dim(`    Trailhead profile: ${profile.name || answer}`));
+      return answer;
+    }
+    if (profile.state !== "missing") {
+      // private, or the API could not be reached: neither is the learner's problem
+      return answer;
+    }
+    warn(`  No public Trailblazer profile answers to "${answer}".`);
+    info("  It is the last part of your own profile URL, not your email and not your");
+    info("  Salesforce username:");
+    info(c.dim("    https://www.salesforce.com/trailblazer/mytrailblazerusername"));
+    // The same answer coming back means nothing is typing: stop asking.
+    if (answer === value || attempt === 3) {
+      warn("  Carrying on with it. The audit checks this too, and will explain it there.");
+      return answer;
+    }
+    value = answer;
+  }
+  return value;
 }
 
 /** true when the signed-in account stars owner/repo. 204 means yes, 404 means no. */
@@ -149,10 +190,7 @@ export default async function claim(args) {
 
   // -------------------------------------------------------------- the fields
   const progress = readProgress();
-  const trailblazer = await input(
-    "\n  Your Trailblazer username, shown on your badge page:",
-    progress.trailblazer || githubHandle() || ""
-  );
+  const trailblazer = await askTrailblazer(progress.trailblazer || githubHandle() || "");
   progress.trailblazer = trailblazer;
   writeProgress(progress);
 

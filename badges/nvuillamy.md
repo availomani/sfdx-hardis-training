@@ -1,14 +1,15 @@
 ---
-title: nvuillam
+title: Nicolas Vuillamy
 ---
 
-# Badges earned by nvuillam
+# Badges earned by Nicolas Vuillamy
 
-Trailblazer profile: [nvuillam](https://www.salesforce.com/trailblazer/nvuillam)
+GitHub: [@nvuillam](https://github.com/nvuillam)
+<br/>Trailblazer: [nvuillamy](https://www.salesforce.com/trailblazer/nvuillamy)
 
-| | Badge | Awarded | Verified |
-|---|---|---|---|
-| ![sfdx-hardis Release Manager](img/nvuillam-level-3.svg) | **sfdx-hardis Release Manager** | 2026-09-22 | 23/23 checks |
+|                                                           | Badge                           | Awarded    | Verified     |
+|-----------------------------------------------------------|---------------------------------|------------|--------------|
+| ![sfdx-hardis Release Manager](img/nvuillamy-level-3.svg) | **sfdx-hardis Release Manager** | 2026-09-22 | 23/23 checks |
 
 ## What these mean
 
