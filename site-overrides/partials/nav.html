@@ -5,16 +5,18 @@
   renders every language in the same menu: a French reader had to scroll past
   the whole English course to reach "Niveau 1". This copy renders only the
   entries that belong to the language of the page, plus the entries that belong
-  to no language in particular (Backlog, Badges), so each language reads as a
-  course of its own. Changing language is the translate widget in the header,
+  to no language in particular, so each language reads as a course of its own.
+  Changing language is the picker in the header,
   which lands on the same page in the other language: see
   site-overrides/partials/alternate.html.
 
   The language of a page, and the home page of that language, come from
   partials/course-locale.html. A level has no front matter of its own, so it
   takes the language of its first page, which is its "Start here". An entry with
-  no language at all is shown in every menu: the backlog and the badges are
-  written once, in English, and they belong to all of them.
+  no language at all is shown in every menu, which today is the link to the
+  sfdx-hardis documentation: it is another site, written once, in English. The
+  backlog and the badges were in that case once; they are generated per language
+  now and carry one like everything else.
 
   This is a copy of the Zensical partial of the same name, which says not to
   edit it: custom_dir is how a theme partial is replaced, and the copy is
@@ -32,11 +34,13 @@
 {% if "toc.integrate" in features %}
   {% set class = class ~ " md-nav--integrated" %}
 {% endif %}
-{#- The language and the root of the site travel with the menu, because the menu
-    is inside the element the theme swaps on instant navigation and the header is
-    not. site-theme/javascripts/language-switch.js reads them from here to keep
-    the translate widget pointing at the page being read. -#}
-<nav class="{{ class }}" aria-label="{{ lang.t('nav') }}" data-md-level="0" data-course-lang="{{ page_lang }}" data-course-base="{{ nav.homepage.url | url }}">
+{#- The language of the page, the root of the site and where this page is read
+    in each language travel with the menu, because the menu is inside the element
+    the theme swaps on instant navigation and the header is not.
+    site-theme/javascripts/language-switch.js reads them from here to keep the
+    language picker pointing at the page being read. -#}
+{% set alternates = (page.meta | d({}, true)).alternates | d({}, true) %}
+<nav class="{{ class }}" aria-label="{{ lang.t('nav') }}" data-md-level="0" data-course-lang="{{ page_lang }}" data-course-base="{{ nav.homepage.url | url }}"{% for alt in config.extra.languages | d([]) %} data-course-alt-{{ alt.lang }}="{{ alternates[alt.lang] | d('') }}"{% endfor %}>
   <label class="md-nav__title" for="__drawer">
     <a href="{{ course.home(page) | trim | url }}" title="{{ config.site_name | e }}" class="md-nav__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}

@@ -448,3 +448,39 @@ body.sfh-lightbox-open {
   background-color: #C2B8D9;
   color: #C2B8D9;
 }
+
+/* The language picker, on flags.
+ *
+ * The header button carries the flag of the page being read, and each entry of
+ * the list carries its own, so a reader recognises the language before reading
+ * the name. The button is the theme's, minus the icon sizing it applies to an
+ * SVG glyph, because what sits in it here is a picture.
+ */
+.md-header__button--flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.2rem;
+  padding: 0.4rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.md-select__flag {
+  width: 1.2rem;
+  height: 0.6rem;
+  border-radius: 0.05rem;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 15%);
+  object-fit: cover;
+}
+
+.md-select__flag--current {
+  width: 1.1rem;
+  height: 0.55rem;
+}
+
+.md-select__link .md-select__flag {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}

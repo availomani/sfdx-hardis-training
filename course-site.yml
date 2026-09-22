@@ -47,7 +47,12 @@ theme:
     - search.highlight
     - toc.follow
   logo: theme/images/cloudity-text-logo-white.svg
-  favicon: theme/images/cloudity-logo.svg
+  # The level 3 hexagon with the Cloudity mark inside it, generated from the
+  # colours of badge-svg.mjs by scripts/badges/social.mjs, so the icon follows
+  # the badges the day the ramp changes. A favicon is 16px: nothing else of the
+  # badge survives, and the gold rim is what keeps it visible on a white tab
+  # strip and on a dark one.
+  favicon: theme/images/badge-mark.svg
   palette:
     - scheme: default
       primary: custom
@@ -167,13 +172,20 @@ extra:
   # Renaming the key is what leaves the click alone. Checked by
   # scripts/verify/check-nav.mjs, which fails if a rel=alternate link comes back,
   # and by scripts/verify/check-language-switch.mjs, which clicks the widget.
+  #
+  # The flag is what the picker shows, in the header and in its list, because a
+  # flag is read without reading. They are two plain SVG files of the theme, not
+  # emoji: Windows ships no flag glyphs and renders them as the two letters of
+  # the country code.
   languages:
     - name: English
       link: /sfdx-hardis-training/
       lang: en
+      flag: theme/images/flags/gb.svg
     - name: Français
       link: /sfdx-hardis-training/fr/
       lang: fr
+      flag: theme/images/flags/fr.svg
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/hardisgroupcom/sfdx-hardis
@@ -199,8 +211,9 @@ nav:
   # tree with the titles filled in, which is the file to read when a locale is
   # added or a lab renamed.
   #
-  # The backlog and the badges come last and are in no language: they are
-  # written once, in English, and they show at the end of every menu.
+  # The backlog and the badges are generated per language, so each course block
+  # ends with its own. The one entry in no language is the link to the
+  # sfdx-hardis documentation: another site, written once, in English.
   - Home: index.md
   - "Level 1 - Contributor basics":
       - Start here: en/level-1-contributor-basics/index.md
@@ -235,7 +248,8 @@ nav:
       - en/level-3-release-manager/3-9-generate-the-project-documentation.md
       - en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
   - Help: en/help.md
-  - Link map: en/link-map.md
+  - Backlog: BACKLOG.md
+  - Badges: badges/index.md
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
       - Commencer ici: fr/level-1-contributor-basics/index.md
@@ -270,7 +284,6 @@ nav:
       - fr/level-3-release-manager/3-9-generate-the-project-documentation.md
       - fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
   - Aide: fr/help.md
-  - Plan des liens: fr/link-map.md
+  - Backlog: fr/BACKLOG.md
+  - Badges: fr/badges/index.md
   - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/
-  - Backlog: BACKLOG.md
-  - Badges: badges/index.md

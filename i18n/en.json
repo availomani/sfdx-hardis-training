@@ -1,0 +1,110 @@
+{
+  "$comment": "The words of the pages this site generates: the backlog, a story, the badges index and a badge page. The labs are plain markdown under labs/<locale>/ and are not here. English is the reference: a locale is this file translated, plus the story, cast and level text of training-universe.json, which is written in English there. Read by scripts/lib/strings.mjs.",
+  "lang": "en",
+  "backlog": {
+    "title": "Helios Energy backlog: the User Stories of the course",
+    "description": "Every User Story of the Salesforce DevOps training with sfdx-hardis, with its acceptance criteria, its Git branch and the lab that delivers it.",
+    "heading": "Helios Energy backlog",
+    "intro": [
+      "The delivery team works in three-week iterations. Every story below is real work",
+      "for the `Helios Delivery` app, and every one of them is a lab in this course."
+    ],
+    "columns": ["Story", "Level", "Title", "Owner", "Branch"],
+    "inFull": "The stories in full",
+    "owner": "Owner",
+    "branch": "Branch",
+    "lab": "Lab",
+    "acceptance": "Acceptance criteria:",
+    "team": "The team",
+    "teamColumns": ["Who", "Role"]
+  },
+  "story": {
+    "owner": "Owner",
+    "branch": "Branch",
+    "deliveredIn": "Delivered in",
+    "acceptance": "Acceptance criteria:",
+    "backToBacklog": "All the stories of the backlog",
+    "labLink": "Lab {level}.{lab} - {title}"
+  },
+  "badges": {
+    "title": "Salesforce DevOps training badges",
+    "description": "The learners who finished a level of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",
+    "heading": "Badges",
+    "intro": [
+      "Everybody who finished a level of this course and claimed it.",
+      "",
+      "It is a badge, not a certification: there is no exam here. What it says is that a job read the",
+      "person's public repository and found the work."
+    ],
+    "columns": ["", "Name", "Highest badge", "GitHub", "Trailblazer"],
+    "nobody": "Nobody has claimed a badge yet. Be the first.",
+    "claim": {
+      "heading": "Claim yours",
+      "body": [
+        "In VS Code: Welcome page > **Training: Level N** > **Claim my badge**. It checks the whole level",
+        "on your machine first, then opens the claim form with everything already filled in, and you tick",
+        "the three boxes and submit.",
+        "",
+        "Each level also asks you to star the open source project it teaches, which the command offers to",
+        "do and the audit checks.",
+        "",
+        "You can also [open a claim issue]({claimUrl}) by hand,",
+        "with your level, your Trailblazer username, the URL of your public fork and the receipt lines",
+        "printed by **Check my work**."
+      ]
+    },
+    "readFromElsewhere": {
+      "heading": "Reading a badge from another site",
+      "intro": [
+        "Every badge is also published as JSON, keyed by Trailblazer username, so a tool that knows",
+        "somebody's Trailblazer username can ask what they earned here without an index or an API key:"
+      ],
+      "outro": [
+        "It answers `404` when that person has no badge. The document holds the recipient's GitHub handle,",
+        "their name, and one entry per badge with its level, its date, the number of checks that passed and",
+        "the URL of its image. These files are served with `Access-Control-Allow-Origin: *`, so a page in a",
+        "browser can read them directly."
+      ]
+    }
+  },
+  "badge": {
+    "heading": "Badges earned by {name}",
+    "github": "GitHub",
+    "trailblazer": "Trailblazer",
+    "columns": ["", "Badge", "Awarded", "Verified"],
+    "checks": "{passed}/{total} checks",
+    "meaning": {
+      "heading": "What these mean",
+      "repository": "the repository",
+      "fallbackRepository": "the learner's public repository",
+      "body": [
+        "Each badge was awarded by a job that cloned {repository}",
+        "and re-ran every check of the level against its actual content and history. A level 2 badge also",
+        "re-ran the level 1 checks, and a level 3 badge re-ran all three.",
+        "",
+        "What is verified is the work in the repository: the fields, the deployment actions, the resolved",
+        "conflicts, the pipeline configuration. What is **not** verified is the state of anybody's Salesforce",
+        "orgs. Nobody is asked for org credentials, and this is not an exam."
+      ]
+    },
+    "notCertification": {
+      "heading": "It is a badge, not a certification",
+      "body": [
+        "There is no exam and no accreditation here. Share this page under *Featured* on LinkedIn, or as a",
+        "course. Not under *Licenses & certifications*."
+      ]
+    },
+    "takeTheCourse": "Take the course",
+    "description": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",
+    "shareHeading": "Share it",
+    "shareText": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis",
+    "networks": {
+      "linkedin": "LinkedIn",
+      "x": "X",
+      "facebook": "Facebook",
+      "bluesky": "Bluesky",
+      "whatsapp": "WhatsApp",
+      "email": "Email"
+    }
+  }
+}

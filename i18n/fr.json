@@ -1,0 +1,284 @@
+{
+  "$comment": "Les pages générées par le site, en français : le backlog, une story, l'index des badges et une page de badge. S'y ajoute la traduction de ce que training-universe.json écrit en anglais : le pitch, les niveaux, les rôles et les User Stories. labs/en/ et i18n/en.json restent la référence. Lu par scripts/lib/strings.mjs.",
+  "lang": "fr",
+  "backlog": {
+    "title": "Backlog Helios Energy : les User Stories du cours",
+    "description": "Toutes les User Stories de la formation Salesforce DevOps avec sfdx-hardis, avec leurs critères d'acceptation, leur branch Git et le lab qui les livre.",
+    "heading": "Backlog Helios Energy",
+    "intro": [
+      "L'équipe de delivery travaille en itérations de trois semaines. Chaque story ci-dessous est du",
+      "vrai travail pour l'application `Helios Delivery`, et chacune est un lab de ce cours."
+    ],
+    "columns": ["Story", "Niveau", "Titre", "Responsable", "Branch"],
+    "inFull": "Les stories en détail",
+    "owner": "Responsable",
+    "branch": "Branch",
+    "lab": "Lab",
+    "acceptance": "Critères d'acceptation :",
+    "team": "L'équipe",
+    "teamColumns": ["Qui", "Rôle"]
+  },
+  "story": {
+    "owner": "Responsable",
+    "branch": "Branch",
+    "deliveredIn": "Livrée dans",
+    "acceptance": "Critères d'acceptation :",
+    "backToBacklog": "Toutes les stories du backlog",
+    "labLink": "Lab {level}.{lab} - {title}"
+  },
+  "badges": {
+    "title": "Badges de la formation Salesforce DevOps",
+    "description": "Les personnes qui ont terminé un niveau de la formation Salesforce DevOps gratuite avec sfdx-hardis, vérifiées par un job qui a lu leur repository public.",
+    "heading": "Badges",
+    "intro": [
+      "Toutes les personnes qui ont terminé un niveau de ce cours et l'ont réclamé.",
+      "",
+      "C'est un badge, pas une certification : il n'y a pas d'examen ici. Ce qu'il dit, c'est qu'un job a",
+      "lu le repository public de la personne et y a trouvé le travail."
+    ],
+    "columns": ["", "Nom", "Badge le plus élevé", "GitHub", "Trailblazer"],
+    "nobody": "Personne n'a encore réclamé de badge. Soyez la première personne.",
+    "claim": {
+      "heading": "Réclamer le vôtre",
+      "body": [
+        "Dans VS Code : page d'accueil > **Training: Level N** > **Claim my badge**. La commande vérifie",
+        "d'abord tout le niveau sur votre machine, puis ouvre le formulaire de réclamation déjà rempli ;",
+        "vous cochez les trois cases et vous validez.",
+        "",
+        "Chaque niveau vous demande aussi de mettre une étoile au projet open source qu'il enseigne, ce que",
+        "la commande propose de faire et que l'audit vérifie.",
+        "",
+        "Vous pouvez aussi [ouvrir une issue de réclamation]({claimUrl}) à la main,",
+        "avec votre niveau, votre nom d'utilisateur Trailblazer, l'URL de votre fork public et les lignes de",
+        "reçu affichées par **Check my work**."
+      ]
+    },
+    "readFromElsewhere": {
+      "heading": "Lire un badge depuis un autre site",
+      "intro": [
+        "Chaque badge est aussi publié en JSON, indexé par nom d'utilisateur Trailblazer : un outil qui",
+        "connaît ce nom peut demander ce que la personne a obtenu ici, sans index ni clé d'API :"
+      ],
+      "outro": [
+        "Il répond `404` quand la personne n'a pas de badge. Le document contient le handle GitHub de la",
+        "personne, son nom, et une entrée par badge avec son niveau, sa date, le nombre de vérifications",
+        "réussies et l'URL de son image. Ces fichiers sont servis avec `Access-Control-Allow-Origin: *`,",
+        "donc une page dans un navigateur peut les lire directement."
+      ]
+    }
+  },
+  "badge": {
+    "heading": "Badges obtenus par {name}",
+    "github": "GitHub",
+    "trailblazer": "Trailblazer",
+    "columns": ["", "Badge", "Obtenu le", "Vérifié"],
+    "checks": "{passed}/{total} vérifications",
+    "meaning": {
+      "heading": "Ce qu'ils veulent dire",
+      "repository": "le repository",
+      "fallbackRepository": "le repository public de la personne",
+      "body": [
+        "Chaque badge a été attribué par un job qui a cloné {repository}",
+        "et a rejoué toutes les vérifications du niveau sur son contenu et son historique réels. Un badge de",
+        "niveau 2 rejoue aussi les vérifications du niveau 1, et un badge de niveau 3 rejoue les trois.",
+        "",
+        "Ce qui est vérifié, c'est le travail dans le repository : les champs, les deployment actions, les",
+        "conflits résolus, la configuration du pipeline. Ce qui n'est **pas** vérifié, c'est l'état des orgs",
+        "Salesforce de qui que ce soit. Personne ne demande d'identifiants d'org, et ceci n'est pas un examen."
+      ]
+    },
+    "notCertification": {
+      "heading": "C'est un badge, pas une certification",
+      "body": [
+        "Il n'y a ici ni examen ni accréditation. Partagez cette page dans *Sélection* sur LinkedIn, ou comme",
+        "une formation suivie. Pas dans *Licences et certifications*."
+      ]
+    },
+    "takeTheCourse": "Suivre le cours",
+    "description": "{name} a obtenu le badge {badge} de la formation Salesforce DevOps gratuite avec sfdx-hardis, vérifié par un job qui a lu son repository public.",
+    "shareHeading": "Le partager",
+    "shareText": "{name} a obtenu le badge {badge} de la formation Salesforce DevOps gratuite avec sfdx-hardis",
+    "networks": {
+      "linkedin": "LinkedIn",
+      "x": "X",
+      "facebook": "Facebook",
+      "bluesky": "Bluesky",
+      "whatsapp": "WhatsApp",
+      "email": "E-mail"
+    }
+  },
+  "universe": {
+    "company": {
+      "pitch": "Helios Energy installe des panneaux solaires résidentiels en Europe du Sud. Les ventes tournent sur Salesforce, et les équipes de pose suivent chaque installation dans une application sur mesure appelée Helios Delivery."
+    },
+    "levels": {
+      "1": "Les bases du contributeur",
+      "2": "Contributeur avancé",
+      "3": "Release Manager"
+    },
+    "cast": {
+      "victor": {
+        "role": "Release manager. A quitté l'entreprise entre le niveau 2 et le niveau 3, et c'est pour cela que le pipeline est le vôtre maintenant."
+      },
+      "mariia": {
+        "role": "Contributrice senior. Merge avant vous, sur les fichiers que vous avez touchés."
+      },
+      "romain": {
+        "role": "Contributeur, travaille sur la partie devis de l'application."
+      },
+      "you": {
+        "name": "Vous",
+        "role": "Nouvelle recrue au niveau 1, contributeur de confiance au niveau 2, release manager au niveau 3."
+      }
+    },
+    "stories": {
+      "US-014": {
+        "title": "Montrer à l'équipe de pose combien de panneaux un chantier demande",
+        "story": "En tant que membre de l'équipe de pose, je veux voir le nombre de panneaux nécessaires sur l'enregistrement d'installation, afin de charger la bonne quantité dans la camionnette.",
+        "acceptance": [
+          "Un champ Panels Required existe sur Installation",
+          "Il est visible par le permission set de l'équipe de pose",
+          "Les planificateurs peuvent le renseigner",
+          "Il apparaît sur la page d'enregistrement Installation"
+        ]
+      },
+      "US-016": {
+        "title": "Permettre à l'équipe de pose de laisser des notes sur une installation",
+        "story": "En tant que membre de l'équipe de pose, je veux un champ de notes en texte libre et une vue de liste des installations encore ouvertes, afin de passer le relais proprement à l'équipe suivante.",
+        "acceptance": [
+          "Un champ Crew Notes existe sur Installation",
+          "Une vue de liste Open Installations existe, pour tous les utilisateurs",
+          "Le permission set de l'équipe de pose donne accès au champ"
+        ]
+      },
+      "US-017": {
+        "title": "Enregistrer qui a validé une installation",
+        "story": "En tant que responsable de delivery, je veux le nom de la personne qui a validé l'installation, afin de pouvoir l'appeler quand le client rappelle.",
+        "acceptance": [
+          "Le champ est sur la présentation de page",
+          "Les managers peuvent le lire et l'écrire"
+        ]
+      },
+      "US-018": {
+        "title": "Plafonner la taille d'équipe qu'un planificateur peut affecter",
+        "story": "En tant que planificateur, je veux que le flow d'affectation refuse une équipe plus grande que ce que l'installation autorise, afin d'arrêter de surdimensionner les petits chantiers.",
+        "acceptance": [
+          "Installation_Assign_Crew vérifie le plafond",
+          "Les planificateurs peuvent le forcer"
+        ]
+      },
+      "US-019": {
+        "title": "Générer un PDF de devis depuis une opportunité",
+        "story": "En tant que commercial, je veux un bouton qui génère le PDF du devis, afin d'arrêter de le refaire dans un tableur.",
+        "acceptance": ["L'autorisation est donnée aux managers"]
+      },
+      "US-052": {
+        "title": "La présentation de page Installation sur deux colonnes",
+        "story": "En tant que planificateur, je veux que la section Information d'une installation utilise ses deux colonnes, afin de voir toute l'installation sans faire défiler.",
+        "acceptance": [
+          "Le plafond de capacité d'équipe est dans la deuxième colonne de la section Information",
+          "Tous les champs qui étaient sur la présentation de page y sont toujours"
+        ]
+      },
+      "US-020": {
+        "title": "Refactorer InstallationScheduler",
+        "story": "En tant que développeur, je veux que le scheduler soit découpé en méthodes testables, afin qu'on arrête d'en avoir peur.",
+        "acceptance": ["Comportement inchangé", "Couverture au-dessus du seuil"]
+      },
+      "US-021": {
+        "title": "Prévenir le planificateur quand une équipe est trop petite",
+        "story": "En tant que planificateur, je veux un seul avertissement sur l'installation quand l'équipe affectée est plus petite que ce que les panneaux demandent, afin de corriger avant que la camionnette parte, et pas une nouvelle tâche à chaque enregistrement.",
+        "acceptance": [
+          "Le flow Installation Crew Warning existant compare l'équipe et les panneaux",
+          "L'avertissement est envoyé une seule fois"
+        ]
+      },
+      "US-024": {
+        "title": "Crew Size devient obligatoire",
+        "story": "En tant que planificateur, je veux que Crew Size soit obligatoire sur toutes les installations, afin qu'aucun chantier ne soit planifié sans équipe.",
+        "acceptance": [
+          "Crew Size est obligatoire",
+          "Les enregistrements existants sont remplis avec la valeur par défaut 2, par un batch qui tient quel que soit le volume"
+        ]
+      },
+      "US-026": {
+        "title": "Données de référence de capacité d'équipe et recalcul nocturne",
+        "story": "En tant que planificateur, je veux des règles de capacité par type d'équipe et un job nocturne qui les recalcule, afin que le tableau de planification soit juste chaque matin et que j'en reçoive un résumé dans ma boîte mail.",
+        "acceptance": [
+          "12 enregistrements Crew Capacity existent dans chaque org",
+          "Le batch est planifié toutes les nuits",
+          "Le planificateur reçoit l'e-mail de résumé du matin"
+        ]
+      },
+      "US-027": {
+        "title": "Vérifier plusieurs installations d'un coup face aux panneaux disponibles",
+        "story": "En tant que planificateur, je veux vérifier une liste d'installations face aux panneaux disponibles en une seule fois, afin de remplir une semaine de planning sans ouvrir chaque enregistrement.",
+        "acceptance": [
+          "InstallationScheduler renvoie les installations qui peuvent recevoir une équipe un jour donné",
+          "La couverture reste au-dessus du seuil"
+        ]
+      },
+      "US-033": {
+        "title": "Les équipes de pose peuvent lire le coût du lot de panneaux",
+        "story": "En tant que membre de l'équipe de pose, je veux voir le coût du lot que je suis en train d'installer, afin de déclarer une casse avec la bonne valeur.",
+        "acceptance": ["L'équipe de pose peut lire Panel Batch Cost"]
+      },
+      "US-034": {
+        "title": "Les toits plats demandent une équipe d'au moins trois personnes",
+        "story": "En tant que planificateur, je veux que le flow d'affectation mette au moins trois personnes sur un toit plat, afin que le lestage soit porté sans risque.",
+        "acceptance": [
+          "Installation_Assign_Crew augmente l'équipe sur les toits plats",
+          "Le plafond d'équipe de Mariia, issu de US-018, l'emporte toujours quand les deux se contredisent"
+        ]
+      },
+      "US-038": {
+        "title": "Ranger la présentation de page Installation",
+        "story": "En tant que planificateur, je veux Crew Size au-dessus d'Install Date sur la présentation de page de l'installation, afin de voir l'équipe avant la date.",
+        "acceptance": [
+          "Crew Size est au-dessus d'Install Date sur la présentation de page Installation"
+        ]
+      },
+      "US-041": {
+        "title": "Checklist de passation d'installation",
+        "story": "En tant que planificateur, je veux une checklist de passation sur l'installation avec ses éléments de référence, afin qu'un chantier ne soit clôturé que lorsque la checklist est complète.",
+        "acceptance": [
+          "Un objet Handover_Item__c existe",
+          "10 éléments de checklist de référence sont chargés dans chaque org",
+          "La vérification de clôture existante bloque aussi sur une checklist incomplète"
+        ]
+      },
+      "US-045": {
+        "title": "Les installations annulées ne peuvent plus être antidatées",
+        "story": "En tant que planificateur, je veux pouvoir antidater une installation que j'annule au jour où elle a été décommandée, afin de pouvoir clôturer la semaine.",
+        "acceptance": [
+          "Les installations annulées échappent à la règle de date, comme les installations terminées",
+          "La règle refuse toujours de déplacer une installation planifiée dans le passé"
+        ]
+      },
+      "US-046": {
+        "title": "Statut Needs Reinspection, ajouté en production par un admin",
+        "story": "En tant que release manager, je veux que le statut ajouté en production par un admin soit dans le repository, afin que la prochaine release ne le retire pas aux planificateurs.",
+        "acceptance": [
+          "Needs Reinspection est une valeur de Installation__c.Status__c sur integration",
+          "Rien d'autre n'est venu de production avec lui"
+        ]
+      },
+      "US-055": {
+        "title": "Install Date dit de quel jour il s'agit",
+        "story": "En tant que chef d'équipe, je veux qu'Install Date dise s'il s'agit du jour où on va sur site ou du jour où les panneaux arrivent, afin que personne ne roule vers un site vide.",
+        "acceptance": [
+          "Install Date a un texte d'aide qui nomme le jour dont il s'agit"
+        ]
+      },
+      "US-056": {
+        "title": "Montrer les panneaux que chaque membre de l'équipe doit poser",
+        "story": "En tant que planificateur, je veux voir combien de panneaux chaque personne de l'équipe doit poser, afin d'arrêter de le calculer de tête.",
+        "acceptance": [
+          "Une formule Crew Workload sur Installation",
+          "Sur la présentation de page, lisible par les managers"
+        ]
+      }
+    }
+  },
+  "source_rev": "0ed9aee7fa8e613181c1d71f572ac750ff9232ed"
+}

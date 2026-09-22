@@ -1,11 +1,14 @@
 ---
 # What the translations need checking for, on the Pull Request that changes them.
 #
-# Two different things, and only one of them is a failure:
+# Three different things, and two of them are failures:
 #
 #   - a translation whose English source has moved is **reported**, never fatal.
 #     English is the reference and a translation is allowed to lag: what the job
 #     prints is the list of pages to re-read, not a reason to block a merge
+#   - a key of i18n/en.json that a locale does not answer **fails**. It is not a
+#     broken page, which is why it needs a check: the site falls back to English
+#     key by key, so the hole reads as an English sentence inside a French one
 #   - a table whose pipes no longer line up **fails**, because it is mechanical,
 #     one command fixes it, and MegaLinter would fail on it anyway, later and
 #     less clearly
@@ -42,6 +45,13 @@ jobs:
 
       - name: Translations behind their English source
         run: node scripts/i18n/check-translations.mjs
+
+      # The generated pages, whose words are in i18n/<locale>.json rather than in
+      # markdown. A key a locale does not answer is not a broken page: strings()
+      # falls back to English, and the hole only shows as an English sentence in
+      # the middle of a French paragraph. So this one fails.
+      - name: Every locale answers every key of the generated pages
+        run: node scripts/i18n/check-i18n.mjs
 
       - name: Every table's pipes line up
         run: node scripts/i18n/align-tables.mjs --check

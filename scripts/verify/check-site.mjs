@@ -6,6 +6,11 @@
  *   node scripts/build/site.mjs && python -m zensical build -f course-site.yml
  *   node scripts/verify/check-site.mjs
  *
+ * The card a share shows is checked here too: og:image is an absolute URL on
+ * the published site, so it is the one reference that cannot be followed by a
+ * browser looking at a local build, and a missing card is invisible until a
+ * link is posted somewhere.
+ *
  * It reads the generated HTML and resolves each reference against the built
  * output on disk, rather than rendering pages in a browser. A browser lazy-loads
  * images below the fold, so a DOM check reports whatever happened not to have
@@ -54,10 +59,17 @@ function sitePathPrefix() {
 }
 const BASE_PATH = sitePathPrefix();
 
+// The site is published under this, and og:image says so in full
+const SITE_URL = (() => {
+  const match = fs.readFileSync(path.join(ROOT, "course-site.yml"), "utf8").match(/^site_url:\s*(\S+)/m);
+  return match ? match[1].replace(/\/$/, "") + "/" : null;
+})();
+
 const pages = walk(SITE);
 const problems = [];
 let references = 0;
 let links_checked = 0;
+let cards = 0;
 
 for (const file of pages) {
   const html = fs.readFileSync(file, "utf8");
@@ -96,6 +108,21 @@ for (const file of pages) {
     }
   }
 
+  // The card of this page: an absolute URL, which has to be on this site and
+  // has to be a file that exists
+  const card = (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1];
+  if (!card) {
+    problems.push(`${pageUrl} declares no og:image, so a share of it shows no card`);
+  } else if (SITE_URL && !card.startsWith(SITE_URL)) {
+    problems.push(`${pageUrl} -> ${card} (og:image is not on this site)`);
+  } else if (SITE_URL) {
+    cards++;
+    const file = path.join(SITE, card.slice(SITE_URL.length));
+    if (!fs.existsSync(file)) {
+      problems.push(`${pageUrl} -> ${card} (og:image, no such file)`);
+    }
+  }
+
   for (const ref of refs) {
     if (/^(https?:)?\/\//.test(ref) || ref.startsWith("data:")) {
       continue;
@@ -116,7 +143,7 @@ for (const file of pages) {
 }
 
 console.log(
-  `${pages.length} page(s), ${references} local asset reference(s), ${links_checked} internal link(s).`
+  `${pages.length} page(s), ${references} local asset reference(s), ${links_checked} internal link(s), ${cards} share card(s).`
 );
 
 if (problems.length > 0) {

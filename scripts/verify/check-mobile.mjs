@@ -40,6 +40,9 @@ const PAGES = [
   "fr/level-2-contributor-advanced/index.html",
   "fr/level-3-release-manager/index.html",
   "fr/help/index.html",
+  // The French backlog: the same five columns as the English one, with longer
+  // words in them, which is how a table starts overflowing
+  "fr/BACKLOG/index.html",
 ];
 
 const PHONE = { width: 412, height: 915 };

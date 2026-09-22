@@ -1,0 +1,25 @@
+{#-
+  The words the theme says for itself, in the language of the page.
+
+  "On this page", "Search", "Previous", "Next", "Table of contents": the theme
+  takes them from one dictionary, chosen by theme.language, which is one setting
+  for the whole build. This site builds every language at once, so a French lab
+  came with an English header and an English table of contents, and the page was
+  translated everywhere except where the theme spoke.
+
+  The page says which language it is in, in its front matter, and that is what
+  picks the dictionary here. It also sets the lang attribute of <html>, which is
+  what a screen reader and a search engine read.
+
+  A locale added without a dictionary of that name in the theme fails the build
+  here, loudly, which is the right moment to find out: Zensical ships one for
+  every language this course is likely to be translated into, and the list is in
+  its partials/languages/ folder.
+
+  This is a copy of the Zensical partial of the same name, which says not to
+  edit it: custom_dir is how a theme partial is replaced.
+-#}
+{% set language = (page.meta | d({}, true)).lang | d(config.theme.language | d("en", true), true) %}
+{% import "partials/languages/" ~ language ~ ".html" as lang %}
+{% import "partials/languages/en.html" as fallback %}
+{% macro t(key) %}{{ lang.t(key) or fallback.t(key) or key }}{% endmacro %}

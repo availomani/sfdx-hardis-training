@@ -6,13 +6,17 @@
  *   node scripts/verify/check-language-switch.mjs
  *
  * check-nav.mjs reads the built HTML, which is the state of a page opened
- * directly, and there the widget is always right. A reader does not open a lab
+ * directly, and there the picker is always right. A reader does not open a lab
  * directly: they land on the home page and walk through the menu. The theme
  * navigates without reloading and swaps the container, the logo and the header
- * title, never the rest of the header, so the widget kept the links of the page
+ * title, never the rest of the header, so the picker kept the links of the page
  * they landed on and sent them to the home page of the other language.
  * site-theme/javascripts/language-switch.js rebuilds them, and only a browser
  * can say that it does.
+ *
+ * The same goes for the choice being remembered: picking a language writes a
+ * cookie, and the next page opened in the other language moves to it before it
+ * is painted. Nothing in the built HTML shows that either.
  *
  * It serves the built site on a port of its own, so run the site build first.
  */
@@ -68,10 +72,14 @@ const WALKS = [
     to: "en",
     expect: "/en/level-3-release-manager/3-7-hotfix-and-retrofit/",
   },
+  // The generated pages, which are not laid out like the labs: the English ones
+  // keep the URLs the outside world holds, and only the others sit under /fr/
+  { land: "/", lab: "Backlog", to: "fr", expect: "/fr/BACKLOG/" },
+  { land: "/fr/", lab: "Badges", to: "en", expect: "/badges/" },
 ];
 
 /** And a page in no language: there is nothing to land on but the home page of the language. */
-const SHARED = { land: "/BACKLOG/", to: "fr", expect: "/fr/" };
+const SHARED = { land: "/TRANSLATION/", to: "fr", expect: "/fr/" };
 
 if (!fs.existsSync(SITE)) {
   console.error("No built site. Run: node scripts/build/site.mjs && python -m zensical build -f course-site.yml");
@@ -137,8 +145,10 @@ try {
 
   for (const walk of WALKS) {
     await page.goto(base + BASE + walk.land.slice(1), { waitUntil: "networkidle" });
-    // The levels start closed, so the lab is behind its level
-    await page.click(`label.md-nav__link:has-text("${walk.level}")`);
+    // The levels start closed, so a lab is behind its level
+    if (walk.level) {
+      await page.click(`label.md-nav__link:has-text("${walk.level}")`);
+    }
     await page.click(`a.md-nav__link:has-text("${walk.lab}")`);
     await page.waitForTimeout(800);
     const from = new URL(page.url()).pathname;
@@ -168,6 +178,42 @@ try {
   } else {
     console.log(`  ${SHARED.land} -> ${SHARED.to}: ${shared} (home page, as it has no counterpart)`);
   }
+  // The choice is remembered: pick French on a lab, then open an English page
+  // of the site the way a link would, and the reader lands in French.
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const reader = await context.newPage();
+  const enLab = `${BASE}en/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org/`;
+  const frLab = `${BASE}fr/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org/`;
+  await reader.goto(base + enLab, { waitUntil: "networkidle" });
+  await reader.evaluate(() => document.querySelector('a.md-select__link[hreflang="fr"]').click());
+  await reader.waitForTimeout(800);
+  const cookies = await context.cookies();
+  const remembered = cookies.find((one) => one.name === "course-language");
+  if (!remembered || remembered.value !== "fr") {
+    problems.push(`picking French wrote ${remembered ? remembered.value : "no cookie"}, expected fr`);
+  } else {
+    console.log(`  the choice is remembered: course-language=${remembered.value}`);
+  }
+  await reader.goto(base + enLab, { waitUntil: "networkidle" });
+  await reader.waitForTimeout(600);
+  const landed = new URL(reader.url()).pathname;
+  if (landed !== frLab) {
+    problems.push(`with French remembered, opening ${enLab} stayed on ${landed}`);
+  } else {
+    console.log(`  ${enLab} opened as ${landed}`);
+  }
+  // And a reader who never picked anything is never moved
+  const plain = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const first = await plain.newPage();
+  await first.goto(base + enLab, { waitUntil: "networkidle" });
+  await first.waitForTimeout(400);
+  if (new URL(first.url()).pathname !== enLab) {
+    problems.push(`a first visit to ${enLab} was moved to ${new URL(first.url()).pathname}`);
+  } else {
+    console.log("  a first visit is left where it asked to be");
+  }
+  await plain.close();
+  await context.close();
 } finally {
   await browser.close();
   server.close();

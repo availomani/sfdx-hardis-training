@@ -5,9 +5,10 @@
   partials/nav.html (the menu), partials/header.html and partials/footer.html.
 
   A page declares its language in its front matter, "lang: fr". The labs carry
-  it in labs/<locale>/, and scripts/build/site.mjs adds it to the link maps. A
-  page that declares none, the backlog, the badges, a story page, is written
-  once in English and reads as part of the site language.
+  it in labs/<locale>/, and scripts/build/site.mjs writes it into the pages it
+  generates: the backlog, the story pages and the badges, one set per language.
+  A page that declares none, TRANSLATION.md for one, reads as part of the site
+  language.
 
   The home page of a language is the one course-site.yml already names in
   extra.alternate, for the translate widget. The English one is the home page of

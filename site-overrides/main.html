@@ -23,6 +23,93 @@
   partials that keep each language to itself, nav.html, header.html,
   alternate.html and footer.html.
 -->
+{#-
+  The language a reader picked, honoured before the page is painted.
+
+  site-theme/javascripts/language-switch.js writes the choice in a cookie when
+  the picker is used. Reading it back belongs here rather than there, because
+  the theme loads its scripts at the end of the body: from there, a reader who
+  chose French would see the English page drawn before it was replaced.
+
+  It only ever moves a reader to the same page in their own language, which
+  every page carries in its front matter, and only when there is one. A reader
+  who never picked a language is never moved, and a crawler carries no cookie,
+  so the page a search engine sees is the page it asked for.
+
+  A link can say which language it means, with ?lang=en or ?lang=fr, and that
+  wins over the cookie: it is how a link shared in a language, a step of the
+  English Trailmix for one, reaches a reader who once picked another. Asking for
+  the language of the page it is on pins that page; asking for another moves to
+  it, as if the picker had been used.
+-#}
+{% block extrahead %}
+  {% set page_lang = (page.meta | d({}, true)).lang | d(config.theme.language | d("en")) %}
+
+  {#-
+    What a share of this page shows.
+
+    A learner shares their badge page, and a link with no card is a grey box with
+    a line of text under it. LinkedIn does not render SVG, so the picture is a
+    PNG of 1200 by 630, written by scripts/badges/social.mjs and committed: the
+    learner's own badge on their page, the three levels of the course everywhere
+    else. The URL has to be absolute, which is why site_url is in it.
+
+    LinkedIn keeps a preview for about a week per URL. A card changed after a
+    page was first shared needs a pass through their Post Inspector to show.
+  -#}
+  {% set social = (page.meta | d({}, true)).social | d("_assets/social/course.png") %}
+  {% set share_title = (page.meta | d({}, true)).title | d(page.title | d(config.site_name), true) %}
+  {% set share_text = (page.meta | d({}, true)).description | d(config.site_description, true) %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  <meta property="og:locale" content="{{ page_lang }}">
+  <meta property="og:title" content="{{ share_title | striptags }}">
+  <meta property="og:description" content="{{ share_text | striptags }}">
+  <meta property="og:url" content="{{ page.canonical_url | d(config.site_url ~ (page.url | d('')), true) }}">
+  <meta property="og:image" content="{{ config.site_url }}{{ social }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ share_title | striptags }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ share_title | striptags }}">
+  <meta name="twitter:description" content="{{ share_text | striptags }}">
+  <meta name="twitter:image" content="{{ config.site_url }}{{ social }}">
+
+  <script>
+    (function () {
+      var here = {{ page_lang | tojson }};
+      var alternates = {{ (page.meta | d({}, true)).alternates | d({}, true) | tojson }};
+      var base = new URL({{ (nav.homepage.url | url) | tojson }} || ".", window.location.href).pathname;
+      try {
+        var asked = new URLSearchParams(window.location.search).get("lang");
+        if (asked) {
+          document.cookie =
+            "course-language=" + encodeURIComponent(asked) + "; path=" + base + "; max-age=31536000; samesite=lax";
+        }
+        var cookie = document.cookie.split("; ").filter(function (one) {
+          return one.indexOf("course-language=") === 0;
+        })[0];
+        if (!cookie) {
+          return;
+        }
+        var preferred = asked || decodeURIComponent(cookie.slice("course-language=".length));
+        if (!preferred || preferred === here) {
+          return;
+        }
+        var target = alternates[preferred];
+        if (typeof target !== "string") {
+          return;
+        }
+        var url = new URL(target, new URL(base, window.location.href)).pathname;
+        if (url !== window.location.pathname) {
+          window.location.replace(url + window.location.search + window.location.hash);
+        }
+      } catch (error) {
+        // A browser with no cookies stays where it is, which is the page asked for
+      }
+    })();
+  </script>
+{% endblock %}
 {% block announce %}
   {% if page and page.url and page.url[:3] == 'fr/' %}
     <strong>Ce cours est en phase de relecture.</strong> Il est complet et a été déroulé de bout en

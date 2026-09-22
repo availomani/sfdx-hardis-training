@@ -145,6 +145,17 @@ jobs:
             --json /tmp/audit.json > /tmp/report.md
           echo "passed=$?" >> "$GITHUB_OUTPUT"
 
+      # The card a share of the badge page shows is a PNG, because LinkedIn does
+      # not render SVG, and drawing it needs a browser. Best effort: a claim that
+      # cannot install one still awards the badge, and the page falls back to the
+      # card of the course until somebody runs scripts/badges/rerender.mjs.
+      - name: A browser, for the share card
+        if: steps.clone.outputs.cloned == 'true' && steps.audit.outcome == 'success'
+        continue-on-error: true
+        run: |
+          npm install --no-save playwright-core
+          npx playwright-core install --with-deps chrome
+
       - name: Award the badge
         if: steps.clone.outputs.cloned == 'true' && steps.audit.outcome == 'success'
         env:
