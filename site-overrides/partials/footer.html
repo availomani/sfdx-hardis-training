@@ -1,0 +1,77 @@
+{#-
+  The footer, with its previous and next arrows kept inside one language.
+
+  The arrows follow the order of the navigation, and the navigation holds every
+  language one after the other. So the last English page used to offer "Accueil"
+  as its next page, and the French home page offered the English link map as its
+  previous one: a reader walking the course with the arrows fell into another
+  language at the seam.
+
+  A page declares its language in its front matter, "lang: fr". An arrow is
+  dropped when both pages declare one and they differ. Pages that declare none,
+  the backlog and the badges, keep their arrows: they are in every menu, in
+  every language. That is why this reads the front matter rather than calling
+  partials/course-locale.html, which answers with the site language for a page
+  that declares none.
+
+  This is a copy of the Zensical partial of the same name, which says not to
+  edit it: custom_dir is how a theme partial is replaced.
+-#}
+{% set page_lang = (page.meta | d({}, true)).lang | d("") %}
+{% set prev_lang = ((page.previous_page | d({}, true)).meta | d({}, true)).lang | d("") %}
+{% set next_lang = ((page.next_page | d({}, true)).meta | d({}, true)).lang | d("") %}
+{% set previous_page = page.previous_page if not (page_lang and prev_lang and page_lang != prev_lang) %}
+{% set next_page = page.next_page if not (page_lang and next_lang and page_lang != next_lang) %}
+<footer class="md-footer">
+  {% if "navigation.footer" in features %}
+    {% if previous_page or next_page %}
+      {% if page.meta and page.meta.hide %}
+        {% set hidden = "hidden" if "footer" in page.meta.hide %}
+      {% endif %}
+      <nav class="md-footer__inner md-grid" aria-label="{{ lang.t('footer') }}" {{ hidden }}>
+        {% if previous_page %}
+          {% set direction = lang.t("footer.previous") %}
+          <a href="{{ previous_page.url | url }}" class="md-footer__link md-footer__link--prev" aria-label="{{ direction }}: {{ previous_page.title | e }}">
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.previous or "material/arrow-left" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                {{ direction }}
+              </span>
+              <div class="md-ellipsis">
+                {{ previous_page.title }}
+              </div>
+            </div>
+          </a>
+        {% endif %}
+        {% if next_page %}
+          {% set direction = lang.t("footer.next") %}
+          <a href="{{ next_page.url | url }}" class="md-footer__link md-footer__link--next" aria-label="{{ direction }}: {{ next_page.title | e }}">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                {{ direction }}
+              </span>
+              <div class="md-ellipsis">
+                {{ next_page.title }}
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.next or "material/arrow-right" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      {% include "partials/copyright.html" %}
+      {% if config.extra.social %}
+        {% include "partials/social.html" %}
+      {% endif %}
+    </div>
+  </div>
+</footer>

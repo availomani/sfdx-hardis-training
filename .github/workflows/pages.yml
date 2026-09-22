@@ -59,6 +59,12 @@ jobs:
       - name: Every page resolves every asset it references
         run: node scripts/verify/check-site.mjs
 
+      # Each language reads as a course of its own: the menu of a page holds
+      # that language and nothing else, the translate widget lands on the same
+      # page in the other language, and the arrows stay inside one language.
+      - name: Every language keeps to itself
+        run: node scripts/verify/check-nav.mjs
+
       # A page opened with no hash must show its title. The comment widget is a
       # cross-origin frame at the bottom of a long page, and an eager one takes
       # the scroll position with it the moment it takes focus.
@@ -67,6 +73,11 @@ jobs:
           npm install --no-save playwright-core
           npx playwright-core install --with-deps chrome
           node scripts/verify/check-scroll.mjs
+
+      # The widget keeps the page only if a script rebuilds its links after an
+      # instant navigation, and only a browser can say that it does.
+      - name: The translate widget keeps the page
+        run: node scripts/verify/check-language-switch.mjs
 
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:

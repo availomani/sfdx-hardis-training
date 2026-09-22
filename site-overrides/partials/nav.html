@@ -1,0 +1,63 @@
+{#-
+  The left menu, filtered to the language of the page being read.
+
+  Zensical builds every locale into one site, so its own partials/nav.html
+  renders every language in the same menu: a French reader had to scroll past
+  the whole English course to reach "Niveau 1". This copy renders only the
+  entries that belong to the language of the page, plus the entries that belong
+  to no language in particular (Backlog, Badges), so each language reads as a
+  course of its own. Changing language is the translate widget in the header,
+  which lands on the same page in the other language: see
+  site-overrides/partials/alternate.html.
+
+  The language of a page, and the home page of that language, come from
+  partials/course-locale.html. A level has no front matter of its own, so it
+  takes the language of its first page, which is its "Start here". An entry with
+  no language at all is shown in every menu: the backlog and the badges are
+  written once, in English, and they belong to all of them.
+
+  This is a copy of the Zensical partial of the same name, which says not to
+  edit it: custom_dir is how a theme partial is replaced, and the copy is
+  fifteen lines of template around one loop. After a Zensical upgrade, diff it
+  against the partial that ships with the new version, and run
+  node scripts/verify/check-nav.mjs on the built site.
+-#}
+{% import "partials/nav-item.html" as item with context %}
+{% import "partials/course-locale.html" as course with context %}
+{% set page_lang = course.lang(page) | trim %}
+{% set class = "md-nav md-nav--primary" %}
+{% if "navigation.tabs" in features %}
+  {% set class = class ~ " md-nav--lifted" %}
+{% endif %}
+{% if "toc.integrate" in features %}
+  {% set class = class ~ " md-nav--integrated" %}
+{% endif %}
+{#- The language and the root of the site travel with the menu, because the menu
+    is inside the element the theme swaps on instant navigation and the header is
+    not. site-theme/javascripts/language-switch.js reads them from here to keep
+    the translate widget pointing at the page being read. -#}
+<nav class="{{ class }}" aria-label="{{ lang.t('nav') }}" data-md-level="0" data-course-lang="{{ page_lang }}" data-course-base="{{ nav.homepage.url | url }}">
+  <label class="md-nav__title" for="__drawer">
+    <a href="{{ course.home(page) | trim | url }}" title="{{ config.site_name | e }}" class="md-nav__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    {{ config.site_name }}
+  </label>
+  {% if config.repo_url %}
+    <div class="md-nav__source">
+      {% include "partials/source.html" %}
+    </div>
+  {% endif %}
+  <ul class="md-nav__list" data-md-scrollfix>
+    {% for nav_item in nav.items %}
+      {% set path = "__nav_" ~ loop.index %}
+      {#- A level carries no front matter, so it is its first page that tells
+          which language it belongs to. -#}
+      {% set leaf = (nav_item.children | first) if nav_item.children else nav_item %}
+      {% set item_lang = (leaf.meta | d({}, true)).lang | d("") %}
+      {% if item_lang == "" or item_lang == page_lang %}
+        {{ item.render(nav_item, path, 1) }}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

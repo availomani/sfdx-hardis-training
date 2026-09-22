@@ -18,8 +18,10 @@
   is everywhere else here: a locale nobody has written a banner for gets the
   English one rather than no banner.
 
-  Remove this file, and theme.custom_dir from course-site.yml, when the course
-  is released. Keep the folder: the comments partial lives in it.
+  Remove this file when the course is released, but keep the folder and
+  theme.custom_dir: the comments partial lives in it, and so do the four
+  partials that keep each language to itself, nav.html, header.html,
+  alternate.html and footer.html.
 -->
 {% block announce %}
   {% if page and page.url and page.url[:3] == 'fr/' %}

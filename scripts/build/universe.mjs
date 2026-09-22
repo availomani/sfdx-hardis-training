@@ -382,45 +382,52 @@ emit("training-manifest.json", manifest());
 
 // ------------------------------------------------------------ mkdocs nav
 // The labels of the navigation itself, per locale. Level and lab titles come
-// from the pages, so there is one source of truth for them; these six words
+// from the pages, so there is one source of truth for them; these few words
 // have no page to take them from.
 const NAV_LABELS = {
-  en: { section: "English", home: "Home", start: "Start here", backlog: "Backlog", badges: "Badges", linkMap: "Link map" },
-  fr: { section: "Français", home: "Accueil", start: "Commencer ici", backlog: "Backlog", badges: "Badges", linkMap: "Plan des liens" }
+  en: { home: "Home", start: "Start here", linkMap: "Link map" },
+  fr: { home: "Accueil", start: "Commencer ici", linkMap: "Plan des liens" }
 };
 
+/**
+ * The navigation, one flat course per locale.
+ *
+ * Every language sits at the top level, next to the others, rather than the
+ * other languages hiding one click deep under their name. The reader never sees
+ * both: site-overrides/partials/nav.html keeps the entries of the language of
+ * the page being read, which it takes from the "lang" front matter every page
+ * carries. Changing language is the translate widget in the header, which lands
+ * on the same page in the other language.
+ *
+ * English comes first because it is the reference, and its home page is the
+ * home page of the site. The backlog and the badges come last and are in no
+ * language: they are written once, in English, and they show in every menu.
+ *
+ * Lab entries carry no title in course-site.yml: an entry without one takes the
+ * page's own heading, so there is one source of truth. They carry one here,
+ * because this file is also read by a human adding a locale.
+ */
 function nav() {
-  const lines = ["nav:", "  - Home: index.md"];
-  // English first and unnested: it is the reference, and the site home page is
-  // its home page.
-  for (const level of universe.levels) {
-    lines.push(`  - Level ${level.level} - ${level.name}:`);
-    lines.push(`      - Start here: en/${level.slug}/index.md`);
-    for (const lab of level.labs) {
-      lines.push(`      - "Lab ${level.level}.${lab.lab} - ${lab.title}": en/${level.slug}/${lab.slug}.md`);
-    }
-  }
-  lines.push("  - Backlog: BACKLOG.md");
-  lines.push("  - Badges: badges/index.md");
-  lines.push("  - Link map: labs/link-map.en.md");
-  // Then one section per other locale, each holding that language's whole course
-  for (const locale of LOCALES) {
+  const lines = ["nav:"];
+  for (const locale of ["en", ...LOCALES]) {
     const labels = NAV_LABELS[locale] || NAV_LABELS.en;
-    const titles = localeTitles[locale] || {};
-    const translated = translations.get(locale) || [];
-    lines.push(`  - "${labels.section}":`);
-    lines.push(`      - ${labels.home}: ${locale}/index.md`);
+    const titles = locale === "en" ? {} : localeTitles[locale] || {};
+    const translated = locale === "en" ? labs : translations.get(locale) || [];
+    // The English home page is the home page of the site, at the root
+    lines.push(`  - ${labels.home}: ${locale === "en" ? "index.md" : `${locale}/index.md`}`);
     for (const level of universe.levels) {
-      lines.push(`      - "${titles[level.slug] || `Level ${level.level} - ${level.name}`}":`);
-      lines.push(`          - ${labels.start}: ${locale}/${level.slug}/index.md`);
+      lines.push(`  - "${titles[level.slug] || `Level ${level.level} - ${level.name}`}":`);
+      lines.push(`      - ${labels.start}: ${locale}/${level.slug}/index.md`);
       for (const lab of level.labs) {
         const found = translated.find((one) => one.level === level.level && one.lab === lab.lab);
         const title = (found && found.front.title) || `Lab ${level.level}.${lab.lab} - ${lab.title}`;
-        lines.push(`          - "${title}": ${locale}/${level.slug}/${lab.slug}.md`);
+        lines.push(`      - "${title}": ${locale}/${level.slug}/${lab.slug}.md`);
       }
     }
-    lines.push(`      - ${labels.linkMap}: labs/link-map.${locale}.md`);
+    lines.push(`  - ${labels.linkMap}: ${locale}/link-map.md`);
   }
+  lines.push("  - Backlog: BACKLOG.md");
+  lines.push("  - Badges: badges/index.md");
   return lines.join("\n") + "\n";
 }
 emit("mkdocs-nav.yml", nav());

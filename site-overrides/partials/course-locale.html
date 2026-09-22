@@ -1,0 +1,28 @@
+{#-
+  The language of the page being read, and where its home page is.
+
+  Read by the partials this folder overrides, so the rule lives in one place:
+  partials/nav.html (the menu), partials/header.html and partials/footer.html.
+
+  A page declares its language in its front matter, "lang: fr". The labs carry
+  it in labs/<locale>/, and scripts/build/site.mjs adds it to the link maps. A
+  page that declares none, the backlog, the badges, a story page, is written
+  once in English and reads as part of the site language.
+
+  The home page of a language is the one course-site.yml already names in
+  extra.alternate, for the translate widget. The English one is the home page of
+  the site, at the root: English is the reference and the site leads with it.
+-#}
+{% macro lang(page) %}
+  {{- (page.meta | d({}, true)).lang | d(config.theme.language | d("en")) -}}
+{% endmacro %}
+{% macro home(page) %}
+  {%- set page_lang = lang(page) | trim -%}
+  {%- set _ = namespace(url = config.extra.homepage | d(nav.homepage.url, true)) -%}
+  {%- for alt in config.extra.languages | d([]) -%}
+    {%- if alt.lang == page_lang -%}
+      {%- set _.url = alt.link -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {{- _.url -}}
+{% endmacro %}

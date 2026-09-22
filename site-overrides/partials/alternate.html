@@ -1,0 +1,56 @@
+{#-
+  The translate widget in the header, pointing at the same page in the other
+  language.
+
+  Every locale is a mirror of labs/en/: same folders, same file names, same
+  URLs under a prefix of its own. So the page a reader is on, read in another
+  language, is the same path with the prefix swapped, and there is nothing to
+  look up. That is what this does: a reader who reaches Lab 2.3 in English and
+  clicks Français lands on Lab 2.3 in French, rather than back at the home page
+  of the course, which is what the Zensical partial does.
+
+  Two cases fall back to the home page of the language, which is what
+  extra.alternate holds in course-site.yml:
+
+  - a page with no language of its own (the backlog, the badges, a story page):
+    it is written once, in English, and has no counterpart to jump to;
+  - the home page of a language: the English one is the site home page, at the
+    root rather than under /en/, so the prefix swap does not describe it.
+
+  A language that ships an incomplete translation would send a reader into a
+  404 here. scripts/verify/check-nav.mjs is what says so, and check-site.mjs
+  fails the build on the dead link, so nothing published can carry one.
+
+  This is a copy of the Zensical partial of the same name, which says not to
+  edit it: custom_dir is how a theme partial is replaced.
+-#}
+{% set page_lang = (page.meta | d({}, true)).lang | d("") %}
+{% set page_url = page.url | d("") %}
+{% set prefix = page_lang ~ "/" %}
+{% set rest = page_url[(prefix | length):] if page_url[:(prefix | length)] == prefix else "" %}
+<div class="md-header__option">
+  <div class="md-select">
+    {% set icon = config.theme.icon.alternate or "material/translate" %}
+    <button class="md-header__button md-icon" aria-label="{{ lang.t('select.language') }}">
+      {% include ".icons/" ~ icon ~ ".svg" %}
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        {% for alt in config.extra.languages %}
+          {#- The same page in that language when this page has one, its home
+              page otherwise. -#}
+          {% set href = (alt.lang ~ "/" ~ rest) if rest else alt.link %}
+          <li class="md-select__item">
+            {#- data-course-home is the fallback link, written as course-site.yml
+                holds it so it stays right from any page: language-switch.js
+                rebuilds this href after an instant navigation, which leaves the
+                header of the page the reader landed on. -#}
+            <a href="{{ href | url }}" hreflang="{{ alt.lang }}" data-course-home="{{ alt.link }}" class="md-select__link">
+              {{ alt.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
