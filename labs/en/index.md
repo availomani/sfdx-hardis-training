@@ -42,7 +42,11 @@ conflicts and deployment actions. Someone who has never solved one cannot review
 ## What you need
 
 - A computer you are allowed to install software on. Lab 1.1 walks through what to install,
-  one download at a time, with screenshots.
+  one download at a time, with screenshots. Nothing to install, or not allowed to?
+  [Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) is VS Code in a browser tab,
+  launched from a developer sandbox or from the free Developer Edition org Lab 1.2 signs you up
+  for, and the course runs there too, as it does in
+  [Cursor](https://cursor.com/) and the other editors built on VS Code.
 - A [GitHub](https://github.com/) account, free.
 - One free [Salesforce Developer Edition org](https://developer.salesforce.com/signup) to start
   with, and one more at Level 3. Lab 1.2 signs you up, and creates the other orgs the course

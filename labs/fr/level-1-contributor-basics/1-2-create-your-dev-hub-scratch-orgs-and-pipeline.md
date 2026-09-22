@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "60e8cb86afb0208776d978f59206c02cf8f85bf3"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -221,6 +221,19 @@ téléchargement de votre machine : **Windows - Download MSI** **(2)**, ou **mac
 binary**. Acceptez les valeurs par défaut de l'installeur.
 
 ![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
+
+!!! tip "Dans Agentforce Vibes, l'installeur n'est pas le même"
+    L'onglet tourne sous Linux : ni le MSI Windows ni le binaire macOS ne sont votre téléchargement.
+    La même page porte les instructions Linux, une ligne de gestionnaire de paquets ou une archive à
+    décompresser, et le terminal de l'onglet est l'endroit où elles vont. Rechargez l'onglet ensuite,
+    plutôt que de redémarrer VS Code.
+
+    `gh` ne sert pas qu'à cette étape, et cela vaut donc la peine de le réussir ici. Les commandes
+    derrière **Publish my work**, **Simulate my teammates**, **Check my work** et **Claim my badge**
+    l'appellent toutes : il ouvre vos Pull Requests, joue les merges de vos collègues, lit les
+    secrets de votre fork pour vérifier un niveau, et regarde votre étoile et la visibilité de votre
+    repository au moment de la réclamation. Un conteneur qui refuse de l'installer vous arrêtera
+    plus loin, pas ici.
 
 !!! warning "Redémarrez VS Code après l'avoir installée"
     L'installeur ajoute `gh` au **PATH**, et un VS Code déjà ouvert ne voit pas le changement avant
@@ -513,7 +526,9 @@ déploiement.
 **Il dit que la CLI GitHub n'est pas installée, alors que vous venez de l'installer.**
 VS Code était ouvert pendant l'installation et ne la voit pas encore. Fermez VS Code complètement,
 rouvrez-le, et recliquez sur la carte. Si le message persiste, installez-la depuis
-[cli.github.com](https://cli.github.com/), comme le montre l'étape 4.
+[cli.github.com](https://cli.github.com/), comme le montre l'étape 4. Dans Agentforce Vibes,
+rechargez l'onglet du navigateur au lieu de redémarrer VS Code, et vérifiez que l'installation Linux
+de l'étape 4 s'est bien terminée : `gh --version` dans le terminal répond si c'est le cas.
 
 **Il dit qu'aucune org connectée n'a été trouvée.**
 L'étape 2 n'est pas finie : connectez votre org Developer Edition dans **Orgs Manager** et nommez-la

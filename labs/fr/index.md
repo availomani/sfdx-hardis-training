@@ -3,7 +3,7 @@ title: "Formation Salesforce DevOps gratuite et pratique"
 description: "Formation Salesforce DevOps gratuite et pratique en trois niveaux : Git, Pull Requests, pipelines CI/CD et gestion des releases avec sfdx-hardis et VS Code."
 id: home
 lang: fr
-source_rev: "fbf66f1518846bab2a307e8869a4aed50b7e7b2d"
+source_rev: "f544baa668133cfc09ee8f73050f7e5167ee8258"
 ---
 
 # Formation Salesforce DevOps avec sfdx-hardis
@@ -54,7 +54,10 @@ un seul ne peut pas les relire.
 ## Ce qu'il vous faut
 
 - Un ordinateur sur lequel vous avez le droit d'installer des logiciels. Le Lab 1.1 déroule ce qu'il
-  faut installer, un téléchargement à la fois, captures d'écran comprises.
+  faut installer, un téléchargement à la fois, captures d'écran comprises. Rien à installer, ou pas
+  le droit ? [Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) est VS Code dans un
+  onglet, lancé depuis une sandbox de développement ou depuis l'org Developer Edition gratuite pour
+  laquelle le Lab 1.2 vous inscrit, et le cours y fonctionne aussi, comme dans [Cursor](https://cursor.com/) et les autres éditeurs construits sur VS Code.
 - Un compte [GitHub](https://github.com/), gratuit.
 - Une org [Salesforce Developer Edition gratuite](https://developer.salesforce.com/signup) pour
   commencer, et une deuxième au Niveau 3. Le Lab 1.2 vous y inscrit, et crée à partir de celle-là
