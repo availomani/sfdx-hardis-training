@@ -165,19 +165,27 @@ function shareButtons({ s, holder, pageUrl }) {
  * every language, so a claim never has to write a page per locale and an old
  * badge gains the new languages by itself.
  */
-export function badgePage({ s, holder, badgeImage, courseUrl, pageUrl }) {
+export function badgePage({ s, holder, badgeImage, bannerImage, courseUrl, pageUrl, recordUrl }) {
   // The holder, not the raw record: a record written before names were stored
   // has only its key, and site.mjs is where that is filled in. Reading the
   // record here put "undefined" on the page while the index listed the person
   // correctly.
   const record = holder.record;
-  const badges = record.badges || [];
+  // Level order, always: a record holds them in the order the claims arrived,
+  // and a page that lists Release Manager above Contributor Basics reads as if
+  // the levels had no order at all.
+  const badges = [...(record.badges || [])].sort((one, other) => one.level - other.level);
   const rows = badges.map((badge) => row([
     `![${badge.name}](${badgeImage(badge.level)})`,
     `**${badge.name}**`,
     badge.issuedOn,
     fill(s.badge.checks, { passed: badge.checksPassed, total: badge.checksTotal })
   ]));
+  // The banner version of each badge earned, in level order. A learner can hold
+  // three of them, and the row says so; each picture is shared by everybody of
+  // that level, which is what makes an address worth publishing.
+  const inBanner = bannerImage ? badges.filter((badge) => badge.bannerImage) : [];
+
   const evidence = badges[0] && badges[0].evidence && badges[0].evidence[0];
   const repository = evidence && evidence.url
     ? `[${s.badge.meaning.repository}](${evidence.url})`
@@ -203,6 +211,24 @@ export function badgePage({ s, holder, badgeImage, courseUrl, pageUrl }) {
     "",
     ...s.badge.notCertification.body,
     "",
+    ...(inBanner.length > 0
+      ? [
+          `## ${s.badge.banner.heading}`,
+          "",
+          inBanner
+            .map((badge) => `![${badge.name}](${bannerImage(badge.level)}){ width="72" }`)
+            .join(" "),
+          "",
+          ...s.badge.banner.body,
+          "",
+          "```",
+          ...inBanner.map((badge) => badge.bannerImage),
+          "```",
+          "",
+          recordUrl ? `[${s.badge.banner.record}](${recordUrl})` : "",
+          ""
+        ]
+      : []),
     ...(pageUrl ? [`## ${s.badge.shareHeading}`, "", ...shareButtons({ s, holder, pageUrl }), ""] : []),
     `[${s.badge.takeTheCourse}](${courseUrl}){ .md-button }`,
     ""

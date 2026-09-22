@@ -105,6 +105,15 @@
       "bluesky": "Bluesky",
       "whatsapp": "WhatsApp",
       "email": "Email"
+    },
+    "banner": {
+      "heading": "Put it in a banner",
+      "body": [
+        "The same award drawn for a row of twenty: the Cloudity mark, sfdx-hardis, and which level it is, with nothing",
+        "personal in it. One picture per level, shared by everybody who earned it, which is what makes its address worth",
+        "publishing. A Trailhead banner reads it from the record."
+      ],
+      "record": "The whole record, as JSON"
     }
   }
 }

@@ -105,6 +105,15 @@
       "bluesky": "Bluesky",
       "whatsapp": "WhatsApp",
       "email": "E-mail"
+    },
+    "banner": {
+      "heading": "Le mettre dans une bannière",
+      "body": [
+        "La même récompense dessinée pour une rangée de vingt : le logo Cloudity, sfdx-hardis, et de quel niveau il",
+        "s'agit, et rien de personnel. Une image par niveau, partagée par toutes les personnes qui l'ont obtenue, et",
+        "c'est ce qui rend son adresse publiable. Une bannière Trailhead la lit dans le record."
+      ],
+      "record": "Le record complet, en JSON"
     }
   },
   "universe": {
@@ -280,5 +289,5 @@
       }
     }
   },
-  "source_rev": "0ed9aee7fa8e613181c1d71f572ac750ff9232ed"
+  "source_rev": "1489b38e601d7e10cf76725494c1c357c5680884"
 }

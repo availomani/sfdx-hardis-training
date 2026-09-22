@@ -543,8 +543,11 @@ function badgePages() {
         s,
         holder,
         badgeImage: (level) => `${images}/${holder.key}-level-${level}.svg`,
+        // The banner version: one file per level, next to the badge images
+        bannerImage: (level) => `${images}/banner-level-${level}.svg`,
         courseUrl: `${universe.course.site}/`,
-        pageUrl
+        pageUrl,
+        recordUrl: `${universe.course.site}/badges/${holder.key}.json`
       });
       // The card of this holder when there is one, the course card otherwise:
       // a badge awarded before social.mjs existed has none until it is re-run
