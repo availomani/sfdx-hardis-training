@@ -66,7 +66,8 @@ panel. Name `US-024-crew-size-required`, org `helios-dev`.
 In `helios-dev`: **Setup > Object Manager > Installation > Fields & Relationships > Crew Size >
 Edit**, tick **Required**, **Save**.
 
-Salesforce accepts it without a word, although most installations in your org have no crew size.
+Salesforce warns you about API and Apex callers, asks you to **Confirm**, and saves it. Not a word
+about your data, although most installations in your org have no crew size.
 Remember that: it is the whole of this lab.
 
 Bring the field down with **Commit changes** (the field, nothing else), commit it, **Save /

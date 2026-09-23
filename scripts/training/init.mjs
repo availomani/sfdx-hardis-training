@@ -127,7 +127,7 @@ export async function findDevHub(orgs, preselected) {
   const { devHub } = trainingOrgs();
   const candidates = orgs.filter((o) => !o.isScratch);
   if (preselected) {
-    return select("Which org is your Developer Edition org?", orgChoices(candidates), preselected);
+    return select("Which org is your Developer Edition org?", orgChoices(candidates), preselected, "org");
   }
   const byAlias = candidates.find((o) => (o.aliases || []).includes(devHub.alias));
   if (byAlias) {

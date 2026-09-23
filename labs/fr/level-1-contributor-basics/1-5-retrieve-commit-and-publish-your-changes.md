@@ -87,8 +87,10 @@ dernier et quand. Tous portent votre nom, et la plupart ne sont pas votre story.
 
 ### 3. Prendre les vôtres, laisser le reste
 
-Triées du plus récent au plus ancien, vos quatre sont les quatre du haut. Cochez-les, et elles
-seules :
+Triez par **Last Updated Date**, du plus récent au plus ancien, et retrouvez vos quatre.
+Cochez-les, et elles seules, par leur nom plutôt que par leur position : Salesforce modifie
+des composants de son côté, et l'un d'eux qui se glisse entre les vôtres est exactement ce
+dont cette étape parle :
 
 1. **PermissionSet** `Helios_Delivery_Manager` **(1)** - l'accès en écriture des planificateurs
 2. **PermissionSet** `Helios_Delivery_Crew` **(2)** - l'accès en lecture de l'équipe de pose

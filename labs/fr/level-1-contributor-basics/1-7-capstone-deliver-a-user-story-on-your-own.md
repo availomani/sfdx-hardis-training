@@ -117,8 +117,10 @@ Il recontrôle d'abord le niveau entier et refuse de demander quoi que ce soit q
 demande qui serait rejetée est une demande qui ne vaut pas la peine d'être ouverte. Puis il ouvre le
 formulaire de demande du repository de formation dans votre navigateur, avec le niveau, votre nom
 d'utilisateur, votre fork (votre copie personnelle du repository du cours sur GitHub, par exemple
-`github.com/my-username/sfdx-hardis-training`) et vos reçus déjà remplis. Cochez les trois cases et
-cliquez sur **Submit**.
+`github.com/my-username/sfdx-hardis-training`) et vos reçus déjà remplis. Un champ reste vide :
+choisissez votre niveau dans la liste **Level**, car GitHub ne pré-remplit pas une liste déroulante
+depuis un lien et le formulaire refuse d'être soumis tant qu'elle affiche *None*. Cochez ensuite les
+trois cases et cliquez sur **Submit**.
 
 Ces trois cases sont à vous de cocher, et rien ne les coche à votre place. Elles disent que votre
 fork (`github.com/my-username/sfdx-hardis-training`) est public et que votre pseudo GitHub devient

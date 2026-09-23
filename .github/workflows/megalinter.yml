@@ -9,8 +9,15 @@ on:
   # changes would be overwritten", a red cross with nothing behind it.
   push:
     branches: [main]
+  # Every major branch of the training pipeline, not just main. This file and the
+  # one the training branches carry both end up on integration and preprod, because
+  # Lab 3.1 cuts preprod from main and Lab 3.7 retrofits main back down into
+  # integration. Lab 3.1 also makes Mega-Linter a required check on all four major
+  # branches, so a copy that only answers Pull Requests into main leaves every other
+  # Pull Request permanently unmergeable, with no red check to explain it. Both
+  # copies list all four, so it does not matter which one wins a merge.
   pull_request:
-    branches: [main]
+    branches: [main, preprod, uat, integration]
 
 env: # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration

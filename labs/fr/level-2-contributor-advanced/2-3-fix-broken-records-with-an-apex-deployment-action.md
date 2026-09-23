@@ -66,7 +66,8 @@ Pipeline. Nom `US-024-crew-size-required`, org `helios-dev`.
 Dans `helios-dev` : **Setup > Object Manager > Installation > Fields & Relationships > Crew Size >
 Edit**, cochez **Required**, **Save**.
 
-Salesforce l'accepte sans un mot, alors que la plupart des installations de votre org n'ont pas de
+Salesforce vous avertit au sujet des appels API et Apex, vous demande de **Confirm**, et
+l'enregistre. Pas un mot sur vos données, alors que la plupart des installations de votre org n'ont pas de
 crew size. Retenez-le : c'est tout ce lab.
 
 Faites descendre le champ avec **Commit changes** (le champ, rien d'autre), commitez-le, **Save /

@@ -223,9 +223,12 @@ export default async function claim(args) {
   info(`    Repository   https://github.com/${slug}`);
   info(`    Receipts     ${receipts ? `${receipts.split("\n").length} line(s)` : "none recorded"}`);
   info("");
-  info("  A browser opens on the claim form, filled in. Tick the three boxes and");
-  info("  click Submit: they say your repository is public and your handle becomes");
-  info("  public too, which is your decision and nobody else's.");
+  info(`  A browser opens on the claim form, filled in except for one field. Pick`);
+  info(`  ${c.bold(`Level ${level} - ${levelDef.name}`)} in the ${c.bold("Level")} dropdown: GitHub does not prefill a`);
+  info("  dropdown from a link, so it arrives empty and the form refuses to submit.");
+  info("  Then tick the three boxes and click Submit: they say your repository is");
+  info("  public and your handle becomes public too, which is your decision and");
+  info("  nobody else's.");
 
   if (!openUrl(url)) {
     warn("The browser did not open. Copy this address into it:");

@@ -136,8 +136,8 @@ Nine checks.
 
 Welcome page > **Training: Level 2** > **Claim my badge**.
 
-Same as Level 1: it re-checks everything here, opens the claim form filled in, and you tick the
-three boxes and submit.
+Same as Level 1: it re-checks everything here and opens the claim form filled in. Pick your level
+in the **Level** dropdown, which a link cannot prefill, then tick the three boxes and submit.
 
 A Level 2 claim re-runs the **Level 1 audit as well**, because the badge says you can do both. If
 you skipped Level 1, that is where it will say so, and the command says it before the form opens.

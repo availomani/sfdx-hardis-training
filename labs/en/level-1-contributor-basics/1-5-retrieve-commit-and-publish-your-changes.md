@@ -83,7 +83,9 @@ when. Every one of them carries your name, and most of them are not your story.
 
 ### 3. Take yours, leave the rest
 
-Sorted newest first, your four are the four at the top. Tick them, and only them:
+Sort by **Last Updated Date**, newest first, and find your four. Tick them, and only them,
+by name rather than by position: Salesforce touches components of its own, and one of them
+landing between yours is exactly the kind of thing this step is about.
 
 1. **PermissionSet** `Helios_Delivery_Manager` **(1)** - the planners' edit access
 2. **PermissionSet** `Helios_Delivery_Crew` **(2)** - the crew's read access

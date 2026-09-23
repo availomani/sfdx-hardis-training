@@ -69,7 +69,8 @@ export default async function simulate(args) {
   const id = await select(
     "Which teammate work do you need?",
     scenarios.map((s) => ({ value: s.id, label: `${s.title}`, hint: s.usedBy })),
-    args.scenario
+    args.scenario,
+    "scenario"
   );
   const scenario = scenarios.find((s) => s.id === id);
 

@@ -29,7 +29,7 @@ export default async function check(args) {
   ];
   // "--lab 1.4" and "--lab 4" both name Lab 1.4
   const preselected = args.lab === undefined ? undefined : String(args.lab).split(".").pop();
-  const lab = await select("Which lab?", labChoices, preselected);
+  const lab = await select("Which lab?", labChoices, preselected, "lab");
 
   info("");
   await runCheck({ level: String(level), lab: lab === "all" ? undefined : lab });

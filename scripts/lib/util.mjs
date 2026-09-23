@@ -283,7 +283,7 @@ async function ask(question) {
  * Numbered list selection. Plain readline, so it works in the VS Code terminal,
  * in Git Bash, in PowerShell and over SSH without a prompt library.
  */
-export async function select(message, choices, preselected) {
+export async function select(message, choices, preselected, flag) {
   const knownValues = () => [...new Set(choices.flatMap((ch) => [ch.value, ...(ch.aliases || [])]))];
   if (preselected) {
     // An org answers to several names: its aliases and its username. Match any of
@@ -306,10 +306,15 @@ export async function select(message, choices, preselected) {
       abortPanelGone(message);
     }
     // Naming the answers this very question accepts, rather than an example
-    // from another command that does not apply here
+    // from another command that does not apply here. And naming the flag: a list
+    // of values nobody can pass is a loop, not an error message.
+    const values = knownValues().join(", ");
     abort(
       `${message} needs an answer, and this terminal cannot ask for one.`,
-      `Pass one of these on the command line instead: ${knownValues().join(", ")}`
+      flag
+        ? `Pass it on the command line instead:  --${flag} <value>
+    Values: ${values}`
+        : `Pass one of these on the command line instead: ${values}`
     );
   }
   if (panel.isActive()) {

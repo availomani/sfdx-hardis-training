@@ -140,8 +140,9 @@ Neuf contrôles.
 
 Welcome page > **Training: Level 2** > **Claim my badge**.
 
-Comme au Niveau 1 : il recontrôle tout ce qui précède, ouvre le formulaire de demande déjà rempli, et
-vous cochez les trois cases et soumettez.
+Comme au Niveau 1 : il recontrôle tout ce qui précède et ouvre le formulaire de demande déjà rempli.
+Choisissez votre niveau dans la liste **Level**, qu'un lien ne peut pas pré-remplir, puis cochez les
+trois cases et soumettez.
 
 Une demande de Niveau 2 rejoue **aussi l'audit du Niveau 1**, parce que le badge dit que vous savez
 faire les deux. Si vous avez sauté le Niveau 1, c'est là qu'il le dira, et la commande le dit avant

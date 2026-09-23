@@ -112,7 +112,9 @@ Welcome page > **Training: Level 1** > **Claim my badge**.
 It checks the whole level again first and refuses to claim anything that does not pass: a claim that
 would be rejected is a claim not worth opening. Then it opens the claim form of the training
 repository in your browser, with the level, your username, your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) and your receipts already in
-it. Tick the three boxes and click **Submit**.
+it. One field is not filled in: pick your level in the **Level** dropdown, because GitHub does
+not prefill a dropdown from a link and the form refuses to submit while it says *None*. Then tick
+the three boxes and click **Submit**.
 
 Those three boxes are yours to tick, and nothing ticks them for you. They say your fork (`github.com/my-username/sfdx-hardis-training`) is public
 and your GitHub handle becomes public in the training repository, which is a decision about your

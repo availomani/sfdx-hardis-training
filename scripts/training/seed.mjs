@@ -171,7 +171,7 @@ export default async function seed(args) {
     );
   }
 
-  const target = await select("Which org do you want to set up?", orgChoices(suggested), args.org);
+  const target = await select("Which org do you want to set up?", orgChoices(suggested), args.org, "org");
   const username = (orgs.find((o) => o.alias === target || o.username === target) || {}).username;
 
   info("");
