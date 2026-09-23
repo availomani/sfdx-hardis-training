@@ -30,6 +30,33 @@
     },
     {
       "type": "Achievement",
+      "level": 2,
+      "name": "sfdx-hardis Contributor Advanced",
+      "description": "Solves deployment errors, declares deployment actions, resolves conflicts.",
+      "issuer": {
+        "name": "Cloudity",
+        "url": "https://cloudity.com",
+        "course": "https://hardisgroupcom.github.io/sfdx-hardis-training"
+      },
+      "issuedOn": "2026-09-23",
+      "evidence": [
+        {
+          "type": "Repository",
+          "url": "https://github.com/nvuillam/sfdx-hardis-training.git"
+        },
+        {
+          "type": "ClaimIssue",
+          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/22"
+        }
+      ],
+      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillamy-level-2.svg",
+      "bannerImage": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/banner-level-2.svg",
+      "superbadge": false,
+      "checksPassed": 14,
+      "checksTotal": 14
+    },
+    {
+      "type": "Achievement",
       "level": 3,
       "name": "sfdx-hardis Release Manager",
       "description": "Owns the pipeline, the releases, the hotfixes and the monitoring.",
