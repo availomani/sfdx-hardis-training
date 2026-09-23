@@ -182,7 +182,7 @@ still there, and remember the JWT certificates in your fork (your own copy of th
 **Three: the promotion branches feature.** Everything you did promotes **everything waiting** from
 one branch to the next. Some teams need to promote a subset. That is what
 [promotion branches](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/) are
-for, it is experimental, and it will make sense to you now in a way it would not have three levels
+for, it is in Beta, and it will make sense to you now in a way it would not have three levels
 ago.
 
 ## Thank you
@@ -194,4 +194,4 @@ training repository. The labs that are hardest to follow are usually the ones no
 
 - [Release Manager Guide](https://sfdx-hardis.cloudity.com/salesforce-devops-release-home/)
 - [Setup checklist for a real project](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-checklist/)
-- [Promotion branches (experimental)](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/)
+- [Promotion branches (Beta)](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/)

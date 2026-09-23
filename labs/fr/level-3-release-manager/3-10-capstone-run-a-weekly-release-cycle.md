@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 10
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "e3bdc82373a535bbb1283cfbfcde593ff067e815"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
@@ -193,7 +193,7 @@ orgs.
 qui attend** d'une branche vers la suivante. Certaines équipes ont besoin de promouvoir un
 sous-ensemble. C'est à cela que servent les
 [branches de promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/),
-c'est expérimental, et cela vous parlera maintenant d'une façon dont cela ne vous aurait pas parlé
+c'est en Beta, et cela vous parlera maintenant d'une façon dont cela ne vous aurait pas parlé
 trois niveaux plus tôt.
 
 ## Merci
@@ -206,4 +206,4 @@ personne n'a signalés.
 
 - [Guide du release manager](https://sfdx-hardis.cloudity.com/salesforce-devops-release-home/)
 - [Checklist d'installation pour un vrai projet](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-checklist/)
-- [Branches de promotion (expérimental)](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/)
+- [Branches de promotion (Beta)](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/)

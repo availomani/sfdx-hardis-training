@@ -137,7 +137,7 @@ The chip is there because no Pull Request is open on that arrow. Once you create
 replaced by the Pull Request number and its status.
 
 !!! note "Not the promotion button of the branch window"
-    The branch window can also show a **Create promotion from integration (experimental)** button,
+    The branch window can also show a **Create promotion from integration (Beta)** button,
     but only on a project that turns on `enablePromotionBranches`, which this one does not. That
     feature is for promoting a **subset** of what is waiting. What you are doing is promoting
     everything, and everything is what a plain Pull Request from one branch to the next carries.
@@ -305,7 +305,7 @@ setup: `integration` into `uat` is a branch merged into another branch, and the 
 (`enableDeltaDeploymentBetweenMajorBranches`, off by default, because a promotion is the worst
 moment to discover the target org drifted).
 
-There is an experimental feature for teams who want to promote a **subset** of what is waiting,
+There is a Beta feature for teams who want to promote a **subset** of what is waiting,
 rather than everything: [promotion
 branches](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). It is worth
 reading about once you have done a few releases the ordinary way.

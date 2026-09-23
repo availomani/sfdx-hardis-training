@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "e3bdc82373a535bbb1283cfbfcde593ff067e815"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -143,7 +143,7 @@ une, la pastille est remplacée par le numéro de la Pull Request et son statut.
 
 !!! note "Pas le bouton de promotion de la fenêtre de branche"
     La fenêtre de branche peut aussi afficher un bouton **Create promotion from integration
-    (experimental)**, mais seulement sur un projet qui active `enablePromotionBranches`, ce que
+    (Beta)**, mais seulement sur un projet qui active `enablePromotionBranches`, ce que
     celui-ci ne fait pas. Cette fonctionnalité sert à promouvoir un **sous-ensemble** de ce qui
     attend. Ce que vous faites, c'est tout promouvoir, et tout est ce que transporte une simple Pull
     Request d'une branche vers la suivante.
@@ -321,7 +321,7 @@ déploiement delta s'applique entre branches majeures
 (`enableDeltaDeploymentBetweenMajorBranches`, désactivé par défaut, parce qu'une promotion est le
 pire moment pour découvrir que l'org cible a dérivé).
 
-Il existe une fonctionnalité expérimentale pour les équipes qui veulent promouvoir un
+Il existe une fonctionnalité en Beta pour les équipes qui veulent promouvoir un
 **sous-ensemble** de ce qui attend, plutôt que tout : les [branches de
 promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). Elle vaut d'être
 lue une fois que vous aurez fait quelques livraisons de la façon ordinaire.
