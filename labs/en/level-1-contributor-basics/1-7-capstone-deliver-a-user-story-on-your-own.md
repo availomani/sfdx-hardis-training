@@ -137,6 +137,11 @@ make it public.
     There is no exam and no accreditation here. Share it under *Featured* on LinkedIn, not under
     *Licenses & certifications*.
 
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+    username, generate the picture, and set it as your LinkedIn cover.
+
 ## What comes next
 
 Level 1 taught you the loop when everything goes right. Level 2 is the other half: the deployment

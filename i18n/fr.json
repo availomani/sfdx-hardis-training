@@ -65,6 +65,19 @@
         "réussies et l'URL de son image. Ces fichiers sont servis avec `Access-Control-Allow-Origin: *`,",
         "donc une page dans un navigateur peut les lire directement."
       ]
+    },
+    "banner": {
+      "heading": "La mettre en bannière LinkedIn",
+      "intro": [
+        "[Trailhead Banner](https://thb.nabondance.me/) est l'un de ces outils. Il dessine une image de",
+        "couverture LinkedIn à partir d'un nom d'utilisateur Trailblazer : le rang, les compteurs de badges",
+        "et de certifications, et le badge sfdx-hardis le plus élevé que la personne a réclamé ici."
+      ],
+      "alt": "Une bannière Trailhead, avec un badge de la formation sfdx-hardis sur la rangée du haut",
+      "outro": [
+        "Tapez votre nom d'utilisateur Trailblazer, générez l'image, et mettez-la en bannière de votre profil",
+        "LinkedIn. Rien à installer et aucun compte à créer : le badge est public et indexé par ce nom."
+      ]
     }
   },
   "badge": {
@@ -111,7 +124,11 @@
       "body": [
         "La même récompense dessinée pour une rangée de vingt : le logo Cloudity, sfdx-hardis, et de quel niveau il",
         "s'agit, et rien de personnel. Une image par niveau, partagée par toutes les personnes qui l'ont obtenue, et",
-        "c'est ce qui rend son adresse publiable. Une bannière Trailhead la lit dans le record."
+        "c'est ce qui rend son adresse publiable.",
+        "",
+        "[Trailhead Banner](https://thb.nabondance.me/) la lit dans le record : tapez votre nom d'utilisateur Trailblazer",
+        "et l'outil dessine une bannière LinkedIn avec votre rang, vos compteurs de badges et de certifications, et le",
+        "badge le plus élevé que vous avez réclamé ici. Générez-la, puis mettez-la en bannière de votre profil LinkedIn."
       ],
       "record": "Le record complet, en JSON"
     }

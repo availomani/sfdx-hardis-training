@@ -150,6 +150,11 @@ you skipped Level 1, that is where it will say so, and the command says it befor
 The badge for this level is called **sfdx-hardis Contributor Advanced**. Level 1 makes you able to
 deliver a User Story; Level 2 makes you able to deal with everything that goes wrong on the way.
 
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+    username, generate the picture, and set it as your LinkedIn cover.
+
 ## What comes next
 
 You can stop here and be genuinely good at the contributor job.

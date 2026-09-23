@@ -65,6 +65,19 @@
         "the URL of its image. These files are served with `Access-Control-Allow-Origin: *`, so a page in a",
         "browser can read them directly."
       ]
+    },
+    "banner": {
+      "heading": "Put it on your LinkedIn banner",
+      "intro": [
+        "[Trailhead Banner](https://thb.nabondance.me/) is one of those tools. It draws a LinkedIn cover",
+        "image from a Trailblazer username: the rank, the badge and certification counts, and the highest",
+        "sfdx-hardis training badge that person claimed here."
+      ],
+      "alt": "A Trailhead banner, with an sfdx-hardis training badge in the top row",
+      "outro": [
+        "Type your Trailblazer username, generate the picture, and set it as your LinkedIn cover. Nothing",
+        "to install and nothing to sign in to: the badge is public and keyed by that username."
+      ]
     }
   },
   "badge": {
@@ -111,7 +124,11 @@
       "body": [
         "The same award drawn for a row of twenty: the Cloudity mark, sfdx-hardis, and which level it is, with nothing",
         "personal in it. One picture per level, shared by everybody who earned it, which is what makes its address worth",
-        "publishing. A Trailhead banner reads it from the record."
+        "publishing.",
+        "",
+        "[Trailhead Banner](https://thb.nabondance.me/) reads it from the record: type your Trailblazer",
+        "username and it draws a LinkedIn cover with your rank, your badge and certification counts, and the",
+        "highest badge you claimed here. Generate it, then set it as your LinkedIn cover."
       ],
       "record": "The whole record, as JSON"
     }

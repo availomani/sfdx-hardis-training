@@ -94,6 +94,10 @@ badge does not depend on it.
 
 Your repository has to be public, and your GitHub handle becomes public in this repository.
 
+The badge is published as JSON keyed by Trailblazer username, which is how
+[Trailhead Banner](https://thb.nabondance.me/) picks it up: type your Trailblazer username there
+and it draws a LinkedIn cover image carrying the highest badge you claimed here.
+
 ## What is in this repository
 
 ```

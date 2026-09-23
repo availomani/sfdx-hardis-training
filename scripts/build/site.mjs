@@ -513,6 +513,9 @@ function badgePages() {
     fs.mkdirSync(dir, { recursive: true });
     // One copy of each image, under the site language, reached from anywhere
     const images = locale === SITE_LANG ? "img" : "../../badges/img";
+    // The example Trailhead banner lives with the lab assets, one tree up from
+    // the badges folder of the site language and two up from any other.
+    const exampleBanner = `${locale === SITE_LANG ? ".." : "../.."}/_assets/badges/trailhead-banner.png`;
 
     const indexAlternates = {};
     for (const other of locales) {
@@ -524,7 +527,8 @@ function badgePages() {
       badgeHref: (key) => `${key}.md`,
       badgeImage: (key, level) => `${images}/${key}-level-${level}.svg`,
       claimUrl,
-      recordUrlPattern: `${universe.course.site}/badges/<trailblazer-username>.json`
+      recordUrlPattern: `${universe.course.site}/badges/<trailblazer-username>.json`,
+      bannerExample: exampleBanner
     });
     fs.writeFileSync(
       path.join(dir, "index.md"),

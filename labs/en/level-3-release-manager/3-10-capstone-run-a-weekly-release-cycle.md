@@ -164,6 +164,11 @@ machine before it opens anything, so you find out here rather than on the issue.
 
 The badge is **sfdx-hardis Release Manager**.
 
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+    username, generate the picture, and set it as your LinkedIn cover.
+
 ## What to do with all this
 
 Three things worth doing in the week after you finish, in order of usefulness:

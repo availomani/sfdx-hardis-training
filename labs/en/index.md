@@ -70,6 +70,13 @@ publishes the badge page.
 It is a badge, not a certification. There is no exam and no accreditation. Share it under
 *Featured* on LinkedIn, not under *Licenses & certifications*.
 
+Your badge also shows up on your Trailhead banner.
+[Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+username: rank, badge counts, certifications, and the highest sfdx-hardis training badge you have
+claimed. Type your Trailblazer username, generate it, and set it as your LinkedIn cover.
+
+![A Trailhead banner, with the sfdx-hardis Release Manager badge in the top row](../_assets/badges/trailhead-banner.png)
+
 ## Under the hood, every time
 
 Every lab is written as clicks in the VS Code extension, because that is how the product is meant

@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 10
 lang: fr
-source_rev: "e3bdc82373a535bbb1283cfbfcde593ff067e815"
+source_rev: "e034d4e37f0f8a9f6edd2b57042774d400e5aaac"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
@@ -170,6 +170,12 @@ l'issue.
     projet open source de rester visible. C'est vous qui voyez : le badge n'en dépend pas.
 
 Le badge s'appelle **sfdx-hardis Release Manager**.
+
+!!! tip "La mettre en bannière LinkedIn"
+    [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
+    d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
+    avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
+    votre profil LinkedIn.
 
 ## Que faire de tout cela
 

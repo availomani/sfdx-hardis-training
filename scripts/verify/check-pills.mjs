@@ -17,6 +17,9 @@
  *
  * It also fails on a lab that points at a raw screenshot rather than the
  * annotated copy, and on an annotated file nothing references.
+ *
+ * labs/_assets/badges/ is out of scope: it holds illustrations drawn by hand,
+ * not captures of a step, so there is nothing to pill and nothing to drift.
  */
 import fs from "fs";
 import path from "path";
@@ -26,6 +29,9 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 const LABS = path.join(ROOT, "labs");
 const SPEC = path.join(LABS, "_assets", "annotations.json");
+
+// Illustrations, not screenshots of a step. See the header.
+const NOT_A_SCREENSHOT = /_assets\/badges\//;
 
 function walk(dir, out = []) {
   if (!fs.existsSync(dir)) {
@@ -112,6 +118,9 @@ for (const file of localeDirs.flatMap((dir) => walk(dir))) {
     const before = problems.length;
     const declared = new Set();
     for (const image of images) {
+      if (NOT_A_SCREENSHOT.test(image.target)) {
+        continue;
+      }
       if (!/_assets\/annotated\//.test(image.target)) {
         problems.push(`${rel}:${image.line} points at a raw screenshot, not the annotated copy: ${image.target}`);
         continue;

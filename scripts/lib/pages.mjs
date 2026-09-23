@@ -93,7 +93,7 @@ export function storyPage({ universe, s, text, story, owner, labLink, backlogLin
 }
 
 /** The badges index: everybody who claimed one, and how to claim yours. */
-export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, recordUrlPattern }) {
+export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, recordUrlPattern, bannerExample }) {
   const rows = holders.map((holder) => {
     // An <img> and not markdown: the badge is drawn 320 square, and a table cell
     // wants a thumbnail. Plain HTML sizes it without depending on an extension.
@@ -127,7 +127,21 @@ export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, record
     "```",
     "",
     ...s.badges.readFromElsewhere.outro,
-    ""
+    "",
+    // The banner a badge ends up in. Trailhead Banner asks for a Trailblazer
+    // username and reads the record above, which is why it sits right after it.
+    ...(bannerExample
+      ? [
+          `## ${s.badges.banner.heading}`,
+          "",
+          ...s.badges.banner.intro,
+          "",
+          `![${s.badges.banner.alt}](${bannerExample})`,
+          "",
+          ...s.badges.banner.outro,
+          ""
+        ]
+      : [])
   ].join("\n");
 }
 

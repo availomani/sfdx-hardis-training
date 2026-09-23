@@ -3,7 +3,7 @@ title: "Formation Salesforce DevOps gratuite et pratique"
 description: "Formation Salesforce DevOps gratuite et pratique en trois niveaux : Git, Pull Requests, pipelines CI/CD et gestion des releases avec sfdx-hardis et VS Code."
 id: home
 lang: fr
-source_rev: "f544baa668133cfc09ee8f73050f7e5167ee8258"
+source_rev: "9d153b14ca4bbf63f6a59585d2773914b7a8d51a"
 ---
 
 # Formation Salesforce DevOps avec sfdx-hardis
@@ -80,6 +80,14 @@ repository et publie la page du badge.
 
 C'est un badge, pas une certification. Il n'y a ni examen ni accréditation. Partagez-le dans
 *Featured* sur LinkedIn, pas dans *Licenses & certifications*.
+
+Votre badge apparaît aussi sur votre bannière Trailhead.
+[Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
+d'un nom d'utilisateur Trailblazer : le rang, les compteurs de badges, les certifications, et le
+badge sfdx-hardis le plus élevé que vous avez réclamé. Tapez votre nom d'utilisateur Trailblazer,
+générez l'image, et mettez-la en bannière de votre profil LinkedIn.
+
+![Une bannière Trailhead, avec le badge sfdx-hardis Release Manager sur la rangée du haut](../_assets/badges/trailhead-banner.png)
 
 ## Sous le capot, à chaque fois
 
