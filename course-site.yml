@@ -138,6 +138,17 @@ extra_javascript:
   - theme/javascripts/language-switch.js
 
 extra:
+  # Which levels still carry the QA banner above the header.
+  #
+  # The banner asks the reader to comment where a step breaks, and it belongs on
+  # the pages where that is still being found out. A level that has been walked
+  # end to end and fixed comes off this list, and its pages stop showing it: the
+  # home page, the backlog, the badges and the story pages never did.
+  #
+  # Level 1 came off on 2026-09-23, after a manual walkthrough in French.
+  # The banner itself is in site-overrides/main.html.
+  qa_levels: [2, 3]
+
   # Google Analytics, on the course's own data stream inside the sfdx-hardis
   # property, so the course and the product documentation can be read together
   # or apart. The theme emits the tag, sends the page view of the page the

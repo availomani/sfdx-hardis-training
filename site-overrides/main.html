@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 <!--
-  The banner above the header, on every page.
+  The banner above the header, on the pages of a level still in QA.
 
-  The course is written and has been walked end to end against real orgs, and it
-  is now in QA: what it needs is learners running it and saying where it breaks.
-  The comment box at the bottom of every page is where that goes, so the banner
-  points at it rather than at an issue tracker nobody opens mid-lab.
+  A level that is written but not yet proven needs learners running it and
+  saying where it breaks. The comment box at the bottom of every page is where
+  that goes, so the banner points at it rather than at an issue tracker nobody
+  opens mid-lab.
+
+  Which levels get it is extra.qa_levels in course-site.yml, and the test is
+  page.meta.level, which every lab and every level index declares in its front
+  matter. Nothing else does: the home page, the backlog, the badges and the
+  story pages carry no level, so a reader who is not inside a lab is not asked
+  to report on one. Level 1 came off the list once it had been walked end to
+  end; an empty list turns the banner off everywhere.
 
   The link is the anchor the comments partial puts on every page. The widget
   loads when the reader reaches it, so following the link loads it too.
@@ -18,7 +25,7 @@
   is everywhere else here: a locale nobody has written a banner for gets the
   English one rather than no banner.
 
-  Remove this file when the course is released, but keep the folder and
+  Remove this file when the whole course is released, but keep the folder and
   theme.custom_dir: the comments partial lives in it, and so do the four
   partials that keep each language to itself, nav.html, header.html,
   alternate.html and footer.html.
@@ -110,17 +117,23 @@
     })();
   </script>
 {% endblock %}
-{% block announce %}
-  {% if page and page.url and page.url[:3] == 'fr/' %}
-    <strong>Ce cours est en phase de relecture.</strong> Il est complet et a été déroulé de bout en
-    bout, et maintenant il a besoin de vous. Si une étape ne fonctionne pas, ou si l'écran ne
-    correspond pas à ce que dit la page, merci de
-    <a href="#__comments">laisser un commentaire en bas de cette page</a>. C'est le moyen le plus
-    rapide de faire corriger le problème, et cela aide la personne suivante.
-  {% else %}
-    <strong>This course is in QA.</strong> It is complete and has been run end to end, and now it
-    needs you. If a step does not work, or the screen does not match what the page says, please
-    <a href="#__comments">leave a comment at the bottom of that page</a>. That is the fastest way to
-    get it fixed, and it helps the next person too.
-  {% endif %}
-{% endblock %}
+{#-
+  The whitespace control below is not cosmetic. base.html wraps this block in
+  <aside class="md-banner"> whenever self.announce() is truthy, and a block that
+  renders nothing but newlines is truthy: Level 1 would keep an empty amber
+  strip above its header. The block has to come back as an empty string.
+-#}
+{% block announce %}{%- if page and page.meta and page.meta.level in config.extra.qa_levels | d([]) -%}
+    {% if page.url and page.url[:3] == 'fr/' %}
+      <strong>Ce niveau est en phase de relecture.</strong> Il est complet et a été déroulé de bout
+      en bout, et maintenant il a besoin de vous. Si une étape ne fonctionne pas, ou si l'écran ne
+      correspond pas à ce que dit la page, merci de
+      <a href="#__comments">laisser un commentaire en bas de cette page</a>. C'est le moyen le plus
+      rapide de faire corriger le problème, et cela aide la personne suivante.
+    {% else %}
+      <strong>This level is in QA.</strong> It is complete and has been run end to end, and now it
+      needs you. If a step does not work, or the screen does not match what the page says, please
+      <a href="#__comments">leave a comment at the bottom of that page</a>. That is the fastest way
+      to get it fixed, and it helps the next person too.
+    {% endif %}
+{%- endif -%}{% endblock %}
