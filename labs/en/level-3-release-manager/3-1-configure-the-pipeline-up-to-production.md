@@ -467,6 +467,10 @@ warning in the log: a single unsuffixed secret left over from an old setup answe
 tells the VS Code pipeline panel which shape to expect: `secretsOnly` means the credentials live
 entirely in CI secrets, `encryptedCert`, the default, means every major branch has a key committed.
 
+<!-- command-links:start -->
+Command documentation: [hardis:project:configure:auth](https://sfdx-hardis.cloudity.com/hardis/project/configure/auth/)
+<!-- command-links:end -->
+
 </details>
 
 <details markdown="1"><summary>Under the hood: the files you just published</summary>
@@ -496,6 +500,10 @@ writes no `config/branches/` file and asks for no org but the Dev Hub: the branc
 Add/Configure Org's job, as above. The command that takes an existing org with no repository at all
 and produces the first commit is `sf hardis:org:retrieve:sources:dx`, the real starting point of
 most projects.
+
+<!-- command-links:start -->
+Command documentation: [hardis:project:create](https://sfdx-hardis.cloudity.com/hardis/project/create/), [hardis:org:retrieve:sources:dx](https://sfdx-hardis.cloudity.com/hardis/org/retrieve/sources/dx/)
+<!-- command-links:end -->
 
 </details>
 
@@ -576,7 +584,7 @@ run it again.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.1.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.1**.
 
 ## Go deeper
 

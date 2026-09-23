@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/web/github-pr-check-failed
   - annotated/web/github-pr-flow-diff
@@ -123,7 +123,7 @@ nouvelle version.
     Un élément d'enregistrement qui n'en a pas échoue en silence : le flow s'arrête, l'utilisateur ne
     voit rien, et la Task censée avertir le planificateur n'apparaît jamais. Sur un vrai projet, le
     chemin de fault envoie le message quelque part où quelqu'un le lit. Ici il se contente de le
-    garder, parce que ce que le pipeline contrôle est qu'un chemin de fault existe. Le flow d'origine
+    garder, parce que ce que la pipeline contrôle est qu'un chemin de fault existe. Le flow d'origine
     en avait déjà un, et votre nouvel élément le suit.
 
 Testez : ouvrez une installation, mettez `Panels Required` à 40 et `Crew Size` à 2, enregistrez. Une
@@ -191,7 +191,7 @@ juste.
 Le package est construit à partir de ce que vos commits ont changé, et le champ n'a jamais été
 commité : regardez là où vivent les champs,
 `force-app/main/default/objects/Installation__c/fields/`, il n'y est pas. Il n'existe qu'à un seul
-endroit, `helios-dev`, et un pipeline ne lit jamais l'org d'un développeur.
+endroit, `helios-dev`, et une pipeline ne lit jamais l'org d'un développeur.
 
 ### 5. Récupérer ce dont le flow dépend
 
@@ -239,6 +239,10 @@ plupart des gens passent vingt minutes sur la question 2 d'abord.
 enregistré le vôtre en version 2, et le déploiement envoie sa définition. L'org d'intégration garde
 sa version 1 en historique, inactive, exactement comme `helios-dev` le fait.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -265,7 +269,7 @@ avez choisi un propre à votre org. Simplifiez : le sujet et le WhatId suffisent
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.2.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.2**.
 
 ## Pour aller plus loin
 

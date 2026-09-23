@@ -6,6 +6,7 @@
  *   node scripts/training.mjs status      Where am I?
  *   node scripts/training.mjs seed        Set up one of my training orgs
  *   node scripts/training.mjs check       Check my work
+ *   node scripts/training.mjs trigger     Trigger my workflows
  *   node scripts/training.mjs claim       Claim my badge
  *   node scripts/training.mjs simulate    Simulate my teammates
  *   node scripts/training.mjs publish     Publish my pipeline configuration (Level 3)
@@ -23,6 +24,7 @@ const VERBS = {
   status: () => import("./training/status.mjs"),
   seed: () => import("./training/seed.mjs"),
   check: () => import("./training/check.mjs"),
+  trigger: () => import("./training/trigger.mjs"),
   claim: () => import("./training/claim.mjs"),
   simulate: () => import("./training/simulate.mjs"),
   publish: () => import("./training/publish.mjs"),
@@ -42,6 +44,7 @@ ${c.bold("Salesforce DevOps with sfdx-hardis - training commands")}
   ${c.cyan("status")}     Where am I? The level and lab you reached, and what to do next
   ${c.cyan("seed")}       Set up one of my training orgs: deploys the Helios app and its data
   ${c.cyan("check")}      Check my work: verifies a lab and prints your receipt
+  ${c.cyan("trigger")}    Trigger my workflows: pushes one line so a fork whose Actions were just enabled starts its checks
   ${c.cyan("claim")}      Claim my badge: checks the whole level, then opens the claim form filled in
   ${c.cyan("simulate")}   Simulate my teammates: creates the branches and Pull Requests a lab needs
   ${c.cyan("publish")}    Publish my pipeline configuration: the release manager's configuration, through a Pull Request into integration

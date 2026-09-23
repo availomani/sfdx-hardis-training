@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "9d153b14ca4bbf63f6a59585d2773914b7a8d51a"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
 depends_on:
   commands: [hardis:work:new, hardis:work:save, hardis:org:data:import]
@@ -62,9 +62,9 @@ savez déjà traiter les trois.
    et donnez un chemin de fault au Get Records, comme le [Lab 2.2](2-2-fix-a-missing-dependency-deployment-error.md) vous l'a fait faire
 5. **Accordez le nouvel objet et ses champs** sur le permission set `Helios Delivery Manager`, jamais
    sur un profil, comme le [Lab 2.6](2-6-permission-sets-and-profiles.md) vous l'a fait faire : **Read**, **Create** et **Edit** sur
-   Handover Item, et **Read** et **Edit** sur ses champs. L'utilisateur du pipeline porte lui aussi
+   Handover Item, et **Read** et **Edit** sur ses champs. L'utilisateur de la pipeline porte lui aussi
    ce permission set, et le chargement de données du deuxième piège en a besoin, comme au [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md)
-6. **Faites-la descendre** : **Commit changes**, **Recent Changes**, et prenez ce que vous avez fait
+6. **Récupérez les métadonnées** : **Commit changes**, **Recent Changes**, et prenez ce que vous avez fait
    et rien d'autre. Commitez
 7. **Publiez, Pull Request, vert, merge**
 
@@ -132,7 +132,7 @@ Niveau 2, ce qui veut dire refaire l'épreuve finale, pas tout le niveau.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez **Everything in level 2**.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez **Everything in level 2, capstone included**.
 
 Neuf contrôles.
 

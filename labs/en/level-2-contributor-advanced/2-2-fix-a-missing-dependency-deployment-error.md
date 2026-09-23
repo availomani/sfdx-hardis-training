@@ -231,6 +231,10 @@ minutes on question 2 first.
 version 2, and the deployment sends its definition. The integration org keeps its version 1 as
 history, inactive, exactly like `helios-dev` does.
 
+<!-- command-links:start -->
+Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -257,7 +261,7 @@ something specific to your org. Simplify: subject and WhatId are enough.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.2.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.2**.
 
 ## Go deeper
 

@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "3da26b76cc8d4ae750c2ff7df3bae9c4d23b08f5"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download
@@ -40,7 +40,7 @@ des autres à votre place.
 
 !!! tip "Ce lab se suffit à lui-même"
     C'est la même liste que vous soyez ici pour la formation ou que vous rejoigniez un projet qui a
-    déjà un pipeline, et elle se moque du fournisseur git de ce projet : GitHub, GitLab, Azure
+    déjà une pipeline, et elle se moque du fournisseur git de ce projet : GitHub, GitLab, Azure
     DevOps et Bitbucket fonctionnent tous pareil à partir d'ici. Si quelqu'un vous a envoyé ici pour
     vous équiper avant votre premier jour, **terminez ce lab et arrêtez-vous**. Le Lab 1.2 est là où
     commence la partie propre à la formation : orgs Salesforce gratuites, repository d'entraînement,
@@ -74,8 +74,8 @@ des autres à votre place.
 
 !!! tip "Dans Agentforce Vibes, commencez aux extensions"
     Les trois téléchargements ci-dessous sont déjà dans l'onglet : Git, Node.js et l'éditeur
-    lui-même viennent avec. Passez-les et allez directement à **l'installation des extensions**,
-    vers la fin de cette étape. Une différence là-bas : la vue Extensions d'un IDE dans le
+    lui-même viennent avec. Passez-les et allez directement à
+    [l'installation du pack d'extensions](#install-the-extension-pack), vers la fin de cette étape. Une différence là-bas : la vue Extensions d'un IDE dans le
     navigateur cherche dans
     [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) et non dans le
     Visual Studio Marketplace, et le pack est le même, sous le même nom. Et partout où ce lab dit de
@@ -147,8 +147,18 @@ Ouvrez ensuite VS Code et installez les extensions. L'icône **Extensions** **(1
 barre étroite de gauche, et ressemble à quatre petits carrés dont l'un est détaché. Cliquez dessus,
 tapez `hardis` dans la zone de recherche **(2)**, et cliquez sur **Install** sur **SFDX Hardis
 Extension Pack for Salesforce, by Cloudity** **(3)**, publié par Nicolas Vuillamy.
+{ #install-the-extension-pack }
 
 ![La vue Extensions de VS Code, avec hardis tapé dans la zone de recherche](../../_assets/annotated/vscode/extensions-install.png)
+
+Deux choses se passent autour de ce clic, et toutes deux sont faciles à rater :
+
+- VS Code peut demander **Do you trust the publishers of these extensions?**. Répondez **Trust
+  Publishers & Install**. Un pack installe des extensions de plusieurs éditeurs, et il s'arrête là
+  tant que vous ne l'avez pas dit
+- Une fois le pack installé, ouvrez l'icône d'engrenage à côté de lui et cochez **Auto Update**. Le
+  cours et le produit avancent ensemble, et une extension en retard de quelques versions est la
+  première raison pour laquelle un panneau de ces labs ne ressemble pas à sa capture
 
 Le pack installe sfdx-hardis lui-même ainsi que les outils qui vont avec : Git Graph, qui dessine vos
 branches, le support YAML et Markdown que les fichiers de configuration utilisent, et le visualiseur
@@ -178,7 +188,7 @@ puis cliquez.
 
 ![L'en-tête de la Welcome page, avec à sa gauche le bouton d'état des dépendances](../../_assets/annotated/vscode/welcome--setup-button.png)
 
-Le panneau liste chaque dépendance dont le pipeline a besoin, avec la version que vous avez et la
+Le panneau liste chaque dépendance dont la pipeline a besoin, avec la version que vous avez et la
 version à jour. Celles qu'il faut connaître par leur nom :
 
 - **Salesforce CLI** - le programme auquel parle chaque outil Salesforce de votre machine
@@ -220,7 +230,7 @@ vous-même, par exemple :
     sf plugins install sfdx-git-delta
 
 puis il a relancé `sf version` et `sf plugins` et comparé les réponses aux versions publiées sur le
-registre npm. Cette comparaison est toute la raison d'être du panneau : un pipeline casse de façon
+registre npm. Cette comparaison est toute la raison d'être du panneau : une pipeline casse de façon
 déroutante quand une personne a deux versions majeures de retard, et personne ne s'en aperçoit
 jusqu'à ce qu'un déploiement échoue.
 
@@ -261,7 +271,7 @@ Si vous êtes venu ici pour équiper un vrai projet, vous avez fini : ouvrez le 
 équipe et le panneau **DevOps Pipeline** vous dira le reste.
 
 Si vous suivez la formation, le [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) vous construit un petit environnement de travail : une org
-Salesforce gratuite, trois scratch orgs créées à partir d'elle, une copie du projet, et un pipeline.
+Salesforce gratuite, trois scratch orgs créées à partir d'elle, une copie du projet, et une pipeline.
 C'est la dernière étape d'installation.
 
 ## Pour aller plus loin

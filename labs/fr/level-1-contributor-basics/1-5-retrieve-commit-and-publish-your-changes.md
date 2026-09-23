@@ -5,7 +5,7 @@ description: "Faites entrer vos modifications d'org dans Git avec le Metadata Re
 level: 1
 lab: 5
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/pipeline-cards--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -39,7 +39,7 @@ Votre champ existe dans une seule org. Si votre portable rendait l'âme ce soir,
 Publier, c'est ce qui transforme "ça marche dans mon org" en "l'équipe l'a".
 
 C'est l'étape où se concentre l'essentiel de la réflexion dans un projet CI/CD, et celle que les gens
-expédient. Allez lentement ici une fois, et chaque story suivante prendra cinq minutes.
+expédient. Allez lentement cette fois-ci, et chaque story suivante prendra cinq minutes.
 
 ## Avant de commencer
 
@@ -51,8 +51,8 @@ expédient. Allez lentement ici une fois, et chaque story suivante prendra cinq 
 
 ### 1. Sortir vos modifications de l'org
 
-Votre champ est dans Salesforce. Rien de lui n'est encore sur votre machine, et git ne voit jamais
-que ce qui est sur votre machine.
+Votre champ est dans Salesforce. Rien de lui n'est encore sur votre machine, et git voit uniquement
+ce qui est sur votre machine.
 
 Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow**, cliquez sur la carte
 **Commit changes** **(1)**.
@@ -113,6 +113,14 @@ Deux règles prennent cette décision à votre place, et elles sont tout ce lab 
 Le retriever écrit ces quatre composants dans `force-app/` sous forme de fichiers. Il ne change rien
 dans Salesforce et rien sur votre branche pour l'instant.
 
+!!! note "S'il dit que la récupération a échoué à cause de conflits de sources"
+    **Failed to retrieve metadata due to source conflicts** veut dire que les fichiers de votre
+    machine et les composants de l'org ont changé tous les deux depuis leur dernier accord. Ici ce
+    n'est pas un conflit, c'est le but : vous avez modifié l'org exprès, et c'est l'org qui a
+    raison. Prenez l'option qui écrase les fichiers locaux et relancez la récupération. Cela
+    compte sur un vrai projet, où quelqu'un d'autre a pu écrire ces fichiers ; pas ici, où rien
+    d'autre que votre propre org n'y a touché.
+
 ### 4. Commiter ce qui est descendu
 
 Ouvrez le panneau **Source Control** **(1)** : dans la barre de gauche, l'icône dessinée comme trois
@@ -120,6 +128,12 @@ petits cercles reliés par des traits, à la manière d'une branche. Les quatre 
 récupération y attendent **(2)**.
 
 ![Le panneau Source Control avec les quatre fichiers récupérés](../../_assets/annotated/vscode/source-control-retrieved--commit.png)
+
+!!! tip "Lisez la liste en arborescence"
+    Par défaut le panneau affiche les chemins complets, et un chemin Salesforce est assez long pour
+    être illisible. Le menu **...** à droite de l'en-tête **Changes** propose **View as Tree** :
+    les mêmes fichiers, repliés dans les dossiers où ils vivent. Réglez-le une fois et VS Code s'en
+    souvient.
 
 Cliquez sur chacun. VS Code ouvre le *diff* du fichier, l'avant et l'après côte à côte, avec les
 lignes ajoutées en vert et les lignes supprimées en rouge. Lire les quatre prend une minute, et c'est
@@ -202,7 +216,7 @@ quatre doivent toutes y être : le champ `Installation__c.Panels_Required__c`, l
 `Installation__c-Installation Layout`, et les permission sets `Helios_Delivery_Crew` et
 `Helios_Delivery_Manager`.
 
-**Cette liste est votre story, telle que le pipeline la voit.** Si un composant que vous attendiez
+**Cette liste est votre story, telle que la pipeline la voit.** Si un composant que vous attendiez
 manque ici, git ne sait pas que vous l'avez modifié, et il manquera aussi en intégration : le
 déploiement échouera, ou pire, réussira en ne faisant que la moitié de ce que vous vouliez. La lire
 avant chaque push est la seule habitude qui sépare un contributeur qui a des ennuis de déploiement
@@ -254,7 +268,7 @@ même format. Le compteur du bouton de rapport compte les entrées et non les bl
 afficher une de plus que prévu quand une modification entraîne son objet parent avec elle.
 
 `manifest/package.xml` a la même forme, avec tous les composants de l'application. Un projet peut
-demander au pipeline de ne déployer que le delta à la place, avec `useDeltaDeployment`, et celui-ci
+demander à la pipeline de ne déployer que le delta à la place, avec `useDeltaDeployment`, et celui-ci
 ne le fait pas : un déploiement complet est plus lent et n'oublie jamais rien, ce qui est le bon
 compromis pour une formation.
 
@@ -310,6 +324,10 @@ qui a effectué, dans cet ordre :
 Chacune de ces étapes est de la configuration, pas de la magie. Tout ce qu'il a fait est dans
 `config/.sfdx-hardis.yml`, et un projet qui veut un autre comportement change ce fichier.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ### 8. Pousser
@@ -363,7 +381,7 @@ réinitialisé un niveau. Tirez d'abord : panneau Source Control, menu **...**, 
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le Lab 1.5.
+Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le **Lab 1.5**.
 
 Il lit la copie de votre branche dans votre fork (`github.com/my-username/sfdx-hardis-training`),
 celle que Save / Publish a poussée : le champ, le permission set qui l'accorde, et la présentation de

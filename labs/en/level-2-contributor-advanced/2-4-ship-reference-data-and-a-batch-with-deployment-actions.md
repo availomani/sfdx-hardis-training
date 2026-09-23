@@ -328,6 +328,10 @@ replayed identically in every org.** A colleague can read the diff and see that 
 data, a job and a click, which is information that otherwise exists only in the head of whoever
 built it.
 
+<!-- command-links:start -->
+Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com/hardis/org/data/import/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -356,7 +360,7 @@ Scheduled Jobs** and tick it.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.4.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.4**.
 
 ## Go deeper
 

@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/vscode/pipeline-cards--new-user-story
@@ -363,7 +363,7 @@ mieux que merger quelque chose que vous ne comprenez pas.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.7.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.7**.
 
 Le contrôle vérifie des **résultats, pas une procédure** : les deux modifications présentes et
 correctes sur `integration`, aucun marqueur restant. Peu importe comment vous y êtes arrivé, y

@@ -52,14 +52,14 @@ No numbered clicks this time. The loop, in order:
 1. **Start the User Story.** Branch `US-016-crew-notes`, target `integration`, then **Scratch org**
    and **Reuse scratch org helios-dev**. Your org already has US-014, because you built it there
 2. **Build it in `helios-dev`**
-    - A **Long Text Area** field `Crew_Notes__c` on `Installation__c`, 4000 characters, with a
-      description and help text
-    - Grant it **Read** and **Edit** on `Helios Delivery Crew`, because a crew member writes notes.
-      Nobody else gets it yet: the planners' turn comes in Level 2
-    - On the Installation page layout
-    - A list view on Installation called **Open Installations**, visible to all users, with
-      **Filter by Owner** on **All installations**, filtered on a status that is not Completed, and
-      showing the account, the status, the install date and Panels Required
+   - A **Long Text Area** field `Crew_Notes__c` on `Installation__c`, 4000 characters, with a
+     description and help text
+   - Grant it **Read** and **Edit** on `Helios Delivery Crew`, because a crew member writes notes.
+     Nobody else gets it yet: the planners' turn comes in Level 2
+   - On the Installation page layout
+   - A list view on Installation called **Open Installations**, visible to all users, with
+     **Filter by Owner** on **All installations**, filtered on a status that is not Completed, and
+     showing the account, the status, the install date and Panels Required
 3. **Bring it down.** **Commit changes**, **Recent Changes**, **Search Metadata**, and take the
    field, the layout, the list view and the permission set. Nothing else. Commit them
 4. **Publish**, and read the **Git Delta package.xml** report before pushing. Four things, all
@@ -98,7 +98,7 @@ is not failing. Not using it and giving up is.
 
 ## Check your work
 
-Welcome page > **Training: Level 1** > **Check my work**, then pick **Everything in level 1**.
+Welcome page > **Training: Level 1** > **Check my work**, then pick **Everything in level 1, capstone included**.
 
 Six checks should pass. The receipt lines it prints are your progress record, and the claim below
 picks them up on its own.

@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 10
 lang: fr
-source_rev: "e034d4e37f0f8a9f6edd2b57042774d400e5aaac"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
@@ -33,7 +33,7 @@ vous dire dans quel ordre faire les choses.
 ## Avant de commencer
 
 - [ ] Labs 3.1 à 3.9 terminés
-- [ ] Les quatre orgs du pipeline fonctionnelles, les quatre branches qui déploient
+- [ ] Les quatre orgs de la pipeline fonctionnelles, les quatre branches qui déploient
 
 ## La semaine
 
@@ -151,7 +151,7 @@ quelque chose de mergé, et aucun ne reporte un état inachevé sur le suivant.
 ## Vérifiez votre travail
 
 Welcome page > **Training: Level 3** > **Check my work**, puis choisissez
-**Everything in level 3**.
+**Everything in level 3, capstone included**.
 
 Dix contrôles.
 
@@ -183,7 +183,7 @@ Trois choses à faire dans la semaine qui suit, par ordre d'utilité :
 
 **Un : emportez la checklist d'installation vers votre propre projet.** La
 [checklist d'installation](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-checklist/) est
-la liste de tout ce dont un vrai pipeline a besoin. Vous en avez maintenant fait l'essentiel une
+la liste de tout ce dont une vraie pipeline a besoin. Vous en avez maintenant fait l'essentiel une
 fois. Parcourez-la sur le projet où vous travaillez réellement et comptez ce qui manque.
 
 **Deux : supprimez vos orgs de formation, ou gardez-les délibérément.** Les scratch orgs se

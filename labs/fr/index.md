@@ -3,13 +3,13 @@ title: "Formation Salesforce DevOps gratuite et pratique"
 description: "Formation Salesforce DevOps gratuite et pratique en trois niveaux : Git, Pull Requests, pipelines CI/CD et gestion des releases avec sfdx-hardis et VS Code."
 id: home
 lang: fr
-source_rev: "9d153b14ca4bbf63f6a59585d2773914b7a8d51a"
+source_rev: "8cf533715aad51a6a517e15d899f0982af9fb07e"
 ---
 
 # Formation Salesforce DevOps avec sfdx-hardis
 
-Trois parcours gratuits qui vous emmènent de "je n'ai jamais utilisé Git" à "le pipeline, c'est moi
-qui le tiens".
+Trois parcours gratuits qui vous emmènent de "je n'ai jamais utilisé Git" à "la pipeline, c'est moi
+qui la gère".
 
 Vous travaillerez sur un vrai repository, celui d'un installateur de panneaux solaires fictif,
 **Helios Energy**, avec des orgs Salesforce gratuites livrées avec l'application et ses données.
@@ -28,11 +28,11 @@ et l'extension VS Code lance les commandes Git à votre place.
 
 ## Les trois niveaux
 
-| Niveau                                                                 | Pour qui                                                           | Durée | Prérequis          | À la fin, vous savez                                                                                               |
-|------------------------------------------------------------------------|--------------------------------------------------------------------|-------|--------------------|--------------------------------------------------------------------------------------------------------------------|
-| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant un pipeline | 2 h   | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
-| [**2 - Contributeur avancé**](level-2-contributor-advanced/index.md)   | Les mêmes, une fois les histoires faciles derrière eux             | 4 h   | Niveau 1           | Résoudre les erreurs de déploiement, déclarer des deployment actions, gérer les écrasements, résoudre les conflits |
-| [**3 - Release Manager**](level-3-release-manager/index.md)            | Celui ou celle qui tient le pipeline, les orgs et les releases     | 6 h   | Niveaux 1 **et** 2 | Reprendre une org sans pipeline, relire et merger, livrer en UAT et en production, faire un hotfix, monitorer      |
+| Niveau                                                                 | Pour qui                                                            | Durée | Prérequis          | À la fin, vous savez                                                                                               |
+|------------------------------------------------------------------------|---------------------------------------------------------------------|-------|--------------------|--------------------------------------------------------------------------------------------------------------------|
+| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant une pipeline | 2 h   | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
+| [**2 - Contributeur avancé**](level-2-contributor-advanced/index.md)   | Les mêmes, une fois les histoires faciles derrière eux              | 4 h   | Niveau 1           | Résoudre les erreurs de déploiement, déclarer des deployment actions, gérer les écrasements, résoudre les conflits |
+| [**3 - Release Manager**](level-3-release-manager/index.md)            | Celui ou celle qui tient la pipeline, les orgs et les releases      | 6 h   | Niveaux 1 **et** 2 | Reprendre une org sans pipeline, relire et merger, livrer en UAT et en production, faire un hotfix, monitorer      |
 
 Les niveaux 1 et 2 forment ensemble le parcours contributeur, et ils s'adressent **autant aux admins
 qu'aux développeurs**. Nul besoin de connaître Git, la CLI Salesforce ou le DevOps : chaque étape est
@@ -45,7 +45,7 @@ livraison se passe mal, ce qui représente l'essentiel du métier.
     bouton a lancée, les fichiers qu'elle a écrits, et la décision qu'elle a prise à votre place. Un
     admin peut les sauter. Un développeur devrait tous les lire : c'est ainsi que vous apprenez ce
     que fait sfdx-hardis, et c'est ce dont vous aurez besoin le jour où vous le scripterez, où vous
-    déboguerez un pipeline, ou où vous attaquerez le Niveau 3.
+    déboguerez une pipeline, ou où vous attaquerez le Niveau 3.
 
 **Le Niveau 2 est obligatoire avant le Niveau 3.** Un release manager relit les erreurs de
 déploiement, les conflits et les deployment actions des autres. Quelqu'un qui n'en a jamais résolu

@@ -339,7 +339,7 @@ merging something you do not understand.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.7.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.7**.
 
 The check asserts **outcomes, not procedure**: both changes present and correct on `integration`,
 no markers left. However you got there, including resolving in the GitHub web editor or redoing the

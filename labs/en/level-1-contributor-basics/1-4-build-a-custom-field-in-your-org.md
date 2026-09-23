@@ -75,10 +75,15 @@ to it.
 | Field Label    | `Panels Required`                                             |
 | Length         | 4                                                             |
 | Decimal Places | 0                                                             |
-| Field Name     | `Panels_Required__c` (Salesforce fills this from the label)   |
+| Field Name     | `Panels_Required` (Salesforce fills this from the label)      |
 | Description    | `How many panels the crew has to load for this installation.` |
 | Help Text      | `Ask the planner if this is empty.`                           |
 | Required       | **no**                                                        |
+
+The **Field Name** box is what Salesforce calls the API name, and it fills it from the label as you
+type. It shows `Panels_Required`, without the `__c`: Salesforce adds that suffix to every custom
+field when it saves, and the rest of this course, the metadata files included, calls the field
+`Panels_Required__c`.
 
 The field-level security screen arrives with **Visible** already ticked for nearly every profile.
 Clear them: the checkbox in the **Visible** column header toggles the whole column, so click it once
@@ -166,6 +171,12 @@ changes live in one org and nowhere else, which is exactly the state [Lab 1.5](1
 You are in the wrong org. Check the Status section in VS Code, then reopen the org from **Orgs
 Manager**.
 
+**Orgs Manager shows your scratch orgs as disconnected, and offers Reconnect instead of Open.**
+Older versions of the extension read only the connection probe, which a scratch org never carries:
+its Dev Hub answers for it instead. Update the extension, which is what **Auto Update** in
+[Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md) is for, then click **Refresh** in the panel. The
+orgs are fine either way, and **Reconnect** would have signed you in again for nothing.
+
 **The field does not appear on the record page.**
 You skipped the page layout step. **Setup > Object Manager > Installation > Page Layouts >
 Installation Layout**, drag `Panels Required` into the Information section, **Save**.
@@ -180,7 +191,7 @@ the top of the page instead: pick `Installation` there, and the object appears w
 
 ## Check your work
 
-Welcome page > **Training: Level 1** > **Check my work**, then pick Lab 1.4.
+Welcome page > **Training: Level 1** > **Check my work**, then pick **Lab 1.4**.
 
 Nothing of your work has left the org yet, so the check reads the org itself: it asks `helios-dev`
 whether `Panels_Required__c` exists on Installation and whether `Helios_Delivery_Crew` can read it.

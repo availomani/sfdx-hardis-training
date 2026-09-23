@@ -248,6 +248,10 @@ The Apex Tests card runs the same command the pipeline runs:
 and the linters, on GitHub's machines, run MegaLinter with the Salesforce flavor. If you ever want
 them on your own machine, that is `npx mega-linter-runner --flavor salesforce`, and it needs Docker.
 
+<!-- command-links:start -->
+Command documentation: [hardis:org:test:apex](https://sfdx-hardis.cloudity.com/hardis/org/test/apex/)
+<!-- command-links:end -->
+
 </details>
 
 ### 6. Push and merge
@@ -311,7 +315,7 @@ the org.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.5.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.5**.
 
 ## Go deeper
 

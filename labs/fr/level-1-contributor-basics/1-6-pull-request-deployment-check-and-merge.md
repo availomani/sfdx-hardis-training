@@ -5,12 +5,12 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
   - annotated/web/github-pr-merge
-  - annotated/web/github-actions-deploy
+  - annotated/vscode/devops-pipeline--deployment-status
   - annotated/web/github-pr-deployed
   - annotated/vscode/work-save-completed
   - annotated/web/github-pr-merge-squash
@@ -43,7 +43,7 @@ C'est tout l'intérêt de cette façon de travailler. Vous apprenez que votre d�
 qu'il est encore à vous de le corriger, pas le soir de la mise en production.
 
 !!! info "La Pull Request, en une phrase"
-    Une Pull Request demande qu'une branche soit repliée dans une autre, la vôtre dans `integration`
+    Une Pull Request demande qu'une branche soit fusionnée dans une autre, la vôtre dans `integration`
     ici. C'est une page sur GitHub qui contient trois choses : ce que votre branche change, le
     résultat de chaque contrôle qui a tourné dessus, et la conversation sur l'opportunité de la
     faire entrer. Rien ne bouge tant que quelqu'un ne clique pas sur Merge. Tout le monde dit "PR".
@@ -71,10 +71,13 @@ suivants s'en servent. **(2)** est le `package.xml` généré par la commande, c
 [Lab 2.3](../level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md).
 
 !!! note "Si vous avez fermé ce panneau"
-    Rien n'est perdu. Ouvrez votre fork (`github.com/my-username/sfdx-hardis-training`) sur GitHub :
-    il affiche une bannière qui propose d'ouvrir une Pull Request pour la branche que vous venez de
-    pousser. La pastille **+ PR** que vous avez peut-être remarquée dans le diagramme DevOps Pipeline
-    est pour les branches majeures, pas pour votre branche de feature.
+    Rien n'est perdu, et il y a deux chemins de retour. Relancez **Save / Publish my User Story** :
+    chaque étape vérifie avant d'agir, il n'y a plus rien à commiter ni à pousser, et elle se
+    termine sur la même barre d'actions. Ou ouvrez votre fork
+    (`github.com/my-username/sfdx-hardis-training`) sur GitHub : il affiche une bannière qui propose
+    d'ouvrir une Pull Request pour la branche que vous venez de pousser. La pastille **+ PR** que
+    vous avez peut-être remarquée dans le diagramme DevOps Pipeline est pour les branches majeures,
+    pas pour votre branche de feature.
 
 Vérifiez deux choses avant de cliquer, à chaque fois sans exception :
 
@@ -89,8 +92,17 @@ Vérifiez deux choses avant de cliquer, à chaque fois sans exception :
 
 Le titre indique **Features/us 014 panels required** : GitHub l'invente à partir du nom de branche
 dès qu'une branche porte plus d'un commit, et la vôtre en porte deux, celui que vous avez écrit et
-celui qu'a ajouté Save / Publish. Remplacez-le par la première ligne de votre message de commit,
-`US-014 Panels Required on Installation`, et collez le reste de ce message dans la description.
+celui qu'a ajouté Save / Publish. Remplacez-le par la première ligne du message de commit que vous
+avez écrit au [Lab 1.5, étape 4](1-5-retrieve-commit-and-publish-your-changes.md), `US-014 Panels
+Required on Installation`.
+
+La zone de description n'est pas vide : ce repository fournit un template de Pull Request, et
+GitHub l'y place pour vous. **Remplacez-le entièrement.** Sous **What this changes**, collez le
+reste de ce même message de commit, le paragraphe qui explique pourquoi ; renseignez l'identifiant
+de la story ; et dites où le relecteur doit regarder. Supprimez les lignes de commentaire et tout
+titre sous lequel vous n'avez rien à mettre. Un template est un rappel de ce qu'il faut écrire, pas
+quelque chose à rendre tel quel.
+
 C'est ce que le relecteur lit en premier. Cliquez sur **Create pull request**.
 
 ### 2. Regarder les contrôles tourner
@@ -107,6 +119,22 @@ Ouvrez l'onglet **Checks** **(1)**. Deux d'entre eux comptent ici, et les deux d
 Cliquez sur l'un ou l'autre pour lire son log pendant qu'il tourne. Le contrôle de déploiement prend
 environ deux minutes, et vous pouvez le voir s'authentifier avec votre secret, calculer ce qui a
 changé, et lancer le déploiement.
+
+!!! warning "Aucun contrôle du tout ? Actions est désactivé sur votre fork"
+    Si l'onglet Checks est vide et que rien ne démarre jamais, GitHub n'a pas activé Actions sur
+    votre copie du repository. Il le fait pour tout nouveau fork, et c'est volontaire : un fork
+    pourrait sinon lancer les workflows de quelqu'un d'autre dans votre compte dès sa création.
+    **Set up my training environment** les active quand il le peut, et le dit quand il ne le peut
+    pas.
+
+    Ouvrez l'onglet **Actions** de votre fork (`github.com/my-username/sfdx-hardis-training`) et
+    cliquez sur **I understand my workflows, go ahead and enable them**. Un seul clic. Revenez
+    ensuite ici et lancez **Training: Level 1 > Trigger my workflows** : il pousse une modification
+    d'une ligne sur votre branche, et c'est ce qui fait démarrer les contrôles sur une Pull Request
+    ouverte pendant qu'Actions était désactivé.
+
+    C'est une affaire de fork, et rien que de fork. Sur un vrai projet, vous rejoignez un
+    repository dont l'automatisation tourne déjà, et il n'y a rien à activer.
 
 ### 3. Lire le commentaire sfdx-hardis
 
@@ -157,8 +185,8 @@ base branch**, et le bouton est actif.
 
 Il est actif *parce que* les deux sont verts. La mise en place de votre environnement au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) a
 protégé `integration` : tant qu'un contrôle tourne ou est rouge, la boîte affiche **Merging is
-blocked** et le bouton reste gris, pour vous comme pour n'importe qui d'autre. C'est la règle de tout
-vrai pipeline, et ici GitHub l'impose au lieu de faire confiance à chacun pour lire les contrôles
+blocked** et le bouton reste gris, pour vous comme pour n'importe qui d'autre. C'est la règle de toute
+vraie pipeline, et ici GitHub l'impose au lieu de faire confiance à chacun pour lire les contrôles
 d'abord.
 
 ![La boîte de merge d'une Pull Request, tous les contrôles passés](../../_assets/annotated/web/github-pr-merge.png)
@@ -201,15 +229,20 @@ une chose de plus dans la liste de tout le monde, sans aucun bénéfice.
 Merger dans `integration` démarre un deuxième job, et celui-là n'est pas un contrôle : il déploie
 pour de vrai.
 
-Allez dans l'onglet **Actions** **(1)** de votre fork
-(`github.com/my-username/sfdx-hardis-training`). Le merge a démarré deux exécutions sur
-`integration` : celle à regarder est **Process Deployment (sfdx-hardis)** **(2)**, et elle prend
-environ trois minutes. L'autre, **Mega-Linter**, revérifie le code après le merge.
+Revenez dans VS Code et ouvrez le panneau **DevOps Pipeline**. La flèche qui va de la branche
+`integration` vers son org porte une pastille, et pendant le déploiement cette pastille le dit et
+clignote. C'est l'écran à regarder, et celui que vous garderez ouvert sur un vrai projet : il
+répond à "est-ce que mon travail est dans l'org" sans quitter l'éditeur.
 
-![L'onglet Actions d'un fork, avec l'exécution de déploiement en haut](../../_assets/annotated/web/github-actions-deploy.png)
+![Le panneau DevOps Pipeline, avec le statut du déploiement sur la flèche vers l'org](../../_assets/annotated/vscode/devops-pipeline--deployment-status.png)
 
-Quand elle se termine, elle écrit un deuxième commentaire sur la Pull Request que vous venez de
-merger :
+La pastille est aussi un lien : cliquez dessus et GitHub s'ouvre sur le log de cette exécution,
+**Process Deployment (sfdx-hardis)**, qui prend environ trois minutes. Vous n'avez pas besoin de le
+lire aujourd'hui. Il est là pour le jour où quelque chose échoue, et le [Lab 3.3](../level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md) est le lab qui
+en lit un ligne par ligne.
+
+Quand le déploiement se termine, il écrit un deuxième commentaire sur la Pull Request que vous venez
+de merger :
 
 ![Le commentaire que sfdx-hardis écrit après le déploiement de merge](../../_assets/annotated/web/github-pr-deployed.png)
 
@@ -254,6 +287,10 @@ Le niveau de test vient de `config/.sfdx-hardis.yml` :
 
 `RunLocalTests` lance tous les tests de l'org sauf ceux des packages gérés. 75 % est le minimum
 Salesforce, et ce projet demande 80, comme la plupart des vrais.
+
+<!-- command-links:start -->
+Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
+<!-- command-links:end -->
 
 </details>
 
@@ -306,7 +343,7 @@ n'est pas dans `manifest/package.xml`, et le [Lab 1.5, étape 6](1-5-retrieve-co
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le Lab 1.6.
+Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le **Lab 1.6**.
 
 ## Pour aller plus loin
 

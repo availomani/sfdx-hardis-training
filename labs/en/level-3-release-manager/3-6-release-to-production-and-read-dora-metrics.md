@@ -210,6 +210,10 @@ The numbers are honest in a way a dashboard somebody fills in by hand never is. 
 deployment frequency by editing a spreadsheet. They are also narrower than the DORA names suggest,
 and a release manager quoting them should know which part they cover.
 
+<!-- command-links:start -->
+Command documentation: [hardis:doc:dora-report](https://sfdx-hardis.cloudity.com/hardis/doc/dora-report/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -244,7 +248,7 @@ fallback cannot tell when a Pull Request was opened.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.6.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.6**.
 
 ## Go deeper
 

@@ -112,14 +112,19 @@ Back in VS Code, on the Welcome page, click **Orgs Manager**.
 
 The picture was taken at the end of this lab. For now your table is empty.
 
-1. Click **Add Org** **(1)**, then pick **🌍 Login to another org**, the first entry in the list that
-   opens
-2. It asks which address to sign in at, and it suggests the sandbox one. **Change it**: take
+1. Click **Add Org** **(1)**. If it asks **Do you want to set the selected org as your default
+   org?**, answer **Yes**: that is what points the rest of the course at this org without asking
+   again
+2. Pick **🌍 Login to another org**, the first entry in the list that opens
+3. It asks which address to sign in at, and it suggests the sandbox one. **Change it**: take
    **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)**, because a Developer
    Edition org is not a sandbox. Pick the sandbox answer here and the login page refuses your
    username
-3. Your browser opens the Salesforce login page. Sign in with the username from the email, and allow
-   access
+4. Your browser opens the Salesforce login page. If it already offers usernames you signed in with
+   before, click **Log In with Different Username** first, then use the one from the email
+5. Salesforce asks **Allow Access?** for the Salesforce CLI. Click **Allow**. This is the screen
+   that hands the CLI the token it stores on your machine, so refusing it leaves the org
+   unconnected
 
 Back in VS Code, the panel asks you one more thing:
 
@@ -156,6 +161,10 @@ credential is yours and stays on your machine. Then it named the org:
 The alias is the name everything else uses. Every sfdx-hardis command that wants an org accepts
 `--target-org helios-prod` from now on, and so does the Salesforce CLI itself.
 
+<!-- command-links:start -->
+Command documentation: [hardis:org:select](https://sfdx-hardis.cloudity.com/hardis/org/select/)
+<!-- command-links:end -->
+
 </details>
 
 ### 3. Get the repository
@@ -184,6 +193,11 @@ If GitHub asks you to sign in, let VS Code handle it: **Sign in with your browse
     **Clone Repository** asks where to put the project, so there is nothing to prepare. The two
     buttons in the picture only appear while no folder is open: once one is, the Source Control
     panel shows that folder's changes instead.
+
+!!! tip "In Agentforce Vibes, keep the folder it offers"
+    The tab opens on a workspace of its own, already short, already outside any sync client. Take
+    the folder the dialog suggests rather than typing a path: there is no `C:\git` to make, and a
+    path you invent there is somewhere the tab may not keep.
 
 <details markdown="1"><summary>Under the hood: what opening the folder told the extension</summary>
 
@@ -215,26 +229,18 @@ defaults.
     change until it starts again. Close VS Code completely, windows and all, and open it again on
     the project. Skip this and step 5 stops at once, saying the GitHub CLI is not installed.
 
-!!! tip "In Agentforce Vibes, the installer is a different one"
-    The tab runs on Linux, so neither the Windows MSI nor the macOS binary is your download: the
-    same page carries the Linux instructions, a package manager line or a tarball to unpack, and
-    the terminal of the tab is where they go. Reload the tab afterwards rather than restarting
-    VS Code.
+!!! tip "In Agentforce Vibes, skip this step"
+    `gh` is already installed in the tab. Go straight to step 5: the first command that needs it
+    signs you in, and nothing here is missing.
 
-    `gh` is not only for this step, so it is worth getting right here. The commands behind
-    **Publish my work**, **Simulate my teammates**, **Check my work** and **Claim my badge** all
-    call it: it opens your Pull Requests, plays your teammates' merges, reads the secrets of your
-    fork to check a level, and looks at your star and your repository's visibility when you claim.
-    A container that will not let you install it will stop you later, not here.
+    `gh` is not only for this step, which is why it is worth knowing it is there. The commands
+    behind **Publish my work**, **Simulate my teammates**, **Check my work** and **Claim my badge**
+    all call it: it opens your Pull Requests, plays your teammates' merges, reads the secrets of
+    your fork to check a level, and looks at your star and your repository's visibility when you
+    claim.
 
 You never have to run `gh` yourself. The command in step 5 uses it and signs you in through your
 browser the first time it needs to.
-
-!!! tip "What the sign-in looks like"
-    The first run stops on a line like `Your one-time code is 5989-F9D9`, and opens
-    [github.com/login/device](https://github.com/login/device) in your browser. Type that code
-    there, approve the sign-in, and come back: the command carries on by itself, and never asks
-    again. If the browser did not open, the address is printed right under the code.
 
 !!! note "This one is for the course, and for GitHub"
     It is here so that one click can hand you a working pipeline instead of a dozen forms. Nothing
@@ -276,6 +282,18 @@ first, in this folder and in every other.
     up, read that line first. It is the only moment anything shows you what a custom menu really
     does.
 
+!!! tip "The first thing it does is sign you in to GitHub"
+    Step 1 of the eight below makes your own copy of the repository, and that needs your GitHub
+    account. The command stops on a line like `Your one-time code is 5989-F9D9` and opens
+    [github.com/login/device](https://github.com/login/device) in your browser. Type the code
+    there, then **accept everything github.com asks for**: the authorisation screen and each
+    permission it lists. It is asking to create a repository in your account and to write the
+    secrets the CI jobs read, which is the whole of what this step does. Come back to VS Code and
+    the command carries on by itself, and never asks again.
+
+    If the browser did not open, the address is printed right under the code. In Agentforce Vibes
+    it does not open on its own: click the printed link.
+
 It does not ask which org to use: you connected one, named `helios-prod`, so it takes that one, says
 so, and asks only for a yes before it changes anything. Then it works through eight steps and tells
 you as it goes:
@@ -315,6 +333,11 @@ OK  uat now takes changes through a Pull Request only, merged once its checks ar
 
 Count on fifteen to twenty minutes, nearly all of it steps 4 and 5, when Salesforce creates the orgs
 and the app is deployed into all three at once. Nothing prints while that happens. It is not stuck.
+
+!!! tip "In Agentforce Vibes it is much faster"
+    The same eight steps took about three minutes in the tab, because the machine running them
+    sits next to Salesforce rather than at the end of your home connection. Fifteen to twenty is
+    the figure to plan for on a laptop; anything faster is a good surprise.
 
 Running it twice is harmless: every step checks before it acts, and an org that already exists is
 kept. If one of the steps cannot be done from here, it says so and tells you which button to click
@@ -364,6 +387,10 @@ rule on `preprod` and `main` in [Lab 3.1](../level-3-release-manager/3-1-configu
 `enforce_admins` is the part that matters: without it, the owner of the fork, you, could still
 merge on red. Setting up the environment and resetting a level lift that protection for the one
 push they make to those branches themselves, and put it back straight after.
+
+<!-- command-links:start -->
+Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com/hardis/org/data/import/)
+<!-- command-links:end -->
 
 </details>
 
@@ -492,9 +519,23 @@ job rather than preparing to do it: a ticket, a branch, a change, a Pull Request
 **It says the GitHub CLI is not installed, and you just installed it.**
 VS Code was open during the install and does not see it yet. Close VS Code completely, open it
 again, and click the card again. If it still says so, install it from
-[cli.github.com](https://cli.github.com/), as step 4 shows. In Agentforce Vibes, reload the browser
-tab instead of restarting VS Code, and check that the Linux install of step 4 actually finished:
-`gh --version` in the terminal answers if it did.
+[cli.github.com](https://cli.github.com/), as step 4 shows. In Agentforce Vibes it is already
+there, so reload the browser tab instead of restarting VS Code.
+
+**It says the fork could not be created.**
+GitHub refused it, and the usual reasons are a repository of that name already in your account, an
+organisation account that does not allow forks, or a sign-in that has not been given permission to
+create repositories. Make the fork yourself, which takes one screen:
+
+1. Open [github.com/hardisgroupcom/sfdx-hardis-training/fork](https://github.com/hardisgroupcom/sfdx-hardis-training/fork)
+2. Leave the owner on your own account and the name on `sfdx-hardis-training`
+3. **Untick "Copy the `main` branch only"**. The course needs every branch, and this is the single
+   most common way a fork ends up unable to work
+4. Click **Create fork**, and wait for the page to land on your copy
+
+Then click **Set up my training environment** again: it sees the fork, says so, and carries on with
+everything else. If GitHub says the name is taken, open the repository it already has under that
+name: if it is an old fork of this course, use it; if it is not, rename it and fork again.
 
 **It says no connected org was found.**
 Step 2 is not finished: connect your Developer Edition org in **Orgs Manager** and name it
@@ -544,7 +585,7 @@ Sign out of GitHub in VS Code (**Accounts** icon, bottom left) and sign in again
 
 ## Check your work
 
-Welcome page > **Training: Level 1** > **Check my work**, then pick Lab 1.2.
+Welcome page > **Training: Level 1** > **Check my work**, then pick **Lab 1.2**.
 
 ## Go deeper
 

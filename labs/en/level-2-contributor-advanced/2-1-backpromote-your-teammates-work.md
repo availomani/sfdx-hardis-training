@@ -172,6 +172,10 @@ The history is not on your computer either. sfdx-hardis records what reached you
 to start, from any machine and any teammate. That is also why the command needs a git provider
 token: without one it cannot read its own history, and it stops.
 
+<!-- command-links:start -->
+Command documentation: [hardis:work:backpromote](https://sfdx-hardis.cloudity.com/hardis/work/backpromote/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -195,7 +199,7 @@ committed it, and the deployment only changed the org.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.1.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.1**.
 
 ## Go deeper
 

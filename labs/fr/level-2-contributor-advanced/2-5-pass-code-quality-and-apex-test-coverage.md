@@ -5,7 +5,7 @@ description: "Corrigez un avertissement PMD et la couverture de code Apex qui bl
 level: 2
 lab: 5
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -44,7 +44,7 @@ ne concerne une métadonnée fausse :
 La première est un choix de ce projet : il pourrait faire refuser l'analyseur, et il ne le fait pas.
 La seconde est aussi un seuil de ce projet : 80 % de l'Apex de l'org exécuté par les tests, au-dessus
 des 75 % qu'exige Salesforce lui-même. Savoir lesquelles de vos barrières avertissent et lesquelles
-refusent est la moitié du travail sur un pipeline, ce lab vous en fait donc rencontrer une de chaque.
+refusent est la moitié du travail sur une pipeline, ce lab vous en fait donc rencontrer une de chaque.
 
 !!! note "Admins, ce lab est aussi pour vous"
     Il y a de l'Apex dedans, et vous n'en écrirez pas une ligne : chaque bloc se copie depuis cette
@@ -71,7 +71,7 @@ Pipeline. Branche `US-027-schedule-by-availability`, cible `integration`, org `h
 ### 2. Ajouter la modification telle que les gens l'écrivent vraiment
 
 Le planificateur veut vérifier plusieurs installations d'un coup. Ouvrez
-`force-app/main/default/classes/InstallationScheduler.cls`, le fichier que le pipeline déploie déjà,
+`force-app/main/default/classes/InstallationScheduler.cls`, le fichier que la pipeline déploie déjà,
 et collez-y la méthode ci-dessous, exactement comme l'a fait le développeur qui l'a écrite en
 premier. C'est la façon évidente de faire, et c'est bien le problème :
 
@@ -222,13 +222,13 @@ du panneau qui s'ouvre, cliquez sur la carte **Apex Tests** **(1)** et choisisse
 
 ![L'Org Monitoring Workbench, avec la carte Apex Tests](../../_assets/annotated/vscode/org-monitoring--apex-tests.png)
 
-Elle lance les tests Apex de l'org et vérifie le même seuil de couverture que le pipeline : vous avez
+Elle lance les tests Apex de l'org et vérifie le même seuil de couverture que la pipeline : vous avez
 donc le succès, l'échec et le pourcentage sans rien pousser. Laissez-lui quelques minutes : une
 scratch org met ses exécutions de tests en file d'attente, et la première de la journée peut prendre
 dix minutes.
 
 !!! note "La bannière du haut est normale"
-    *Org Monitoring Not Present (CI/CD Repo)* veut dire que ce repository est un pipeline de livraison et
+    *Org Monitoring Not Present (CI/CD Repo)* veut dire que ce repository est une pipeline de livraison et
     non un repository de monitoring. Les cartes en dessous fonctionnent quand même sur l'org que vous
     choisissez. Le Lab 3.8 est là où le monitoring obtient son propre repository.
 
@@ -246,13 +246,17 @@ Niveau 3 montre la vue du release manager sur le même rapport.
 
 <details markdown="1"><summary>Sous le capot : les deux commandes derrière ces cartes</summary>
 
-La carte Apex Tests lance la même commande que le pipeline :
+La carte Apex Tests lance la même commande que la pipeline :
 
     sf hardis:org:test:apex
 
 et les linters, sur les machines de GitHub, lancent MegaLinter avec la saveur Salesforce. Si vous
 voulez un jour les avoir sur votre machine, c'est `npx mega-linter-runner --flavor salesforce`, et
 il faut Docker.
+
+<!-- command-links:start -->
+Documentation de la commande : [hardis:org:test:apex](https://sfdx-hardis.cloudity.com/hardis/org/test/apex/)
+<!-- command-links:end -->
 
 </details>
 
@@ -318,7 +322,7 @@ besoin, plutôt que de faire confiance à ce qui se trouve dans l'org.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.5.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.5**.
 
 ## Pour aller plus loin
 

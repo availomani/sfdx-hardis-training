@@ -191,6 +191,10 @@ The rule to take away: **if a permission can live on a Permission Set, put it th
 an sfdx-hardis opinion, it is what Salesforce has been recommending for years, and this pipeline
 enforces it rather than hoping.
 
+<!-- command-links:start -->
+Command documentation: [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -216,7 +220,7 @@ It was committed after a retrieve and never went through the cleaning. Check tha
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.6.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.6**.
 
 ## Go deeper
 

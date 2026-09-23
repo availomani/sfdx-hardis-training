@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/welcome-custom-menu-3
@@ -123,7 +123,7 @@ Comparez ensuite avec ce qu'a écrit Mariia. La description dit *the crew capaci
 second column*. Elle ne dit rien d'un champ qui s'en va. C'est l'écart auquel sert une revue : le
 diff dit une chose, la description une autre, et une seule des deux est ce qui sera déployé.
 
-**Rien dans le pipeline ne peut attraper cela.** Une présentation de page avec un champ de moins est
+**Rien dans la pipeline ne peut attraper cela.** Une présentation de page avec un champ de moins est
 un déploiement valide, la ligne de compteurs dit `updated: 1`, et seul quelqu'un qui connaît l'org
 peut voir ce qui manque.
 
@@ -194,6 +194,10 @@ commentaire donne à cela un nombre dans la ligne de compteurs, et un tableau se
 Flows sont en jeu. Si les compteurs d'une Pull Request montrent quoi que ce soit de supprimé, le
 commentaire vous a dit tout ce qu'il dira : le reste, c'est le diff.
 
+<!-- command-links:start -->
+Documentation des commandes : [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -221,7 +225,7 @@ d'abord sur **Restore branch** en bas de la Pull Request mergée.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le Lab 3.2.
+Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **Lab 3.2**.
 
 ## Pour aller plus loin
 

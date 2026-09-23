@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "e3bdc82373a535bbb1283cfbfcde593ff067e815"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -197,7 +197,7 @@ comme faite. Laissez-la décochée et la promotion suivante vous la redemandera.
 
 Mergez la promotion. L'exécution **Process Deployment (sfdx-hardis)** démarre, cette fois sur `uat`.
 
-C'est le premier déploiement vers cette org par le pipeline : il sera donc plus gros que ceux vers
+C'est le premier déploiement vers cette org par la pipeline : il sera donc plus gros que ceux vers
 integration, l'UAT est en retard de tout ce que l'équipe a fait. Comptez plusieurs minutes.
 
 Quand il se termine, faites les étapes manuelles que le commentaire listait, dans `helios-uat`.
@@ -326,6 +326,10 @@ Il existe une fonctionnalité en Beta pour les équipes qui veulent promouvoir u
 promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). Elle vaut d'être
 lue une fois que vous aurez fait quelques livraisons de la façon ordinaire.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cloudity.com/hardis/doc/release-notes/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -358,7 +362,7 @@ la recherche de Pull Requests n'a donc rien renvoyé et s'est contentée d'avert
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le Lab 3.5.
+Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **Lab 3.5**.
 
 ## Pour aller plus loin
 

@@ -4,7 +4,7 @@ description: "Formation Salesforce DevOps gratuite et pratique pour admins et d�
 id: l1-home
 level: 1
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 ---
 
 # Niveau 1 - Contributeur Salesforce DevOps, les bases
@@ -19,7 +19,7 @@ Vous avez rejoint **Helios Energy** lundi. Ils installent des panneaux solaires 
 toute l'Europe du Sud, les ventes tournent sur Salesforce, et les équipes de pose suivent chaque
 installation dans une application sur mesure appelée **Helios Delivery**.
 
-L'équipe a déjà un pipeline. Il y a un repository Git, une org d'intégration, un contrôle de Pull
+L'équipe a déjà une pipeline. Il y a un repository Git, une org d'intégration, un contrôle de Pull
 Request qui déploie votre travail avant que quiconque le relise. Personne ne va vous apprendre Git :
 l'extension VS Code fait la partie technique, et d'ici vendredi on attend de vous que vous ayez
 livré votre première story.
@@ -39,7 +39,7 @@ s'en charge.
 | **Clone**        | Télécharger un repository sur votre portable, pour que VS Code puisse l'ouvrir.                                                                                            |
 | **Branch**       | Une ligne de travail nommée à l'intérieur d'un repository. Vous changez ce qu'il faut sur la vôtre, et la version de l'équipe reste intacte jusqu'au merge.                |
 | **Commit**       | Enregistrer un ensemble de modifications dans l'historique du repository, avec un message qui dit pourquoi.                                                                |
-| **Pull Request** | Demander que votre branche soit repliée dans celle de l'équipe. C'est là que les contrôles tournent et qu'un collègue lit ce que vous avez fait. Tout le monde dit "PR".   |
+| **Pull Request** | Demander que votre branche soit fusionnée dans celle de l'équipe. C'est là que les contrôles tournent et qu'un collègue lit ce que vous avez fait. Tout le monde dit "PR". |
 
 ## Ce que vous allez faire
 
@@ -61,15 +61,16 @@ seul menu. Ouvrez la **Welcome page**, et sous **CUSTOM MENUS** cliquez sur la c
 
 ![Le menu de formation du niveau 1, ouvert sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu.png)
 
-Elles sont cinq, et les labs les appellent par ces noms :
+Elles sont six, et les labs les appellent par ces noms :
 
-| Commande                           | Ce qu'elle fait                                                                  |
-|------------------------------------|----------------------------------------------------------------------------------|
-| **Set up my training environment** | Forke le repository, crée vos scratch orgs avec l'application, câble le pipeline |
-| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite     |
-| **Check my work**                  | Vérifie le lab que vous venez de terminer et affiche votre reçu                  |
-| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie        |
-| **Reset this level**               | Remet votre repository au début du Niveau 1                                      |
+| Commande                           | Ce qu'elle fait                                                                   |
+|------------------------------------|-----------------------------------------------------------------------------------|
+| **Set up my training environment** | Forke le repository, crée vos scratch orgs avec l'application, câble la pipeline  |
+| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite      |
+| **Check my work**                  | Vérifie le lab que vous venez de terminer et affiche votre reçu                   |
+| **Trigger my workflows**           | Démarre les contrôles de votre Pull Request quand Actions était coupé sur le fork |
+| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie         |
+| **Reset this level**               | Remet votre repository au début du Niveau 1                                       |
 
 Il y a un menu par niveau, et chacun ne contient que ce dont ce niveau a besoin : rien de ce que vous
 avez sous les yeux ne concerne un lab que vous n'avez pas encore atteint.
@@ -87,7 +88,7 @@ repository qui n'appartient qu'à vous. Vos modifications, vos erreurs, vos corr
 ce que vous faites n'atteint le travail de qui que ce soit d'autre. Le Lab 1.2 met cette copie en
 place pour vous en un clic, et explique pourquoi il ne peut pas en être autrement.
 
-**Vous cliquez, vous ne tapez pas.** Chaque action de ces labs est un bouton de l'extension VS Code.
+**Vous cliquez, vous ne tapez pas de ligne de commande.** Chaque action de ces labs est un bouton de l'extension VS Code.
 Là où une commande apparaît, c'est dans un bloc **Sous le capot**, qui explique ce que le bouton a
 fait. Vous n'avez jamais à la retaper.
 

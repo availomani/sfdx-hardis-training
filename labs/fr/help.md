@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "212fa1300e5e31ea586c7d1d03747a5636924f54"
+source_rev: "03f914446cf04a638dc913d7ab6ca3c037018ce7"
 ---
 
 # Aide
@@ -40,12 +40,12 @@ qui sort chaque mois a commencé par le rapport de bug de quelqu'un.
 
 Ce cours se déroule dans une entreprise fictive, avec des orgs gratuites et un repository que vous
 créez pour vous. Un vrai projet apporte ce qu'aucun cours ne peut vous donner : une org avec dix
-ans d'histoire dedans, une équipe qui doit continuer à livrer pendant que le pipeline se construit,
+ans d'histoire dedans, une équipe qui doit continuer à livrer pendant que la pipeline se construit,
 et un calendrier de releases. Cloudity fait ce travail en prestation, par-dessus le même produit
 open source que ce cours enseigne.
 
 - **Mise en place.** Votre équipe pilote et un expert Cloudity relit le modèle de branches, le
-  pipeline et la configuration, ou bien Cloudity met tout le pipeline en place sur votre plateforme
+  pipeline et la configuration, ou bien Cloudity met toute la pipeline en place sur votre plateforme
   Git et vous le transmet.
 - **Formation.** Des sessions pour les contributeurs, les release managers et les chefs de projet,
   et l'accompagnement au changement qui fait qu'une nouvelle façon de travailler tient dans la

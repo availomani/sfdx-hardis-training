@@ -56,6 +56,12 @@ jobs:
       - name: Every table's pipes line up
         run: node scripts/i18n/align-tables.mjs --check
 
+      # A command named in an Under the hood block without a link to its page is
+      # a dead end for the one reader who wanted the flags. Caught here rather
+      # than on main, because the publish is too late to notice it.
+      - name: Every Under the hood block links the commands it names
+        run: node scripts/build/lab-command-links.mjs --check
+
       # Reports, never fails: a deliberate difference is allowed, and the French
       # home page has one. It is here to be read on the Pull Request, because a
       # translation that lost an image or an "Under the hood" block shows up

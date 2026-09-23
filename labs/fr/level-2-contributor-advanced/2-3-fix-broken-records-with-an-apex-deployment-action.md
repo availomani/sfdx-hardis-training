@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -293,6 +293,10 @@ se rejoue en UAT et en production des mois plus tard, sans que personne se souvi
 existait. C'est toute la valeur de la chose : **la connaissance est dans le repository, pas dans la
 tête de quelqu'un.**
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -332,7 +336,7 @@ essais.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.3.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.3**.
 
 ## Pour aller plus loin
 

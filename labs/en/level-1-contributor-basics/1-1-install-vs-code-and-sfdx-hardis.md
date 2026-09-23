@@ -71,7 +71,8 @@ five things have to be on your machine, and the last of them installs most of th
 
 !!! tip "In Agentforce Vibes, start at the extensions"
     The three downloads below are already in the tab: Git, Node.js and the editor itself come with
-    it. Skip them and go straight to **the extensions**, near the end of this step. One difference
+    it. Skip them and go straight to [installing the extension pack](#install-the-extension-pack),
+    near the end of this step. One difference
     there: the Extensions view of a browser IDE searches
     [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) rather than the
     Visual Studio Marketplace, and the pack is the same one under the same name. And wherever this
@@ -139,8 +140,17 @@ Then open VS Code and install the extensions. The **Extensions** icon **(1)** si
 down the left, and looks like four small squares with one lifted away. Click it, type `hardis` in
 the search box **(2)**, and click **Install** on **SFDX Hardis Extension Pack for Salesforce, by
 Cloudity** **(3)**, published by Nicolas Vuillamy.
+{ #install-the-extension-pack }
 
 ![The Extensions view of VS Code, with hardis typed in the search box](../../_assets/annotated/vscode/extensions-install.png)
+
+Two things happen around that click, and both are easy to miss:
+
+- VS Code may ask **Do you trust the publishers of these extensions?**. Answer **Trust Publishers &
+  Install**. A pack installs extensions from several publishers, and it stops there until you say so
+- Once it is installed, open the gear icon next to the pack and tick **Auto Update**. The course and
+  the product move together, and an extension a few versions behind is the most common reason a
+  panel in these labs does not look like its screenshot
 
 The pack installs sfdx-hardis itself along with the tools that go with it: Git Graph, which draws
 your branches, the YAML and Markdown support the configuration files use, and the Apex log viewer.

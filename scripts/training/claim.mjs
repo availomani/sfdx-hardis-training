@@ -36,6 +36,18 @@ function starOf(levelDef) {
  */
 async function askTrailblazer(suggestion) {
   let value = suggestion;
+  // Said before the question, not only after a miss: most people have never
+  // had to type this, and the suggestion below is their GitHub handle, which
+  // looks plausible enough to accept without checking.
+  info("");
+  info("  Where to find your Trailblazer username:");
+  info("    1. Sign in at https://trailhead.salesforce.com");
+  info("    2. Click your picture, top right, then View Profile");
+  info("    3. The address of that page ends with it:");
+  info(c.dim("       https://www.salesforce.com/trailblazer/mytrailblazerusername"));
+  info(c.dim("       the username there is: mytrailblazerusername"));
+  info("  It is not your email and not your Salesforce username. If you have never");
+  info("  set one, that profile page is also where you choose it.");
   for (let attempt = 1; attempt <= 3; attempt++) {
     const answer = (await input("\n  Your Trailblazer username, shown on your badge page:", value)).trim();
     const profile = await fetchTrailblazerProfile(answer);
@@ -231,7 +243,9 @@ export default async function claim(args) {
   info("  nobody else's.");
 
   if (!openUrl(url)) {
-    warn("The browser did not open. Copy this address into it:");
+    // A browser IDE has no browser of its own to open: the address is the whole
+    // of the answer there, and it is clickable where this is printed.
+    warn("No browser opened from here. Click the address below, or copy it into one:");
   }
   info("");
   info(`  ${c.cyan(url)}`);

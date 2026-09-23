@@ -182,6 +182,10 @@ The reason an over-wide selection produces deletions is worth stating plainly. I
 `integration`, and the diff reads as "remove what they added". A backpromote before starting
 ([Lab 2.1](2-1-backpromote-your-teammates-work.md)) is what prevents that.
 
+<!-- command-links:start -->
+Command documentation: [hardis:work:resetselection](https://sfdx-hardis.cloudity.com/hardis/work/resetselection/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -205,7 +209,7 @@ redo the story properly. Do not try to fix `integration` by hand.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick Lab 2.8.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.8**.
 
 ## Go deeper
 

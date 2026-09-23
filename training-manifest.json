@@ -236,7 +236,7 @@
         "annotated/web/github-pr-checks",
         "annotated/web/github-pr-comment",
         "annotated/web/github-pr-merge",
-        "annotated/web/github-actions-deploy",
+        "annotated/vscode/devops-pipeline--deployment-status",
         "annotated/web/github-pr-deployed",
         "annotated/vscode/work-save-completed",
         "annotated/web/github-pr-merge-squash"

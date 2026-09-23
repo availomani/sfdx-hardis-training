@@ -230,6 +230,10 @@ Two failure modes worth recognising:
   not carry it, and the deployment fails on a reference. The fix is not to disable delta: it is to
   include the dependency, which `manifest/package.xml` is for
 
+<!-- command-links:start -->
+Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -262,7 +266,7 @@ Request: GitHub merges `integration` into it, and the check runs again.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.3.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.3**.
 
 ## Go deeper
 

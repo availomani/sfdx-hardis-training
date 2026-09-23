@@ -282,6 +282,10 @@ If your organisation runs Grafana, the results can feed [ready-made
 dashboards](https://sfdx-hardis.cloudity.com/salesforce-monitoring-grafana-v2/). That is out of
 scope here, and worth knowing exists.
 
+<!-- command-links:start -->
+Command documentation: [hardis:org:configure:monitoring](https://sfdx-hardis.cloudity.com/hardis/org/configure/monitoring/), [hardis:org:monitor:backup](https://sfdx-hardis.cloudity.com/hardis/org/monitor/backup/), [hardis:org:test:apex](https://sfdx-hardis.cloudity.com/hardis/org/test/apex/), [hardis:org:monitor:all](https://sfdx-hardis.cloudity.com/hardis/org/monitor/all/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -322,7 +326,7 @@ not. Go back to step 1 and make the monitoring one.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.8.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.8**.
 
 ## Go deeper
 

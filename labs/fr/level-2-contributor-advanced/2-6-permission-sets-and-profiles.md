@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-config
@@ -36,7 +36,7 @@ et découvrir qu'elle a été retirée exprès.
 Vous accordez la permission, vous publiez, le contrôle est vert, le déploiement est vert, et la
 permission n'est pas dans l'org d'intégration. Rien n'a échoué. Rien ne vous a averti.
 
-C'est le mode de défaillance qui fait perdre confiance dans un pipeline, et il s'explique
+C'est le mode de défaillance qui fait perdre confiance dans une pipeline, et il s'explique
 entièrement.
 
 ## Avant de commencer
@@ -110,7 +110,7 @@ laissant les profils ne contenir que ce qui ne peut vraiment vivre nulle part ai
 horaires de connexion, les plages d'adresses IP, les types d'enregistrement par défaut, les
 affectations de présentation de page.
 
-Le pipeline n'a donc pas perdu votre travail. Il a refusé de le transporter, parce que le
+La pipeline n'a donc pas perdu votre travail. Elle a refusé de le transporter, parce que le
 transporter finirait par supprimer celui de quelqu'un d'autre.
 
 !!! note "Pourquoi les profils restent quand même dans le repository"
@@ -162,7 +162,7 @@ et il vaut la peine de savoir lequel fait quoi :
 | `autoRemoveUserPermissions`        | **Salesforce Project** **(2)** | Des permissions utilisateur précises qui ne doivent jamais voyager entre orgs, quel qu'en soit le porteur |
 
 Les deux tournent sur votre machine, au moment où vous publiez : ils décident de ce que votre commit
-transporte. L'onglet voisin, **Deployment** **(3)**, décide comment le pipeline l'envoie dans chaque
+transporte. L'onglet voisin, **Deployment** **(3)**, décide comment la pipeline l'envoie dans chaque
 org. Celui-là appartient au release manager, et le Niveau 3 est là où vous le rencontrez.
 
 <details markdown="1"><summary>Sous le capot : ce que le nettoyage a vraiment fait au fichier</summary>
@@ -188,7 +188,7 @@ set ne sait pas exprimer :
 Et certaines sections ne sont jamais touchées, parce que rien d'autre ne peut les contenir :
 `loginHours`, `loginIpRanges`, `layoutAssignments`, `tabVisibilities`, `custom`, `userLicense`.
 
-Un profil a donc toujours un rôle dans ce pipeline. Simplement beaucoup plus petit.
+Un profil a donc toujours un rôle dans cette pipeline. Simplement beaucoup plus petit.
 
 Rien n'a été retiré de votre org. Le nettoyage change **ce que le repository transporte**, jamais ce
 que Salesforce contient. Votre autorisation à la mode admin est toujours dans `helios-dev`, et c'est
@@ -196,8 +196,12 @@ exactement pour cela que le lab vous demande de la refaire sur le permission set
 réparer le fichier à la main.
 
 La règle à retenir : **si une permission peut vivre sur un permission set, mettez-la là.** Ce n'est
-pas une opinion de sfdx-hardis, c'est ce que Salesforce recommande depuis des années, et ce pipeline
+pas une opinion de sfdx-hardis, c'est ce que Salesforce recommande depuis des années, et cette pipeline
 l'impose au lieu d'espérer.
+
+<!-- command-links:start -->
+Documentation de la commande : [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
 
 </details>
 
@@ -225,7 +229,7 @@ puis refaites **Save / Publish**. Ne raccourcissez pas le fichier à la main.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.6.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.6**.
 
 ## Pour aller plus loin
 

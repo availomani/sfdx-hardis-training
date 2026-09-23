@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "9d153b14ca4bbf63f6a59585d2773914b7a8d51a"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
 depends_on:
   commands: [hardis:work:new, hardis:work:save]
@@ -53,16 +53,16 @@ Pas de clics numérotés cette fois. La boucle, dans l'ordre :
    org** et **Reuse scratch org helios-dev**. Votre org a déjà US-014, puisque vous l'y avez
    construite
 2. **Construisez-la dans `helios-dev`**
-    - Un champ **Long Text Area** `Crew_Notes__c` sur `Installation__c`, 4000 caractères, avec une
-      description et un help text
-    - Accordez-lui **Read** et **Edit** sur `Helios Delivery Crew`, parce que c'est un membre de
-      l'équipe de pose qui écrit les notes. Personne d'autre ne l'obtient pour l'instant : le tour
-      des planificateurs vient au Niveau 2
-    - Sur la présentation de page Installation
-    - Une vue de liste sur Installation appelée **Open Installations**, visible par tous les
-      utilisateurs, avec **Filter by Owner** sur **All installations**, filtrée sur un statut autre
-      que Completed, et affichant le compte, le statut, la date d'installation et Panels Required
-3. **Faites-la descendre.** **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
+   - Un champ **Long Text Area** `Crew_Notes__c` sur `Installation__c`, 4000 caractères, avec une
+     description et un help text
+   - Accordez-lui **Read** et **Edit** sur `Helios Delivery Crew`, parce que c'est un membre de
+     l'équipe de pose qui écrit les notes. Personne d'autre ne le voit pour le moment : le tour
+     des planificateurs vient au Niveau 2
+   - Sur la présentation de page Installation
+   - Une vue de liste sur Installation appelée **Open Installations**, visible par tous les
+     utilisateurs, avec **Filter by Owner** sur **All installations**, filtrée sur un statut autre
+     que Completed, et affichant le compte, le statut, la date d'installation et Panels Required
+3. **Récupérez les métadonnées.** **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
    le champ, la présentation de page, la vue de liste et le permission set. Rien d'autre.
    Commitez-les
 4. **Publiez**, et lisez le rapport **Git Delta package.xml** avant de pousser. Quatre choses,
@@ -71,7 +71,7 @@ Pas de clics numérotés cette fois. La boucle, dans l'ordre :
    mergez
 6. **Vérifiez l'org d'intégration** après le job de déploiement
 
-## Le piège qui attrape tout le monde
+## Attention aux pièges :)
 
 **Le permission set et le champ voyagent ensemble.** Si vous récupérez le champ et oubliez le
 permission set, le déploiement réussit et personne ne voit le champ. Si vous récupérez le permission
@@ -102,7 +102,7 @@ l'épreuve finale proprement. S'en servir n'est pas échouer. Ne pas s'en servir
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 1** > **Check my work**, puis choisissez **Everything in level 1**.
+Welcome page > **Training: Level 1** > **Check my work**, puis choisissez **Everything in level 1, capstone included**.
 
 Six contrôles doivent passer. Les lignes de reçu qu'il affiche sont votre relevé de progression, et
 la demande de badge ci-dessous les reprend toute seule.

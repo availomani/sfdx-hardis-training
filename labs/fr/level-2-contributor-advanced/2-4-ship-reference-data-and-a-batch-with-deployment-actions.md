@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/web/github-pr-deployment-actions
   - annotated/vscode/pipeline-cards--new-user-story
@@ -78,7 +78,7 @@ Dans `helios-dev`, créez :
   quelqu'un doive les planifier dans chaque org, ce qui est tout l'objet du lab
 - Les accès, sur **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity, et
   **Read** et **Edit** sur ses quatre champs. Les planificateurs entretiennent ces nombres, et c'est
-  aussi le permission set que porte l'utilisateur du pipeline dans chaque org : sans lui, le
+  aussi le permission set que porte l'utilisateur de la pipeline dans chaque org : sans lui, le
   chargement de données de l'étape 4 trouverait des champs qu'il n'a pas le droit d'écrire
 
 Créez ensuite 12 enregistrements Crew Capacity dans votre org, un par combinaison de type d'équipe et
@@ -139,7 +139,7 @@ ignorés par git : rien à commiter de ce côté.
 !!! tip "Pourquoi l'identifiant externe n'est pas facultatif"
     `Upsert` sur `External_Id__c` veut dire que lancer l'import deux fois met à jour les mêmes douze
     enregistrements au lieu d'en créer douze de plus. Sans identifiant externe stable, l'import n'est
-    pas rejouable, et un import qui n'est pas rejouable ne peut pas faire partie d'un pipeline.
+    pas rejouable, et un import qui n'est pas rejouable ne peut pas faire partie d'une pipeline.
 
 ### 4. Déclarer les trois actions
 
@@ -167,7 +167,7 @@ donc rien à faire pendant un contrôle.
 **Type** **(1)** décide des champs que montre le reste de la boîte. **SFDMU Project Path** **(2)**
 est une liste déroulante des workspaces sous `scripts/data/`, il nomme donc `HeliosCrewRefData`
 plutôt que son chemin. **Target orgs** **(3)** sur **All target orgs** veut dire toutes les orgs dans
-lesquelles le pipeline déploie.
+lesquelles la pipeline déploie.
 
 **Deux : planifier le batch.**
 
@@ -260,7 +260,7 @@ Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 
 Faites l'étape manuelle à la main dans `helios-integration`, puis cochez sa case sous **Pending
 manual actions** dans le commentaire de votre Pull Request : le job sfdx-hardis suivant
-l'enregistrera comme faite. C'est tout l'intérêt : vous l'avez faite **parce que le pipeline vous l'a
+l'enregistrera comme faite. C'est tout l'intérêt : vous l'avez faite **parce que la pipeline vous l'a
 dit**, pas parce que vous vous en êtes souvenu.
 
 !!! warning "Si les enregistrements ne sont pas là et que le job était vert"
@@ -338,6 +338,10 @@ Request, rejoués à l'identique dans chaque org.** Un collègue peut lire le di
 story a besoin de données, d'un job et d'un clic, information qui autrement n'existe que dans la
 tête de celui qui l'a construite.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:org:data:import](https://sfdx-hardis.cloudity.com/hardis/org/data/import/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -367,7 +371,7 @@ Le cron Salesforce a des secondes et un champ jour de la semaine : `0 0 2 * * ?`
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.4.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.4**.
 
 ## Pour aller plus loin
 

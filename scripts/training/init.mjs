@@ -428,7 +428,22 @@ async function ensureFork(handle) {
     // work. The web form calls it "Copy the main branch only".
     const res = run("gh", ["repo", "fork", UPSTREAM, "--clone=false", "--remote=false"]);
     if (res.code !== 0) {
-      abort("The fork could not be created.", "Fork it by hand on GitHub, then run this again.");
+      // Three lines and a link beat "fork it by hand": the web form has one box
+      // that has to be unticked, and a learner who misses it gets a fork the
+      // course cannot work in.
+      warn("The fork could not be created from here.");
+      info("");
+      info("  GitHub refused it. The usual reasons are a repository of that name already");
+      info("  in your account, an organisation that does not allow forks, or a sign-in");
+      info("  without permission to create repositories.");
+      info("");
+      info("  Make it yourself, it is one screen:");
+      info(`    1. Open ${c.cyan(`https://github.com/${UPSTREAM}/fork`)}`);
+      info("    2. Leave the owner on your own account and the name as it is");
+      info(`    3. ${c.bold('Untick "Copy the main branch only"')}. The course needs every branch`);
+      info("    4. Click Create fork, and wait for the page to land on your copy");
+      info("");
+      abort("The fork could not be created.", "Make it as described above, then run this again.");
     }
   }
 
@@ -479,32 +494,69 @@ export function ensurePipelineBranches() {
 }
 
 // ------------------------------------------------------------- actions on
+/**
+ * Every workflow of the fork that GitHub parked, put back to work.
+ *
+ * A fork arrives with Actions allowed and its workflows in `disabled_fork`,
+ * which is a different switch from the repository permission above and the one
+ * the banner flips. It has an API of its own, so this does not need the banner:
+ * enable each parked workflow, then read them back.
+ *
+ * Returns the names still parked, empty when they all run.
+ */
+function enableForkWorkflows(slug) {
+  const listed = ghJson(["api", `repos/${slug}/actions/workflows`, "--paginate"]);
+  const workflows = listed?.workflows || [];
+  for (const workflow of workflows) {
+    if (workflow.state === "active") {
+      continue;
+    }
+    run("gh", ["api", "-X", "PUT", `repos/${slug}/actions/workflows/${workflow.id}/enable`], {
+      capture: true,
+      quiet: true
+    });
+  }
+  const after = ghJson(["api", `repos/${slug}/actions/workflows`, "--paginate"]);
+  // A read that fails says nothing either way, and claiming success on it is
+  // how a learner ends up with a Pull Request nothing ever checks
+  if (!after?.workflows) {
+    return workflows.filter((workflow) => workflow.state !== "active").map((workflow) => workflow.name);
+  }
+  return after.workflows.filter((workflow) => workflow.state !== "active").map((workflow) => workflow.name);
+}
+
 function ensureActions(slug) {
   step(2, "Actions turned on");
 
   const permissions = ghJson(["api", `repos/${slug}/actions/permissions`]);
-  if (permissions?.enabled === true) {
-    ok("Actions are on.");
+  if (permissions?.enabled !== true) {
+    run("gh", [
+      "api", "-X", "PUT", `repos/${slug}/actions/permissions`,
+      "-F", "enabled=true", "-f", "allowed_actions=all"
+    ], { capture: true, quiet: true });
+  }
+
+  const enabled = ghJson(["api", `repos/${slug}/actions/permissions`])?.enabled === true;
+  const parked = enabled ? enableForkWorkflows(slug) : [];
+
+  if (enabled && parked.length === 0) {
+    ok("Actions are on, and every workflow of your fork runs.");
     return true;
   }
 
-  const res = run("gh", [
-    "api", "-X", "PUT", `repos/${slug}/actions/permissions`,
-    "-F", "enabled=true", "-f", "allowed_actions=all"
-  ], { capture: true, quiet: true });
-
-  const after = ghJson(["api", `repos/${slug}/actions/permissions`]);
-  if (res.code === 0 && after?.enabled === true) {
-    ok("Actions are on.");
-    return true;
-  }
-
-  // GitHub disables workflows on a new fork behind a banner that has no API.
-  // Saying so is better than reporting a success nobody can verify.
-  warn("Actions could not be turned on from here.");
-  info(`    Open https://github.com/${slug}/actions and click`);
+  // Two different switches, and the second one is the one a learner meets as an
+  // empty Checks tab on a Pull Request that looks perfectly fine.
+  warn(
+    enabled
+      ? `Actions are on, but ${parked.length} workflow(s) are still parked: ${parked.join(", ")}.`
+      : "Actions could not be turned on from here."
+  );
+  info(`    Open ${c.cyan(`https://github.com/${slug}/actions`)} and click`);
   info(`    ${c.bold("I understand my workflows, go ahead and enable them")}.`);
   info("    It is one click, and then this command has nothing left to do.");
+  info("");
+  info("    If a Pull Request is already open, its checks will not start on their own");
+  info(`    afterwards. Run ${c.bold("Training > Trigger my workflows")} once and they will.`);
   return false;
 }
 

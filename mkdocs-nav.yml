@@ -58,7 +58,7 @@ nav:
       - "Lab 2.9 - Épreuve finale : livrer une User Story qui a tout": fr/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all.md
   - "Niveau 3 - Release manager Salesforce DevOps":
       - Commencer ici: fr/level-3-release-manager/index.md
-      - "Lab 3.1 - Configurer le pipeline CI/CD jusqu'à la production": fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
+      - "Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production": fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
       - "Lab 3.2 - Relire et merger la Pull Request d'un contributeur": fr/level-3-release-manager/3-2-review-a-contributor-pull-request.md
       - "Lab 3.3 - Lire le log de déploiement, et ce que .forceignore lui cache": fr/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md
       - "Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge": fr/level-3-release-manager/3-4-merge-colliding-pull-requests.md

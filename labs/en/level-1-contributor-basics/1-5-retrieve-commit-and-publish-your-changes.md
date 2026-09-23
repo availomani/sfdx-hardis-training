@@ -107,6 +107,14 @@ Two rules make that decision for you, and they are the whole of this lab:
 The retriever writes those four components into `force-app/` as files. It changes nothing in
 Salesforce and nothing on your branch yet.
 
+!!! note "If it says the retrieve failed because of source conflicts"
+    **Failed to retrieve metadata due to source conflicts** means the files on your machine and the
+    components in the org both changed since the last time they agreed. Here that is not a
+    conflict, it is the point: you changed the org on purpose and the org is right. Take the
+    option that overwrites the local files and retrieve again. It matters on a real project, where
+    somebody else may have written those files; it does not here, where nothing but your own org
+    has touched them.
+
 ### 4. Commit what came down
 
 Open the **Source Control** panel **(1)**: in the left bar, the icon drawn as three small circles
@@ -114,6 +122,11 @@ joined by lines, like a branch. The four files the
 retrieve wrote are waiting there **(2)**.
 
 ![The Source Control panel with the four retrieved files](../../_assets/annotated/vscode/source-control-retrieved--commit.png)
+
+!!! tip "Read the list as a tree"
+    By default the panel lists full paths, and a Salesforce path is long enough to be unreadable.
+    The **...** menu at the right of the **Changes** header has **View as Tree**: the same files,
+    folded into the folders they live in. Set it once and VS Code remembers it.
 
 Click each one. VS Code opens the file's *diff*, the before and the after side by side, with the
 added lines in green and the removed ones in red. Reading the four takes a minute, and it is the
@@ -293,6 +306,10 @@ which performed, in order:
 Every one of those steps is configuration, not magic. Everything it did is in
 `config/.sfdx-hardis.yml`, and a project that wants different behaviour changes that file.
 
+<!-- command-links:start -->
+Command documentation: [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ### 8. Push
@@ -341,7 +358,7 @@ Your fork (`github.com/my-username/sfdx-hardis-training`) moved, usually because
 
 ## Check your work
 
-Welcome page > **Training: Level 1** > **Check my work**, then pick Lab 1.5.
+Welcome page > **Training: Level 1** > **Check my work**, then pick **Lab 1.5**.
 
 It reads the copy of your branch in your fork (`github.com/my-username/sfdx-hardis-training`), the one Save / Publish pushed: the field, the
 permission set granting it, and the layout carrying it. A commit that stayed on your machine does

@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--settings-menu
@@ -129,7 +129,7 @@ Vérifiez ensuite, comme pour l'UAT et avec davantage de soin :
 Cette dernière vérification existe parce que l'incident de production le plus fréquent après une
 livraison n'est pas la nouvelle fonctionnalité qui échoue. C'est une ancienne.
 
-### 7. Mesurer le pipeline, maintenant
+### 7. Mesurer la pipeline, maintenant
 
 Vous avez livré. La question qu'on pose ensuite à un release manager est "où en est-on", et elle
 mérite mieux qu'une impression.
@@ -221,6 +221,10 @@ Personne ne peut améliorer la fréquence de déploiement en éditant un tableur
 étroits que ce que les noms DORA laissent croire, et un release manager qui les cite devrait savoir
 quelle part ils couvrent.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:doc:dora-report](https://sfdx-hardis.cloudity.com/hardis/doc/dora-report/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -256,7 +260,7 @@ repli sur `git log` ne peut pas savoir quand une Pull Request a été ouverte.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le Lab 3.6.
+Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **Lab 3.6**.
 
 ## Pour aller plus loin
 

@@ -96,7 +96,7 @@
         "niveau 2 rejoue aussi les vérifications du niveau 1, et un badge de niveau 3 rejoue les trois.",
         "",
         "Ce qui est vérifié, c'est le travail dans le repository : les champs, les deployment actions, les",
-        "conflits résolus, la configuration du pipeline. Ce qui n'est **pas** vérifié, c'est l'état des orgs",
+        "conflits résolus, la configuration de la pipeline. Ce qui n'est **pas** vérifié, c'est l'état des orgs",
         "Salesforce de qui que ce soit. Personne ne demande d'identifiants d'org, et ceci n'est pas un examen."
       ]
     },
@@ -144,7 +144,7 @@
     },
     "cast": {
       "victor": {
-        "role": "Release manager. A quitté l'entreprise entre le niveau 2 et le niveau 3, et c'est pour cela que le pipeline est le vôtre maintenant."
+        "role": "Release manager. A quitté l'entreprise entre le niveau 2 et le niveau 3, et c'est pour cela que la pipeline est la vôtre maintenant."
       },
       "mariia": {
         "role": "Contributrice senior. Merge avant vous, sur les fichiers que vous avez touchés."

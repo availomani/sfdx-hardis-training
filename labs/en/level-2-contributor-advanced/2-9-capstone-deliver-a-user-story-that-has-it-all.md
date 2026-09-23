@@ -128,7 +128,7 @@ Level 2, which means redoing the capstone, not the whole level.
 
 ## Check your work
 
-Welcome page > **Training: Level 2** > **Check my work**, then pick **Everything in level 2**.
+Welcome page > **Training: Level 2** > **Check my work**, then pick **Everything in level 2, capstone included**.
 
 Nine checks.
 

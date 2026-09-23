@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -294,11 +294,15 @@ décide de ce qui part où, et à partir de quelle sévérité.
 
 La sauvegarde nocturne est la partie sous-estimée. Quand quelqu'un demande "quand cette règle de
 validation a-t-elle changé", la réponse est un `git log` sur le repository de monitoring, et cela
-fonctionne même pour les modifications que personne n'a faites par le pipeline.
+fonctionne même pour les modifications que personne n'a faites par la pipeline.
 
 Si votre organisation utilise Grafana, les résultats peuvent alimenter des [tableaux de bord prêts à
 l'emploi](https://sfdx-hardis.cloudity.com/salesforce-monitoring-grafana-v2/). C'est hors sujet ici,
 et il est bon de savoir que cela existe.
+
+<!-- command-links:start -->
+Documentation des commandes : [hardis:org:configure:monitoring](https://sfdx-hardis.cloudity.com/hardis/org/configure/monitoring/), [hardis:org:monitor:backup](https://sfdx-hardis.cloudity.com/hardis/org/monitor/backup/), [hardis:org:test:apex](https://sfdx-hardis.cloudity.com/hardis/org/test/apex/), [hardis:org:monitor:all](https://sfdx-hardis.cloudity.com/hardis/org/monitor/all/)
+<!-- command-links:end -->
 
 </details>
 
@@ -342,7 +346,7 @@ réponse quand vous ne l'êtes pas. Revenez à l'étape 1 et créez celui de mon
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le Lab 3.8.
+Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **Lab 3.8**.
 
 ## Pour aller plus loin
 

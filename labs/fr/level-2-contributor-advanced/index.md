@@ -53,7 +53,7 @@ Elles sont sept, et les labs les appellent par ces noms :
 
 | Commande                           | Ce qu'elle fait                                                              |
 |------------------------------------|------------------------------------------------------------------------------|
-| **Set up my training environment** | Reconstruit une scratch org qui a expiré, et pointe le pipeline dessus       |
+| **Set up my training environment** | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus       |
 | **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite |
 | **Simulate my teammates**          | Crée les branches et Pull Requests de collègues dont un lab a besoin         |
 | **Set up one of my training orgs** | Déploie l'application Helios et ses données dans une org que vous choisissez |

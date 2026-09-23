@@ -145,7 +145,7 @@ nothing carries an unfinished state into the next.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick **Everything in level 3**.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Everything in level 3, capstone included**.
 
 Ten checks.
 

@@ -5,7 +5,7 @@ description: "Vous avez publié bien plus que votre story. Voyez ce que cela fai
 level: 2
 lab: 8
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--select-all
@@ -188,6 +188,10 @@ clairement. Si votre org est en retard sur `integration` et que vous récupérez
 fichiers récupérés sont plus anciens que ce qui est sur `integration`, et le diff se lit comme
 "enlever ce qu'ils ont ajouté". Un backpromote avant de commencer ([Lab 2.1](2-1-backpromote-your-teammates-work.md)) est ce qui évite cela.
 
+<!-- command-links:start -->
+Documentation des commandes : [hardis:work:resetselection](https://sfdx-hardis.cloudity.com/hardis/work/resetselection/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -213,7 +217,7 @@ mergée, puis refaites la story proprement. N'essayez pas de réparer `integrati
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.8.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.8**.
 
 ## Pour aller plus loin
 

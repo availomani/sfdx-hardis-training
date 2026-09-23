@@ -184,6 +184,10 @@ unticking something in the selection screen after it was committed. The comment 
 in the counts line, and a table only when Flows are involved. If a Pull Request's counts show
 anything deleted, the comment has told you everything it is going to: the rest is the diff.
 
+<!-- command-links:start -->
+Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see
@@ -209,7 +213,7 @@ first.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.2.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.2**.
 
 ## Go deeper
 

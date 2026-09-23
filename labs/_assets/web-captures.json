@@ -88,6 +88,20 @@
       "selector": ".timeline-comment:has(h2:has-text(\"Tickets\")) .comment-body"
     },
     {
+      "name": "github-pr-create",
+      "_comment": "Lab 1.6 step 1: the Open a pull request form, with base and compare already filled in and the repository Pull Request template in the description. The head branch has to exist on the fork: run Lab 1.5 on it first, and never click Create pull request while capturing.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/compare/integration...features/US-014-panels-required?expand=1",
+      "width": 1440,
+      "height": 1200,
+      "settle": 5000,
+      "clip": {
+        "x": 0,
+        "y": 95,
+        "width": 1440,
+        "height": 760
+      }
+    },
+    {
       "name": "github-pr-checks",
       "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/89/checks",
       "width": 1440,

@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -75,10 +75,15 @@ sur le point d'y ajouter.
 | Field Label    | `Panels Required`                                             |
 | Length         | 4                                                             |
 | Decimal Places | 0                                                             |
-| Field Name     | `Panels_Required__c` (Salesforce le remplit depuis le label)  |
+| Field Name     | `Panels_Required` (Salesforce le remplit depuis le label)     |
 | Description    | `How many panels the crew has to load for this installation.` |
 | Help Text      | `Ask the planner if this is empty.`                           |
 | Required       | **non**                                                       |
+
+La case **Field Name** est ce que Salesforce appelle le nom d'API, et il la remplit depuis le label
+au fur et à mesure que vous tapez. Elle affiche `Panels_Required`, sans le `__c` : Salesforce
+ajoute ce suffixe à chaque champ personnalisé au moment de l'enregistrement, et la suite de ce
+cours, fichiers de métadonnées compris, appelle le champ `Panels_Required__c`.
 
 L'écran de sécurité au niveau des champs arrive avec **Visible** déjà coché pour presque tous les
 profils. Décochez-les : la case dans l'en-tête de la colonne **Visible** bascule toute la colonne,
@@ -172,6 +177,13 @@ vivent dans une org et nulle part ailleurs, et c'est exactement l'état auquel l
 Vous êtes dans la mauvaise org. Vérifiez la section Status dans VS Code, puis rouvrez l'org depuis
 **Orgs Manager**.
 
+**Orgs Manager affiche vos scratch orgs comme déconnectées, et propose Reconnect au lieu d'Open.**
+Les anciennes versions de l'extension ne lisaient que la sonde de connexion, qu'une scratch org ne
+porte jamais : c'est son Dev Hub qui répond pour elle. Mettez l'extension à jour, ce à quoi sert
+**Auto Update** au [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md), puis cliquez sur **Refresh**
+dans le panneau. Les orgs vont bien dans les deux cas, et **Reconnect** vous aurait reconnecté pour
+rien.
+
 **Le champ n'apparaît pas sur la page d'enregistrement.**
 Vous avez sauté l'étape de présentation de page. **Setup > Object Manager > Installation > Page
 Layouts > Installation Layout**, glissez `Panels Required` dans la section Information, **Save**.
@@ -187,7 +199,7 @@ avec ses champs.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le Lab 1.4.
+Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le **Lab 1.4**.
 
 Rien de votre travail n'a encore quitté l'org, le contrôle lit donc l'org elle-même : il demande à
 `helios-dev` si `Panels_Required__c` existe sur Installation et si `Helios_Delivery_Crew` peut le

@@ -38,7 +38,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | Lab | URL |
 |---|---|
 | Level home | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/ |
-| Lab 3.1 - Configurer le pipeline CI/CD jusqu'à la production | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/ |
+| Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/ |
 | Lab 3.2 - Relire et merger la Pull Request d'un contributeur | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/3-2-review-a-contributor-pull-request/ |
 | Lab 3.3 - Lire le log de déploiement, et ce que .forceignore lui cache | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log/ |
 | Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge | https://hardisgroupcom.github.io/sfdx-hardis-training/fr/level-3-release-manager/3-4-merge-colliding-pull-requests/ |

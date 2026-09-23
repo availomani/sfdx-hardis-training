@@ -1,6 +1,6 @@
 ---
 title: "Niveau 3 - Release manager Salesforce DevOps"
-description: "Tenez un pipeline CI/CD Salesforce avec sfdx-hardis : environnements, authentification JWT, promotions, notes de version, hotfixes, monitoring et métriques DORA."
+description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environnements, authentification JWT, promotions, notes de version, hotfixes, monitoring et métriques DORA."
 id: l3-home
 level: 3
 lang: fr
@@ -27,13 +27,13 @@ approuver des Pull Requests et les comprendre.
 
 ## L'histoire
 
-Victor Squeeker est parti. Il était le release manager, il a monté le pipeline il y a deux ans, et il
+Victor Squeeker est parti. Il était le release manager, il a monté la pipeline il y a deux ans, et il
 ne l'a jamais fini.
 
 Ce dont vous héritez fonctionne, au sens où les contributeurs livrent dans `integration` tous les
 jours et où le métier teste dans `uat`. Ce qu'il n'a pas :
 
-- **Ni preprod ni production dans le pipeline.** Les branches existent. Rien n'y déploie
+- **Ni preprod ni production dans la pipeline.** Les branches existent. Rien n'y déploie
 - **Pas d'authentification de CI correcte.** Il y a deux secrets de refresh token que quelqu'un a
   ajoutés à la hâte
 - **Pas de monitoring.** Personne n'apprend qu'il y a un problème en production avant qu'un
@@ -43,7 +43,7 @@ jours et où le métier teste dans `uat`. Ce qu'il n'a pas :
 - **Pas de documentation générée.** L'org a deux ans et la seule description qui en existe,
   c'était Victor
 
-Votre première semaine consiste à finir le pipeline. Ensuite, vous le faites tourner.
+Votre première semaine consiste à finir la pipeline. Ensuite, vous la faites tourner.
 
 ## Le menu Training
 
@@ -57,7 +57,7 @@ Elles sont neuf, et les labs les appellent par ces noms :
 
 | Commande                              | Ce qu'elle fait                                                                        |
 |---------------------------------------|----------------------------------------------------------------------------------------|
-| **Set up my training environment**    | Reconstruit une scratch org qui a expiré, et pointe le pipeline dessus                 |
+| **Set up my training environment**    | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus                 |
 | **Where am I?**                       | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite           |
 | **Set up one of my training orgs**    | Déploie l'application Helios et ses données dans une org que vous choisissez           |
 | **Simulate my teammates**             | Crée les branches et Pull Requests de collègues dont un lab a besoin                   |
@@ -77,7 +77,7 @@ Les mêmes commandes sont dans la vue **SFDX HARDIS** de la barre de gauche, sou
 
 | Lab                                                       | Titre                                                        | Durée  |
 |-----------------------------------------------------------|--------------------------------------------------------------|--------|
-| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer le pipeline CI/CD jusqu'à la production           | 75 min |
+| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production           | 75 min |
 | [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur           | 25 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache | 25 min |
 | [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge  | 35 min |
@@ -111,7 +111,7 @@ environment** la reconstruit d'abord.
 
 Aux niveaux 1 et 2, vous construisiez des User Stories et ouvriez leurs Pull Requests. Un release
 manager ne le fait pas. Vos collègues ouvrent les Pull Requests, **Simulate my teammates** les joue,
-et vous les relisez, les mergez ou les renvoyez. Ce que vous créez vous-même, c'est le pipeline : sa
+et vous les relisez, les mergez ou les renvoyez. Ce que vous créez vous-même, c'est la pipeline : sa
 configuration, que **Publish my pipeline configuration** envoie vers `integration` par une Pull
 Request, et les promotions d'une branche majeure à la suivante, `integration` vers `uat`, `uat` vers
 `preprod`, `preprod` vers `main`.

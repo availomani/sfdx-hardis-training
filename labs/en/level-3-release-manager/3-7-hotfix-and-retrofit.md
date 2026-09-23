@@ -261,6 +261,10 @@ because a hotfix joined the pipeline above the branches the team works on.
 **Do it the same night.** A retrofit put off until Monday is a retrofit that collides with a week of
 new work, and the merge stops being a formality.
 
+<!-- command-links:start -->
+Command documentation: [hardis:work:new](https://sfdx-hardis.cloudity.com/hardis/work/new/), [hardis:work:save](https://sfdx-hardis.cloudity.com/hardis/work/save/)
+<!-- command-links:end -->
+
 </details>
 
 ## What you should see

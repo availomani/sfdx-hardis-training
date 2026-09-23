@@ -230,7 +230,7 @@ branch is how a release manager loses an evening.
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.4.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.4**.
 
 ## Go deeper
 

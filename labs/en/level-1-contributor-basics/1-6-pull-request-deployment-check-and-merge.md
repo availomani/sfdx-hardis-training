@@ -10,7 +10,7 @@ screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
   - annotated/web/github-pr-merge
-  - annotated/web/github-actions-deploy
+  - annotated/vscode/devops-pipeline--deployment-status
   - annotated/web/github-pr-deployed
   - annotated/vscode/work-save-completed
   - annotated/web/github-pr-merge-squash
@@ -69,9 +69,12 @@ Two other things in that bar are worth knowing now, because later labs use them.
 Actions of this Pull Request, which is what the whole of [Lab 2.3](../level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md) is about.
 
 !!! note "If you closed that panel"
-    Nothing is lost. Open your fork (`github.com/my-username/sfdx-hardis-training`) on GitHub: it shows a banner offering to open a Pull Request
-    for the branch you just pushed. The **+ PR** pill you may have noticed in the DevOps Pipeline
-    diagram is for major branches, not for your feature branch.
+    Nothing is lost, and there are two ways back. Run **Save / Publish my User Story** again: every
+    step checks before it acts, there is nothing left to commit or push, and it finishes on the
+    same actions bar. Or open your fork (`github.com/my-username/sfdx-hardis-training`) on GitHub,
+    which shows a banner offering to open a Pull Request for the branch you just pushed. The
+    **+ PR** pill you may have noticed in the DevOps Pipeline diagram is for major branches, not
+    for your feature branch.
 
 Check two things before clicking, every single time:
 
@@ -86,9 +89,17 @@ Check two things before clicking, every single time:
 
 The title reads **Features/us 014 panels required**: GitHub makes it up from the branch name
 whenever a branch carries more than one commit, and yours carries two, the one you wrote and the
-one Save / Publish added. Replace it with the first line of your commit message,
-`US-014 Panels Required on Installation`, and paste the rest of that message into the
-description. It is what the reviewer reads first. Click **Create pull request**.
+one Save / Publish added. Replace it with the first line of the commit message you wrote in
+[Lab 1.5 step 4](1-5-retrieve-commit-and-publish-your-changes.md), `US-014 Panels Required on
+Installation`.
+
+The description box is not empty: this repository ships a Pull Request template, and GitHub puts it
+there for you. **Replace the whole of it.** Under **What this changes**, paste the rest of that
+same commit message, the paragraph explaining why; fill in the story id; and say where a reviewer
+should look. Delete the comment lines and any heading you have nothing to put under. A template is
+a reminder of what to write, not something to hand in as it came.
+
+It is what the reviewer reads first. Click **Create pull request**.
 
 ### 2. Watch the checks run
 
@@ -103,6 +114,21 @@ Open the **Checks** tab **(1)**. Two of them matter here, and both start on thei
 
 Click either one to read its log while it runs. The deployment check takes about two minutes, and
 you can watch it authenticate with your secret, work out what changed, and start the deployment.
+
+!!! warning "No checks at all? Actions are off on your fork"
+    If the Checks tab is empty and nothing ever starts, GitHub has not enabled Actions on your
+    copy of the repository. It does that to every new fork, on purpose: a fork could otherwise run
+    somebody else's workflows in your account the moment you made it. **Set up my training
+    environment** turns them on when it can, and says so when it cannot.
+
+    Open the **Actions** tab of your fork (`github.com/my-username/sfdx-hardis-training`) and click
+    **I understand my workflows, go ahead and enable them**. One click. Then come back here and
+    run **Training: Level 1 > Trigger my workflows**: it pushes a one-line change to your branch,
+    which is what makes GitHub start the checks on a Pull Request that opened while Actions were
+    off.
+
+    This is a fork thing, and only a fork thing. On a real project you join a repository whose
+    automation is already running, and there is nothing to enable.
 
 ### 3. Read the sfdx-hardis comment
 
@@ -191,13 +217,18 @@ more thing in everyone's list for no benefit.
 
 Merging into `integration` starts a second job, and this one is not a check: it deploys for real.
 
-Go to the **Actions** tab **(1)** of your fork (`github.com/my-username/sfdx-hardis-training`). The merge started two runs on `integration`: the
-one to watch is **Process Deployment (sfdx-hardis)** **(2)**, and it takes about three minutes.
-The other, **Mega-Linter**, checks the code again after the merge.
+Go back to VS Code and open the **DevOps Pipeline** panel. The arrow from the `integration` branch
+to its org carries a pill, and while the deployment runs that pill says so and pulses. This is the
+screen to watch, and the one you will keep open on a real project: it answers "is my work in the
+org yet" without leaving the editor.
 
-![The Actions tab of a fork, with the deployment run at the top](../../_assets/annotated/web/github-actions-deploy.png)
+![The DevOps Pipeline panel, with the deployment status on the arrow to the org](../../_assets/annotated/vscode/devops-pipeline--deployment-status.png)
 
-When it finishes, it writes a second comment on the Pull Request you just merged:
+The pill is also a link: click it and GitHub opens on the log of that run, **Process Deployment
+(sfdx-hardis)**, which takes about three minutes. You do not need to read it today. It is there for
+the day something fails, and [Lab 3.3](../level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md) is the lab that reads one line by line.
+
+When the deployment finishes, it writes a second comment on the Pull Request you just merged:
 
 ![The comment sfdx-hardis writes after the merge deployment](../../_assets/annotated/web/github-pr-deployed.png)
 
@@ -242,6 +273,10 @@ The test level comes from `config/.sfdx-hardis.yml`:
 
 `RunLocalTests` runs every test in the org except those from managed packages. 75% is the Salesforce
 minimum, and this project asks for 80, like most real ones.
+
+<!-- command-links:start -->
+Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
+<!-- command-links:end -->
 
 </details>
 
@@ -291,7 +326,7 @@ Look at the deployed components list in the comment. If the field is not there, 
 
 ## Check your work
 
-Welcome page > **Training: Level 1** > **Check my work**, then pick Lab 1.6.
+Welcome page > **Training: Level 1** > **Check my work**, then pick **Lab 1.6**.
 
 ## Go deeper
 

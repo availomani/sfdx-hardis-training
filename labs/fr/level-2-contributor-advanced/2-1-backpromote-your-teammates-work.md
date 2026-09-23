@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
 screenshots:
   - annotated/vscode/backpromote-result--what-it-did
   - annotated/vscode/pipeline-cards--backpromote
@@ -183,6 +183,10 @@ backpromote suivant sache où commencer, depuis n'importe quelle machine et n'im
 C'est aussi pourquoi la commande a besoin d'un token de fournisseur git : sans lui, elle ne peut pas
 lire son propre historique, et elle s'arrête.
 
+<!-- command-links:start -->
+Documentation de la commande : [hardis:work:backpromote](https://sfdx-hardis.cloudity.com/hardis/work/backpromote/)
+<!-- command-links:end -->
+
 </details>
 
 ## Ce que vous devez voir
@@ -207,7 +211,7 @@ branche si vous l'aviez commité, et le déploiement n'a changé que l'org.
 
 ## Vérifiez votre travail
 
-Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le Lab 2.1.
+Welcome page > **Training: Level 2** > **Check my work**, puis choisissez le **Lab 2.1**.
 
 ## Pour aller plus loin
 
