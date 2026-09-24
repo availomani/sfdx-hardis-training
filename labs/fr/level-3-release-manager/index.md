@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "8f5b7cdee8d2c49b954a13c7b42aa8b00a5ec6b6"
+source_rev: "fc6954d3c4e0728198f404d0be20439b291214d5"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -53,19 +53,20 @@ seul menu. Ouvrez la **Welcome page**, et sous **CUSTOM MENUS** cliquez sur la c
 
 ![Le menu de formation du niveau 3, ouvert sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
 
-Elles sont neuf, et les labs les appellent par ces noms :
+Elles sont dix, et les labs les appellent par ces noms :
 
-| Commande                              | Ce qu'elle fait                                                                        |
-|---------------------------------------|----------------------------------------------------------------------------------------|
-| **Set up my training environment**    | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus                 |
-| **Where am I?**                       | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite           |
-| **Set up one of my training orgs**    | Déploie l'application Helios et ses données dans une org que vous choisissez           |
-| **Simulate my teammates**             | Crée les branches et Pull Requests de collègues dont un lab a besoin                   |
-| **Publish my pipeline configuration** | Ouvre une Pull Request vers `integration` avec la configuration que vous avez modifiée |
-| **Check my work**                     | Vérifie le lab que vous venez de terminer et affiche votre reçu                        |
-| **Claim my badge**                    | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie              |
-| **Reset this level**                  | Remet votre repository au début du Niveau 3                                            |
-| **Clean up a training org**           | Retire l'application Helios et ses données d'une org                                   |
+| Commande                              | Ce qu'elle fait                                                                                       |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Set up my training environment**    | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus                                |
+| **Where am I?**                       | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                          |
+| **Set up one of my training orgs**    | Déploie l'application Helios et ses données dans une org que vous choisissez                          |
+| **Simulate my teammates**             | Crée les branches et Pull Requests de collègues dont un lab a besoin                                  |
+| **Publish my pipeline configuration** | Ouvre une Pull Request vers `integration` avec la configuration que vous avez modifiée                |
+| **Check my work**                     | Vérifie le lab que vous venez de terminer et affiche votre reçu                                       |
+| **Claim my badge**                    | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                             |
+| **Update my course**                  | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration` |
+| **Reset this level**                  | Remet votre repository au début du Niveau 3                                                           |
+| **Clean up a training org**           | Retire l'application Helios et ses données d'une org                                                  |
 
 Il y a un menu par niveau, et chacun ne contient que ce dont ce niveau a besoin : rien de ce que vous
 avez sous les yeux ne concerne un lab que vous n'avez pas encore atteint.

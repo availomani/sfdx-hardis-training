@@ -47,17 +47,18 @@ over the page:
 
 ![The Level 2 training menu, opened on the Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-2.png)
 
-Seven of them, and the labs call them by these names:
+Eight of them, and the labs call them by these names:
 
-| Command                            | What it does                                                       |
-|------------------------------------|--------------------------------------------------------------------|
-| **Set up my training environment** | Rebuilds a scratch org that expired, and points the pipeline at it |
-| **Where am I?**                    | Says which level and lab you reached, and what to do next          |
-| **Simulate my teammates**          | Creates the teammate branches and Pull Requests a lab needs        |
-| **Set up one of my training orgs** | Deploys the Helios app and its data into an org you choose         |
-| **Check my work**                  | Verifies the lab you just finished and prints your receipt         |
-| **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in      |
-| **Reset this level**               | Puts your repository back to the start of Level 2                  |
+| Command                            | What it does                                                                                          |
+|------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Set up my training environment** | Rebuilds a scratch org that expired, and points the pipeline at it                                    |
+| **Where am I?**                    | Says which level and lab you reached, and what to do next                                             |
+| **Simulate my teammates**          | Creates the teammate branches and Pull Requests a lab needs                                           |
+| **Set up one of my training orgs** | Deploys the Helios app and its data into an org you choose                                            |
+| **Check my work**                  | Verifies the lab you just finished and prints your receipt                                            |
+| **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in                                         |
+| **Update my course**               | Brings the changes the course received since you forked it, through a Pull Request into `integration` |
+| **Reset this level**               | Puts your repository back to the start of Level 2                                                     |
 
 There is one menu per level, and each holds only what that level needs, so nothing in front of you is
 for a lab you have not reached.

@@ -9,6 +9,7 @@ import {
   gitOut, githubHandle, repoSlug, connectedOrgs, run } from "../lib/util.mjs";
 import { makeContext, rulesForLevel } from "../verify/rules.mjs";
 import { runRules } from "../verify/check.mjs";
+import { adviseCourseUpdate } from "../lib/course-updates.mjs";
 
 export default async function status() {
   const u = universe();
@@ -23,6 +24,7 @@ export default async function status() {
     warn("You are working in the training repository itself, not in your own fork.");
     info(c.dim("    Everything in this course happens in your fork. See Lab 1.2."));
   }
+  adviseCourseUpdate({ quietWhenCurrent: false });
 
   // ------------------------------------------------------------ the orgs
   const orgs = connectedOrgs().filter((o) => o.connected);

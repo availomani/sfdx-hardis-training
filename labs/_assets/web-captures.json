@@ -382,6 +382,36 @@
         "width": 1440,
         "height": 540
       }
+    },
+    {
+      "name": "github-pr-promotion-description",
+      "_comment": "Lab 3.10 step 5: the description a promotion Pull Request is created with, the conflict warning, the promotionPullRequests block, the carried table and the folded prompt for a coding agent.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/44",
+      "width": 1440,
+      "height": 2400,
+      "settle": 5000,
+      "selector": ".timeline-comment .comment-body",
+      "maxHeight": 1500,
+      "evaluate": [
+        "(() => { const map = [[/nvuillam\\/sfdx-hardis-training/g, \"my-username/sfdx-hardis-training\"], [/\\bnvuillam\\b/g, \"my-username\"], [/2026-09-24-1510/g, \"2026-09-24-0930\"], [/\\[39, 40, 42\\]/g, \"[62, 63, 65]\"], [/#39\\b/g, \"#62\"], [/#40\\b/g, \"#63\"], [/#42\\b/g, \"#65\"], [/\\b11f9887\\w*/g, \"7c41ab9\"], [/\\b258e3ec\\w*/g, \"d1e90e9\"], [/\\b181ab99\\w*/g, \"5b7e2c1\"]]; const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode); for (const n of nodes) { let t = n.nodeValue; for (const [re, to] of map) t = t.replace(re, to); if (t !== n.nodeValue) n.nodeValue = t; } })()",
+        "(() => { for (const el of document.querySelectorAll('body *')) { const p = getComputedStyle(el).position; if (p === 'sticky' || p === 'fixed') { el.style.visibility = 'hidden'; } } })()"
+      ],
+      "_fiction": "The page is a real Pull Request of the maintainer fork; the numbers, the handle, the commits and the branch time are rewritten to the course fiction before the shot, the way the lab prints them."
+    },
+    {
+      "name": "github-pr-promotion-markers",
+      "_comment": "Lab 3.10 step 5: the sfdx-hardis comment of the red check, naming the two files still holding conflict markers.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/44",
+      "width": 1440,
+      "height": 2400,
+      "settle": 5000,
+      "selector": ".timeline-comment:has-text(\"Git conflict markers in the promotion branch\") .comment-body",
+      "maxHeight": 1200,
+      "evaluate": [
+        "(() => { const map = [[/nvuillam\\/sfdx-hardis-training/g, \"my-username/sfdx-hardis-training\"], [/\\bnvuillam\\b/g, \"my-username\"], [/2026-09-24-1510/g, \"2026-09-24-0930\"], [/\\[39, 40, 42\\]/g, \"[62, 63, 65]\"], [/#39\\b/g, \"#62\"], [/#40\\b/g, \"#63\"], [/#42\\b/g, \"#65\"], [/\\b11f9887\\w*/g, \"7c41ab9\"], [/\\b258e3ec\\w*/g, \"d1e90e9\"], [/\\b181ab99\\w*/g, \"5b7e2c1\"]]; const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode); for (const n of nodes) { let t = n.nodeValue; for (const [re, to] of map) t = t.replace(re, to); if (t !== n.nodeValue) n.nodeValue = t; } })()",
+        "(() => { for (const el of document.querySelectorAll('body *')) { const p = getComputedStyle(el).position; if (p === 'sticky' || p === 'fixed') { el.style.visibility = 'hidden'; } } })()"
+      ],
+      "_fiction": "The page is a real Pull Request of the maintainer fork; the numbers, the handle, the commits and the branch time are rewritten to the course fiction before the shot, the way the lab prints them."
     }
   ]
 }

@@ -1,0 +1,54 @@
+---
+# Publishes the training/start-level-N branches that "Reset this level" resets
+# to, every time main changes.
+#
+# They are derived from main by scripts/build/start-branches.mjs, and a merge
+# that forgets to run it ships a rescue command that drops the learner into a
+# state the labs no longer describe: on 2026-09-24 the three branches predated
+# the Lab 3.10 release, and Simulate my teammates on a reset Level 3 did not
+# know US-058. The monthly consistency check reports that; this job removes the
+# step to forget. A push by hand is only for a run of this job that failed.
+name: Publish the reset branches
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: read-all
+
+concurrency:
+  group: start-branches
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build the start branches from main and push them
+    # The shared repository only: a learner's fork resets from upstream, and its
+    # own start branches are never read. And main only: the script builds from
+    # the checked out branch, and a manual run from a feature branch would
+    # publish that branch as the state every level starts from.
+    if: github.repository == 'hardisgroupcom/sfdx-hardis-training' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # The token stays in the checkout on purpose: the script pushes with it.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: Say who pushes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Build and push training/start-level-1, -2 and -3
+        run: node scripts/build/start-branches.mjs --push

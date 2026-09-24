@@ -138,5 +138,7 @@
   "vscode/promotion-create-select.png#confirm": "bc5253db4ac75dc1",
   "vscode/promotion-create-conflict.png#recommended": "55ca142041f71876",
   "vscode/promotion-create-completed.png#prompt": "1652177157269e08",
-  "vscode/promotion-conflict-editor.png#accept-incoming": "9a05e32259bd3f52"
+  "vscode/promotion-conflict-editor.png#accept-incoming": "9a05e32259bd3f52",
+  "web/github-pr-promotion-description.png": "c2e8f7b16c124240",
+  "web/github-pr-promotion-markers.png": "220da7b760292456"
 }

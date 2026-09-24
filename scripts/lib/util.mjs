@@ -659,3 +659,45 @@ export function openUrl(url) {
   const res = run(opener.command, opener.args, { capture: true, quiet: true });
   return res.code === 0;
 }
+
+/** A date and minute for branch names: 2026-09-24-0930, local time. */
+export function stamp() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`;
+}
+
+/**
+ * Opens a Pull Request of the fork with gh, and returns its address, or null.
+ *
+ * Retried three times, two seconds apart: right after a push, GitHub has not
+ * always registered the new branch, and the first gh pr create fails with "No
+ * commits between" or "head ref not found". The body goes through a file, which
+ * is removed whatever happens.
+ */
+export function openPullRequest({ slug, base, branch, title, body }) {
+  if (!slug || !hasGh()) {
+    return null;
+  }
+  const bodyFile = path.join(ROOT, ".training-pr-body.md");
+  fs.writeFileSync(bodyFile, body, "utf8");
+  let url = null;
+  try {
+    for (let attempt = 1; attempt <= 3 && !url; attempt++) {
+      // Captured: the address of the Pull Request is what the learner opens
+      // next, and what gh prints goes nowhere they can see in the panel
+      const pr = run("gh", ["pr", "create", "--repo", slug, "--base", base, "--head", branch, "--title", title, "--body-file", bodyFile], {
+        capture: true,
+        quiet: true
+      });
+      if (pr.code === 0) {
+        url = (pr.stdout || "").match(/https:\/\/\S+\/pull\/\d+/)?.[0] || `https://github.com/${slug}/pulls`;
+      } else if (attempt < 3) {
+        run(process.execPath, ["-e", "const t = Date.now(); while (Date.now() - t < 2000) {}"], { quiet: true });
+      }
+    }
+  } finally {
+    fs.rmSync(bodyFile, { force: true });
+  }
+  return url;
+}

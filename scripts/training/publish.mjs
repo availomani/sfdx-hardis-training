@@ -14,7 +14,7 @@
  */
 import fs from "fs";
 import path from "path";
-import { ROOT, c, title, info, ok, warn, abort, run, gitOut, confirm, repoSlug, hasGh } from "../lib/util.mjs";
+import { ROOT, c, title, info, ok, warn, abort, run, gitOut, confirm, repoSlug, stamp, openPullRequest } from "../lib/util.mjs";
 
 // What a release manager configures, and nothing else: a feature never goes this way
 const CONFIGURATION = [
@@ -24,12 +24,6 @@ const CONFIGURATION = [
   "manifest/package-no-overwrite.xml"
 ];
 const BASE = "integration";
-
-function stamp() {
-  const d = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`;
-}
 
 export default async function publish(args) {
   title("Publish my pipeline configuration");
@@ -97,29 +91,13 @@ export default async function publish(args) {
     "",
     "Merge it with **Merge pull request**, not with a squash: the configuration travels to uat, preprod and main with the promotions."
   ].join("\n");
-  const bodyFile = path.join(ROOT, ".training-pr-body.md");
-  fs.writeFileSync(bodyFile, body, "utf8");
-  let opened = false;
-  let prUrl = null;
-  if (hasGh() && slug) {
-    for (let attempt = 1; attempt <= 3 && !opened; attempt++) {
-      // Captured: the address of the Pull Request is what the learner opens
-      // next, and what gh prints goes nowhere they can see in the panel
-      const pr = run("gh", ["pr", "create", "--repo", slug, "--base", BASE, "--head", branch, "--title", message, "--body-file", bodyFile], { capture: true, quiet: true });
-      opened = pr.code === 0;
-      prUrl = (pr.stdout || "").match(/https:\/\/\S+\/pull\/\d+/)?.[0] || null;
-      if (!opened && attempt < 3) {
-        run(process.execPath, ["-e", "const t = Date.now(); while (Date.now() - t < 2000) {}"], { quiet: true });
-      }
-    }
-  }
-  fs.rmSync(bodyFile, { force: true });
-  if (!opened) {
+  const prUrl = openPullRequest({ slug, base: BASE, branch, title: message, body });
+  if (!prUrl) {
     warn("The Pull Request could not be opened automatically.");
     info(`  Open it yourself: ${c.cyan(`https://github.com/${slug}/compare/${BASE}...${branch}?expand=1`)}`);
   } else {
     ok(`Pull Request opened into ${BASE}`);
-    info(`  ${c.cyan(prUrl || `https://github.com/${slug}/pulls`)}`);
+    info(`  ${c.cyan(prUrl)}`);
   }
 
   // Back on integration: the configuration comes back to it with the merge

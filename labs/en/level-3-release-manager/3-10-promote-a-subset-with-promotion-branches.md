@@ -13,6 +13,8 @@ screenshots:
   - annotated/vscode/promotion-create-select--confirm
   - annotated/vscode/promotion-create-conflict--recommended
   - annotated/vscode/promotion-create-completed--prompt
+  - annotated/web/github-pr-promotion-description
+  - annotated/web/github-pr-promotion-markers
   - annotated/vscode/devops-pipeline-promotion--in-flight
   - annotated/vscode/promotion-conflict-editor--accept-incoming
 depends_on:
@@ -292,11 +294,15 @@ A cherry-pick rewrites the commit SHA, which is why the Pull Request has to decl
 in words: nothing in git links the copy to the Pull Request it came from any more.
 
 The conflict is git being exact, not git being difficult. The commit of US-059 says "after the
-Warranty Years row of the layout, add a Supplier row", and "after the Warranty Years grant of the
+Warranty Years row of the layout, add a Supplier row", and "next to the Warranty Years grant of the
 permission set, add a Supplier grant". On `preprod` there is no Warranty Years row and no Warranty
-Years grant to add after, so git stops and writes both versions into the file, between markers:
+Years grant to anchor on, so git stops and writes both versions into the file, between markers:
 what `preprod` has on the `<<<<<<< HEAD` side, which is nothing at that spot, and what the story
-brought on the `>>>>>>>` side, the Warranty Years entry and the Supplier entry together. The
+brought on the `>>>>>>>` side, the Warranty Years entry and the Supplier entry together. Git cuts
+the block where the lines stop matching, not where an XML element starts: in the layout, the two
+opening lines of the Warranty Years row are also the opening lines of the row that follows on
+`preprod`, so they sit just above the markers, and the incoming side runs from the Warranty Years
+field to the opening lines of the row after Supplier. The
 recommended answer commits the files exactly like that, so the branch can be pushed, the Pull
 Request opened, and the decision made where it can be reviewed.
 
@@ -347,6 +353,8 @@ Tickets: US-057, US-059, US-061
 _Created with `sf hardis:project:promotion:create`. Do not squash this Pull Request when merging it._
 ````
 
+![The description of the promotion Pull Request on GitHub, with the warning, the declaration block, the carried table and the folded prompt](../../_assets/annotated/web/github-pr-promotion-description.png)
+
 The **Author** column is the GitHub account that opened the Pull Request, so on this course it is
 your own handle rather than Mariia's or Romain's: the teammate wrote the commit, `Simulate my
 teammates` opened the Pull Request with your account. The branch window of the panel shows the
@@ -382,6 +390,8 @@ sfdx-hardis comment says why, in one paragraph:
 >
 > - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
 > - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+
+![The sfdx-hardis comment of the red check, naming the two files that still hold conflict markers](../../_assets/annotated/web/github-pr-promotion-markers.png)
 
 That is the safety net: a marker in an XML file is sometimes tolerated by git and always fatal to
 Salesforce, so the job stops before it deploys anything, and says so where you are looking rather

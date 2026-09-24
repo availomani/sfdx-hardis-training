@@ -34,6 +34,28 @@ somebody's bug report.
    [sfdx-hardis documentation](https://sfdx-hardis.cloudity.com/) and search the
    [issues](https://github.com/hardisgroupcom/sfdx-hardis/issues) before opening one.
 
+## When the course changed after you forked
+
+The lab pages are always current: you read them on this site. What your fork holds is fixed on
+the day you forked it: the scripts behind the **Training** menu, the teammate stories of
+**Simulate my teammates**, the rules of **Check my work** and the project configuration. When the
+course adds a lab or fixes one of those, your fork does not get it on its own.
+
+Every training command tells you when that happened: it checks your fork against the course
+first, and says how many changes you are missing. **Where am I?** always shows it. Changes to the
+lab pages, the translations, the site and the badges of other learners are left out, since you read
+them here and they change nothing your fork runs.
+
+To bring the changes in, click **Update my course** in the Training menu of your level. It merges
+the course into a branch of its own, made from your `integration`, and opens a Pull Request into
+`integration`, like every change in this course. Wait for its checks, merge it with **Merge pull
+request**, never a squash, then **Pull** in the Source Control panel. Your work is kept.
+
+If the course and you changed the same file, the command stops, undoes everything and names the
+files. Then either **Reset this level**, which starts the level again from its current state and
+throws away your work on `integration` in that level, or merge by hand the way
+[Lab 2.7](level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) solves a conflict.
+
 ## Help on a real project
 
 This course runs on a fictional company, with free orgs and a repository you create for yourself.

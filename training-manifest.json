@@ -1009,6 +1009,8 @@
         "annotated/vscode/promotion-create-select--confirm",
         "annotated/vscode/promotion-create-conflict--recommended",
         "annotated/vscode/promotion-create-completed--prompt",
+        "annotated/web/github-pr-promotion-description",
+        "annotated/web/github-pr-promotion-markers",
         "annotated/vscode/devops-pipeline-promotion--in-flight",
         "annotated/vscode/promotion-conflict-editor--accept-incoming"
       ],

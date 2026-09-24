@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "8f5b7cdee8d2c49b954a13c7b42aa8b00a5ec6b6"
+source_rev: "9dad8d20634fe26a6b2d94040c95f8b420b63aac"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -13,6 +13,8 @@ screenshots:
   - annotated/vscode/promotion-create-select--confirm
   - annotated/vscode/promotion-create-conflict--recommended
   - annotated/vscode/promotion-create-completed--prompt
+  - annotated/web/github-pr-promotion-description
+  - annotated/web/github-pr-promotion-markers
   - annotated/vscode/devops-pipeline-promotion--in-flight
   - annotated/vscode/promotion-conflict-editor--accept-incoming
 depends_on:
@@ -306,14 +308,17 @@ toutes lettres ce qu'elle transporte : plus rien dans git ne relie la copie à l
 elle vient.
 
 Le conflit, c'est git qui est exact, pas git qui est difficile. Le commit d'US-059 dit « après la
-ligne Warranty Years de la présentation de page, ajoute une ligne Supplier », et « après le droit
+ligne Warranty Years de la présentation de page, ajoute une ligne Supplier », et « à côté du droit
 Warranty Years du permission set, ajoute un droit Supplier ». Sur `preprod` il n'y a ni ligne
-Warranty Years ni droit Warranty Years après quoi ajouter, donc git s'arrête et écrit les deux
+Warranty Years ni droit Warranty Years sur quoi s'appuyer, donc git s'arrête et écrit les deux
 versions dans le fichier, entre des marqueurs : ce que `preprod` a du côté `<<<<<<< HEAD`, c'est à
 dire rien à cet endroit, et ce que la story apporte du côté `>>>>>>>`, l'entrée Warranty Years et
-l'entrée Supplier ensemble. La réponse recommandée committe les fichiers exactement comme ça, pour
-que la branche puisse être poussée, la Pull Request ouverte, et la décision prise là où on peut la
-relire.
+l'entrée Supplier ensemble. Git coupe le bloc là où les lignes cessent de coïncider, pas là où un
+élément XML commence : dans la présentation de page, les deux lignes qui ouvrent la ligne Warranty
+Years ouvrent aussi la ligne qui suit sur `preprod`, donc elles restent juste au-dessus des
+marqueurs, et le côté entrant va du champ Warranty Years aux lignes d'ouverture de la ligne qui
+suit Supplier. La réponse recommandée committe les fichiers exactement comme ça, pour que la
+branche puisse être poussée, la Pull Request ouverte, et la décision prise là où on peut la relire.
 
 <!-- command-links:start -->
 Documentation de la commande : [hardis:project:promotion:create](https://sfdx-hardis.cloudity.com/hardis/project/promotion/create/)
@@ -363,6 +368,8 @@ Tickets: US-057, US-059, US-061
 _Created with `sf hardis:project:promotion:create`. Do not squash this Pull Request when merging it._
 ````
 
+![La description de la promotion Pull Request sur GitHub, avec l'avertissement, le bloc de déclaration, le tableau des Pull Requests portées et le prompt replié](../../_assets/annotated/web/github-pr-promotion-description.png)
+
 La colonne **Author** est le compte GitHub qui a ouvert la Pull Request : sur cette formation,
 c'est donc votre propre identifiant et non celui de Mariia ou de Romain. Le coéquipier a écrit le
 commit, **Simulate my teammates** a ouvert la Pull Request avec votre compte. La fenêtre de branche
@@ -401,6 +408,8 @@ et le commentaire sfdx-hardis dit pourquoi, en un paragraphe :
 >
 > - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
 > - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+
+![Le commentaire sfdx-hardis du check rouge, qui nomme les deux fichiers contenant encore des marqueurs de conflit](../../_assets/annotated/web/github-pr-promotion-markers.png)
 
 C'est le filet de sécurité : un marqueur dans un fichier XML est parfois toléré par git et toujours
 fatal pour Salesforce, donc le job s'arrête avant de déployer quoi que ce soit, et le dit là où vous
