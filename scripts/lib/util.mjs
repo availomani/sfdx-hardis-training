@@ -575,7 +575,43 @@ const GH_DEVICE_URL = "https://github.com/login/device";
 const GH_ONE_TIME_CODE = /\b([A-Z0-9]{4}-[A-Z0-9]{4})\b/;
 
 /**
- * The web sign-in of gh, run so that the panel can carry it.
+ * What the course needs gh to hold on top of what a sign-in gives by default.
+ *
+ * `workflow`: GitHub refuses a push that adds or changes a file under
+ * .github/workflows unless the token holds it. The course ships workflows and
+ * changes them, so Update my course brings workflow changes, and Reset this
+ * level can put back older ones. Without it the push is refused with "refusing
+ * to allow an OAuth App to create or update workflow".
+ */
+const GH_SCOPES = ["workflow"];
+
+/**
+ * The scopes the course needs that the gh token does not hold. Empty when gh
+ * does not say which scopes it has, as with a GH_TOKEN or a fine-grained token:
+ * those are not something gh auth refresh can change, so nothing is asked.
+ */
+function ghMissingScopes() {
+  const res = run("gh", ["auth", "status", "--hostname", "github.com"], { capture: true, quiet: true });
+  const line = `${res.stdout}\n${res.stderr}`.split(/\r?\n/).find((one) => /Token scopes:/i.test(one));
+  if (!line) {
+    return [];
+  }
+  const held = [...line.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+  return GH_SCOPES.filter((scope) => !held.includes(scope));
+}
+
+/** The web sign-in of gh, with the scopes the course needs from the start. */
+async function ghAuthLogin() {
+  return ghWebFlow(
+    ["auth", "login", "--hostname", "github.com", "--git-protocol", "https", "--web", "--scopes", GH_SCOPES.join(",")],
+    "    A browser window opens. Answer GitHub.com, HTTPS, and sign in there."
+  );
+}
+
+/**
+ * A gh command that goes through the browser with a one-time code, run so that
+ * the panel can carry it: the sign-in, or the refresh that adds a scope to a
+ * token gh already has.
  *
  * gh with a terminal prints the one-time code there and opens the browser
  * itself. Started from the panel it has no terminal: it still prints the code
@@ -584,10 +620,9 @@ const GH_ONE_TIME_CODE = /\b([A-Z0-9]{4}-[A-Z0-9]{4})\b/;
  * see. The code is lifted out of its output and shown in the panel instead, and
  * the page is opened here.
  */
-async function ghAuthLogin() {
-  const args = ["auth", "login", "--hostname", "github.com", "--git-protocol", "https", "--web"];
+async function ghWebFlow(args, terminalHint) {
   if (!panel.isActive()) {
-    info(c.dim("    A browser window opens. Answer GitHub.com, HTTPS, and sign in there."));
+    info(c.dim(terminalHint));
     info("");
     return run("gh", args).code;
   }
@@ -630,6 +665,7 @@ export async function ensureGh() {
     );
   }
   if (ghSignedIn()) {
+    await ensureGhScopes();
     return;
   }
 
@@ -647,6 +683,33 @@ export async function ensureGh() {
   // which is not something a Source Control panel can answer.
   run("gh", ["auth", "setup-git", "--hostname", "github.com"], { capture: true, quiet: true });
   ok("Signed in to GitHub.");
+}
+
+/**
+ * The scopes of GH_SCOPES, added to a token that was made without them: every
+ * learner who signed in before the course asked for them. One more pass through
+ * the browser, once, then git is pointed at that token again, since a push made
+ * with another one would be refused the same way.
+ */
+async function ensureGhScopes() {
+  const missing = ghMissingScopes();
+  if (missing.length === 0) {
+    return;
+  }
+  info("");
+  info(`GitHub needs one more permission for the course: ${c.bold(missing.join(", "))}, to push changes to the workflow files of your fork.`);
+  const code = await ghWebFlow(
+    ["auth", "refresh", "--hostname", "github.com", "--scopes", missing.join(",")],
+    "    A browser window opens. Type the code printed here and approve."
+  );
+  if (code !== 0 || ghMissingScopes().length > 0) {
+    abort(
+      "GitHub did not grant the permission.",
+      "Click the command again: a new code is given, and it starts over."
+    );
+  }
+  run("gh", ["auth", "setup-git", "--hostname", "github.com"], { capture: true, quiet: true });
+  ok("GitHub permission granted.");
 }
 
 /** Opens a page in the default browser, and always prints it in case it does not. */

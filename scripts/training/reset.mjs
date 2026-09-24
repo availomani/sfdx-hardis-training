@@ -9,7 +9,7 @@ import fs from "fs";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, git, gitOut,
-  select, confirm, universe, repoSlug
+  select, confirm, universe, repoSlug, ensureGh
 } from "../lib/util.mjs";
 import { withProtectionLifted } from "../lib/protection.mjs";
 
@@ -41,6 +41,9 @@ export default async function reset(args) {
   }
 
   ensureUpstream(u);
+  // The start branch can carry other workflow files than integration has, and
+  // GitHub refuses that push to a token without the workflow permission
+  await ensureGh();
 
   title("1 of 3  Fetching the reference branches");
   if (run("git", ["fetch", "upstream", "--prune"]).code !== 0) {
