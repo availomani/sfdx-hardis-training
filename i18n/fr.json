@@ -110,7 +110,31 @@
     "takeTheCourse": "Suivre le cours",
     "description": "{name} a obtenu le badge {badge} de la formation Salesforce DevOps gratuite avec sfdx-hardis, vérifié par un job qui a lu son repository public.",
     "shareHeading": "Le partager",
-    "shareText": "{name} a obtenu le badge {badge} de la formation Salesforce DevOps gratuite avec sfdx-hardis",
+    "shareTitle": "{name} a obtenu le badge {badge}",
+    "shareIntro": "LinkedIn s'ouvre avec ce post déjà écrit. Il est aussi ici, à copier :",
+    "shareText": "Je viens d'obtenir le badge {badge} de la formation Salesforce DevOps gratuite avec sfdx-hardis",
+    "postText": [
+      "Je viens d'obtenir le badge {badge} 🎉 {page}",
+      "",
+      "Une formation Salesforce DevOps gratuite et concrète : de vraies Pull Requests, une vraie pipeline, vérifiées sur mon repository public.",
+      "",
+      "Obtenez le vôtre : {course}",
+      "",
+      "#Salesforce #DevOps #sfdxhardis"
+    ],
+    "picture": {
+      "heading": "Le publier avec l'image en grand",
+      "body": [
+        "LinkedIn affiche un lien en petite vignette. Pour montrer le badge en grand, joignez cette image au post :"
+      ],
+      "steps": [
+        "Téléchargez l'image.",
+        "Copiez le post ci-dessus, avec le bouton en haut à droite.",
+        "[Commencez un post sur LinkedIn](https://www.linkedin.com/feed/?shareActive=true), collez le texte et ajoutez l'image."
+      ],
+      "download": "Télécharger l'image",
+      "alt": "{name}, {badge}"
+    },
     "networks": {
       "linkedin": "LinkedIn",
       "x": "X",

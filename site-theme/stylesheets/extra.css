@@ -484,3 +484,12 @@ body.sfh-lightbox-open {
   margin-right: 0.5rem;
   vertical-align: middle;
 }
+
+/*
+ * The post a badge page offers to copy. It is prose in a code block, for the
+ * copy button, so it wraps like prose instead of scrolling sideways.
+ */
+.badge-post pre code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

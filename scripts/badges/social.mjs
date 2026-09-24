@@ -12,6 +12,11 @@
  * every other page of the site gets one card showing the three levels,
  * `labs/_assets/social/course.png`.
  *
+ * LinkedIn also shows that card as a small thumbnail, whatever its size. The
+ * only way a badge shows full width in a feed is a picture attached to the post,
+ * so each holder gets a second one, square, `badges/post/<trailblazer>.png`,
+ * that their badge page offers to download.
+ *
  * Both are drawn here as SVG, with the badge itself embedded from
  * `badge-svg.mjs`, so a change to the artwork reaches the cards by re-running
  * this. They are rasterised with the browser the verify scripts already use, and
@@ -31,10 +36,18 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 const BADGES = path.join(ROOT, "badges");
 const CARDS = path.join(BADGES, "social");
+const POSTS = path.join(BADGES, "post");
 const COURSE_CARD = path.join(ROOT, "labs", "_assets", "social", "course.png");
 const ICON = path.join(ROOT, "site-theme", "images", "badge-mark.svg");
 
+const universe = JSON.parse(fs.readFileSync(path.join(ROOT, "training-universe.json"), "utf8"));
+const SITE = universe.course.site;
+// The course URL as a picture prints it: a card is often seen without the link
+// under it, reposted or screenshotted, and then it is the only way to the course
+const SITE_LABEL = SITE.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
 export const CARD = { width: 1200, height: 630 };
+export const POST = { width: 1200, height: 1200 };
 const FONT = "Segoe UI, Helvetica, Arial, sans-serif";
 
 /**
@@ -64,42 +77,72 @@ function badgeAt(svg, { x, y, size, suffix }) {
 const fit = (text, max, width, min = 24) =>
   Math.max(min, Math.min(max, Math.floor(width / (String(text).length * 0.55))));
 
-const shell = (body) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD.width}" height="${CARD.height}" viewBox="0 0 ${CARD.width} ${CARD.height}">
+const shell = (body, size = CARD) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="${size.width}" height="${size.height}" viewBox="0 0 ${size.width} ${size.height}">
   <defs>
     <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#150A33"/>
       <stop offset="100%" stop-color="#0A0620"/>
     </linearGradient>
   </defs>
-  <rect width="${CARD.width}" height="${CARD.height}" fill="url(#ground)"/>
+  <rect width="${size.width}" height="${size.height}" fill="url(#ground)"/>
 ${body}
 </svg>
 `;
 
-/** One learner's card: their badge, their name, the level they earned. */
-export function badgeCardSvg({ record, holder }) {
+/** The highest badge of a record, drawn for its holder, and its level. */
+function highestBadge({ record, holder }) {
   const badges = record.badges || [];
   const highest = badges.reduce((best, one) => (best === null || one.level > best.level ? one : best), null);
   const level = highest ? highest.level : 1;
-  const def = LEVELS[level] || LEVELS[1];
-  const badge = renderSvg({
+  const svg = renderSvg({
     level,
     handle: holder.recipient || holder.key,
     fullName: holder.name,
     trailblazer: holder.trailblazer,
     date: highest ? highest.issuedOn : ""
   });
-  const name = holder.name || holder.key;
-  const earned = badges.length > 1 ? `${badges.length} levels earned` : "";
+  return { level, def: LEVELS[level] || LEVELS[1], svg, name: holder.name || holder.key };
+}
 
-  return shell(`  ${badgeAt(badge, { x: 80, y: 105, size: 420, suffix: "card" })}
-  <text x="560" y="215" font-family="${FONT}" font-size="26" letter-spacing="4.5" fill="#A87BFF">SALESFORCE DEVOPS</text>
-  <text x="560" y="300" font-family="${FONT}" font-size="${fit(name, 68, 560, 34)}" font-weight="700" fill="#FFFFFF">${escapeXml(name)}</text>
-  <text x="560" y="360" font-family="${FONT}" font-size="${fit(def.name, 40, 560, 22)}" font-weight="600" fill="${def.rim}">${escapeXml(def.name)}</text>
-  <text x="560" y="412" font-family="${FONT}" font-size="22" fill="#B9B3D0">Badge, not a certification. Checked against a public repository.</text>
-  <text x="560" y="470" font-family="${FONT}" font-size="22" fill="#6F6A8A">${escapeXml(earned)}</text>
-  <text x="560" y="510" font-family="${FONT}" font-size="24" font-weight="700" fill="#FFFFFF">sfdx-hardis training</text>`);
+/**
+ * One learner's card: their badge, their name, the level they earned.
+ *
+ * LinkedIn shows a link as a thumbnail about 200 pixels wide, so the card is
+ * drawn to be read at that size: a large badge, the name and the level in large
+ * type, and nothing else. A line of 22px text on it was a grey smear.
+ */
+export function badgeCardSvg(one) {
+  const { level, def, svg, name } = highestBadge(one);
+  const label = def.name.replace(/^sfdx-hardis /, "");
+
+  return shell(`  ${badgeAt(svg, { x: 50, y: 45, size: 540, suffix: "card" })}
+  <text x="620" y="170" font-family="${FONT}" font-size="26" font-weight="600" letter-spacing="4" fill="#A87BFF">SFDX-HARDIS TRAINING</text>
+  <text x="620" y="265" font-family="${FONT}" font-size="${fit(name, 76, 500, 40)}" font-weight="700" fill="#FFFFFF">${escapeXml(name)}</text>
+  <text x="620" y="340" font-family="${FONT}" font-size="${fit(label, 52, 540, 28)}" font-weight="700" fill="${def.lite}">${escapeXml(label)}</text>
+  <rect x="620" y="378" width="170" height="52" rx="26" fill="${def.pill}"/>
+  <text x="705" y="413" text-anchor="middle" font-family="${FONT}" font-size="26" font-weight="700" letter-spacing="3" fill="${def.ink}">LEVEL ${level}</text>
+  <text x="620" y="505" font-family="${FONT}" font-size="28" fill="#B9B3D0">Free Salesforce DevOps course</text>
+  <text x="620" y="548" font-family="${FONT}" font-size="${fit(SITE_LABEL, 24, 540, 18)}" fill="#8A84A6">${escapeXml(SITE_LABEL)}</text>`);
+}
+
+/**
+ * One learner's picture to attach to a post: square, because a picture in a
+ * feed is shown full width and a square one takes more of it than a 1200x630
+ * card, which a feed shows as a thumbnail when it comes from a link.
+ */
+export function postImageSvg(one) {
+  const { def, svg, name } = highestBadge(one);
+
+  return shell(
+    `  <text x="600" y="95" text-anchor="middle" font-family="${FONT}" font-size="30" font-weight="600" letter-spacing="5" fill="#A87BFF">SFDX-HARDIS TRAINING</text>
+  ${badgeAt(svg, { x: 280, y: 130, size: 640, suffix: "post" })}
+  <text x="600" y="870" text-anchor="middle" font-family="${FONT}" font-size="${fit(name, 76, 1040, 40)}" font-weight="700" fill="#FFFFFF">${escapeXml(name)}</text>
+  <text x="600" y="945" text-anchor="middle" font-family="${FONT}" font-size="${fit(def.name, 48, 1040, 28)}" font-weight="700" fill="${def.lite}">${escapeXml(def.name)}</text>
+  <text x="600" y="1030" text-anchor="middle" font-family="${FONT}" font-size="32" fill="#B9B3D0">Free Salesforce DevOps training with sfdx-hardis</text>
+  <text x="600" y="1090" text-anchor="middle" font-family="${FONT}" font-size="28" fill="#8A84A6">${escapeXml(SITE_LABEL)}</text>`,
+    POST
+  );
 }
 
 /** The card every other page shows: the three levels of the course. */
@@ -128,7 +171,7 @@ export function courseCardSvg() {
   <text x="600" y="124" text-anchor="middle" font-family="${FONT}" font-size="24" fill="#B9B3D0">Three free hands-on levels, from your first Pull Request to owning the pipeline</text>
   ${badges}
   ${names}
-  <text x="600" y="586" text-anchor="middle" font-family="${FONT}" font-size="22" fill="#6F6A8A">Free and open source, by Cloudity</text>`);
+  <text x="600" y="590" text-anchor="middle" font-family="${FONT}" font-size="22" fill="#8A84A6">Free and open source, by Cloudity - ${escapeXml(SITE_LABEL)}</text>`);
 }
 
 /**
@@ -206,11 +249,13 @@ async function rasterise(jobs) {
   try {
     const page = await browser.newPage({ viewport: CARD, deviceScaleFactor: 1 });
     for (const job of jobs) {
+      const size = job.size || CARD;
+      await page.setViewportSize(size);
       const html = `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>${job.svg}`;
       await page.setContent(html, { waitUntil: "load" });
       await page.waitForTimeout(120);
       fs.mkdirSync(path.dirname(job.file), { recursive: true });
-      await page.screenshot({ path: job.file, clip: { x: 0, y: 0, ...CARD } });
+      await page.screenshot({ path: job.file, clip: { x: 0, y: 0, ...size } });
       console.log(`  ${path.relative(ROOT, job.file).split(path.sep).join("/")}`);
     }
   } finally {
@@ -225,24 +270,31 @@ export function writeIcon() {
   return path.relative(ROOT, ICON).split(path.sep).join("/");
 }
 
-/** Writes the course card and one card per badge holder. */
+/** The two pictures of one holder: the card a link shows, the picture a post attaches. */
+const holderJobs = (one) => [
+  { svg: badgeCardSvg(one), file: path.join(CARDS, `${one.holder.key}.png`) },
+  { svg: postImageSvg(one), file: path.join(POSTS, `${one.holder.key}.png`), size: POST }
+];
+
+/** Writes the course card, and the card and post picture of every badge holder. */
 export async function writeCards() {
   const jobs = [{ svg: courseCardSvg(), file: COURSE_CARD }];
   for (const one of holders()) {
-    jobs.push({ svg: badgeCardSvg(one), file: path.join(CARDS, `${one.holder.key}.png`) });
+    jobs.push(...holderJobs(one));
   }
   await rasterise(jobs);
   return jobs.length;
 }
 
-/** The card of one holder, which is what a claim needs. */
+/** The card and the post picture of one holder, which is what a claim needs. */
 export async function writeCardFor(key) {
   const one = holders().find((candidate) => candidate.holder.key === key);
   if (!one) {
     throw new Error(`No badge record for ${key}`);
   }
-  await rasterise([{ svg: badgeCardSvg(one), file: path.join(CARDS, `${key}.png`) }]);
-  return path.join(CARDS, `${key}.png`);
+  const jobs = holderJobs(one);
+  await rasterise(jobs);
+  return jobs.map((job) => job.file);
 }
 
 const invoked = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));

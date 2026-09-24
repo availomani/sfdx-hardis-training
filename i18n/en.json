@@ -110,7 +110,31 @@
     "takeTheCourse": "Take the course",
     "description": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",
     "shareHeading": "Share it",
-    "shareText": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis",
+    "shareTitle": "{name} earned the {badge} badge",
+    "shareIntro": "LinkedIn opens with this post already written. It is also here, to copy:",
+    "shareText": "I just earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis",
+    "postText": [
+      "I just earned the {badge} badge 🎉 {page}",
+      "",
+      "A free, hands-on Salesforce DevOps course: real Pull Requests, a real pipeline, checked against my public repository.",
+      "",
+      "Get yours: {course}",
+      "",
+      "#Salesforce #DevOps #sfdxhardis"
+    ],
+    "picture": {
+      "heading": "Post it with the full picture",
+      "body": [
+        "LinkedIn shows a link as a small thumbnail. To show the badge full size, attach this picture to the post:"
+      ],
+      "steps": [
+        "Download the picture.",
+        "Copy the post above, with the button at its top right.",
+        "[Start a post on LinkedIn](https://www.linkedin.com/feed/?shareActive=true), paste the text and add the picture."
+      ],
+      "download": "Download the picture",
+      "alt": "{name}, {badge}"
+    },
     "networks": {
       "linkedin": "LinkedIn",
       "x": "X",

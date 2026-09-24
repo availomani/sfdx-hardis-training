@@ -323,6 +323,12 @@ const frontMatter = (meta) => {
   if (meta.social) {
     lines.push(`social: ${JSON.stringify(meta.social)}`);
   }
+  // The title of that share, when the page title alone says too little: a badge
+  // page is titled with a name, and a preview that reads "Olivier Mulot" says
+  // nothing about a badge
+  if (meta.socialTitle) {
+    lines.push(`social_title: ${JSON.stringify(meta.socialTitle)}`);
+  }
   return `${lines.join("\n")}\n---\n\n`;
 };
 for (const file of ["TRANSLATION.md"]) {
@@ -458,6 +464,8 @@ copyTree(path.join(badgesDir, "img"), path.join(OUT, "badges", "img"), (name) =>
 // LinkedIn does not render SVG, so this one is a PNG and it is committed like
 // the badge image itself.
 copyTree(path.join(badgesDir, "social"), path.join(OUT, "badges", "social"), (name) => name.endsWith(".png"));
+// The square picture a badge page offers to attach to a post, from the same script
+copyTree(path.join(badgesDir, "post"), path.join(OUT, "badges", "post"), (name) => name.endsWith(".png"));
 // The records are published as they are, at /badges/<trailblazer>.json, so that
 // anything holding a Trailblazer username can ask what that person earned with
 // one GET. The Trailhead Banner project is the reason this exists. GitHub Pages
@@ -543,13 +551,18 @@ function badgePages() {
         alternates[other] = `${localePrefix(other)}badges/${holder.key}/`;
       }
       const pageUrl = `${universe.course.site}/${localePrefix(locale)}badges/${holder.key}/`;
+      // The picture to attach to a post, when the claim could draw it
+      const post = fs.existsSync(path.join(badgesDir, "post", `${holder.key}.png`));
       const page = badgePage({
         s,
         holder,
         badgeImage: (level) => `${images}/${holder.key}-level-${level}.svg`,
         // The banner version: one file per level, next to the badge images
         bannerImage: (level) => `${images}/banner-level-${level}.svg`,
-        courseUrl: `${universe.course.site}/`,
+        postImage: post ? `${images.replace(/img$/, "post")}/${holder.key}.png` : null,
+        // The course in the language of the page, which is the one a reader of
+        // the post most likely reads too
+        courseUrl: `${universe.course.site}/${localePrefix(locale)}`,
         pageUrl,
         recordUrl: `${universe.course.site}/badges/${holder.key}.json`
       });
@@ -564,7 +577,8 @@ function badgePages() {
           frontMatter({
             title: holder.name,
             description: fill(s.badge.description, { name: holder.name, badge: highest }),
-            social
+            social,
+            socialTitle: fill(s.badge.shareTitle, { name: holder.name, badge: highest })
           }) + page,
           alternates,
           locale

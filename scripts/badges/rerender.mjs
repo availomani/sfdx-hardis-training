@@ -10,8 +10,9 @@
  * URLs they publish stay exactly as they were, only the pictures are rewritten.
  *
  * It also redraws what is made of those badges: the banner version of each
- * level, the card a share of a badge page shows, the card of the course, and the
- * icon of the site. Run it after any
+ * level, the card a share of a badge page shows, the square picture a badge page
+ * offers to attach to a post, the card of the course, and the icon of the site.
+ * Run it after any
  * template change, together with scripts/badges/examples.mjs, which does the
  * same for the three examples the home page shows.
  */

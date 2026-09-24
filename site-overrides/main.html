@@ -65,7 +65,8 @@
     page was first shared needs a pass through their Post Inspector to show.
   -#}
   {% set social = (page.meta | d({}, true)).social | d("_assets/social/course.png") %}
-  {% set share_title = (page.meta | d({}, true)).title | d(page.title | d(config.site_name), true) %}
+  {#- A badge page is titled with a name; its share says which badge it is -#}
+  {% set share_title = (page.meta | d({}, true)).social_title | d((page.meta | d({}, true)).title | d(page.title | d(config.site_name), true), true) %}
   {% set share_text = (page.meta | d({}, true)).description | d(config.site_description, true) %}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ config.site_name }}">

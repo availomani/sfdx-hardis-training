@@ -145,6 +145,22 @@ export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, record
   ].join("\n");
 }
 
+/** The name of the highest badge a holder earned, as a post says it. */
+const badgeName = ({ s, holder }) => (holder.highest ? holder.highest.name : s.badges.heading);
+
+/**
+ * The post a learner publishes about their badge, in the language of the page.
+ *
+ * Written in the first person, because the button is pressed by the holder. The
+ * badge page comes first, on the opening line: a post shows the preview of one
+ * link, and it has to be the page with the learner's card on it, not the course.
+ */
+export function postText({ s, holder, pageUrl, courseUrl }) {
+  return s.badge.postText
+    .map((line) => fill(line, { badge: badgeName({ s, holder }), page: pageUrl, course: courseUrl }))
+    .join("\n");
+}
+
 /**
  * The row of share buttons under a badge.
  *
@@ -153,12 +169,17 @@ export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, record
  * credential lands; the others are there so nobody has to copy the URL by hand.
  * Each one carries the page, which is what holds the card a feed renders, and a
  * line of text for the networks that take one.
+ *
+ * LinkedIn's documented share URL takes the page and nothing else: it has
+ * ignored any text since 2019, so it opened an empty post. The composer URL of
+ * the feed takes the whole post instead. It is not documented, which is why the
+ * same text is also on the page, to copy, for the day it stops working.
  */
-function shareButtons({ s, holder, pageUrl }) {
+function shareButtons({ s, holder, pageUrl, post }) {
   const url = encodeURIComponent(pageUrl);
-  const text = encodeURIComponent(fill(s.badge.shareText, { name: holder.name, badge: holder.highest ? holder.highest.name : s.badges.heading }));
+  const text = encodeURIComponent(fill(s.badge.shareText, { name: holder.name, badge: badgeName({ s, holder }) }));
   const networks = [
-    { label: s.badge.networks.linkedin, href: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`, primary: true },
+    { label: s.badge.networks.linkedin, href: `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(post)}`, primary: true },
     { label: s.badge.networks.x, href: `https://twitter.com/intent/tweet?url=${url}&text=${text}` },
     { label: s.badge.networks.facebook, href: `https://www.facebook.com/sharer/sharer.php?u=${url}` },
     { label: s.badge.networks.bluesky, href: `https://bsky.app/intent/compose?text=${text}%20${url}` },
@@ -179,7 +200,7 @@ function shareButtons({ s, holder, pageUrl }) {
  * every language, so a claim never has to write a page per locale and an old
  * badge gains the new languages by itself.
  */
-export function badgePage({ s, holder, badgeImage, bannerImage, courseUrl, pageUrl, recordUrl }) {
+export function badgePage({ s, holder, badgeImage, bannerImage, postImage, courseUrl, pageUrl, recordUrl }) {
   // The holder, not the raw record: a record written before names were stored
   // has only its key, and site.mjs is where that is filled in. Reading the
   // record here put "undefined" on the page while the index listed the person
@@ -243,8 +264,53 @@ export function badgePage({ s, holder, badgeImage, bannerImage, courseUrl, pageU
           ""
         ]
       : []),
-    ...(pageUrl ? [`## ${s.badge.shareHeading}`, "", ...shareButtons({ s, holder, pageUrl }), ""] : []),
+    ...(pageUrl ? shareSection({ s, holder, pageUrl, courseUrl, postImage }) : []),
     `[${s.badge.takeTheCourse}](${courseUrl}){ .md-button }`,
     ""
   ].join("\n");
+}
+
+/**
+ * Where a learner shares their badge: the post, already written, the buttons,
+ * and the square picture to attach.
+ *
+ * The post is a code block for the copy button the theme puts on every one, so
+ * the page needs no script of its own. A link in a LinkedIn post only ever
+ * shows as a thumbnail; the picture, downloaded and attached, is the one way the
+ * badge shows full width, and the steps say how. Without a picture, which is a
+ * claim that ran without a browser, that part is left out rather than broken.
+ */
+function shareSection({ s, holder, pageUrl, courseUrl, postImage }) {
+  const post = postText({ s, holder, pageUrl, courseUrl });
+  const alt = fill(s.badge.picture.alt, { name: holder.name, badge: badgeName({ s, holder }) });
+  return [
+    `## ${s.badge.shareHeading}`,
+    "",
+    s.badge.shareIntro,
+    "",
+    '<div class="badge-post" markdown>',
+    "",
+    "```text",
+    post,
+    "```",
+    "",
+    "</div>",
+    "",
+    ...shareButtons({ s, holder, pageUrl, post }),
+    "",
+    ...(postImage
+      ? [
+          `### ${s.badge.picture.heading}`,
+          "",
+          ...s.badge.picture.body,
+          "",
+          ...s.badge.picture.steps.map((step, index) => `${index + 1}. ${step}`),
+          "",
+          `![${alt}](${postImage}){ width="360" }`,
+          "",
+          `[${s.badge.picture.download}](${postImage}){ .md-button download="sfdx-hardis-badge-${holder.key}.png" }`,
+          ""
+        ]
+      : [])
+  ];
 }

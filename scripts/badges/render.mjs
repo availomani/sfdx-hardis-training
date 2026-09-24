@@ -199,13 +199,14 @@ fs.writeFileSync(recordPath, JSON.stringify(record, null, 2) + "\n", "utf8");
 // since the last claim. No browser needed: they are SVG like the badge itself.
 writeBanners();
 
-// The card a share of the badge page shows. Best effort on purpose: it needs a
-// browser, and a claim must not fail because one could not be installed. When it
-// does not happen here, the page falls back to the card of the course until
-// somebody runs scripts/badges/rerender.mjs.
-let card = null;
+// The card a share of the badge page shows, and the square picture the page
+// offers to attach to a post. Best effort on purpose: they need a browser, and a
+// claim must not fail because one could not be installed. When it does not
+// happen here, the page falls back to the card of the course and leaves the
+// picture out until somebody runs scripts/badges/rerender.mjs.
+let cards = [];
 try {
-  card = await writeCardFor(key);
+  cards = await writeCardFor(key);
 } catch (error) {
   console.warn(`  (no social card: ${error.message.split("\n")[0]})`);
 }
@@ -213,8 +214,8 @@ try {
 console.log(`Badge written for ${handle} as ${key}, level ${level}:`);
 console.log(`  badges/${key}.json`);
 console.log(`  badges/img/${key}-level-${level}.svg`);
-if (card) {
-  console.log(`  badges/social/${key}.png`);
+for (const card of cards) {
+  console.log(`  ${path.relative(ROOT, card).split(path.sep).join("/")}`);
 }
 if (movedFrom) {
   console.log(`  (moved from ${movedFrom}, which was removed)`);
