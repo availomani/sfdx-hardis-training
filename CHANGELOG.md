@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-09-24
 
+- The course has its own **Free training** page on the sfdx-hardis documentation site, linked from its menu, its home page and its guides.
 - **Update my course** and **Reset this level** no longer fail on a course change to the workflow files: GitHub is asked once for the permission they need.
 - Level 3: a new Lab 3.10 on promotion branches (Beta), and the capstone becomes Lab 3.11.
 - Lab 3.10: two GitHub screenshots of a real promotion, the Pull Request description and the red check naming the files with conflict markers.
