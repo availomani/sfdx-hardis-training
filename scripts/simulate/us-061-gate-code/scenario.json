@@ -1,0 +1,40 @@
+{
+  "id": "us-061-gate-code",
+  "title": "US-061 Record the gate code of a site",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Mariia stores the gate code of the site on the installation, readable by the crews and set by the planners. The crew leads tested it and signed it off: this is the newest story Lab 3.10 promotes, and it touches the same layout as US-060 without conflicting with it.",
+  "branch": "training/mate-us-061-gate-code",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-061 Record the gate code of a site\n\nInstallation__c.Gate_Code__c, on the layout under the account, readable\nby Helios_Delivery_Crew and editable by Helios_Delivery_Manager.",
+  "prTitle": "US-061 Record the gate code of a site",
+  "prBody": "Crews phone the customer from the gate at seven in the morning to get in.\nThis puts the code on the installation, where the planner already has it.\n\n- New field `Installation__c.Gate_Code__c`\n- On the Installation layout, after Account\n- `Helios_Delivery_Crew`: read\n- `Helios_Delivery_Manager`: read and edit\n\nStory: US-061 in BACKLOG.md",
+  "nextStep": "Review it and merge it into integration: it is the last of the five. Then promote integration into uat, Lab 3.10 step 2.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Crew.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Gate_Code__c",
+        "editable": false,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Gate_Code__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "layoutField": "Gate_Code__c",
+      "after": "Account__c",
+      "behavior": "Edit"
+    }
+  ]
+}

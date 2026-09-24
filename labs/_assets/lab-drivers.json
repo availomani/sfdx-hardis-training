@@ -130,6 +130,11 @@
       "id": "3.5",
       "title": "Promote to UAT and write the release notes",
       "skip": "answers not recorded yet"
+    },
+    {
+      "id": "3.10",
+      "title": "Promote a subset with promotion branches (Beta)",
+      "skip": "the promotion is assembled from the branch window of the DevOps Pipeline and finished in the editor and on GitHub: the command asks two questions, the selection pre-answered by the panel and the conflict answer, and nothing after them is a panel"
     }
   ]
 }

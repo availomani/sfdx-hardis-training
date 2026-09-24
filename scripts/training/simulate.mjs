@@ -18,6 +18,12 @@
  *               already exists, after a review: the branch is kept, the commit
  *               is added, and a Pull Request is opened into base only when there
  *               is none yet (the hotfix going back into integration)
+ *   basedOn     the id of another scenario this one was written on top of: its
+ *               patches anchor on lines that story added, so the branch it is
+ *               cut from has to carry that story already. Lab 3.10 promotes
+ *               such a story without the one under it, which is what makes its
+ *               cherry-pick conflict for real. The check says which story to
+ *               merge first instead of failing on a line it cannot find.
  */
 import fs from "fs";
 import path from "path";
@@ -99,6 +105,9 @@ export default async function simulate(args) {
   } else {
     info(`  It creates the branch ${c.bold(scenario.branch)} from your current ${c.bold(from)},`);
     info(`  and opens a Pull Request into ${c.bold(base)} in ${c.bold(slug || "your fork")}.`);
+    if (scenario.basedOn) {
+      info(`  It is written on top of ${c.bold(scenario.basedOn.toUpperCase().split("-").slice(0, 2).join("-"))}, which has to be merged into ${c.bold(from)} first.`);
+    }
   }
 
   const sure = args.yes === true || (await confirm("Create it?", true));
@@ -158,6 +167,19 @@ export default async function simulate(args) {
       abort(`There is no ${from} branch to branch from.`, "Run Reset this level first, from the Training menu of your level.");
     }
     run("git", ["pull", "--ff-only", "origin", from], { quiet: true });
+    // Checked on the branch the story is cut from, once it is up to date: the
+    // story under this one has to be merged there, not merely simulated.
+    const under = scenario.basedOn ? all.find((s) => s.id === scenario.basedOn) : null;
+    if (scenario.basedOn && !under) {
+      abort(`${scenario.id} says it is based on ${scenario.basedOn}, which is not a known scenario.`);
+    }
+    if (under && !scenarioIsApplied(under)) {
+      restore();
+      abort(
+        `${scenario.title} was written on top of ${under.title}, which is not in your ${from} branch yet.`,
+        `Merge ${under.title.split(" ")[0]} into ${from} first, then run Simulate my teammates again. ${scenario.usedBy} gives the order.`
+      );
+    }
     const existing = gitOut(["rev-parse", "--verify", scenario.branch]);
     if (existing) {
       warn(`${scenario.branch} already exists. It is being recreated from the current ${from}.`);
@@ -304,7 +326,7 @@ async function simulateOrgChange(scenario, args) {
   info(`  ${scenario.nextStep}`);
 }
 
-function loadScenarios() {
+export function loadScenarios() {
   if (!fs.existsSync(SIMULATE_DIR)) {
     return [];
   }
@@ -326,14 +348,17 @@ function loadScenarios() {
  * Each patch is { file, block, insertBefore | insertAfter | remove }, { file, replace: { from, to } },
  * or one of the structural patches of applyStructuralPatch below. A replace works whatever the line
  * endings of the learner's working copy.
+ *
+ * `root` is the learner's repository. The verification scripts pass a throwaway
+ * clone instead, to replay the same scenarios outside anybody's working copy.
  */
-function planPatches(scenario) {
+export function planPatches(scenario, root = ROOT) {
   // Every patch is worked out in memory first, and nothing is written until all
   // of them fit: a scenario that stopped half way used to leave the permission
   // set changed and the field file written, on a branch the learner never asked for.
   const planned = new Map();
   for (const patch of scenario.patches || []) {
-    const target = path.join(ROOT, patch.file);
+    const target = path.join(root, patch.file);
     if (!planned.has(target) && !fs.existsSync(target)) {
       abort(
         `The teammate change expects ${patch.file}, which is not in your project.`,
@@ -388,13 +413,65 @@ function planPatches(scenario) {
   return planned;
 }
 
-function writePlanned(planned) {
+export function writePlanned(planned, root = ROOT) {
   const written = [];
   for (const [target, content] of planned) {
     fs.writeFileSync(target, content, "utf8");
-    written.push(`${path.relative(ROOT, target).replace(/\\/g, "/")} (patched)`);
+    written.push(`${path.relative(root, target).replace(/\\/g, "/")} (patched)`);
   }
   return written;
+}
+
+/**
+ * Whether a scenario's changes are already in the working copy: every file it
+ * ships is there, and every patch would be reported as "already carries this
+ * change". This is what `basedOn` reads before cutting a branch, and what the
+ * verification scripts use to know what a synthetic branch holds.
+ */
+export function scenarioIsApplied(scenario, root = ROOT) {
+  const filesDir = path.join(scenario.dir, "files");
+  if (fs.existsSync(filesDir)) {
+    const walk = (dir, rel) =>
+      fs.readdirSync(dir, { withFileTypes: true }).every((entry) => {
+        const relPath = rel ? `${rel}/${entry.name}` : entry.name;
+        return entry.isDirectory()
+          ? walk(path.join(dir, entry.name), relPath)
+          : fs.existsSync(path.join(root, relPath));
+      });
+    if (!walk(filesDir, "")) {
+      return false;
+    }
+  }
+  for (const patch of scenario.patches || []) {
+    const target = path.join(root, patch.file);
+    if (!fs.existsSync(target)) {
+      return false;
+    }
+    const content = fs.readFileSync(target, "utf8");
+    if (patch.fieldPermission) {
+      if (!new RegExp(`<field>${patch.fieldPermission.field.replace(/\./g, "\\.")}</field>`).test(content)) {
+        return false;
+      }
+    } else if (patch.layoutField) {
+      if (!content.includes(`<field>${patch.layoutField}</field>`)) {
+        return false;
+      }
+    } else if (patch.removeLayoutField) {
+      if (content.includes(`<field>${patch.removeLayoutField}</field>`)) {
+        return false;
+      }
+    } else if (patch.replace) {
+      const eol = content.includes("\r\n") ? "\r\n" : "\n";
+      if (!content.includes(patch.replace.to.replace(/\r?\n/g, eol))) {
+        return false;
+      }
+    } else if (patch.block) {
+      if (!content.includes(patch.block.trim())) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 /**
@@ -461,7 +538,7 @@ function applyStructuralPatch(patch, content) {
   return content.slice(0, at) + block + content.slice(at);
 }
 
-function applyFiles(scenario) {
+export function applyFiles(scenario, root = ROOT) {
   const filesDir = path.join(scenario.dir, "files");
   if (!fs.existsSync(filesDir)) {
     return [];
@@ -474,7 +551,7 @@ function applyFiles(scenario) {
       if (entry.isDirectory()) {
         walk(from, relPath);
       } else {
-        const to = path.join(ROOT, relPath);
+        const to = path.join(root, relPath);
         fs.mkdirSync(path.dirname(to), { recursive: true });
         fs.copyFileSync(from, to);
         written.push(relPath);
@@ -483,7 +560,7 @@ function applyFiles(scenario) {
   };
   walk(filesDir, "");
   for (const gone of scenario.deletes || []) {
-    const target = path.join(ROOT, gone);
+    const target = path.join(root, gone);
     if (fs.existsSync(target)) {
       fs.rmSync(target, { force: true });
       written.push(`${gone} (deleted)`);

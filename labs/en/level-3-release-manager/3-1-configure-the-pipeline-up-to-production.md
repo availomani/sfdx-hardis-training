@@ -19,13 +19,14 @@ screenshots:
   - annotated/vscode/pipeline-config--target-branches
   - annotated/vscode/pipeline-config-user-stories--target-branches
   - annotated/vscode/pipeline-config-deployment--deployment-tab
+  - annotated/vscode/pipeline-config-danger--promotion-branches
   - annotated/vscode/pipeline-cards--save-publish
   - annotated/vscode/work-save-completed
   - annotated/vscode/devops-pipeline-level3--four-stages
 depends_on:
   commands: [hardis:project:configure:auth]
   flags: []
-  config: [availableTargetBranches, availableTargetBranchesLabels, productionBranch, mergeTargets, targetUsername, instanceUrl, orgAuthenticationMode]
+  config: [availableTargetBranches, availableTargetBranchesLabels, productionBranch, mergeTargets, targetUsername, instanceUrl, orgAuthenticationMode, enablePromotionBranches, allowedPromotionSteps]
   panels: [pipeline, pipelineConfig, orgManager, commandExecution, promptInput]
   docs: [salesforce-devops-setup-home, salesforce-devops-setup-auth, salesforce-devops-setup-auth-github, salesforce-devops-setup-existing-org]
 ---
@@ -378,7 +379,58 @@ Still in **Pipeline Settings**, scope **Global Settings** **(1)**, open the **De
 change it to *Encrypted certificate key files*, and **Save**. From now on the panel checks
 `config/branches/.jwt/<branch>.key` for every major branch and says so when one is missing.
 
-### 10. Delete the shortcut, before anything proves anything
+### 10. Switch on promotion branches, for a week you hope not to have
+
+One more setting, on the same panel, and it is the only one in this lab you are turning on for
+something that has not happened yet.
+
+Most weeks a release manager promotes a whole branch: everything that is in `uat` goes to `preprod`
+together, because that is the version the testers tested. Some weeks the business signs off one
+story and not the one next to it, and the release date does not move. sfdx-hardis has a Beta
+feature for that week, **promotion branches**, and [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) is where you use it.
+
+Still in **Pipeline Settings**, scope **Global Settings**, open the **Danger Zone** tab.
+
+![The Danger Zone of the Global Pipeline Settings, with the two promotion branch settings](../../_assets/annotated/vscode/pipeline-config-danger--promotion-branches.png)
+
+The tab opens on a warning, *Use these settings with caution, be sure to understand their impact as
+they drift from DevOps best practices*, and it is there for every setting on it, this one included.
+
+Click **Edit**, turn **Enable promotion branches (Beta)** **(1)** on, then add one row to **Allowed
+promotion steps (Beta)** **(2)** with **Source branch** `uat` and **Target branch** `preprod`.
+**Save**.
+
+The second setting is required by the first, and it is a real decision rather than paperwork: it
+says a release manager on this project may assemble a subset on the way into `preprod`, the stage in
+front of production, and nowhere else. `sf hardis:project:promotion:create` refuses to run while the
+list is missing instead of guessing that every major branch may promote into every other one.
+
+**Nothing changes today.** With the feature on and no `promotion/...` branch in the repository, the
+pipeline behaves exactly as it did a minute ago. It is switched on now because of where the setting
+has to be by [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md), and the next step is about to explain why that is not obvious.
+
+<details markdown="1"><summary>Under the hood: why this cannot wait until the lab that needs it</summary>
+
+`config/.sfdx-hardis.yml` gained:
+
+    enablePromotionBranches: true
+    allowedPromotionSteps:
+      - source: uat
+        target: preprod
+
+A promotion branch is cut from its **target** branch, so the deployment job of its Pull Request
+reads the configuration that `preprod` carries, not the one `integration` carries. A project
+configuration only reaches `preprod` by travelling up the pipeline with the promotions, which on
+this course happens in Labs 3.5 and 3.6.
+
+Turn the feature on here and it arrives in `uat`, `preprod` and `main` on its own, with the rest of
+the pipeline configuration, in time for [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md). Turn it on in [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) instead and you would owe
+yourself three merges before you could use it, which is exactly the kind of detail that makes a
+Beta feature look broken when it is only late.
+
+</details>
+
+### 11. Delete the shortcut, before anything proves anything
 
 In your fork (`github.com/my-username/sfdx-hardis-training`): **Settings > Secrets and variables >
 Actions**, find `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT`, and delete both.
@@ -388,10 +440,10 @@ Do it now, before you publish. The authentication step of every job looks for
 green job proves nothing about your keys: it logged in the old way. Once they are gone, the only way
 in is the JWT one, so the next green job is the proof.
 
-### 11. Publish the configuration through a Pull Request
+### 12. Publish the configuration through a Pull Request
 
 Everything you did is files on your disk, on `integration`: the four branch files, the four keys,
-the target branches and the authentication mode. They reach `integration` the way every change
+the target branches, the authentication mode and the two promotion branch settings. They reach `integration` the way every change
 does, through a Pull Request with green checks. The protection of step 3 would refuse anything else.
 
 You publish them the way you published a User Story in Level 1, with the same two buttons.
@@ -458,7 +510,7 @@ never written anywhere persistent.
 **How the authentication hook chooses.** For a branch `<B>`, it looks for `SFDX_AUTH_URL_<B>` first,
 in that spelling and then upper-cased. If it finds one, it uses it and returns, before the JWT
 variables are even read. Only if there is none does it go on to `SFDX_CLIENT_ID_<B>` plus the key.
-That order is why step 10 comes before publishing.
+That order is why step 11 comes before publishing.
 
 The JWT lookup also accepts a plain `SFDX_CLIENT_ID` with no suffix, as a last resort and with a
 warning in the log: a single unsuffixed secret left over from an old setup answers for every branch.
@@ -484,6 +536,10 @@ Command documentation: [hardis:project:configure:auth](https://sfdx-hardis.cloud
       - "The shared integration org, where every contributor merges"
       - "Hotfixes on the production version, agreed with the release manager"
     orgAuthenticationMode: encryptedCert
+    enablePromotionBranches: true
+    allowedPromotionSteps:
+      - source: uat
+        target: preprod
 
 and `config/branches/` now holds four files, each with `targetUsername`, `instanceUrl` and
 `mergeTargets`, plus a `.jwt` folder with four encrypted keys.
@@ -507,7 +563,7 @@ Command documentation: [hardis:project:create](https://sfdx-hardis.cloudity.com/
 
 </details>
 
-### 12. Look at the diagram again
+### 13. Look at the diagram again
 
 Open the **DevOps Pipeline** panel and click **Refresh**. This is the pipeline you built:
 
@@ -532,6 +588,8 @@ the first time you click one.
 - Your configuration Pull Request merged into `integration`, with `sf org login jwt` in the log of
   its check
 - The DevOps Pipeline panel with four columns and no warning about a missing key
+- `enablePromotionBranches` and one allowed step in the Danger Zone of Pipeline Settings, doing
+  nothing until [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md)
 
 ## If it goes wrong
 
@@ -566,6 +624,18 @@ The External Client App behind that consumer key was never created: the command 
 printed the two values. Run **Add/Configure Org** again for that branch, store the two new values,
 and publish again.
 
+**Add/Configure Org stops asking whether you deleted the External Client App.**
+You are running it a second time for that branch, and the app it deploys is already in the org, so
+it asks you to remove the old one first: *External Client App named `sfdxhardis<branch>` already
+exists ... Have you deleted it?* In the org, **Setup > External Client App Manager**, delete that
+app, then answer yes. It is the normal path whenever an entry above sends you back through
+**Add/Configure Org**.
+
+**Add/Configure Org stops straight after "Selected Org", with none of the questions asked.**
+The org list offered a `helios-` org that no longer exists, usually because a scratch org was
+rebuilt under the same alias. See the entry above: the last answer of the list,
+**I already authenticated my org but I don't see it !**, clears that cache.
+
 **Everything passes even with the JWT secrets missing.**
 An auth URL secret is still there and still winning. Step 10.
 
@@ -577,6 +647,14 @@ then publish again.
 **The check you want to require is not suggested.**
 GitHub only lists checks that reported on this repository in the last seven days. Open a Pull
 Request into `integration`, let its checks run, and come back to the rule.
+
+**Set up my training environment fails with `There is already a Child Relationship named
+Installations on Account`.**
+You cleaned that org up with **Clean up a training org** and are now putting the app back. Deleting
+a custom object does not erase it: it sits in **Setup > Objects and Fields > Deleted Objects** and
+keeps its relationship names reserved, so the app cannot be created again next to it. Erase it
+there, then run **Set up my training environment** again. On a scratch org it is quicker to let
+**Set up my training environment** build a new one.
 
 **Set up one of my training orgs fails on `helios-prod`.**
 The usual cause is an expired connection: reconnect it in **Orgs Manager** under the same alias, and

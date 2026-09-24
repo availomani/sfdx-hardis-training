@@ -1,0 +1,32 @@
+{
+  "id": "us-058-warranty-term",
+  "title": "US-058 Record the warranty term on a panel batch",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Romain stores the warranty term on the panel batch, on the layout and granted to managers. This is the story nobody has approved the wording of, and the one Lab 3.10 leaves behind in uat.",
+  "branch": "training/mate-us-058-warranty-term",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-058 Record the warranty term on a panel batch\n\nPanel_Batch__c.Warranty_Years__c, on the layout, granted on\nHelios_Delivery_Manager.",
+  "prTitle": "US-058 Record the warranty term on a panel batch",
+  "prBody": "Sales read the warranty term off the supplier invoice every time they build a quote. This stores it\non the batch the panels came in.\n\n- New field `Panel_Batch__c.Warranty_Years__c`\n- On the Panel Batch layout, after Cost\n- `Helios_Delivery_Manager`: read and edit\n\nStory: US-058 in BACKLOG.md",
+  "nextStep": "Review it and merge it into integration first: US-059 is written on top of it. Lab 3.10 step 2 gives the order.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Panel_Batch__c.Warranty_Years__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml",
+      "layoutField": "Warranty_Years__c",
+      "after": "Cost__c",
+      "behavior": "Edit"
+    }
+  ]
+}

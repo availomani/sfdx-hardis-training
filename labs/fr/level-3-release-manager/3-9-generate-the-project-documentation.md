@@ -5,7 +5,7 @@ description: "Générez une documentation lisible d'une org Salesforce non docum
 level: 3
 lab: 9
 lang: fr
-source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
+source_rev: "ed7a1945f5852ece1409b68dfa3161d14c12e40d"
 screenshots:
   - annotated/vscode/documentation-workbench--generate-and-deploy
 depends_on:
@@ -225,4 +225,4 @@ Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **L
 
 - [Générer la documentation](https://sfdx-hardis.cloudity.com/salesforce-project-doc-generate/)
 
-[Suite : Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire](3-10-capstone-run-a-weekly-release-cycle.md){ .md-button .md-button--primary }
+[Suite : Lab 3.10 - Promouvoir un sous-ensemble avec les promotion branches (Beta)](3-10-promote-a-subset-with-promotion-branches.md){ .md-button .md-button--primary }

@@ -28,6 +28,11 @@ for the `Helios Delivery` app, and every one of them is a lab in this course.
 | [US-046](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-046/) | 3 | Needs Reinspection status, added in production by an admin | You | `retrofit/US-046-needs-reinspection` |
 | [US-055](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-055/) | 3 | Install Date says which day it means | Romain Panda | `training/mate-us-055-install-date-help` |
 | [US-056](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-056/) | 3 | Show the panels each crew member has to lay | Romain Panda | `training/mate-us-056-crew-workload` |
+| [US-057](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-057/) | 3 | Park an installation that is waiting for parts | Mariia Pyvovarchuk | `training/mate-us-057-awaiting-parts` |
+| [US-058](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-058/) | 3 | Record the warranty term on a panel batch | Romain Panda | `training/mate-us-058-warranty-term` |
+| [US-059](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-059/) | 3 | Record the supplier of a panel batch | Romain Panda | `training/mate-us-059-supplier` |
+| [US-060](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-060/) | 3 | Flag an installation that needs scaffolding | Mariia Pyvovarchuk | `training/mate-us-060-scaffolding` |
+| [US-061](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-061/) | 3 | Record the gate code of a site | Mariia Pyvovarchuk | `training/mate-us-061-gate-code` |
 
 ## The stories in full
 
@@ -294,7 +299,7 @@ Acceptance criteria:
 
 **Owner**: Romain Panda  
 **Branch**: `training/mate-us-055-install-date-help`  
-**Lab**: 3.10
+**Lab**: 3.11
 
 > As a crew lead, I want Install Date to say whether it is the day we go on site or the day the panels arrive, so that nobody drives to an empty site.
 
@@ -316,6 +321,85 @@ Acceptance criteria:
 
 - A Crew Workload formula on Installation
 - On the layout, readable by managers
+
+<a id="US-057"></a>
+
+### US-057 - Park an installation that is waiting for parts
+
+**Owner**: Mariia Pyvovarchuk  
+**Branch**: `training/mate-us-057-awaiting-parts`  
+**Lab**: 3.10
+
+> As a planner, I want a status for an installation held up by a missing part, so that the weekly report stops counting it as late.
+
+Acceptance criteria:
+
+- Status offers Awaiting Parts
+- Planners can pick it on an installation that is already planned
+
+<a id="US-058"></a>
+
+### US-058 - Record the warranty term on a panel batch
+
+**Owner**: Romain Panda  
+**Branch**: `training/mate-us-058-warranty-term`  
+**Lab**: 3.10
+
+> As a sales rep, I want the warranty term stored on the panel batch, so that the quote says how long the panels are covered for.
+
+Acceptance criteria:
+
+- A Warranty Years field exists on Panel Batch
+- It is on the Panel Batch layout
+- Managers can read and write it
+
+<a id="US-059"></a>
+
+### US-059 - Record the supplier of a panel batch
+
+**Owner**: Romain Panda  
+**Branch**: `training/mate-us-059-supplier`  
+**Lab**: 3.10
+
+> As a buyer, I want the supplier stored on the panel batch, so that a warranty claim goes to the right company without digging out the invoice.
+
+Acceptance criteria:
+
+- A Supplier field exists on Panel Batch
+- It is on the Panel Batch layout
+- Managers can read and write it
+
+<a id="US-060"></a>
+
+### US-060 - Flag an installation that needs scaffolding
+
+**Owner**: Mariia Pyvovarchuk  
+**Branch**: `training/mate-us-060-scaffolding`  
+**Lab**: 3.10
+
+> As a planner, I want to flag an installation that needs scaffolding, so that the crew books it before the day instead of finding out on site.
+
+Acceptance criteria:
+
+- A Scaffolding Required checkbox exists on Installation
+- It is on the Installation layout
+- Crews can see it, planners can set it
+
+<a id="US-061"></a>
+
+### US-061 - Record the gate code of a site
+
+**Owner**: Mariia Pyvovarchuk  
+**Branch**: `training/mate-us-061-gate-code`  
+**Lab**: 3.10
+
+> As a crew member, I want the gate code of the site on the installation, so that I get in without phoning the customer at seven in the morning.
+
+Acceptance criteria:
+
+- A Gate Code field exists on Installation
+- It is on the Installation layout
+- Crews can read it, planners can edit it
 
 ## The team
 

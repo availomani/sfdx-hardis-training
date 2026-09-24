@@ -1,0 +1,40 @@
+{
+  "id": "us-060-scaffolding",
+  "title": "US-060 Flag an installation that needs scaffolding",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Mariia adds a Scaffolding Required checkbox on the installation, visible to the crews and set by the planners. It works, and the operations lead holds it until the crews have been briefed: this is the second story Lab 3.10 leaves behind in uat.",
+  "branch": "training/mate-us-060-scaffolding",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-060 Flag an installation that needs scaffolding\n\nInstallation__c.Scaffolding_Required__c, on the layout, readable by\nHelios_Delivery_Crew and editable by Helios_Delivery_Manager.",
+  "prTitle": "US-060 Flag an installation that needs scaffolding",
+  "prBody": "Crews find out on site that a roof cannot be reached without scaffolding, and lose the day.\nThis lets the planner say so before anybody drives.\n\n- New checkbox `Installation__c.Scaffolding_Required__c`\n- On the Installation layout, after Roof Type\n- `Helios_Delivery_Crew`: read\n- `Helios_Delivery_Manager`: read and edit\n\nStory: US-060 in BACKLOG.md",
+  "nextStep": "Review it and merge it into integration, then take the next story: Lab 3.10 step 2 gives the order.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Crew.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Scaffolding_Required__c",
+        "editable": false,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Installation__c.Scaffolding_Required__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Installation__c-Installation Layout.layout-meta.xml",
+      "layoutField": "Scaffolding_Required__c",
+      "after": "Roof_Type__c",
+      "behavior": "Edit"
+    }
+  ]
+}

@@ -47,7 +47,8 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | Lab 3.7 - Production is broken: hotfix and retrofit | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-7-hotfix-and-retrofit/ |
 | Lab 3.8 - Monitor your production org | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-8-monitor-your-production-org/ |
 | Lab 3.9 - Generate the Salesforce project documentation | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-9-generate-the-project-documentation/ |
-| Lab 3.10 - Capstone: run a weekly release cycle | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle/ |
+| Lab 3.10 - Promote a subset with promotion branches (Beta) | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches/ |
+| Lab 3.11 - Capstone: run a weekly release cycle | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle/ |
 
 ## sfdx-hardis documentation pages used by the labs
 
@@ -55,6 +56,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 |---|---|
 | hardis/doc/salesforce-devops-dora-report | https://sfdx-hardis.cloudity.com/hardis/doc/salesforce-devops-dora-report/ |
 | hardis/doc/salesforce-devops-release-notes | https://sfdx-hardis.cloudity.com/hardis/doc/salesforce-devops-release-notes/ |
+| hardis/project/promotion/create | https://sfdx-hardis.cloudity.com/hardis/project/promotion/create/ |
 | salesforce-devops-agent-data-workspaces | https://sfdx-hardis.cloudity.com/salesforce-devops-agent-data-workspaces/ |
 | salesforce-devops-backpromote | https://sfdx-hardis.cloudity.com/salesforce-devops-backpromote/ |
 | salesforce-devops-clone-repository | https://sfdx-hardis.cloudity.com/salesforce-devops-clone-repository/ |
@@ -67,6 +69,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | salesforce-devops-handle-merge-request-results | https://sfdx-hardis.cloudity.com/salesforce-devops-handle-merge-request-results/ |
 | salesforce-devops-hotfixes | https://sfdx-hardis.cloudity.com/salesforce-devops-hotfixes/ |
 | salesforce-devops-manual-repo-clean | https://sfdx-hardis.cloudity.com/salesforce-devops-manual-repo-clean/ |
+| salesforce-devops-promotion-branches | https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/ |
 | salesforce-devops-publish-user-story | https://sfdx-hardis.cloudity.com/salesforce-devops-publish-user-story/ |
 | salesforce-devops-pull-request-github | https://sfdx-hardis.cloudity.com/salesforce-devops-pull-request-github/ |
 | salesforce-devops-release-home | https://sfdx-hardis.cloudity.com/salesforce-devops-release-home/ |

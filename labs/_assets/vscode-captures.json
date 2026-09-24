@@ -21,14 +21,77 @@
       "gate": "pipeline-modals",
       "file": "pipeline-branch-modal",
       "_env_comment": "The window of uat, which has no merge target before Level 3, so it shows its go-lives: the point is the uat box in devops-pipeline.png.",
-      "env": { "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH_NODE": "1343,477" }
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH_NODE": "1343,477"
+      }
     },
     "pipeline-branch-modal-level3": {
       "gate": "pipeline-modals",
       "file": "pipeline-branch-modal",
       "state": "level3",
       "_env_comment": "The level3 diagram is laid out differently: the point is the integration box in devops-pipeline-level3.png, in window pixels.",
-      "env": { "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH_NODE": "880,432" }
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH_NODE": "880,432"
+      }
+    },
+    "devops-pipeline-promotion": {
+      "gate": "promotion",
+      "file": "promotion-pipeline",
+      "state": "level3",
+      "_env_comment": "Lab 3.10: the level3 pipeline with enablePromotionBranches on and the promotion of US-057 open on the uat to preprod arrow. The promotion variant is a separate fixture overlay, so every other capture keeps a project with no promotion in flight.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "pipeline-branch-modal-promotion": {
+      "gate": "promotion",
+      "file": "promotion-branch-modal",
+      "state": "level3",
+      "_env_comment": "Lab 3.10 step 4: the uat window with its checkbox column, five stories waiting, US-061, US-059 and US-057 ticked and the two others left alone. The uat node of the level3 diagram and the rows to tick come from promotionNode and promotionRows of the helios universe fixture.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "promotion-create-select": {
+      "gate": "promotion-create",
+      "state": "level3",
+      "_env_comment": "Lab 3.10 step 4: the command the Create promotion button ran, stopped on the selection to confirm, with the three ticked stories pre-filled.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "promotion-create-conflict": {
+      "gate": "promotion-create",
+      "state": "level3",
+      "_env_comment": "Lab 3.10 step 4: the same run stopped on the conflict question of the US-059 cherry-pick, the recommended answer first.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "promotion-create-completed": {
+      "gate": "promotion-create",
+      "state": "level3",
+      "_env_comment": "Lab 3.10 step 5: the end of the run, with the warning about the markers and the prompt report file next to the Pull Request button.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "promotion-conflict-editor": {
+      "gate": "promotion-conflict",
+      "state": "level3",
+      "_env_comment": "Lab 3.10 step 6: the Panel Batch layout as the promotion committed it, open in the editor with the Accept Current / Accept Incoming / Accept Both code lenses of VS Code over the conflict block.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
+    },
+    "pipeline-config-danger": {
+      "gate": "promotion",
+      "file": "promotion-settings",
+      "state": "level3",
+      "_env_comment": "Lab 3.1 step 10 and Lab 3.10 step 1: the Danger Zone of the Global Pipeline Settings, where enablePromotionBranches and allowedPromotionSteps are set.",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
+      }
     }
   }
 }

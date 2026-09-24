@@ -215,4 +215,4 @@ Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.9**.
 
 - [Generate documentation](https://sfdx-hardis.cloudity.com/salesforce-project-doc-generate/)
 
-[Next: Lab 3.10 - Capstone: run a weekly release cycle](3-10-capstone-run-a-weekly-release-cycle.md){ .md-button .md-button--primary }
+[Next: Lab 3.10 - Promote a subset with promotion branches (Beta)](3-10-promote-a-subset-with-promotion-branches.md){ .md-button .md-button--primary }

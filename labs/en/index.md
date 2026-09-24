@@ -23,7 +23,7 @@ runs the Git commands for you.
 |-----------------------------------------------------------------------|------------------------------------------------------------------|------|--------------------|-----------------------------------------------------------------------------------------------------|
 | [**1 - Contributor basics**](level-1-contributor-basics/index.md)     | Admins and developers joining a team that already has a pipeline | 2 h  | Nothing            | Take a User Story, build it, publish it, get a green Pull Request, merge it                         |
 | [**2 - Contributor advanced**](level-2-contributor-advanced/index.md) | The same people, once the easy stories are behind them           | 4 h  | Level 1            | Solve deployment errors, declare deployment actions, handle overwrites, resolve conflicts           |
-| [**3 - Release Manager**](level-3-release-manager/index.md)           | The person who owns the pipeline, the orgs and the releases      | 6 h  | Levels 1 **and** 2 | Take over an org with no pipeline, review and merge, release to UAT and production, hotfix, monitor |
+| [**3 - Release Manager**](level-3-release-manager/index.md)           | The person who owns the pipeline, the orgs and the releases      | 7 h  | Levels 1 **and** 2 | Take over an org with no pipeline, review and merge, release to UAT and production, hotfix, monitor |
 
 Levels 1 and 2 are both the contributor path, and they are for **admins and developers alike**. You
 do not need to know Git, the Salesforce CLI or DevOps: every step is a click in VS Code or on

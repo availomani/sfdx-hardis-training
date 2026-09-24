@@ -31,7 +31,8 @@ nav:
       - "Lab 3.7 - Production is broken: hotfix and retrofit": en/level-3-release-manager/3-7-hotfix-and-retrofit.md
       - "Lab 3.8 - Monitor your production org": en/level-3-release-manager/3-8-monitor-your-production-org.md
       - "Lab 3.9 - Generate the Salesforce project documentation": en/level-3-release-manager/3-9-generate-the-project-documentation.md
-      - "Lab 3.10 - Capstone: run a weekly release cycle": en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+      - "Lab 3.10 - Promote a subset with promotion branches (Beta)": en/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches.md
+      - "Lab 3.11 - Capstone: run a weekly release cycle": en/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle.md
   - Help: en/help.md
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
@@ -67,7 +68,8 @@ nav:
       - "Lab 3.7 - La production est cassée : hotfix et retrofit": fr/level-3-release-manager/3-7-hotfix-and-retrofit.md
       - "Lab 3.8 - Monitorer votre org de production": fr/level-3-release-manager/3-8-monitor-your-production-org.md
       - "Lab 3.9 - Générer la documentation du projet Salesforce": fr/level-3-release-manager/3-9-generate-the-project-documentation.md
-      - "Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire": fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+      - "Lab 3.10 - Promouvoir un sous-ensemble avec les promotion branches (Beta)": fr/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches.md
+      - "Lab 3.11 - Épreuve finale : mener un cycle de release hebdomadaire": fr/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle.md
   - Aide: fr/help.md
   - Backlog: fr/BACKLOG.md
   - Badges: fr/badges/index.md

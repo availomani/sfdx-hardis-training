@@ -1,11 +1,11 @@
 ---
-id: lab-3-10
-title: "Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire"
+id: lab-3-11
+title: "Lab 3.11 - Épreuve finale : mener un cycle de release hebdomadaire"
 description: "Menez une semaine entière de release manager Salesforce sans pas-à-pas : relire, intégrer, promouvoir en UAT, livrer en production et mesurer."
 level: 3
-lab: 10
+lab: 11
 lang: fr
-source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
+source_rev: "0dc7f79d02b7090ab393c38f76a8ccb48c2b1cb5"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
@@ -16,7 +16,7 @@ depends_on:
   docs: [salesforce-devops-release-home, salesforce-devops-setup-checklist]
 ---
 
-# Lab 3.10 - Épreuve finale : mener un cycle de release hebdomadaire
+# Lab 3.11 - Épreuve finale : mener un cycle de release hebdomadaire
 
 **Niveau** : 3 Release Manager
 
@@ -32,7 +32,7 @@ vous dire dans quel ordre faire les choses.
 
 ## Avant de commencer
 
-- [ ] Labs 3.1 à 3.9 terminés
+- [ ] Labs 3.1 à 3.10 terminés
 - [ ] Les quatre orgs de la pipeline fonctionnelles, les quatre branches qui déploient
 
 ## La semaine
@@ -42,6 +42,11 @@ vous dire dans quel ordre faire les choses.
 Deux Pull Requests attendent. **US-020**, ouverte depuis le [Lab 3.4](3-4-merge-colliding-pull-requests.md) et toujours en échec. Et une
 nouvelle de Romain : **Training: Level 3** > **Simulate my teammates**, et choisissez
 **US-055 Install Date says which day it means**.
+
+Deux autres choses attendent, et pas dans une Pull Request : **US-058**, la durée de garantie, et
+**US-060**, le signal d'échafaudage, posées dans `uat` depuis le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) parce que la
+promotion branch est passée à côté. La formulation a été validée pendant le week-end et les équipes
+ont été informées lundi. Rien à en faire aujourd'hui, et c'est jeudi que cela compte.
 
 ![Le menu Training du niveau 3 sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
 
@@ -77,8 +82,18 @@ vous ne vous attendiez pas. Mergez, regardez, vérifiez, faites les étapes manu
 
 Tout ce que le [Lab 3.7](3-7-hotfix-and-retrofit.md) a posé sur `preprod` est déjà dans `main`, cette livraison ne devrait donc pas
 le redéplacer. Lisez la ligne de compteurs avec cela en tête : ce qui sort cette semaine est le help
-text de Romain et les retrofits qui remontent depuis `integration`, et `deleted: 0` reste le nombre
-sur lequel s'arrêter.
+text de Romain, les retrofits qui remontent depuis `integration`, et US-058 et US-060, qui attendent
+dans `uat` depuis le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md). `deleted: 0` reste le nombre sur lequel s'arrêter.
+
+**Cette promotion est aussi ce qui met fin à l'exception.** US-057, US-059 et US-061 sont parties
+seules vers `preprod` la semaine dernière ; celle-ci transporte US-058 et US-060 de manière
+ordinaire, et `uat` et `preprod` contiennent de nouveau la même chose. Elle merge sans conflit parce
+que l'étape 9 du [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) a retrofité la promotion dans `integration` le jour même : les
+deux fichiers résolus sur la promotion branch retrouvent leurs originaux avec un point commun que
+git connaît. Vérifiez-le plutôt que de le supposer : le nœud `uat` du diagramme compte zéro User
+Story en attente une fois la promotion mergée, et `helios-preprod` a enfin un champ Warranty Years
+sur Panel Batch. Une promotion branch qui n'est jamais suivie d'une promotion complète, c'est ainsi
+qu'une pipeline cesse d'être une pipeline.
 
 Générez ensuite les notes de version de la livraison vers `main`, ajoutez en haut la phrase qui dit à
 quoi sert cette livraison, et mettez-les dans la description de la Pull Request de `preprod` vers
@@ -121,6 +136,8 @@ qui est bien l'intérêt de l'avoir.
 - Les notes de version dans la description de la Pull Request de livraison, avec une phrase humaine
   en haut
 - Un deuxième rapport DORA à comparer avec la ligne de base du [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md)
+- `uat` qui compte zéro User Story en attente : US-058 et US-060 ont rattrapé les trois stories
+  promues avant elles, et la pipeline est alignée de nouveau
 
 ## En cas de problème
 
@@ -138,6 +155,12 @@ prochaine story retire en silence.
 **Une simulation de collègue dit qu'il n'y a rien à commiter.**
 Cette story est déjà mergée. Chaque story de collègue se merge une fois par niveau, et celles
 qu'utilise le Niveau 3 sont listées dans chaque lab. Rien ne va mal : passez à la suite.
+
+**La promotion de `uat` vers `preprod` de jeudi signale des conflits.**
+Le retrofit de l'étape 9 du [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) manque, et git retrouve les deux fichiers de la promotion
+sans rien qui lui dise quel côté était une décision. Faites ce retrofit maintenant, de `preprod`
+vers `integration`, puis promouvez de nouveau `integration` vers `uat` avant de promouvoir `uat` : le
+conflit a disparu, parce que `uat` porte alors la réconciliation.
 
 **Un déploiement est vert et la fonctionnalité n'est pas dans l'org.**
 Ouvrez le log et trouvez **Listing Post-deployment actions**. S'il dit qu'aucune n'était définie,
@@ -195,12 +218,12 @@ certificats JWT de votre fork (votre copie personnelle du repository du cours su
 exemple `github.com/my-username/sfdx-hardis-training`) sont de vrais identifiants vers de vraies
 orgs.
 
-**Trois : la fonctionnalité des branches de promotion.** Tout ce que vous avez fait promeut **tout ce
-qui attend** d'une branche vers la suivante. Certaines équipes ont besoin de promouvoir un
-sous-ensemble. C'est à cela que servent les
-[branches de promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/),
-c'est en Beta, et cela vous parlera maintenant d'une façon dont cela ne vous aurait pas parlé
-trois niveaux plus tôt.
+**Trois : gardez les promotion branches comme exception.** Le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) vous en a fait
+assembler une, et cette semaine a remis la pipeline en place. Sur un vrai projet la pression va dans
+l'autre sens : le premier sous-ensemble est accepté pour une bonne raison, le deuxième parce que le
+premier a marché, et au bout d'un trimestre plus personne ne sait ce que contient chaque org. Si vous
+vous retrouvez à en assembler une toutes les semaines, ce qu'il faut corriger est la validation, pas
+l'outillage.
 
 ## Merci
 

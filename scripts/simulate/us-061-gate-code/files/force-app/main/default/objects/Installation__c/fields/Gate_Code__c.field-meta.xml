@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gate_Code__c</fullName>
+    <description>The code of the gate or the entrance of the site, as the customer gave it to the planner.</description>
+    <externalId>false</externalId>
+    <label>Gate Code</label>
+    <length>20</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

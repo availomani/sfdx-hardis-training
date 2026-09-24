@@ -53,3 +53,6 @@ force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml
 # generated on demand, never committed
 docs/
 mkdocs.yml
+
+# Provider tokens for terminals and agents, never committed
+.env

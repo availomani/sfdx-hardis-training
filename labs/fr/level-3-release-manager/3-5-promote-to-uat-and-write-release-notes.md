@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "7c72aa9f55c70ee2149f4d1fc01cf3571e086f86"
+source_rev: "ed7a1945f5852ece1409b68dfa3161d14c12e40d"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -142,11 +142,16 @@ La pastille est là parce qu'aucune Pull Request n'est ouverte sur cette flèche
 une, la pastille est remplacée par le numéro de la Pull Request et son statut.
 
 !!! note "Pas le bouton de promotion de la fenêtre de branche"
-    La fenêtre de branche peut aussi afficher un bouton **Create promotion from integration
-    (Beta)**, mais seulement sur un projet qui active `enablePromotionBranches`, ce que
-    celui-ci ne fait pas. Cette fonctionnalité sert à promouvoir un **sous-ensemble** de ce qui
-    attend. Ce que vous faites, c'est tout promouvoir, et tout est ce que transporte une simple Pull
-    Request d'une branche vers la suivante.
+    Une fenêtre de branche peut aussi afficher un bouton **Create promotion from <branche> (Beta)**
+    et une case à cocher sur chaque ligne. Ce projet active cette fonctionnalité
+    ([Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)), mais `allowedPromotionSteps` n'autorise qu'une seule étape, `uat` vers
+    `preprod` : la fenêtre d'`integration` n'a donc ni l'un ni l'autre. Vous les rencontrerez tous
+    les deux sur la fenêtre d'`uat` à l'étape 7.
+
+    Cette fonctionnalité transporte un **sous-ensemble** de ce qui attend, et elle existe pour la
+    semaine où le métier valide une story et pas celle d'à côté. Ce que vous faites ici, c'est tout
+    promouvoir, ce que transporte une simple Pull Request d'une branche vers la suivante, et ce que
+    vous devriez faire presque toutes les semaines. Le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) est l'exception.
 
 Intitulez-la pour les humains qui la liront, pas pour git, et appelez-la une **promotion** :
 
@@ -232,6 +237,10 @@ permission ou une donnée de référence.
 Ouvrez le panneau **DevOps Pipeline** et cliquez sur le nœud `uat`, comme vous aviez cliqué sur
 `integration` à l'étape 1. Dans le pied de page de cette fenêtre, le bouton de gauche affiche
 maintenant **Generate Promotion Notes for uat**. Cliquez dessus.
+
+Cette fenêtre a la colonne de cases à cocher et le bouton **Create promotion from uat (Beta)** dont
+parlait la note ci-dessus, parce qu'`uat` est la source de la seule étape de promotion que ce projet
+autorise. Ignorez les deux jusqu'au [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md).
 
 Il pose une question, **Select the merge commit for this release or promotion**, en listant les
 merges qui ont atterri sur `uat`, du plus récent au plus ancien. Prenez celui du haut, **Merge pull
@@ -321,10 +330,11 @@ déploiement delta s'applique entre branches majeures
 (`enableDeltaDeploymentBetweenMajorBranches`, désactivé par défaut, parce qu'une promotion est le
 pire moment pour découvrir que l'org cible a dérivé).
 
-Il existe une fonctionnalité en Beta pour les équipes qui veulent promouvoir un
-**sous-ensemble** de ce qui attend, plutôt que tout : les [branches de
-promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). Elle vaut d'être
-lue une fois que vous aurez fait quelques livraisons de la façon ordinaire.
+Il existe une fonctionnalité en Beta pour les équipes qui doivent promouvoir un **sous-ensemble** de
+ce qui attend, plutôt que tout : les [branches de
+promotion](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). Le
+[Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) s'en sert, délibérément tard, parce que cela prend son sens une fois que vous avez
+fait quelques livraisons de la façon ordinaire.
 
 <!-- command-links:start -->
 Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cloudity.com/hardis/doc/release-notes/)

@@ -4,12 +4,12 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "4661bc03d2558cec0b10dc8f320de2e8a4617d66"
+source_rev: "8f5b7cdee8d2c49b954a13c7b42aa8b00a5ec6b6"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
 
-**Durée** : environ 6 h.
+**Durée** : environ 7 h.
 
 **Prérequis** : le [Niveau 1](../level-1-contributor-basics/index.md) **et** le
 [Niveau 2](../level-2-contributor-advanced/index.md). Les deux sont obligatoires, et l'audit du
@@ -75,18 +75,19 @@ Les mêmes commandes sont dans la vue **SFDX HARDIS** de la barre de gauche, sou
 
 ## Ce que vous allez faire
 
-| Lab                                                       | Titre                                                        | Durée  |
-|-----------------------------------------------------------|--------------------------------------------------------------|--------|
-| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production           | 75 min |
-| [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur           | 25 min |
-| [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache | 25 min |
-| [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge  | 35 min |
-| [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promouvoir en UAT et écrire les notes de version             | 35 min |
-| [3.6](3-6-release-to-production-and-read-dora-metrics.md) | Livrer en production et lire vos métriques DORA              | 35 min |
-| [3.7](3-7-hotfix-and-retrofit.md)                         | La production est cassée : hotfix et retrofit                | 35 min |
-| [3.8](3-8-monitor-your-production-org.md)                 | Monitorer votre org de production                            | 35 min |
-| [3.9](3-9-generate-the-project-documentation.md)          | Générer la documentation du projet Salesforce                | 20 min |
-| [3.10](3-10-capstone-run-a-weekly-release-cycle.md)       | Épreuve finale : mener un cycle de release hebdomadaire      | 45 min |
+| Lab                                                       | Titre                                                          | Durée  |
+|-----------------------------------------------------------|----------------------------------------------------------------|--------|
+| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production             | 75 min |
+| [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur             | 25 min |
+| [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache   | 25 min |
+| [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge    | 35 min |
+| [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promouvoir en UAT et écrire les notes de version               | 35 min |
+| [3.6](3-6-release-to-production-and-read-dora-metrics.md) | Livrer en production et lire vos métriques DORA                | 35 min |
+| [3.7](3-7-hotfix-and-retrofit.md)                         | La production est cassée : hotfix et retrofit                  | 35 min |
+| [3.8](3-8-monitor-your-production-org.md)                 | Monitorer votre org de production                              | 35 min |
+| [3.9](3-9-generate-the-project-documentation.md)          | Générer la documentation du projet Salesforce                  | 20 min |
+| [3.10](3-10-promote-a-subset-with-promotion-branches.md)  | Promouvoir un sous-ensemble avec les promotion branches (Beta) | 55 min |
+| [3.11](3-11-capstone-run-a-weekly-release-cycle.md)       | Épreuve finale : mener un cycle de release hebdomadaire        | 45 min |
 
 ## Une org de plus
 

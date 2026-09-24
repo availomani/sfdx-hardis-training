@@ -127,6 +127,41 @@ const PERMSET = (name) => `force-app/main/default/permissionsets/${name}.permiss
 const pass = (detail) => ({ ok: true, detail });
 const miss = (detail, where) => ({ ok: false, detail, where });
 
+/** The ref a branch is read from: the published one when the clone has it, else the local one. */
+function refOf(ctx, branch) {
+  return ctx.git(["rev-parse", "--verify", "--quiet", `origin/${branch}`]) ? `origin/${branch}` : branch;
+}
+
+/** The metadata files of a branch that still carry git conflict markers. */
+function filesWithConflictMarkers(ctx, branch) {
+  const ref = refOf(ctx, branch);
+  return ctx.git(["grep", "-l", "-e", "^<<<<<<< ", "-e", "^>>>>>>> ", ref, "--", "force-app"])
+    .split("\n")
+    .map((line) => line.replace(`${ref}:`, "").trim())
+    .filter(Boolean);
+}
+
+/**
+ * The files on which merging `theirs` into `ours` would conflict, without touching either
+ * branch: git merge-tree does the merge in memory. Null when this git cannot say (the
+ * --write-tree mode arrived with git 2.38), so a rule can pass on what it could check.
+ */
+function branchesDisagree(ctx, ours, theirs) {
+  const res = spawnSync(
+    "git",
+    ["merge-tree", "--write-tree", "--name-only", "--no-messages", refOf(ctx, ours), refOf(ctx, theirs)],
+    { cwd: ctx.dir, encoding: "utf8", shell: false }
+  );
+  if (res.status === 0) {
+    return [];
+  }
+  if (res.status !== 1) {
+    return null;
+  }
+  // The first line is the tree it wrote, the rest the conflicted paths
+  return (res.stdout || "").split("\n").slice(1).map((s) => s.trim()).filter(Boolean);
+}
+
 function fieldGrantedIn(content, field) {
   if (!content) {
     return false;
@@ -927,6 +962,72 @@ export const RULES = [
   },
   {
     id: "3.10", level: 3, lab: 10,
+    title: "Three approved User Stories were carried to preprod on their own, and the pipeline can take them back",
+    check: (ctx) => {
+      if (!ctx.hasBranch("preprod")) {
+        return miss("there is no preprod branch", "your fork");
+      }
+      // The three promoted stories, each by the one component only that story adds. The
+      // two held back are not asserted absent: the capstone brings them up a lab later,
+      // and this rule has to stay true after it.
+      const status = ctx.readOn("preprod", FIELD("Installation__c", "Status__c")) || "";
+      const missing = [];
+      if (!/Awaiting Parts/.test(status)) {
+        missing.push("US-057 (Awaiting Parts on Installation Status)");
+      }
+      if (!ctx.readOn("preprod", FIELD("Panel_Batch__c", "Supplier__c"))) {
+        missing.push("US-059 (Panel_Batch__c.Supplier__c)");
+      }
+      if (!ctx.readOn("preprod", FIELD("Installation__c", "Gate_Code__c"))) {
+        missing.push("US-061 (Installation__c.Gate_Code__c)");
+      }
+      if (missing.length > 0) {
+        return miss(
+          `preprod does not carry ${missing.join(", ")}, so the promotion did not reach it`,
+          "force-app/main/default/objects on branch preprod. Lab 3.10 step 4 assembles the promotion, step 7 merges it"
+        );
+      }
+      // A conflict committed with its markers is what the promotion asks you to solve. A
+      // marker that reached preprod is one the deployment refused, or one nobody looked at.
+      const marked = filesWithConflictMarkers(ctx, "preprod");
+      if (marked.length > 0) {
+        return miss(
+          `preprod still holds git conflict markers in ${marked.join(", ")}, so the promotion was merged half solved`,
+          "those files on branch preprod. Lab 3.10 step 6 solves the conflict on the promotion branch, by hand or with the coding agent prompt"
+        );
+      }
+      // Whichever way the promotion Pull Request was merged, the commits it carries were
+      // copied with git cherry-pick -x, which leaves its trailer in the message. The branch
+      // name survives in the merge commit of an ordinary merge. Either one is evidence that
+      // the stories travelled on their own rather than with the whole of uat, and both stay
+      // true after the capstone brings the rest of uat up.
+      const history = ctx.log("preprod");
+      if (!(/cherry picked from commit/i.test(history) || /promotion\/uat\/preprod\//.test(history))) {
+        return miss(
+          "the three stories are in preprod, but nothing in the history of preprod came from a promotion branch: they arrived with the whole of uat instead",
+          "the history of preprod. Lab 3.10 step 4, Create promotion from uat"
+        );
+      }
+      // The resolution of step 6 dropped the held-back story's lines, and git meets the same
+      // two files again when uat is promoted whole: preprod says "Supplier", uat says
+      // "Warranty Years then Supplier", and that is a conflict on a branch nobody may push
+      // to. The retrofit of step 9 is what settles it, and its outcome is that integration
+      // can absorb preprod without a conflict. Asserted as an outcome: however the learner
+      // brought preprod back down, the next ordinary promotion merges.
+      const disagreement = branchesDisagree(ctx, DEV, "preprod");
+      if (disagreement === null) {
+        return pass("The three stories reached preprod through a promotion branch (retrofit not checked: this git has no merge-tree --write-tree)");
+      }
+      return disagreement.length === 0
+        ? pass("US-057, US-059 and US-061 reached preprod through a promotion branch, and integration can take preprod back without a conflict")
+        : miss(
+          `integration and preprod still disagree on ${disagreement.join(", ")}: the conflict solved on the promotion branch comes back at the next ordinary promotion of uat`,
+          `those files on branches ${DEV} and preprod. Lab 3.10 step 9 retrofits preprod into ${DEV}, and the merge takes the ${DEV} side`
+        );
+    }
+  },
+  {
+    id: "3.11", level: 3, lab: 11,
     title: "Capstone: a full release cycle",
     check: (ctx) => {
       // The week's release carried Romain's US-055 to production. The Lab 3.7 hotfix is on
@@ -936,6 +1037,18 @@ export const RULES = [
         return miss(
           "Romain's US-055 never reached production, so the week's release did not happen",
           `${FIELD("Installation__c", "Install_Date__c")} on branch main`
+        );
+      }
+      // Thursday's promotion of uat is what ends the Lab 3.10 exception: the two stories the
+      // promotion branch went around go out with everything else.
+      const heldBack = [
+        ["US-058", FIELD("Panel_Batch__c", "Warranty_Years__c")],
+        ["US-060", FIELD("Installation__c", "Scaffolding_Required__c")]
+      ].filter(([, file]) => !ctx.readOn("main", file));
+      if (heldBack.length > 0) {
+        return miss(
+          `${heldBack.map(([id]) => id).join(" and ")}, held back in Lab 3.10, never reached production: the week's promotion of uat did not end the exception`,
+          `${heldBack.map(([, file]) => file).join(", ")} on branch main. Lab 3.11, Thursday: promote uat into preprod, then release preprod into main`
         );
       }
       return hasHotfix(ctx, "main")

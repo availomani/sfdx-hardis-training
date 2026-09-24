@@ -8,7 +8,7 @@ lang: en
 
 # Level 3 - Salesforce DevOps release manager
 
-**Time**: about 6 h.
+**Time**: about 7 h.
 
 **Before you start**: [Level 1](../level-1-contributor-basics/index.md) **and** [Level 2](../level-2-contributor-advanced/index.md). Both
 are required, and the badge audit checks both before it looks at anything here.
@@ -80,7 +80,8 @@ Either route runs the same thing.
 | [3.7](3-7-hotfix-and-retrofit.md)                         | Production is broken: hotfix and retrofit                    | 35 min |
 | [3.8](3-8-monitor-your-production-org.md)                 | Monitor your production org                                  | 35 min |
 | [3.9](3-9-generate-the-project-documentation.md)          | Generate the Salesforce project documentation                | 20 min |
-| [3.10](3-10-capstone-run-a-weekly-release-cycle.md)       | Capstone: run a weekly release cycle                         | 45 min |
+| [3.10](3-10-promote-a-subset-with-promotion-branches.md)  | Promote a subset with promotion branches (Beta)              | 55 min |
+| [3.11](3-11-capstone-run-a-weekly-release-cycle.md)       | Capstone: run a weekly release cycle                         | 45 min |
 
 ## One more org
 

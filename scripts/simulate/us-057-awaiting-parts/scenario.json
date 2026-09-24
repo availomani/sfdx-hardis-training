@@ -1,0 +1,25 @@
+{
+  "id": "us-057-awaiting-parts",
+  "title": "US-057 Park an installation that is waiting for parts",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Mariia adds an Awaiting Parts value to the Installation Status picklist, so a job held up by a missing part stops being counted as late. This is the story the business signs off in Lab 3.10.",
+  "branch": "training/mate-us-057-awaiting-parts",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-057 Park an installation that is waiting for parts\n\nAwaiting Parts value on Installation__c.Status__c, so the weekly report\nstops counting a job held up by a missing part as late.",
+  "prTitle": "US-057 Park an installation that is waiting for parts",
+  "prBody": "Planners cancel and recreate an installation when a part does not arrive, which loses its history.\nThis gives them a status to park it in.\n\n- `Installation__c.Status__c`: new restricted picklist value `Awaiting Parts`\n\nStory: US-057 in BACKLOG.md",
+  "nextStep": "Review it and merge it into integration, then take the next story: Lab 3.10 step 2 gives the order.",
+  "patches": [
+    {
+      "file": "force-app/main/default/objects/Installation__c/fields/Status__c.field-meta.xml",
+      "replace": {
+        "from": "            <value>\n                <fullName>Cancelled</fullName>\n                <default>false</default>\n                <label>Cancelled</label>\n            </value>\n",
+        "to": "            <value>\n                <fullName>Cancelled</fullName>\n                <default>false</default>\n                <label>Cancelled</label>\n            </value>\n            <value>\n                <fullName>Awaiting Parts</fullName>\n                <default>false</default>\n                <label>Awaiting Parts</label>\n            </value>\n"
+      }
+    }
+  ]
+}

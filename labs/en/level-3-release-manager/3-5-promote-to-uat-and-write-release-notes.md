@@ -137,10 +137,15 @@ The chip is there because no Pull Request is open on that arrow. Once you create
 replaced by the Pull Request number and its status.
 
 !!! note "Not the promotion button of the branch window"
-    The branch window can also show a **Create promotion from integration (Beta)** button,
-    but only on a project that turns on `enablePromotionBranches`, which this one does not. That
-    feature is for promoting a **subset** of what is waiting. What you are doing is promoting
-    everything, and everything is what a plain Pull Request from one branch to the next carries.
+    A branch window can also show a **Create promotion from <branch> (Beta)** button and a checkbox
+    on every row. This project turns that feature on ([Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)), but `allowedPromotionSteps` allows
+    one step only, `uat` to `preprod`, so the window of `integration` has neither. You will meet
+    both on the window of `uat` in step 7.
+
+    That feature carries a **subset** of what is waiting, and it exists for the week the business
+    signs off one story and not the one next to it. What you are doing here is promoting
+    everything, which is what a plain Pull Request from one branch to the next carries, and what
+    you should be doing almost every week. [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) is the exception.
 
 Title it for the humans who will read it, not for git, and call it a **promotion**:
 
@@ -221,6 +226,10 @@ a piece of reference data.
 Open the **DevOps Pipeline** panel and click the `uat` node, the same way you clicked `integration`
 in step 1. In the footer of that window, the left button now reads **Generate Promotion Notes for
 uat**. Click it.
+
+This window has the checkbox column and the **Create promotion from uat (Beta)** button the note
+above mentioned, because `uat` is the source of the one promotion step this project allows. Ignore
+both until [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md).
 
 It asks one question, **Select the merge commit for this release or promotion**, listing the merges
 that landed on `uat`, newest first. Take the top one, **Merge pull request #N from
@@ -305,10 +314,10 @@ setup: `integration` into `uat` is a branch merged into another branch, and the 
 (`enableDeltaDeploymentBetweenMajorBranches`, off by default, because a promotion is the worst
 moment to discover the target org drifted).
 
-There is a Beta feature for teams who want to promote a **subset** of what is waiting,
-rather than everything: [promotion
-branches](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). It is worth
-reading about once you have done a few releases the ordinary way.
+There is a Beta feature for teams who have to promote a **subset** of what is waiting, rather than
+everything: [promotion
+branches](https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/). [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) uses
+it, deliberately late, because it makes sense once you have done a few releases the ordinary way.
 
 <!-- command-links:start -->
 Command documentation: [hardis:doc:release-notes](https://sfdx-hardis.cloudity.com/hardis/doc/release-notes/)

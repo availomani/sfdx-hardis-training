@@ -303,8 +303,52 @@
           "Une formule Crew Workload sur Installation",
           "Sur la présentation de page, lisible par les managers"
         ]
+      },
+      "US-057": {
+        "title": "Mettre en pause une installation qui attend une pièce",
+        "story": "En tant que planificateur, je veux un statut pour une installation bloquée par une pièce manquante, afin que le rapport hebdomadaire cesse de la compter en retard.",
+        "acceptance": [
+          "Status propose Awaiting Parts",
+          "Les planificateurs peuvent le choisir sur une installation déjà planifiée"
+        ]
+      },
+      "US-058": {
+        "title": "Enregistrer la durée de garantie sur un panel batch",
+        "story": "En tant que commercial, je veux que la durée de garantie soit stockée sur le panel batch, afin que le devis dise combien de temps les panneaux sont couverts.",
+        "acceptance": [
+          "Un champ Warranty Years existe sur Panel Batch",
+          "Il est sur la présentation de page Panel Batch",
+          "Les managers peuvent le lire et l'écrire"
+        ]
+      },
+      "US-059": {
+        "title": "Enregistrer le fournisseur d'un panel batch",
+        "story": "En tant qu'acheteur, je veux que le fournisseur soit stocké sur le panel batch, afin qu'une demande de garantie parte chez la bonne entreprise sans ressortir la facture.",
+        "acceptance": [
+          "Un champ Supplier existe sur Panel Batch",
+          "Il est sur la présentation de page Panel Batch",
+          "Les managers peuvent le lire et l'écrire"
+        ]
+      },
+      "US-060": {
+        "title": "Signaler une installation qui a besoin d'un échafaudage",
+        "story": "En tant que planificateur, je veux signaler une installation qui a besoin d'un échafaudage, afin que l'équipe le réserve avant le jour J au lieu de le découvrir sur place.",
+        "acceptance": [
+          "Une case à cocher Scaffolding Required existe sur Installation",
+          "Elle est sur la présentation de page Installation",
+          "Les équipes de pose la voient, les planificateurs la cochent"
+        ]
+      },
+      "US-061": {
+        "title": "Enregistrer le code du portail d'un site",
+        "story": "En tant que membre de l'équipe de pose, je veux le code du portail du site sur l'installation, afin d'entrer sans appeler le client à sept heures du matin.",
+        "acceptance": [
+          "Un champ Gate Code existe sur Installation",
+          "Il est sur la présentation de page Installation",
+          "Les équipes de pose le lisent, les planificateurs le modifient"
+        ]
       }
     }
   },
-  "source_rev": "1489b38e601d7e10cf76725494c1c357c5680884"
+  "source_rev": "8cf533715aad51a6a517e15d899f0982af9fb07e"
 }

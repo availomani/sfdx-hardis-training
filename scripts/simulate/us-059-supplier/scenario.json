@@ -1,0 +1,33 @@
+{
+  "id": "us-059-supplier",
+  "title": "US-059 Record the supplier of a panel batch",
+  "usedBy": "Lab 3.10",
+  "levels": [3],
+  "description": "Romain stores the supplier on the panel batch, right under the warranty term he merged the day before. This is the story Lab 3.10 promotes on its own, and the one whose cherry-pick conflicts because it was written on top of US-058.",
+  "branch": "training/mate-us-059-supplier",
+  "basedOn": "us-058-warranty-term",
+  "author": {
+    "name": "Romain Panda",
+    "email": "romain.panda@helios-training.demo"
+  },
+  "commitMessage": "US-059 Record the supplier of a panel batch\n\nPanel_Batch__c.Supplier__c, on the layout under Warranty Years, granted\non Helios_Delivery_Manager.",
+  "prTitle": "US-059 Record the supplier of a panel batch",
+  "prBody": "A warranty claim goes to the supplier, and the supplier's name is on an invoice nobody keeps.\nThis stores it on the batch, next to the warranty term US-058 just added.\n\n- New field `Panel_Batch__c.Supplier__c`\n- On the Panel Batch layout, under Warranty Years\n- `Helios_Delivery_Manager`: read and edit\n\nStory: US-059 in BACKLOG.md",
+  "nextStep": "Review it and merge it into integration, then take the next story: Lab 3.10 step 2 gives the order.",
+  "patches": [
+    {
+      "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
+      "fieldPermission": {
+        "field": "Panel_Batch__c.Supplier__c",
+        "editable": true,
+        "readable": true
+      }
+    },
+    {
+      "file": "force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml",
+      "layoutField": "Supplier__c",
+      "after": "Warranty_Years__c",
+      "behavior": "Edit"
+    }
+  ]
+}

@@ -404,7 +404,7 @@
     {
       "id": "US-055",
       "level": 3,
-      "lab": 10,
+      "lab": 11,
       "author": "romain",
       "title": "Install Date says which day it means",
       "story": "As a crew lead, I want Install Date to say whether it is the day we go on site or the day the panels arrive, so that nobody drives to an empty site.",
@@ -430,6 +430,98 @@
         "Helios_Delivery_Manager"
       ],
       "seededFailure": "A .forceignore wildcard added in the same Pull Request matches the new field, so no deployment sends it, and the layout and the permission set that use it are refused"
+    },
+    {
+      "id": "US-057",
+      "level": 3,
+      "lab": 10,
+      "author": "mariia",
+      "title": "Park an installation that is waiting for parts",
+      "story": "As a planner, I want a status for an installation held up by a missing part, so that the weekly report stops counting it as late.",
+      "acceptance": [
+        "Status offers Awaiting Parts",
+        "Planners can pick it on an installation that is already planned"
+      ],
+      "branch": "training/mate-us-057-awaiting-parts",
+      "metadata": ["Installation__c.Status__c"]
+    },
+    {
+      "id": "US-058",
+      "level": 3,
+      "lab": 10,
+      "author": "romain",
+      "title": "Record the warranty term on a panel batch",
+      "story": "As a sales rep, I want the warranty term stored on the panel batch, so that the quote says how long the panels are covered for.",
+      "acceptance": [
+        "A Warranty Years field exists on Panel Batch",
+        "It is on the Panel Batch layout",
+        "Managers can read and write it"
+      ],
+      "branch": "training/mate-us-058-warranty-term",
+      "metadata": [
+        "Panel_Batch__c.Warranty_Years__c",
+        "Panel_Batch__c-Panel Batch Layout",
+        "Helios_Delivery_Manager"
+      ]
+    },
+    {
+      "id": "US-059",
+      "level": 3,
+      "lab": 10,
+      "author": "romain",
+      "title": "Record the supplier of a panel batch",
+      "story": "As a buyer, I want the supplier stored on the panel batch, so that a warranty claim goes to the right company without digging out the invoice.",
+      "acceptance": [
+        "A Supplier field exists on Panel Batch",
+        "It is on the Panel Batch layout",
+        "Managers can read and write it"
+      ],
+      "branch": "training/mate-us-059-supplier",
+      "metadata": [
+        "Panel_Batch__c.Supplier__c",
+        "Panel_Batch__c-Panel Batch Layout",
+        "Helios_Delivery_Manager"
+      ]
+    },
+    {
+      "id": "US-060",
+      "level": 3,
+      "lab": 10,
+      "author": "mariia",
+      "title": "Flag an installation that needs scaffolding",
+      "story": "As a planner, I want to flag an installation that needs scaffolding, so that the crew books it before the day instead of finding out on site.",
+      "acceptance": [
+        "A Scaffolding Required checkbox exists on Installation",
+        "It is on the Installation layout",
+        "Crews can see it, planners can set it"
+      ],
+      "branch": "training/mate-us-060-scaffolding",
+      "metadata": [
+        "Installation__c.Scaffolding_Required__c",
+        "Installation__c-Installation Layout",
+        "Helios_Delivery_Crew",
+        "Helios_Delivery_Manager"
+      ]
+    },
+    {
+      "id": "US-061",
+      "level": 3,
+      "lab": 10,
+      "author": "mariia",
+      "title": "Record the gate code of a site",
+      "story": "As a crew member, I want the gate code of the site on the installation, so that I get in without phoning the customer at seven in the morning.",
+      "acceptance": [
+        "A Gate Code field exists on Installation",
+        "It is on the Installation layout",
+        "Crews can read it, planners can edit it"
+      ],
+      "branch": "training/mate-us-061-gate-code",
+      "metadata": [
+        "Installation__c.Gate_Code__c",
+        "Installation__c-Installation Layout",
+        "Helios_Delivery_Crew",
+        "Helios_Delivery_Manager"
+      ]
     }
   ],
   "pullRequests": [
@@ -607,7 +699,7 @@
       "level": 3,
       "slug": "level-3-release-manager",
       "name": "Release Manager",
-      "duration": "about 6 h",
+      "duration": "about 7 h",
       "prerequisite": 2,
       "badge": "sfdx-hardis Release Manager",
       "star": "hardisgroupcom/vscode-sfdx-hardis",
@@ -677,7 +769,14 @@
         },
         {
           "lab": 10,
-          "slug": "3-10-capstone-run-a-weekly-release-cycle",
+          "slug": "3-10-promote-a-subset-with-promotion-branches",
+          "title": "Promote a subset with promotion branches (Beta)",
+          "description": "Carry three approved User Stories out of five from uat to preprod with an sfdx-hardis promotion branch, solve the cherry-pick conflict it raises, and weigh what that shortcut costs.",
+          "time": "55 min"
+        },
+        {
+          "lab": 11,
+          "slug": "3-11-capstone-run-a-weekly-release-cycle",
           "title": "Capstone: run a weekly release cycle",
           "description": "Run a full week as a Salesforce release manager with no step-by-step: review, integrate, promote to UAT, release to production and measure.",
           "time": "45 min"

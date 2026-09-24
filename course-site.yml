@@ -257,7 +257,8 @@ nav:
       - en/level-3-release-manager/3-7-hotfix-and-retrofit.md
       - en/level-3-release-manager/3-8-monitor-your-production-org.md
       - en/level-3-release-manager/3-9-generate-the-project-documentation.md
-      - en/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+      - en/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches.md
+      - en/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle.md
   - Help: en/help.md
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
@@ -293,7 +294,8 @@ nav:
       - fr/level-3-release-manager/3-7-hotfix-and-retrofit.md
       - fr/level-3-release-manager/3-8-monitor-your-production-org.md
       - fr/level-3-release-manager/3-9-generate-the-project-documentation.md
-      - fr/level-3-release-manager/3-10-capstone-run-a-weekly-release-cycle.md
+      - fr/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches.md
+      - fr/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle.md
   - Aide: fr/help.md
   - Backlog: fr/BACKLOG.md
   - Badges: fr/badges/index.md
