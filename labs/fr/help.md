@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "dd2d4d4ea73edc165941a654aca1555f82185c60"
+source_rev: "ebaa090ce924c6d2eea8889f8c9b351eefd10858"
 ---
 
 # Aide
@@ -50,10 +50,15 @@ labs, des traductions, du site et les badges des autres participants sont ignor�
 ici, et ils ne changent rien à ce que votre fork exécute.
 
 Pour récupérer les changements, cliquez sur **Update my course** dans le menu Training de votre
-niveau. La commande merge le cours dans une branche à elle, créée depuis votre `integration`, et
-ouvre une Pull Request vers `integration`, comme tout changement dans ce cours. Attendez ses
-contrôles, mergez-la avec **Merge pull request**, jamais en squash, puis faites **Pull** dans le
-panneau Source Control. Votre travail est conservé.
+niveau, et attendez la fin. La commande merge le cours dans une branche à elle, créée depuis votre
+`integration`, et ouvre une Pull Request vers `integration`, comme tout changement dans ce cours.
+Elle attend ensuite les contrôles de cette Pull Request, la merge avec un commit de merge, jamais en
+squash, et ramène le résultat sur la branche où vous êtes. Il n'y a rien à cliquer entre les deux,
+et votre travail est conservé.
+
+Si un contrôle échoue, la commande s'arrête avant le merge et donne le lien de la Pull Request. Une
+fois le problème réglé, cliquez à nouveau sur **Update my course** : elle reprend la même Pull
+Request.
 
 Si le cours et vous avez modifié le même fichier, la commande s'arrête, annule tout et nomme les
 fichiers. Faites alors soit **Reset this level**, qui recommence le niveau depuis son état actuel et

@@ -46,10 +46,14 @@ first, and says how many changes you are missing. **Where am I?** always shows i
 lab pages, the translations, the site and the badges of other learners are left out, since you read
 them here and they change nothing your fork runs.
 
-To bring the changes in, click **Update my course** in the Training menu of your level. It merges
-the course into a branch of its own, made from your `integration`, and opens a Pull Request into
-`integration`, like every change in this course. Wait for its checks, merge it with **Merge pull
-request**, never a squash, then **Pull** in the Source Control panel. Your work is kept.
+To bring the changes in, click **Update my course** in the Training menu of your level, and wait
+for it to finish. It merges the course into a branch of its own, made from your `integration`, and
+opens a Pull Request into `integration`, like every change in this course. Then it waits for the
+checks of that Pull Request, merges it with a merge commit, never a squash, and brings the result
+to the branch you are on. There is nothing to click in between, and your work is kept.
+
+If a check fails, the command stops before merging and gives you the link of the Pull Request.
+Once that is sorted out, click **Update my course** again: it picks the same Pull Request up.
 
 If the course and you changed the same file, the command stops, undoes everything and names the
 files. Then either **Reset this level**, which starts the level again from its current state and

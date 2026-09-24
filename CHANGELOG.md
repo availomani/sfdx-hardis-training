@@ -12,6 +12,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 - New **Update my course** in the Training menu of every level: brings the course changes made since you forked, through a Pull Request into `integration`, without losing your work.
 - Every training command, and **Where am I?**, tells you when your fork is missing course changes it runs (lab pages, translations, the site and badges are ignored).
 - Reset this level keeps the certificate keys of Lab 3.1, so a Level 3 pipeline still logs in to its orgs after a reset.
+- **Update my course** goes to the end on its own: it waits for the checks of its Pull Request, merges it and brings the update to your computer.
 - Badge pages: the LinkedIn button opens a post already written, the preview says which badge was earned, and a square picture can be downloaded to post the badge full size.
 
 ## 2026-09-23

@@ -146,6 +146,63 @@ export function openUpdatePullRequest() {
   }
 }
 
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** The checks of a Pull Request as gh lists them: [{ name, state }], state being pass, fail, pending, skipping or cancel. */
+function pullRequestChecks(slug, url) {
+  const res = run("gh", ["pr", "checks", url, "--repo", slug], { quiet: true, capture: true });
+  return (res.stdout || "")
+    .split(/\r?\n/)
+    .map((line) => line.split("\t"))
+    .filter((cols) => cols.length >= 2 && cols[0].trim())
+    .map((cols) => ({ name: cols[0].trim(), state: cols[1].trim().toLowerCase() }));
+}
+
+/**
+ * Waits for the checks of a Pull Request to finish. Resolves to { ok, failed }.
+ *
+ * Checks take a few seconds to show up on a new Pull Request, so an empty list
+ * is waited on too, for three minutes: a fork whose Actions are switched off
+ * never gets any, and its update is then merged without them, the way the
+ * learner would have merged it by hand. Every change of state is printed, so a
+ * panel is never silent through the four minutes of the deployment simulation.
+ */
+export async function waitForPullRequestChecks(slug, url, { timeoutMs = 45 * 60 * 1000, noChecksMs = 3 * 60 * 1000 } = {}) {
+  const started = Date.now();
+  let last = "";
+  for (;;) {
+    const checks = pullRequestChecks(slug, url);
+    const failed = checks.filter((check) => check.state === "fail" || check.state === "cancel");
+    const pending = checks.filter((check) => check.state === "pending");
+    if (checks.length > 0) {
+      const summary = `${checks.length - pending.length}/${checks.length} check(s) finished`;
+      if (summary !== last) {
+        info(c.dim(`    ${summary}${pending.length ? `, waiting for ${pending.map((check) => check.name).join(", ")}` : ""}`));
+        last = summary;
+      }
+      if (pending.length === 0) {
+        return { ok: failed.length === 0, failed, none: false };
+      }
+    } else if (Date.now() - started > noChecksMs) {
+      return { ok: true, failed: [], none: true };
+    }
+    if (Date.now() - started > timeoutMs) {
+      return { ok: false, failed: pending, timedOut: true };
+    }
+    await wait(20000);
+  }
+}
+
+/**
+ * Merges an update Pull Request with a merge commit, never a squash: git then
+ * remembers what was brought in, and the next update only brings what is new.
+ * Returns { ok, message }.
+ */
+export function mergeUpdatePullRequest(slug, url, subject) {
+  const res = run("gh", ["pr", "merge", url, "--repo", slug, "--merge", "--subject", subject], { quiet: true, capture: true });
+  return { ok: res.code === 0, message: (res.stderr || res.stdout || "").trim() };
+}
+
 /**
  * The check every training command runs first. Says nothing when the fork is
  * current, when there is no training repository to compare with, or offline.
@@ -168,15 +225,15 @@ export function adviseCourseUpdate({ fetch = true, quietWhenCurrent = true } = {
   const waiting = openUpdatePullRequest();
   console.log("");
   if (waiting) {
-    warn(`Your fork is missing ${missing.length} change(s) of the course, and an update Pull Request is open.`);
-    info(`    Merge ${c.cyan(waiting.url)} into ${UPDATE_BASE} with ${c.bold("Merge pull request")}, never a squash, then Pull.`);
+    warn(`Your fork is missing ${missing.length} change(s) of the course, and an update Pull Request is open: ${c.cyan(waiting.url)}`);
+    info(`    Run ${c.bold("Update my course")} from the Training menu of your level: it waits for its checks, merges it and brings it to your computer.`);
   } else {
     warn(`Your fork is missing ${missing.length} change(s) of the course since you forked it.`);
     missing.slice(0, 3).forEach((commit) => info(c.dim(`    ${commit.subject}`)));
     if (missing.length > 3) {
       info(c.dim(`    ... and ${missing.length - 3} more`));
     }
-    info(`    Run ${c.bold("Update my course")} from the Training menu of your level: it opens a Pull Request into ${UPDATE_BASE} that brings them in.`);
+    info(`    Run ${c.bold("Update my course")} from the Training menu of your level: it brings them in through a Pull Request into ${UPDATE_BASE}, and merges it for you.`);
   }
   console.log("");
   return missing.length;
