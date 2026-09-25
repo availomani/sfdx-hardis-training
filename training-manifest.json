@@ -909,6 +909,7 @@
       "flags": [],
       "config": [
         "monitoringRepository",
+        "deploymentRepository",
         "monitoringCommands",
         "monitoringDisable",
         "notificationConfig",
@@ -1494,6 +1495,9 @@
         "lab-3-5"
       ],
       "monitoringRepository": [
+        "lab-3-8"
+      ],
+      "deploymentRepository": [
         "lab-3-8"
       ],
       "monitoringCommands": [

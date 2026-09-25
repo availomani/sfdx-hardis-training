@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-09-25
 
+- Lab 3.8 answers the new question about the CI/CD repository that deploys to the org, and explains the `AGENTS.md` the nightly backup writes for coding agents.
 - **Set up my training environment** waits for the one click GitHub asks for on a new fork, instead of reporting Actions on while no workflow ran.
 - Check my work for Lab 1.2 fails when the fork runs none of its pipeline workflows.
 - The monthly checks of the course no longer run on learners' forks.

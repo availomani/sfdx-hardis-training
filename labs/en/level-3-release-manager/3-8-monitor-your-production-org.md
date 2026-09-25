@@ -14,7 +14,7 @@ screenshots:
 depends_on:
   commands: [hardis:org:configure:monitoring]
   flags: []
-  config: [monitoringRepository, monitoringCommands, monitoringDisable, notificationConfig, msTeamsWebhookUrl]
+  config: [monitoringRepository, deploymentRepository, monitoringCommands, monitoringDisable, notificationConfig, msTeamsWebhookUrl]
   panels: [monitoringConfig, orgMonitoring]
   docs: [salesforce-monitoring-home, salesforce-monitoring-config-github, salesforce-monitoring-grafana-v2]
 ---
@@ -107,21 +107,25 @@ It runs in a command panel and asks its questions one at a time, the way [Lab 3.
    first if you have not
 2. **Please select or connect to the org that you want to monitor** - `helios-prod`. As in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md),
    making it the default org restarts the command, so pick it again in the new panel
-3. **Branch monitoring_... does not exist on the remote server. Do you want to push it?** - yes.
+3. **What is the address of the CI/CD repository that deploys to this org? (optional)** - the
+   address of your fork, `https://github.com/<your-handle>/sfdx-hardis-training`. It is the mirror
+   of step 8: the monitoring repository records where the pipeline lives, so that a coding agent
+   opened in it can search your fork and its workflow runs too
+4. **Branch monitoring_... does not exist on the remote server. Do you want to push it?** - yes.
    This one comes before the certificate, not after, and it only appears the first time
-4. Then the certificate questions from [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), unchanged and in the same order: self-signed,
+5. Then the certificate questions from [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), unchanged and in the same order: self-signed,
    let sfdx-hardis configure the External Client App, encrypted certificate as a file, then the same
    stop while you store the two secrets, this time in the **monitoring** repository, then the name,
    the contact email and the profile of the app. The profile list is in the language of the org's
    user, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
-5. **Do you want to save the configuration on the remote server (auto-commit)?** - yes
+6. **Do you want to save the configuration on the remote server (auto-commit)?** - yes
 
 Last, it writes the workflow on `main` and says so: *The monitoring workflow on main now runs
 monitoring_...*. GitHub only schedules the workflows of the default branch, and only offers **Run
 workflow** for those, so the workflow that runs every monitored org lives on `main` and lists each
 monitoring branch.
 
-It never asks for a repository name or a git provider, because it creates neither. The authentication is the same code as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): External Client App, JWT, two secrets to store,
+It never asks for a repository name to create or for a git provider, because it creates neither: the one address it asks for, your fork, it only records. The authentication is the same code as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): External Client App, JWT, two secrets to store,
 this time in the **monitoring** repository. The key lands in `./.ssh/` rather than
 `config/branches/.jwt/`, and the configuration in a `.sfdx-hardis.yml` at the repository root, on a
 branch called `monitoring_` plus the org's domain, cut from `main`. The repository was empty, so it
@@ -166,6 +170,10 @@ Open the **Org Monitoring Workbench** panel in VS Code, pointed at the monitorin
 Check the banner first **(1)**. **Org Monitoring Not Present (CI/CD Repo)** means you opened the
 wrong folder: this panel reads the monitoring repository, not the one you have been working in all
 course. Open the monitoring repository and the banner goes.
+
+Under the monitored org, the panel shows the **Deployment repository** you gave the command in
+step 2: click it to open your fork in a new VS Code window. Had you left that question empty, the
+panel would offer **Set deployment repository** instead. It is optional either way.
 
 Each check is a card, and the two worth opening first are **Detect calls to deprecated API versions**
 **(2)** and **Detect unsecured Connected Apps in an org** **(3)**.
@@ -278,6 +286,13 @@ The nightly backup is the underrated part. When somebody asks "when did that val
 change", the answer is a `git log` on the monitoring repository, and it works even for changes
 nobody made through the pipeline.
 
+The backup also writes an `AGENTS.md` at the root of the monitoring branch, and a `CLAUDE.md`
+pointing at it. It explains the repository to a coding agent: what each folder holds, what the
+backup skips, how to read the history, which checks run. With `deploymentRepository` set, it also
+tells the agent how to clone your fork next to it, read-only, find the branch that deploys to
+`helios-prod`, and read the workflow runs of both repositories. That is what lets an agent answer
+"was this change deployed by the pipeline, or made directly in production?".
+
 If your organisation runs Grafana, the results can feed [ready-made
 dashboards](https://sfdx-hardis.cloudity.com/salesforce-monitoring-grafana-v2/). That is out of
 scope here, and worth knowing exists.
@@ -296,6 +311,8 @@ Command documentation: [hardis:org:configure:monitoring](https://sfdx-hardis.clo
 - A first report you have read and triaged, however short it is
 - One notification channel configured
 - `monitoringRepository` in `config/.sfdx-hardis.yml` on `integration`, pointing at it
+- `deploymentRepository` in the monitoring branch's `.sfdx-hardis.yml`, pointing back at your fork,
+  and an `AGENTS.md` at the root of that branch
 
 ## If it goes wrong
 

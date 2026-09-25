@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "82261c5e6ae7b18bac13b73251bfbc6a44976035"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -14,7 +14,7 @@ screenshots:
 depends_on:
   commands: [hardis:org:configure:monitoring]
   flags: []
-  config: [monitoringRepository, monitoringCommands, monitoringDisable, notificationConfig, msTeamsWebhookUrl]
+  config: [monitoringRepository, deploymentRepository, monitoringCommands, monitoringDisable, notificationConfig, msTeamsWebhookUrl]
   panels: [monitoringConfig, orgMonitoring]
   docs: [salesforce-monitoring-home, salesforce-monitoring-config-github, salesforce-monitoring-grafana-v2]
 ---
@@ -112,21 +112,25 @@ La commande tourne dans un panneau et pose ses questions une à une, comme au [L
 2. **Please select or connect to the org that you want to monitor** - `helios-prod`. Comme au
    [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), en faire l'org par défaut relance la commande : rechoisissez-la donc dans le nouveau
    panneau
-3. **Branch monitoring_... does not exist on the remote server. Do you want to push it?** - oui.
+3. **What is the address of the CI/CD repository that deploys to this org? (optional)** - l'adresse
+   de votre fork, `https://github.com/<your-handle>/sfdx-hardis-training`. C'est le miroir de
+   l'étape 8 : le repository de monitoring retient où vit la pipeline, pour qu'un agent de code ouvert
+   dedans puisse aussi chercher dans votre fork et dans ses exécutions de workflow
+4. **Branch monitoring_... does not exist on the remote server. Do you want to push it?** - oui.
    Celle-ci vient avant le certificat, pas après, et elle n'apparaît que la première fois
-4. Puis les questions de certificat du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), inchangées et dans le même ordre : auto-signé,
+5. Puis les questions de certificat du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), inchangées et dans le même ordre : auto-signé,
    laisser sfdx-hardis configurer l'External Client App, certificat chiffré sous forme de fichier,
    puis le même arrêt pendant que vous stockez les deux secrets, cette fois dans le repository de
    **monitoring**, puis le nom, l'e-mail de contact et le profil de l'application. La liste des
    profils est dans la langue de l'utilisateur de l'org, comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
-5. **Do you want to save the configuration on the remote server (auto-commit)?** - oui
+6. **Do you want to save the configuration on the remote server (auto-commit)?** - oui
 
 Pour finir, elle écrit le workflow sur `main` et le dit : *The monitoring workflow on main now runs
 monitoring_...*. GitHub ne planifie que les workflows de la branche par défaut, et ne propose
 **Run workflow** que pour ceux-là : le workflow qui lance chaque org monitorée vit donc sur `main` et
 liste chaque branche de monitoring.
 
-Elle ne demande jamais de nom de repository ni de fournisseur git, parce qu'elle n'en crée aucun.
+Elle ne demande jamais de nom de repository à créer ni de fournisseur git, parce qu'elle n'en crée aucun : la seule adresse qu'elle demande, celle de votre fork, elle se contente de l'enregistrer.
 L'authentification est le même code qu'au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 : External Client App, JWT, deux secrets à stocker, cette fois dans le repository de **monitoring**.
 La clé atterrit dans `./.ssh/` plutôt que dans `config/branches/.jwt/`, et la configuration dans un
@@ -175,6 +179,11 @@ Ouvrez le panneau **Org Monitoring Workbench** dans VS Code, pointé sur le repo
 Vérifiez d'abord la bannière **(1)**. **Org Monitoring Not Present (CI/CD Repo)** veut dire que vous
 avez ouvert le mauvais dossier : ce panneau lit le repository de monitoring, pas celui où vous
 travaillez depuis le début du cours. Ouvrez le repository de monitoring et la bannière disparaît.
+
+Sous l'org monitorée, le panneau affiche le **Deployment repository** donné à la commande à
+l'étape 2 : cliquez dessus pour ouvrir votre fork dans une nouvelle fenêtre VS Code. Si vous aviez
+laissé cette question vide, le panneau proposerait **Set deployment repository** à la place. C'est
+optionnel dans les deux cas.
 
 Chaque contrôle est une carte, et les deux à ouvrir en premier sont **Detect calls to deprecated API
 versions** **(2)** et **Detect unsecured Connected Apps in an org** **(3)**.
@@ -296,6 +305,14 @@ La sauvegarde nocturne est la partie sous-estimée. Quand quelqu'un demande "qua
 validation a-t-elle changé", la réponse est un `git log` sur le repository de monitoring, et cela
 fonctionne même pour les modifications que personne n'a faites par la pipeline.
 
+La sauvegarde écrit aussi un `AGENTS.md` à la racine de la branche de monitoring, et un `CLAUDE.md`
+qui pointe dessus. Il explique le repository à un agent de code : ce que contient chaque dossier, ce
+que la sauvegarde ignore, comment lire l'historique, quels contrôles tournent. Avec
+`deploymentRepository` renseigné, il explique aussi à l'agent comment cloner votre fork à côté, en
+lecture seule, trouver la branche qui déploie dans `helios-prod`, et lire les exécutions de workflow
+des deux repositories. C'est ce qui permet à un agent de répondre à "ce changement a-t-il été déployé
+par la pipeline, ou fait directement en production ?".
+
 Si votre organisation utilise Grafana, les résultats peuvent alimenter des [tableaux de bord prêts à
 l'emploi](https://sfdx-hardis.cloudity.com/salesforce-monitoring-grafana-v2/). C'est hors sujet ici,
 et il est bon de savoir que cela existe.
@@ -315,6 +332,8 @@ Documentation des commandes : [hardis:org:configure:monitoring](https://sfdx-har
 - Un premier rapport que vous avez lu et trié, aussi court soit-il
 - Un canal de notification configuré
 - `monitoringRepository` dans `config/.sfdx-hardis.yml` sur `integration`, pointant dessus
+- `deploymentRepository` dans le `.sfdx-hardis.yml` de la branche de monitoring, pointant vers votre
+  fork, et un `AGENTS.md` à la racine de cette branche
 
 ## En cas de problème
 
