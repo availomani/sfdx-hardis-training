@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "071fe1a5506146b9a09ca8741a6d6d137a5d5d47"
 screenshots:
   - annotated/vscode/backpromote-result--what-it-did
   - annotated/vscode/pipeline-cards--backpromote
@@ -123,14 +123,15 @@ Cliquez sur **Backpromote to helios-dev** **(1)**. Le panneau déroule l'exécut
 
 ![Le panneau Backpromote, terminé, avec son résumé](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
 
-Lisez les quatre lignes du résumé plutôt que la couleur :
+Lisez le résumé plutôt que la couleur :
 
 - combien d'éléments ont atteint votre org, et combien en ont été supprimés
-- combien de deployment actions ont tourné, ont été sautées, ou ont échoué
-- **combien d'actions manuelles vous attendent dans la sandbox**, ce que rien ne peut faire à votre
-  place
 - sur quelles Pull Requests il a écrit son historique, pour que le backpromote suivant sache où
   commencer
+
+Les trois stories ne portent aucune deployment action. Quand celles que vous ramenez en portent, le
+résumé dit aussi combien ont tourné, ont été sautées ou ont échoué, et **combien d'actions manuelles
+vous attendent dans la sandbox**, ce que rien ne peut faire à votre place.
 
 Cliquez ensuite sur **Back to `<votre branche>`** **(4)**. C'est le dernier bouton du panneau et
 celui que les gens ratent, et la note suivante explique pourquoi il compte.

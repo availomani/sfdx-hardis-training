@@ -116,7 +116,7 @@
         "promptInput"
       ],
       "screenshots": [
-        "annotated/vscode/pipeline-cards--new-user-story",
+        "annotated/vscode/pipeline-cards-level1--new-user-story",
         "annotated/vscode/work-new-story-type",
         "annotated/vscode/work-new-story-name",
         "annotated/vscode/work-new-org-type",
@@ -186,11 +186,11 @@
         "commandExecution"
       ],
       "screenshots": [
-        "annotated/vscode/pipeline-cards--commit-changes",
+        "annotated/vscode/pipeline-cards-level1--commit-changes",
         "annotated/vscode/metadata-retriever-recent-changes--find",
         "annotated/vscode/metadata-retriever-selected--us-014",
         "annotated/vscode/source-control-retrieved--commit",
-        "annotated/vscode/pipeline-cards--save-publish",
+        "annotated/vscode/pipeline-cards-level1--save-publish",
         "annotated/vscode/work-save-commit-ready",
         "annotated/vscode/work-save-package-xml",
         "annotated/vscode/pipeline-packages-menu--package-xml",

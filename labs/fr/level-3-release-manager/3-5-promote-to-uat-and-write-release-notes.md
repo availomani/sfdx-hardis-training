@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "810d4dfb1955110f1f91b4b18f7de130b2a1cc98"
+source_rev: "38cc76435a6378c00ce1e8c91a71b72a38a95a47"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -222,9 +222,11 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 Ouvrez `helios-uat` et vérifiez que les deux stories sont réellement utilisables, pas seulement
 déployées :
 
-- Une équipe plus grande que le plafond est ramenée au plafond à l'enregistrement : mettez
-  `Crew Capacity Cap` à 3 et `Crew Size` à 6 sur une installation planifiée, enregistrez, et il
-  affiche 3
+- Une équipe plus grande que le plafond est ramenée au plafond à l'enregistrement. La règle s'exécute
+  quand une installation planifiée reçoit son équipe, et UAT n'en a plus aucune au statut planifié
+  depuis le remplissage de la taille d'équipe du Lab 2.3 : créez-en une. Sur n'importe quelle
+  installation, mettez `Status` à `Planned`, `Crew Capacity Cap` à 3 et `Crew Size` à 6 dans la même
+  modification, et enregistrez. Il affiche 3, et elle est passée à `Scheduled`
 - La permission du PDF de devis est sur le permission set des managers
 - **Setup > Remote Site Settings** dit toujours `https://warehouse-test.helios.invalid` pour
   `Helios_Warehouse` : la promotion ne l'a pas touché

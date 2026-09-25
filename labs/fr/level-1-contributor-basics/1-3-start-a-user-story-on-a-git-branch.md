@@ -5,9 +5,9 @@ description: "Prenez votre premier ticket du backlog et créez sa branche Git et
 level: 1
 lab: 3
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "aac990829d9935136489584c303016855dd143f4"
 screenshots:
-  - annotated/vscode/pipeline-cards--new-user-story
+  - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type
   - annotated/vscode/work-new-story-name
   - annotated/vscode/work-new-org-type
@@ -71,7 +71,7 @@ point d'apprendre et de répéter pendant tout le reste de votre carrière sur c
 Sur la Welcome page, ouvrez le panneau **DevOps Pipeline** et faites défiler au-delà du diagramme
 jusqu'au **Project Contribution Workflow** **(1)**. Cliquez sur la carte **New User Story** **(2)**.
 
-![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards-level1--new-user-story.png)
 
 !!! tip "Vous ne voyez pas les cartes ?"
     Elles sont sous le diagramme des branches. Faites défiler vers le bas dans le panneau.

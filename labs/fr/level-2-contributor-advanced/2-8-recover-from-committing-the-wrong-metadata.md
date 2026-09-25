@@ -5,7 +5,7 @@ description: "Vous avez publié bien plus que votre story. Voyez ce que cela fai
 level: 2
 lab: 8
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "deadc7823cffd652cc4f9237b1c96a434d2d75ee"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--select-all
@@ -69,7 +69,7 @@ Regardez le rapport **Git Delta package.xml** que la publication a proposé : bi
 présentation de page que votre story a modifiée. Ouvrez la Pull Request et lisez le diff.
 
 Au minimum il y a **un profil**, `Admin`, le profil System Administrator. Le repository le porte
-court, quelques lignes, et il est revenu long de plusieurs milliers de lignes : chaque champ que
+court, quelques lignes, et il est revenu plus long de plusieurs centaines de lignes : chaque champ que
 vous avez créé dans Setup depuis le Niveau 1 a donné à ce profil une sécurité au niveau du champ, et
 une récupération de toute l'org ramène tout cela avec. Ce qui vient d'autre dépend de ce qu'a vécu
 votre org, et une récupération de toute l'org sur un vrai projet en emporte généralement une partie

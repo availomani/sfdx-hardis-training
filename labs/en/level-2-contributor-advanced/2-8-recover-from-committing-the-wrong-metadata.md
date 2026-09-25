@@ -68,7 +68,7 @@ Look at the **Git Delta package.xml** report the publish offered: more than the 
 changed. Open the Pull Request and read the diff.
 
 At the very least there is **a Profile**, `Admin`, the System Administrator profile. The repository
-carries it short, a few lines, and it came back thousands of lines long: every field you created in
+carries it short, a few lines, and it came back several hundred lines longer: every field you created in
 Setup since Level 1 gave that profile field-level security, and a whole-org retrieve brings all of
 it along. What else comes depends on what your org went through, and
 a whole-org retrieve on a real project usually carries some of it:

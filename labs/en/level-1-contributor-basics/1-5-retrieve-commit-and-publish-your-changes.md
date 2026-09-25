@@ -7,11 +7,11 @@ lab: 5
 lang: en
 source_rev: ""
 screenshots:
-  - annotated/vscode/pipeline-cards--commit-changes
+  - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
   - annotated/vscode/metadata-retriever-selected--us-014
   - annotated/vscode/source-control-retrieved--commit
-  - annotated/vscode/pipeline-cards--save-publish
+  - annotated/vscode/pipeline-cards-level1--save-publish
   - annotated/vscode/work-save-commit-ready
   - annotated/vscode/work-save-package-xml
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -56,7 +56,7 @@ on your machine.
 In the **DevOps Pipeline** panel, under **Project Contribution Workflow**, click the **Commit
 changes** card **(1)**.
 
-![The Commit changes card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--commit-changes.png)
+![The Commit changes card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards-level1--commit-changes.png)
 
 It opens the **Metadata Retriever**, which is where every publish starts.
 
@@ -68,8 +68,9 @@ thousands of components an org contains. Click **Search Metadata** **(3)**.
 
 ![The Metadata Retriever listing the recent changes of the org](../../_assets/annotated/vscode/metadata-retriever-recent-changes--find.png)
 
-About thirty results come back **(4)**, each with what it is, its name, who last touched it and
-when. Every one of them carries your name, and most of them are not your story.
+The count of results is at **(4)**: a few dozen on your org, fewer in the picture. Each row says
+what it is, its name, who last touched it and when. Every one of them carries your name, and most of
+them are not your story.
 
 !!! info "Why the list is longer than your story"
     A scratch org remembers every component that arrived in it, however it arrived. In Lab 1.2,
@@ -174,7 +175,7 @@ for the team, and that is what Save / Publish does.
 
 In the **DevOps Pipeline** panel, click the **Save / Publish** card **(1)**.
 
-![The Save / Publish card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--save-publish.png)
+![The Save / Publish card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards-level1--save-publish.png)
 
 The first question is the one that catches everybody out.
 
@@ -324,7 +325,8 @@ panel and click **Publish Branch**.
   the field, the layout and the two permission sets
 - `manifest/package.xml` gaining one line, the new field, in a commit the tool made
 - Your branch on GitHub, in your fork (`github.com/my-username/sfdx-hardis-training`), under **Branches**
-- The DevOps Pipeline panel showing your branch feeding `integration`, with no Pull Request yet
+- The DevOps Pipeline panel still without your branch: it draws a branch once it has a Pull
+  Request, and yours gets one in [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md)
 
 ## If it goes wrong
 

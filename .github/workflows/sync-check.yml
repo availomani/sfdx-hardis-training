@@ -20,6 +20,9 @@ permissions: read-all
 jobs:
   consistency:
     name: Generated files, links, and the command list
+    # The monthly run checks the course itself: on a learner's fork it would
+    # only send them failure emails about files they never touch
+    if: github.event_name != 'schedule' || github.repository == 'hardisgroupcom/sfdx-hardis-training'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1

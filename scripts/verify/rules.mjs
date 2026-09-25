@@ -210,26 +210,82 @@ const HOTFIX_RULE = "force-app/main/default/objects/Installation__c/validationRu
 /** The US-045 hotfix on a branch: the validation rule lets a cancelled installation be back-dated. */
 const hasHotfix = (ctx, branch) => /ISPICKVAL\(Status__c,\s*(&quot;|")Cancelled(&quot;|")\)/.test(ctx.readOn(branch, HOTFIX_RULE) || "");
 
+/** owner/name of the learner's fork, read from origin, or null when origin is not on GitHub. */
+function forkSlug(ctx) {
+  const url = ctx.git(["remote", "get-url", "origin"]);
+  return (url.match(/github\.com[/:]([^/]+\/[^/.]+?)(?:\.git)?$/) || [])[1] || null;
+}
+
+/**
+ * The GitHub CLI, its output parsed as JSON, or null when it fails or is missing. On Windows it can
+ * be a .cmd shim, which only runs through a shell, and Node deprecates an argument array together
+ * with shell:true: the line is quoted and handed over as one string, as scripts/lib/util.mjs does.
+ */
+function ghJson(ctx, args) {
+  const windows = process.platform === "win32";
+  const quote = (arg) => (/^[\w./:?=,-]+$/.test(arg) ? arg : `"${arg.replace(/"/g, '""')}"`);
+  const res = windows
+    ? spawnSync(["gh", ...args].map(quote).join(" "), { cwd: ctx.dir, encoding: "utf8", shell: true })
+    : spawnSync("gh", args, { cwd: ctx.dir, encoding: "utf8" });
+  if (res.status !== 0) {
+    return null;
+  }
+  try {
+    return JSON.parse(res.stdout);
+  } catch {
+    return null;
+  }
+}
+
 /**
  * The names of the Actions secrets of the learner's fork, or null when they cannot be read: no
  * GitHub CLI, or not signed in. The fork is origin, named explicitly: in a fork gh would pick the
  * parent repository by default.
  */
 function forkSecretNames(ctx) {
-  const url = ctx.git(["remote", "get-url", "origin"]);
-  const slug = (url.match(/github\.com[/:]([^/]+\/[^/.]+?)(?:\.git)?$/) || [])[1];
-  if (!slug) {
+  const slug = forkSlug(ctx);
+  const secrets = slug ? ghJson(ctx, ["secret", "list", "-R", slug, "--json", "name"]) : null;
+  return Array.isArray(secrets) ? secrets.map((secret) => secret.name) : null;
+}
+
+/**
+ * The workflows GitHub runs on the learner's fork, by file name, or null when they cannot be read.
+ * A brand new fork lists none at all until its owner clicks the banner of its Actions tab, and a
+ * fork in that state has every branch right while nothing ever checks or deploys it.
+ */
+function forkActiveWorkflows(ctx) {
+  const slug = forkSlug(ctx);
+  const listed = slug ? ghJson(ctx, ["api", `repos/${slug}/actions/workflows?per_page=100`]) : null;
+  if (!Array.isArray(listed?.workflows)) {
     return null;
   }
-  const res = spawnSync("gh", ["secret", "list", "-R", slug, "--json", "name"], { cwd: ctx.dir, encoding: "utf8", shell: process.platform === "win32" });
-  if (res.status !== 0) {
-    return null;
+  return listed.workflows
+    .filter((workflow) => workflow.state === "active")
+    .map((workflow) => path.basename(workflow.path));
+}
+
+/** The workflows a Pull Request of the course cannot do without. */
+const PIPELINE_WORKFLOWS = ["check-deploy.yml", "process-deploy.yml", "megalinter.yml"];
+
+/** Lab 1.2's outcome in the fork: integration and uat each name the org they deploy to. */
+function branchesNameTheirOrgs(ctx) {
+  if (!ctx.hasBranch(DEV)) {
+    return miss(`no branch named "${DEV}"`, "your fork. Lab 1.2 creates it, or Reset this level restores it");
   }
-  try {
-    return JSON.parse(res.stdout).map((secret) => secret.name);
-  } catch {
-    return null;
+  const rerun = "Run Set up my training environment again: it writes the file and pushes it";
+  for (const branch of ["integration", "uat"]) {
+    const file = `config/branches/.sfdx-hardis.${branch}.yml`;
+    const config = ctx.readOn(DEV, file);
+    if (!config) {
+      return miss(`${file} is missing`, `branch ${DEV}. ${rerun}`);
+    }
+    const hasOrg = /targetUsername:[ \t]*["']?[^"'\s][^\n]*/.test(config) &&
+      !/targetUsername:\s*["']{2}\s*$/m.test(config);
+    if (!hasOrg) {
+      return miss(`targetUsername is still empty in ${file}`, `branch ${DEV}. ${rerun}`);
+    }
   }
+  return pass("integration and uat both name their org");
 }
 
 /** The dev org alias, as the universe names it. */
@@ -241,24 +297,24 @@ export const RULES = [
   {
     id: "1.2", level: 1, lab: 2,
     title: "Your fork has integration and uat branches, and each knows which org it deploys to",
-    check: (ctx) => {
-      if (!ctx.hasBranch(DEV)) {
-        return miss(`no branch named "${DEV}"`, "your fork. Lab 1.2 creates it, or Reset this level restores it");
+    check: (ctx) => branchesNameTheirOrgs(ctx),
+    // The live state of the fork's Actions is only asked on the learner's machine: the badge audit
+    // judges what the level left behind, and a workflow disabled later does not undo the lab
+    now: (ctx) => {
+      const branches = branchesNameTheirOrgs(ctx);
+      if (!branches.ok) {
+        return branches;
       }
-      const rerun = "Run Set up my training environment again: it writes the file and pushes it";
-      for (const branch of ["integration", "uat"]) {
-        const file = `config/branches/.sfdx-hardis.${branch}.yml`;
-        const config = ctx.readOn(DEV, file);
-        if (!config) {
-          return miss(`${file} is missing`, `branch ${DEV}. ${rerun}`);
-        }
-        const hasOrg = /targetUsername:[ \t]*["']?[^"'\s][^\n]*/.test(config) &&
-          !/targetUsername:\s*["']{2}\s*$/m.test(config);
-        if (!hasOrg) {
-          return miss(`targetUsername is still empty in ${file}`, `branch ${DEV}. ${rerun}`);
-        }
+      const active = forkActiveWorkflows(ctx);
+      const off = active === null ? [] : PIPELINE_WORKFLOWS.filter((file) => !active.includes(file));
+      if (off.length > 0) {
+        return miss(
+          `GitHub does not run ${off.join(", ")} on your fork, so nothing will check or deploy your work`,
+          "the Actions tab of your fork: click I understand my workflows, go ahead and enable them, " +
+            "then run Training: Level 1 > Trigger my workflows"
+        );
       }
-      return pass("integration and uat both name their org");
+      return pass("integration and uat both name their org, and the fork runs its pipeline workflows");
     }
   },
   {

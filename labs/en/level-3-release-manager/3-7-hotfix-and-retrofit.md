@@ -128,7 +128,9 @@ again, and nothing else changes.** That is a hotfix.
 
 ### 4. Merge it into preprod
 
-When the check is green, **Merge pull request** **(1)**:
+When the check is green, merge it with **Squash and merge**, from the arrow beside **Merge pull
+request** **(1)**: Romain's branch is a fix, and a fix is squashed like every User Story
+([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). The promotion into `main` that follows is merged, not squashed.
 
 ![Merging a Pull Request on GitHub](../../_assets/annotated/web/github-pr-merge.png)
 

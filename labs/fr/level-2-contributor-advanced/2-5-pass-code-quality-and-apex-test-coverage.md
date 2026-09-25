@@ -5,7 +5,7 @@ description: "Corrigez un avertissement PMD et la couverture de code Apex qui bl
 level: 2
 lab: 5
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "73eac21691ef803b05712d5adfd945e732097fd5"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -295,7 +295,8 @@ déploie très volontiers un identifiant en dur couvert à 100 %.
 
 ## Ce que vous devez voir
 
-- Le contrôle MegaLinter ne signalant aucune trouvaille
+- Le commentaire MegaLinter sans la boucle de `InstallationScheduler.cls` : les trouvailles sur le
+  code qui était là avant vous sont toujours listées, et ne font toujours qu'avertir
 - Le contrôle de déploiement vert, avec une couverture au-dessus de 80 % dans le commentaire
 - `schedulableOn` dans `helios-integration`, avec une requête en dehors de la boucle
 

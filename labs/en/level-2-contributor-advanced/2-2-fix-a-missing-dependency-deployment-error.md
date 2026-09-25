@@ -77,6 +77,9 @@ First, the field the flow needs so it does not warn twice. In `helios-dev`,
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Unchecked              |
 
+Leave **Visible** unticked for every profile, as in Lab 1.4, and on the last screen untick
+**Installation Layout**: nobody but the flow needs this checkbox, so it goes on no page.
+
 Then the flow. **Setup > Flows**, open **Installation Crew Warning**. It is active, so Flow Builder
 opens the running version: every change you make is saved as a **new version**, and the old one
 keeps running until you activate yours.
@@ -114,7 +117,9 @@ Three changes, and the picture above shows where each one starts:
 
     ![The Add Element menu, with Update Triggering Record](../../_assets/annotated/salesforce/flow-builder-add-element.png)
 
-**Save As New Version** **(4)**, then **Activate**, the button that replaces **Deactivate** on the
+**Save As New Version** **(4)**. The window it opens holds the description of the flow: replace it
+with `Warns the planner when the crew assigned to an installation is too small for the panels it
+needs.`, since the flow no longer warns on every save. Then **Activate**, the button that replaces **Deactivate** on the
 new version.
 
 !!! info "Why the flow has a fault path at all"

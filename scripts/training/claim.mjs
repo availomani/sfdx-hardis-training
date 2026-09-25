@@ -238,7 +238,7 @@ export default async function claim(args) {
   info(`  A browser opens on the claim form, filled in except for one field. Pick`);
   info(`  ${c.bold(`Level ${level} - ${levelDef.name}`)} in the ${c.bold("Level")} dropdown: GitHub does not prefill a`);
   info("  dropdown from a link, so it arrives empty and the form refuses to submit.");
-  info("  Then tick the three boxes and click Submit: they say your repository is");
+  info("  Then tick the three boxes and click Create: they say your repository is");
   info("  public and your handle becomes public too, which is your decision and");
   info("  nobody else's.");
 

@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "3b02d1f7c5bf4acfda4269d3a54da9fb1b9fb9a0"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
@@ -132,7 +132,9 @@ Petite, et son rayon d'impact tient en une phrase : **les installations annulée
 
 ### 4. Le merger dans preprod
 
-Quand le contrôle est vert, **Merge pull request** **(1)** :
+Quand le contrôle est vert, mergez-la avec **Squash and merge**, depuis la flèche à côté de **Merge
+pull request** **(1)** : la branche de Romain est un correctif, et un correctif se squashe comme
+chaque User Story ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). La promotion vers `main` qui suit est mergée, pas squashée.
 
 ![Merger une Pull Request sur GitHub](../../_assets/annotated/web/github-pr-merge.png)
 

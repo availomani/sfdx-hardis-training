@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "4e07ca72f292110fec265b043b9fb58e23eeb7d9"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -134,11 +134,12 @@ permission set n'accorde pas.
 ### 4. Le mettre là où les gens regarderont
 
 Le champ est sur la présentation de page, celle qu'utilisent les pages Salesforce à l'ancienne. La
-page d'enregistrement Installation est une page Lightning, et elle affiche la présentation de page à
-l'intérieur de son onglet **Details** : vous avez donc déjà fini.
+page d'enregistrement Installation est une page Lightning, et la colonne de champs à sa gauche est
+cette présentation de page : vous avez donc déjà fini.
 
 Ouvrez n'importe quelle installation (**App Launcher > Helios Delivery > Installations**, prenez
-`INST-00001`) et regardez l'onglet **Details**. `Panels Required` est là, vide.
+`INST-00001`) et regardez le bas de cette colonne. `Panels Required` est là, vide, avec à côté de
+son nom le petit **i** du texte d'aide que vous avez écrit.
 
 ### 5. Le tester sur de vraies données
 
@@ -150,10 +151,11 @@ L'onglet **Installations** **(1)** est la façon de revenir à cette liste depui
 l'application. À droite de l'enregistrement se trouve le **Panel delivery timeline** **(2)**, qui
 liste les palettes réservées pour cette installation avec leurs quantités. L'image a été prise avant
 que cette story existe, sur une installation sans palette réservée : il n'y a donc pas non plus de
-Panels Required dans ses Details. La plupart des installations ont deux ou trois palettes.
+Panels Required dans sa colonne. La plupart des installations ont deux ou trois palettes.
 
-1. Sur `INST-00001`, cliquez sur **Edit**, mettez **Panels Required** au nombre auquel la timeline
-   aboutit, et **Save**
+1. Sur `INST-00001`, cliquez sur le crayon à droite de **Panels Required**, tapez le nombre auquel
+   la timeline aboutit, et cliquez sur **Save** en bas de la page. Cette page n'a pas de bouton
+   **Edit** : chaque champ se modifie sur place, avec son propre crayon
 2. Regardez les deux nombres côte à côte. Sur une vraie story, vous demanderiez au planificateur si
    ce champ doit être saisi ou calculé à partir des palettes. Ici, la saisie est ce que demande la
    story, et cette question est exactement celle qu'un bon contributeur pose avant de construire quoi
@@ -164,8 +166,8 @@ déploiement.
 
 ## Ce que vous devez voir
 
-Sur trois installations : une valeur `Panels Required`, visible dans l'onglet Details, enregistrée
-sans erreur.
+Sur trois installations : une valeur `Panels Required`, visible dans la colonne de champs,
+enregistrée sans erreur.
 
 Et dans VS Code, **rien du tout**. Le repository ne sait encore rien de tout cela. Vos modifications
 vivent dans une org et nulle part ailleurs, et c'est exactement l'état auquel le [Lab

@@ -235,6 +235,10 @@ export default async function simulate(args) {
   } else {
     warn(`Nothing to commit: the teammate changes are already in your ${from} branch.`);
     restore();
+    // The branch was only made to hold the teammate commit, and there is none. Left
+    // behind, it is a branch nobody pushed, and Claim my badge refuses to run until
+    // the learner pushes a teammate branch they never made.
+    run("git", ["branch", "-D", scenario.branch], { quiet: true });
     return;
   }
 

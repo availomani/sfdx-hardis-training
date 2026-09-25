@@ -132,11 +132,12 @@ does not grant.
 ### 4. Put it where people will look
 
 The field is on the layout, which is what old-style Salesforce pages use. The Installation record
-page is a Lightning record page, and it shows the layout inside its **Details** tab, so you are
+page is a Lightning record page, and the column of fields on its left is that layout, so you are
 already done.
 
 Open any installation (**App Launcher > Helios Delivery > Installations**, pick `INST-00001`) and
-check the **Details** tab. `Panels Required` is there, empty.
+look at the bottom of that column. `Panels Required` is there, empty, with the small **i** of the
+help text you wrote next to its name.
 
 ### 5. Test it against real data
 
@@ -147,11 +148,12 @@ Empty fields prove nothing. Put a number in.
 The **Installations** tab **(1)** is how you get back to this list from anywhere in the app. On the
 right of the record sits the **Panel delivery timeline** **(2)**, which lists the pallets booked for
 this installation with their quantities. The picture was taken before this story existed, on an
-installation with no pallet booked, so there is no Panels Required in its Details either. Most
+installation with no pallet booked, so there is no Panels Required in its column either. Most
 installations have two or three pallets.
 
-1. On `INST-00001`, click **Edit**, set **Panels Required** to the number the timeline adds up to,
-   and **Save**
+1. On `INST-00001`, click the pencil at the right of **Panels Required**, type the number the
+   timeline adds up to, and click **Save** at the bottom of the page. This page has no **Edit**
+   button: every field is edited in place, with its own pencil
 2. Look at the two numbers side by side. On a real story you would ask the planner whether this
    field should be typed in or worked out from the pallets. Here, typed in is the story, and that
    question is exactly the one a good contributor asks before building anything
@@ -160,7 +162,8 @@ Do the same on two more installations, so you have something to look at after th
 
 ## What you should see
 
-On three installations: a `Panels Required` value, visible in the Details tab, saved without error.
+On three installations: a `Panels Required` value, visible in the column of fields, saved without
+error.
 
 And in VS Code, **nothing at all**. The repository does not know about any of this yet. Your
 changes live in one org and nowhere else, which is exactly the state [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md) exists to end.

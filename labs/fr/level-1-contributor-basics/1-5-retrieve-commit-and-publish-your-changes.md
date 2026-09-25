@@ -5,13 +5,13 @@ description: "Faites entrer vos modifications d'org dans Git avec le Metadata Re
 level: 1
 lab: 5
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "aac990829d9935136489584c303016855dd143f4"
 screenshots:
-  - annotated/vscode/pipeline-cards--commit-changes
+  - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
   - annotated/vscode/metadata-retriever-selected--us-014
   - annotated/vscode/source-control-retrieved--commit
-  - annotated/vscode/pipeline-cards--save-publish
+  - annotated/vscode/pipeline-cards-level1--save-publish
   - annotated/vscode/work-save-commit-ready
   - annotated/vscode/work-save-package-xml
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -57,7 +57,7 @@ ce qui est sur votre machine.
 Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow**, cliquez sur la carte
 **Commit changes** **(1)**.
 
-![La carte Commit changes du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--commit-changes.png)
+![La carte Commit changes du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards-level1--commit-changes.png)
 
 Elle ouvre le **Metadata Retriever**, par lequel commence chaque publication.
 
@@ -70,8 +70,9 @@ sur **Search Metadata** **(3)**.
 
 ![Le Metadata Retriever listant les modifications récentes de l'org](../../_assets/annotated/vscode/metadata-retriever-recent-changes--find.png)
 
-Une trentaine de résultats reviennent **(4)**, chacun avec ce qu'il est, son nom, qui l'a touché en
-dernier et quand. Tous portent votre nom, et la plupart ne sont pas votre story.
+Le nombre de résultats est en **(4)** : quelques dizaines sur votre org, moins sur l'image. Chaque
+ligne dit ce qu'elle est, son nom, qui l'a touchée en dernier et quand. Toutes portent votre nom, et
+la plupart ne sont pas votre story.
 
 !!! info "Pourquoi la liste est plus longue que votre story"
     Une scratch org se souvient de chaque composant qui y est arrivé, quelle qu'en soit la voie. Au
@@ -183,7 +184,7 @@ préparer pour l'équipe, et c'est ce que fait Save / Publish.
 
 Dans le panneau **DevOps Pipeline**, cliquez sur la carte **Save / Publish** **(1)**.
 
-![La carte Save / Publish du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--save-publish.png)
+![La carte Save / Publish du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards-level1--save-publish.png)
 
 La première question est celle qui piège tout le monde.
 
@@ -344,8 +345,8 @@ Répondez **Yes** et la branche part sur votre fork
 - `manifest/package.xml` gagnant une ligne, le nouveau champ, dans un commit fait par l'outil
 - Votre branche sur GitHub, dans votre fork (`github.com/my-username/sfdx-hardis-training`), sous
   **Branches**
-- Le panneau DevOps Pipeline montrant votre branche qui alimente `integration`, sans Pull Request
-  pour l'instant
+- Le panneau DevOps Pipeline toujours sans votre branche : il dessine une branche dès qu'elle a une
+  Pull Request, et la vôtre en reçoit une au [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md)
 
 ## En cas de problème
 

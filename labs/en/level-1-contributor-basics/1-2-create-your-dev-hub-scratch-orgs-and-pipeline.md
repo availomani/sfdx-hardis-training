@@ -294,6 +294,13 @@ first, in this folder and in every other.
     If the browser did not open, the address is printed right under the code. In Agentforce Vibes
     it does not open on its own: click the printed link.
 
+!!! tip "Then it asks for one click on GitHub"
+    GitHub switches off the workflows of every new fork, behind a banner that no command can
+    press. Step 2 of the eight opens the **Actions** tab of your fork in your browser and waits.
+    Click **I understand my workflows, go ahead and enable them**, come back to VS Code, and the
+    command carries on by itself. Without that click, nothing would ever check or deploy your
+    work.
+
 It does not ask which org to use: you connected one, named `helios-prod`, so it takes that one, says
 so, and asks only for a yes before it changes anything. Then it works through eight steps and tells
 you as it goes:
@@ -563,10 +570,14 @@ deployments, seeding and monitoring can use them up. Nothing is broken and nothi
 work is on your fork. The allowance comes back over the following hours, so this is the moment to
 read the Under the hood blocks of the labs you have done, and to come back to the clicking later.
 
-**It says Actions could not be turned on from here.**
-GitHub hides that switch behind a banner with no API. Open the **Actions** tab of your fork (`github.com/my-username/sfdx-hardis-training`) and
-click **I understand my workflows, go ahead and enable them**. One click, and the command has
-nothing left to do.
+**It says Actions could not be turned on from here, or that workflows are still parked.**
+GitHub hides that switch behind a banner with no API, and the command stopped waiting for your
+click. Open the **Actions** tab of your fork (`github.com/my-username/sfdx-hardis-training`) and
+click **I understand my workflows, go ahead and enable them**. Then click **Set up my training
+environment** again, which checks that they run. Its earlier push to `integration` started
+nothing, and nothing in Level 1 depends on it: your first merge deploys to `integration` anyway.
+A Pull Request you have already opened gets no checks on its own, though: run **Training: Level 1 >
+Trigger my workflows** once for it.
 
 **The Actions tab shows no workflows.**
 You forked by hand at some point and left "Copy the `main` branch only" ticked. Delete the fork on

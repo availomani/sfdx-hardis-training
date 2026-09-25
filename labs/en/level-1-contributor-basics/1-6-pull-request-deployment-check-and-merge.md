@@ -205,13 +205,15 @@ GitHub remembers the method you picked last, so check the button label before ev
 Then delete the branch. GitHub offers a button for it. A merged branch that stays around is one
 more thing in everyone's list for no benefit.
 
-!!! note "What the linter is for, since it had nothing to say"
+!!! note "What the linter is for, and why its comment can show a warning"
     MegaLinter reads the whole repository, not only your change, and reports anything that breaks
-    the project's quality rules. It found nothing here because this repository is clean. When it
-    does find something, it writes it on the Pull Request the same way the deployment check does,
-    and whether a finding fails the job is a choice the project makes in `.mega-linter.yml`. A job that
-    fails blocks the merge, like the deployment check.
-    Level 2 has a lab where one blocks you, on purpose.
+    the project's quality rules. It writes its verdict on the Pull Request the same way the
+    deployment check does. Your change broke none of them, so the check is green, and the comment
+    may still read **Success with warnings**, with a ⚠️ line for a linter the project keeps
+    non-blocking, such as the auditor of the GitHub Actions workflow files. Whether a finding fails
+    the job is a choice the project makes in `.mega-linter.yml`, and a job that fails blocks the
+    merge, like the deployment check. [Lab 2.5](../level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage.md) has you meet one finding that only warns, and
+    one check that blocks.
 
 ### 5. Watch the real deployment
 
@@ -319,6 +321,12 @@ is the original repository and not your fork (`github.com/my-username/sfdx-hardi
 A required check is still running, or it failed. Wait for it, or open it from the **Checks** tab,
 fix what it reports on your branch, and push again: the checks run again on their own. There is no
 way around it, and there is not meant to be.
+
+**A commit you did not make, `chore(megalinter): apply linters fixes`, is on your branch.**
+MegaLinter reformatted a file of your Pull Request and pushed the result. GitHub does not start the
+checks again for a commit its own robot pushed, so they are missing or red on it and the merge stays
+blocked. **Pull** in the **Source Control** panel to bring the robot's commit to your computer, then
+run **Training: Level 1 > Trigger my workflows**: a push of yours is what starts the checks again.
 
 **The deployment succeeds but the field is not in the org.**
 Look at the deployed components list in the comment. If the field is not there, it is not in

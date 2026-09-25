@@ -212,8 +212,10 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 
 Open `helios-uat` and check the two stories are genuinely usable, not just deployed:
 
-- A crew larger than the cap is brought back down to the cap when you save: put `Crew Capacity Cap`
-  at 3 and `Crew Size` at 6 on a planned installation, save, and it reads 3
+- A crew larger than the cap is brought back down to the cap when you save. The rule runs when a
+  planned installation gets its crew, and UAT has none left planned since the crew size backfill of
+  Lab 2.3, so make one: on any installation, set `Status` to `Planned`, `Crew Capacity Cap` to 3 and
+  `Crew Size` to 6, in the same edit, and save. It reads 3, and it has moved on to `Scheduled`
 - The quote PDF permission is on the manager permission set
 - **Setup > Remote Site Settings** still says `https://warehouse-test.helios.invalid` for
   `Helios_Warehouse`: the promotion left it alone

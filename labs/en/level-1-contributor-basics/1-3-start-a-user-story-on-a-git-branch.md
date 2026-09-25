@@ -7,7 +7,7 @@ lab: 3
 lang: en
 source_rev: ""
 screenshots:
-  - annotated/vscode/pipeline-cards--new-user-story
+  - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type
   - annotated/vscode/work-new-story-name
   - annotated/vscode/work-new-org-type
@@ -67,7 +67,7 @@ and repeat for the rest of your career on this project.
 On the Welcome page, open the **DevOps Pipeline** panel and scroll past the diagram to the
 **Project Contribution Workflow** **(1)**. Click the **New User Story** card **(2)**.
 
-![The contribution cards of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+![The contribution cards of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards-level1--new-user-story.png)
 
 !!! tip "Cannot see the cards?"
     They sit under the branch diagram. Scroll down in the panel.

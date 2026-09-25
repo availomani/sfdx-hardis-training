@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "deadc7823cffd652cc4f9237b1c96a434d2d75ee"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/vscode/pipeline-cards--new-user-story
@@ -284,8 +284,9 @@ est pire qu'un flow qui échoue.
 3. Ouvrez **Flow Builder** dans l'org, sur `Installation_Assign_Crew`, et rajoutez votre règle de
    toiture plate, **avant** son plafond : le flow porte d'abord l'équipe d'une toiture plate à trois,
    et son plafond, qui tourne maintenant en dernier, a le dernier mot
-4. Revenez dans VS Code, faites descendre le flow reconstruit avec **Commit changes**, commitez-le,
-   et publiez
+4. Revenez dans VS Code, faites descendre le flow reconstruit avec **Commit changes**, et indexez-le
+   dans **Source Control**, à côté du permission set. Ne commitez pas encore : un merge se termine
+   par un seul commit, et l'étape suivante le fait
 
 Plus long à décrire, bien plus rapide à faire, et vous voyez ce que vous construisez.
 

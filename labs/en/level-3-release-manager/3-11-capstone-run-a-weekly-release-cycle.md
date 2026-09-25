@@ -170,7 +170,7 @@ nothing carries an unfinished state into the next.
 
 Welcome page > **Training: Level 3** > **Check my work**, then pick **Everything in level 3, capstone included**.
 
-Ten checks.
+Eleven checks.
 
 ## Claim your badge
 

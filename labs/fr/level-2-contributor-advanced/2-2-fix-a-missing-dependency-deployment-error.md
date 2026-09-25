@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "73eac21691ef803b05712d5adfd945e732097fd5"
 screenshots:
   - annotated/web/github-pr-check-failed
   - annotated/web/github-pr-flow-diff
@@ -77,6 +77,10 @@ D'abord le champ dont le flow a besoin pour ne pas avertir deux fois. Dans `heli
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Décoché                |
 
+Laissez **Visible** décoché pour tous les profils, comme au Lab 1.4, et sur le dernier écran
+décochez **Installation Layout** : personne d'autre que le flow n'a besoin de cette case, elle ne va
+donc sur aucune page.
+
 Puis le flow. **Setup > Flows**, ouvrez **Installation Crew Warning**. Il est actif, Flow Builder
 ouvre donc la version qui tourne : chaque modification que vous faites est enregistrée comme une
 **nouvelle version**, et l'ancienne continue de tourner jusqu'à ce que vous activiez la vôtre.
@@ -116,7 +120,9 @@ Trois modifications, et l'image ci-dessus montre où chacune commence :
 
     ![Le menu Add Element, avec Update Triggering Record](../../_assets/annotated/salesforce/flow-builder-add-element.png)
 
-**Save As New Version** **(4)**, puis **Activate**, le bouton qui remplace **Deactivate** sur la
+**Save As New Version** **(4)**. La fenêtre qui s'ouvre contient la description du flow : remplacez-la
+par `Warns the planner when the crew assigned to an installation is too small for the panels it
+needs.`, puisque le flow ne prévient plus à chaque enregistrement. Puis **Activate**, le bouton qui remplace **Deactivate** sur la
 nouvelle version.
 
 !!! info "Pourquoi le flow a un chemin de fault"

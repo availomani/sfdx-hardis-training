@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "4e07ca72f292110fec265b043b9fb58e23eeb7d9"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download
@@ -143,11 +143,12 @@ Les deux sont des installeurs suivant-suivant-terminer.
 
     La même chose vaut pour un terminal que vous aviez déjà ouvert.
 
+<a id="install-the-extension-pack"></a>
+
 Ouvrez ensuite VS Code et installez les extensions. L'icône **Extensions** **(1)** se trouve dans la
 barre étroite de gauche, et ressemble à quatre petits carrés dont l'un est détaché. Cliquez dessus,
 tapez `hardis` dans la zone de recherche **(2)**, et cliquez sur **Install** sur **SFDX Hardis
 Extension Pack for Salesforce, by Cloudity** **(3)**, publié par Nicolas Vuillamy.
-{ #install-the-extension-pack }
 
 ![La vue Extensions de VS Code, avec hardis tapé dans la zone de recherche](../../_assets/annotated/vscode/extensions-install.png)
 

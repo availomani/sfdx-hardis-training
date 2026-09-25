@@ -266,7 +266,9 @@ developers included, and a flow that deploys but behaves wrongly is worse than o
 3. Open **Flow Builder** in the org, on `Installation_Assign_Crew`, and add your flat-roof rule
    again, **before** her cap: the flow raises a flat roof crew to three first, and her cap, which
    now runs last, has the final word
-4. Come back to VS Code, bring the rebuilt flow down with **Commit changes**, commit it, and publish
+4. Come back to VS Code, bring the rebuilt flow down with **Commit changes**, and stage it in
+   **Source Control**, next to the permission set. Do not commit yet: a merge ends with one commit,
+   and the next step makes it
 
 Slower to describe, much faster to do, and you can see what you are building.
 

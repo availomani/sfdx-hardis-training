@@ -92,6 +92,32 @@
       "env": {
         "SFDX_HARDIS_DOC_SCREENSHOTS_PROMOTION": "true"
       }
+    },
+    "pipeline-cards-level1": {
+      "_comment": "The cards as Level 1 sees them: no feature branch and no open Pull Request yet. The default state is the Level 2 world.",
+      "gate": "pipeline-cards",
+      "file": "pipeline-cards",
+      "state": "fresh",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH": "features/US-014-panels-required"
+      }
+    },
+    "pipeline-packages-menu": {
+      "_comment": "Only Lab 1.5 shows it, so it is taken in the Level 1 state.",
+      "gate": "pipeline-menus",
+      "file": "pipeline-packages-menu",
+      "state": "fresh",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_BRANCH": "features/US-014-panels-required"
+      }
+    },
+    "pipeline-pr-actions-list": {
+      "_comment": "Lab 2.3 shows the one action its Pull Request carries: the fixture holds one of each type for the editor captures, so this keeps only the backfill.",
+      "gate": "pipeline-modals",
+      "file": "pipeline-pr-actions-list",
+      "env": {
+        "SFDX_HARDIS_DOC_SCREENSHOTS_ACTIONS_KEEP": "7a1c3d2e-2d0b-4f1e-8e3b-024b00000004"
+      }
     }
   }
 }

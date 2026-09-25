@@ -289,7 +289,8 @@ coverage.
 
 ## What you should see
 
-- The MegaLinter check reporting no findings
+- The MegaLinter comment without the loop of `InstallationScheduler.cls`: the findings on code that
+  was there before you are still listed, and still only warn
 - The deployment check green, with coverage above 80% in the comment
 - `schedulableOn` in `helios-integration`, with one query outside the loop
 

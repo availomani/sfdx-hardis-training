@@ -119,12 +119,14 @@ and when it finishes it tells you what happened **(3)**.
 
 ![The Backpromote panel, finished, with its summary](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
 
-Read the four lines of the summary rather than the colour:
+Read the summary rather than the colour:
 
 - how many items reached your org, and how many were deleted from it
-- how many deployment actions ran, were skipped, or failed
-- **how many manual actions are waiting for you in the sandbox**, which nothing can do for you
 - which Pull Requests it wrote its history onto, so the next backpromote knows where to start
+
+The three stories carry no deployment action. When the ones you bring down do, the summary also
+says how many ran, were skipped or failed, and **how many manual actions are waiting for you in the
+sandbox**, which nothing can do for you.
 
 Then click **Back to `<your branch>`** **(4)**. It is the last button of the panel and the one
 people miss, and the next note explains why it matters.
