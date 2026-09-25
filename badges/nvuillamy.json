@@ -65,7 +65,7 @@
         "url": "https://cloudity.com",
         "course": "https://hardisgroupcom.github.io/sfdx-hardis-training"
       },
-      "issuedOn": "2026-09-22",
+      "issuedOn": "2026-09-25",
       "evidence": [
         {
           "type": "Repository",
@@ -73,14 +73,14 @@
         },
         {
           "type": "ClaimIssue",
-          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/8"
+          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/45"
         }
       ],
       "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/nvuillamy-level-3.svg",
-      "checksPassed": 23,
-      "checksTotal": 23,
       "bannerImage": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/banner-level-3.svg",
-      "superbadge": true
+      "superbadge": true,
+      "checksPassed": 24,
+      "checksTotal": 24
     }
   ],
   "trailblazer": "nvuillamy",
