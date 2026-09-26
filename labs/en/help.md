@@ -60,6 +60,25 @@ files. Then either **Reset this level**, which starts the level again from its c
 throws away your work on `integration` in that level, or merge by hand the way
 [Lab 2.7](level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) solves a conflict.
 
+## When Claim my badge says your work is only on this computer
+
+**Claim my badge** stops when a branch holds commits that are not on your fork, because the audit
+reads your fork on GitHub. Push only sends the branch you are on: switch to each branch it names,
+then Push, and claim again.
+
+On a fork made before 2026-09-26, the command can also name `integration`, as `integration [ahead 2]`
+for example, after **Reset this level**, even though your work is on GitHub. Pushing does not help:
+`integration` only takes Pull Requests. Click **Update my course**, which brings the fix, then claim
+again. Or, in a terminal of VS Code (**Terminal** > **New Terminal**):
+
+```sh
+git fetch origin
+git branch --set-upstream-to=origin/integration integration
+```
+
+Neither command changes your work or your fork. Then claim again: you do not need to redo the
+level.
+
 ## Help on a real project
 
 This course runs on a fictional company, with free orgs and a repository you create for yourself.

@@ -81,7 +81,10 @@ export default async function reset(args) {
   // The one command a learner runs to get out of a broken state: if the
   // checkout is refused, say so instead of reporting a reset that never
   // happened and force-pushing a branch that never moved.
-  if (run("git", ["checkout", "-B", "integration", `upstream/${start}`]).code !== 0) {
+  // --no-track: started from upstream/<start>, git would make integration follow
+  // that start branch, and every later "ahead" would compare with the course
+  // instead of the fork. Claim my badge then reported integration as not pushed.
+  if (run("git", ["checkout", "--no-track", "-B", "integration", `upstream/${start}`]).code !== 0) {
     abort(
       "Your integration branch could not be moved to the reset point.",
       "Close anything holding a file of this folder open, then run Reset this level again."
@@ -99,8 +102,13 @@ export default async function reset(args) {
   // integration is protected against force pushes, and a reset is one. The
   // protection is lifted for this push only, and put back right after.
   const push = withProtectionLifted(repoSlug(), ["integration"], () => run("git", ["push", "origin", "integration", "--force-with-lease"]));
+  // integration follows the fork's integration, pushed or not: that is what
+  // Source Control and Claim my badge compare it with
+  run("git", ["fetch", "--quiet", "origin", "integration"], { quiet: true, capture: true });
+  run("git", ["branch", "--set-upstream-to=origin/integration", "integration"], { quiet: true, capture: true });
   if (push.code !== 0) {
-    warn("The push was refused. Your local branch is reset; push it yourself when you are ready.");
+    // integration only takes Pull Requests: the learner cannot push it by hand
+    warn("The push was refused, so your fork was not reset. Run Reset this level again.");
   } else {
     ok("Your fork is level with the reset point");
   }

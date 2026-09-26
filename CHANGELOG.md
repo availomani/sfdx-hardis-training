@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-09-26
 
+- **Claim my badge** no longer says your work is only on this computer when it is on your fork: after **Reset this level**, `integration` showed as not pushed, and so did branches pushed without tracking. The help page says how to claim from a fork made before this fix.
 - The course site publishes again: the changes of 2026-09-25 below never reached it, because four labs named another lab without linking it.
 - **Clean up a training org** works on an org that was used: it deletes the old versions of the Helios flows, and erases the objects instead of leaving them under Deleted Objects, where they made the next **Set up my training environment** fail.
 - **Clean up a training org** also removes the External Client Apps of Lab 3.1, which stopped **Add/Configure Org** the next time Level 3 was walked on the same orgs.

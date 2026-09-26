@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "5fa25b7c44afb636f4a8895de3dc2dc0c5b3fd5a"
+source_rev: "1d1d311a6e37558f26e5e72fa86c9bb11382ccaa"
 ---
 
 # Aide
@@ -64,6 +64,26 @@ Si le cours et vous avez modifié le même fichier, la commande s'arrête, annul
 fichiers. Faites alors soit **Reset this level**, qui recommence le niveau depuis son état actuel et
 jette votre travail sur `integration` dans ce niveau, soit le merge à la main, comme le
 [Lab 2.7](level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) résout un conflit.
+
+## Quand Claim my badge dit que votre travail n'est que sur cet ordinateur
+
+**Claim my badge** s'arrête quand une branche contient des commits absents de votre fork, car
+l'audit lit votre fork sur GitHub. Push n'envoie que la branche sur laquelle vous êtes : passez sur
+chaque branche nommée, faites Push, puis réclamez à nouveau.
+
+Sur un fork créé avant le 2026-09-26, la commande peut aussi nommer `integration`, par exemple
+`integration [ahead 2]`, après un **Reset this level**, alors que votre travail est bien sur GitHub.
+Push n'y change rien : `integration` n'accepte que des Pull Requests. Cliquez sur
+**Update my course**, qui apporte la correction, puis réclamez à nouveau. Ou, dans un terminal de
+VS Code (**Terminal** > **New Terminal**) :
+
+```sh
+git fetch origin
+git branch --set-upstream-to=origin/integration integration
+```
+
+Aucune de ces deux commandes ne modifie votre travail ni votre fork. Réclamez ensuite à nouveau :
+inutile de refaire le niveau.
 
 ## De l'aide sur un vrai projet
 
