@@ -252,8 +252,12 @@ Do not take the green tick for it. **Open the org and look:**
 - The manual step is listed as still to do, because you have not done it
 
 Do the manual step by hand in `helios-integration`, then tick its box under **Pending manual
-actions** in the comment on your Pull Request: the next sfdx-hardis job records it as done. That is
-the point: you did it **because the pipeline told you to**, not because you remembered.
+actions** in the comment on your Pull Request. A job reads the boxes of the Pull Requests it
+deploys, so this tick is recorded by the next job that carries US-026: the promotion to `uat` in
+[Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md). Until then its row under **Status by org branch** still reads waiting, and
+that is expected. On a real release the person merging does the click and ticks the box before
+merging, and the deployment job records it at once. That is the point: you did it **because the
+pipeline told you to**, not because you remembered.
 
 !!! warning "If the records are not there and the job was green"
     Read the deployment log for the line **Listing Post-deployment actions**. When it is followed by

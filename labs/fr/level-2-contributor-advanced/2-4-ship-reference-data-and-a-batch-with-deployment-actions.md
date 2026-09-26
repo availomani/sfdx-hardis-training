@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "2ff4d0faf3b366e9e689becf0b6dbf7374ab9d8b"
 screenshots:
   - annotated/web/github-pr-deployment-actions
   - annotated/vscode/pipeline-cards--new-user-story
@@ -259,8 +259,11 @@ Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 - L'étape manuelle est listée comme restant à faire, parce que vous ne l'avez pas faite
 
 Faites l'étape manuelle à la main dans `helios-integration`, puis cochez sa case sous **Pending
-manual actions** dans le commentaire de votre Pull Request : le job sfdx-hardis suivant
-l'enregistrera comme faite. C'est tout l'intérêt : vous l'avez faite **parce que la pipeline vous l'a
+manual actions** dans le commentaire de votre Pull Request. Un job lit les cases des Pull Requests
+qu'il déploie : cette case est donc enregistrée par le prochain job qui porte US-026, la promotion
+vers `uat` du [Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md). D'ici là, sa ligne sous **Status by org branch** reste en
+attente, et c'est normal. Sur une vraie release, la personne qui merge fait le clic et coche la case
+avant de merger, et le job de déploiement l'enregistre aussitôt. C'est tout l'intérêt : vous l'avez faite **parce que la pipeline vous l'a
 dit**, pas parce que vous vous en êtes souvenu.
 
 !!! warning "Si les enregistrements ne sont pas là et que le job était vert"

@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "38cc76435a6378c00ce1e8c91a71b72a38a95a47"
+source_rev: "f23aca466021abbfa96066a9fe688eb25b279ab8"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -205,7 +205,11 @@ Mergez la promotion. L'exécution **Process Deployment (sfdx-hardis)** démarre,
 C'est le premier déploiement vers cette org par la pipeline : il sera donc plus gros que ceux vers
 integration, l'UAT est en retard de tout ce que l'équipe a fait. Comptez plusieurs minutes.
 
-Quand il se termine, faites les étapes manuelles que le commentaire listait, dans `helios-uat`.
+L'étape de délivrabilité est une étape **pre-deploy** : sa place est avant le merge, comme le dit
+l'étape 4. Si vous l'avez faite dans `helios-uat` et avez coché sa case, le log de ce job le dit :
+*Manual action Set Email Deliverability to All Email has been confirmed as done in org branch uat*.
+Sinon, faites-la maintenant et cochez la case : le prochain job qui porte cette Pull Request
+l'enregistre.
 
 Puis lisez le log à la recherche du gestionnaire d'écrasement, au-dessus du déploiement, parmi les
 lignes qui commencent par `[NoOverwrite]` :
@@ -224,7 +228,7 @@ déployées :
 
 - Une équipe plus grande que le plafond est ramenée au plafond à l'enregistrement. La règle s'exécute
   quand une installation planifiée reçoit son équipe, et UAT n'en a plus aucune au statut planifié
-  depuis le remplissage de la taille d'équipe du Lab 2.3 : créez-en une. Sur n'importe quelle
+  depuis le remplissage de la taille d'équipe du [Lab 2.3](../level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md) : créez-en une. Sur n'importe quelle
   installation, mettez `Status` à `Planned`, `Crew Capacity Cap` à 3 et `Crew Size` à 6 dans la même
   modification, et enregistrez. Il affiche 3, et elle est passée à `Scheduled`
 - La permission du PDF de devis est sur le permission set des managers
@@ -279,7 +283,8 @@ Sur cette promotion, les notes générées s'ouvrent ainsi :
 
 Viennent ensuite un tableau des tickets, un des Pull Requests avec leurs auteurs et dates de merge,
 les métadonnées modifiées par type, et les deployment actions avec leur statut dans `uat` : l'étape
-manuelle de délivrabilité toujours **manual**, les imports et la planification **success**.
+manuelle de délivrabilité **success** si vous avez coché sa case avant le merge et **manual**
+sinon, les imports et la planification **success**.
 
 Lisez-les puis améliorez-les. Des notes générées sont une liste complète, et une note de version que
 le métier lit a besoin de deux choses que le générateur ne peut pas connaître :

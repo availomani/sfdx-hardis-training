@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "810d4dfb1955110f1f91b4b18f7de130b2a1cc98"
+source_rev: "ddfba58fa2cb43037074de4bf07c662f49081ea4"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--settings-menu
@@ -109,7 +109,10 @@ Regardez-la. Non parce que vous pouvez faire quoi que ce soit pendant qu'elle to
 savoir si elle a échoué à la deuxième minute ou à la trente-cinquième change ce que vous faites
 ensuite.
 
-Quand elle se termine, faites les éventuelles étapes manuelles, puis vérifiez l'org.
+Quand elle se termine, faites les éventuelles étapes manuelles post-déploiement, puis vérifiez
+l'org. Celles de pré-déploiement se font avant le merge : faites-les, cochez leurs cases dans le
+commentaire du contrôle, puis mergez, et le job de déploiement les enregistre, comme au
+[Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md).
 
 ### 6. Vérifier en production
 
@@ -174,7 +177,9 @@ cinquième livraison, quand les nombres ont d'où bouger. Prenez la ligne de bas
 
 Le rapport est un fichier, `docs/dora/dora-report-<date>.md`, et le panneau vous l'ouvre. Laissez-le
 là où il est : il est reconstruit depuis l'org et les Pull Requests à chaque nouvelle exécution du
-rapport, rien n'est donc commité, et le [Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) compare le suivant avec celui-ci.
+rapport, rien n'est donc commité, et le [Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) compare le suivant avec celui-ci. Le fichier porte le
+nom du jour : un second rapport le même jour le remplace. Si vous enchaînez avec le
+[Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) aujourd'hui, notez d'abord les cinq chiffres, ou copiez le fichier sous un autre nom.
 
 <details markdown="1"><summary>Sous le capot : d'où viennent les nombres DORA</summary>
 

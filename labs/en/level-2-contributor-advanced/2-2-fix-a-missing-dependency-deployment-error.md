@@ -77,8 +77,11 @@ First, the field the flow needs so it does not warn twice. In `helios-dev`,
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Unchecked              |
 
-Leave **Visible** unticked for every profile, as in Lab 1.4, and on the last screen untick
-**Installation Layout**: nobody but the flow needs this checkbox, so it goes on no page.
+On the field-level security screen, tick **Visible** for **System Administrator** only, and on the
+last screen untick **Installation Layout**: nobody but the flow needs this checkbox, so it goes on no
+page. That one tick is for you, not for the flow: Flow Builder only offers the fields the person
+editing the flow can read, and without it **Crew Warning Sent** is missing from the list of step 2.
+The flow itself runs in system mode and needs no grant.
 
 Then the flow. **Setup > Flows**, open **Installation Crew Warning**. It is active, so Flow Builder
 opens the running version: every change you make is saved as a **new version**, and the old one
@@ -131,7 +134,7 @@ new version.
 Test it: open an installation, set `Panels Required` to 40 and `Crew Size` to 2, save. A task
 appears in its **Activity**. Save again: no second task. That is the story working, in your org.
 The checkbox itself stays out of sight: no permission set grants it, because nobody but the flow
-needs it.
+needs it, and the only person who can read it is the administrator who built the flow.
 
 ### 3. Publish the flow, and watch the check fail
 
@@ -250,6 +253,13 @@ Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudit
 - After the merge, the flow present and active in `helios-integration`
 
 ## If it goes wrong
+
+**Flow Builder does not offer Crew Warning Sent.**
+You created the field with **Visible** unticked for every profile, so you cannot read it, and Flow
+Builder only lists the fields you can read. **Setup > Object Manager > Installation > Fields &
+Relationships > Crew Warning Sent > Set Field-Level Security**, tick **Visible** for **System
+Administrator**, **Save**. Then reload Flow Builder: the field is in the list of **Update Triggering
+Record**, and the `crewTooSmall` formula accepts it.
 
 **The retrieve brings nothing.**
 The org selector of the Metadata Retriever points at another org. It must read `helios-dev`, where

@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "73eac21691ef803b05712d5adfd945e732097fd5"
+source_rev: "ebcae9c8e40b4a133887efcb978a8ab181e80608"
 screenshots:
   - annotated/web/github-pr-check-failed
   - annotated/web/github-pr-flow-diff
@@ -77,9 +77,12 @@ D'abord le champ dont le flow a besoin pour ne pas avertir deux fois. Dans `heli
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Décoché                |
 
-Laissez **Visible** décoché pour tous les profils, comme au Lab 1.4, et sur le dernier écran
-décochez **Installation Layout** : personne d'autre que le flow n'a besoin de cette case, elle ne va
-donc sur aucune page.
+Sur l'écran de sécurité au niveau du champ, cochez **Visible** pour **System Administrator**
+seulement (*Administrateur système* dans une org en français), et sur le dernier écran décochez **Installation Layout** : personne d'autre que le flow n'a
+besoin de cette case, elle ne va donc sur aucune page. Cette seule coche est pour vous, pas pour le
+flow : Flow Builder ne propose que les champs que la personne qui édite le flow peut lire, et sans
+elle **Crew Warning Sent** manque dans la liste de l'étape 2. Le flow lui-même tourne en mode système
+et n'a besoin d'aucun droit.
 
 Puis le flow. **Setup > Flows**, ouvrez **Installation Crew Warning**. Il est actif, Flow Builder
 ouvre donc la version qui tourne : chaque modification que vous faites est enregistrée comme une
@@ -135,7 +138,8 @@ nouvelle version.
 Testez : ouvrez une installation, mettez `Panels Required` à 40 et `Crew Size` à 2, enregistrez. Une
 tâche apparaît dans son **Activity**. Enregistrez à nouveau : pas de deuxième tâche. C'est la story
 qui fonctionne, dans votre org. La case à cocher elle-même reste invisible : aucun permission set ne
-l'accorde, parce que personne d'autre que le flow n'en a besoin.
+l'accorde, parce que personne d'autre que le flow n'en a besoin, et la seule personne qui peut la lire
+est l'administrateur qui a construit le flow.
 
 ### 3. Publier le flow, et regarder le contrôle échouer
 
@@ -259,6 +263,14 @@ Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis
 - Après le merge, le flow présent et actif dans `helios-integration`
 
 ## En cas de problème
+
+**Flow Builder ne propose pas Crew Warning Sent.**
+Vous avez créé le champ avec **Visible** décoché pour tous les profils : vous ne pouvez pas le lire, et
+Flow Builder ne liste que les champs que vous pouvez lire. **Setup > Object Manager > Installation >
+Fields & Relationships > Crew Warning Sent > Set Field-Level Security**, cochez **Visible** pour
+**System Administrator** (*Administrateur système* dans une org en français), **Save**. Rechargez ensuite Flow Builder :
+le champ apparaît dans la liste de **Update Triggering Record**, et la formule `crewTooSmall`
+l'accepte.
 
 **La récupération ne ramène rien.**
 Le sélecteur d'org du Metadata Retriever pointe vers une autre org. Il doit indiquer `helios-dev`, là

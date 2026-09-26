@@ -62,6 +62,16 @@ jobs:
       - name: Every Under the hood block links the commands it names
         run: node scripts/build/lab-command-links.mjs --check
 
+      # The same for a lab named without a link. pages.yml runs this check before
+      # it publishes, so a Pull Request that lets one through merges green and
+      # then stops the site from publishing at all: on 2026-09-25 two merges in a
+      # row never reached the learners.
+      - name: Every mention of another lab is a link
+        run: node scripts/build/lab-crossrefs.mjs --check
+
+      - name: The generated files match what the sources say
+        run: node scripts/build/universe.mjs --check
+
       # Reports, never fails: a deliberate difference is allowed, and the French
       # home page has one. It is here to be read on the Pull Request, because a
       # translation that lost an image or an "Under the hood" block shows up

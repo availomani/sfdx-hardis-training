@@ -65,7 +65,18 @@ export default async function trigger(args) {
   // and there is nothing to go back to.
   const permissions = ghJson(["api", `repos/${slug}/actions/permissions`]);
   const listed = ghJson(["api", `repos/${slug}/actions/workflows`, "--paginate"]);
-  const parked = (listed?.workflows || []).filter((workflow) => workflow.state !== "active");
+  // Only the workflows a Pull Request needs. GitHub keeps the scheduled ones
+  // (the link check, the monthly check) at disabled_fork on a fork even after
+  // the banner is clicked, and they have nothing to do with a push: counting
+  // them refused every learner who came here from Lab 1.6's "The checks never
+  // start". The same list as PIPELINE_WORKFLOWS in scripts/verify/rules.mjs.
+  const pipeline = ["check-deploy.yml", "process-deploy.yml", "megalinter.yml"];
+  const parked = (listed?.workflows || []).filter(
+    (workflow) => pipeline.includes(path.basename(workflow.path)) && workflow.state !== "active"
+  );
+  if ((listed?.workflows || []).length === 0) {
+    parked.push({ path: "(no workflow listed yet)" });
+  }
   if (permissions?.enabled !== true || parked.length > 0) {
     warn("The workflows of your fork are not allowed to run yet, so pushing would change nothing.");
     info("");
