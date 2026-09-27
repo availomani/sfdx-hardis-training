@@ -1,11 +1,11 @@
 ---
 id: lab-2-1
-title: "Lab 2.1 - Backpromote : remettre votre org au niveau de l'équipe"
+title: "Lab 2.1 - Backpromote : remettre votre org de dev au niveau de l'équipe"
 description: "Votre org de développement est en retard sur integration. Faites-y entrer les stories mergées par vos collègues avec le panneau Backpromote de sfdx-hardis, en gardant votre propre travail."
 level: 2
 lab: 1
 lang: fr
-source_rev: "6af1d01c9f033ddcbab49bac53353ec66cfd482b"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -23,13 +23,13 @@ depends_on:
   docs: [salesforce-devops-backpromote]
 ---
 
-# Lab 2.1 - Backpromote : remettre votre org au niveau de l'équipe
+# Lab 2.1 - Backpromote : remettre votre org de dev au niveau de l'équipe
 
 **Niveau** : 2 Contributeur avancé
 
 **Durée** : ~15 min
 
-**Vous allez** : faire entrer dans votre propre org de dev les stories mergées par trois collègues,
+**Vous allez** : rapatrier dans votre propre org de dev les stories mergées par trois collègues,
 décider quoi garder quand l'outil vous le demande, et apprendre ce qu'un backpromote ne fera jamais
 pour vous.
 
@@ -50,7 +50,7 @@ plus courante pour un contributeur de défaire par accident le travail d'un coll
 
 ## Les étapes
 
-### 1. Faire entrer le travail de votre collègue
+### 1. Rapatrier le travail de votre collègue
 
 Les deux semaines d'absence doivent exister avant que vous puissiez les rattraper. Romain n'existe
 pas, mais son travail si : la formation le rejoue dans **votre propre** fork, sous la forme d'une
@@ -157,7 +157,7 @@ Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow**, cli
 
 Il calcule son plan avant de vous montrer quoi que ce soit :
 
-1. **Target sandbox** **(1)** est l'org dans laquelle le travail descend, `helios-dev`
+1. **Target sandbox** **(1)** est l'org dans laquelle le travail est rapatrié, `helios-dev`
 2. **Parent branch** **(2)** est l'endroit d'où il vient, `integration`
 3. Les trois lignes **(3)** lisent votre org, listent les Pull Requests mergées dans `integration`,
    et calculent la différence entre les deux
@@ -173,19 +173,19 @@ construisiez sur ce que l'équipe a et non sur ce dont vous vous souvenez.
 
 Le bloc **WHERE** en haut du panneau y répond, et c'est le seul endroit qui le fasse.
 **3 Pull Requests in the window** : trois stories ont été mergées dans `integration` depuis la
-dernière fois que quelque chose est descendu dans votre org.
+dernière fois que quelque chose a été rapatrié dans votre org.
 
 C'est ce compteur, pas votre mémoire, qui vous dit si un rafraîchissement est nécessaire. Un lundi
 après une semaine d'absence, il mérite d'être lu avant toute chose.
 
-### 4. Choisir ce qui descend
+### 4. Choisir ce qu'on rapatrie
 
 Quand le plan est prêt, le panneau se remplit. Les Pull Requests mergées sont listées de la plus
-récente à la plus ancienne **(1)** : choisissez la plus ancienne que vous voulez, et tout ce qui va
-de là jusqu'à la tête d'`integration` **(2)** descend. En dessous, ce qui diffère entre `integration`
+récente à la plus ancienne **(1)** : choisissez la plus ancienne, et tout ce qui va de là jusqu'à
+la tête d'`integration` **(2)** sera rapatrié. En dessous, ce qui diffère entre `integration`
 et votre org est listé par type de métadonnée, chaque élément avec sa propre case **(3)**.
 
-![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles font descendre](../../_assets/annotated/vscode/backpromote.png)
+![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles rapatrient](../../_assets/annotated/vscode/backpromote.png)
 
 Parcourez la liste plutôt que de cliquer sur "tout" :
 
@@ -267,7 +267,7 @@ Et une chose qu'il fait et que personne n'attend la première fois :
     à gauche de VS Code.
 
 L'historique n'est pas sur votre ordinateur non plus. sfdx-hardis note ce qui a atteint votre sandbox
-dans un **commentaire Backpromotes** sur chaque Pull Request qu'il a fait descendre, pour que le
+dans un **commentaire Backpromotes** sur chaque Pull Request qu'il a rapatriée, pour que le
 backpromote suivant sache où commencer, depuis n'importe quelle machine et n'importe quel collègue.
 C'est aussi pourquoi la commande a besoin d'un token de fournisseur git : sans lui, elle ne peut pas
 lire son propre historique, et elle s'arrête.

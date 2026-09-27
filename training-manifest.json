@@ -270,7 +270,9 @@
         "pipeline",
         "orgManager"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "annotated/web/github-star-sfdx-hardis"
+      ],
       "translations": {
         "fr": {
           "file": "labs/fr/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md",
@@ -282,7 +284,7 @@
       "id": "lab-2-1",
       "level": 2,
       "lab": 1,
-      "title": "Backpromote: catch your org up with the team",
+      "title": "Backpromote: catch your dev org up with the team",
       "file": "labs/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md",
       "url": "https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work/",
       "commands": [
@@ -342,6 +344,9 @@
         "packageXml"
       ],
       "screenshots": [
+        "annotated/vscode/package-xml-filtered",
+        "annotated/vscode/editor-field-file",
+        "annotated/vscode/pipeline-packages-menu--package-xml",
         "annotated/web/github-pr-check-failed",
         "annotated/web/github-pr-flow-diff",
         "annotated/salesforce/flow-builder-crew-warning",
@@ -423,6 +428,9 @@
         "pipeline"
       ],
       "screenshots": [
+        "annotated/vscode/sidebar-commands-custom-menu-2--lab-records",
+        "annotated/salesforce/crew-capacity-records",
+        "annotated/vscode/editor-crew-capacity-csv",
         "annotated/web/github-pr-deployment-actions",
         "annotated/vscode/pipeline-cards--new-user-story",
         "annotated/vscode/data-workbench",
@@ -531,6 +539,8 @@
         "commandExecution"
       ],
       "screenshots": [
+        "annotated/salesforce/flow-builder-assign-crew",
+        "annotated/salesforce/flow-builder-assign-crew-full",
         "annotated/vscode/sidebar-commands-custom-menu-2--training-menu",
         "annotated/vscode/pipeline-cards--new-user-story",
         "annotated/vscode/git-palette-fetch--fetch",
@@ -607,7 +617,9 @@
         "deploymentAction",
         "dataWorkbench"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "annotated/web/github-star-megalinter"
+      ],
       "translations": {
         "fr": {
           "file": "labs/fr/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all.md",
@@ -1051,6 +1063,7 @@
         "pipeline"
       ],
       "screenshots": [
+        "annotated/web/github-star-vscode-sfdx-hardis",
         "annotated/vscode/welcome-custom-menu-3"
       ],
       "translations": {

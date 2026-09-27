@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "167dd57e011225f4bda9135f37e416716b2bc9ba"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
@@ -216,7 +216,7 @@ Puis la Command Palette à nouveau, tapez `Git: Merge`, et choisissez **Git: Mer
 
 ![Git Merge dans la Command Palette](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-Elle demande quelle branche faire entrer. Choisissez **origin/main** **(1)**, listée sous
+Elle demande quelle branche merger. Choisissez **origin/main** **(1)**, listée sous
 **remote branches** :
 
 ![Le sélecteur de branche, avec origin main](../../_assets/annotated/vscode/git-retrofit-pick--origin-main.png)

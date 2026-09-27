@@ -5,8 +5,11 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "ebcae9c8e40b4a133887efcb978a8ab181e80608"
+source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
 screenshots:
+  - annotated/vscode/package-xml-filtered
+  - annotated/vscode/editor-field-file
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/web/github-pr-check-failed
   - annotated/web/github-pr-flow-diff
   - annotated/salesforce/flow-builder-crew-warning
@@ -128,11 +131,11 @@ par `Warns the planner when the crew assigned to an installation is too small fo
 needs.`, puisque le flow ne prévient plus à chaque enregistrement. Puis **Activate**, le bouton qui remplace **Deactivate** sur la
 nouvelle version.
 
-!!! info "Pourquoi le flow a un chemin de fault"
+!!! info "Pourquoi le flow a un fault path"
     Un élément d'enregistrement qui n'en a pas échoue en silence : le flow s'arrête, l'utilisateur ne
     voit rien, et la Task censée avertir le planificateur n'apparaît jamais. Sur un vrai projet, le
-    chemin de fault envoie le message quelque part où quelqu'un le lit. Ici il se contente de le
-    garder, parce que ce que la pipeline contrôle est qu'un chemin de fault existe. Le flow d'origine
+    fault path envoie le message quelque part où quelqu'un le lit. Ici il se contente de le
+    garder, parce que ce que la pipeline contrôle est qu'un fault path existe. Le flow d'origine
     en avait déjà un, et votre nouvel élément le suit.
 
 Testez : ouvrez une installation, mettez `Panels Required` à 40 et `Crew Size` à 2, enregistrez. Une
@@ -143,7 +146,7 @@ est l'administrateur qui a construit le flow.
 
 ### 3. Publier le flow, et regarder le contrôle échouer
 
-Faites-le descendre comme le Niveau 1 vous l'a appris : **DevOps Pipeline > Commit changes**,
+Faites-en un retrieve comme le Niveau 1 vous l'a appris : **DevOps Pipeline > Commit changes**,
 **Recent Changes**, **Search Metadata**. La story porte sur le flow, cochez donc le flow
 `Installation_Crew_Warning`, récupérez-le, et commitez-le depuis **Source Control**.
 
@@ -190,9 +193,16 @@ minutes et le flow que vous venez de tester le lit.
 Quand un déploiement dit que quelque chose n'existe pas, la première question n'est jamais "est-ce
 dans l'org". C'est **"est-ce dans le package"**.
 
-Ouvrez le package : panneau **DevOps Pipeline**, menu **Deployment packages**, **Package XML**, comme
-au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). Tapez `Crew_Warning` dans sa zone de filtre. La ligne **Flow** liste votre flow.
-**CustomField** ne liste pas `Installation__c.Crew_Warning_Sent__c`.
+Ouvrez le package : dans le panneau **DevOps Pipeline**, le menu **Deployment packages** **(1)**,
+puis **Package XML** **(2)**, comme au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
+
+![Le menu Deployment packages du panneau DevOps Pipeline, avec Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
+
+Tapez `Crew_Warning` dans sa zone de filtre **(1)**. Il reste une ligne, **Flow** **(2)** : le
+package porte votre flow. Il n'y a aucune ligne **CustomField** : le package ne porte pas
+`Installation__c.Crew_Warning_Sent__c`.
+
+![Le visualiseur de package filtré sur Crew_Warning, avec la seule ligne Flow](../../_assets/annotated/vscode/package-xml-filtered.png)
 
 On envoie à l'org d'intégration un flow qui lit un champ que le package ne porte pas, et l'org
 d'intégration n'a pas ce champ non plus. Du point de vue de Salesforce, l'erreur est exactement
@@ -213,7 +223,10 @@ Ouvrez le panneau **Metadata Retriever** :
 
 ![Le panneau Metadata Retriever, avec son sélecteur d'org, ses filtres et le bouton Search Metadata](../../_assets/annotated/vscode/metadata-retriever.png)
 
-Le champ apparaît sous `force-app/main/default/objects/Installation__c/fields/`.
+Le champ apparaît sous `force-app/main/default/objects/Installation__c/fields/` **(1)**, dans la
+vue **Explorer** de VS Code.
+
+![Le fichier du champ rapatrié dans l'Explorer, ouvert dans l'éditeur](../../_assets/annotated/vscode/editor-field-file.png)
 
 L'habitude à retenir : quand vous modifiez quelque chose qui **lit** un autre composant, récupérez
 aussi ce composant. Un flow lit des champs, une présentation de page les affiche, un permission set

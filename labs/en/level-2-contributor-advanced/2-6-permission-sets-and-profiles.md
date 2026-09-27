@@ -61,7 +61,7 @@ Cost > Set Field-Level Security**, tick **Visible** for the **Helios Crew** prof
 
 That is how most people grant a permission, and it is what this lab is built on.
 
-Bring it down the usual way: **Commit changes**, **Recent Changes**, **Search Metadata**, tick the
+Retrieve it the usual way: **Commit changes**, **Recent Changes**, **Search Metadata**, tick the
 `Helios Crew` Profile, retrieve, and commit it from **Source Control**. Then **Save / Publish**,
 push, Pull Request, green, merge.
 

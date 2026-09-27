@@ -66,7 +66,7 @@ Seven of them, and the labs call them by these names:
 |------------------------------------|-------------------------------------------------------------------------------------------------------|
 | **Set up my training environment** | Forks the repository, creates your scratch orgs with the app, wires the pipeline                      |
 | **Where am I?**                    | Says which level and lab you reached, and what to do next                                             |
-| **Check my work**                  | Verifies the lab you just finished and prints your receipt                                            |
+| **Check my work**                  | Verifies the lab you just finished                                                                    |
 | **Trigger my workflows**           | Starts the checks of your Pull Request when your fork had Actions switched off                        |
 | **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in                                         |
 | **Update my course**               | Brings the changes the course received since you forked it, through a Pull Request into `integration` |

@@ -1,6 +1,6 @@
 ---
 id: lab-2-1
-title: "Lab 2.1 - Backpromote: catch your org up with the team"
+title: "Lab 2.1 - Backpromote: catch your dev org up with the team"
 description: "Your development org is behind integration. Bring in the stories your teammates merged with the sfdx-hardis Backpromote panel, keeping your own work."
 level: 2
 lab: 1
@@ -23,7 +23,7 @@ depends_on:
   docs: [salesforce-devops-backpromote]
 ---
 
-# Lab 2.1 - Backpromote: catch your org up with the team
+# Lab 2.1 - Backpromote: catch your dev org up with the team
 
 **Level**: 2 Contributor advanced
 
@@ -175,8 +175,8 @@ week off it is worth reading before anything else.
 ### 4. Choose what comes down
 
 When the plan is ready the panel fills in. The merged Pull Requests are listed newest first
-**(1)**: pick the oldest one you want, and everything from there to the head of `integration`
-**(2)** comes down. Below, what differs between `integration` and your org is listed by metadata
+**(1)**: pick the oldest one, and everything from there to the head of `integration` **(2)** is
+brought back. Below, what differs between `integration` and your org is listed by metadata
 type, each item with its own tick **(3)**.
 
 ![The Backpromote panel, with the merged Pull Requests and the items they bring down](../../_assets/annotated/vscode/backpromote.png)

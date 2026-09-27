@@ -9,6 +9,7 @@
  *   node scripts/training.mjs trigger     Trigger my workflows
  *   node scripts/training.mjs claim       Claim my badge
  *   node scripts/training.mjs simulate    Simulate my teammates
+ *   node scripts/training.mjs records     Create my lab records
  *   node scripts/training.mjs publish     Publish my pipeline configuration (Level 3)
  *   node scripts/training.mjs update      Update my course
  *   node scripts/training.mjs reset       Reset this level
@@ -33,6 +34,7 @@ const VERBS = {
   trigger: () => import("./training/trigger.mjs"),
   claim: () => import("./training/claim.mjs"),
   simulate: () => import("./training/simulate.mjs"),
+  records: () => import("./training/records.mjs"),
   publish: () => import("./training/publish.mjs"),
   update: () => import("./training/update.mjs"),
   reset: () => import("./training/reset.mjs"),
@@ -50,10 +52,11 @@ ${c.bold("Salesforce DevOps with sfdx-hardis - training commands")}
   ${c.cyan("init")}       Set up my training environment: forks the repository, creates the scratch orgs, wires the pipeline
   ${c.cyan("status")}     Where am I? The level and lab you reached, and what to do next
   ${c.cyan("seed")}       Set up one of my training orgs: deploys the Helios app and its data
-  ${c.cyan("check")}      Check my work: verifies a lab and prints your receipt
+  ${c.cyan("check")}      Check my work: verifies the lab you just finished
   ${c.cyan("trigger")}    Trigger my workflows: pushes one line so a fork whose Actions were just enabled starts its checks
   ${c.cyan("claim")}      Claim my badge: checks the whole level, then opens the claim form filled in
   ${c.cyan("simulate")}   Simulate my teammates: creates the branches and Pull Requests a lab needs
+  ${c.cyan("records")}    Create my lab records: creates the records a lab starts from, in your dev org
   ${c.cyan("publish")}    Publish my pipeline configuration: the release manager's configuration, through a Pull Request into integration
   ${c.cyan("update")}     Update my course: brings the course changes made since you forked, through a Pull Request into integration that it merges for you
   ${c.cyan("reset")}      Reset this level: puts your repository back to a known state

@@ -7,6 +7,9 @@ lab: 4
 lang: en
 source_rev: ""
 screenshots:
+  - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
+  - annotated/salesforce/crew-capacity-records
+  - annotated/vscode/editor-crew-capacity-csv
   - annotated/web/github-pr-deployment-actions
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/data-workbench
@@ -81,8 +84,35 @@ In `helios-dev`, create:
   permission set the pipeline's own user holds in every org: without it the data load of step 4
   would find fields it is not allowed to write
 
-Then create 12 Crew Capacity records in your org, one per crew type and roof type combination that
-Helios supports.
+Then the records. Helios supports 12 combinations, three crew types by four roof types, and each
+one needs a Crew Capacity record saying how many panels a day that crew lays on that roof. Typing
+twelve records teaches nothing this lab is about, so the Training menu creates them:
+**Training: Level 2** **(1)** > **Create my lab records** **(2)**, pick **Lab 2.4 - the 12 Crew
+Capacity records**, then **helios-dev**, and answer **Yes** to **Create them?**.
+
+![The Level 2 Training menu, with Create my lab records](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--lab-records.png)
+
+The panel first checks that your object and its four fields are in the org, then creates the
+records, lists them, and ends with a **See them in the org** link. Open it: the **All** list of
+Crew Capacity reads **12 items** **(1)**, from `CAP-ROOF-TILE` to `CAP-ELECTRICAL-METAL`. If the
+panel says a field is missing, finish the object first, then run it again: it updates the same
+twelve records rather than creating more.
+
+![The All list of Crew Capacity in helios-dev, with its 12 records](../../_assets/annotated/salesforce/crew-capacity-records.png)
+
+<details markdown="1"><summary>Under the hood: how the records were created</summary>
+
+The menu entry ran:
+
+    node scripts/training.mjs records
+
+which loaded `scripts/lab-records/lab-2-4/Crew_Capacity__c.csv` into `helios-dev` with
+`sf data upsert bulk`, matching on `External_Id__c`, and added an **All** list view to the object
+when it had none, so the link has a list to open. On a real project somebody enters these
+records in the org, or loads them from a spreadsheet: either way they exist in one org only, which
+is the problem the rest of this lab solves.
+
+</details>
 
 ### 2. Publish and watch nothing fail
 
@@ -112,27 +142,40 @@ the project already carries are listed on the left **(2)**: `HeliosBaseline` is 
 menu uses to seed your org.
 
 A workspace is a folder of CSV files plus the recipe that says which object each one fills and how.
-It is run by SFDMU, the data loader sfdx-hardis uses, and nothing in it is specific to one org.
+It is run by [SFDMU](https://github.com/forcedotcom/SFDX-Data-Move-Utility), the data loader
+sfdx-hardis uses, and nothing in it is specific to one org.
 
 ![The Data Import/Export Workbench, where SFDMU workspaces are created and run](../../_assets/annotated/vscode/data-workbench.png)
 
-Create a new workspace named `HeliosCrewRefData`:
+Create a new workspace:
 
-1. **Create Workspace**, and name it `HeliosCrewRefData`
-2. Add the object `Crew_Capacity__c`
-3. Operation: **Upsert**
-4. External id: `External_Id__c`
-5. Fields: the four you created
+1. **Create Workspace** **(1)**, and fill in its three fields:
+   - **Workspace Name**: `HeliosCrewRefData`, the name of its folder under `scripts/data/`
+   - **Display Label**: `Crew capacity reference data`, the name the panels show, for example when
+     you pick this workspace in a deployment action in step 4
+   - **Description**: `The 12 Crew Capacity records every org needs: panels a day per crew type and
+     roof type.`
+2. **Add Object**, and paste this into **SOQL Query**. It names the object and the four fields you
+   created:
+
+    ```sql
+    SELECT External_Id__c, Crew_Type__c, Roof_Type__c, Panels_Per_Day__c FROM Crew_Capacity__c
+    ```
+
+3. **Operation**: **Upsert**
+4. **External Id (for Upsert)**: `External_Id__c`
 
 Then **Export data**. It asks two questions: whether to use your default org, `helios-dev`, and
 whether you confirm the export. Yes to both. The panel pulls your 12 records into
 `scripts/data/HeliosCrewRefData/Crew_Capacity__c.csv`.
 
-Open that file and read it. Twelve rows, one column per field, each with a stable external id, and
-an `Id` column first: the record ids of `helios-dev`, which mean nothing anywhere else and which
+Open that file **(1)** and read it. Twelve rows, one column per field, each with a stable external
+id **(3)**, and an `Id` column first **(2)**: the record ids of `helios-dev`, which mean nothing anywhere else and which
 the import ignores, because it matches on the external id. That file is now versioned, reviewed
 and deployed like any other source. The `logs`, `reports` and `target` folders the export also
 wrote next to it are git-ignored: nothing to commit there.
+
+![The exported Crew_Capacity__c.csv, open in the editor](../../_assets/annotated/vscode/editor-crew-capacity-csv.png)
 
 !!! tip "Why the external id is not optional"
     `Upsert` on `External_Id__c` means running the import twice updates the same twelve records
@@ -224,6 +267,11 @@ A manual step does not do anything. It **appears in the Pull Request comment and
 report**, so the person releasing to production is told, in the release itself, that there is a
 click to make. That is the difference between a manual step that gets done and one that lives in a
 Confluence page nobody opens.
+
+So write it for somebody who has never seen your story: every click, in order, with the exact names
+on the screen, and what the page shows when it is done, like the four lines above. The release
+manager does it in an org you have never opened, often on release day. If they have to guess what
+you meant, they will guess, and a wrong guess in production is worse than no step at all.
 
 ### 5. Read the Pull Request comment
 

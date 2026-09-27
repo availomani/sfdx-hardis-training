@@ -29,6 +29,7 @@ public with sharing class CrewCapacityBatch implements Database.Batchable<SObjec
     for (Crew_Capacity__c capacity : [
       SELECT Roof_Type__c, Panels_Per_Day__c
       FROM Crew_Capacity__c
+      WHERE Panels_Per_Day__c != null
       WITH USER_MODE
     ]) {
       panelsPerDayByRoofType.put(capacity.Roof_Type__c, capacity.Panels_Per_Day__c);
@@ -48,8 +49,10 @@ public with sharing class CrewCapacityBatch implements Database.Batchable<SObjec
   /**
    * Emails the summary to whoever scheduled the job. An org whose email
    * deliverability is not All email refuses to send it, which is why Lab 2.4
-   * declares a manual step: no deployment can change that setting.
+   * declares a manual step: no deployment can change that setting. The debug
+   * log is the only place a batch can say so, hence the one debug statement.
    */
+  @SuppressWarnings('PMD.AvoidDebugStatements')
   public void finish(Database.BatchableContext context) {
     Messaging.SingleEmailMessage summary = new Messaging.SingleEmailMessage();
     summary.setToAddresses(new List<String>{ UserInfo.getUserEmail() });

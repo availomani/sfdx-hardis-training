@@ -412,6 +412,51 @@
         "(() => { for (const el of document.querySelectorAll('body *')) { const p = getComputedStyle(el).position; if (p === 'sticky' || p === 'fixed') { el.style.visibility = 'hidden'; } } })()"
       ],
       "_fiction": "The page is a real Pull Request of the maintainer fork; the numbers, the handle, the commits and the branch time are rewritten to the course fiction before the shot, the way the lab prints them."
+    },
+    {
+      "name": "github-star-sfdx-hardis",
+      "_comment": "Level 1 capstone: the header of the repository page, where the Star button is. Taken signed out, which is what a learner who is not the owner sees: the Star button, without Edit Pins or Settings.",
+      "url": "https://github.com/hardisgroupcom/sfdx-hardis",
+      "width": 1440,
+      "height": 900,
+      "settle": 4000,
+      "fresh": true,
+      "clip": {
+        "x": 0,
+        "y": 80,
+        "width": 1440,
+        "height": 110
+      }
+    },
+    {
+      "name": "github-star-megalinter",
+      "_comment": "Level 2 capstone: the header of the repository page, where the Star button is. Taken signed out, which is what a learner who is not the owner sees: the Star button, without Edit Pins or Settings.",
+      "url": "https://github.com/oxsecurity/megalinter",
+      "width": 1440,
+      "height": 900,
+      "settle": 4000,
+      "fresh": true,
+      "clip": {
+        "x": 0,
+        "y": 80,
+        "width": 1440,
+        "height": 110
+      }
+    },
+    {
+      "name": "github-star-vscode-sfdx-hardis",
+      "_comment": "Level 3 capstone: the header of the repository page, where the Star button is. Taken signed out, which is what a learner who is not the owner sees: the Star button, without Edit Pins or Settings.",
+      "url": "https://github.com/hardisgroupcom/vscode-sfdx-hardis",
+      "width": 1440,
+      "height": 900,
+      "settle": 4000,
+      "fresh": true,
+      "clip": {
+        "x": 0,
+        "y": 80,
+        "width": 1440,
+        "height": 110
+      }
     }
   ]
 }

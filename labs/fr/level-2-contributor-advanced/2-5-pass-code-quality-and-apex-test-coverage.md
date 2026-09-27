@@ -1,11 +1,11 @@
 ---
 id: lab-2-5
 title: "Lab 2.5 - Passer la barrière de qualité de code et la couverture de tests Apex"
-description: "Corrigez un avertissement PMD et la couverture de code Apex qui bloquent votre Pull Request, et lancez les mêmes contrôles depuis VS Code avant de pousser."
+description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloquent votre Pull Request, et lancez les mêmes contrôles depuis VS Code avant de pousser."
 level: 2
 lab: 5
 lang: fr
-source_rev: "73eac21691ef803b05712d5adfd945e732097fd5"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -37,14 +37,15 @@ Une modification Apex dans `InstallationScheduler`. Deux choses vont vous arrêt
 ne concerne une métadonnée fausse :
 
 1. **PMD**, l'analyseur de code Apex, lancé pour vous par MegaLinter, sur une requête à l'intérieur
-   d'une boucle que vous êtes sur le point d'écrire en copiant un motif existant. Il **avertit**
+   d'une boucle que vous êtes sur le point d'écrire en copiant un motif existant. Il **bloque** le
+   merge
 2. **La couverture de code**, parce que la nouvelle branche de logique n'a pas de test. Elle
-   **bloque**
+   **bloque** aussi
 
-La première est un choix de ce projet : il pourrait faire refuser l'analyseur, et il ne le fait pas.
-La seconde est aussi un seuil de ce projet : 80 % de l'Apex de l'org exécuté par les tests, au-dessus
-des 75 % qu'exige Salesforce lui-même. Savoir lesquelles de vos barrières avertissent et lesquelles
-refusent est la moitié du travail sur une pipeline, ce lab vous en fait donc rencontrer une de chaque.
+Les deux sont des choix de ce projet, et ce sont ceux des vrais projets : l'analyseur refuse le code
+qui dépasse les limites de Salesforce, et les tests doivent exécuter 80 % de l'Apex de l'org,
+au-dessus des 75 % qu'exige Salesforce lui-même. Chacun vous dit ce qui ne va pas à un endroit
+différent, ce lab vous les fait donc rencontrer l'un après l'autre.
 
 !!! note "Admins, ce lab est aussi pour vous"
     Il y a de l'Apex dedans, et vous n'en écrirez pas une ligne : chaque bloc se copie depuis cette
@@ -106,16 +107,17 @@ Celle-ci est un fichier, pas une modification d'org : il n'y a donc rien à réc
 `InstallationScheduler.cls` depuis le panneau **Source Control**, puis **Save / Publish**, poussez,
 et ouvrez la Pull Request.
 
-### 3. MegaLinter vous avertit
+### 3. MegaLinter vous bloque
 
 ```
 (Moderate)  pmd:OperationWithLimitsInLoop  force-app/main/default/classes/InstallationScheduler.cls
 Avoid operations in loops that may hit governor limits
 ```
 
-C'est dans le commentaire MegaLinter de votre Pull Request, sous **code-analyzer-apex**, au milieu de
-quelques trouvailles sur du code qui était déjà là avant vous. Le contrôle de déploiement à côté est
-vert : les tests exécutent toujours plus de 80 % de l'Apex de l'org, environ 81 %.
+Le contrôle **Mega-Linter** de votre Pull Request est rouge, et la boîte de merge indique **Merging
+is blocked**. La trouvaille est dans le commentaire MegaLinter de la Pull Request, sous
+**code-analyzer-apex**. Le contrôle de déploiement à côté est vert : les tests exécutent toujours
+plus de 80 % de l'Apex de l'org, environ 81 %. Le code se déploie, et il est quand même refusé.
 
 Une requête SOQL à l'intérieur d'une boucle `for`. Salesforce autorise 100 requêtes par transaction :
 cette méthode marche donc parfaitement pour un planificateur qui vérifie cinq installations et lève
@@ -150,16 +152,17 @@ dehors de la boucle, et indexer ce qu'on récupère**.
 
 Une seule requête, quelle que soit la taille de la liste.
 
-!!! note "Celle-ci avertit, elle ne bloque pas"
-    L'analyseur Apex n'est pas bloquant sur ce projet : votre Pull Request reste mergeable avec cette
-    trouvaille dessus. Rien ne vous empêche de livrer la boucle, sinon la lecture du commentaire.
-    C'est un choix délibéré que fait un projet, et c'est pourquoi l'étape suivante est celle qui,
-    elle, refuse vraiment.
+!!! note "Pourquoi un linter a le droit de refuser"
+    La boucle fonctionne dans tous les tests et échoue en production le premier jour chargé.
+    Personne ne la repère à coup sûr en relisant une Pull Request, l'analyseur toujours, et c'est
+    pourquoi les vrais projets le rendent bloquant. Il ne refuse que les trouvailles de sévérité
+    Moderate et au-dessus : le code d'Helios n'en a aucune, donc la seule chose qui peut faire passer
+    ce contrôle au rouge est ce que vous venez d'écrire.
 
 ### 4. Les tests vous bloquent
 
-Poussez la correction. MegaLinter ne signale plus la boucle. Cette fois, c'est le contrôle de
-déploiement qui **échoue**, et celui-là n'est pas un conseil :
+Poussez la correction. MegaLinter ne signale plus la boucle, et son contrôle passe au vert. Cette
+fois, c'est le contrôle de déploiement qui **échoue** :
 
 ```
 [sfdx-hardis][apextest] Test run code coverage (org wide) 76.92% should be greater than 80%
@@ -286,8 +289,10 @@ via Salesforce Code Analyzer sur l'Apex, plus un scanner de flows, plus les lint
 tourne sur tout le repository pour une Pull Request vers une branche majeure, c'est pourquoi une
 règle peut se déclencher sur un fichier que vous n'avez pas écrit.
 
-Le linter, c'est votre équipe qui refuse, ou ici qui avertit. Le plancher de couverture, c'est
-Salesforce qui refuse, et le réglage du projet choisit seulement s'il faut en demander davantage. Ni
+L'analyseur refuse parce que `.mega-linter.yml` le dit, avec
+`SALESFORCE_CODE_ANALYZER_APEX_DISABLE_ERRORS: false` : la configuration partagée de sfdx-hardis ne
+fait que signaler les trouvailles Apex, et c'est un projet qui en fait une barrière. Le linter, c'est
+votre équipe qui refuse. Le plancher de couverture, c'est Salesforce qui refuse, et le réglage du projet choisit seulement s'il faut en demander davantage. Ni
 l'un ni l'autre ne vérifie que le code fait la bonne chose, et c'est bien le sujet : Salesforce
 déploie très volontiers un identifiant en dur couvert à 100 %.
 
@@ -295,8 +300,7 @@ déploie très volontiers un identifiant en dur couvert à 100 %.
 
 ## Ce que vous devez voir
 
-- Le commentaire MegaLinter sans la boucle de `InstallationScheduler.cls` : les trouvailles sur le
-  code qui était là avant vous sont toujours listées, et ne font toujours qu'avertir
+- Le contrôle **Mega-Linter** vert, et son commentaire sans la boucle de `InstallationScheduler.cls`
 - Le contrôle de déploiement vert, avec une couverture au-dessus de 80 % dans le commentaire
 - `schedulableOn` dans `helios-integration`, avec une requête en dehors de la boucle
 

@@ -62,6 +62,12 @@
   "documentation-workbench": {
     "gate": "documentation-workbench"
   },
+  "editor-crew-capacity-csv": {
+    "gate": "training-files"
+  },
+  "editor-field-file": {
+    "gate": "training-files"
+  },
   "extension-config": {
     "gate": "extension-config"
   },
@@ -127,6 +133,9 @@
   },
   "package-xml": {
     "gate": "pipeline-menus"
+  },
+  "package-xml-filtered": {
+    "gate": "training-files"
   },
   "pipeline-action-editors-base": {
     "gate": "pipeline-action-editors"

@@ -23,7 +23,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | Lab | URL |
 |---|---|
 | Level home | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/ |
-| Lab 2.1 - Backpromote: catch your org up with the team | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work/ |
+| Lab 2.1 - Backpromote: catch your dev org up with the team | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work/ |
 | Lab 2.2 - Fix a deployment error caused by a missing dependency | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error/ |
 | Lab 2.3 - Fix broken records with an Apex deployment action | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action/ |
 | Lab 2.4 - Ship reference data and a batch with deployment actions | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions/ |

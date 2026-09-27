@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "2537bdf1c86222acb1074ecc13c1269b2923aea4"
+source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -46,7 +46,7 @@ qu'il est encore à vous de le corriger, pas le soir de la mise en production.
     Une Pull Request demande qu'une branche soit fusionnée dans une autre, la vôtre dans `integration`
     ici. C'est une page sur GitHub qui contient trois choses : ce que votre branche change, le
     résultat de chaque contrôle qui a tourné dessus, et la conversation sur l'opportunité de la
-    faire entrer. Rien ne bouge tant que quelqu'un ne clique pas sur Merge. Tout le monde dit "PR".
+    merger. Rien ne bouge tant que quelqu'un ne clique pas sur Merge. Tout le monde dit "PR".
 
 ## Avant de commencer
 

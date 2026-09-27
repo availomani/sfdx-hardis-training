@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-config
@@ -64,7 +64,7 @@ Cost > Set Field-Level Security**, cochez **Visible** pour le profil **Helios Cr
 C'est ainsi que la plupart des gens accordent une permission, et c'est là-dessus que ce lab est
 construit.
 
-Faites-le descendre comme d'habitude : **Commit changes**, **Recent Changes**, **Search Metadata**,
+Faites-en un retrieve comme d'habitude : **Commit changes**, **Recent Changes**, **Search Metadata**,
 cochez le profil `Helios Crew`, récupérez, et commitez-le depuis **Source Control**. Puis
 **Save / Publish**, poussez, Pull Request, vert, merge.
 

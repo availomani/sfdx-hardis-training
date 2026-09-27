@@ -212,7 +212,7 @@ Then the Command Palette again, type `Git: Merge`, and pick **Git: Merge...** **
 
 ![Git Merge in the Command Palette](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-It asks which branch to bring in. Pick **origin/main** **(1)**, listed under **remote branches**:
+It asks which branch to merge. Pick **origin/main** **(1)**, listed under **remote branches**:
 
 ![The branch picker, with origin main](../../_assets/annotated/vscode/git-retrofit-pick--origin-main.png)
 

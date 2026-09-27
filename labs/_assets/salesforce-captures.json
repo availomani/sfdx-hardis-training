@@ -5,7 +5,8 @@
   "lookups": {
     "crewPermSetId": "SELECT Id FROM PermissionSet WHERE Name = 'Helios_Delivery_Crew' LIMIT 1",
     "installationId": "SELECT Id FROM Installation__c WHERE Name = 'INST-00001' LIMIT 1",
-    "crewWarningFlowId": "SELECT ActiveVersionId FROM FlowDefinitionView WHERE ApiName = 'Installation_Crew_Warning'"
+    "crewWarningFlowId": "SELECT ActiveVersionId FROM FlowDefinitionView WHERE ApiName = 'Installation_Crew_Warning'",
+    "assignCrewFlowId": "SELECT ActiveVersionId FROM FlowDefinitionView WHERE ApiName = 'Installation_Assign_Crew'"
   },
   "captures": [
     {
@@ -102,7 +103,7 @@
     },
     {
       "name": "flow-builder-formula",
-      "_comment": "Lab 2.2 step 2.2: the crewTooSmall formula, opened from the Toolbox and left without Done.",
+      "_comment": "Lab 2.2 step 2.2: the crewTooSmall formula, opened from the Toolbox, with the description and the formula the lab asks for typed in, and left without Done.",
       "path": "/builder_platform_interaction/flowBuilder.app?flowId={{crewWarningFlowId}}",
       "width": 1600,
       "height": 950,
@@ -115,7 +116,17 @@
         "y": 140,
         "width": 840,
         "height": 600
-      }
+      },
+      "fillAfter": [
+        [
+          "textarea.slds-textarea >> nth=0",
+          "True when eight panels a person do not cover the job, and no warning was sent yet"
+        ],
+        [
+          "textarea[name='Formula']",
+          "AND(\n  {!$Record.Crew_Size__c} * 8 < {!$Record.Panels_Required__c},\n  NOT({!$Record.Crew_Warning_Sent__c})\n)"
+        ]
+      ]
     },
     {
       "name": "flow-builder-add-element",
@@ -126,6 +137,50 @@
       "load": 15000,
       "mouse": [[476, 808]],
       "settle": 3000
+    },
+    {
+      "name": "crew-capacity-records",
+      "_comment": "Lab 2.4 step 1: the list of the 12 Crew Capacity records that Create my lab records made. The object has no tab, and this address opens its list all the same. Needs an org holding the records: run Create my lab records on it first.",
+      "path": "/lightning/o/Crew_Capacity__c/list?filterName=All",
+      "width": 1440,
+      "height": 900,
+      "load": 12000,
+      "settle": 3000,
+      "clip": {
+        "x": 0,
+        "y": 90,
+        "width": 1440,
+        "height": 620
+      }
+    },
+    {
+      "name": "flow-builder-assign-crew",
+      "_comment": "Lab 2.7 step 1: the Installation Assign Crew flow in Auto-Layout, with the Flat Roof Minimum decision after Move To Scheduled. Read from helios-uat, whose flow carries the finished rule. Switching the canvas to Auto-Layout only changes the view: nothing is saved.",
+      "path": "/builder_platform_interaction/flowBuilder.app?flowId={{assignCrewFlowId}}",
+      "width": 1600,
+      "height": 950,
+      "load": 15000,
+      "settle": 3000,
+      "hide": [".slds-popover_tooltip", "[role='tooltip']"],
+      "click": ["button:has-text('Free-Form')", "text=Auto-Layout"]
+    },
+    {
+      "name": "flow-builder-assign-crew-full",
+      "_comment": "Lab 2.7 step 7.3: the same flow zoomed to fit, so the flat roof rule and the cap under it are both in view: the minimum first, the cap last. Fit to view is the second button of the zoom bar, bottom left of the canvas, in window pixels. Nothing is saved.",
+      "path": "/builder_platform_interaction/flowBuilder.app?flowId={{assignCrewFlowId}}",
+      "width": 1600,
+      "height": 950,
+      "load": 15000,
+      "click": ["button:has-text('Free-Form')", "text=Auto-Layout"],
+      "mouse": [[57, 890]],
+      "settle": 3000,
+      "hide": [".slds-popover_tooltip", "[role='tooltip']"],
+      "clip": {
+        "x": 560,
+        "y": 215,
+        "width": 480,
+        "height": 700
+      }
     }
   ]
 }

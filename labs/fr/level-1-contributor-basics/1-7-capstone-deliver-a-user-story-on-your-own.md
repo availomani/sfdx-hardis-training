@@ -5,8 +5,9 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "4e07ca72f292110fec265b043b9fb58e23eeb7d9"
+source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
 screenshots:
+  - annotated/web/github-star-sfdx-hardis
 depends_on:
   commands: [hardis:work:new, hardis:work:save]
   flags: []
@@ -62,7 +63,7 @@ Pas de clics numérotés cette fois. La boucle, dans l'ordre :
    - Une vue de liste sur Installation appelée **Open Installations**, visible par tous les
      utilisateurs, avec **Filter by Owner** sur **All installations**, filtrée sur un statut autre
      que Completed, et affichant le compte, le statut, la date d'installation et Panels Required
-3. **Récupérez les métadonnées.** **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
+3. **Faites un retrieve.** **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
    le champ, la présentation de page, la vue de liste et le permission set. Rien d'autre.
    Commitez-les
 4. **Publiez**, et lisez le rapport **Git Delta package.xml** avant de pousser. Quatre choses,
@@ -130,7 +131,10 @@ formalité.
 !!! tip "Si ce cours vous a servi"
     [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis) est le projet open
     source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme celui-ci de
-    rester visible. C'est vous qui voyez : le badge n'en dépend pas.
+    rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, en haut à droite. Donnez une étoile si
+    vous avez aimé ce cours !
+
+    ![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
 Un job clone ensuite votre fork (`github.com/my-username/sfdx-hardis-training`), rejoue sur lui tous
 les contrôles ci-dessus, et répond sur l'issue. Personne ne le relit à la main, cela prend donc

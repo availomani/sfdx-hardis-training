@@ -56,7 +56,7 @@ Ten of them, and the labs call them by these names:
 | **Set up one of my training orgs**    | Deploys the Helios app and its data into an org you choose                                            |
 | **Simulate my teammates**             | Creates the teammate branches and Pull Requests a lab needs                                           |
 | **Publish my pipeline configuration** | Opens a Pull Request into `integration` with the configuration you changed                            |
-| **Check my work**                     | Verifies the lab you just finished and prints your receipt                                            |
+| **Check my work**                     | Verifies the lab you just finished                                                                    |
 | **Claim my badge**                    | Checks the whole level, then opens your badge claim filled in                                         |
 | **Update my course**                  | Brings the changes the course received since you forked it, through a Pull Request into `integration` |
 | **Reset this level**                  | Puts your repository back to the start of Level 3                                                     |

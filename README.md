@@ -67,7 +67,7 @@ this project declares itself as a **Training** menu, rendered on the Welcome pag
 | **Set up my training environment** | Forks this repository, creates the scratch orgs, sets the CI secrets |
 | **Where am I?**                    | The level and lab you reached, and what to open next                 |
 | **Set up one of my training orgs** | Deploys the Helios app and its data into an org you pick             |
-| **Check my work**                  | Verifies a lab and prints your receipt                               |
+| **Check my work**                  | Verifies the lab you just finished                                   |
 | **Simulate my teammates**          | Creates the teammate branches and Pull Requests a lab needs          |
 | **Reset this level**               | Puts your repository back to the start of a level                    |
 | **Clean up a training org**        | Removes the Helios app and its data from an org                      |

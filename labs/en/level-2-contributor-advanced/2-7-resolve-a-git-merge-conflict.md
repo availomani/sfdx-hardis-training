@@ -7,6 +7,8 @@ lab: 7
 lang: en
 source_rev: ""
 screenshots:
+  - annotated/salesforce/flow-builder-assign-crew
+  - annotated/salesforce/flow-builder-assign-crew-full
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/git-palette-fetch--fetch
@@ -63,6 +65,12 @@ In `helios-dev`:
    **same assignment** the flow already ends on, so the new rule runs after the status change
 2. On the permission set `Helios Delivery Manager`, grant edit access on
    `Installation__c.Crew_Notes__c`, so a planner can say why a crew was raised
+
+In Flow Builder, with the canvas in **Auto-Layout**, the flow then reads: the assignment it already
+ended on, **Move To Scheduled** **(1)**, your new decision **(2)**, and on its flat roof branch the
+assignment that raises the crew to three **(3)**.
+
+![The Installation Assign Crew flow with the flat roof decision after Move To Scheduled](../../_assets/annotated/salesforce/flow-builder-assign-crew.png)
 
 Retrieve the flow and the permission set, commit them, and **stop there**: do not publish yet.
 
@@ -135,7 +143,7 @@ two of you wrote in the same place: Mariia granted a field on the permission set
 you granted yours, and she connected the same assignment element in the flow to a decision of her
 own. A merge tool cannot know which of two connectors should win. You can.
 
-### 4. Bring integration into your branch
+### 4. Merge integration into your branch
 
 Open the **Source Control** panel, the icon of three small circles joined by lines in the left bar.
 
@@ -151,7 +159,7 @@ command is in the **...** menu at the top of the Source Control panel, under **B
 
 ![The Command Palette filtered on Git: Merge](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-VS Code asks which branch to bring in. Type `integration` and pick **origin/integration** **(1)**,
+VS Code asks which branch to merge. Type `integration` and pick **origin/integration** **(1)**,
 listed under **remote branches**: the copy of `integration` that is on GitHub, with Mariia's work in
 it. Not the plain `integration` if it is listed too: that is the copy on your machine, which you
 have not updated since you branched.
@@ -280,8 +288,12 @@ developers included, and a flow that deploys but behaves wrongly is worse than o
 
 3. Open **Flow Builder** in the org, on `Installation_Assign_Crew`, and add your flat-roof rule
    again, **before** her cap: the flow raises a flat roof crew to three first, and her cap, which
-   now runs last, has the final word
-4. Come back to VS Code, bring the rebuilt flow down with **Commit changes**, and stage it in
+   now runs last, has the final word. Your decision **(1)** comes first, her **Crew Over Cap**
+   decision **(2)** last
+
+    ![The rebuilt flow: the flat roof minimum first, the cap last](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
+
+4. Come back to VS Code, retrieve the rebuilt flow with **Commit changes**, and stage it in
    **Source Control**, next to the permission set. Do not commit yet: a merge ends with one commit,
    and the next step makes it
 
@@ -290,7 +302,7 @@ Slower to describe, much faster to do, and you can see what you are building.
 <details markdown="1"><summary>Under the hood: resolving it in the file instead</summary>
 
 If you can read flow XML and want to: take Mariia's version of the element and its connectors as the
-base, re-add your flat-roof decision after her cap, and delete every conflict marker. Then publish,
+base, re-add your flat-roof decision before her cap, and delete every conflict marker. Then publish,
 which re-runs the cleaning rules over what you wrote by hand.
 
 The risk is not that it fails. The risk is that it deploys and the decisions run in an order you did

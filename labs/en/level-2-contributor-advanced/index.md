@@ -23,13 +23,14 @@ because the org already holds thirty records without it. Reference records and a
 have to follow your change into every org, and no deployment will carry them for you. Mariia, who
 edited the same flow and the same permission set as you and merged first.
 
-This is the half of the contributor path that decides whether you enjoy working on a CI/CD project.
+This is the half of the contributor path that makes you ready for a real CI/CD project: when
+something breaks, you know where to look and what to do, and you lose minutes instead of days.
 
 ## What you will do
 
 | Lab                                                                   | Title                                                   | Time   |
 |-----------------------------------------------------------------------|---------------------------------------------------------|--------|
-| [2.1](2-1-backpromote-your-teammates-work.md)                         | Backpromote: catch your org up with the team            | 15 min |
+| [2.1](2-1-backpromote-your-teammates-work.md)                         | Backpromote: catch your dev org up with the team        | 15 min |
 | [2.2](2-2-fix-a-missing-dependency-deployment-error.md)               | Fix a deployment error caused by a missing dependency   | 25 min |
 | [2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md)       | Fix broken records with an Apex deployment action       | 30 min |
 | [2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) | Ship reference data and a batch with deployment actions | 30 min |
@@ -55,7 +56,7 @@ Eight of them, and the labs call them by these names:
 | **Where am I?**                    | Says which level and lab you reached, and what to do next                                             |
 | **Simulate my teammates**          | Creates the teammate branches and Pull Requests a lab needs                                           |
 | **Set up one of my training orgs** | Deploys the Helios app and its data into an org you choose                                            |
-| **Check my work**                  | Verifies the lab you just finished and prints your receipt                                            |
+| **Check my work**                  | Verifies the lab you just finished                                                                    |
 | **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in                                         |
 | **Update my course**               | Brings the changes the course received since you forked it, through a Pull Request into `integration` |
 | **Reset this level**               | Puts your repository back to the start of Level 2                                                     |

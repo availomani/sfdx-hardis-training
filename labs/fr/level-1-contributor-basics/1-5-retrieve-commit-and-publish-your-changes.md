@@ -1,11 +1,11 @@
 ---
 id: lab-1-5
 title: "Lab 1.5 - Récupérer, commiter et publier vos modifications Salesforce"
-description: "Faites entrer vos modifications d'org dans Git avec le Metadata Retriever de sfdx-hardis, ne stagez que les fichiers de votre story, commitez, et publiez votre branche."
+description: "Rapatriez vos modifications d'org dans Git avec le Metadata Retriever de sfdx-hardis, ne stagez que les fichiers de votre story, commitez, et publiez votre branche."
 level: 1
 lab: 5
 lang: fr
-source_rev: "aac990829d9935136489584c303016855dd143f4"
+source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -30,7 +30,7 @@ depends_on:
 
 **Durée** : ~20 min
 
-**Vous allez** : faire entrer vos modifications d'org dans le repository, décider lesquelles appartiennent
+**Vous allez** : rapatrier vos modifications d'org dans le repository, décider lesquelles appartiennent
 à votre story, et pousser une branche prête à être relue.
 
 ## La situation
@@ -122,7 +122,7 @@ dans Salesforce et rien sur votre branche pour l'instant.
     compte sur un vrai projet, où quelqu'un d'autre a pu écrire ces fichiers ; pas ici, où rien
     d'autre que votre propre org n'y a touché.
 
-### 4. Commiter ce qui est descendu
+### 4. Commiter ce que vous avez rapatrié
 
 Ouvrez le panneau **Source Control** **(1)** : dans la barre de gauche, l'icône dessinée comme trois
 petits cercles reliés par des traits, à la manière d'une branche. Les quatre fichiers écrits par la

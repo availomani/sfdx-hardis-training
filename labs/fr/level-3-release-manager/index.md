@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "e7208fdb3ddb4226315f5595365f110c93c132af"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -62,7 +62,7 @@ Elles sont dix, et les labs les appellent par ces noms :
 | **Set up one of my training orgs**    | Déploie l'application Helios et ses données dans une org que vous choisissez                          |
 | **Simulate my teammates**             | Crée les branches et Pull Requests de collègues dont un lab a besoin                                  |
 | **Publish my pipeline configuration** | Ouvre une Pull Request vers `integration` avec la configuration que vous avez modifiée                |
-| **Check my work**                     | Vérifie le lab que vous venez de terminer et affiche votre reçu                                       |
+| **Check my work**                     | Vérifie le lab que vous venez de terminer                                                             |
 | **Claim my badge**                    | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                             |
 | **Update my course**                  | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration` |
 | **Reset this level**                  | Remet votre repository au début du Niveau 3                                                           |

@@ -70,7 +70,7 @@ Salesforce vous avertit au sujet des appels API et Apex, vous demande de **Confi
 l'enregistre. Pas un mot sur vos données, alors que la plupart des installations de votre org n'ont pas de
 crew size. Retenez-le : c'est tout ce lab.
 
-Faites descendre le champ avec **Commit changes** (le champ, rien d'autre), commitez-le, **Save /
+Faites un retrieve du champ avec **Commit changes** (le champ, rien d'autre), commitez-le, **Save /
 Publish**, poussez, et ouvrez la Pull Request.
 
 ### 2. Lire le premier échec
@@ -88,7 +88,7 @@ chaque entrée de sécurité au niveau du champ qui le mentionne devient invalid
 refuse les permission sets plutôt que le champ.
 
 La correction prend une minute, et l'org l'a déjà faite : dans `helios-dev` les entrées ont disparu
-des deux permission sets à l'instant où le champ est devenu obligatoire. Faites-les descendre :
+des deux permission sets à l'instant où le champ est devenu obligatoire. Faites-en un retrieve :
 **Commit changes**, cochez `Helios_Delivery_Crew` et `Helios_Delivery_Manager`, récupérez. Source
 Control montre chacun d'eux perdant son entrée `Crew_Size__c` et rien d'autre. Commitez, **Save /
 Publish** à nouveau. Le commentaire sfdx-hardis le disait même, sous chaque erreur, avec un lien vers
@@ -257,7 +257,7 @@ plus tard, chaque installation de `helios-integration` porte un crew size, et pe
 Setup.
 
 `helios-dev` a toujours ses crew sizes vides, et c'est normal : le prochain backpromote lance les
-actions des Pull Requests qu'il fait descendre, celle-ci comprise.
+actions des Pull Requests qu'il rapatrie, celle-ci comprise.
 
 <details markdown="1"><summary>Sous le capot : où l'action est stockée et comment elle tourne</summary>
 

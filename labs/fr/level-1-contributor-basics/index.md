@@ -4,7 +4,7 @@ description: "Formation Salesforce DevOps gratuite et pratique pour admins et d�
 id: l1-home
 level: 1
 lang: fr
-source_rev: "e7208fdb3ddb4226315f5595365f110c93c132af"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 ---
 
 # Niveau 1 - Contributeur Salesforce DevOps, les bases
@@ -67,7 +67,7 @@ Elles sont sept, et les labs les appellent par ces noms :
 |------------------------------------|-------------------------------------------------------------------------------------------------------|
 | **Set up my training environment** | Forke le repository, crée vos scratch orgs avec l'application, câble la pipeline                      |
 | **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                          |
-| **Check my work**                  | Vérifie le lab que vous venez de terminer et affiche votre reçu                                       |
+| **Check my work**                  | Vérifie le lab que vous venez de terminer                                                             |
 | **Trigger my workflows**           | Démarre les contrôles de votre Pull Request quand Actions était coupé sur le fork                     |
 | **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                             |
 | **Update my course**               | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration` |

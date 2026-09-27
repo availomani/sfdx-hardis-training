@@ -20,12 +20,12 @@ FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifes
 DISABLE_LINTERS:
   - CSS_STYLELINT
 
-# The Salesforce Code Analyzer is for the Apex and the metadata of the Helios
-# app. Pointed at the whole repository it reads the site stylesheet as if it were
-# an Aura component and asks for SLDS design tokens in it.
-SALESFORCE_SFDX_SCANNER_APEX_ARGUMENTS: --workspace force-app
-SALESFORCE_SFDX_SCANNER_AURA_ARGUMENTS: --workspace force-app
-SALESFORCE_SFDX_SCANNER_LWC_ARGUMENTS: --workspace force-app
+# The shared sfdx-hardis configuration reports Apex findings without failing the
+# check. Here they fail it, as on any real project: Lab 2.5 teaches that a query
+# in a loop does not reach integration. The threshold is MegaLinter's own,
+# Moderate and above, and the Helios code and the samples a lab copies carry no
+# such finding, so only what a learner writes can turn it red.
+SALESFORCE_CODE_ANALYZER_APEX_DISABLE_ERRORS: false
 
 # trivy and grype download their vulnerability database on every run, and when
 # the download is refused they fail the whole check of a Pull Request that changed

@@ -5,8 +5,10 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "26480524514753ce9058724689c148988ba61775"
+source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
 screenshots:
+  - annotated/salesforce/flow-builder-assign-crew
+  - annotated/salesforce/flow-builder-assign-crew-full
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/git-palette-fetch--fetch
@@ -67,7 +69,14 @@ Dans `helios-dev` :
    `Installation__c.Crew_Notes__c`, pour qu'un planificateur puisse dire pourquoi une équipe a été
    renforcée
 
-Récupérez le flow et le permission set, commitez-les, et **arrêtez-vous là** : ne publiez pas encore.
+Dans Flow Builder, avec le canevas en **Auto-Layout**, le flow se lit alors ainsi : l'affectation
+sur laquelle il se terminait déjà, **Move To Scheduled** **(1)**, votre nouvelle décision **(2)**,
+et sur sa branche de toiture plate l'affectation qui porte l'équipe à trois **(3)**.
+
+![Le flow Installation Assign Crew avec la décision de toiture plate après Move To Scheduled](../../_assets/annotated/salesforce/flow-builder-assign-crew.png)
+
+Faites un retrieve du flow et du permission set, commitez-les, et **arrêtez-vous là** : ne publiez
+pas encore.
 
 ### 2. Pendant que vous construisiez, Mariia a mergé
 
@@ -141,7 +150,7 @@ accordé un champ sur le permission set à une ligne de là où vous avez accord
 relié le même élément d'affectation dans le flow à une décision à elle. Un outil de merge ne peut pas
 savoir lequel de deux connecteurs doit l'emporter. Vous, si.
 
-### 4. Faire entrer integration dans votre branche
+### 4. Merger integration dans votre branche
 
 Ouvrez le panneau **Source Control**, l'icône de trois petits cercles reliés par des traits dans la
 barre de gauche.
@@ -158,7 +167,7 @@ même commande est dans le menu **...** en haut du panneau Source Control, sous 
 
 ![La Command Palette filtrée sur Git: Merge](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-VS Code demande quelle branche faire entrer. Tapez `integration` et choisissez **origin/integration**
+VS Code demande quelle branche merger. Tapez `integration` et choisissez **origin/integration**
 **(1)**, listée sous **remote branches** : la copie d'`integration` qui est sur GitHub, avec le
 travail de Mariia dedans. Pas l'`integration` toute seule si elle est aussi listée : c'est la copie
 de votre machine, que vous n'avez pas mise à jour depuis que vous avez branché.
@@ -295,8 +304,12 @@ est pire qu'un flow qui échoue.
 
 3. Ouvrez **Flow Builder** dans l'org, sur `Installation_Assign_Crew`, et rajoutez votre règle de
    toiture plate, **avant** son plafond : le flow porte d'abord l'équipe d'une toiture plate à trois,
-   et son plafond, qui tourne maintenant en dernier, a le dernier mot
-4. Revenez dans VS Code, faites descendre le flow reconstruit avec **Commit changes**, et indexez-le
+   et son plafond, qui tourne maintenant en dernier, a le dernier mot. Votre décision **(1)** vient
+   en premier, sa décision **Crew Over Cap** **(2)** en dernier
+
+    ![Le flow reconstruit : le minimum de toiture plate d'abord, le plafond en dernier](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
+
+4. Revenez dans VS Code, faites un retrieve du flow reconstruit avec **Commit changes**, et indexez-le
    dans **Source Control**, à côté du permission set. Ne commitez pas encore : un merge se termine
    par un seul commit, et l'étape suivante le fait
 
@@ -305,7 +318,7 @@ Plus long à décrire, bien plus rapide à faire, et vous voyez ce que vous cons
 <details markdown="1"><summary>Sous le capot : le résoudre dans le fichier à la place</summary>
 
 Si vous savez lire du XML de flow et que vous y tenez : prenez la version de Mariia de l'élément et
-de ses connecteurs comme base, rajoutez votre décision de toiture plate après son plafond, et
+de ses connecteurs comme base, rajoutez votre décision de toiture plate avant son plafond, et
 supprimez tous les marqueurs de conflit. Publiez ensuite, ce qui rejoue les règles de nettoyage sur
 ce que vous avez écrit à la main.
 

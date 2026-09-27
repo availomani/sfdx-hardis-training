@@ -5,8 +5,9 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "3b02d1f7c5bf4acfda4269d3a54da9fb1b9fb9a0"
+source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
 screenshots:
+  - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
   commands: [hardis:project:deploy:smart, hardis:doc:release-notes, hardis:doc:dora-report]
@@ -190,7 +191,10 @@ l'issue.
 !!! tip "Si ce cours vous a servi"
     [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) est
     l'extension par laquelle est passé chaque clic de ce cours. Une étoile est ce qui permet à un
-    projet open source de rester visible. C'est vous qui voyez : le badge n'en dépend pas.
+    projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, en haut à
+    droite. Donnez une étoile si vous avez aimé ce cours !
+
+    ![Le bouton Star du repository vscode-sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
 
 Le badge s'appelle **sfdx-hardis Release Manager**.
 

@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "82261c5e6ae7b18bac13b73251bfbc6a44976035"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -70,9 +70,9 @@ bien `monitoring`, la question n'est jamais posée, et c'est l'état dans lequel
 avant de commencer.
 
 Donc, avant toute chose : créez un repository privé vide appelé `sfdx-hardis-training-monitoring`
-sur GitHub. Faites-le ensuite descendre comme le [Lab
-1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) a fait
-descendre celui-ci : **File > Open Folder** sur un dossier vide, panneau **Source Control**, **Clone
+sur GitHub. Clonez-le ensuite comme le [Lab
+1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) a cloné
+celui-ci : **File > Open Folder** sur un dossier vide, panneau **Source Control**, **Clone
 Repository**, et collez l'adresse du bouton vert **Code** de votre nouveau repository. Rien dans ce
 lab ne se passe dans le repository où vous travaillez depuis le début du cours.
 

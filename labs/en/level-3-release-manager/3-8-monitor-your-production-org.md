@@ -67,8 +67,8 @@ alone, not because the two are alternatives. In a repository whose name does con
 the question is never asked at all, which is the state you want to be in before you start.
 
 So, before anything else: create an empty private repository called
-`sfdx-hardis-training-monitoring` on GitHub. Then bring it down the way [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) brought this
-one down: **File > Open Folder** on an empty folder, **Source Control** panel, **Clone Repository**,
+`sfdx-hardis-training-monitoring` on GitHub. Then clone it the way [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) cloned this
+one: **File > Open Folder** on an empty folder, **Source Control** panel, **Clone Repository**,
 and paste the address from the green **Code** button of your new repository. Nothing in this lab
 happens in the repository you have been working in all course.
 

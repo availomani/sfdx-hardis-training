@@ -181,6 +181,17 @@ async function main() {
     if (target.after) {
       await view.locator(target.after).first().waitFor({ state: "visible", timeout: 60000 });
     }
+    // Typed into a window the clicks opened, so the picture shows what the lab asks
+    // the learner to type rather than what the org holds. Never followed by a save.
+    for (const [selector, value] of target.fillAfter || []) {
+      const field = view.locator(selector).first();
+      await field.fill(value, { timeout: 15000 });
+      // Filling leaves a short box scrolled to its last line: the picture starts
+      // where the reader starts reading
+      await field.evaluate((el) => {
+        el.scrollTop = 0;
+      });
+    }
     if (target.scrollTo) {
       await view.locator(target.scrollTo).first().scrollIntoViewIfNeeded().catch(() => {});
     }

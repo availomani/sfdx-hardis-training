@@ -5,7 +5,7 @@ description: "Vous avez publié bien plus que votre story. Voyez ce que cela fai
 level: 2
 lab: 8
 lang: fr
-source_rev: "deadc7823cffd652cc4f9237b1c96a434d2d75ee"
+source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--select-all
@@ -119,12 +119,17 @@ vous n'est perdu : la modification est dans Salesforce, et le fichier est toujou
 
 ### 4. Traiter ce que vous avez déjà poussé
 
+**Rien à cliquer dans cette étape.** C'est une décision à prendre avant l'étape 5, et dans ce lab
+elle est déjà prise pour vous : personne n'a relu votre Pull Request, vous êtes donc dans le premier
+cas ci-dessous, et l'étape 5 fait ce qu'elle dit. Lisez quand même le second cas, c'est celui dans
+lequel un vrai projet vous mettra.
+
 En local vous êtes propre. La branche sur GitHub ne l'est pas : elle porte encore le commit trop
 large, parce que la réinitialisation n'a changé que la copie de votre machine.
 
-**Personne ne l'a relue** (le cas normal) : poussez la branche corrigée par-dessus une fois que vous
-aurez republié à l'étape suivante. C'est ce que la réinitialisation a autorisé, et la publication le
-proposera. L'erreur disparaît de l'historique comme si elle n'avait jamais eu lieu, ce qui, sur votre
+**Personne ne l'a relue** (le cas normal, et le vôtre ici) : la branche corrigée passe par-dessus
+quand vous republiez à l'étape 5. C'est ce que la réinitialisation a autorisé, et la publication le
+fait sans demander. L'erreur disparaît de l'historique comme si elle n'avait jamais eu lieu, ce qui, sur votre
 propre branche de feature avant relecture, est exactement ce que vous voulez.
 
 **Quelqu'un l'a déjà relue**, ou la branche est partagée : ne faites pas de force push. Réécrire
@@ -139,7 +144,7 @@ l'erreur et sa correction, les deux visibles.
 
 ### 5. Publier à nouveau, correctement
 
-Tout ce que la récupération a fait descendre est toujours dans vos fichiers, non commité. Dans le
+Tout ce que le retrieve a rapatrié est toujours dans vos fichiers, non commité. Dans le
 panneau **Source Control**, stagez **un seul fichier**, la présentation de page. Commitez-le, puis
 jetez le reste : clic droit sur **Changes**, **Discard All Changes**.
 
@@ -207,8 +212,8 @@ Publiez-les ou jetez-les d'abord dans le panneau **Source Control**, puis relanc
 réinitialisation.
 
 **Après la nouvelle publication, le rapport Git Delta nomme encore plusieurs composants.**
-Vous avez commité plus que la présentation de page après la réinitialisation. Tout ce que la
-récupération a fait descendre est toujours dans vos fichiers, et seul ce que vous commitez entre dans
+Vous avez commité plus que la présentation de page après la réinitialisation. Tout ce que le
+retrieve a rapatrié est toujours dans vos fichiers, et seul ce que vous commitez entre dans
 le package : réinitialisez à nouveau, et stagez un seul fichier.
 
 **Vous avez déjà mergé la mauvaise Pull Request.**

@@ -7,6 +7,9 @@ lab: 2
 lang: en
 source_rev: ""
 screenshots:
+  - annotated/vscode/package-xml-filtered
+  - annotated/vscode/editor-field-file
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/web/github-pr-check-failed
   - annotated/web/github-pr-flow-diff
   - annotated/salesforce/flow-builder-crew-warning
@@ -138,7 +141,7 @@ needs it, and the only person who can read it is the administrator who built the
 
 ### 3. Publish the flow, and watch the check fail
 
-Bring it down the way Level 1 taught you: **DevOps Pipeline > Commit changes**, **Recent Changes**,
+Retrieve it the way Level 1 taught you: **DevOps Pipeline > Commit changes**, **Recent Changes**,
 **Search Metadata**. The story is about the flow, so tick the flow `Installation_Crew_Warning`,
 retrieve it, and commit it from **Source Control**.
 
@@ -182,9 +185,16 @@ ago and the flow you just tested reads it.
 When a deployment says something does not exist, the first question is never "is it in the org".
 It is **"is it in the package"**.
 
-Open the package: **DevOps Pipeline** panel, **Deployment packages** menu, **Package XML**, as in
-[Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). Type `Crew_Warning` in its filter box. The **Flow** row lists your flow. **CustomField**
-does not list `Installation__c.Crew_Warning_Sent__c`.
+Open the package: in the **DevOps Pipeline** panel, the **Deployment packages** menu **(1)**, then
+**Package XML** **(2)**, as in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
+
+![The Deployment packages menu of the DevOps Pipeline panel, with Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
+
+Type `Crew_Warning` in its filter box **(1)**. One row is left, **Flow** **(2)**: the package
+carries your flow. There is no **CustomField** row at all: the package does not carry
+`Installation__c.Crew_Warning_Sent__c`.
+
+![The package viewer filtered on Crew_Warning, with only the Flow row left](../../_assets/annotated/vscode/package-xml-filtered.png)
 
 The integration org is being sent a flow that reads a field the package does not carry, and the
 integration org does not have that field either. From Salesforce's point of view the error is
@@ -204,7 +214,10 @@ Open the **Metadata Retriever** panel:
 
 ![The Metadata Retriever panel, with its org selector, its filters and the Search Metadata button](../../_assets/annotated/vscode/metadata-retriever.png)
 
-The field appears under `force-app/main/default/objects/Installation__c/fields/`.
+The field appears under `force-app/main/default/objects/Installation__c/fields/` **(1)**, in the
+**Explorer** view of VS Code.
+
+![The retrieved field file in the Explorer, open in the editor](../../_assets/annotated/vscode/editor-field-file.png)
 
 The habit to take away: when you change something that **reads** another component, retrieve that
 component too. A flow reads fields, a layout shows them, a permission set grants them. Anything new

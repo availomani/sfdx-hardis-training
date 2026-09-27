@@ -3,6 +3,14 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-09-27
+
+- New **Create my lab records** entry in the Level 2 Training menu: Lab 2.4 no longer asks you to type the 12 Crew Capacity records, it creates them and you check them.
+- The Apex code analyzer now blocks a Pull Request, as on a real project: Lab 2.5 shows the query in a loop refused, and the Apex samples the labs copy no longer carry findings.
+- Lab 2.4 gives the SOQL query and the label to type when you create the data workspace, links SFDMU, and says how precise a manual action must be.
+- Lab 2.8 step 4 says there is nothing to click, and Lab 2.9 says how to create the checklist records by hand.
+- Clearer wording across the labs: retrieve, merge and bring back replace vaguer verbs, and the capstones ask for a GitHub star if you liked the course.
+
 ## 2026-09-26
 
 - After **Reset this level** on Level 2, **Set up one of my training orgs** and every Pull Request into integration no longer fail on the Signed Off By field, which the start state granted before US-017 created it.

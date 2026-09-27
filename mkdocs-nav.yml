@@ -11,7 +11,7 @@ nav:
       - "Lab 1.7 - Capstone: deliver a User Story on your own": en/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md
   - "Level 2 - Contributor advanced":
       - Start here: en/level-2-contributor-advanced/index.md
-      - "Lab 2.1 - Backpromote: catch your org up with the team": en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
+      - "Lab 2.1 - Backpromote: catch your dev org up with the team": en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
       - "Lab 2.2 - Fix a deployment error caused by a missing dependency": en/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error.md
       - "Lab 2.3 - Fix broken records with an Apex deployment action": en/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md
       - "Lab 2.4 - Ship reference data and a batch with deployment actions": en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md
@@ -48,7 +48,7 @@ nav:
       - "Lab 1.7 - Épreuve finale : livrer une User Story tout seul": fr/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md
   - "Niveau 2 - Contributeur Salesforce DevOps avancé":
       - Commencer ici: fr/level-2-contributor-advanced/index.md
-      - "Lab 2.1 - Backpromote : remettre votre org au niveau de l'équipe": fr/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
+      - "Lab 2.1 - Backpromote : remettre votre org de dev au niveau de l'équipe": fr/level-2-contributor-advanced/2-1-backpromote-your-teammates-work.md
       - "Lab 2.2 - Corriger une erreur de déploiement due à une dépendance manquante": fr/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error.md
       - "Lab 2.3 - Réparer des enregistrements cassés avec une deployment action Apex": fr/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action.md
       - "Lab 2.4 - Livrer des données de référence et un batch avec des deployment actions": fr/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md
