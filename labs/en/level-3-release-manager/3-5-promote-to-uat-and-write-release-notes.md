@@ -99,12 +99,15 @@ production address back in UAT without a word. The **overwrite manager** is for 
 anything listed in `manifest/package-no-overwrite.xml` is taken out of the deployment when the target
 org already has it, and created when it does not.
 
-The file does not exist yet, and you do not have to write it. In the **DevOps Pipeline** panel, open
-the **Deployment packages** menu, the one that opened **Package XML** in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md), and pick **No
-Overwrite**. The package viewer opens on an empty list. Turn **Edit mode** on **(1)**, then click
+Helios already has that file: it is the list every sfdx-hardis project starts with. It protects the
+components an org keeps for itself almost everywhere, reports and dashboards maintained in
+production, connected apps, named credentials, certificates. Remote site settings are not in it yet,
+and you do not have to write XML to add them. In the **DevOps Pipeline** panel, open the
+**Deployment packages** menu, the one that opened **Package XML** in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md), and pick **No
+Overwrite**. The package viewer opens on that list. Turn **Edit mode** on **(1)**, then click
 **Add Type** **(2)**.
 
-![The package viewer on the empty no-overwrite list, in edit mode](../../_assets/annotated/vscode/package-no-overwrite-edit--add-type.png)
+![The package viewer on the default no-overwrite list, in edit mode](../../_assets/annotated/vscode/package-no-overwrite-edit--add-type.png)
 
 Type `RemoteSiteSetting`, the name Salesforce gives this kind of component, in **Metadata Type API
 Name** **(1)**, and click **Add** **(2)**.
@@ -112,9 +115,9 @@ Name** **(1)**, and click **Add** **(2)**.
 ![The Add Metadata Type window of the package viewer](../../_assets/annotated/vscode/package-no-overwrite-add-type--type.png)
 
 The new **RemoteSiteSetting** row has an **Add member** button: click it, type `Helios_Warehouse`,
-and **Add**. The viewer wrote `manifest/package-no-overwrite.xml` for you, with the shape of
-`manifest/package.xml`: one block per kind of component, its members listed by name. **Edit File**
-opens it as text, if you want to see it.
+and **Add**. The viewer added a `RemoteSiteSetting` block to `manifest/package-no-overwrite.xml`
+for you. The file has the shape of `manifest/package.xml`: one block per kind of component, its
+members listed by name, or `*` for all of them. **Edit File** opens it as text, if you want to see it.
 
 Then **Training: Level 3** > **Publish my pipeline configuration**, and merge its Pull Request once
 green, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): the list of what must never be overwritten is pipeline configuration, like the

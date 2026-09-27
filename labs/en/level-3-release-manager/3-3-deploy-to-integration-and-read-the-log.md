@@ -207,14 +207,15 @@ and the package it sent was built like this:
    package. `enableDeltaDeploymentBetweenMajorBranches` controls whether the same applies to a
    major-to-major deployment, and is off by default because a promotion to production is the worst
    possible place to discover that the org drifted
-3. **The overwrite manager**, if `manifest/package-no-overwrite.xml` exists: the org is queried, and
+3. **The overwrite manager**, when `manifest/package-no-overwrite.xml` lists something: the org is queried, and
    any component **listed in that file** that the org already has is taken out. It is scoped to its
    own list and nothing else, and a component it protects is still created in an org that does not
    have it yet
 4. **Deploy-on-change**, if `manifest/packageDeployOnChange.xml` exists: those components, and only
    those, are retrieved from the org and compared, and the unchanged ones are dropped
 
-Steps 2, 3 and 4 are all off in this project, so what Salesforce receives is step 1.
+Steps 2 and 4 are off in this project. Step 3 runs, and its `[NoOverwrite]` lines are in the log, but
+none of what Helios deploys is in its list yet, so what Salesforce receives is step 1.
 
 **Cleaning is not in that list, and this is the thing to take away.** The `autoCleanTypes` rules run
 inside `sf hardis:work:save`, on a contributor's machine, before the commit. They rewrite the files

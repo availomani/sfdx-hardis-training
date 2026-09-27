@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "f23aca466021abbfa96066a9fe688eb25b279ab8"
+source_rev: "dd66f0b0d98198e8a0e40fd57b516f4abcce664b"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -104,12 +104,15 @@ l'adresse de production en UAT sans un mot. Le **gestionnaire d'écrasement** es
 cela : tout ce qui est listé dans `manifest/package-no-overwrite.xml` est retiré du déploiement quand
 l'org cible le possède déjà, et créé quand elle ne l'a pas.
 
-Le fichier n'existe pas encore, et vous n'avez pas à l'écrire. Dans le panneau **DevOps Pipeline**,
+Helios a déjà ce fichier : c'est la liste avec laquelle démarre tout projet sfdx-hardis. Elle protège
+les composants qu'une org garde pour elle presque partout, rapports et tableaux de bord maintenus en
+production, connected apps, named credentials, certificats. Les remote site settings n'y sont pas
+encore, et vous n'avez pas à écrire de XML pour les ajouter. Dans le panneau **DevOps Pipeline**,
 ouvrez le menu **Deployment packages**, celui qui ouvrait **Package XML** au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md), et choisissez
-**No Overwrite**. Le visualiseur de package s'ouvre sur une liste vide. Activez le **Edit mode**
+**No Overwrite**. Le visualiseur de package s'ouvre sur cette liste. Activez le **Edit mode**
 **(1)**, puis cliquez sur **Add Type** **(2)**.
 
-![Le visualiseur de package sur la liste no-overwrite vide, en mode édition](../../_assets/annotated/vscode/package-no-overwrite-edit--add-type.png)
+![Le visualiseur de package sur la liste no-overwrite par défaut, en mode édition](../../_assets/annotated/vscode/package-no-overwrite-edit--add-type.png)
 
 Tapez `RemoteSiteSetting`, le nom que Salesforce donne à ce type de composant, dans **Metadata Type
 API Name** **(1)**, et cliquez sur **Add** **(2)**.
@@ -117,9 +120,10 @@ API Name** **(1)**, et cliquez sur **Add** **(2)**.
 ![La fenêtre Add Metadata Type du visualiseur de package](../../_assets/annotated/vscode/package-no-overwrite-add-type--type.png)
 
 La nouvelle ligne **RemoteSiteSetting** a un bouton **Add member** : cliquez dessus, tapez
-`Helios_Warehouse`, et **Add**. Le visualiseur a écrit `manifest/package-no-overwrite.xml` pour vous,
-avec la forme de `manifest/package.xml` : un bloc par type de composant, ses membres listés par nom.
-**Edit File** l'ouvre en texte, si vous voulez le voir.
+`Helios_Warehouse`, et **Add**. Le visualiseur a ajouté un bloc `RemoteSiteSetting` à
+`manifest/package-no-overwrite.xml` pour vous. Le fichier a la forme de `manifest/package.xml` : un
+bloc par type de composant, ses membres listés par nom, ou `*` pour tous. **Edit File** l'ouvre en
+texte, si vous voulez le voir.
 
 Puis **Training: Level 3** > **Publish my pipeline configuration**, et mergez sa Pull Request une
 fois verte, comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : la liste de ce qui ne doit jamais être écrasé est de la configuration

@@ -175,8 +175,9 @@ project bans permissions on Profiles.
 **The overwrite manager** (`packageNoOverwritePath`) protects components that are deliberately
 different per org. Anything listed in `manifest/package-no-overwrite.xml` is removed from the package
 when the target org already has it, so a deployment cannot flatten a named credential that points at
-a different endpoint in each environment. The file does not exist in this project yet, so nothing is
-protected: [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) creates it, before the first promotion to `uat`. Its location can be changed per
+a different endpoint in each environment. The project starts with the list every sfdx-hardis project
+gets. It covers reports, dashboards, connected apps and credentials, Helios deploys none of those,
+so nothing it deploys is protected yet: [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) adds the first entry that matters, before the first promotion to `uat`. Its location can be changed per
 branch, which is why you will not find it on the global **Deployment** tab **(2)**: switch the scope
 to `Branch: integration` and it is there, as **Branch-scoped custom Package-No-Overwrite path**.
 

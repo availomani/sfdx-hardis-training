@@ -19,6 +19,11 @@ FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifes
 # ours: stylelint asks us to rename things we do not own.
 DISABLE_LINTERS:
   - CSS_STYLELINT
+  # checkov and grype take minutes on every Pull Request of the course, a
+  # learner's included, and find nothing to say about a training project: there
+  # is no infrastructure code for checkov, and trivy already scans dependencies.
+  - REPOSITORY_CHECKOV
+  - REPOSITORY_GRYPE
 
 # The shared sfdx-hardis configuration reports Apex findings without failing the
 # check. Here they fail it, as on any real project: Lab 2.5 teaches that a query
@@ -27,10 +32,9 @@ DISABLE_LINTERS:
 # such finding, so only what a learner writes can turn it red.
 SALESFORCE_CODE_ANALYZER_APEX_DISABLE_ERRORS: false
 
-# trivy and grype download their vulnerability database on every run, and when
-# the download is refused they fail the whole check of a Pull Request that changed
-# nothing they scan. They still run and report; they no longer block a merge on a
+# trivy downloads its vulnerability database on every run, and when the
+# download is refused it fails the whole check of a Pull Request that changed
+# nothing it scans. It still runs and reports; it no longer blocks a merge on a
 # network error.
 DISABLE_ERRORS_LINTERS:
-  - REPOSITORY_GRYPE
   - REPOSITORY_TRIVY

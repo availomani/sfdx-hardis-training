@@ -5,7 +5,7 @@ description: "Lisez correctement un log de déploiement sfdx-hardis, puis relise
 level: 3
 lab: 3
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "dd66f0b0d98198e8a0e40fd57b516f4abcce664b"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -218,15 +218,16 @@ et le package qu'il a envoyé a été construit ainsi :
    `enableDeltaDeploymentBetweenMajorBranches` décide si la même chose s'applique à un déploiement de
    majeure à majeure, et est désactivé par défaut parce qu'une promotion vers la production est le
    pire endroit possible pour découvrir que l'org a dérivé
-3. **Le gestionnaire d'écrasement**, si `manifest/package-no-overwrite.xml` existe : l'org est
+3. **Le gestionnaire d'écrasement**, quand `manifest/package-no-overwrite.xml` liste quelque chose : l'org est
    interrogée, et tout composant **listé dans ce fichier** que l'org possède déjà est retiré. Il est
    limité à sa propre liste et à rien d'autre, et un composant qu'il protège est quand même créé dans
    une org qui ne l'a pas encore
 4. **Le deploy-on-change**, si `manifest/packageDeployOnChange.xml` existe : ces composants, et eux
    seuls, sont récupérés depuis l'org et comparés, et ceux qui n'ont pas changé sont écartés
 
-Les étapes 2, 3 et 4 sont toutes désactivées dans ce projet : ce que Salesforce reçoit est donc
-l'étape 1.
+Les étapes 2 et 4 sont désactivées dans ce projet. L'étape 3 s'exécute, et ses lignes `[NoOverwrite]`
+sont dans le log, mais rien de ce que déploie Helios n'est encore dans sa liste : ce que Salesforce
+reçoit est donc l'étape 1.
 
 **Le nettoyage n'est pas dans cette liste, et c'est ce qu'il faut retenir.** Les règles
 `autoCleanTypes` tournent à l'intérieur de `sf hardis:work:save`, sur la machine d'un contributeur,

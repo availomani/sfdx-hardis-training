@@ -5,6 +5,8 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-09-27
 
+- Helios starts with the package-no-overwrite.xml every sfdx-hardis project gets, and Lab 3.5 adds the warehouse remote site setting to it.
+- Pull Request checks are faster: MegaLinter no longer runs checkov and grype on the course.
 - New **Create my lab records** entry in the Level 2 Training menu: Lab 2.4 no longer asks you to type the 12 Crew Capacity records, it creates them and you check them.
 - The Apex code analyzer now blocks a Pull Request, as on a real project: Lab 2.5 shows the query in a loop refused, and the Apex samples the labs copy no longer carry findings.
 - Lab 2.4 gives the SOQL query and the label to type when you create the data workspace, links SFDMU, and says how precise a manual action must be.

@@ -857,6 +857,11 @@ write(
 // The real manifest: the labs open it in the package viewer, and the reader
 // compares the picture with what their own clone shows.
 write(path.join(PROJECT, "manifest", "package.xml"), fs.readFileSync(path.join(ROOT, "manifest", "package.xml"), "utf8"));
+// The default no-overwrite list Lab 3.5 opens and adds the remote site setting to
+write(
+  path.join(PROJECT, "manifest", "package-no-overwrite.xml"),
+  fs.readFileSync(path.join(ROOT, "manifest", "package-no-overwrite.xml"), "utf8")
+);
 
 // SFDMU workspaces, so the Data Workbench panel has content and the data
 // deployment action resolves its project path instead of reporting it missing.
