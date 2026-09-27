@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "deadc7823cffd652cc4f9237b1c96a434d2d75ee"
+source_rev: "26480524514753ce9058724689c148988ba61775"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/vscode/pipeline-cards--new-user-story
@@ -77,18 +77,30 @@ modification existe, parce que c'est la situation dont parle ce lab : vous avez 
 mergé, et aucun des deux ne savait pour l'autre.
 
 **Training: Level 2** **(1)** > **Simulate my teammates** **(2)**, depuis la Welcome page ou depuis
-la liste des commandes sfdx-hardis, et choisissez
-**US-018 Cap the crew size a planner can assign**.
+la liste des commandes sfdx-hardis.
 
 ![Le menu Training du niveau 2 dans la liste des commandes sfdx-hardis](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
+Le panneau de commande pose trois questions :
+
+| Question                               | Réponse                                                     |
+|----------------------------------------|-------------------------------------------------------------|
+| Which teammate work do you need?       | **US-018 Cap the crew size a planner can assign**           |
+| Create it?                             | **Yes**                                                     |
+| Merge it for you once its checks pass? | **Yes**, sauf si vous voulez la merger vous-même sur GitHub |
+
 Cela crée la branche `training/mate-us-018-crew-capacity` à partir de votre `integration` actuelle,
 commite les modifications de Mariia sous son nom, la pousse sur votre fork (votre copie personnelle
-du repository du cours sur GitHub, par exemple `github.com/my-username/sfdx-hardis-training`), et
-ouvre la Pull Request.
+du repository du cours sur GitHub, par exemple `github.com/my-username/sfdx-hardis-training`),
+ouvre la Pull Request et affiche son adresse.
 
-Relisez-la rapidement, puis **mergez-la**. Mariia est maintenant dans `integration`, et vous êtes en
-retard.
+Avec **Yes**, le panneau attend les checks, deux à quatre minutes, merge la Pull Request et écrit
+**Pull Request merged into its base branch**. Avec **No**, ouvrez l'adresse affichée, jetez un œil à
+**Files changed**, et mergez-la avec **Squash and merge** une fois les checks verts : les mêmes clics
+qu'au [Lab 2.1](2-1-backpromote-your-teammates-work.md), étape 1b, où chacun a sa capture d'écran.
+Si vous la mergez sur GitHub pendant que le panneau attend encore, il s'en aperçoit et s'arrête.
+
+Dans les deux cas, Mariia est maintenant dans `integration`, et vous êtes en retard.
 
 <details markdown="1"><summary>Sous le capot : pourquoi la collègue est rejouée plutôt que préexistante</summary>
 

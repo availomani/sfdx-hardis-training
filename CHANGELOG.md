@@ -5,6 +5,8 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-09-26
 
+- After **Reset this level** on Level 2, **Set up one of my training orgs** and every Pull Request into integration no longer fail on the Signed Off By field, which the start state granted before US-017 created it.
+- Lab 2.1 walks through merging Romain's Pull Request click by click, with screenshots. In Level 2, **Simulate my teammates** prints the address of the teammate Pull Request and offers to merge it for you once its checks pass, and it knows when you already merged it yourself.
 - **Claim my badge** no longer says your work is only on this computer when it is on your fork: after **Reset this level**, `integration` showed as not pushed, and so did branches pushed without tracking. The help page says how to claim from a fork made before this fix.
 - The course site publishes again: the changes of 2026-09-25 below never reached it, because four labs named another lab without linking it.
 - **Clean up a training org** works on an org that was used: it deletes the old versions of the Helios flows, and erases the objects instead of leaving them under Deleted Objects, where they made the next **Set up my training environment** fail.

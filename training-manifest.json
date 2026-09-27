@@ -301,6 +301,10 @@
         "pipeline"
       ],
       "screenshots": [
+        "annotated/vscode/sidebar-commands-custom-menu-2--training-menu",
+        "annotated/web/github-pr-files",
+        "annotated/web/github-pr-merge",
+        "annotated/web/github-pr-merge-squash",
         "annotated/vscode/backpromote-result--what-it-did",
         "annotated/vscode/pipeline-cards--backpromote",
         "annotated/vscode/backpromote-loading",

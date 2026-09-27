@@ -12,7 +12,7 @@
   "commitMessage": "US-018 Cap the crew size a planner can assign\n\nAdds Crew_Capacity_Cap__c on Installation and a decision in Installation_Assign_Crew\nthat brings an over-sized crew back down to the cap. Granted on Helios_Delivery_Manager.\nMoved the cap onto the Installation layout.",
   "prTitle": "US-018 Cap the crew size a planner can assign",
   "prBody": "Planners have been assigning crews larger than the installation can take, and the crews end up\nin each other's way on small roofs.\n\nThis adds `Crew_Capacity_Cap__c` on Installation, and a decision in `Installation_Assign_Crew`\nthat brings the crew back down to the cap when a planner goes over it.\n\n- New field `Installation__c.Crew_Capacity_Cap__c`\n- `Installation_Assign_Crew`: new `Crew Over Cap` decision after the status assignment\n- `Helios_Delivery_Manager`: read and edit on the new field\n- Installation layout: the cap added\n\nStory: US-018 in BACKLOG.md",
-  "nextStep": "Review it, then merge it into integration. Lab 2.7 then builds your own change on top and meets the conflict.",
+  "nextStep": "Review it, then merge it into integration. In Lab 2.7, then publish your own change and meet the conflict, step 3. In Lab 3.4, merge US-019 first.",
   "patches": [
     {
       "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
@@ -27,5 +27,7 @@
       "layoutField": "Crew_Capacity_Cap__c",
       "after": "Crew_Size__c"
     }
-  ]
+  ],
+  "offerMergeLevels": [2],
+  "nextStepMerged": "Mariia is in integration and you are behind. Go on with Lab 2.7 step 3: publish your own change."
 }

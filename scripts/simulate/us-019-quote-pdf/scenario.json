@@ -12,7 +12,7 @@
   "commitMessage": "US-019 Generate a quote PDF from an opportunity\n\nAdds Panel_Batch__c.Quote_Pdf_Url__c to hold the generated document,\ngranted on Helios_Delivery_Manager.",
   "prTitle": "US-019 Generate a quote PDF from an opportunity",
   "prBody": "Sales rebuild the quote in a spreadsheet every time. This stores the generated PDF against the\npanel batch so it can be linked from the opportunity.\n\n- New field `Panel_Batch__c.Quote_Pdf_Url__c`\n- `Helios_Delivery_Manager`: read and edit on the new field\n\nStory: US-019 in BACKLOG.md",
-  "nextStep": "Merge this one first: it is small and green. US-018 then has a permission set conflict to resolve, which is the point of Lab 3.4.",
+  "nextStep": "Merge it into integration. In Lab 2.9, then bring integration into your branch. In Lab 3.4, merge it before US-018, which then has the permission set conflict the lab is about.",
   "patches": [
     {
       "file": "force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml",
@@ -22,5 +22,7 @@
         "readable": true
       }
     }
-  ]
+  ],
+  "offerMergeLevels": [2],
+  "nextStepMerged": "Romain is in integration. Bring integration into your branch from the Source Control panel, as Lab 2.9 says."
 }

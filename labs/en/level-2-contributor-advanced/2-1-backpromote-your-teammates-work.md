@@ -7,6 +7,10 @@ lab: 1
 lang: en
 source_rev: ""
 screenshots:
+  - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
+  - annotated/web/github-pr-files
+  - annotated/web/github-pr-merge
+  - annotated/web/github-pr-merge-squash
   - annotated/vscode/backpromote-result--what-it-did
   - annotated/vscode/pipeline-cards--backpromote
   - annotated/vscode/backpromote-loading
@@ -47,12 +51,93 @@ contributor accidentally undoes a teammate's work.
 
 ### 1. Bring your teammate's work in
 
-The two weeks you were away have to exist before you can catch up on them. One click makes them:
-**Training: Level 2** > **Simulate my teammates**, and take **US-017 Record who signed an
-installation off**.
+The two weeks you were away have to exist before you can catch up on them. Romain does not exist,
+but his work does: the training replays it in **your own** fork, as a Pull Request you merge.
 
-It creates Romain's branch in your own fork from your current `integration`, commits his change under
-his name and opens the Pull Request. Review it the way you would a colleague's, then **merge it**.
+#### 1a. Run Simulate my teammates
+
+In the sfdx-hardis command list, expand **Training: Level 2** **(1)** and click **Simulate my
+teammates** **(2)**. The same entry is on the Welcome page, under **Training: Level 2**.
+
+![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
+
+A command panel opens and asks three questions. Answer them this way:
+
+| Question                               | Answer                                                  |
+|----------------------------------------|---------------------------------------------------------|
+| Which teammate work do you need?       | **US-017 Record who signed an installation off**        |
+| Create it?                             | **Yes**                                                 |
+| Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself (step 1b) |
+
+If VS Code first asks how to allow the Training command, choose **Always allow**, as in
+[Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+
+The command creates the branch `training/mate-us-017-sign-off` from your current `integration`,
+commits Romain's change under his name, pushes it to your fork on GitHub and opens the Pull Request.
+The panel prints its address: keep it, you need it in step 1b.
+
+With **Yes** to the last question, the panel then waits for the two checks of the Pull Request,
+about two to four minutes, and merges it as soon as both are green. It writes
+**Pull Request merged into its base branch**, then **Done**. You can skip step 1b and go straight to
+step 2. If you merge it yourself on GitHub while the panel is still waiting, it notices and stops
+there too.
+
+If it says a check failed, or that it could not merge, nothing is lost: the Pull Request is still
+open, and step 1b is the way to finish.
+
+<details markdown="1"><summary>Under the hood: what Simulate my teammates did</summary>
+
+The Training entry ran:
+
+    node scripts/training.mjs simulate --level 2
+
+It applied the patch set of `scripts/simulate/us-017-sign-off/` to your working copy, committed it
+with Romain's name and email, pushed the branch and opened the Pull Request with `gh pr create`.
+Your own uncommitted changes, if you had any, were put aside first and put back at the end.
+
+With **Yes** to the merge, it gave you back your own branch first, then asked GitHub for the state
+of the Pull Request's checks every twenty seconds (`gh pr checks`), and ran `gh pr merge --squash`
+once all of them, **Simulate Deployment to Major Org** and **Mega-Linter** among them, were green.
+The same rule as the button: your fork's `integration` is protected, and GitHub would refuse the
+merge while a check is red or running.
+
+</details>
+
+#### 1b. Or review and merge it yourself on GitHub
+
+Only if you answered **No**, or if the panel could not merge.
+
+1. Open the Pull Request: click the address the panel printed, or open your fork on GitHub
+   (`github.com/my-username/sfdx-hardis-training`), click the **Pull requests** tab, then
+   **US-017 Record who signed an installation off**
+2. Click **Files changed** **(1)**. The file list on the left **(2)** has two files, the permission
+   set `Helios_Delivery_Manager` and the `Installation` layout. Each line of the diff **(3)** is one
+   change, green when added and red when removed. Romain only adds: read and edit access on
+   `Signed_Off_By__c`, and the field on the layout. That is the review: you are checking that the
+   Pull Request does what its title says, and nothing else
+
+   ![The Files changed tab of a teammate Pull Request](../../_assets/annotated/web/github-pr-files.png)
+
+   The picture is a later teammate Pull Request, US-052: yours shows Romain's two files, and the
+   tabs and buttons are the same.
+
+3. Go back to the **Conversation** tab and scroll to the bottom. While a check is still running,
+   the box reads **Merging is blocked**: wait, the page updates on its own. When it reads **All
+   checks have passed**, the **Merge pull request** button **(1)** is live
+
+   ![The merge box of a Pull Request, with all checks passed](../../_assets/annotated/web/github-pr-merge.png)
+
+4. Click the small arrow **(1)** on the right of the green button, choose **Squash and merge**
+   **(2)**, then click **Squash and merge** and **Confirm squash and merge**. The badge at the top
+   of the page turns purple and reads **Merged**
+
+   ![The merge method menu of a Pull Request, with Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
+
+This is the same merge as [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), step 4. A
+check that fails here is not your fault and not something to fix: run **Simulate my teammates**
+again, it recreates the branch and the Pull Request.
+
+#### 1c. Where you are now
 
 `integration` now carries three merged Pull Requests your org has never seen as a deployment: your
 two Level 1 stories, which are in `helios-dev` only because you built them there, and Romain's, which
@@ -186,6 +271,15 @@ Open `helios-dev` and check that the metadata from the three merged stories is t
 `Panels_Required__c` and `Crew_Notes__c` from Level 1, if you did Level 1 in a different org.
 
 ## If it goes wrong
+
+**Simulate my teammates says no check ran on the Pull Request.**
+The Checks tab of the Pull Request is empty: GitHub Actions are off on your fork.
+[Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), step 2, says how to turn them on. Then
+merge it yourself, step 1b.
+
+**The panel says "Nothing to commit".**
+Romain's change is already in your `integration`: you merged it earlier, and the panel prints the
+address of that merged Pull Request. Go on with step 2.
 
 **The panel says there is nothing to backpromote.**
 Your org is already level with `integration`, which happens if you just finished Level 1 in the same

@@ -11,11 +11,6 @@
     <description>Planners: everything in the Helios Delivery app, including the scheduler.</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Installation__c.Signed_Off_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Installation__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>

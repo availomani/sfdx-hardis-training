@@ -80,8 +80,11 @@ the object and the flow into `helios-integration` and the checklist will be empt
 feature will do nothing at all. Build a data workspace and declare an action.
 
 **Three: the teammate on the same file.** Before you open your Pull Request, run **Training:
-Level 2 > Simulate my teammates** and pick **US-019**, then merge it. Romain adds a quote PDF field
-and grants it on `Helios Delivery Manager`, the same permission set your checklist needs. Bring
+Level 2 > Simulate my teammates** and pick **US-019**. Romain adds a quote PDF field and grants it
+on `Helios Delivery Manager`, the same permission set your checklist needs. Answer **Yes** to
+**Merge it for you once its checks pass?** and the panel merges his Pull Request as soon as its
+checks are green, or answer **No** and merge it yourself on GitHub from the address the panel
+prints, the way [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, shows. Then bring
 `integration` into your branch from the **Source Control** panel.
 
 This time git merges it on its own, with no conflict: Salesforce keeps the permissions of a

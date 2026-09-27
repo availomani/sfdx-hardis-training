@@ -73,15 +73,30 @@ can genuinely review and merge it. Do this **after** your own change exists, bec
 situation the lab is about: you branched, she merged, and neither of you knew about the other.
 
 **Training: Level 2** **(1)** > **Simulate my teammates** **(2)**, from the Welcome page or from the
-sfdx-hardis command list, and choose
-**US-018 Cap the crew size a planner can assign**.
+sfdx-hardis command list.
 
 ![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-It creates the branch `training/mate-us-018-crew-capacity` from your current `integration`, commits
-Mariia's changes under her name, pushes it to your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`), and opens the Pull Request.
+The command panel asks three questions:
 
-Review it briefly, then **merge it**. Mariia is now in `integration`, and you are behind.
+| Question                               | Answer                                                  |
+|----------------------------------------|---------------------------------------------------------|
+| Which teammate work do you need?       | **US-018 Cap the crew size a planner can assign**       |
+| Create it?                             | **Yes**                                                 |
+| Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself on GitHub |
+
+It creates the branch `training/mate-us-018-crew-capacity` from your current `integration`, commits
+Mariia's changes under her name, pushes it to your fork (your own copy of the course repository on
+GitHub, for example `github.com/my-username/sfdx-hardis-training`), opens the Pull Request and
+prints its address.
+
+With **Yes**, the panel waits for the checks, two to four minutes, merges the Pull Request and
+writes **Pull Request merged into its base branch**. With **No**, open the address it printed, have
+a look at **Files changed**, and merge it with **Squash and merge** once the checks are green: the
+same clicks as [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, where each one has its
+screenshot. If you merge it on GitHub while the panel is still waiting, it notices and stops.
+
+Either way, Mariia is now in `integration`, and you are behind.
 
 <details markdown="1"><summary>Under the hood: why the teammate is replayed rather than pre-existing</summary>
 

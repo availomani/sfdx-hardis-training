@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "0aac07ff699d13017591031c15b2c7b125849a59"
 screenshots:
 depends_on:
   commands: [hardis:work:new, hardis:work:save, hardis:org:data:import]
@@ -82,9 +82,12 @@ Un déploiement vert mettra l'objet et le flow dans `helios-integration` et la c
 et la fonctionnalité ne fera rien du tout. Construisez un data workspace et déclarez une action.
 
 **Trois : le collègue sur le même fichier.** Avant d'ouvrir votre Pull Request, lancez **Training:
-Level 2 > Simulate my teammates** et choisissez **US-019**, puis mergez-la. Romain ajoute un champ de
-PDF de devis et l'accorde sur `Helios Delivery Manager`, le permission set même dont votre checklist
-a besoin. Faites entrer `integration` dans votre branche depuis le panneau **Source Control**.
+Level 2 > Simulate my teammates** et choisissez **US-019**. Romain ajoute un champ de PDF de devis et
+l'accorde sur `Helios Delivery Manager`, le permission set même dont votre checklist a besoin.
+Répondez **Yes** à **Merge it for you once its checks pass?** et le panneau merge sa Pull Request dès
+que ses checks sont verts, ou répondez **No** et mergez-la vous-même sur GitHub depuis l'adresse
+affichée par le panneau, comme le montre le [Lab 2.1](2-1-backpromote-your-teammates-work.md),
+étape 1b. Faites ensuite entrer `integration` dans votre branche depuis le panneau **Source Control**.
 
 Cette fois git merge tout seul, sans conflit : Salesforce garde les permissions d'un permission set
 par ordre alphabétique, son autorisation `Panel_Batch__c` et les vôtres sur `Handover_Item__c`
