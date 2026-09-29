@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
+source_rev: "4469908307f988b14dfd81ce3636e0cfe591c884"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -280,9 +280,10 @@ Documentation de la commande : [hardis:work:backpromote](https://sfdx-hardis.clo
 
 ## Ce que vous devez voir
 
-Ouvrez `helios-dev` et vérifiez que la métadonnée des trois stories mergées y est. En particulier
-`Panels_Required__c` et `Crew_Notes__c` du Niveau 1, si vous avez fait le Niveau 1 dans une autre
-org.
+Ouvrez `helios-dev` et vérifiez que la métadonnée des trois stories mergées y est. Le champ
+**Signed Off By** de Romain est celui à chercher : ouvrez une installation, il est en bas de la
+colonne des champs. `Panels_Required__c` et `Crew_Notes__c` du Niveau 1 y étaient déjà, sauf si
+vous avez fait le Niveau 1 dans une autre org.
 
 ## En cas de problème
 

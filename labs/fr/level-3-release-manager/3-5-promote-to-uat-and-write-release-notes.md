@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "dd66f0b0d98198e8a0e40fd57b516f4abcce664b"
+source_rev: "61522b52030bb3ccfc5b71dda053a192d3091436"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -279,11 +279,16 @@ Sur cette promotion, les notes générées s'ouvrent ainsi :
 
 | Metric           | Value |
 |------------------|-------|
-| Pull Requests    | 19    |
+| Pull Requests    | 20    |
 | Tickets          | 15    |
 | Contributors     | 1     |
-| Added / Modified | 33    |
+| Added / Modified | 34    |
 ```
+
+Le décompte inclut les Pull Requests qui ne portent aucune story : celles de configuration du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
+et de l'étape 2, et la promotion elle-même. Le vôtre dépend de votre parcours : près de 20 après les
+Niveaux 1 et 2, beaucoup moins après **Reset this level**, qui démarre le Niveau 3 sans leurs Pull
+Requests.
 
 Viennent ensuite un tableau des tickets, un des Pull Requests avec leurs auteurs et dates de merge,
 les métadonnées modifiées par type, et les deployment actions avec leur statut dans `uat` : l'étape

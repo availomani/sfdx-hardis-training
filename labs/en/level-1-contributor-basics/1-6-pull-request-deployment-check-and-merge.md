@@ -139,8 +139,8 @@ the most useful thing on the page.
 
 1. **The banner** **(1)** says whether the simulated deployment succeeded
 2. **What would change** **(2)**. Not a list of your files: sfdx-hardis sends the whole package,
-   `manifest/package.xml`, and Salesforce answers how much of it differs: `34 sent to the org, 5
-   would change (1 created, 4 updated, 0 deleted, 29 unchanged)`. The one created is your field, and the
+   `manifest/package.xml`, and Salesforce answers how much of it differs: `36 sent to the org, 7
+   would change (1 created, 6 updated, 0 deleted, 29 unchanged)`. The one created is your field, and the
    updated ones include the layout and the two permission sets you changed
 3. **Apex coverage** **(3)**, against the target this project sets
 4. **Tickets** **(4)**, the stories it recognised in your branch name and commit messages, each
@@ -226,6 +226,10 @@ org yet" without leaving the editor.
 
 ![The DevOps Pipeline panel, with the deployment status on the arrow to the org](../../_assets/annotated/vscode/devops-pipeline--deployment-status.png)
 
+The picture was taken later in the course, with teammates' branches on the left of `integration`.
+Yours shows only `integration` and `uat`: the pill **(1)** on the arrow to the org is the part to look
+at.
+
 The pill is also a link: click it and GitHub opens on the log of that run, **Process Deployment
 (sfdx-hardis)**, which takes about three minutes. You do not need to read it today. It is there for
 the day something fails, and [Lab 3.3](../level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md) is the lab that reads one line by line.
@@ -235,8 +239,8 @@ When the deployment finishes, it writes a second comment on the Pull Request you
 ![The comment sfdx-hardis writes after the merge deployment](../../_assets/annotated/web/github-pr-deployed.png)
 
 1. **Deployment successful** **(1)**, and this time the org really changed
-2. **What changed** **(2)**, in the same shape as the check said it would: `5 changed` where the
-   check said `5 would change`
+2. **What changed** **(2)**, in the same shape as the check said it would: `7 changed` where the
+   check said `7 would change`
 3. **Quick Deploy** **(3)**. The merge job did not start from nothing. It released the validation
    the Pull Request check had already done, which is why it did not run the Apex tests a second
    time and why it took two minutes rather than five

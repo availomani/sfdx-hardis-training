@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "61522b52030bb3ccfc5b71dda053a192d3091436"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/welcome-custom-menu-3
@@ -158,8 +158,8 @@ Capacity back, beside the cap**.
 Cela ajoute un commit à sa branche, la même Pull Request se met donc à jour, et ses contrôles
 retournent. Rouvrez **Files changed** : GitHub propose de n'afficher que les modifications depuis
 votre revue, et il y en a une, `Total_Capacity_kW__c` ajouté dans la deuxième colonne, en lecture
-seule, sous le plafond. Le diff entier de la Pull Request déplace maintenant un champ et n'en retire
-aucun.
+seule, sous le plafond. Le diff entier de la Pull Request déplace maintenant deux champs dans la deuxième colonne, le
+plafond et la capacité installée, désormais en lecture seule, et n'en retire aucun.
 
 Quand les contrôles sont verts, mergez avec **Squash and merge**, comme pour toute Pull Request de
 feature ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)) : les deux commits deviennent une ligne dans l'historique d'`integration`, titrée

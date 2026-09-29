@@ -81,7 +81,7 @@
     },
     {
       "name": "github-pr-comment",
-      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/89",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/1",
       "width": 1440,
       "height": 1800,
       "settle": 5000,
@@ -176,7 +176,7 @@
     },
     {
       "name": "github-pr-deployed",
-      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/89",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/1",
       "width": 1440,
       "height": 1800,
       "settle": 5000,

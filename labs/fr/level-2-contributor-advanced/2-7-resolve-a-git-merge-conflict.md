@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
+source_rev: "c43ebd2258a2c6950db136e2317822d8dae07296"
 screenshots:
   - annotated/salesforce/flow-builder-assign-crew
   - annotated/salesforce/flow-builder-assign-crew-full
@@ -178,6 +178,9 @@ Deux fichiers reviennent marqués en conflit. Ils apparaissent dans le panneau s
 **(1)**, chacun avec un **!** **(2)**, et la barre d'état dit qu'un merge est en cours.
 
 ![Le panneau Source Control avec les fichiers en conflit sous Merge Changes](../../_assets/annotated/vscode/git-merge-conflicts--merge-changes.png)
+
+La capture ne montre que le permission set. La vôtre montre aussi le flow `Installation_Assign_Crew`,
+avec son propre **!** : deux fichiers, comme GitHub l'a dit.
 
 <details markdown="1"><summary>Sous le capot : ce qu'a lancé Merge Branch</summary>
 

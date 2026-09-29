@@ -150,7 +150,8 @@ back, beside the cap**.
 It adds one commit to her branch, so the same Pull Request updates, and its checks run again. Open
 **Files changed** again: GitHub offers to show only the changes since your review, and there is one,
 `Total_Capacity_kW__c` added in the second column, read only, under the cap. The whole diff of the
-Pull Request now moves one field and removes nothing.
+Pull Request now moves two fields to the second column, the cap and the installed capacity, now read only,
+and removes nothing.
 
 When the checks are green, merge with **Squash and merge**, as for every feature Pull Request (Lab
 1.6): the two commits become one line in the history of `integration`, titled like the Pull Request.

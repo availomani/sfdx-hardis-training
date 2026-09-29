@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "ecec979441416a4d9c6a3f833bbb555facb88aa6"
+source_rev: "cb5f905c738e49eeef5ea49e5734aa0aee4d3818"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -147,6 +147,9 @@ comment. Il est exécuté par [SFDMU](https://github.com/forcedotcom/SFDX-Data-M
 données qu'utilise sfdx-hardis, et rien dedans n'est propre à une org.
 
 ![Le Data Import/Export Workbench, où les workspaces SFDMU se créent et se lancent](../../_assets/annotated/vscode/data-workbench.png)
+
+La capture a été prise à la fin de cette étape : elle montre déjà `HeliosCrewRefData` sous
+`HeliosBaseline`. La vôtre ne montre que `HeliosBaseline` tant que vous ne l'avez pas créé.
 
 Créez un nouveau workspace :
 

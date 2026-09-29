@@ -3,6 +3,14 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-09-29
+
+- Lab 1.6 shows the counts a learner gets today, 36 sent and 7 changed, in its text and its two comment pictures.
+- Pictures that show a later state of the course now say so: the pipeline of Lab 1.6, the Data Workbench of Lab 2.4 and the Merge Changes list of Lab 2.7.
+- Lab 2.1 names the field the backpromote actually brings, Romain's Signed Off By.
+- Lab 3.2 says the fixed Pull Request moves two fields to the second column, and Lab 3.5 explains why its notes count 20 Pull Requests.
+- A badge claim now republishes the reset branches, so a retrofit in Labs 3.7 and 3.10 no longer brings badge files along.
+
 ## 2026-09-27
 
 - Helios starts with the package-no-overwrite.xml every sfdx-hardis project gets, and Lab 3.5 adds the warehouse remote site setting to it.

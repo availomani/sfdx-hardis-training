@@ -267,8 +267,10 @@ Command documentation: [hardis:work:backpromote](https://sfdx-hardis.cloudity.co
 
 ## What you should see
 
-Open `helios-dev` and check that the metadata from the three merged stories is there. In particular
-`Panels_Required__c` and `Crew_Notes__c` from Level 1, if you did Level 1 in a different org.
+Open `helios-dev` and check that the metadata from the three merged stories is there. Romain's
+**Signed Off By** field is the one to look for: open an installation, it is at the bottom of the
+field column. `Panels_Required__c` and `Crew_Notes__c` from Level 1 were already there, unless you
+did Level 1 in a different org.
 
 ## If it goes wrong
 

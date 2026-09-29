@@ -147,6 +147,9 @@ sfdx-hardis uses, and nothing in it is specific to one org.
 
 ![The Data Import/Export Workbench, where SFDMU workspaces are created and run](../../_assets/annotated/vscode/data-workbench.png)
 
+The picture was taken at the end of this step, so it already lists `HeliosCrewRefData` under
+`HeliosBaseline`. Yours lists `HeliosBaseline` alone until you create it.
+
 Create a new workspace:
 
 1. **Create Workspace** **(1)**, and fill in its three fields:

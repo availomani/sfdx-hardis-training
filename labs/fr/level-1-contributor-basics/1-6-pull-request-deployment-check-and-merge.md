@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "71114c5446375824368bab616dc0f1d1ee701d51"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -145,8 +145,8 @@ Quand le contrôle de déploiement se termine, sfdx-hardis écrit un commentaire
 
 1. **La bannière** **(1)** dit si le déploiement simulé a réussi
 2. **Ce qui changerait** **(2)**. Pas une liste de vos fichiers : sfdx-hardis envoie le package
-   entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `34 sent to the org,
-   5 would change (1 created, 4 updated, 0 deleted, 29 unchanged)`. Le composant créé est votre
+   entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `36 sent to the org,
+   7 would change (1 created, 6 updated, 0 deleted, 29 unchanged)`. Le composant créé est votre
    champ, et les composants mis à jour incluent la présentation de page et les deux permission sets
    que vous avez modifiés
 3. **La couverture Apex** **(3)**, face à l'objectif que fixe ce projet
@@ -239,6 +239,10 @@ répond à "est-ce que mon travail est dans l'org" sans quitter l'éditeur.
 
 ![Le panneau DevOps Pipeline, avec le statut du déploiement sur la flèche vers l'org](../../_assets/annotated/vscode/devops-pipeline--deployment-status.png)
 
+La capture a été prise plus loin dans le cours, avec les branches des collègues à gauche
+d'`integration`. La vôtre ne montre que `integration` et `uat` : c'est la pastille **(1)** sur la
+flèche vers l'org qu'il faut regarder.
+
 La pastille est aussi un lien : cliquez dessus et GitHub s'ouvre sur le log de cette exécution,
 **Process Deployment (sfdx-hardis)**, qui prend environ trois minutes. Vous n'avez pas besoin de le
 lire aujourd'hui. Il est là pour le jour où quelque chose échoue, et le [Lab 3.3](../level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md) est le lab qui
@@ -250,8 +254,8 @@ de merger :
 ![Le commentaire que sfdx-hardis écrit après le déploiement de merge](../../_assets/annotated/web/github-pr-deployed.png)
 
 1. **Deployment successful** **(1)**, et cette fois l'org a vraiment changé
-2. **Ce qui a changé** **(2)**, sous la même forme que ce que le contrôle annonçait : `5 changed`
-   là où le contrôle disait `5 would change`
+2. **Ce qui a changé** **(2)**, sous la même forme que ce que le contrôle annonçait : `7 changed`
+   là où le contrôle disait `7 would change`
 3. **Quick Deploy** **(3)**. Le job de merge n'est pas parti de rien. Il a libéré la validation que
    le contrôle de Pull Request avait déjà faite, c'est pourquoi il n'a pas relancé les tests Apex une
    deuxième fois et pourquoi il a pris deux minutes plutôt que cinq

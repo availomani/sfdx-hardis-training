@@ -266,11 +266,16 @@ On this promotion, the generated notes open like this:
 
 | Metric           | Value |
 |------------------|-------|
-| Pull Requests    | 19    |
+| Pull Requests    | 20    |
 | Tickets          | 15    |
 | Contributors     | 1     |
-| Added / Modified | 33    |
+| Added / Modified | 34    |
 ```
+
+The count includes the Pull Requests that carry no story: the configuration ones of [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) and
+of step 2, and the promotion itself. Yours depends on how you got here: close to 20 after walking
+Levels 1 and 2, far fewer after **Reset this level**, which starts Level 3 without their Pull
+Requests.
 
 Then come a table of the tickets, one of the Pull Requests with their authors and merge dates, the
 metadata changed by type, and the deployment actions with their status in `uat`: the manual

@@ -1,7 +1,7 @@
 ---
 # Badge claim audit.
 #
-# FIVE RULES. Read them before changing anything in this file.
+# SIX RULES. Read them before changing anything in this file.
 #
 #  1. NEVER execute anything from the learner's clone. No npm install, no npm run,
 #     no build, no script of theirs. The audit only reads files and git history,
@@ -14,9 +14,10 @@
 #     repository cannot exhaust the runner.
 #  5. Serialise with a concurrency group. Two claims landing together both commit
 #     to main, and without serialisation the second push is rejected.
-#  6. Ask for the site build after committing a badge. A push made with
-#     GITHUB_TOKEN never triggers a workflow, so nothing else will, and the badge
-#     page this workflow links to would not exist.
+#  6. Ask for the site build and the reset branches after committing a badge. A
+#     push made with GITHUB_TOKEN never triggers a workflow, so nothing else will:
+#     the badge page this workflow links to would not exist, and the reset
+#     branches would lag main by every badge commit.
 #
 # The learner's code is never checked out into the workspace: it is cloned into a
 # temporary directory and read. That is what keeps this simple, and it is why the
@@ -49,8 +50,8 @@ jobs:
     permissions:
       contents: write
       issues: write
-      # To start the site build below. A push made with GITHUB_TOKEN never
-      # triggers a workflow, so the badge has to ask for the build explicitly.
+      # To start the site build and the reset branches below. A push made with
+      # GITHUB_TOKEN never triggers a workflow, so the badge has to ask for both.
       actions: write
     steps:
       - name: Checkout the training repository
@@ -190,6 +191,15 @@ jobs:
             if [ "$pushed" != "true" ]; then
               echo "The badge could not be pushed after 5 attempts: the issue stays open."
               exit 1
+            fi
+            # Rule 6: the push above starts no workflow, so ask for the reset
+            # branches. They are built from main, and without this they lag
+            # every badge commit: a learner's retrofit (Labs 3.7 and 3.10) then
+            # carries the badge files main has and integration does not, and
+            # start-branches.mjs --check reports them stale. Only after a push:
+            # a re-run with nothing to commit has nothing to publish.
+            if ! gh workflow run "Publish the reset branches" --ref "${GITHUB_REF_NAME}"; then
+              echo "The reset branches could not be republished: the next push to main does it."
             fi
           fi
           # GitHub does not start a workflow from a push made with GITHUB_TOKEN,
