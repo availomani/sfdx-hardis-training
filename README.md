@@ -133,11 +133,22 @@ keeps the button names.
 
 ## For maintainers
 
+The site is built here and published to
+[sfdx-hardis-training/sfdx-hardis-training.github.io](https://github.com/sfdx-hardis-training/sfdx-hardis-training.github.io).
+Its `gh-pages` branch is written by the build and force-pushed on every run, so nothing should ever
+be committed to it by hand. That repository is an organization site, so it serves at the root of its
+host, which is the base path the custom domain answers on.
+
+The address this repository used to serve, `hardisgroupcom.github.io/sfdx-hardis-training`, keeps
+answering: `scripts/build/redirect-site.mjs` builds one redirect page per page of the course, and
+copies the badge records as they are, because nothing that fetches a badge record parses HTML.
+
 ```bash
 node scripts/build/universe.mjs          # regenerate the backlog, link map and manifest, and check consistency
 node scripts/build/universe.mjs --check  # same, in CI: writes nothing, fails on drift
 node scripts/build/data.mjs              # regenerate the seed CSV files
 node scripts/build/site.mjs              # assemble site-src/ for Zensical
+node scripts/build/redirect-site.mjs     # the site the old URL serves, built from site/
 node scripts/build/mocks.mjs             # regenerate the Helios screenshot fixtures in ../vscode-sfdx-hardis
 node scripts/build/lab-crossrefs.mjs     # link every mention of another lab, in every locale
 node scripts/i18n/check-translations.mjs # which translations their English source has moved past

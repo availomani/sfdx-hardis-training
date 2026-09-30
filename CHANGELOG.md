@@ -3,6 +3,13 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-09-30
+
+- The site is now built onto a host of its own, the first step of moving the course to
+  sfdx-hardis-training.cloudity.com. Nothing changes for a reader yet: the address stays
+  hardisgroupcom.github.io/sfdx-hardis-training, and every link, badge and bookmark keeps working
+  when it does move.
+
 ## 2026-09-29
 
 - Lab 1.6 shows the counts a learner gets today, 36 sent and 7 changed, in its text and its two comment pictures.

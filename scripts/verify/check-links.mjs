@@ -12,14 +12,16 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { SITE_URL } from "../lib/urls.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 const WARN_ONLY = process.argv.includes("--warn-only");
 
 // The site is built from this repository, so its own pages cannot be fetched
-// before they are published. They are checked as files instead.
-const SELF = "https://hardisgroupcom.github.io/sfdx-hardis-training";
+// before they are published. They are checked as files instead, which is also
+// why the move to a new host can land here before DNS answers for it.
+const SELF = SITE_URL;
 
 // Hosts that answer 403 to anything that is not a browser. A link there cannot be
 // proved good by a fetch, so it is reported and never fails the build. Keep this

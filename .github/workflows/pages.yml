@@ -1,9 +1,18 @@
 ---
-# Builds the training site and publishes it to GitHub Pages.
+# Builds the training site, publishes it to the host that serves it, and keeps
+# the address it used to have answering.
 #
-# The repository Pages setting is **Source: GitHub Actions**, so this uploads an
-# artifact and deploys it directly. There is no gh-pages branch and nothing is
-# force-pushed anywhere.
+# The course is served from sfdx-hardis-training/sfdx-hardis-training.github.io.
+# This workflow force-pushes the built site there, to a gh-pages branch, over a
+# deploy key. That repository is an organization site, so it serves at the root
+# of its host rather than under a repository name, which is the base path the
+# custom domain answers on: the copy published there already has the URLs it
+# keeps.
+#
+# This repository's own Pages setting stays **Source: GitHub Actions**, and the
+# artifact uploaded at the end of the build is what its URL serves. That is still
+# the course itself. It becomes the redirect site, built here on every run, the
+# day the custom domain answers.
 name: Build and publish the training site
 
 on:
@@ -79,6 +88,31 @@ jobs:
       # instant navigation, and only a browser can say that it does.
       - name: The translate widget keeps the page
         run: node scripts/verify/check-language-switch.mjs
+
+      # The host the course is served from. This runs before the Pages artifact
+      # is uploaded on purpose: a failure here stops the old URL from publishing
+      # redirects to a copy that was never updated.
+      - name: Publish the site to sfdx-hardis-training.github.io
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          deploy_key: ${{ secrets.SFDX_HARDIS_TRAINING_GITHUB_IO_SSH_PRIVATE_KEY }}
+          external_repository: sfdx-hardis-training/sfdx-hardis-training.github.io
+          publish_branch: gh-pages
+          publish_dir: ./site
+          # A built site has no history worth keeping, and without this the branch
+          # grows by a full copy of 50 MB of screenshots on every push.
+          force_orphan: true
+          commit_message: "Built from ${{ github.sha }}"
+
+      # What the old URL serves once the custom domain answers: one redirect page
+      # per page of the course, and the badge records copied as they are, because
+      # nothing that fetches a badge record parses HTML. Built on every run, so it
+      # always covers the page set that exists, and checked here even though the
+      # artifact below is still the course itself.
+      - name: Build the redirect site for the old URL
+        run: |
+          node scripts/build/redirect-site.mjs
+          node scripts/build/redirect-site.mjs --check
 
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:

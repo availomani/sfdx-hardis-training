@@ -24,6 +24,9 @@ yarn-error.log
 # Site build (assembled by scripts/build/site.mjs)
 site/
 
+# The site that keeps the old URL answering (built from site/ by scripts/build/redirect-site.mjs)
+redirect-site/
+
 # Linter output. MegaLinter writes it into the workspace on every run, and a
 # committed copy makes "git diff --check" fail on the trailing whitespace inside
 # the CSV reports.

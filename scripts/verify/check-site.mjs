@@ -20,6 +20,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { SITE_URL as CANONICAL_SITE_URL } from "../lib/urls.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
@@ -67,6 +68,16 @@ const SITE_URL = (() => {
 
 const pages = walk(SITE);
 const problems = [];
+
+// course-site.yml and scripts/lib/urls.mjs each say where this site is published,
+// one for the theme and one for the scripts. They move together or the site
+// declares a canonical it is not served at, which is the kind of thing nobody
+// notices until a search engine does.
+if (SITE_URL !== `${CANONICAL_SITE_URL}/`) {
+  problems.push(
+    `course-site.yml site_url is ${SITE_URL || "missing"}, scripts/lib/urls.mjs SITE_URL is ${CANONICAL_SITE_URL}`
+  );
+}
 let references = 0;
 let links_checked = 0;
 let cards = 0;

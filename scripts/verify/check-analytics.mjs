@@ -36,12 +36,13 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer } from "http";
+import { SITE_URL } from "../lib/urls.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 
 const SITES = [
-  { name: "course", url: "https://hardisgroupcom.github.io/sfdx-hardis-training/" },
+  { name: "course", url: `${SITE_URL}/` },
   { name: "product documentation", url: "https://sfdx-hardis.cloudity.com/" },
 ];
 
