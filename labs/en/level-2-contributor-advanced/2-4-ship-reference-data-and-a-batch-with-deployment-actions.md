@@ -74,15 +74,21 @@ In `helios-dev`, create:
   - `Crew_Type__c`, Picklist: `Roof`, `Ground`, `Electrical`
   - `Roof_Type__c`, Picklist: `Tile`, `Slate`, `Flat`, `Metal`
   - `Panels_Per_Day__c`, Number 3,0
+- A tab for it, so the records can be found in the app: **Setup > Tabs**, **New** under **Custom
+  Object Tabs**, object **Crew Capacity**, any tab style. Keep the profile visibility the wizard
+  offers. On the last screen, **Add to Custom Apps**, untick **Include Tab** at the top of the list,
+  then tick **Helios Delivery** alone: the other apps have no use for it
 - An Apex class `CrewCapacityBatch` that recalculates `Total_Capacity_kW__c` on planned
   installations and that Salesforce can run on a schedule, plus its test class
   `CrewCapacityBatchTest`. **You do not have to write these.** Copy them from
   `scripts/apex/samples/` in the repository: what they compute matters far less here than the fact
   that somebody has to schedule them in every org, which is the whole point of the lab
 - The access, on **Helios Delivery Manager**: **Read**, **Create** and **Edit** on Crew Capacity,
-  and **Read** and **Edit** on its four fields. Planners maintain these numbers, and it is also the
-  permission set the pipeline's own user holds in every org: without it the data load of step 4
-  would find fields it is not allowed to write
+  **Read** and **Edit** on its four fields, and under **Tab Settings** on the same page, **Available**
+  and **Visible**. Planners maintain these numbers, and it is also the permission set the pipeline's
+  own user holds in every org: without it the data load of step 4 would find fields it is not
+  allowed to write. The tab setting is what shows the tab in the other orgs, where the profile
+  visibility you kept in the wizard never travels
 
 Then the records. Helios supports 12 combinations, three crew types by four roof types, and each
 one needs a Crew Capacity record saying how many panels a day that crew lays on that roof. Typing
@@ -93,8 +99,9 @@ Capacity records**, then **helios-dev**, and answer **Yes** to **Create them?**.
 ![The Level 2 Training menu, with Create my lab records](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--lab-records.png)
 
 The panel first checks that your object and its four fields are in the org, then creates the
-records, lists them, and ends with a **See them in the org** link. Open it: the **All** list of
-Crew Capacity reads **12 items** **(1)**, from `CAP-ROOF-TILE` to `CAP-ELECTRICAL-METAL`. If the
+records, lists them, and ends with a **See them in the org** link. Open it, or open the **Crew
+Capacity** tab of the Helios Delivery app and pick the **All** list view: it reads **12 items**
+**(1)**, from `CAP-ROOF-TILE` to `CAP-ELECTRICAL-METAL`. If the
 panel says a field is missing, finish the object first, then run it again: it updates the same
 twelve records rather than creating more.
 
@@ -116,13 +123,13 @@ is the problem the rest of this lab solves.
 
 ### 2. Publish and watch nothing fail
 
-Retrieve the object, its fields, the two Apex classes and `Helios_Delivery_Manager` with **Commit
-changes**, commit them, then **Save / Publish**, push, Pull Request. The check is green. Merge. The
-deployment is green.
+Retrieve the object, its fields, its tab, the `Helios_Delivery` app, the two Apex classes and
+`Helios_Delivery_Manager` with **Commit changes**, commit them, then **Save / Publish**, push, Pull
+Request. The check is green. Merge. The deployment is green.
 
 Now open `helios-integration` and look:
 
-- `Crew_Capacity__c` exists, **with zero records**
+- The **Crew Capacity** tab is in the Helios Delivery app, **with zero records**
 - `CrewCapacityBatch` exists, **scheduled nowhere**
 - Nobody checked that the org is allowed to send the batch's summary email
 
@@ -298,7 +305,7 @@ step stays pending until a person says it is done.
 
 Do not take the green tick for it. **Open the org and look:**
 
-- **Crew Capacity** has 12 records
+- The **Crew Capacity** tab of the Helios Delivery app, on its **All** list view, has 12 records
 - **Setup > Scheduled Jobs** lists `Helios crew capacity nightly`
 - The manual step is listed as still to do, because you have not done it
 
@@ -396,6 +403,11 @@ Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com
 - The manual step listed in the deployment report, ticked off by you
 
 ## If it goes wrong
+
+**The Crew Capacity tab is missing from the app in `helios-integration`.**
+Either the tab or the `Helios_Delivery` app was not in your Pull Request, or the tab is not
+**Visible** under **Tab Settings** of `Helios_Delivery_Manager`. The profile visibility you set in
+the wizard stays in `helios-dev`. Fix it there, retrieve the missing piece, and publish again.
 
 **The data import fails on field level security.**
 The CI user cannot write the fields: the grant of step 1 is missing from `Helios_Delivery_Manager`,

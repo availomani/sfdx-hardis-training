@@ -187,6 +187,10 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <tabSettings>
+        <tab>Crew_Capacity__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Installation__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

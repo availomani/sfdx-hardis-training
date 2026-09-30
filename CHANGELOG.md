@@ -11,6 +11,7 @@ a day, newest first, and a change goes under the date of the day it is made.
   address, and still serves the badge records, the story records and the share cards themselves, so
   a badge already claimed and a fork already made carry on as they are.
 - The language picker works on the new address. It held a link that only existed under the old one.
+- Lab 2.4 creates a Crew Capacity tab in the Helios Delivery app, so the records can be found in every org without typing a URL.
 
 ## 2026-09-29
 

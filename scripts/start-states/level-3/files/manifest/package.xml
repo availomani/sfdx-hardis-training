@@ -50,6 +50,7 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Crew_Capacity__c</members>
         <members>Installation__c</members>
         <members>Panel_Batch__c</members>
         <name>CustomTab</name>

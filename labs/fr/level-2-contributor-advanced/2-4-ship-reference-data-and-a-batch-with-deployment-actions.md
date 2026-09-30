@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "cb5f905c738e49eeef5ea49e5734aa0aee4d3818"
+source_rev: "65a2f5f1c44fe41fecb7de63d46f0f775333058a"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -74,15 +74,23 @@ Dans `helios-dev`, créez :
   - `Crew_Type__c`, Picklist : `Roof`, `Ground`, `Electrical`
   - `Roof_Type__c`, Picklist : `Tile`, `Slate`, `Flat`, `Metal`
   - `Panels_Per_Day__c`, Number 3,0
+- Un onglet pour lui, pour retrouver les enregistrements dans l'application : **Setup > Tabs**,
+  **New** sous **Custom Object Tabs**, objet **Crew Capacity**, n'importe quel style d'onglet. Gardez
+  la visibilité par profil que propose l'assistant. Sur le dernier écran, **Add to Custom Apps**,
+  décochez **Include Tab** en haut de la liste, puis cochez **Helios Delivery** seule : les autres
+  applications n'en ont pas l'usage
 - Une classe Apex `CrewCapacityBatch` qui recalcule `Total_Capacity_kW__c` sur les installations
   planifiées et que Salesforce peut lancer selon une planification, plus sa classe de test
   `CrewCapacityBatchTest`. **Vous n'avez pas à les écrire.** Copiez-les depuis
   `scripts/apex/samples/` du repository : ce qu'elles calculent importe bien moins ici que le fait que
   quelqu'un doive les planifier dans chaque org, ce qui est tout l'objet du lab
-- Les accès, sur **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity, et
-  **Read** et **Edit** sur ses quatre champs. Les planificateurs entretiennent ces nombres, et c'est
-  aussi le permission set que porte l'utilisateur de la pipeline dans chaque org : sans lui, le
-  chargement de données de l'étape 4 trouverait des champs qu'il n'a pas le droit d'écrire
+- Les accès, sur **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity,
+  **Read** et **Edit** sur ses quatre champs, et sous **Tab Settings** sur la même page, **Available**
+  et **Visible**. Les planificateurs entretiennent ces nombres, et c'est aussi le permission set que
+  porte l'utilisateur de la pipeline dans chaque org : sans lui, le chargement de données de
+  l'étape 4 trouverait des champs qu'il n'a pas le droit d'écrire. Le réglage d'onglet est ce qui
+  affiche l'onglet dans les autres orgs, là où la visibilité par profil gardée dans l'assistant ne
+  voyage jamais
 
 Puis les enregistrements. Helios prend en charge 12 combinaisons, trois types d'équipe par quatre
 types de toiture, et chacune a besoin d'un enregistrement Crew Capacity qui dit combien de panneaux
@@ -94,8 +102,9 @@ répondez **Yes** à **Create them?**.
 ![Le menu Training du Niveau 2, avec Create my lab records](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--lab-records.png)
 
 Le panneau vérifie d'abord que votre objet et ses quatre champs sont dans l'org, puis crée les
-enregistrements, les liste, et termine par un lien **See them in the org**. Ouvrez-le : la liste
-**All** de Crew Capacity indique **12 items** **(1)**, de `CAP-ROOF-TILE` à `CAP-ELECTRICAL-METAL`.
+enregistrements, les liste, et termine par un lien **See them in the org**. Ouvrez-le, ou ouvrez
+l'onglet **Crew Capacity** de l'application Helios Delivery et choisissez la vue de liste **All** :
+elle indique **12 items** **(1)**, de `CAP-ROOF-TILE` à `CAP-ELECTRICAL-METAL`.
 Si le panneau dit qu'un champ manque, terminez d'abord l'objet, puis relancez-le : il met à jour les
 mêmes douze enregistrements au lieu d'en créer d'autres.
 
@@ -117,13 +126,13 @@ dans une org, et c'est le problème que la suite de ce lab résout.
 
 ### 2. Publier et regarder rien échouer
 
-Récupérez l'objet, ses champs, les deux classes Apex et `Helios_Delivery_Manager` avec
-**Commit changes**, commitez-les, puis **Save / Publish**, poussez, Pull Request. Le contrôle est
-vert. Mergez. Le déploiement est vert.
+Récupérez l'objet, ses champs, son onglet, l'application `Helios_Delivery`, les deux classes Apex et
+`Helios_Delivery_Manager` avec **Commit changes**, commitez-les, puis **Save / Publish**, poussez,
+Pull Request. Le contrôle est vert. Mergez. Le déploiement est vert.
 
 Ouvrez maintenant `helios-integration` et regardez :
 
-- `Crew_Capacity__c` existe, **avec zéro enregistrement**
+- L'onglet **Crew Capacity** est dans l'application Helios Delivery, **avec zéro enregistrement**
 - `CrewCapacityBatch` existe, **planifié nulle part**
 - Personne n'a vérifié que l'org a le droit d'envoyer l'e-mail de synthèse du batch
 
@@ -306,7 +315,8 @@ l'étape manuelle reste en attente jusqu'à ce qu'une personne dise qu'elle est 
 
 Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 
-- **Crew Capacity** a 12 enregistrements
+- L'onglet **Crew Capacity** de l'application Helios Delivery, sur sa vue de liste **All**, a 12
+  enregistrements
 - **Setup > Scheduled Jobs** liste `Helios crew capacity nightly`
 - L'étape manuelle est listée comme restant à faire, parce que vous ne l'avez pas faite
 
@@ -406,6 +416,12 @@ Documentation de la commande : [hardis:org:data:import](https://sfdx-hardis.clou
 - L'étape manuelle listée dans le rapport de déploiement, cochée par vous
 
 ## En cas de problème
+
+**L'onglet Crew Capacity manque dans l'application de `helios-integration`.**
+L'onglet ou l'application `Helios_Delivery` n'était pas dans votre Pull Request, ou l'onglet n'est
+pas **Visible** sous **Tab Settings** de `Helios_Delivery_Manager`. La visibilité par profil réglée
+dans l'assistant reste dans `helios-dev`. Corrigez-le là, récupérez l'élément manquant, et publiez à
+nouveau.
 
 **L'import de données échoue sur la sécurité au niveau des champs.**
 L'utilisateur de CI ne peut pas écrire les champs : l'autorisation de l'étape 1 manque dans
