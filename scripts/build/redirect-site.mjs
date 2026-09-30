@@ -20,12 +20,20 @@
  * all a static host can offer. Search engines read the canonical, browsers obey
  * the refresh, and the sentence in the body is there for whoever gets neither.
  *
- * The second is that the badge records cannot be redirected at all. A meta
- * refresh is HTML, and nothing fetching /badges/<name>.json or embedding
- * /badges/img/<name>-level-1.svg parses HTML. Those files are copied here as
- * they are, so an assertion handed out on the old host keeps resolving to the
- * badge it describes. Everything under badges/ that is not a page is copied for
- * the same reason.
+ * The second is that whatever is fetched rather than opened cannot be redirected
+ * at all, because nothing that fetches it parses HTML. Those files are copied
+ * here as they are, and there are three kinds:
+ *
+ *   badges/       the records and their images. A badge record is an assertion
+ *                 handed to a learner and read by Trailhead Banner, at a URL
+ *                 nobody can recall.
+ *   BACKLOG/      the story records. Every learner's fork points
+ *                 genericTicketingProviderDetailsUrlBuilder at
+ *                 <old site>/BACKLOG/{REF}.json, and sfdx-hardis fetches it to
+ *                 write the ticket into a Pull Request comment and a DORA
+ *                 report. A fork made last month still asks for it here.
+ *   _assets/social/  the card a share shows. og:image was absolute on the old
+ *                 site, so a link posted before the move points at it.
  *
  * It is rebuilt on every push, from the site that was just built, so the set of
  * pages it covers is the set of pages that exists. A page added to the course
@@ -34,7 +42,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { CLOUDITY_SITE_URL } from "../lib/urls.mjs";
+import { SITE_URL, LEGACY_SITE_URL } from "../lib/urls.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
@@ -81,11 +89,13 @@ const files = walk(SITE);
 const pages = files.filter((rel) => rel === "index.html" || rel.endsWith("/index.html"));
 
 /**
- * The files served as they are: the badge records and their images. Anything
- * under badges/ that is not a page, so a new kind of badge asset is carried
- * without this list having to learn about it.
+ * The folders whose files are fetched rather than opened, and so are served here
+ * as they are. Anything in them that is not a page, so a new badge asset or a new
+ * story record is carried without this list having to learn about it.
  */
-const copied = files.filter((rel) => rel.startsWith("badges/") && !rel.endsWith(".html"));
+const SERVED_AS_IS = ["badges/", "BACKLOG/", "_assets/social/"];
+
+const copied = files.filter((rel) => SERVED_AS_IS.some((dir) => rel.startsWith(dir)) && !rel.endsWith(".html"));
 
 /** The URL path of a page, from the file that holds it: "" for the home page, "en/" for en/index.html. */
 function urlPath(rel) {
@@ -131,7 +141,7 @@ function redirectPage(source, target) {
 function build() {
   fs.rmSync(OUT, { recursive: true, force: true });
   for (const rel of pages) {
-    const target = `${CLOUDITY_SITE_URL}/${urlPath(rel)}`;
+    const target = `${SITE_URL}/${urlPath(rel)}`;
     const file = path.join(OUT, rel);
     fs.mkdirSync(path.dirname(file), { recursive: true });
     fs.writeFileSync(file, redirectPage(path.join(SITE, rel), target), "utf8");
@@ -142,7 +152,7 @@ function build() {
     fs.copyFileSync(path.join(SITE, rel), file);
   }
   console.log(
-    `redirect-site assembled: ${pages.length} redirect page(s) to ${CLOUDITY_SITE_URL}, ${copied.length} badge file(s) served as they are.`
+    `redirect-site assembled: ${pages.length} redirect page(s) to ${SITE_URL}, ${copied.length} file(s) served as they are.`
   );
 }
 
@@ -158,7 +168,7 @@ function check() {
       problems.push(`${rel} has no redirect`);
       continue;
     }
-    const target = `${CLOUDITY_SITE_URL}/${urlPath(rel)}`;
+    const target = `${SITE_URL}/${urlPath(rel)}`;
     const html = fs.readFileSync(file, "utf8");
     if (!html.includes(`<link rel="canonical" href="${target}">`)) {
       problems.push(`${rel} does not declare ${target} as its canonical`);
@@ -168,7 +178,7 @@ function check() {
     }
     // A redirect page that still names the old host sends the reader back where
     // they came from, and a loop is worse than a dead link.
-    if (html.includes("hardisgroupcom.github.io")) {
+    if (html.includes(LEGACY_SITE_URL)) {
       problems.push(`${rel} still points at the old host`);
     }
   }
@@ -183,13 +193,13 @@ function check() {
     }
   }
 
-  console.log(`${pages.length} redirect page(s), ${copied.length} badge file(s) served as they are.`);
+  console.log(`${pages.length} redirect page(s), ${copied.length} file(s) served as they are.`);
   if (problems.length > 0) {
     console.error(`\n${problems.length} problem(s) with the redirect site:`);
     problems.forEach((p) => console.error(`  ${p}`));
     process.exit(1);
   }
-  console.log(`Every page of the course has a redirect to ${CLOUDITY_SITE_URL}, and every badge file is served as it is.`);
+  console.log(`Every page of the course has a redirect to ${SITE_URL}, and every file it cannot redirect is served as it is.`);
 }
 
 if (CHECK) {

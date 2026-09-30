@@ -9,7 +9,7 @@
       "issuer": {
         "name": "Cloudity",
         "url": "https://cloudity.com",
-        "course": "https://hardisgroupcom.github.io/sfdx-hardis-training"
+        "course": "https://sfdx-hardis-training.github.io"
       },
       "issuedOn": "2026-09-25",
       "evidence": [
@@ -22,8 +22,8 @@
           "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/49"
         }
       ],
-      "image": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/katiekimura-level-1.svg",
-      "bannerImage": "https://hardisgroupcom.github.io/sfdx-hardis-training/badges/img/banner-level-1.svg",
+      "image": "https://sfdx-hardis-training.github.io/badges/img/katiekimura-level-1.svg",
+      "bannerImage": "https://sfdx-hardis-training.github.io/badges/img/banner-level-1.svg",
       "superbadge": false,
       "checksPassed": 6,
       "checksTotal": 6

@@ -22,7 +22,7 @@
  * username can ask the site what that person earned, with one GET and no index
  * to walk:
  *
- *     https://hardisgroupcom.github.io/sfdx-hardis-training/badges/nvuillamy.json
+ *     https://sfdx-hardis-training.github.io/badges/nvuillamy.json
  *
  * The Trailhead Banner project works from a Trailblazer username, and a badge
  * filed under a GitHub login would be invisible to it. The GitHub handle stays

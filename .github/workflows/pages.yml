@@ -10,9 +10,11 @@
 # keeps.
 #
 # This repository's own Pages setting stays **Source: GitHub Actions**, and the
-# artifact uploaded at the end of the build is what its URL serves. That is still
-# the course itself. It becomes the redirect site, built here on every run, the
-# day the custom domain answers.
+# artifact uploaded at the end of the build is what its URL serves: the redirect
+# site, built here on every run. The address this repository used to serve is in
+# badge records, trailmixes, command descriptions and the ticketing configuration
+# of every learner's fork, so it answers with a redirect for the pages, and with
+# the file itself for everything that is fetched rather than opened.
 name: Build and publish the training site
 
 on:
@@ -104,11 +106,10 @@ jobs:
           force_orphan: true
           commit_message: "Built from ${{ github.sha }}"
 
-      # What the old URL serves once the custom domain answers: one redirect page
-      # per page of the course, and the badge records copied as they are, because
-      # nothing that fetches a badge record parses HTML. Built on every run, so it
-      # always covers the page set that exists, and checked here even though the
-      # artifact below is still the course itself.
+      # What the old URL serves: one redirect page per page of the course, and the
+      # badge records, the story records and the share cards copied as they are,
+      # because nothing that fetches one of those parses HTML. Built on every run,
+      # so it always covers the page set that exists.
       - name: Build the redirect site for the old URL
         run: |
           node scripts/build/redirect-site.mjs
@@ -116,10 +117,10 @@ jobs:
 
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
-          path: site
+          path: redirect-site
 
   deploy:
-    name: Deploy to GitHub Pages
+    name: Deploy the redirect site to the old URL
     needs: build
     if: github.repository == 'hardisgroupcom/sfdx-hardis-training'
     runs-on: ubuntu-latest

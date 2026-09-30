@@ -9,30 +9,30 @@ for the `Helios Delivery` app, and every one of them is a lab in this course.
 
 | Story | Level | Title | Owner | Branch |
 |---|---|---|---|---|
-| [US-014](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-014/) | 1 | Show the crew how many panels a job needs | You | `features/US-014-panels-required` |
-| [US-016](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-016/) | 1 | Let the crew leave notes on an installation | You | `features/US-016-crew-notes` |
-| [US-017](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-017/) | 2 | Record who signed an installation off | Romain Panda | `training/mate-us-017-sign-off` |
-| [US-018](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-018/) | 2 | Cap the crew size a planner can assign | Mariia Pyvovarchuk | `training/mate-us-018-crew-capacity` |
-| [US-019](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-019/) | 2 | Generate a quote PDF from an opportunity | Romain Panda | `training/mate-us-019-quote-pdf` |
-| [US-052](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-052/) | 3 | The Installation layout in two columns | Mariia Pyvovarchuk | `training/mate-us-052-layout-columns` |
-| [US-020](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-020/) | 3 | Refactor InstallationScheduler | Mariia Pyvovarchuk | `training/mate-us-020-apex-refactor` |
-| [US-021](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-021/) | 2 | Warn the planner when a crew is too small | You | `features/US-021-crew-size-warning` |
-| [US-024](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-024/) | 2 | Crew size becomes mandatory | You | `features/US-024-crew-size-required` |
-| [US-026](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-026/) | 2 | Crew capacity reference data and nightly recalculation | You | `features/US-026-crew-capacity-data` |
-| [US-027](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-027/) | 2 | Check several installations against panel availability at once | You | `features/US-027-schedule-by-availability` |
-| [US-033](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-033/) | 2 | Crews can read the panel batch cost | You | `features/US-033-batch-cost-visibility` |
-| [US-034](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-034/) | 2 | Flat roofs need a crew of at least three | You | `features/US-034-crew-override` |
-| [US-038](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-038/) | 2 | Tidy the Installation layout | You | `features/US-038-installation-notes-tidy` |
-| [US-041](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-041/) | 2 | Installation handover checklist | You | `features/US-041-handover-checklist` |
-| [US-045](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-045/) | 3 | Cancelled installations can no longer be back-dated | Romain Panda | `fix/US-045-installation-date-hotfix` |
-| [US-046](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-046/) | 3 | Needs Reinspection status, added in production by an admin | You | `retrofit/US-046-needs-reinspection` |
-| [US-055](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-055/) | 3 | Install Date says which day it means | Romain Panda | `training/mate-us-055-install-date-help` |
-| [US-056](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-056/) | 3 | Show the panels each crew member has to lay | Romain Panda | `training/mate-us-056-crew-workload` |
-| [US-057](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-057/) | 3 | Park an installation that is waiting for parts | Mariia Pyvovarchuk | `training/mate-us-057-awaiting-parts` |
-| [US-058](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-058/) | 3 | Record the warranty term on a panel batch | Romain Panda | `training/mate-us-058-warranty-term` |
-| [US-059](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-059/) | 3 | Record the supplier of a panel batch | Romain Panda | `training/mate-us-059-supplier` |
-| [US-060](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-060/) | 3 | Flag an installation that needs scaffolding | Mariia Pyvovarchuk | `training/mate-us-060-scaffolding` |
-| [US-061](https://hardisgroupcom.github.io/sfdx-hardis-training/BACKLOG/US-061/) | 3 | Record the gate code of a site | Mariia Pyvovarchuk | `training/mate-us-061-gate-code` |
+| [US-014](https://sfdx-hardis-training.github.io/BACKLOG/US-014/) | 1 | Show the crew how many panels a job needs | You | `features/US-014-panels-required` |
+| [US-016](https://sfdx-hardis-training.github.io/BACKLOG/US-016/) | 1 | Let the crew leave notes on an installation | You | `features/US-016-crew-notes` |
+| [US-017](https://sfdx-hardis-training.github.io/BACKLOG/US-017/) | 2 | Record who signed an installation off | Romain Panda | `training/mate-us-017-sign-off` |
+| [US-018](https://sfdx-hardis-training.github.io/BACKLOG/US-018/) | 2 | Cap the crew size a planner can assign | Mariia Pyvovarchuk | `training/mate-us-018-crew-capacity` |
+| [US-019](https://sfdx-hardis-training.github.io/BACKLOG/US-019/) | 2 | Generate a quote PDF from an opportunity | Romain Panda | `training/mate-us-019-quote-pdf` |
+| [US-052](https://sfdx-hardis-training.github.io/BACKLOG/US-052/) | 3 | The Installation layout in two columns | Mariia Pyvovarchuk | `training/mate-us-052-layout-columns` |
+| [US-020](https://sfdx-hardis-training.github.io/BACKLOG/US-020/) | 3 | Refactor InstallationScheduler | Mariia Pyvovarchuk | `training/mate-us-020-apex-refactor` |
+| [US-021](https://sfdx-hardis-training.github.io/BACKLOG/US-021/) | 2 | Warn the planner when a crew is too small | You | `features/US-021-crew-size-warning` |
+| [US-024](https://sfdx-hardis-training.github.io/BACKLOG/US-024/) | 2 | Crew size becomes mandatory | You | `features/US-024-crew-size-required` |
+| [US-026](https://sfdx-hardis-training.github.io/BACKLOG/US-026/) | 2 | Crew capacity reference data and nightly recalculation | You | `features/US-026-crew-capacity-data` |
+| [US-027](https://sfdx-hardis-training.github.io/BACKLOG/US-027/) | 2 | Check several installations against panel availability at once | You | `features/US-027-schedule-by-availability` |
+| [US-033](https://sfdx-hardis-training.github.io/BACKLOG/US-033/) | 2 | Crews can read the panel batch cost | You | `features/US-033-batch-cost-visibility` |
+| [US-034](https://sfdx-hardis-training.github.io/BACKLOG/US-034/) | 2 | Flat roofs need a crew of at least three | You | `features/US-034-crew-override` |
+| [US-038](https://sfdx-hardis-training.github.io/BACKLOG/US-038/) | 2 | Tidy the Installation layout | You | `features/US-038-installation-notes-tidy` |
+| [US-041](https://sfdx-hardis-training.github.io/BACKLOG/US-041/) | 2 | Installation handover checklist | You | `features/US-041-handover-checklist` |
+| [US-045](https://sfdx-hardis-training.github.io/BACKLOG/US-045/) | 3 | Cancelled installations can no longer be back-dated | Romain Panda | `fix/US-045-installation-date-hotfix` |
+| [US-046](https://sfdx-hardis-training.github.io/BACKLOG/US-046/) | 3 | Needs Reinspection status, added in production by an admin | You | `retrofit/US-046-needs-reinspection` |
+| [US-055](https://sfdx-hardis-training.github.io/BACKLOG/US-055/) | 3 | Install Date says which day it means | Romain Panda | `training/mate-us-055-install-date-help` |
+| [US-056](https://sfdx-hardis-training.github.io/BACKLOG/US-056/) | 3 | Show the panels each crew member has to lay | Romain Panda | `training/mate-us-056-crew-workload` |
+| [US-057](https://sfdx-hardis-training.github.io/BACKLOG/US-057/) | 3 | Park an installation that is waiting for parts | Mariia Pyvovarchuk | `training/mate-us-057-awaiting-parts` |
+| [US-058](https://sfdx-hardis-training.github.io/BACKLOG/US-058/) | 3 | Record the warranty term on a panel batch | Romain Panda | `training/mate-us-058-warranty-term` |
+| [US-059](https://sfdx-hardis-training.github.io/BACKLOG/US-059/) | 3 | Record the supplier of a panel batch | Romain Panda | `training/mate-us-059-supplier` |
+| [US-060](https://sfdx-hardis-training.github.io/BACKLOG/US-060/) | 3 | Flag an installation that needs scaffolding | Mariia Pyvovarchuk | `training/mate-us-060-scaffolding` |
+| [US-061](https://sfdx-hardis-training.github.io/BACKLOG/US-061/) | 3 | Record the gate code of a site | Mariia Pyvovarchuk | `training/mate-us-061-gate-code` |
 
 ## The stories in full
 

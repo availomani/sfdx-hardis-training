@@ -9,46 +9,46 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 
 | Lab | URL |
 |---|---|
-| Level home | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/ |
-| Lab 1.1 - Install VS Code, Git and sfdx-hardis | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis/ |
-| Lab 1.2 - Create your Dev Hub, scratch orgs and CI/CD pipeline | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline/ |
-| Lab 1.3 - Start a User Story on its own Git branch | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch/ |
-| Lab 1.4 - Build a custom field in your Salesforce org | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org/ |
-| Lab 1.5 - Retrieve, commit and publish your Salesforce changes | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes/ |
-| Lab 1.6 - Open a Pull Request, pass the deployment check, merge | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge/ |
-| Lab 1.7 - Capstone: deliver a User Story on your own | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own/ |
+| Level home | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/ |
+| Lab 1.1 - Install VS Code, Git and sfdx-hardis | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis/ |
+| Lab 1.2 - Create your Dev Hub, scratch orgs and CI/CD pipeline | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline/ |
+| Lab 1.3 - Start a User Story on its own Git branch | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch/ |
+| Lab 1.4 - Build a custom field in your Salesforce org | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-4-build-a-custom-field-in-your-org/ |
+| Lab 1.5 - Retrieve, commit and publish your Salesforce changes | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes/ |
+| Lab 1.6 - Open a Pull Request, pass the deployment check, merge | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge/ |
+| Lab 1.7 - Capstone: deliver a User Story on your own | https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own/ |
 
 ## Level 2 - Contributor advanced
 
 | Lab | URL |
 |---|---|
-| Level home | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/ |
-| Lab 2.1 - Backpromote: catch your dev org up with the team | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work/ |
-| Lab 2.2 - Fix a deployment error caused by a missing dependency | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error/ |
-| Lab 2.3 - Fix broken records with an Apex deployment action | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action/ |
-| Lab 2.4 - Ship reference data and a batch with deployment actions | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions/ |
-| Lab 2.5 - Pass the code quality gate and Apex test coverage | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage/ |
-| Lab 2.6 - Permission sets, profiles and why a grant disappears | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-6-permission-sets-and-profiles/ |
-| Lab 2.7 - Resolve a Git merge conflict with a teammate | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict/ |
-| Lab 2.8 - Recover from committing the wrong metadata | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-8-recover-from-committing-the-wrong-metadata/ |
-| Lab 2.9 - Capstone: deliver a User Story that has it all | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all/ |
+| Level home | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/ |
+| Lab 2.1 - Backpromote: catch your dev org up with the team | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-1-backpromote-your-teammates-work/ |
+| Lab 2.2 - Fix a deployment error caused by a missing dependency | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-2-fix-a-missing-dependency-deployment-error/ |
+| Lab 2.3 - Fix broken records with an Apex deployment action | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-3-fix-broken-records-with-an-apex-deployment-action/ |
+| Lab 2.4 - Ship reference data and a batch with deployment actions | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions/ |
+| Lab 2.5 - Pass the code quality gate and Apex test coverage | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage/ |
+| Lab 2.6 - Permission sets, profiles and why a grant disappears | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-6-permission-sets-and-profiles/ |
+| Lab 2.7 - Resolve a Git merge conflict with a teammate | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict/ |
+| Lab 2.8 - Recover from committing the wrong metadata | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-8-recover-from-committing-the-wrong-metadata/ |
+| Lab 2.9 - Capstone: deliver a User Story that has it all | https://sfdx-hardis-training.github.io/en/level-2-contributor-advanced/2-9-capstone-deliver-a-user-story-that-has-it-all/ |
 
 ## Level 3 - Release Manager
 
 | Lab | URL |
 |---|---|
-| Level home | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/ |
-| Lab 3.1 - Configure the CI/CD pipeline up to production | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/ |
-| Lab 3.2 - Review and merge a contributor Pull Request | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-2-review-a-contributor-pull-request/ |
-| Lab 3.3 - Read the deployment log, and what .forceignore hides from it | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log/ |
-| Lab 3.4 - Three Pull Requests collide: choose the merge order | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-4-merge-colliding-pull-requests/ |
-| Lab 3.5 - Promote to UAT and write the release notes | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes/ |
-| Lab 3.6 - Release to production and read your DORA metrics | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics/ |
-| Lab 3.7 - Production is broken: hotfix and retrofit | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-7-hotfix-and-retrofit/ |
-| Lab 3.8 - Monitor your production org | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-8-monitor-your-production-org/ |
-| Lab 3.9 - Generate the Salesforce project documentation | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-9-generate-the-project-documentation/ |
-| Lab 3.10 - Promote a subset with promotion branches (Beta) | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches/ |
-| Lab 3.11 - Capstone: run a weekly release cycle | https://hardisgroupcom.github.io/sfdx-hardis-training/en/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle/ |
+| Level home | https://sfdx-hardis-training.github.io/en/level-3-release-manager/ |
+| Lab 3.1 - Configure the CI/CD pipeline up to production | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/ |
+| Lab 3.2 - Review and merge a contributor Pull Request | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-2-review-a-contributor-pull-request/ |
+| Lab 3.3 - Read the deployment log, and what .forceignore hides from it | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log/ |
+| Lab 3.4 - Three Pull Requests collide: choose the merge order | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-4-merge-colliding-pull-requests/ |
+| Lab 3.5 - Promote to UAT and write the release notes | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes/ |
+| Lab 3.6 - Release to production and read your DORA metrics | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics/ |
+| Lab 3.7 - Production is broken: hotfix and retrofit | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-7-hotfix-and-retrofit/ |
+| Lab 3.8 - Monitor your production org | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-8-monitor-your-production-org/ |
+| Lab 3.9 - Generate the Salesforce project documentation | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-9-generate-the-project-documentation/ |
+| Lab 3.10 - Promote a subset with promotion branches (Beta) | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-10-promote-a-subset-with-promotion-branches/ |
+| Lab 3.11 - Capstone: run a weekly release cycle | https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-11-capstone-run-a-weekly-release-cycle/ |
 
 ## sfdx-hardis documentation pages used by the labs
 

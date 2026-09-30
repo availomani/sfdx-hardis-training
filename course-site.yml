@@ -3,7 +3,7 @@
 # mkdocs.yml is the project's own. Build with: python -m zensical build -f course-site.yml
 site_name: Salesforce DevOps with sfdx-hardis
 site_description: Free hands-on Salesforce DevOps training in three levels, from your first Pull Request to owning the CI/CD pipeline, with sfdx-hardis and VS Code
-site_url: https://hardisgroupcom.github.io/sfdx-hardis-training/
+site_url: https://sfdx-hardis-training.github.io/
 repo_url: https://github.com/hardisgroupcom/sfdx-hardis-training
 repo_name: hardisgroupcom/sfdx-hardis-training
 edit_uri: edit/main/labs/
@@ -190,11 +190,11 @@ extra:
   # the country code.
   languages:
     - name: English
-      link: /sfdx-hardis-training/
+      link: /
       lang: en
       flag: theme/images/flags/gb.svg
     - name: Français
-      link: /sfdx-hardis-training/fr/
+      link: /fr/
       lang: fr
       flag: theme/images/flags/fr.svg
   social:

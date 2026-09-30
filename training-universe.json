@@ -3,7 +3,7 @@
   "version": 1,
   "course": {
     "name": "Salesforce DevOps with sfdx-hardis",
-    "site": "https://hardisgroupcom.github.io/sfdx-hardis-training",
+    "site": "https://sfdx-hardis-training.github.io",
     "upstreamRepo": "hardisgroupcom/sfdx-hardis-training",
     "docSite": "https://sfdx-hardis.cloudity.com",
     "trailheadOwner": "nvuillamy"
