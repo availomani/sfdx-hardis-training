@@ -147,6 +147,8 @@ address for `BACKLOG/<story>.json` on every Pull Request.
 
 The site URL is written once, as `course.site` in `training-universe.json`, and repeated once more
 in `course-site.yml` for the theme. `scripts/verify/check-site.mjs` fails if the two disagree.
+`config/.sfdx-hardis.yml` carries it too, in the ticketing URLs and the Training menu links: no check
+covers that file, so replace it there by hand on the day the URL changes.
 
 ```bash
 node scripts/build/universe.mjs          # regenerate the backlog, link map and manifest, and check consistency
