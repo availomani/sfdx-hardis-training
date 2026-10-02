@@ -5,7 +5,7 @@ description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloq
 level: 2
 lab: 5
 lang: fr
-source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
+source_rev: "81a6262c87486213f6491e6d081ccdd4cda54f65"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -220,8 +220,11 @@ Dans l'**Explorer**, clic droit sur `InstallationScheduler.cls`, puis **SFDX: De
 Org**, et faites de même pour `InstallationSchedulerTest.cls`. C'est l'extension Salesforce livrée
 avec le pack d'extensions, et elle envoie ce seul fichier vers votre org par défaut.
 
-Puis, sur la Welcome page, cliquez sur **Org Monitoring**. Dans la section **Apex Tests & Security**
-du panneau qui s'ouvre, cliquez sur la carte **Apex Tests** **(1)** et choisissez `helios-dev`.
+Ouvrez ensuite le panneau **Org Monitoring Workbench**. Deux chemins y mènent, et ils arrivent au
+même endroit : la carte **Org Monitoring** de la Welcome page, ou, dans la barre latérale sfdx-hardis,
+la section **Org Monitoring** et sa première entrée, **Org Monitoring Workbench**. Dans la section
+**Apex Tests & Security** de ce panneau, cliquez sur la carte **Apex Tests** **(1)**. Elle ne demande
+aucune org : elle s'exécute sur votre org par défaut, `helios-dev`.
 
 ![L'Org Monitoring Workbench, avec la carte Apex Tests](../../_assets/annotated/vscode/org-monitoring--apex-tests.png)
 
@@ -232,8 +235,8 @@ dix minutes.
 
 !!! note "La bannière du haut est normale"
     *Org Monitoring Not Present (CI/CD Repo)* veut dire que ce repository est une pipeline de livraison et
-    non un repository de monitoring. Les cartes en dessous fonctionnent quand même sur l'org que vous
-    choisissez. Le Lab 3.8 est là où le monitoring obtient son propre repository.
+    non un repository de monitoring. Les cartes en dessous fonctionnent quand même, sur votre org par
+    défaut. Le Lab 3.8 est là où le monitoring obtient son propre repository.
 
 !!! note "L'onglet Apex Tests est une autre chose"
     Une Pull Request dans le panneau **DevOps Pipeline** peut afficher un onglet

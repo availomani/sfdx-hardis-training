@@ -216,8 +216,11 @@ in `helios-dev` is still the old version. Send it there first. In the **Explorer
 `InstallationSchedulerTest.cls`. It is the Salesforce extension that comes with the extension pack,
 and it sends that one file to your default org.
 
-Then, on the Welcome page, click **Org Monitoring**. In the **Apex Tests & Security**
-section of the panel that opens, click the **Apex Tests** card **(1)** and pick `helios-dev`.
+Then open the **Org Monitoring Workbench** panel. There are two ways in, and both land in the same
+place: the **Org Monitoring** card of the Welcome page, or, in the sfdx-hardis side bar, the **Org
+Monitoring** section and its first entry, **Org Monitoring Workbench**. In the **Apex Tests &
+Security** section of that panel, click the **Apex Tests** card **(1)**. It asks for no org: it
+runs on your default org, `helios-dev`.
 
 ![The Org Monitoring Workbench, with the Apex Tests card](../../_assets/annotated/vscode/org-monitoring--apex-tests.png)
 
@@ -227,7 +230,7 @@ org queues its test runs, and the first one of the day can take ten.
 
 !!! note "The banner at the top is expected"
     *Org Monitoring Not Present (CI/CD Repo)* means this repository is a delivery pipeline and not a
-    monitoring repository. The cards below it still work against whatever org you pick. Lab 3.8 is
+    monitoring repository. The cards below it still work, against your default org. Lab 3.8 is
     where monitoring gets a repository of its own.
 
 !!! note "The Apex Tests tab is a different thing"

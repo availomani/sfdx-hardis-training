@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "65a2f5f1c44fe41fecb7de63d46f0f775333058a"
+source_rev: "81a6262c87486213f6491e6d081ccdd4cda54f65"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -81,9 +81,12 @@ Dans `helios-dev`, créez :
   applications n'en ont pas l'usage
 - Une classe Apex `CrewCapacityBatch` qui recalcule `Total_Capacity_kW__c` sur les installations
   planifiées et que Salesforce peut lancer selon une planification, plus sa classe de test
-  `CrewCapacityBatchTest`. **Vous n'avez pas à les écrire.** Copiez-les depuis
-  `scripts/apex/samples/` du repository : ce qu'elles calculent importe bien moins ici que le fait que
-  quelqu'un doive les planifier dans chaque org, ce qui est tout l'objet du lab
+  `CrewCapacityBatchTest`. **Vous n'avez pas à les écrire**, et c'est le seul élément de cette liste
+  que vous ne créez pas dans l'org. Depuis `scripts/apex/samples/` du repository, copiez
+  `CrewCapacityBatch.cls`, `CrewCapacityBatchTest.cls` et leurs deux fichiers `.cls-meta.xml` dans
+  `force-app/main/default/classes/`, dans l'Explorer, par copier-coller, comme au [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md). Ce qu'elles
+  calculent importe bien moins ici que le fait que quelqu'un doive les planifier dans chaque org, ce
+  qui est tout l'objet du lab
 - Les accès, sur **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity,
   **Read** et **Edit** sur ses quatre champs, et sous **Tab Settings** sur la même page, **Available**
   et **Visible**. Les planificateurs entretiennent ces nombres, et c'est aussi le permission set que
@@ -126,9 +129,11 @@ dans une org, et c'est le problème que la suite de ce lab résout.
 
 ### 2. Publier et regarder rien échouer
 
-Récupérez l'objet, ses champs, son onglet, l'application `Helios_Delivery`, les deux classes Apex et
-`Helios_Delivery_Manager` avec **Commit changes**, commitez-les, puis **Save / Publish**, poussez,
-Pull Request. Le contrôle est vert. Mergez. Le déploiement est vert.
+Récupérez l'objet, ses champs, son onglet, l'application `Helios_Delivery` et
+`Helios_Delivery_Manager` avec **Commit changes**. Les deux classes Apex ne se récupèrent pas : ce
+sont déjà des fichiers du projet, et Source Control liste les quatre que vous avez copiés à côté de
+ce que vous avez récupéré. Commitez le tout, puis **Save / Publish**, poussez, Pull Request. Le
+contrôle est vert. Mergez. Le déploiement est vert.
 
 Ouvrez maintenant `helios-integration` et regardez :
 
@@ -238,8 +243,14 @@ lesquelles la pipeline déploie.
 | Run Only Once By Org          | oui                                                |
 
 **Schedule Batch** **(1)** remplace le champ de script par deux champs à lui : **Apex Class Name**
-**(2)**, une liste déroulante des classes planifiables du projet, et **Cron Expression** **(3)**, que
-la boîte explique avec des exemples sous le champ.
+**(2)**, une liste déroulante des classes que Salesforce peut lancer selon une planification, lues
+dans votre org par défaut et dans le projet, et **Cron Expression** **(3)**, que la boîte explique
+avec des exemples sous le champ.
+
+Dans votre liste, la classe s'affiche **CrewCapacityBatch (in the project, not in the default org
+yet)**. C'est normal, et c'est bien celle à choisir : la classe est allée du repository à
+`helios-integration` par la pipeline et jamais dans `helios-dev`, où vous n'en aviez pas besoin.
+L'action s'exécute dans les orgs où la pipeline déploie, et la classe y est avant qu'elle ne tourne.
 
 **Trois : celle que personne ne peut automatiser.**
 

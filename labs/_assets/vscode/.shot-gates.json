@@ -176,6 +176,9 @@
   "pipeline-edit-action-command": {
     "gate": "pipeline-action-editors"
   },
+  "pipeline-edit-action-custom-function": {
+    "gate": "pipeline-action-editors"
+  },
   "pipeline-edit-action-data": {
     "gate": "pipeline-action-editors"
   },

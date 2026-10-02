@@ -80,9 +80,12 @@ In `helios-dev`, create:
   then tick **Helios Delivery** alone: the other apps have no use for it
 - An Apex class `CrewCapacityBatch` that recalculates `Total_Capacity_kW__c` on planned
   installations and that Salesforce can run on a schedule, plus its test class
-  `CrewCapacityBatchTest`. **You do not have to write these.** Copy them from
-  `scripts/apex/samples/` in the repository: what they compute matters far less here than the fact
-  that somebody has to schedule them in every org, which is the whole point of the lab
+  `CrewCapacityBatchTest`. **You do not have to write these**, and they are the one thing in this
+  list you do not create in the org. From `scripts/apex/samples/` in the repository, copy
+  `CrewCapacityBatch.cls`, `CrewCapacityBatchTest.cls` and their two `.cls-meta.xml` files into
+  `force-app/main/default/classes/`, in the Explorer, with copy and paste, as in [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md). What they
+  compute matters far less here than the fact that somebody has to schedule them in every org,
+  which is the whole point of the lab
 - The access, on **Helios Delivery Manager**: **Read**, **Create** and **Edit** on Crew Capacity,
   **Read** and **Edit** on its four fields, and under **Tab Settings** on the same page, **Available**
   and **Visible**. Planners maintain these numbers, and it is also the permission set the pipeline's
@@ -123,9 +126,10 @@ is the problem the rest of this lab solves.
 
 ### 2. Publish and watch nothing fail
 
-Retrieve the object, its fields, its tab, the `Helios_Delivery` app, the two Apex classes and
-`Helios_Delivery_Manager` with **Commit changes**, commit them, then **Save / Publish**, push, Pull
-Request. The check is green. Merge. The deployment is green.
+Retrieve the object, its fields, its tab, the `Helios_Delivery` app and `Helios_Delivery_Manager`
+with **Commit changes**. The two Apex classes are not retrieved: they are already files of the
+project, and Source Control lists the four you copied next to what you retrieved. Commit all of it,
+then **Save / Publish**, push, Pull Request. The check is green. Merge. The deployment is green.
 
 Now open `helios-integration` and look:
 
@@ -233,8 +237,14 @@ its path. **Target orgs** **(3)** on **All target orgs** means every org the pip
 | Run Only Once By Org          | yes                                                |
 
 **Schedule Batch** **(1)** replaces the script field with two of its own: **Apex Class Name**
-**(2)**, a dropdown of the schedulable classes in the project, and **Cron Expression** **(3)**,
-which the dialog explains with examples under the field.
+**(2)**, a dropdown of the classes Salesforce can run on a schedule, read from your default org and
+from the project, and **Cron Expression** **(3)**, which the dialog explains with examples under the
+field.
+
+In your list the class reads **CrewCapacityBatch (in the project, not in the default org yet)**.
+That is expected, and it is the right one to pick: the class went from the repository to
+`helios-integration` through the pipeline and never to `helios-dev`, where you did not need it. The
+action runs in the orgs the pipeline deploys to, and the class is there before it runs.
 
 **Three: the one nobody can automate.**
 

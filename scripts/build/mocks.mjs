@@ -318,11 +318,10 @@ const overlay = {
     ["ApexClass", "InstallationScheduler", "You", "created", "2026-09-15T09:12:00.000+0000"],
     ["PermissionSet", "Helios_Delivery_Manager", "You", "modified", "2026-09-17T14:48:00.000+0000"]
   ],
+  // What helios-dev holds. CrewCapacityBatch is left out on purpose: in Lab 2.4 it
+  // reaches helios-integration through the pipeline and never helios-dev, so the
+  // editor finds it in the project alone and labels it, which is what the lab shows.
   apexClasses: [
-    {
-      Name: "CrewCapacityBatch",
-      Body: "global class CrewCapacityBatch implements Database.Batchable<SObject>, Schedulable {"
-    },
     {
       Name: "InstallationReminderBatch",
       Body: "global class InstallationReminderBatch implements Schedulable {"
@@ -846,6 +845,13 @@ STAGES.forEach((stage, index) => {
   );
 });
 write(path.join(PROJECT, "force-app", "main", "default", "classes", ".gitkeep"), "");
+// The batch Lab 2.4 schedules, as the learner's project holds it once the story is merged
+for (const file of ["CrewCapacityBatch.cls", "CrewCapacityBatch.cls-meta.xml"]) {
+  write(
+    path.join(PROJECT, "force-app", "main", "default", "classes", file),
+    fs.readFileSync(path.join(ROOT, "scripts", "apex", "samples", file), "utf8")
+  );
+}
 // The field Lab 2.2 retrieves, for the shot that shows where it lands
 write(
   path.join(PROJECT, "force-app", "main", "default", "objects", "Installation__c", "fields", "Crew_Warning_Sent__c.field-meta.xml"),

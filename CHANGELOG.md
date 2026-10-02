@@ -3,6 +3,11 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-02
+
+- Lab 2.4 says where the two Apex classes are copied, and its Schedule Batch action finds `CrewCapacityBatch` in the list: the class is read from the project, and the lab explains the label it carries. It needs version 8.9.2 of the VS Code extension.
+- Lab 2.5 names the two ways to the Org Monitoring Workbench, and says the Apex Tests card runs on the default org instead of asking for one.
+
 ## 2026-09-30
 
 - **The course has a new address: <https://sfdx-hardis-training.github.io/>**, on its way to
