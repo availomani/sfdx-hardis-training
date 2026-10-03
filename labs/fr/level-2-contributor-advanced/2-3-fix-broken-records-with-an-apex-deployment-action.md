@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "a34ea6fe2995834d2ab32fd72793082b541c84c8"
+source_rev: "79b0a4262e70033fe2a94c1d4e5ac3aaf73e1f6e"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -210,7 +210,7 @@ sautée, pour que le relecteur la voie venir.
 
 **Save**. L'action rejoint la liste de l'onglet **Deployment Actions**, dont le compteur **(1)**
 augmente d'une unité. **Add New Action** **(2)** reste là pour la suivante, et votre ligne **(3)**
-porte une pastille **Post-Deploy** dans la colonne **WHEN**.
+porte une pastille **Post-Deploy** sous son libellé.
 
 ![L'onglet Deployment Actions de la Pull Request, listant les actions qu'elle porte](../../_assets/annotated/vscode/pipeline-pr-actions-list.png)
 

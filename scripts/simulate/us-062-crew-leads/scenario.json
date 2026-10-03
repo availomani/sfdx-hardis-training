@@ -1,0 +1,17 @@
+{
+  "id": "us-062-crew-leads",
+  "title": "US-062 Put the delivery managers in a Crew Leads group",
+  "usedBy": "Lab 3.3",
+  "levels": [3],
+  "description": "Mariia ships three post-deployment actions: put the delivery managers in the Crew Leads public group, recalculate the crew capacity, and add the deployment user to the group. She created the group by hand in her own org and typed one class name wrong, and neither shows before the merge.",
+  "branch": "training/mate-us-062-crew-leads",
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-062 Put the delivery managers in a Crew Leads group\n\nThree post-deployment actions: delivery managers into Crew Leads,\ncrew capacity recalculated, deployment user into Crew Leads.",
+  "prTitle": "US-062 Put the delivery managers in a Crew Leads group",
+  "prBody": "Planners want one group to share the installation plans with.\n\n- Post-deployment action: every delivery manager joins the **Crew Leads** public group\n- Post-deployment action: the crew capacity is recalculated once, with the `CrewCapacityBatch` batch\n- Post-deployment action: the deployment user joins Crew Leads too\n\nNo metadata: the group is setup, and the actions are in this Pull Request's actions file.\n\nStory: US-062 in BACKLOG.md",
+  "nextStep": "Wait for its checks, merge it, and read the deployment job. Lab 3.3 part 3.",
+  "patches": []
+}

@@ -205,7 +205,7 @@ it coming.
 
 **Save**. The action joins the list on the **Deployment Actions** tab, whose counter **(1)** goes up
 by one. **Add New Action** **(2)** stays there for the next one, and your row **(3)** carries a
-**Post-Deploy** chip in the **WHEN** column.
+**Post-Deploy** chip under its label.
 
 ![The Deployment Actions tab of the Pull Request, listing the actions it carries](../../_assets/annotated/vscode/pipeline-pr-actions-list.png)
 

@@ -1,0 +1,19 @@
+{
+  "id": "us-062-crew-leads-fix",
+  "title": "US-062 Mariia fixes the crew capacity action",
+  "usedBy": "Lab 3.3",
+  "levels": [3],
+  "description": "Mariia moves the crew capacity action of her merged Pull Request to a new one, with the class name fixed. It keeps its id and records the Pull Request it comes from, so it runs from the new Pull Request only.",
+  "branch": "training/mate-us-062-crew-leads-fix",
+  "movedFrom": "us-062-crew-leads",
+  "moveActions": ["7d1e4b90-3c2a-4f5e-8a6b-062000000002"],
+  "author": {
+    "name": "Mariia Pyvovarchuk",
+    "email": "mariia.pyvovarchuk@helios-training.demo"
+  },
+  "commitMessage": "US-062 Fix the class name of the crew capacity action\n\nMoved from the Pull Request of US-062 with Move to my Pull Request:\nCrewCapacityBatch, not CrewCapacityBach.",
+  "prTitle": "US-062 Fix the crew capacity action",
+  "prBody": "The crew capacity action of US-062 named a class that does not exist (`CrewCapacityBach`).\n\nI moved it to this Pull Request with **Move to my Pull Request** and fixed the class name. It keeps its id, and `movedFrom` says which Pull Request it comes from: once this one is deployed, the action runs from here only.\n\nStory: US-062 in BACKLOG.md",
+  "nextStep": "Review the moved action, merge it, and read both Deployment Actions comments. Lab 3.3 step 12.",
+  "patches": []
+}

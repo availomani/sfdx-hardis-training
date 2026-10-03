@@ -25,7 +25,7 @@
   "vscode/metadata-retriever.png": "7041823fc7fd1ace",
   "vscode/pipeline-pr-actions-empty.png": "1306519a630cb8d6",
   "vscode/pipeline-edit-action-apex.png": "730ac01d861b0528",
-  "vscode/pipeline-pr-actions-list.png": "d457de3f25e82485",
+  "vscode/pipeline-pr-actions-list.png": "8a4ca11f37ca3809",
   "vscode/data-workbench.png": "26439cc0d9e75dab",
   "vscode/pipeline-edit-action-data.png": "d8f1521739d80dd4",
   "vscode/pipeline-edit-action-schedule-batch.png": "49c2bebc6dc1246c",
@@ -153,5 +153,10 @@
   "salesforce/flow-builder-assign-crew-full.png": "75b5288745b65e9f",
   "web/github-star-sfdx-hardis.png": "edaed3e63e065bdd",
   "web/github-star-megalinter.png": "61c3292576a7cbed",
-  "web/github-star-vscode-sfdx-hardis.png": "ddcc14c93fbbf014"
+  "web/github-star-vscode-sfdx-hardis.png": "ddcc14c93fbbf014",
+  "vscode/pipeline-branch-modal-actions-failed.png": "7ff23433f761f123",
+  "vscode/action-run-prompts.png": "c9b3f1f78c84c0fb",
+  "vscode/pipeline-edit-action-moved.png": "4bd90a151e7658e6",
+  "web/github-pr-deployment-actions-failed.png": "49ae4e5809ad5b48",
+  "web/github-pr-deployment-actions-moved.png": "eb1c91bd1cfb85c6"
 }

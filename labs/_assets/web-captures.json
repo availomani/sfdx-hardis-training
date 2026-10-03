@@ -457,6 +457,32 @@
         "width": 1440,
         "height": 110
       }
+    },
+    {
+      "name": "github-pr-deployment-actions-failed",
+      "_comment": "Lab 3.3 step 10: the Deployment Actions comment of US-062 right after its deployment, the first action failed and the two others stopped. Captured at that moment: the same comment later reads moved and done.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/41",
+      "width": 1440,
+      "height": 2400,
+      "settle": 5000,
+      "selector": ".timeline-comment:has-text(\"Status by org branch\") .comment-body",
+      "maxHeight": 1500,
+      "evaluate": [
+        "(() => { for (const el of document.querySelectorAll('body *')) { const p = getComputedStyle(el).position; if (p === 'sticky' || p === 'fixed') { el.style.visibility = 'hidden'; } } })()"
+      ]
+    },
+    {
+      "name": "github-pr-deployment-actions-moved",
+      "_comment": "Lab 3.3 step 12: the same comment once the fix Pull Request is deployed, the crew capacity action moved to it.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/41",
+      "width": 1440,
+      "height": 2400,
+      "settle": 5000,
+      "selector": ".timeline-comment:has-text(\"Status by org branch\") .comment-body",
+      "maxHeight": 1500,
+      "evaluate": [
+        "(() => { for (const el of document.querySelectorAll('body *')) { const p = getComputedStyle(el).position; if (p === 'sticky' || p === 'fixed') { el.style.visibility = 'hidden'; } } })()"
+      ]
     }
   ]
 }

@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "81a6262c87486213f6491e6d081ccdd4cda54f65"
+source_rev: "fcd1999a735116d3fc0cd6db469e288e0b4ba8a8"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -19,7 +19,7 @@ screenshots:
 depends_on:
   commands: [hardis:org:data:import, hardis:work:save]
   flags: []
-  config: [dataPackages, commandsPostDeploy]
+  config: [dataPackages, commandsPostDeploy, failValidationOnPendingManualActions]
   panels: [dataWorkbench, deploymentAction, pipeline]
   docs: [salesforce-devops-agent-data-workspaces, salesforce-devops-work-on-user-story-deployment-actions]
 ---
@@ -307,20 +307,41 @@ production est pire que pas d'étape du tout.
 L'éditeur a écrit les trois actions dans `scripts/actions/`, dans un fichier nommé d'après votre Pull
 Request. Commitez-le, **Save / Publish**.
 
-Quand le contrôle se termine, sfdx-hardis publie un commentaire **Deployment Actions** sur la Pull
-Request :
+Cette fois, le contrôle passe au **rouge**, et c'est voulu. L'étape de délivrabilité tourne
+**avant** le déploiement : elle doit donc être faite avant le merge, et sfdx-hardis arrête le
+contrôle tant que personne ne dit qu'elle l'est. Son log nomme l'étape et les trois façons de la
+marquer, et sfdx-hardis publie un commentaire **Deployment Actions** sur la Pull Request :
 
 ![Le commentaire Deployment Actions de la Pull Request US-026](../../_assets/annotated/web/github-pr-deployment-actions.png)
 
 - **Pending manual actions** **(1)** : votre étape de délivrabilité, avec une case à cocher, pour
-  `integration`. Faites le clic dans l'org, puis cochez la case : le job suivant l'enregistre comme
-  faite
+  `integration`
 - **Status by org branch** **(2)** : une ligne par action, avec son moment. L'étape de délivrabilité,
   **pre-deploy**, attend quelqu'un ; l'import et la planification, **post-deploy**, sont marqués
   **skipped**, parce qu'un contrôle ne change rien
 
+Faites le clic dans `helios-integration` (elle affiche déjà **All email** sur vos scratch orgs, c'est
+donc une vérification de dix secondes), puis cochez la case **(1)**. Dans VS Code, **Mark as done in
+integration** sur l'étape, dans l'onglet **Deployment Actions** de votre Pull Request, fait la même
+chose.
+
+Relancez ensuite le contrôle : sur la Pull Request, ouvrez **Checks** et cliquez sur **Re-run all
+jobs**. Il lit votre case, enregistre l'étape comme faite dans `integration`, la saute, et passe au
+vert.
+
 Mergez, et regardez le job de déploiement : l'import de données tourne, le batch est planifié, et
-l'étape manuelle reste en attente jusqu'à ce qu'une personne dise qu'elle est faite.
+l'étape manuelle est sautée, parce qu'elle est déjà faite dans `integration`.
+
+<details markdown="1"><summary>Sous le capot : pourquoi le contrôle s'est arrêté</summary>
+
+Une action manuelle déclarée **Before Metadata Deployment** doit être faite avant le merge. Le job de
+validation s'arrête juste après ses actions de pré-déploiement tant que l'une d'elles n'est pas
+marquée comme faite dans la branche d'org cible. Une Pull Request en draft (ou avec `draft` dans son
+titre) n'est pas arrêtée, pour pouvoir continuer à contrôler une story en cours. Les projets qui ne
+veulent pas de ce comportement mettent `failValidationOnPendingManualActions: false` dans
+`config/.sfdx-hardis.yml`.
+
+</details>
 
 ### 6. Vérifier dans l'org d'intégration
 
@@ -329,15 +350,13 @@ Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 - L'onglet **Crew Capacity** de l'application Helios Delivery, sur sa vue de liste **All**, a 12
   enregistrements
 - **Setup > Scheduled Jobs** liste `Helios crew capacity nightly`
-- L'étape manuelle est listée comme restant à faire, parce que vous ne l'avez pas faite
+- L'étape manuelle est **done** pour `integration` sous **Status by org branch**, avec la date de
+  votre case
 
-Faites l'étape manuelle à la main dans `helios-integration`, puis cochez sa case sous **Pending
-manual actions** dans le commentaire de votre Pull Request. Un job lit les cases des Pull Requests
-qu'il déploie : cette case est donc enregistrée par le prochain job qui porte US-026, la promotion
-vers `uat` du [Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md). D'ici là, sa ligne sous **Status by org branch** reste en
-attente, et c'est normal. Sur une vraie release, la personne qui merge fait le clic et coche la case
-avant de merger, et le job de déploiement l'enregistre aussitôt. C'est tout l'intérêt : vous l'avez faite **parce que la pipeline vous l'a
-dit**, pas parce que vous vous en êtes souvenu.
+Vous avez fait le clic avant le merge, ce qu'exige une vraie release : la personne qui merge le fait
+et coche la case, et la pipeline ne laisse pas passer le merge tant que ce n'est pas fait. C'est tout
+l'intérêt : vous l'avez faite **parce que la pipeline vous l'a dit**, pas parce que vous vous en êtes
+souvenu.
 
 !!! warning "Si les enregistrements ne sont pas là et que le job était vert"
     Lisez le log de déploiement à la recherche de la ligne **Listing Post-deployment actions**. Quand

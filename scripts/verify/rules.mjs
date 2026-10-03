@@ -290,6 +290,7 @@ function branchesNameTheirOrgs(ctx) {
 
 /** The dev org alias, as the universe names it. */
 const DEV_ORG = "helios-dev";
+const INTEGRATION_ORG = "helios-integration";
 
 // --------------------------------------------------------------- the rules
 export const RULES = [
@@ -868,7 +869,35 @@ export const RULES = [
   },
   {
     id: "3.3", level: 3, lab: 3,
-    title: "Romain's US-056 deploys, and .forceignore hides nothing it should not",
+    title: "Romain's US-056 deploys, .forceignore hides nothing it should not, and Mariia's failed action was fixed",
+    // Right after the lab, the org says whether the actions really did their work: the group
+    // exists and holds the delivery managers and the learner, whichever way each action was recovered
+    now: (ctx) => {
+      const repository = ruleCheck("3.3")(ctx);
+      if (!repository.ok) {
+        return repository;
+      }
+      if (!ctx.sfQuery) {
+        return repository;
+      }
+      const members = ctx.sfQuery(
+        INTEGRATION_ORG,
+        "SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName = 'Helios_Crew_Leads'"
+      );
+      if (members === null) {
+        return miss(
+          "helios-integration could not be queried, or it has no Crew Leads group",
+          `${INTEGRATION_ORG}. Lab 3.3 step 11 creates the group in Setup, with the group name Helios_Crew_Leads`
+        );
+      }
+      if (members.length === 0) {
+        return miss(
+          "the Crew Leads group of helios-integration has no member",
+          `${INTEGRATION_ORG}, Setup > Public Groups > Crew Leads. Lab 3.3 step 11 retries the action that fills it`
+        );
+      }
+      return pass("Crew Leads has its members in helios-integration, and the crew capacity action runs from Mariia's fix");
+    },
     check: (ctx) => {
       const forceignore = ctx.readOn(DEV, ".forceignore") || "";
       if (/Crew_W\*/.test(forceignore)) {
@@ -877,12 +906,31 @@ export const RULES = [
           `.forceignore on branch ${DEV}. Lab 3.3 step 8 sends it back to Romain`
         );
       }
-      return ctx.readOn(DEV, FIELD("Installation__c", "Crew_Workload__c"))
-        ? pass("US-056 is merged, and its field deploys")
-        : miss(
+      if (!ctx.readOn(DEV, FIELD("Installation__c", "Crew_Workload__c"))) {
+        return miss(
           "Romain's US-056 is not merged into integration yet",
           `${FIELD("Installation__c", "Crew_Workload__c")} on branch ${DEV}`
         );
+      }
+      // The crew capacity action of US-062 lives in exactly one actions file, with the right class
+      // and the Pull Request it was moved from: Mariia's fix is merged
+      const crewCapacityAction = "7d1e4b90-3c2a-4f5e-8a6b-062000000002";
+      const carrying = ctx.listOn(DEV, "scripts/actions/")
+        .map((file) => ctx.readOn(DEV, file) || "")
+        .filter((content) => content.includes(crewCapacityAction));
+      if (carrying.length === 0) {
+        return miss(
+          "Mariia's US-062 is not merged into integration yet",
+          `scripts/actions/ on branch ${DEV}. Lab 3.3 step 9 merges it`
+        );
+      }
+      if (carrying.length > 1 || !carrying[0].includes("className: CrewCapacityBatch") || !/movedFrom: \d+/.test(carrying[0])) {
+        return miss(
+          "the crew capacity action of US-062 still names CrewCapacityBach, or was not moved to Mariia's fix",
+          `scripts/actions/ on branch ${DEV}. Lab 3.3 step 12 merges her fix Pull Request`
+        );
+      }
+      return pass("US-056 is merged and its field deploys, and the crew capacity action of US-062 was moved and fixed");
     }
   },
   {

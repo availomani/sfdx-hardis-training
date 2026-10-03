@@ -328,6 +328,14 @@
           "Sur la présentation de page, lisible par les managers"
         ]
       },
+      "US-062": {
+        "title": "Réunir les delivery managers dans un groupe Crew Leads",
+        "story": "En tant que planificateur, je veux tous les delivery managers dans un même groupe Crew Leads, afin de partager les plannings d'installation une seule fois au lieu de personne par personne.",
+        "acceptance": [
+          "Un groupe public Crew Leads qui contient tous les delivery managers",
+          "La capacité des équipes recalculée une fois après le déploiement"
+        ]
+      },
       "US-057": {
         "title": "Mettre en pause une installation qui attend une pièce",
         "story": "En tant que planificateur, je veux un statut pour une installation bloquée par une pièce manquante, afin que le rapport hebdomadaire cesse de la compter en retard.",

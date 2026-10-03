@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "61522b52030bb3ccfc5b71dda053a192d3091436"
+source_rev: "fcd1999a735116d3fc0cd6db469e288e0b4ba8a8"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -17,7 +17,7 @@ screenshots:
 depends_on:
   commands: [hardis:doc:release-notes, hardis:project:deploy:smart]
   flags: []
-  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath]
+  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
   docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes]
 ---
@@ -202,6 +202,12 @@ La liste de cases est l'exception, et ce n'est pas de la décoration. **Cochez u
 vous avez fait la chose dans l'org**, et le job sfdx-hardis suivant relit la case et note l'action
 comme faite. Laissez-la décochée et la promotion suivante vous la redemandera.
 
+Une étape **avant** retient aussi le merge : tant que l'étape de délivrabilité de US-026 n'est pas
+marquée comme faite dans `uat`, le contrôle de la promotion s'arrête en rouge, juste après ses
+actions de pré-déploiement. Faites le clic dans `helios-uat`, cochez sa case (ou **Mark as done in
+uat** dans l'onglet **Deployment Actions** de VS Code), puis **Re-run all jobs** sur le contrôle :
+il enregistre l'étape et passe au vert.
+
 ### 5. Merger et regarder le déploiement
 
 Mergez la promotion. L'exécution **Process Deployment (sfdx-hardis)** démarre, cette fois sur `uat`.
@@ -210,10 +216,8 @@ C'est le premier déploiement vers cette org par la pipeline : il sera donc plus
 integration, l'UAT est en retard de tout ce que l'équipe a fait. Comptez plusieurs minutes.
 
 L'étape de délivrabilité est une étape **pre-deploy** : sa place est avant le merge, comme le dit
-l'étape 4. Si vous l'avez faite dans `helios-uat` et avez coché sa case, le log de ce job le dit :
-*Manual action Set Email Deliverability to All Email has been confirmed as done in org branch uat*.
-Sinon, faites-la maintenant et cochez la case : le prochain job qui porte cette Pull Request
-l'enregistre.
+l'étape 4, et le contrôle n'est pas passé au vert avant que vous ne l'ayez cochée. Ce job la saute :
+*Skipping Set Email Deliverability to All Email ...: already run in uat*.
 
 Puis lisez le log à la recherche du gestionnaire d'écrasement, au-dessus du déploiement, parmi les
 lignes qui commencent par `[NoOverwrite]` :
@@ -292,8 +296,8 @@ Requests.
 
 Viennent ensuite un tableau des tickets, un des Pull Requests avec leurs auteurs et dates de merge,
 les métadonnées modifiées par type, et les deployment actions avec leur statut dans `uat` : l'étape
-manuelle de délivrabilité **success** si vous avez coché sa case avant le merge et **manual**
-sinon, les imports et la planification **success**.
+manuelle de délivrabilité **success**, cochée avant le merge, les imports et la planification
+**success**.
 
 Lisez-les puis améliorez-les. Des notes générées sont une liste complète, et une note de version que
 le métier lit a besoin de deux choses que le générateur ne peut pas connaître :

@@ -19,7 +19,7 @@ screenshots:
 depends_on:
   commands: [hardis:org:data:import, hardis:work:save]
   flags: []
-  config: [dataPackages, commandsPostDeploy]
+  config: [dataPackages, commandsPostDeploy, failValidationOnPendingManualActions]
   panels: [dataWorkbench, deploymentAction, pipeline]
   docs: [salesforce-devops-agent-data-workspaces, salesforce-devops-work-on-user-story-deployment-actions]
 ---
@@ -298,18 +298,37 @@ you meant, they will guess, and a wrong guess in production is worse than no ste
 The editor wrote the three actions into `scripts/actions/`, in a file named after your Pull Request.
 Commit it, **Save / Publish**.
 
-When the check finishes, sfdx-hardis posts a **Deployment Actions** comment on the Pull Request:
+This time the check turns **red**, and on purpose. The deliverability step runs **before** the
+deployment, so it has to be done before the merge, and sfdx-hardis stops the check until somebody
+says it is. Its log names the step and the three ways to mark it, and sfdx-hardis posts a
+**Deployment Actions** comment on the Pull Request:
 
 ![The Deployment Actions comment of the US-026 Pull Request](../../_assets/annotated/web/github-pr-deployment-actions.png)
 
-- **Pending manual actions** **(1)**: your deliverability step, with a checkbox, for `integration`.
-  Do the click in the org, then tick the box: the next job records it as done
+- **Pending manual actions** **(1)**: your deliverability step, with a checkbox, for `integration`
 - **Status by org branch** **(2)**: one row per action, with its moment. The deliverability step,
   **pre-deploy**, waits for somebody; the import and the schedule, **post-deploy**, are marked
   **skipped**, because a check changes nothing
 
+Do the click in `helios-integration` (it already reads **All email** on your scratch orgs, so it is
+a ten-second check), then tick the box **(1)**. In VS Code, **Mark as done in integration** on the
+step, in the **Deployment Actions** tab of your Pull Request, does the same.
+
+Then run the check again: on the Pull Request, open **Checks** and click **Re-run all jobs**. It
+reads your tick, records the step as done in `integration`, skips it, and goes green.
+
 Merge, and watch the deployment job: the data import runs, the batch gets scheduled, and the manual
-step stays pending until a person says it is done.
+step is skipped, because it is done in `integration` already.
+
+<details markdown="1"><summary>Under the hood: why the check stopped</summary>
+
+A manual action declared **Before Metadata Deployment** has to be performed before the merge. The
+validation job stops right after its pre-deployment actions while one of them is not marked as
+performed in the target org branch. A draft Pull Request (or one with `draft` in its title) is not
+stopped, so you can keep checking a story in progress. Projects that do not want this set
+`failValidationOnPendingManualActions: false` in `config/.sfdx-hardis.yml`.
+
+</details>
 
 ### 6. Verify in the integration org
 
@@ -317,15 +336,12 @@ Do not take the green tick for it. **Open the org and look:**
 
 - The **Crew Capacity** tab of the Helios Delivery app, on its **All** list view, has 12 records
 - **Setup > Scheduled Jobs** lists `Helios crew capacity nightly`
-- The manual step is listed as still to do, because you have not done it
+- The manual step reads **done** for `integration` under **Status by org branch**, with the date
+  of your tick
 
-Do the manual step by hand in `helios-integration`, then tick its box under **Pending manual
-actions** in the comment on your Pull Request. A job reads the boxes of the Pull Requests it
-deploys, so this tick is recorded by the next job that carries US-026: the promotion to `uat` in
-[Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md). Until then its row under **Status by org branch** still reads waiting, and
-that is expected. On a real release the person merging does the click and ticks the box before
-merging, and the deployment job records it at once. That is the point: you did it **because the
-pipeline told you to**, not because you remembered.
+You did the click before the merge, which is what a real release needs: the person merging does it
+and ticks the box, and the pipeline does not let the merge through until they have. That is the
+point: you did it **because the pipeline told you to**, not because you remembered.
 
 !!! warning "If the records are not there and the job was green"
     Read the deployment log for the line **Listing Post-deployment actions**. When it is followed by

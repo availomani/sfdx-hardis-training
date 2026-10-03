@@ -28,6 +28,7 @@ for the `Helios Delivery` app, and every one of them is a lab in this course.
 | [US-046](https://sfdx-hardis-training.github.io/BACKLOG/US-046/) | 3 | Needs Reinspection status, added in production by an admin | You | `retrofit/US-046-needs-reinspection` |
 | [US-055](https://sfdx-hardis-training.github.io/BACKLOG/US-055/) | 3 | Install Date says which day it means | Romain Panda | `training/mate-us-055-install-date-help` |
 | [US-056](https://sfdx-hardis-training.github.io/BACKLOG/US-056/) | 3 | Show the panels each crew member has to lay | Romain Panda | `training/mate-us-056-crew-workload` |
+| [US-062](https://sfdx-hardis-training.github.io/BACKLOG/US-062/) | 3 | Put the delivery managers in a Crew Leads group | Mariia Pyvovarchuk | `training/mate-us-062-crew-leads` |
 | [US-057](https://sfdx-hardis-training.github.io/BACKLOG/US-057/) | 3 | Park an installation that is waiting for parts | Mariia Pyvovarchuk | `training/mate-us-057-awaiting-parts` |
 | [US-058](https://sfdx-hardis-training.github.io/BACKLOG/US-058/) | 3 | Record the warranty term on a panel batch | Romain Panda | `training/mate-us-058-warranty-term` |
 | [US-059](https://sfdx-hardis-training.github.io/BACKLOG/US-059/) | 3 | Record the supplier of a panel batch | Romain Panda | `training/mate-us-059-supplier` |
@@ -321,6 +322,21 @@ Acceptance criteria:
 
 - A Crew Workload formula on Installation
 - On the layout, readable by managers
+
+<a id="US-062"></a>
+
+### US-062 - Put the delivery managers in a Crew Leads group
+
+**Owner**: Mariia Pyvovarchuk  
+**Branch**: `training/mate-us-062-crew-leads`  
+**Lab**: 3.3
+
+> As a planner, I want every delivery manager in one Crew Leads group, so that I share the installation plans once instead of person by person.
+
+Acceptance criteria:
+
+- A Crew Leads public group holding every delivery manager
+- The crew capacity recalculated once after the deployment
 
 <a id="US-057"></a>
 

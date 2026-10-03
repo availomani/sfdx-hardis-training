@@ -24,6 +24,15 @@
  *               such a story without the one under it, which is what makes its
  *               cherry-pick conflict for real. The check says which story to
  *               merge first instead of failing on a line it cannot find.
+ *   movedFrom   the id of the scenario whose merged Pull Request this one moves
+ *               deployment actions from, to fix their definition after they
+ *               failed (Lab 3.3): the actions listed in moveActions leave the
+ *               actions file of that Pull Request, and __MOVED_FROM__ in a file
+ *               of this one is its number
+ *   files whose path holds {{PR}}
+ *               a deployment actions file is named after the Pull Request that
+ *               carries it, and its number is only known once it is opened: such
+ *               a file is written and pushed in a second commit, right after
  *   offerMergeLevels
  *               the levels where merging the Pull Request is not what the lab
  *               teaches: run from their Training menu, the learner is offered to
@@ -212,8 +221,22 @@ export default async function simulate(args) {
   ok(`On ${scenario.branch}`);
 
   title("2 of 4  Applying the teammate changes");
+  // The Pull Request the actions are moved from has to be merged: its number names its file
+  let movedFromPr = null;
+  if (scenario.movedFrom) {
+    const source = all.find((s) => s.id === scenario.movedFrom);
+    const mergedSource = source ? pullRequestOf(slug, source.branch, "merged") : null;
+    movedFromPr = mergedSource ? mergedSource.number : null;
+    if (!movedFromPr) {
+      restore();
+      abort(
+        `${scenario.title} fixes the actions of ${source ? source.title : scenario.movedFrom}, whose Pull Request is not merged in your fork.`,
+        `Simulate and merge ${source ? source.title.split(" ")[0] : scenario.movedFrom} first. ${scenario.usedBy} gives the order.`
+      );
+    }
+  }
   const planned = planPatches(scenario);
-  const applied = [...applyFiles(scenario), ...writePlanned(planned)];
+  const applied = [...applyFiles(scenario), ...writePlanned(planned), ...removeMovedActions(scenario, movedFromPr)];
   applied.forEach((f) => info(c.dim(`    ${f}`)));
   ok(`${applied.length} file(s) written`);
 
@@ -324,6 +347,31 @@ export default async function simulate(args) {
       ok("Pull Request opened");
       prUrl = (pr.stdout || "").match(/https:\/\/\S+\/pull\/\d+/)?.[0] || `https://github.com/${slug}/pulls`;
       info(`  ${c.cyan(prUrl)}`);
+    }
+  }
+
+  // Files named after the Pull Request number, known only now: second commit, same author
+  const prNumber = Number((prUrl || "").match(/\/pull\/(\d+)/)?.[1] || 0);
+  if (numberedFiles(scenario).length > 0) {
+    if (!prNumber) {
+      warn("The Pull Request number is unknown, so its deployment actions file was not added.");
+    } else {
+      const numbered = writeNumberedFiles(scenario, prNumber, movedFromPr);
+      numbered.forEach((f) => info(c.dim(`    ${f}`)));
+      run("git", ["add", "-A"]);
+      const messageFile = path.join(ROOT, ".training-commit-message.txt");
+      fs.writeFileSync(messageFile, `${scenario.prTitle}: deployment actions of #${prNumber}`, "utf8");
+      const commit = run("git", [
+        "-c", `user.name=${scenario.author.name}`,
+        "-c", `user.email=${scenario.author.email}`,
+        "commit", "-F", messageFile
+      ]);
+      fs.rmSync(messageFile, { force: true });
+      if (commit.code !== 0 || run("git", ["push", "origin", scenario.branch]).code !== 0) {
+        warn(`The deployment actions file of #${prNumber} could not be committed and pushed.`);
+      } else {
+        ok(`Deployment actions file of #${prNumber} added to the Pull Request`);
+      }
     }
   }
 
@@ -683,6 +731,9 @@ export function applyFiles(scenario, root = ROOT) {
       const relPath = rel ? `${rel}/${entry.name}` : entry.name;
       if (entry.isDirectory()) {
         walk(from, relPath);
+      } else if (relPath.includes("{{PR}}")) {
+        // Written once the Pull Request number is known: writeNumberedFiles
+        continue;
       } else {
         const to = path.join(root, relPath);
         fs.mkdirSync(path.dirname(to), { recursive: true });
@@ -700,4 +751,73 @@ export function applyFiles(scenario, root = ROOT) {
     }
   }
   return written;
+}
+
+/**
+ * The files of a scenario named after its own Pull Request number ({{PR}} in the path).
+ */
+export function numberedFiles(scenario) {
+  const filesDir = path.join(scenario.dir, "files");
+  if (!fs.existsSync(filesDir)) {
+    return [];
+  }
+  const found = [];
+  const walk = (dir, rel) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const relPath = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        walk(path.join(dir, entry.name), relPath);
+      } else if (relPath.includes("{{PR}}")) {
+        found.push(relPath);
+      }
+    }
+  };
+  walk(filesDir, "");
+  return found;
+}
+
+/**
+ * Write the files named after the Pull Request number, with {{PR}} and __MOVED_FROM__ replaced (a token Prettier leaves alone in YAML)
+ * in their path and their content.
+ */
+export function writeNumberedFiles(scenario, prNumber, movedFromPr, root = ROOT) {
+  const fill = (text) => text.replaceAll("{{PR}}", String(prNumber)).replaceAll("__MOVED_FROM__", String(movedFromPr || ""));
+  return numberedFiles(scenario).map((relPath) => {
+    const to = path.join(root, fill(relPath));
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.writeFileSync(to, fill(fs.readFileSync(path.join(scenario.dir, "files", relPath), "utf8")), "utf8");
+    return fill(relPath);
+  });
+}
+
+/**
+ * Take the actions listed in moveActions out of the actions file of the Pull Request they are
+ * moved from. The file is written by a scenario, one "  - id: <id>" block per action, so a block
+ * runs from its id line to the next one, or to the next top-level key.
+ */
+export function removeMovedActions(scenario, movedFromPr, root = ROOT) {
+  if (!movedFromPr || !(scenario.moveActions || []).length) {
+    return [];
+  }
+  const relPath = `scripts/actions/.sfdx-hardis.${movedFromPr}.yml`;
+  const file = path.join(root, relPath);
+  if (!fs.existsSync(file)) {
+    return [];
+  }
+  const lines = fs.readFileSync(file, "utf8").split("\n");
+  const kept = [];
+  let skipping = false;
+  for (const line of lines) {
+    const idMatch = line.match(/^\s*- id: (\S+)\s*$/);
+    if (idMatch) {
+      skipping = scenario.moveActions.includes(idMatch[1]);
+    } else if (/^\S/.test(line)) {
+      skipping = false;
+    }
+    if (!skipping) {
+      kept.push(line);
+    }
+  }
+  fs.writeFileSync(file, kept.join("\n"), "utf8");
+  return [relPath];
 }

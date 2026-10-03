@@ -17,7 +17,7 @@ screenshots:
 depends_on:
   commands: [hardis:doc:release-notes, hardis:project:deploy:smart]
   flags: []
-  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath]
+  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
   docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes]
 ---
@@ -192,6 +192,11 @@ The checklist is the exception, and it is not decoration. **Tick a box once you 
 in the org**, and the next sfdx-hardis job reads the box back and records the action as done. Leave
 it unticked and the next promotion will still be asking you for it.
 
+A **before** step also holds the merge: while the deliverability step of US-026 is not marked as
+done in `uat`, the check of the promotion stops red, right after its pre-deployment actions. Do the
+click in `helios-uat`, tick its box (or **Mark as done in uat** in the VS Code **Deployment
+Actions** tab), then **Re-run all jobs** on the check: it records the step and goes green.
+
 ### 5. Merge and watch the deployment
 
 Merge the promotion. The **Process Deployment (sfdx-hardis)** run starts, this time on `uat`.
@@ -199,10 +204,9 @@ Merge the promotion. The **Process Deployment (sfdx-hardis)** run starts, this t
 This is the first deployment to this org through the pipeline, so it will be larger than the ones to
 integration: UAT is behind by everything the team has done. Expect several minutes.
 
-The deliverability step is a **pre-deploy** one: its place is before the merge, as step 4 says.
-If you did it in `helios-uat` and ticked its box, the log of this job says so: *Manual action Set
-Email Deliverability to All Email has been confirmed as done in org branch uat*. If you did not,
-do it now and tick the box: the next job that carries this Pull Request records it.
+The deliverability step is a **pre-deploy** one: its place is before the merge, as step 4 says,
+and the check did not go green until you ticked it. This job skips it: *Skipping Set Email
+Deliverability to All Email ...: already run in uat*.
 
 Then read the log for the overwrite manager, above the deployment, among the lines that start
 with `[NoOverwrite]`:
@@ -279,8 +283,8 @@ Requests.
 
 Then come a table of the tickets, one of the Pull Requests with their authors and merge dates, the
 metadata changed by type, and the deployment actions with their status in `uat`: the manual
-deliverability step **success** if you ticked its box before the merge and **manual** if not, the
-imports and the schedule **success**.
+deliverability step **success**, ticked before the merge, the imports and the schedule
+**success**.
 
 Read it and then improve it. Generated notes are a complete list, and a release note the business
 reads needs two things the generator cannot know:
