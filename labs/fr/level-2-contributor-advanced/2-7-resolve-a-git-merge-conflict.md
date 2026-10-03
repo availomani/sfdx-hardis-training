@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "c43ebd2258a2c6950db136e2317822d8dae07296"
+source_rev: "b98be8fdffbb4c72042a620b3094bdfcab6451cd"
 screenshots:
   - annotated/salesforce/flow-builder-assign-crew
   - annotated/salesforce/flow-builder-assign-crew-full
@@ -64,7 +64,9 @@ Dans `helios-dev` :
 1. Ouvrez le flow `Installation Assign Crew` et ajoutez une décision pour qu'une installation dont le
    type de toiture est `Flat` reçoive une équipe d'au moins 3 personnes, quoi que le flow ait décidé
    par ailleurs. Reliez-la à la **même affectation** sur laquelle le flow se termine déjà, pour que
-   la nouvelle règle tourne après le changement de statut
+   la nouvelle règle tourne après le changement de statut.
+   **Save**, puis **Activate** : chaque enregistrement d'un flow crée une nouvelle version, et seule
+   la version active s'exécute
 2. Sur le permission set `Helios Delivery Manager`, accordez l'accès en écriture sur
    `Installation__c.Crew_Notes__c`, pour qu'un planificateur puisse dire pourquoi une équipe a été
    renforcée
@@ -305,10 +307,13 @@ est pire qu'un flow qui échoue.
    modifications que git a vues depuis la dernière synchronisation, suppressions comprises, ce qui
    est plus que ce que cette étape demande
 
-3. Ouvrez **Flow Builder** dans l'org, sur `Installation_Assign_Crew`, et rajoutez votre règle de
-   toiture plate, **avant** son plafond : le flow porte d'abord l'équipe d'une toiture plate à trois,
-   et son plafond, qui tourne maintenant en dernier, a le dernier mot. Votre décision **(1)** vient
-   en premier, sa décision **Crew Over Cap** **(2)** en dernier
+3. Ouvrez la version du flow de Mariia, qui est la **plus récente**. Ouvrir le flow depuis son nom
+   peut tomber sur une version plus ancienne, sans sa décision **Crew Over Cap** : dans Setup,
+   **Flows**, ouvrez le menu au bout de la ligne `Installation Assign Crew`, **View Details and
+   Versions**, et ouvrez la version en haut de la liste. Rajoutez votre règle de toiture plate,
+   **avant** son plafond : le flow porte d'abord l'équipe d'une toiture plate à trois, et son
+   plafond, qui tourne maintenant en dernier, a le dernier mot. Votre décision **(1)** vient en
+   premier, sa décision **Crew Over Cap** **(2)** en dernier. **Save**, puis **Activate**
 
     ![Le flow reconstruit : le minimum de toiture plate d'abord, le plafond en dernier](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
 

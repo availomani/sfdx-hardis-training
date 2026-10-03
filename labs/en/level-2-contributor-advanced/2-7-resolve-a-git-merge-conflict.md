@@ -62,7 +62,8 @@ In `helios-dev`:
 
 1. Open the flow `Installation Assign Crew` and add a decision so that an installation whose roof
    type is `Flat` gets a crew of at least 3, whatever else the flow decided. Connect it to the
-   **same assignment** the flow already ends on, so the new rule runs after the status change
+   **same assignment** the flow already ends on, so the new rule runs after the status change.
+   **Save**, then **Activate**: each save of a flow is a new version, and only the active one runs
 2. On the permission set `Helios Delivery Manager`, grant edit access on
    `Installation__c.Crew_Notes__c`, so a planner can say why a crew was raised
 
@@ -289,10 +290,13 @@ developers included, and a flow that deploys but behaves wrongly is worse than o
    **Push from local files to Salesforce org** command would send your org every change git has
    seen since the last sync, deletions included, which is more than this step needs
 
-3. Open **Flow Builder** in the org, on `Installation_Assign_Crew`, and add your flat-roof rule
-   again, **before** her cap: the flow raises a flat roof crew to three first, and her cap, which
-   now runs last, has the final word. Your decision **(1)** comes first, her **Crew Over Cap**
-   decision **(2)** last
+3. Open Mariia's version of the flow, which is the **latest** one. Opening the flow from its name
+   can land on an older version, without her **Crew Over Cap** decision: in Setup, **Flows**, open
+   the menu at the end of the `Installation Assign Crew` row, **View Details and Versions**, and
+   open the version at the top of the list. Add your flat-roof rule again, **before** her cap: the
+   flow raises a flat roof crew to three first, and her cap, which now runs last, has the final
+   word. Your decision **(1)** comes first, her **Crew Over Cap** decision **(2)** last. **Save**,
+   then **Activate**
 
     ![The rebuilt flow: the flat roof minimum first, the cap last](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
 

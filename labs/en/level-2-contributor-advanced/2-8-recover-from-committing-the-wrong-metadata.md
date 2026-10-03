@@ -62,6 +62,10 @@ Now open **Commit changes**, search the recent changes, and this time click the 
 
 ![The Metadata Retriever, with every row selected](../../_assets/annotated/vscode/metadata-retriever-recent-changes--select-all.png)
 
+In an org where Agentforce is on, the list can also carry `GenOpAgentConfig` rows, named after
+your flows. The Salesforce CLI does not know that type yet, so the retrieve stops and names it:
+untick those rows and retrieve again.
+
 ### 2. Look at what you did
 
 Look at the **Git Delta package.xml** report the publish offered: more than the one layout your story
