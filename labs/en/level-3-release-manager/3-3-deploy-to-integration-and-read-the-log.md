@@ -313,7 +313,7 @@ the Crew Leads group**. The command runs in VS Code, against `helios-integration
 
 - the action runs and goes green, and the command asks what to do with the two actions its failure
   stopped **(1)**
-- answer **Run the next action only (2)**
+- answer **Run the next action only** **(2)**
 - the crew capacity action runs, and fails **(3)**: the class `CrewCapacityBach` does not exist
 
 ![The command runner retrying the action, asking about the stopped actions, then the next one failing](../../_assets/annotated/vscode/action-run-prompts.png)

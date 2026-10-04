@@ -196,7 +196,7 @@ Open the **DevOps Pipeline** panel and click the `uat` node. The window that ope
 [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) used to read a promotion window, with two things on it that were doing nothing until
 now.
 
-![The uat branch window, with the checkbox column and the Create promotion button](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
+![The uat branch window, with the checkboxes and the Create promotion button](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
 
 A **checkbox** on each User Story row **(1)**, and **Create promotion from uat (Beta)** in the
 footer **(2)**. Both appear because `uat` is the source of an allowed promotion step and `preprod`

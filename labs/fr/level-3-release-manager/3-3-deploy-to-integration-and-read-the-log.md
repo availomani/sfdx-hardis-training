@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "e1e8c48c227c1a01ce4aa9956321c3dc636307b7"
+source_rev: "341e56461c873fde887c8f69d1879421c0f939db"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -331,7 +331,7 @@ delivery managers in the Crew Leads group**. La commande tourne dans VS Code, su
 
 - l'action tourne et passe au vert, et la commande demande quoi faire des deux actions que son échec
   a arrêtées **(1)**
-- répondez **Run the next action only (2)**
+- répondez **Run the next action only** **(2)**
 - l'action de capacité des équipes tourne, et échoue **(3)** : la classe `CrewCapacityBach`
   n'existe pas
 

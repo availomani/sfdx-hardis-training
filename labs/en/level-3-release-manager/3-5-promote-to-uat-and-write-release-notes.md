@@ -239,7 +239,7 @@ Open the **DevOps Pipeline** panel and click the `uat` node, the same way you cl
 in step 1. In the footer of that window, the left button now reads **Generate Promotion Notes for
 uat**. Click it.
 
-This window has the checkbox column and the **Create promotion from uat (Beta)** button the note
+This window has the checkboxes and the **Create promotion from uat (Beta)** button the note
 above mentioned, because `uat` is the source of the one promotion step this project allows. Ignore
 both until [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md).
 

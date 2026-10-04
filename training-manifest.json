@@ -391,7 +391,7 @@
       "screenshots": [
         "annotated/vscode/pipeline-cards--my-pull-request",
         "annotated/vscode/pipeline-cards--new-user-story",
-        "annotated/vscode/pipeline-pr-actions-empty",
+        "annotated/vscode/pipeline-workflow-cards",
         "annotated/vscode/pipeline-edit-action-apex",
         "annotated/vscode/pipeline-pr-actions-list"
       ],

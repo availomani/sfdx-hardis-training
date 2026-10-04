@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "e1e8c48c227c1a01ce4aa9956321c3dc636307b7"
+source_rev: "3968f02fdcd843945a4c380b843caad045cbdd2a"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -252,7 +252,7 @@ Ouvrez le panneau **DevOps Pipeline** et cliquez sur le nœud `uat`, comme vous 
 `integration` à l'étape 1. Dans le pied de page de cette fenêtre, le bouton de gauche affiche
 maintenant **Generate Promotion Notes for uat**. Cliquez dessus.
 
-Cette fenêtre a la colonne de cases à cocher et le bouton **Create promotion from uat (Beta)** dont
+Cette fenêtre a les cases à cocher et le bouton **Create promotion from uat (Beta)** dont
 parlait la note ci-dessus, parce qu'`uat` est la source de la seule étape de promotion que ce projet
 autorise. Ignorez les deux jusqu'au [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md).
 

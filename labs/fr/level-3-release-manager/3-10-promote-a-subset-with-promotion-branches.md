@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "e7208fdb3ddb4226315f5595365f110c93c132af"
+source_rev: "3968f02fdcd843945a4c380b843caad045cbdd2a"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -207,7 +207,7 @@ Ouvrez le panneau **DevOps Pipeline** et cliquez sur le nœud `uat`. La fenêtre
 que le [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) utilisait pour lire une fenêtre de promotion, avec deux choses dessus qui ne
 servaient à rien jusqu'ici.
 
-![La fenêtre de branche d'uat, avec la colonne de cases à cocher et le bouton Create promotion](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
+![La fenêtre de branche d'uat, avec les cases à cocher et le bouton Create promotion](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
 
 Une **case à cocher** sur chaque ligne de User Story **(1)**, et **Create promotion from uat (Beta)**
 dans le pied de la fenêtre **(2)**. Les deux apparaissent parce que `uat` est la source d'une étape

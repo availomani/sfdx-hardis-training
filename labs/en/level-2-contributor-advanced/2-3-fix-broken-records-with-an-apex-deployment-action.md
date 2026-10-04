@@ -9,7 +9,7 @@ source_rev: ""
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
-  - annotated/vscode/pipeline-pr-actions-empty
+  - annotated/vscode/pipeline-workflow-cards
   - annotated/vscode/pipeline-edit-action-apex
   - annotated/vscode/pipeline-pr-actions-list
 depends_on:
@@ -171,7 +171,7 @@ In the diagram: turn on **Show feature branches** at the top right, which is off
 it, and your own branch appears beside the major ones. Your feature branch **(1)**, and on the arrow
 leaving it the numbered badge **(2)**. Click the badge.
 
-![The DevOps Pipeline panel, with the feature branch and the badge of its Pull Request](../../_assets/annotated/vscode/pipeline-pr-actions-empty.png)
+![The DevOps Pipeline panel, with the feature branch and the badge of its Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
 
 Or scroll to **Project Contribution Workflow** and click the **My Pull Request** card **(1)**, which
 always points at the Pull Request of the branch you are standing on.

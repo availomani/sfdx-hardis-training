@@ -122,7 +122,7 @@ writeJson(path.join(OUT, "universe.json"), {
   // first, third and fourth stories from the top (US-061, US-059, US-057).
   promotionBranch: "promotion/uat/preprod/2026-09-24-0930",
   promotionNode: "1073,389",
-  promotionRows: "512,374;512,472;512,522",
+  promotionRows: "531,353;531,513;531,593",
   // The file the conflict editor shot opens: the Panel Batch layout as
   // hardis:project:promotion:create committed it, markers included. The files
   // of that state are generated under promotion-conflict/ next to this file.

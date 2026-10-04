@@ -5,11 +5,11 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "be9237023991a4849d1b439ae2326890f426a297"
+source_rev: "c7fe459dbebc149321086bfa6bfdf055ef7eefb7"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
-  - annotated/vscode/pipeline-pr-actions-empty
+  - annotated/vscode/pipeline-workflow-cards
   - annotated/vscode/pipeline-edit-action-apex
   - annotated/vscode/pipeline-pr-actions-list
 depends_on:
@@ -176,7 +176,7 @@ Dans le diagramme : activez **Show feature branches** en haut à droite, désact
 demandez pas, et votre propre branche apparaît à côté des branches majeures. Votre branche de feature
 **(1)**, et sur la flèche qui en part la pastille numérotée **(2)**. Cliquez sur la pastille.
 
-![Le panneau DevOps Pipeline, avec la branche de feature et la pastille de sa Pull Request](../../_assets/annotated/vscode/pipeline-pr-actions-empty.png)
+![Le panneau DevOps Pipeline, avec la branche de feature et la pastille de sa Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
 
 Ou faites défiler jusqu'à **Project Contribution Workflow** et cliquez sur la carte **My Pull
 Request** **(1)**, qui pointe toujours vers la Pull Request de la branche sur laquelle vous êtes.
