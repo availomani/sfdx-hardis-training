@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-04
 
+- Lab 3.3: the screenshot of the Deployment Actions tab shows the switch to the next promotion above the actions, and every item of the row menu.
 - Labs 2.3 and 2.4: the deployment actions file shows the ids the editor generates, and says not to change them.
 
 ## 2026-10-03
