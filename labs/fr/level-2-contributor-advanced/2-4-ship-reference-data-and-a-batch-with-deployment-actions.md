@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "fcd1999a735116d3fc0cd6db469e288e0b4ba8a8"
+source_rev: "4a8bc77dba920e0ff8628ab47692c12e5a1c1fb6"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -400,7 +400,7 @@ prouve rien d'autre.** L'org est la seule chose qui vous dise qu'une action a to
 Les trois sont des entrées du même fichier YAML sous `scripts/actions/` :
 
     commandsPreDeploy:
-      - id: email-deliverability
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000003
         label: Set Email Deliverability to All Email
         type: manual
         parameters:
@@ -408,13 +408,13 @@ Les trois sont des entrées du même fichier YAML sous `scripts/actions/` :
             1. Open **Setup**, type `Deliverability` in the Quick Find box, and open it.
             ...
     commandsPostDeploy:
-      - id: load-crew-capacity
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000001
         label: Load crew capacity reference data
         type: data
         parameters:
           sfdmuProject: HeliosCrewRefData
         context: process-deployment-only
-      - id: schedule-crew-capacity
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000002
         label: Schedule the nightly crew capacity recalculation
         type: schedule-batch
         parameters:
@@ -423,6 +423,8 @@ Les trois sont des entrées du même fichier YAML sous `scripts/actions/` :
           jobName: Helios crew capacity nightly
         context: process-deployment-only
         runOnlyOnceByOrg: true
+
+L'éditeur a généré chaque `id` en créant l'action : les vôtres sont différents.
 
 L'import de données lance SFDMU via `sf hardis:org:data:import`, la commande même dont se sert le
 menu Training pour alimenter votre org. L'action de planification lance de l'Apex anonyme qui appelle

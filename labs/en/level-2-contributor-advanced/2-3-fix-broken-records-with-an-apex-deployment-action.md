@@ -254,13 +254,15 @@ of the Pull Requests it brings down, this one included.
 The editor wrote a YAML file named after your Pull Request, under `scripts/actions/`:
 
     commandsPostDeploy:
-      - id: backfill-crew-size
+      - id: 3f6d0a52-24b1-4c1a-9a0e-5b7f02400001
         label: Backfill Crew Size on existing installations
         type: apex
         parameters:
           apexScript: scripts/apex/backfill-crew-size.apex
         context: process-deployment-only
         runOnlyOnceByOrg: true
+
+The `id` is the one the editor generated when it created the action, so yours is different. Never change it: it is how sfdx-hardis knows in which orgs the action already ran.
 
 `sf hardis:project:deploy:smart` reads it, and around the Salesforce deployment it:
 

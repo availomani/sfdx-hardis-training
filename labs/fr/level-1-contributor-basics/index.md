@@ -4,7 +4,7 @@ description: "Formation Salesforce DevOps gratuite et pratique pour admins et d√
 id: l1-home
 level: 1
 lang: fr
-source_rev: "8bc390afe8fb943bdfa3eadd477b54ef38001e7f"
+source_rev: "227087b70542c7fdd5f235321968b5154475be67"
 ---
 
 # Niveau 1 - Contributeur Salesforce DevOps, les bases

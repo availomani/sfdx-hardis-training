@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "4e07ca72f292110fec265b043b9fb58e23eeb7d9"
+source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download

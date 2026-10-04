@@ -383,7 +383,7 @@ evidence of nothing else.** The org is the only thing that tells you an action r
 All three are entries in the same YAML file under `scripts/actions/`:
 
     commandsPreDeploy:
-      - id: email-deliverability
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000003
         label: Set Email Deliverability to All Email
         type: manual
         parameters:
@@ -391,13 +391,13 @@ All three are entries in the same YAML file under `scripts/actions/`:
             1. Open **Setup**, type `Deliverability` in the Quick Find box, and open it.
             ...
     commandsPostDeploy:
-      - id: load-crew-capacity
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000001
         label: Load crew capacity reference data
         type: data
         parameters:
           sfdmuProject: HeliosCrewRefData
         context: process-deployment-only
-      - id: schedule-crew-capacity
+      - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000002
         label: Schedule the nightly crew capacity recalculation
         type: schedule-batch
         parameters:
@@ -406,6 +406,8 @@ All three are entries in the same YAML file under `scripts/actions/`:
           jobName: Helios crew capacity nightly
         context: process-deployment-only
         runOnlyOnceByOrg: true
+
+The editor generated each `id` when it created the action, so yours are different.
 
 The data import runs SFDMU through `sf hardis:org:data:import`, the same command the Training menu
 uses to seed your org. The schedule action runs anonymous Apex that calls `System.schedule`. The

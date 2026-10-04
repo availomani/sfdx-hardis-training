@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "4fab8e4311867a9191cbc9e72411f422a42ebc0f"
+source_rev: "e1e8c48c227c1a01ce4aa9956321c3dc636307b7"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps

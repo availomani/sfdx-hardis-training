@@ -5,7 +5,7 @@ description: "Prenez votre premier ticket du backlog et créez sa branche Git et
 level: 1
 lab: 3
 lang: fr
-source_rev: "aac990829d9935136489584c303016855dd143f4"
+source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type

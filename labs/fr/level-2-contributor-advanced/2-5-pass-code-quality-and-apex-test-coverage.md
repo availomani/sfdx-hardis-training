@@ -5,7 +5,7 @@ description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloq
 level: 2
 lab: 5
 lang: fr
-source_rev: "81a6262c87486213f6491e6d081ccdd4cda54f65"
+source_rev: "ffb6aaecf99de2f613d260b80e5edd5e5d81805f"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests

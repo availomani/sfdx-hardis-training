@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "1d1d311a6e37558f26e5e72fa86c9bb11382ccaa"
+source_rev: "23082173246410bc567962d701d1706c73f2970c"
 ---
 
 # Aide

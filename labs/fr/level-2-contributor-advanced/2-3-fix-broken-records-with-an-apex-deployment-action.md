@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "79b0a4262e70033fe2a94c1d4e5ac3aaf73e1f6e"
+source_rev: "4a8bc77dba920e0ff8628ab47692c12e5a1c1fb6"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -264,13 +264,15 @@ actions des Pull Requests qu'il rapatrie, celle-ci comprise.
 L'éditeur a écrit un fichier YAML nommé d'après votre Pull Request, sous `scripts/actions/` :
 
     commandsPostDeploy:
-      - id: backfill-crew-size
+      - id: 3f6d0a52-24b1-4c1a-9a0e-5b7f02400001
         label: Backfill Crew Size on existing installations
         type: apex
         parameters:
           apexScript: scripts/apex/backfill-crew-size.apex
         context: process-deployment-only
         runOnlyOnceByOrg: true
+
+L'`id` est celui que l'éditeur a généré en créant l'action : le vôtre est différent. Ne le changez jamais : c'est grâce à lui que sfdx-hardis sait dans quelles orgs l'action a déjà tourné.
 
 `sf hardis:project:deploy:smart` le lit, et autour du déploiement Salesforce il :
 

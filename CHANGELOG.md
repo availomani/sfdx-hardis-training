@@ -3,6 +3,10 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-04
+
+- Labs 2.3 and 2.4: the deployment actions file shows the ids the editor generates, and says not to change them.
+
 ## 2026-10-03
 
 - Lab 2.7: activate the flow after each change, and open its latest version to rebuild the flat roof rule, because Flow Builder can open an older one without Mariia's cap.
