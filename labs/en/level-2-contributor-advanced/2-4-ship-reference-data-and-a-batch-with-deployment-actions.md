@@ -293,12 +293,21 @@ on the screen, and what the page shows when it is done, like the four lines abov
 manager does it in an org you have never opened, often on release day. If they have to guess what
 you meant, they will guess, and a wrong guess in production is worse than no step at all.
 
+**Then update the Pull Request, or none of the three exists for the pipeline.**
+
+So far the actions are only on your machine. Each **Save** wrote the action into a file under
+`scripts/actions/`, named after the number of your Pull Request: `.sfdx-hardis.12.yml` for Pull
+Request 12. VS Code said so each time, in a notification at the bottom right: **Deployment action
+saved for Pull Request #12. Don't forget to commit and push**, followed by the path of the file. Its
+**Open Git** button opens **Source Control**, where the file waits.
+
+Commit it, then **Save / Publish**. The Pull Request check and the deployment read the actions from
+that file in the branch of the Pull Request, not from the panel: an action that was never pushed
+does not run, and nothing fails to tell you.
+
 ### 5. Read the Pull Request comment
 
-The editor wrote the three actions into `scripts/actions/`, in a file named after your Pull Request.
-Commit it, **Save / Publish**.
-
-This time the check turns **red**, and on purpose. The deliverability step runs **before** the
+The check starts again on the commit you just published. This time it turns **red**, and on purpose. The deliverability step runs **before** the
 deployment, so it has to be done before the merge, and sfdx-hardis stops the check until somebody
 says it is. Its log names the step and the three ways to mark it, and sfdx-hardis posts a
 **Deployment Actions** comment on the Pull Request:

@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "4a8bc77dba920e0ff8628ab47692c12e5a1c1fb6"
+source_rev: "6a5db3926cd216dc6c612dee6b69833d4b905aca"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -302,12 +302,22 @@ ci-dessus. Le release manager la fait dans une org que vous n'avez jamais ouvert
 de la livraison. S'il doit deviner ce que vous vouliez, il devinera, et une mauvaise supposition en
 production est pire que pas d'étape du tout.
 
+**Mettez ensuite la Pull Request à jour, sinon aucune des trois n'existe pour le pipeline.**
+
+Pour l'instant, les actions ne sont que sur votre poste. Chaque **Save** a écrit l'action dans un
+fichier sous `scripts/actions/`, nommé d'après le numéro de votre Pull Request :
+`.sfdx-hardis.12.yml` pour la Pull Request 12. VS Code l'a dit à chaque fois, dans une notification
+en bas à droite : **Deployment action saved for Pull Request #12. Don't forget to commit and push**,
+suivi du chemin du fichier. Son bouton **Open Git** ouvre **Source Control**, où le fichier attend.
+
+Commitez-le, puis **Save / Publish**. Le contrôle de la Pull Request et le déploiement lisent les
+actions dans ce fichier, sur la branche de la Pull Request, et non dans le panneau : une action
+jamais poussée ne tourne pas, et rien n'échoue pour vous le dire.
+
 ### 5. Lire le commentaire de la Pull Request
 
-L'éditeur a écrit les trois actions dans `scripts/actions/`, dans un fichier nommé d'après votre Pull
-Request. Commitez-le, **Save / Publish**.
-
-Cette fois, le contrôle passe au **rouge**, et c'est voulu. L'étape de délivrabilité tourne
+Le contrôle repart sur le commit que vous venez de publier. Cette fois, il passe au **rouge**, et
+c'est voulu. L'étape de délivrabilité tourne
 **avant** le déploiement : elle doit donc être faite avant le merge, et sfdx-hardis arrête le
 contrôle tant que personne ne dit qu'elle l'est. Son log nomme l'étape et les trois façons de la
 marquer, et sfdx-hardis publie un commentaire **Deployment Actions** sur la Pull Request :
