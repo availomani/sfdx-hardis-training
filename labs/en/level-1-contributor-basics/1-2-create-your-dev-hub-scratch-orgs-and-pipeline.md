@@ -112,6 +112,15 @@ Back in VS Code, on the Welcome page, click **Orgs Manager**.
 
 The picture was taken at the end of this lab. For now your table is empty.
 
+!!! info "Connected org, default org"
+    An org is **connected** when the Salesforce CLI on your machine holds a token for it: VS Code
+    can open it and work in it without asking you for a password. You can have several connected
+    orgs at once, and this table lists them all.
+
+    The **default org** is the one of them a command works on when nobody tells it which org to
+    use. There is only one at a time, the Status section of the sfdx-hardis panel names it, and
+    this panel is where you change it.
+
 1. Click **Add Org** **(1)**. If it asks **Do you want to set the selected org as your default
    org?**, answer **Yes**: that is what points the rest of the course at this org without asking
    again
@@ -216,6 +225,16 @@ Those branch files are empty of your details until step 5 fills them in.
 
 ### 4. Install the GitHub CLI
 
+!!! tip "In Agentforce Vibes, skip this step"
+    `gh` is already installed in the tab. Go straight to step 5: the first command that needs it
+    signs you in, and nothing here is missing.
+
+    `gh` is not only for this step, which is why it is worth knowing it is there. The commands
+    behind **Publish my work**, **Simulate my teammates**, **Check my work** and **Claim my badge**
+    all call it: it opens your Pull Requests, plays your teammates' merges, reads the secrets of
+    your fork to check a level, and looks at your star and your repository's visibility when you
+    claim.
+
 One tool first, and only for this. The command in step 5 uses the
 [GitHub CLI](https://cli.github.com/), called `gh`, to make your copy of the repository and set its
 automation up. On its home page, open the install list **(1)** and take the download for your
@@ -228,16 +247,6 @@ defaults.
     The installer adds `gh` to the **PATH**, and a VS Code that was already open does not see the
     change until it starts again. Close VS Code completely, windows and all, and open it again on
     the project. Skip this and step 5 stops at once, saying the GitHub CLI is not installed.
-
-!!! tip "In Agentforce Vibes, skip this step"
-    `gh` is already installed in the tab. Go straight to step 5: the first command that needs it
-    signs you in, and nothing here is missing.
-
-    `gh` is not only for this step, which is why it is worth knowing it is there. The commands
-    behind **Publish my work**, **Simulate my teammates**, **Check my work** and **Claim my badge**
-    all call it: it opens your Pull Requests, plays your teammates' merges, reads the secrets of
-    your fork to check a level, and looks at your star and your repository's visibility when you
-    claim.
 
 You never have to run `gh` yourself. The command in step 5 uses it and signs you in through your
 browser the first time it needs to.

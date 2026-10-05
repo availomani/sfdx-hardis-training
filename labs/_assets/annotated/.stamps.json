@@ -54,7 +54,7 @@
   "web/github-code-url.png": "67bdfb71a108b33c",
   "vscode/pipeline-config-branch-edit.png": "b1e47eb998ff0267",
   "vscode/devops-pipeline.png#github-auth": "5ee24b813657de6f",
-  "vscode/extensions-install.png": "15263a96426000cc",
+  "vscode/extensions-install.png": "1a73bc7cedb654fe",
   "web/gh-cli-download.png": "b1d6d4578e30c19a",
   "web/github-pr-checks.png": "b30baa99fed013e8",
   "web/github-pr-comment.png": "bed72a511f6ca7bf",
@@ -116,7 +116,7 @@
   "vscode/package-no-overwrite-add-type.png#type": "b9f905d3bf249412",
   "web/github-run-workflow.png": "aa354b743781d482",
   "salesforce/flow-builder-crew-warning.png": "626ee0b9e5bfcd35",
-  "salesforce/flow-builder-start-conditions.png": "6ccba9f3f29f7a92",
+  "salesforce/flow-builder-start-conditions.png": "667683dd260fce0f",
   "salesforce/flow-builder-formula.png": "2d533ebfbedb891c",
   "salesforce/flow-builder-add-element.png": "936a208dce04c7b5",
   "vscode/pipeline-branch-modal-uat.png#no-merge-target": "ac4f8b0c6ee01708",
@@ -158,5 +158,6 @@
   "vscode/pipeline-edit-action-moved.png": "c93375c80d33ec36",
   "web/github-pr-deployment-actions-failed.png": "49ae4e5809ad5b48",
   "web/github-pr-deployment-actions-moved.png": "eb1c91bd1cfb85c6",
-  "vscode/pipeline-workflow-cards.png": "5a553e24406f9160"
+  "vscode/pipeline-workflow-cards.png": "5a553e24406f9160",
+  "vscode/work-save-package-xml.png#cleaning": "0a09b3500049a25d"
 }

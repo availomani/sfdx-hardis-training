@@ -37,14 +37,24 @@ on:
 
 permissions: read-all
 
-concurrency:
-  group: badge-claims
-  cancel-in-progress: false
-
 jobs:
   audit:
     name: Clone, audit, answer
-    if: contains(github.event.issue.labels.*.name, 'badge-claim')
+    # A claim filed through the form fires `opened` AND `labeled`, one second
+    # apart, and both carry the label: the audit ran twice and answered twice.
+    # The `labeled` of the form is sent by the author of the issue, so that one
+    # is skipped. A label added by hand comes from a maintainer, and still runs.
+    if: >-
+      contains(github.event.issue.labels.*.name, 'badge-claim') &&
+      (github.event.action != 'labeled' ||
+      (github.event.label.name == 'badge-claim' &&
+      github.event.sender.login != github.event.issue.user.login))
+    # Rule 5. On the job, not on the workflow: a group keeps one pending run and
+    # cancels the one it replaces, so a skipped `labeled` run queued at workflow
+    # level would cancel the `opened` run waiting behind another claim.
+    concurrency:
+      group: badge-claims
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

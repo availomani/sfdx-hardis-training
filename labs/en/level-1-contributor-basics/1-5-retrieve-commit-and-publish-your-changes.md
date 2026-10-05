@@ -16,6 +16,7 @@ screenshots:
   - annotated/vscode/work-save-package-xml
   - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/vscode/package-xml--custom-field
+  - annotated/vscode/work-save-package-xml--cleaning
 depends_on:
   commands: [hardis:work:save]
   flags: []
@@ -262,8 +263,14 @@ full deployment is slower and never forgets anything, which is the right trade f
 
 ### 7. Read what the command did to your files
 
-Scroll back up the command's own panel. Between your answers it printed a few lines about cleaning:
-references to deleted components, and the pixel positions inside Flows. That is the project's
+Go back to the tab of the command. Save / Publish runs in a tab of its own, named
+**hardis:work:save** **(1)**, and it is still open next to the package viewer, waiting for your
+answer.
+
+![The Save / Publish command tab, with the two cleaning lines above the question](../../_assets/annotated/vscode/work-save-package-xml--cleaning.png)
+
+Between your answers it printed two lines about cleaning **(2)**: references to deleted components,
+and the pixel positions inside Flows. That is the project's
 automated cleaning, and it runs on every publish, on everybody's work, so that nobody has to
 remember the house rules.
 

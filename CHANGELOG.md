@@ -5,6 +5,12 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-05
 
+- A badge claim is answered once: the audit no longer posts the same comment twice on the issue.
+- Lab 1.1: the Git installer options are named as the installer shows them, each installer is named where the lab talks about it, and the pill of the Extensions icon sits on that icon.
+- Lab 1.2: a note says what a connected org and the default org are, and the Agentforce Vibes tip opens the GitHub CLI step instead of closing it.
+- Lab 1.4: what to do when Open in Orgs Manager brings no browser tab.
+- Lab 1.5: step 7 says which tab to go back to, with a picture of the two cleaning lines.
+- Lab 2.2: the Start panel of Flow Builder has no Done button, the lab now closes it with its X.
 - Set up my training environment creates your fork again. Its first step always stopped on "The fork could not be created", because the GitHub CLI refuses `--remote=false` once a repository is named, before it even contacts GitHub. When the fork does fail, the panel now shows what the GitHub CLI said above the usual reasons, and Lab 1.2 says to read it.
 - Lab 2.1 works the same whether you did Level 1 or used Reset this level: you pick Romain's US-017, the only work your dev org lacks. The Backpromote panel can only start from a Pull Request of your fork, and after a reset your Level 1 stories are one commit, not Pull Requests, so "pick #1 US-014" could not be done. Step 1c checks that your dev org holds Level 1, which Romain's layout needs, and says how to put it there when you joined at Level 2. The lab also says which rows cannot be picked, that a number in brackets like (#77) is a Pull Request of the course repository, that the panel reads `integration` from GitHub without a pull, and that Romain's Pull Request has three files, not two.
 - Every screenshot of VS Code was taken again with version 8.10.0 of the extension and 8.13.0 of sfdx-hardis, and its numbered pills put back in place. The GitHub pictures come from a brand new fork.

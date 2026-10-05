@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "fe8c1b383f7bafda219cfb9dee1ec44ece7beeba"
+source_rev: "3a6b3f5a9738b10c6a54060e5dbed6422f08d256"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -117,6 +117,15 @@ De retour dans VS Code, sur la Welcome page, cliquez sur **Orgs Manager**.
 ![Le tableau Orgs Manager, avec les orgs de formation et leur état de connexion](../../_assets/annotated/vscode/orgs-manager.png)
 
 L'image a été prise à la fin de ce lab. Pour l'instant votre tableau est vide.
+
+!!! info "Org connectée, org par défaut"
+    Une org est **connectée** quand la CLI Salesforce de votre machine détient un token pour elle :
+    VS Code peut l'ouvrir et y travailler sans vous demander de mot de passe. Vous pouvez avoir
+    plusieurs orgs connectées en même temps, et ce tableau les liste toutes.
+
+    L'**org par défaut** est celle d'entre elles sur laquelle une commande travaille quand personne
+    ne lui dit quelle org utiliser. Il n'y en a qu'une à la fois, la section Status du panneau
+    sfdx-hardis la nomme, et c'est dans ce panneau-ci que vous en changez.
 
 1. Cliquez sur **Add Org** **(1)**. S'il vous demande **Do you want to set the selected org as
    your default org?**, répondez **Yes** : c'est ce qui pointe la suite du cours sur cette org
@@ -230,14 +239,6 @@ remplis.
 
 ### 4. Installer la CLI GitHub
 
-Un outil d'abord, et uniquement pour cela. La commande de l'étape 5 utilise la [CLI
-GitHub](https://cli.github.com/), appelée `gh`, pour faire votre copie du repository et mettre en
-place son automatisation. Sur sa page d'accueil, ouvrez la liste d'installation **(1)** et prenez le
-téléchargement de votre machine : **Windows - Download MSI** **(2)**, ou **macOS - Download
-binary**. Acceptez les valeurs par défaut de l'installeur.
-
-![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
-
 !!! tip "Dans Agentforce Vibes, sautez cette étape"
     `gh` est déjà installé dans l'onglet. Passez directement à l'étape 5 : la première commande qui
     en a besoin vous connecte, et il ne manque rien ici.
@@ -247,6 +248,14 @@ binary**. Acceptez les valeurs par défaut de l'installeur.
     **Claim my badge** l'appellent toutes : il ouvre vos Pull Requests, joue les merges de vos
     collègues, lit les secrets de votre fork pour vérifier un niveau, et regarde votre étoile et la
     visibilité de votre repository au moment de la réclamation.
+
+Un outil d'abord, et uniquement pour cela. La commande de l'étape 5 utilise la [CLI
+GitHub](https://cli.github.com/), appelée `gh`, pour faire votre copie du repository et mettre en
+place son automatisation. Sur sa page d'accueil, ouvrez la liste d'installation **(1)** et prenez le
+téléchargement de votre machine : **Windows - Download MSI** **(2)**, ou **macOS - Download
+binary**. Acceptez les valeurs par défaut de l'installeur.
+
+![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
 
 !!! warning "Redémarrez VS Code après l'avoir installée"
     L'installeur ajoute `gh` au **PATH**, et un VS Code déjà ouvert ne voit pas le changement avant

@@ -5,7 +5,7 @@ description: "Rapatriez vos modifications d'org dans Git avec le Metadata Retrie
 level: 1
 lab: 5
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "3a6b3f5a9738b10c6a54060e5dbed6422f08d256"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -16,6 +16,7 @@ screenshots:
   - annotated/vscode/work-save-package-xml
   - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/vscode/package-xml--custom-field
+  - annotated/vscode/work-save-package-xml--cleaning
 depends_on:
   commands: [hardis:work:save]
   flags: []
@@ -277,9 +278,14 @@ compromis pour une formation.
 
 ### 7. Lire ce que la commande a fait à vos fichiers
 
-Remontez dans le panneau de la commande. Entre vos réponses, elle a affiché quelques lignes à propos
-du nettoyage : des références à des composants supprimés, et les positions en pixels à l'intérieur
-des Flows. C'est le nettoyage automatique du projet, et il tourne à chaque publication, sur le
+Revenez à l'onglet de la commande. Save / Publish tourne dans son propre onglet, nommé
+**hardis:work:save** **(1)**, et il est toujours ouvert à côté du visualiseur de package, en attente
+de votre réponse.
+
+![L'onglet de la commande Save / Publish, avec les deux lignes de nettoyage au-dessus de la question](../../_assets/annotated/vscode/work-save-package-xml--cleaning.png)
+
+Entre vos réponses, elle a affiché deux lignes à propos du nettoyage **(2)** : des références à des
+composants supprimés, et les positions en pixels à l'intérieur des Flows. C'est le nettoyage automatique du projet, et il tourne à chaque publication, sur le
 travail de tout le monde, pour que personne n'ait à se souvenir des règles de la maison.
 
 Sur cette story il n'a presque rien à faire, parce que vous avez modifié un champ, une présentation

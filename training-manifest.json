@@ -194,7 +194,8 @@
         "annotated/vscode/work-save-commit-ready",
         "annotated/vscode/work-save-package-xml",
         "annotated/vscode/pipeline-packages-menu--package-xml",
-        "annotated/vscode/package-xml--custom-field"
+        "annotated/vscode/package-xml--custom-field",
+        "annotated/vscode/work-save-package-xml--cleaning"
       ],
       "translations": {
         "fr": {

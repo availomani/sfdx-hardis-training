@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "3a6b3f5a9738b10c6a54060e5dbed6422f08d256"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download
@@ -100,9 +100,9 @@ rapport avec Git.
 
 Deux écrans méritent d'être lus plutôt que cliqués au pas de course :
 
-- **Select Components** : laissez **Git Bash Here** et **Git GUI Here** cochés
-- **Adjusting your PATH environment** : gardez l'option du milieu, celle qui est recommandée, *Git
-  from the command line and also from 3rd-party software*, pour que VS Code trouve Git
+- **Select Components** : laissez **Open Git Bash here** et **Open Git GUI here** cochés
+- **Adjusting your PATH environment** : gardez l'option du milieu, celle qui est recommandée, **Git
+  from the command line and also from 3rd-party software**, pour que VS Code trouve Git
 
 macOS et Linux ont déjà un shell Unix, il n'y a donc rien à choisir de ce côté.
 
@@ -119,7 +119,8 @@ macOS et Linux ont déjà un shell Unix, il n'y a donc rien à choisir de ce cô
 
 Ouvrez ensuite [Visual Studio Code](https://code.visualstudio.com/) et prenez le téléchargement qui
 correspond à votre machine. Sous Windows c'est le bouton **Windows** **(1)** ; les deux cartes à côté
-contiennent les versions macOS et Linux.
+contiennent les versions macOS et Linux. Son installeur ne demande aucun choix : acceptez la licence
+et gardez toutes les valeurs par défaut qu'il propose.
 
 ![La page de téléchargement de Visual Studio Code, une carte par système d'exploitation](../../_assets/annotated/web/vscode-download.png)
 
@@ -132,10 +133,11 @@ pas rater sur cette page :
 
 ![La page de téléchargement de Node.js, avec le sélecteur de version et les boutons d'installeur](../../_assets/annotated/web/nodejs-download.png)
 
-Les deux sont des installeurs suivant-suivant-terminer.
+L'installeur de Node.js est comme celui de VS Code : acceptez la licence et gardez toutes les
+valeurs par défaut.
 
 !!! warning "Redémarrez VS Code après avoir installé Git ou Node.js"
-    Les deux installeurs s'ajoutent au **PATH**, la liste des endroits où votre machine cherche une
+    Les installeurs de Git et de Node.js s'ajoutent au **PATH**, la liste des endroits où votre machine cherche une
     commande. Un programme ne lit cette liste qu'à son démarrage : un VS Code déjà ouvert au moment
     de l'installation ne les trouve donc toujours pas, et le panneau Setup de l'étape 2 les signale
     manquants alors qu'ils sont là. Fermez VS Code complètement, toutes fenêtres comprises, et

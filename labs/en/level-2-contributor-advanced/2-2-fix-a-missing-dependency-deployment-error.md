@@ -96,7 +96,8 @@ Three changes, and the picture above shows where each one starts:
 
 1. **Start** element: click **Edit** **(1)** on it. Under **Set Entry Conditions**, the flow already
    runs when `Crew Size` is not null **(1)**. Click **Add Condition** **(2)** and add the second one,
-   `Panels Required`, **Is Null**, `False`, then **Done** at the bottom of the panel
+   `Panels Required`, **Is Null**, `False`. This panel has no **Done** button: the condition is kept
+   as you fill it in, and the **X** **(3)** at the top right closes the panel
 
     ![The entry conditions of the Start element](../../_assets/annotated/salesforce/flow-builder-start-conditions.png)
 

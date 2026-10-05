@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "3a6b3f5a9738b10c6a54060e5dbed6422f08d256"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -178,6 +178,14 @@ vivent dans une org et nulle part ailleurs, et c'est exactement l'état auquel l
 **Object Manager ne liste pas Installation.**
 Vous êtes dans la mauvaise org. Vérifiez la section Status dans VS Code, puis rouvrez l'org depuis
 **Orgs Manager**.
+
+**Vous cliquez sur Open et aucun onglet de navigateur n'apparaît.**
+Les anciennes versions de l'extension pouvaient échouer à ouvrir l'org sans dire pourquoi. Mettez
+l'extension à jour, c'est à cela que sert **Auto Update** dans le
+[Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md), et cliquez de nouveau sur **Open**. En attendant,
+il existe une seconde entrée : dans la section **Status** du panneau sfdx-hardis, sous **Current
+Org**, cliquez sur la première ligne, l'adresse de l'org. Elle ouvre votre org par défaut, qui est
+`helios-dev` ici.
 
 **Orgs Manager affiche vos scratch orgs comme déconnectées, et propose Reconnect au lieu d'Open.**
 Les anciennes versions de l'extension ne lisaient que la sonde de connexion, qu'une scratch org ne

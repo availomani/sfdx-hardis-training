@@ -96,9 +96,9 @@ errors that look like nothing to do with Git.
 
 Two screens are worth reading rather than clicking through:
 
-- **Select Components**: leave **Git Bash Here** and **Git GUI Here** ticked
-- **Adjusting your PATH environment**: keep the recommended middle option, *Git from the command
-  line and also from 3rd-party software*, so VS Code can find Git
+- **Select Components**: leave **Open Git Bash here** and **Open Git GUI here** ticked
+- **Adjusting your PATH environment**: keep the recommended middle option, **Git from the command
+  line and also from 3rd-party software**, so VS Code can find Git
 
 macOS and Linux already have a Unix shell, so there is nothing to choose there.
 
@@ -113,7 +113,7 @@ macOS and Linux already have a Unix shell, so there is nothing to choose there.
 
 Then open [Visual Studio Code](https://code.visualstudio.com/) and take the download for your machine.
 On Windows that is the **Windows** button **(1)**; the two cards next to it hold the macOS and Linux
-builds.
+builds. Its installer has nothing to choose: accept the licence and keep every default it offers.
 
 ![The Visual Studio Code download page, one card per operating system](../../_assets/annotated/web/vscode-download.png)
 
@@ -126,10 +126,10 @@ get right on that page:
 
 ![The Node.js download page, with the version selector and the installer buttons](../../_assets/annotated/web/nodejs-download.png)
 
-Both are next-next-finish installers.
+The Node.js installer is like the VS Code one: accept the licence and keep every default.
 
 !!! warning "Restart VS Code after installing Git or Node.js"
-    Both installers add themselves to the **PATH**, the list of places your machine looks for a
+    The Git and Node.js installers add themselves to the **PATH**, the list of places your machine looks for a
     command. A program only reads that list when it starts, so a VS Code that was already open when
     you installed them still cannot find them, and the Setup panel in step 2 reports them missing
     even though they are there. Close VS Code completely, windows and all, and open it again.
