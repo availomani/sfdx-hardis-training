@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "fe8c1b383f7bafda219cfb9dee1ec44ece7beeba"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -564,9 +564,11 @@ rouvrez-le, et recliquez sur la carte. Si le message persiste, installez-la depu
 est déjà là : rechargez l'onglet du navigateur au lieu de redémarrer VS Code.
 
 **Il dit que le fork n'a pas pu être créé.**
-GitHub l'a refusé, et les raisons habituelles sont un repository de ce nom déjà présent dans votre
-compte, un compte d'organisation qui n'autorise pas les forks, ou une connexion à qui la permission
-de créer des repositories n'a pas été donnée. Faites le fork vous-même, c'est un seul écran :
+Lisez ce que la GitHub CLI a dit, juste au-dessus : elle donne la raison. Quand GitHub a refusé le
+fork, les raisons habituelles sont un repository de ce nom déjà présent dans votre compte, un compte
+d'organisation qui n'autorise pas les forks, ou une connexion à qui la permission de créer des
+repositories n'a pas été donnée. Quelle que soit la raison, faites le fork vous-même, c'est un seul
+écran :
 
 1. Ouvrez [github.com/hardisgroupcom/sfdx-hardis-training/fork](https://github.com/hardisgroupcom/sfdx-hardis-training/fork)
 2. Laissez le propriétaire sur votre propre compte et le nom sur `sfdx-hardis-training`

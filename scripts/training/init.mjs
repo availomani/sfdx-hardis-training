@@ -428,16 +428,30 @@ async function ensureFork(handle) {
     // No --default-branch-only: this course needs every branch, and that option
     // is the single most common way a learner ends up with a fork that cannot
     // work. The web form calls it "Copy the main branch only".
-    const res = run("gh", ["repo", "fork", UPSTREAM, "--clone=false", "--remote=false"]);
+    // No --remote either: gh refuses that flag (any value) once a repository is
+    // named, before it contacts GitHub. Named, it adds no remote anyway, and the
+    // remotes are set below.
+    // Captured, because the panel only shows what goes through info() and warn():
+    // what gh prints itself lands in an output channel nobody has open.
+    const res = run("gh", ["repo", "fork", UPSTREAM, "--clone=false"], { capture: true });
     if (res.code !== 0) {
       // Three lines and a link beat "fork it by hand": the web form has one box
       // that has to be unticked, and a learner who misses it gets a fork the
       // course cannot work in.
       warn("The fork could not be created from here.");
+      // gh's own words first: a local error must not read as "GitHub refused it"
+      const said = (res.stderr || res.stdout).trim();
+      if (said) {
+        info("");
+        info("  The GitHub CLI said:");
+        for (const line of said.split(/\r?\n/)) {
+          info(`    ${line}`);
+        }
+      }
       info("");
-      info("  GitHub refused it. The usual reasons are a repository of that name already");
-      info("  in your account, an organisation that does not allow forks, or a sign-in");
-      info("  without permission to create repositories.");
+      info("  When GitHub refuses it, the usual reasons are a repository of that name");
+      info("  already in your account, an organisation that does not allow forks, or a");
+      info("  sign-in without permission to create repositories.");
       info("");
       info("  Make it yourself, it is one screen:");
       info(`    1. Open ${c.cyan(`https://github.com/${UPSTREAM}/fork`)}`);
@@ -447,6 +461,7 @@ async function ensureFork(handle) {
       info("");
       abort("The fork could not be created.", "Make it as described above, then run this again.");
     }
+    ok(`Your fork is ${c.bold(fork)}.`);
   }
 
   // The clone was made from the shared repository, so origin still points there

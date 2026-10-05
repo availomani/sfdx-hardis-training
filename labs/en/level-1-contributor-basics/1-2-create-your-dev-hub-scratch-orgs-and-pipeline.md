@@ -530,9 +530,10 @@ again, and click the card again. If it still says so, install it from
 there, so reload the browser tab instead of restarting VS Code.
 
 **It says the fork could not be created.**
-GitHub refused it, and the usual reasons are a repository of that name already in your account, an
-organisation account that does not allow forks, or a sign-in that has not been given permission to
-create repositories. Make the fork yourself, which takes one screen:
+Read what the GitHub CLI said, just above: it names the reason. When GitHub refused the fork, the
+usual reasons are a repository of that name already in your account, an organisation account that
+does not allow forks, or a sign-in that has not been given permission to create repositories.
+Whatever the reason, make the fork yourself, which takes one screen:
 
 1. Open [github.com/hardisgroupcom/sfdx-hardis-training/fork](https://github.com/hardisgroupcom/sfdx-hardis-training/fork)
 2. Leave the owner on your own account and the name on `sfdx-hardis-training`
