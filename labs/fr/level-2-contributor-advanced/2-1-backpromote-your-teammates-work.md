@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "9f4eae623f9e0d447b4576a156064f2db73ad5de"
+source_rev: "92d632ca7c80162d5a137015a77a60277e17d879"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -172,8 +172,9 @@ construisiez sur ce que l'équipe a et non sur ce dont vous vous souvenez.
 ### 3. Voir à quel point vous êtes en retard
 
 Le bloc **WHERE** en haut du panneau y répond, et c'est le seul endroit qui le fasse.
-**3 Pull Requests in the window** : trois stories ont été mergées dans `integration` depuis la
-dernière fois que quelque chose a été rapatrié dans votre org.
+Une fois le point de départ choisi, à l'étape 4, il indique **3 Pull Requests in the window** :
+trois stories ont été mergées dans `integration` depuis la dernière fois que quelque chose a été
+rapatrié dans votre org.
 
 C'est ce compteur, pas votre mémoire, qui vous dit si un rafraîchissement est nécessaire. Un lundi
 après une semaine d'absence, il mérite d'être lu avant toute chose.
@@ -181,9 +182,16 @@ après une semaine d'absence, il mérite d'être lu avant toute chose.
 ### 4. Choisir ce qu'on rapatrie
 
 Quand le plan est prêt, le panneau se remplit. Les Pull Requests mergées sont listées de la plus
-récente à la plus ancienne **(1)** : choisissez la plus ancienne, et tout ce qui va de là jusqu'à
-la tête d'`integration` **(2)** sera rapatrié. En dessous, ce qui diffère entre `integration`
-et votre org est listé par type de métadonnée, chaque élément avec sa propre case **(3)**.
+récente à la plus ancienne **(1)** : choisissez la plus ancienne des trois stories, **#1 US-014**,
+et tout ce qui va de là jusqu'à la tête d'`integration` **(2)** sera rapatrié.
+
+Votre liste continue sous ces trois lignes, avec des dizaines de lignes qui portent un titre et
+aucun numéro. Ce sont les commits du cours lui-même, dont votre `integration` a hérité quand vous
+avez fait votre copie du repository : ce ne sont pas des stories, et votre org les a déjà. Laissez-les.
+L'image montre les trois lignes qui comptent.
+
+Sous la liste, ce qui diffère entre `integration` et votre org est listé par type de métadonnée,
+chaque élément avec sa propre case **(3)**.
 
 ![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles rapatrient](../../_assets/annotated/vscode/backpromote.png)
 

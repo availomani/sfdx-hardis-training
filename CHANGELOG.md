@@ -3,6 +3,18 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-05
+
+- Every screenshot of VS Code was taken again with version 8.10.0 of the extension and 8.13.0 of sfdx-hardis, and its numbered pills put back in place. The GitHub pictures come from a brand new fork.
+- Lab 3.3: the fix Pull Request of US-062 now ships the Crew Leads public group with the sources. Without it, the promotion to UAT of Lab 3.5 ended with a red deployment job, because the group only existed in the org where you created it by hand.
+- Lab 3.6: the promotions to preprod and to production stop red until the email deliverability step is done in each org, ticked, and the check run again. The lab now says so, as Lab 3.5 does.
+- Lab 2.1: the Backpromote list holds more than the three stories of the picture. The lab names the one to pick, #1 US-014, and says what the rows without a number are.
+- Lab 2.4: at the red check, the two post-deployment actions read "not run in this org branch yet", not "skipped".
+- Lab 3.5: the example release notes count 22 Pull Requests and 16 tickets, with the two Pull Requests Lab 3.3 gained.
+- Save / Publish no longer ends by asking for a manual actions file: the project declares that manual steps are deployment actions, and sends you to the DevOps Pipeline panel.
+- The MegaLinter comment of your Pull Requests no longer lists thousands of findings on the scripts of the course.
+- Clean up a training org also removes the Crew Leads public group, so Lab 3.3 can be done again on the same org.
+
 ## 2026-10-04
 
 - The screenshots of the DevOps Pipeline panel show it as the next VS Code extension draws it: a Pull Requests search button in the header, and a Pull Request window with General, Tickets, Deployment Actions, Validation, Code Quality and Deployment tabs.

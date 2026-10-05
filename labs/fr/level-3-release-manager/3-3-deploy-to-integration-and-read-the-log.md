@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "341e56461c873fde887c8f69d1879421c0f939db"
+source_rev: "867e1a6f169325d15fa5d47a32d823aae4deb0c3"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -224,8 +224,9 @@ et le package qu'il a envoyé a été construit ainsi :
    `enableDeltaDeploymentBetweenMajorBranches` décide si la même chose s'applique à un déploiement de
    majeure à majeure, et est désactivé par défaut parce qu'une promotion vers la production est le
    pire endroit possible pour découvrir que l'org a dérivé
-3. **Le gestionnaire d'écrasement**, quand `manifest/package-no-overwrite.xml` liste quelque chose : l'org est
-   interrogée, et tout composant **listé dans ce fichier** que l'org possède déjà est retiré. Il est
+3. **Le gestionnaire d'écrasement**, quand le package contient quelque chose que `manifest/package-no-overwrite.xml` liste :
+   l'org est interrogée, et tout composant **listé dans ce fichier** que l'org possède déjà est retiré.
+   Quand rien dans le package ne correspond à la liste, l'org n'est pas interrogée du tout, et le log le dit. Il est
    limité à sa propre liste et à rien d'autre, et un composant qu'il protège est quand même créé dans
    une org qui ne l'a pas encore
 4. **Le deploy-on-change**, si `manifest/packageDeployOnChange.xml` existe : ces composants, et eux
@@ -284,8 +285,8 @@ Le job de déploiement passe au rouge. Les métadonnées sont déployées, puis 
 System.QueryException: List has no rows for assignment to SObject
 ```
 
-Mariia a créé le groupe à la main dans sa propre org, et un groupe public relève du setup : rien dans
-sa Pull Request ne le crée.
+Mariia a créé le groupe à la main dans sa propre org, dans Setup, comme on en crée un le plus
+souvent : rien dans sa Pull Request ne le crée.
 
 **Le commentaire Deployment Actions** de sa Pull Request liste les trois actions sous **Failed
 actions (1)** : ❌ pour celle qui a échoué, ⏸️ pour les deux qu'elle a arrêtées, chacune avec une
@@ -391,6 +392,13 @@ Request :
 - **Files changed** : l'action a quitté le fichier d'actions de US-062 et est arrivée dans le
   fichier de la nouvelle Pull Request, avec `className: CrewCapacityBatch` et `movedFrom` qui vaut
   le numéro de US-062
+- toujours dans **Files changed** : un nouveau fichier, `groups/Helios_Crew_Leads.group-meta.xml`,
+  et un bloc de plus dans `manifest/package.xml`. Un groupe public est une métadonnée comme une
+  autre, et Mariia a mis le sien dans les sources. Dans `integration`, le déploiement trouve le
+  groupe que vous avez créé à l'étape 11 et le garde, sous le libellé `Crew Leads`. Dans `uat`, `preprod` et la
+  production, où personne n'a rien créé, le déploiement le crée avant que les actions ne
+  s'exécutent. Sans ce fichier, la première action échouerait dans chacune d'elles comme elle a
+  échoué ici
 - l'onglet **Deployment Actions** de sa Pull Request : ouvrez l'action, et l'éditeur montre d'où
   elle vient, sous **Moved from (1)**
 
@@ -467,6 +475,8 @@ Documentation des commandes : [hardis:project:action:run](https://sfdx-hardis.cl
   équipes, ✅ pour la dernière avec une note disant que vous l'avez close à la main
 - Dans `helios-integration`, un groupe public **Crew Leads** qui contient les delivery managers et
   vous
+- `force-app/main/default/groups/Helios_Crew_Leads.group-meta.xml` sur `integration`, pour que les
+  orgs suivantes reçoivent le groupe par le déploiement
 
 ## En cas de problème
 

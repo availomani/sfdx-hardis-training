@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "27337f0ac790884ec31a7b66932ff097588b6400"
+source_rev: "92d632ca7c80162d5a137015a77a60277e17d879"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--settings-menu
@@ -73,6 +73,12 @@ Intitulez-la simplement :
 
 > Promotion 2026-09 to preprod
 
+Son premier contrôle s'arrête en **rouge**, exprès, comme celui de la promotion vers `uat` au
+[Lab 3.5 étape 4](3-5-promote-to-uat-and-write-release-notes.md) : l'étape de délivrabilité de US-026 s'exécute avant le déploiement, et
+personne ne l'a faite dans `helios-preprod`. Faites-y le clic, cochez sa case dans le commentaire
+sfdx-hardis (ou **Mark as done in preprod** dans l'onglet **Deployment Actions** de VS Code), puis
+**Re-run all jobs** sur le contrôle. Il passe au vert.
+
 Lisez le contrôle, mergez, et regardez l'exécution **Process Deployment (sfdx-hardis)** sur
 `preprod`. Ouvrez ensuite `helios-preprod` et faites-y d'abord les vérifications de l'étape 6.
 
@@ -86,6 +92,10 @@ La pastille **+ PR** sur la flèche de `preprod` vers `main`, de `preprod` dans 
 contrôle est la première connexion JWT à `helios-prod`. Intitulez-la simplement :
 
 > Release 2026-09 to production
+
+Son premier contrôle s'arrête en rouge pour la même raison qu'à l'étape 2, dans la dernière org où
+personne n'a fait l'étape de délivrabilité : `helios-prod`. Faites le clic en production, cochez la
+case, **Re-run all jobs**, et lisez le contrôle vert qui suit.
 
 ### 4. Lire le contrôle comme si cela comptait
 

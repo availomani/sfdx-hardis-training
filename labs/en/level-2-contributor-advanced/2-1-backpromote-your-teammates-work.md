@@ -166,8 +166,8 @@ your own environment, so you are building on what the team has rather than on wh
 ### 3. See how far behind you are
 
 The **WHERE** block at the top of the panel answers that, and it is the only place that does.
-**3 Pull Requests in the window**: three stories were merged into `integration` since the last time
-anything came down into your org.
+Once you have picked where to start, in step 4, it reads **3 Pull Requests in the window**: three
+stories were merged into `integration` since the last time anything came down into your org.
 
 That count, not your memory, is what tells you whether a refresh is needed. On a Monday after a
 week off it is worth reading before anything else.
@@ -175,9 +175,16 @@ week off it is worth reading before anything else.
 ### 4. Choose what comes down
 
 When the plan is ready the panel fills in. The merged Pull Requests are listed newest first
-**(1)**: pick the oldest one, and everything from there to the head of `integration` **(2)** is
-brought back. Below, what differs between `integration` and your org is listed by metadata
-type, each item with its own tick **(3)**.
+**(1)**: pick the oldest of the three stories, **#1 US-014**, and everything from there to the head
+of `integration` **(2)** is brought back.
+
+Your list goes on under those three, with dozens of rows that carry a title and no number. They are
+the commits of the course itself, which your `integration` inherited when you made your copy of the
+repository: they are not stories, and your org has them already. Leave them alone. The picture shows
+the three rows that matter.
+
+Below the list, what differs between `integration` and your org is listed by metadata type, each
+item with its own tick **(3)**.
 
 ![The Backpromote panel, with the merged Pull Requests and the items they bring down](../../_assets/annotated/vscode/backpromote.png)
 

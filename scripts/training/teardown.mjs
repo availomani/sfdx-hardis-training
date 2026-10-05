@@ -36,6 +36,7 @@ const REMOVE = [
       "CrewSizeBackfillBatch"
     ]
   ],
+  ["Group", ["Helios_Crew_Leads"]],
   ["PermissionSet", ["Helios_Delivery_Crew", "Helios_Delivery_Manager"]],
   ["Profile", ["Helios Crew"]],
   ["RemoteSiteSetting", ["Helios_Warehouse"]],
@@ -118,6 +119,23 @@ System.debug('Aborted ' + jobs.size() + ' scheduled job(s)');
   );
   const unscheduled = run("sf", ["apex", "run", "--file", jobsFile, "--target-org", target], { quiet: true });
   fs.rmSync(jobsFile, { force: true });
+
+  // The public group of Lab 3.3. The lab is built on its absence: the first
+  // action of US-062 fails because the org has no Crew Leads group, and the
+  // learner creates it by hand. A group left by an earlier walk makes that
+  // action pass, and the lab then describes a failure nobody sees.
+  const groupFile = path.join(os.tmpdir(), `helios-group-${Date.now()}.apex`);
+  fs.writeFileSync(
+    groupFile,
+    `List<Group> groups = [SELECT Id FROM Group WHERE DeveloperName = 'Helios_Crew_Leads'];
+delete groups;
+System.debug('Deleted ' + groups.size() + ' public group(s)');
+`,
+    "utf8"
+  );
+  const ungrouped = run("sf", ["apex", "run", "--file", groupFile, "--target-org", target], { quiet: true });
+  fs.rmSync(groupFile, { force: true });
+  info(ungrouped.code === 0 ? "  Crew Leads public group removed, when there was one" : c.dim("  No public group to remove"));
   info(unscheduled.code === 0 ? "  Scheduled jobs aborted" : c.dim("  No scheduled job to abort"));
 
   // The flows, deactivated. An active flow refuses to be deleted, and says so

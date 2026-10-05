@@ -70,6 +70,12 @@ Title it plainly:
 
 > Promotion 2026-09 to preprod
 
+Its first check stops **red**, on purpose, the way the promotion to `uat` did in
+[Lab 3.5 step 4](3-5-promote-to-uat-and-write-release-notes.md): the deliverability step of US-026 runs before the deployment, and nobody has done
+it in `helios-preprod`. Do the click there, tick its box in the sfdx-hardis comment (or **Mark as
+done in preprod** in the VS Code **Deployment Actions** tab), then **Re-run all jobs** on the check.
+It goes green.
+
 Read the check, merge, and watch the **Process Deployment (sfdx-hardis)** run on `preprod`. Then
 open `helios-preprod` and do the checks of step 6 there first.
 
@@ -83,6 +89,10 @@ The **+ PR** chip on the arrow from `preprod` to `main`, from `preprod` into `ma
 the first JWT login into `helios-prod`. Title it plainly:
 
 > Release 2026-09 to production
+
+Its first check stops red for the same reason as in step 2, in the last org where nobody has done
+the deliverability step: `helios-prod`. Do the click in production, tick the box, **Re-run all
+jobs**, and read the green check that follows.
 
 ### 4. Read the check like it matters
 

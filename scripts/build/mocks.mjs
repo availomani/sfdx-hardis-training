@@ -141,7 +141,7 @@ writeJson(path.join(OUT, "universe.json"), {
   labFieldFile: "force-app/main/default/objects/Installation__c/fields/Crew_Warning_Sent__c.field-meta.xml",
   labCsvFile: "scripts/data/HeliosCrewRefData/Crew_Capacity__c.csv",
   retrieverSortClicks: "1680,413;1680,413",
-  retrieverRows: "459,510,561,611",
+  retrieverRows: "454,494,534,574",
   // The files the Source Control shot shows after that retrieve: the four
   // components of US-014, the planners' permission set included
   retrievedFiles: [
@@ -283,8 +283,12 @@ const overlay = {
       mergeTargets: ["uat"],
       contactEmail: "release.manager@heliostraining.invalid"
     },
-    // Where this project records the manual steps a deployment needs. The base
-    // fixture points at a SharePoint file that means nothing to a learner.
+    // Where this project records the manual steps a deployment needs: as
+    // deployment actions (manualActionsMode: sfdxHardis in the project
+    // configuration), so Save / Publish names the DevOps Pipeline panel and
+    // shows no button for an external file. Read from the configuration, so the
+    // picture cannot say something the project does not.
+    manualActionsMode: (projectConfigText.match(/^manualActionsMode:\s*(\S+)/m) || [])[1] || "externalFile",
     manualActionsUrl: `${u.course.site}/en/level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions/`,
     // The delta package.xml the Save / Publish command shows for that story
     packageXmlTypes: [

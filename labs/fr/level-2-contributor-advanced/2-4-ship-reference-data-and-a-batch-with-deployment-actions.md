@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "0014fdd29921b509163e2f279858b34118aafe1e"
+source_rev: "92d632ca7c80162d5a137015a77a60277e17d879"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -327,8 +327,9 @@ marquer, et sfdx-hardis publie un commentaire **Deployment Actions** sur la Pull
 - **Pending manual actions** **(1)** : votre étape de délivrabilité, avec une case à cocher, pour
   `integration`
 - **Status by org branch** **(2)** : une ligne par action, avec son moment. L'étape de délivrabilité,
-  **pre-deploy**, attend quelqu'un ; l'import et la planification, **post-deploy**, sont marqués
-  **skipped**, parce qu'un contrôle ne change rien
+  **pre-deploy**, attend quelqu'un ; l'import et la planification, **post-deploy**, indiquent
+  **not run in this org branch yet**, parce que le contrôle s'est arrêté avant eux, et qu'un
+  contrôle ne lance ni l'un ni l'autre de toute façon
 
 Faites le clic dans `helios-integration` (elle affiche déjà **All email** sur vos scratch orgs, c'est
 donc une vérification de dix secondes), puis cochez la case **(1)**. Dans VS Code, **Mark as done in

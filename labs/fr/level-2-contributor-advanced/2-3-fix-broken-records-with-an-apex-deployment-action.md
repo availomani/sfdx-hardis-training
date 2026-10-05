@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "c7fe459dbebc149321086bfa6bfdf055ef7eefb7"
+source_rev: "af0ed2794b7fc66b266d5280832d5a890ceda29f"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story

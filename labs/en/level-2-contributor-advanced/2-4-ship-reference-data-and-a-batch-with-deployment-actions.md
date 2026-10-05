@@ -316,8 +316,8 @@ says it is. Its log names the step and the three ways to mark it, and sfdx-hardi
 
 - **Pending manual actions** **(1)**: your deliverability step, with a checkbox, for `integration`
 - **Status by org branch** **(2)**: one row per action, with its moment. The deliverability step,
-  **pre-deploy**, waits for somebody; the import and the schedule, **post-deploy**, are marked
-  **skipped**, because a check changes nothing
+  **pre-deploy**, waits for somebody; the import and the schedule, **post-deploy**, read **not run
+  in this org branch yet**, because the check stopped before them, and a check runs neither anyway
 
 Do the click in `helios-integration` (it already reads **All email** on your scratch orgs, so it is
 a ten-second check), then tick the box **(1)**. In VS Code, **Mark as done in integration** on the

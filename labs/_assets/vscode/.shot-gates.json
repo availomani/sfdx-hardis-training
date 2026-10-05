@@ -191,6 +191,9 @@
   "pipeline-edit-action-remove-packagexml-items": {
     "gate": "pipeline-action-editors"
   },
+  "pipeline-edit-action-run-batch": {
+    "gate": "pipeline-action-editors"
+  },
   "pipeline-edit-action-schedule-batch": {
     "gate": "pipeline-action-editors"
   },

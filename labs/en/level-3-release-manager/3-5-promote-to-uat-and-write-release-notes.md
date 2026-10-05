@@ -270,14 +270,14 @@ On this promotion, the generated notes open like this:
 
 | Metric           | Value |
 |------------------|-------|
-| Pull Requests    | 20    |
-| Tickets          | 15    |
+| Pull Requests    | 22    |
+| Tickets          | 16    |
 | Contributors     | 1     |
-| Added / Modified | 34    |
+| Added / Modified | 38    |
 ```
 
 The count includes the Pull Requests that carry no story: the configuration ones of [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) and
-of step 2, and the promotion itself. Yours depends on how you got here: close to 20 after walking
+of step 2, and the promotion itself. Yours depends on how you got here: a little over 20 after walking
 Levels 1 and 2, far fewer after **Reset this level**, which starts Level 3 without their Pull
 Requests.
 
@@ -352,6 +352,15 @@ Command documentation: [hardis:doc:release-notes](https://sfdx-hardis.cloudity.c
 - The release notes in the description of the promotion Pull Request
 
 ## If it goes wrong
+
+**The deployment job to uat is red on "Put the delivery managers in the Crew Leads group".**
+Your fork dates from before 2026-10-05, when Mariia's fix in [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) did not ship the Crew Leads public group
+yet: `helios-uat` has none, and her first action looks for it. The metadata is deployed, so do not
+deploy again. Recover it the way [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) taught: create the group in `helios-uat` (**Setup** >
+**Public Groups** > **New**, group name `Helios_Crew_Leads`), then in the **DevOps Pipeline** panel
+click `uat`, **Deployment Actions** tab, **Retry** on the failed action, and answer **Run all the
+next actions**. Create the same group in `helios-preprod` and `helios-prod` before their promotions
+in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
 
 **The check fails with authentication errors for uat.**
 [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) for the `uat` branch: the secrets, and the pre-authorisation of the External Client App in

@@ -24,6 +24,11 @@ DISABLE_LINTERS:
   # is no infrastructure code for checkov, and trivy already scans dependencies.
   - REPOSITORY_CHECKOV
   - REPOSITORY_GRYPE
+  # The project has no Aura component, and with none to read this analyzer runs
+  # ESLint with every rule on over the scripts of the course instead: thousands
+  # of findings on tooling a learner never opens, printed under a warning line in
+  # the MegaLinter comment of each of their Pull Requests.
+  - SALESFORCE_CODE_ANALYZER_AURA
 
 # The shared sfdx-hardis configuration reports Apex findings without failing the
 # check. Here they fail it, as on any real project: Lab 2.5 teaches that a query

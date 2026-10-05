@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "3968f02fdcd843945a4c380b843caad045cbdd2a"
+source_rev: "867e1a6f169325d15fa5d47a32d823aae4deb0c3"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -283,14 +283,14 @@ Sur cette promotion, les notes générées s'ouvrent ainsi :
 
 | Metric           | Value |
 |------------------|-------|
-| Pull Requests    | 20    |
-| Tickets          | 15    |
+| Pull Requests    | 22    |
+| Tickets          | 16    |
 | Contributors     | 1     |
-| Added / Modified | 34    |
+| Added / Modified | 38    |
 ```
 
 Le décompte inclut les Pull Requests qui ne portent aucune story : celles de configuration du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
-et de l'étape 2, et la promotion elle-même. Le vôtre dépend de votre parcours : près de 20 après les
+et de l'étape 2, et la promotion elle-même. Le vôtre dépend de votre parcours : un peu plus de 20 après les
 Niveaux 1 et 2, beaucoup moins après **Reset this level**, qui démarre le Niveau 3 sans leurs Pull
 Requests.
 
@@ -371,6 +371,16 @@ Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cl
 - Les notes de version dans la description de la Pull Request de promotion
 
 ## En cas de problème
+
+**Le job de déploiement vers uat est rouge sur « Put the delivery managers in the Crew Leads group ».**
+Votre fork date d'avant le 2026-10-05, quand le correctif de Mariia au [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) ne livrait pas encore le
+groupe public Crew Leads : `helios-uat` n'en a pas, et sa première action le cherche. Les
+métadonnées sont déployées, donc ne redéployez pas. Rattrapez-le comme le [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) l'a montré : créez
+le groupe dans `helios-uat` (**Setup** > **Public Groups** > **New**, nom de groupe
+`Helios_Crew_Leads`), puis dans le panneau **DevOps Pipeline** cliquez sur `uat`, onglet
+**Deployment Actions**, **Retry** sur l'action en échec, et répondez **Run all the next
+actions**. Créez le même groupe dans `helios-preprod` et `helios-prod` avant leurs promotions du
+[Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
 
 **Le contrôle échoue avec des erreurs d'authentification pour uat.**
 [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) pour la branche `uat` : les secrets, et la pré-autorisation de l'External Client App dans
