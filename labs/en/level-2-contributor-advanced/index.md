@@ -86,7 +86,7 @@ as **Connected**, it expired: Welcome page > **Training: Level 2** > **Set up my
 environment**. It creates a new one with the Helios app, points the pipeline at it, and leaves the
 others alone.
 
-A new `helios-dev` starts from the app as it ships, without the stories you already merged. Lab 2.1
-is precisely how you bring them in.
+A new `helios-dev` gets the app from the branch you have checked out when it is created. Lab 2.1,
+step 1c, says how to check that it holds your Level 1 stories, and how to put them there.
 
 [Start with Lab 2.1](2-1-backpromote-your-teammates-work.md){ .md-button .md-button--primary }

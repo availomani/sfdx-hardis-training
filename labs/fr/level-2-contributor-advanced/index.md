@@ -4,7 +4,7 @@ description: "Affrontez ce que les vraies livraisons Salesforce vous envoient : 
 id: l2-home
 level: 2
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "81afc7fd0ced5df4cae2058768b9b55e9b576e6a"
 ---
 
 # Niveau 2 - Contributeur Salesforce DevOps avancé
@@ -89,7 +89,8 @@ d'elles comme **Connected**, c'est qu'elle a expiré : Welcome page > **Training
 **Set up my training environment**. Il en crée une nouvelle avec l'application Helios, pointe le
 pipeline dessus, et laisse les autres tranquilles.
 
-Une nouvelle `helios-dev` part de l'application telle qu'elle est livrée, sans les stories que vous
-avez déjà mergées. Le Lab 2.1 est précisément la façon de les y rapatrier.
+Une nouvelle `helios-dev` reçoit l'application depuis la branche sur laquelle vous êtes quand elle
+est créée. Le Lab 2.1, étape 1c, dit comment vérifier qu'elle contient vos stories du Niveau 1, et
+comment les y mettre.
 
 [Commencer par le Lab 2.1](2-1-backpromote-your-teammates-work.md){ .md-button .md-button--primary }

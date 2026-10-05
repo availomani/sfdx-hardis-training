@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-05
 
+- Lab 2.1 works the same whether you did Level 1 or used Reset this level: you pick Romain's US-017, the only work your dev org lacks. The Backpromote panel can only start from a Pull Request of your fork, and after a reset your Level 1 stories are one commit, not Pull Requests, so "pick #1 US-014" could not be done. Step 1c checks that your dev org holds Level 1, which Romain's layout needs, and says how to put it there when you joined at Level 2. The lab also says which rows cannot be picked, that a number in brackets like (#77) is a Pull Request of the course repository, that the panel reads `integration` from GitHub without a pull, and that Romain's Pull Request has three files, not two.
 - Every screenshot of VS Code was taken again with version 8.10.0 of the extension and 8.13.0 of sfdx-hardis, and its numbered pills put back in place. The GitHub pictures come from a brand new fork.
 - Lab 3.3: the fix Pull Request of US-062 now ships the Crew Leads public group with the sources. Without it, the promotion to UAT of Lab 3.5 ended with a red deployment job, because the group only existed in the org where you created it by hand.
 - Lab 3.6: the promotions to preprod and to production stop red until the email deliverability step is done in each org, ticked, and the check run again. The lab now says so, as Lab 3.5 does.
