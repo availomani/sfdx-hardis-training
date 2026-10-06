@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "8234def2c3d19cf3752d21be9c04204c40ca0ff8"
+source_rev: "e0b26bac584c1b1a250237b3044c45a656322ceb"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -230,8 +230,9 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 **Final package.xml to deploy** affiché juste après a un élément de moins.
 
 La Pull Request le dit aussi, sans le log : le commentaire du contrôle, et celui qu'écrit ce
-déploiement, portent une section **Protected metadata (package-no-overwrite.xml)**, et son tableau
-compte **1** dans la colonne **Not overwritten** de la ligne **RemoteSiteSetting**. Lisez-la sur le
+déploiement, portent une section **Protected metadata (package-no-overwrite.xml)**. Ouvrez son
+tableau, **Protected components per metadata type** : il compte **1** dans la colonne **Not
+overwritten** de la ligne **RemoteSiteSetting**. Lisez-la sur le
 contrôle, avant de merger : un composant que vous pensiez déployer et qui apparaît là est un
 composant que la liste protège par erreur.
 

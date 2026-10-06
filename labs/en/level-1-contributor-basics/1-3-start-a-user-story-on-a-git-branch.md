@@ -230,6 +230,19 @@ something.
 The pattern this project uses is `US-014-panels-required`: three digits, then lowercase words
 separated by hyphens. `US14-PanelsRequired` is rejected on purpose.
 
+**It says the branch already exists and asks for another name.**
+A new User Story never reuses a branch: an old branch would carry its own commits into your Pull
+Request. Which way out depends on where that branch comes from:
+
+- **You are working on US-014 right now**, and the command stopped halfway or you clicked **New User
+  Story** twice. You do not need a second branch: click **Cancel**, then click the branch name at the
+  bottom left of the status bar and pick `features/US-014-panels-required` from the list. If you had
+  changes you had not committed, the command put them aside before it asked: the next entry gets
+  them back
+- **It is left over from an attempt you gave up**, after **Reset this level** kept it. Do not go back
+  to it: it starts from an old `integration`. Type a new name instead, `US-014-panels-required-2`,
+  and carry on from there
+
 **A file you were editing has disappeared.**
 You changed something before starting, and `hardis:work:new` never carries stray work onto a fresh
 branch: it puts it aside in a *stash*, and says so in its panel, naming the files. To get them back

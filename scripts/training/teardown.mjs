@@ -97,9 +97,9 @@ System.debug('Unassigned ' + psa.size() + ' permission set assignment(s)');
 `,
     "utf8"
   );
-  const unassigned = run("sf", ["apex", "run", "--file", apexFile, "--target-org", target], { quiet: true });
+  const unassigned = runSf(["apex", "run", "--file", apexFile, "--target-org", target], { quiet: true });
   fs.rmSync(apexFile, { force: true });
-  info(unassigned.code === 0 ? "  Permission sets unassigned" : c.dim("  No permission set assignment to remove"));
+  reportStep(unassigned, "  Permission sets unassigned", "unassign the permission sets");
 
   // The scheduled jobs. Lab 2.4 schedules CrewCapacityBatch nightly, and a
   // scheduled job holds its class, which holds both custom objects. Salesforce
@@ -117,7 +117,7 @@ System.debug('Aborted ' + jobs.size() + ' scheduled job(s)');
 `,
     "utf8"
   );
-  const unscheduled = run("sf", ["apex", "run", "--file", jobsFile, "--target-org", target], { quiet: true });
+  const unscheduled = runSf(["apex", "run", "--file", jobsFile, "--target-org", target], { quiet: true });
   fs.rmSync(jobsFile, { force: true });
 
   // The public group of Lab 3.3. The lab is built on its absence: the first
@@ -133,39 +133,48 @@ System.debug('Deleted ' + groups.size() + ' public group(s)');
 `,
     "utf8"
   );
-  const ungrouped = run("sf", ["apex", "run", "--file", groupFile, "--target-org", target], { quiet: true });
+  const ungrouped = runSf(["apex", "run", "--file", groupFile, "--target-org", target], { quiet: true });
   fs.rmSync(groupFile, { force: true });
-  info(ungrouped.code === 0 ? "  Crew Leads public group removed, when there was one" : c.dim("  No public group to remove"));
-  info(unscheduled.code === 0 ? "  Scheduled jobs aborted" : c.dim("  No scheduled job to abort"));
+  reportStep(ungrouped, "  Crew Leads public group removed, when there was one", "remove the Crew Leads public group");
+  reportStep(unscheduled, "  Scheduled jobs aborted", "abort the scheduled jobs");
 
   // The flows, deactivated. An active flow refuses to be deleted, and says so
   // with "insufficient access rights on cross-reference id", which reads like a
   // permission problem and is not one.
   let deactivated = 0;
+  const stillActive = [];
   for (const flow of ["Installation_Assign_Crew", "Installation_Close_Check", "Installation_Crew_Warning"]) {
-    const found = run(
-      "sf",
-      ["data", "query", "--use-tooling-api", "-q", `SELECT Id FROM FlowDefinition WHERE DeveloperName = '${flow}'`,
+    const found = runSf(["data", "query", "--use-tooling-api", "-q", `SELECT Id FROM FlowDefinition WHERE DeveloperName = '${flow}'`,
         "--target-org", target, "--json"],
       { capture: true, quiet: true }
     );
+    if (found.code !== 0) {
+      stillActive.push(`${flow} (could not be read: ${firstError(found)})`);
+      continue;
+    }
     let id = null;
     try {
       id = JSON.parse(found.stdout).result.records[0].Id;
     } catch {
+      // Not in this org: nothing to deactivate
       continue;
     }
-    const off = run(
-      "sf",
-      ["api", "request", "rest", `services/data/v64.0/tooling/sobjects/FlowDefinition/${id}`,
+    const off = runSf(["api", "request", "rest", `services/data/v64.0/tooling/sobjects/FlowDefinition/${id}`,
         "--method", "PATCH", "--body", '{"Metadata":{"activeVersionNumber":null}}', "--target-org", target],
       { quiet: true }
     );
     if (off.code === 0) {
       deactivated++;
+    } else {
+      stillActive.push(`${flow} (${firstError(off)})`);
     }
   }
   info(deactivated > 0 ? `  ${deactivated} flow(s) deactivated` : c.dim("  No active flow to deactivate"));
+  if (stillActive.length > 0) {
+    // Said here rather than left to the destructive deploy, which reports an active flow as
+    // "insufficient access rights on cross-reference id" and the objects as "used by another feature"
+    warn(`  Could not deactivate ${stillActive.join(", ")}`);
+  }
 
   // The flow versions, deleted one by one. A deactivated flow with more than
   // one version still refuses the destructive deploy with the same "insufficient
@@ -173,31 +182,36 @@ System.debug('Deleted ' + groups.size() + ' public group(s)');
   // ("used by another feature: Flow Version"). Level 2 updates two of these flows
   // and every walk adds a version, so an org used once is already in that state.
   // Deleting the last version deletes the flow itself.
-  const versions = run(
-    "sf",
-    ["data", "query", "--use-tooling-api", "-q",
+  const versions = runSf(["data", "query", "--use-tooling-api", "-q",
       "SELECT Id FROM Flow WHERE Definition.DeveloperName IN ('Installation_Assign_Crew','Installation_Close_Check','Installation_Crew_Warning')",
       "--target-org", target, "--json"],
     { capture: true, quiet: true }
   );
   let versionIds = [];
+  if (versions.code !== 0) {
+    warn(`  Could not list the flow versions: ${firstError(versions)}`);
+  }
   try {
     versionIds = (parseJsonOutput(versions.stdout)?.result?.records || []).map((r) => r.Id);
   } catch {
     versionIds = [];
   }
   let deleted = 0;
+  let notDeleted = 0;
   for (const id of versionIds) {
-    const gone = run(
-      "sf",
-      ["data", "delete", "record", "--use-tooling-api", "--sobject", "Flow", "--record-id", id, "--target-org", target],
+    const gone = runSf(["data", "delete", "record", "--use-tooling-api", "--sobject", "Flow", "--record-id", id, "--target-org", target],
       { quiet: true }
     );
     if (gone.code === 0) {
       deleted++;
+    } else {
+      notDeleted++;
     }
   }
   info(deleted > 0 ? `  ${deleted} flow version(s) deleted` : c.dim("  No flow version to delete"));
+  if (notDeleted > 0) {
+    warn(`  ${notDeleted} flow version(s) could not be deleted: an active version refuses it, run this again`);
+  }
 
   // The record page, put back to the standard one. A Lightning page assigned as
   // an object's record page is "active", and an active page cannot be deleted.
@@ -246,14 +260,12 @@ System.debug('Deleted ' + groups.size() + ' public group(s)');
 `,
     "utf8"
   );
-  const page = run(
-    "sf",
-    ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", target,
+  const page = run("sf", ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", target,
       "--test-level", "NoTestRun", "--ignore-warnings", "--wait", "30"],
     { quiet: true }
   );
   fs.rmSync(dir, { recursive: true, force: true });
-  info(page.code === 0 ? "  The Installation record page is back to the standard one" : c.dim("  No Lightning record page to deactivate"));
+  reportStep(page, "  The Installation record page is back to the standard one", "put the Installation record page back to the standard one");
 }
 
 /**
@@ -282,10 +294,13 @@ const APP_CLIENT_TYPES = [
 function removeCourseAppClients(target) {
   const found = [];
   for (const type of APP_CLIENT_TYPES) {
-    const listed = run("sf", ["org", "list", "metadata", "-m", type, "--target-org", target, "--json"], {
+    const listed = runSf(["org", "list", "metadata", "-m", type, "--target-org", target, "--json"], {
       capture: true,
       quiet: true
     });
+    if (listed.code !== 0) {
+      warn(`  Could not list the ${type} of the org: ${firstError(listed)}`);
+    }
     let names = [];
     try {
       names = (parseJsonOutput(listed.stdout)?.result || []).map((r) => r.fullName).filter((n) => COURSE_APP_NAME.test(n));
@@ -309,15 +324,13 @@ ${types.map(([type, names]) => `    <types>\n${names.map((n) => `        <member
 `;
   fs.writeFileSync(path.join(dir, "package.xml"), pkg([]), "utf8");
   fs.writeFileSync(path.join(dir, "destructiveChangesPost.xml"), pkg(found), "utf8");
-  const gone = run(
-    "sf",
-    ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", target,
+  const gone = run("sf", ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", target,
       "--test-level", "NoTestRun", "--ignore-warnings", "--wait", "30"],
     { quiet: true }
   );
   fs.rmSync(dir, { recursive: true, force: true });
   const apps = found.find(([type]) => type === "ExternalClientApplication")[1];
-  info(gone.code === 0 ? `  External Client App(s) removed: ${apps.join(", ")}` : c.dim("  The External Client Apps could not be removed"));
+  reportStep(gone, `  External Client App(s) removed: ${apps.join(", ")}`, `remove the External Client Apps ${apps.join(", ")}`);
 }
 
 export default async function teardown(args) {
@@ -433,4 +446,56 @@ ${types}
     <version>64.0</version>
 </Package>
 `;
+}
+
+/**
+ * An sf call of a cleanup step, with its output captured.
+ *
+ * The CLI checks the DNS of a scratch org's domain before each command, and that
+ * check fails now and then for a few seconds ("DomainNotFoundError: Parsing
+ * --target-org ... The org cannot be found"). A cleanup step then failed without a
+ * word: two flows stayed active, and the destructive deploy that follows refused
+ * the flow versions and the objects they use. That failure is retried.
+ *
+ * For the short calls only: the deploys of this file stream their output instead,
+ * because they can run for minutes and a captured call shows nothing meanwhile.
+ */
+function runSf(args, options = {}) {
+  let res = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    res = run("sf", args, { ...options, capture: true });
+    if (res.code === 0 || !TRANSIENT_DNS_ERROR.test(`${res.stdout}\n${res.stderr}`)) {
+      return res;
+    }
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
+  }
+  return res;
+}
+
+// Only the DNS check of the CLI, which fails before any request reaches the org: a call retried on it
+// has done nothing yet. A network error later on (ENOTFOUND while polling) could re-run a call that
+// already worked, so it is reported rather than retried.
+const TRANSIENT_DNS_ERROR = /DomainNotFoundError/;
+
+/**
+ * Says what a cleanup step did. A failure is reported as a failure: these steps
+ * used to print "nothing to remove" whenever their command failed, which hid
+ * the reason the destructive deploy failed next.
+ */
+function reportStep(res, doneMessage, what) {
+  if (res.code === 0) {
+    info(doneMessage);
+  } else {
+    warn(`  Could not ${what}: ${firstError(res)}`);
+  }
+}
+
+/** The first line of a failed sf call worth showing, without its colours. */
+function firstError(res) {
+  const lines = `${res.stderr}\n${res.stdout}`
+    .replace(/\x1b\[[0-9;]*m/g, "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line !== "");
+  return lines.find((line) => /error|failed|cannot|invalid/i.test(line)) || lines[0] || `exit code ${res.code}, see the output above`;
 }

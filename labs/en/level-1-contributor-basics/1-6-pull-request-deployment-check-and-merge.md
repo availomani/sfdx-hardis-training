@@ -107,8 +107,8 @@ Open the **Checks** tab **(1)**. Two of them matter here, and both start on thei
 
 | Check                                         | What it does                                                                                |
 |-----------------------------------------------|---------------------------------------------------------------------------------------------|
-| **Simulate Deployment (sfdx-hardis)** **(3)** | Deploys your metadata into `helios-integration` in validation mode, and runs the Apex tests |
-| **Mega-Linter** **(2)**                       | Runs the code quality linters over the repository                                           |
+| **Simulate Deployment (sfdx-hardis)** **(2)** | Deploys your metadata into `helios-integration` in validation mode, and runs the Apex tests |
+| **Mega-Linter** **(3)**                       | Runs the code quality linters over the repository                                           |
 
 ![The Checks tab of a Pull Request, listing the jobs that ran](../../_assets/annotated/web/github-pr-checks.png)
 
@@ -138,13 +138,13 @@ the most useful thing on the page.
 ![The sfdx-hardis comment on a Pull Request](../../_assets/annotated/web/github-pr-comment.png)
 
 1. **The banner** **(1)** says whether the simulated deployment succeeded
-2. **What would change** **(2)**. Not a list of your files: sfdx-hardis sends the whole package,
+2. **Apex coverage** **(2)**, right under it, against the target this project sets
+3. **What would change** **(3)**. Not a list of your files: sfdx-hardis sends the whole package,
    `manifest/package.xml`, and Salesforce answers how much of it differs: `Simulated deployment: 36
    components validated against the org, 7 would change (1 created, 6 updated, 0 deleted, 29
    unchanged)`. The one created is your field, and the updated ones include the layout and the two
    permission sets you changed. Click the line under it to open a table of those changes, per type
    of component: the field is the **CustomField** row
-3. **Apex coverage** **(3)**, against the target this project sets
 4. **Tickets** **(4)**, the stories it recognised in your branch name and commit messages, each
    with its title and a link to its page in the backlog
 
@@ -321,7 +321,7 @@ without the field. Redo [Lab 1.5 step 3](1-5-retrieve-commit-and-publish-your-ch
 
 **The check is stuck as "Expected".**
 The workflow is waiting for a job that will never run, usually because the base of the Pull Request
-is the original repository and not your fork (`github.com/my-username/sfdx-hardis-training`). Close it and open it again with the right base.
+is the original repository and not your fork. Close it and open it again with the right base.
 
 **The merge box says Merging is blocked, and the button is grey.**
 A required check is still running, or it failed. Wait for it, or open it from the **Checks** tab,

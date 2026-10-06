@@ -430,9 +430,9 @@ Seven things, each of them real work on a real project, and none of them yours t
 | `helios-uat`         | User acceptance, where the business tests what integration has collected |
 
 - **Which org each branch deploys to**, written into the project's one configuration file per
-  branch, in `config/branches/`, committed on `integration` and pushed to your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`). The repository
+  branch, in `config/branches/`, committed on `integration` and pushed to your fork. The repository
   could not know that: your orgs did not exist when it was written. It is pushed because the badge
-  check clones your fork (`github.com/my-username/sfdx-hardis-training`) and reads what is actually in it. `uat` receives the same files with its
+  check clones your fork and reads what is actually in it. `uat` receives the same files with its
   first promotion, in [Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md), the way every change reaches it
 - **`integration` and `uat` protected.** A Pull Request into either one can only be merged once
   every check GitHub runs on it has finished green, and that rule holds for you too, the owner of
@@ -514,7 +514,7 @@ Your own `helios-dev` is not in the diagram either, and that is correct: the dia
 is deployed, and nothing is ever deployed into the org you build in.
 
 !!! note "`preprod` and `main` are missing on purpose"
-    Your fork (`github.com/my-username/sfdx-hardis-training`) has a `main` branch, and no
+    Your fork has a `main` branch, and no
     `preprod` yet, and the diagram shows neither: a branch becomes part of the pipeline only once
     somebody says which org it deploys to, and nobody has.
 

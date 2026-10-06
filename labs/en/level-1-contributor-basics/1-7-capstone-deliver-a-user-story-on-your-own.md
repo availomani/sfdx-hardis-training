@@ -117,7 +117,7 @@ it. One field is not filled in: pick your level in the **Level** dropdown, becau
 not prefill a dropdown from a link and the form refuses to submit while it says *None*. Then tick
 the three boxes and click **Create**.
 
-Those three boxes are yours to tick, and nothing ticks them for you. They say your fork (`github.com/my-username/sfdx-hardis-training`) is public
+Those three boxes are yours to tick, and nothing ticks them for you. They say your fork is public
 and your GitHub handle becomes public in the training repository, which is a decision about your
 name rather than a formality.
 
@@ -128,12 +128,12 @@ name rather than a formality.
 
     ![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
-A job then clones your fork (`github.com/my-username/sfdx-hardis-training`), re-runs every check above against it, and answers on the issue. Nobody
+A job then clones your fork, re-runs every check above against it, and answers on the issue. Nobody
 reviews it by hand, so it usually takes a couple of minutes. If something does not verify, the
 comment names the exact lab and what it looked for, you fix it, and you edit the issue to run it
 again.
 
-Your fork (`github.com/my-username/sfdx-hardis-training`) has to be **public** for the audit to read it. If it is private, the command offers to
+Your fork has to be **public** for the audit to read it. If it is private, the command offers to
 make it public.
 
 !!! note "It is a badge, not a certification"

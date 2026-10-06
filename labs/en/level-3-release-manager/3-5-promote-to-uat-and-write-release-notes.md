@@ -219,8 +219,9 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 **Final package.xml to deploy** printed right after it has one item fewer.
 
 The Pull Request says it too, without the log: the comment of the check, and the one this
-deployment writes, carry a **Protected metadata (package-no-overwrite.xml)** section, and its table
-counts **1** in the **Not overwritten** column of the **RemoteSiteSetting** row. Read it on the
+deployment writes, carry a **Protected metadata (package-no-overwrite.xml)** section. Open its
+table, **Protected components per metadata type**: it counts **1** in the **Not overwritten** column
+of the **RemoteSiteSetting** row. Read it on the
 check, before merging: a component you expected to deploy that shows up there is one the list
 protects by mistake.
 

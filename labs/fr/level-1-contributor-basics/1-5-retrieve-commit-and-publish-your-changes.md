@@ -5,7 +5,7 @@ description: "Rapatriez vos modifications d'org dans Git avec le Metadata Retrie
 level: 1
 lab: 5
 lang: fr
-source_rev: "d0a3a04d32929b6ab52a1f9590ff383010fc3ea1"
+source_rev: "e02b8da9d8186fdb3574371c6b54375323049f2d"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -325,8 +325,7 @@ qui a effectué, dans cet ordre :
 4. **Commité ce qu'il a modifié**, sous `chore(sfdx-hardis): update package content` et
    `chore(sfdx-hardis): clean sfdx project`. Ces commits sont ceux de l'outil, pas les vôtres : le
    vôtre est celui que vous avez écrit à l'étape 4
-5. **Poussé** la branche sur votre fork (votre copie personnelle du repository du cours sur GitHub, par
-   exemple `github.com/my-username/sfdx-hardis-training`)
+5. **Poussé** la branche sur votre fork
 
 Chacune de ces étapes est de la configuration, pas de la magie. Tout ce qu'il a fait est dans
 `config/.sfdx-hardis.yml`, et un projet qui veut un autre comportement change ce fichier.
@@ -383,14 +382,14 @@ plus. Lisez les règles de nettoyage dans le bloc Sous le capot ci-dessus. Rien 
 org : le nettoyage change ce qui est commité, jamais ce qui est dans Salesforce.
 
 **Le push est rejeté.**
-Votre fork (`github.com/my-username/sfdx-hardis-training`) a bougé, en général parce que vous avez
+Votre fork a bougé, en général parce que vous avez
 réinitialisé un niveau. Tirez d'abord : panneau Source Control, menu **...**, **Pull**.
 
 ## Vérifiez votre travail
 
 Welcome page > **Training: Level 1** > **Check my work**, puis choisissez le **Lab 1.5**.
 
-Il lit la copie de votre branche dans votre fork (`github.com/my-username/sfdx-hardis-training`),
+Il lit la copie de votre branche dans votre fork,
 celle que Save / Publish a poussée : le champ, le permission set qui l'accorde, et la présentation de
 page qui le porte. Un commit resté sur votre machine ne compte pas, parce que personne d'autre ne
 peut le voir.

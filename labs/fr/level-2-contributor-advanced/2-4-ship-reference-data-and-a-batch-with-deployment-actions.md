@@ -348,9 +348,9 @@ l'étape manuelle est sautée, parce qu'elle est déjà faite dans `integration`
 Une action manuelle déclarée **Before Metadata Deployment** doit être faite avant le merge. Le job de
 validation s'arrête juste après ses actions de pré-déploiement tant que l'une d'elles n'est pas
 marquée comme faite dans la branche d'org cible. Une Pull Request en draft (ou avec `draft` dans son
-titre) n'est pas arrêtée, pour pouvoir continuer à contrôler une story en cours. Les projets qui ne
-veulent pas de ce comportement mettent `failValidationOnPendingManualActions: false` dans
-`config/.sfdx-hardis.yml`.
+titre) n'est pas arrêtée, pour pouvoir continuer à contrôler une story en cours. Par défaut,
+sfdx-hardis ne fait que lister l'étape : le projet Helios active l'arrêt avec
+`failValidationOnPendingManualActions: true` dans `config/.sfdx-hardis.yml`.
 
 </details>
 

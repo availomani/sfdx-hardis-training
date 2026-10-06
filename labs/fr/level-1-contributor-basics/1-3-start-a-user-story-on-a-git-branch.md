@@ -5,7 +5,7 @@ description: "Prenez votre premier ticket du backlog et créez sa branche Git et
 level: 1
 lab: 3
 lang: fr
-source_rev: "9c0626c6cc38da209d2afd619561a0e94eaff865"
+source_rev: "e02b8da9d8186fdb3574371c6b54375323049f2d"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type
@@ -241,6 +241,19 @@ construit quelque chose.
 **La commande refuse le nom.**
 Le motif qu'utilise ce projet est `US-014-panels-required` : trois chiffres, puis des mots en
 minuscules séparés par des tirets. `US14-PanelsRequired` est rejeté exprès.
+
+**Elle dit que la branche existe déjà et demande un autre nom.**
+Une nouvelle User Story ne réutilise jamais une branche : une ancienne branche emporterait ses propres
+commits dans votre Pull Request. La sortie dépend de l'origine de cette branche :
+
+- **Vous travaillez en ce moment sur US-014**, et la commande s'est arrêtée en route ou vous avez
+  cliqué deux fois sur **New User Story**. Vous n'avez pas besoin d'une deuxième branche : cliquez
+  sur **Cancel**, puis sur le nom de la branche en bas à gauche de la barre d'état, et choisissez
+  `features/US-014-panels-required` dans la liste. Si vous aviez des changements non commités, la
+  commande les a mis de côté avant de demander : l'entrée suivante les récupère
+- **Elle reste d'une tentative abandonnée**, après un **Reset this level** qui l'a gardée. N'y
+  retournez pas : elle part d'un ancien `integration`. Tapez plutôt un nouveau nom,
+  `US-014-panels-required-2`, et continuez à partir de là
 
 **Un fichier que vous éditiez a disparu.**
 Vous avez modifié quelque chose avant de démarrer, et `hardis:work:new` n'emporte jamais du travail

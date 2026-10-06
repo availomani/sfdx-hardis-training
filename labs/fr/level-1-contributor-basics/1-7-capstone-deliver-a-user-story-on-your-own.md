@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "0990e9994b61a2ade22a0280849ae5fe07d2acb0"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -124,7 +124,7 @@ depuis un lien et le formulaire refuse d'être soumis tant qu'elle affiche *None
 trois cases et cliquez sur **Create**.
 
 Ces trois cases sont à vous de cocher, et rien ne les coche à votre place. Elles disent que votre
-fork (`github.com/my-username/sfdx-hardis-training`) est public et que votre pseudo GitHub devient
+fork est public et que votre pseudo GitHub devient
 public dans le repository de formation, ce qui est une décision à propos de votre nom plutôt qu'une
 formalité.
 
@@ -136,12 +136,12 @@ formalité.
 
     ![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
-Un job clone ensuite votre fork (`github.com/my-username/sfdx-hardis-training`), rejoue sur lui tous
+Un job clone ensuite votre fork, rejoue sur lui tous
 les contrôles ci-dessus, et répond sur l'issue. Personne ne le relit à la main, cela prend donc
 généralement deux minutes. Si quelque chose ne se vérifie pas, le commentaire nomme le lab exact et
 ce qu'il a cherché, vous corrigez, et vous modifiez l'issue pour le relancer.
 
-Votre fork (`github.com/my-username/sfdx-hardis-training`) doit être **public** pour que l'audit
+Votre fork doit être **public** pour que l'audit
 puisse le lire. S'il est privé, la commande propose de le rendre public.
 
 !!! note "C'est un badge, pas une certification"

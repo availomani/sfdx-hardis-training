@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
+source_rev: "0990e9994b61a2ade22a0280849ae5fe07d2acb0"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -454,11 +454,9 @@ Sept choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vo
 | `helios-uat`         | La recette utilisateur, où le métier teste ce que l'intégration a rassemblé           |
 
 - **Dans quelle org déploie chaque branche**, écrit dans l'unique fichier de configuration par
-  branche du projet, dans `config/branches/`, commité sur `integration` et poussé sur votre fork
-  (votre copie personnelle du repository du cours sur GitHub, par exemple
-  `github.com/my-username/sfdx-hardis-training`). Le repository ne pouvait pas le savoir : vos orgs
-  n'existaient pas quand il a été écrit. C'est poussé parce que le contrôle du badge clone votre fork
-  (`github.com/my-username/sfdx-hardis-training`) et lit ce qui s'y trouve réellement. `uat` reçoit
+  branche du projet, dans `config/branches/`, commité sur `integration` et poussé sur votre fork. Le repository ne pouvait pas le savoir : vos orgs
+  n'existaient pas quand il a été écrit. C'est poussé parce que le contrôle du badge clone votre fork et lit
+  ce qui s'y trouve réellement. `uat` reçoit
   les mêmes fichiers avec sa première promotion, au [Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md), comme tout changement qui l'atteint
 - **`integration` et `uat` protégées.** Une Pull Request vers l'une ou l'autre ne peut être mergée
   qu'une fois que tous les contrôles que GitHub lance dessus sont terminés et verts, et cette règle
@@ -546,7 +544,7 @@ Votre `helios-dev` n'est pas dans le diagramme non plus, et c'est correct : le d
 travail est déployé, et rien n'est jamais déployé dans l'org où vous construisez.
 
 !!! note "`preprod` et `main` manquent exprès"
-    Votre fork (`github.com/my-username/sfdx-hardis-training`) a une branche `main`, et pas encore de
+    Votre fork a une branche `main`, et pas encore de
     `preprod`, et le diagramme ne montre ni l'une ni l'autre : une branche ne fait partie de la pipeline
     qu'à partir du moment où quelqu'un dit dans quelle org elle déploie, et personne ne l'a fait.
 

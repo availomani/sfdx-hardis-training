@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "8234def2c3d19cf3752d21be9c04204c40ca0ff8"
+source_rev: "e0b26bac584c1b1a250237b3044c45a656322ceb"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -111,8 +111,8 @@ Ouvrez l'onglet **Checks** **(1)**. Deux d'entre eux comptent ici, et les deux d
 
 | Contrôle                                      | Ce qu'il fait                                                                                  |
 |-----------------------------------------------|------------------------------------------------------------------------------------------------|
-| **Simulate Deployment (sfdx-hardis)** **(3)** | Déploie votre métadonnée dans `helios-integration` en mode validation, et lance les tests Apex |
-| **Mega-Linter** **(2)**                       | Lance les linters de qualité de code sur le repository                                         |
+| **Simulate Deployment (sfdx-hardis)** **(2)** | Déploie votre métadonnée dans `helios-integration` en mode validation, et lance les tests Apex |
+| **Mega-Linter** **(3)**                       | Lance les linters de qualité de code sur le repository                                         |
 
 ![L'onglet Checks d'une Pull Request, listant les jobs qui ont tourné](../../_assets/annotated/web/github-pr-checks.png)
 
@@ -144,14 +144,14 @@ Quand le contrôle de déploiement se termine, sfdx-hardis écrit un commentaire
 ![Le commentaire sfdx-hardis sur une Pull Request](../../_assets/annotated/web/github-pr-comment.png)
 
 1. **La bannière** **(1)** dit si le déploiement simulé a réussi
-2. **Ce qui changerait** **(2)**. Pas une liste de vos fichiers : sfdx-hardis envoie le package
+2. **La couverture Apex** **(2)**, juste en dessous, face à l'objectif que fixe ce projet
+3. **Ce qui changerait** **(3)**. Pas une liste de vos fichiers : sfdx-hardis envoie le package
    entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `Simulated
    deployment: 36 components validated against the org, 7 would change (1 created, 6 updated, 0
    deleted, 29 unchanged)`. Le composant créé est votre champ, et les composants mis à jour incluent
    la présentation de page et les deux permission sets que vous avez modifiés. Cliquez sur la ligne
    en dessous pour ouvrir un tableau de ces changements, par type de composant : le champ est la
    ligne **CustomField**
-3. **La couverture Apex** **(3)**, face à l'objectif que fixe ce projet
 4. **Les tickets** **(4)**, les stories qu'il a reconnues dans votre nom de branche et vos messages
    de commit, chacune avec son titre et un lien vers sa page dans le backlog
 
@@ -338,7 +338,7 @@ set sans le champ. Refaites le [Lab 1.5, étape 3](1-5-retrieve-commit-and-publi
 
 **Le contrôle reste bloqué sur "Expected".**
 Le workflow attend un job qui ne tournera jamais, en général parce que la base de la Pull Request
-est le repository d'origine et non votre fork (`github.com/my-username/sfdx-hardis-training`).
+est le repository d'origine et non votre fork.
 Fermez-la et rouvrez-la avec la bonne base.
 
 **La boîte de merge dit Merging is blocked, et le bouton est gris.**
