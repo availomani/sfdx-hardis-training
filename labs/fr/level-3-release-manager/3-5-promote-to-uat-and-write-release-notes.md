@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
+source_rev: "8234def2c3d19cf3752d21be9c04204c40ca0ff8"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -19,7 +19,7 @@ depends_on:
   flags: []
   config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
-  docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes]
+  docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes, salesforce-devops-config-overwrite]
 ---
 
 # Lab 3.5 - Promouvoir en UAT et écrire les notes de version
@@ -228,6 +228,12 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 
 `helios-uat` a déjà `Helios_Warehouse`, la promotion l'a donc laissé hors du package, et le
 **Final package.xml to deploy** affiché juste après a un élément de moins.
+
+La Pull Request le dit aussi, sans le log : le commentaire du contrôle, et celui qu'écrit ce
+déploiement, portent une section **Protected metadata (package-no-overwrite.xml)**, et son tableau
+compte **1** dans la colonne **Not overwritten** de la ligne **RemoteSiteSetting**. Lisez-la sur le
+contrôle, avant de merger : un composant que vous pensiez déployer et qui apparaît là est un
+composant que la liste protège par erreur.
 
 ### 6. Vérifier avec des yeux de testeur
 

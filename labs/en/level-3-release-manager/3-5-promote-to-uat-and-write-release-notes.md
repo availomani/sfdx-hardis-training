@@ -19,7 +19,7 @@ depends_on:
   flags: []
   config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
-  docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes]
+  docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes, salesforce-devops-config-overwrite]
 ---
 
 # Lab 3.5 - Promote to UAT and write the release notes
@@ -217,6 +217,12 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 
 `helios-uat` already has `Helios_Warehouse`, so the promotion left it out of the package, and the
 **Final package.xml to deploy** printed right after it has one item fewer.
+
+The Pull Request says it too, without the log: the comment of the check, and the one this
+deployment writes, carry a **Protected metadata (package-no-overwrite.xml)** section, and its table
+counts **1** in the **Not overwritten** column of the **RemoteSiteSetting** row. Read it on the
+check, before merging: a component you expected to deploy that shows up there is one the list
+protects by mistake.
 
 ### 6. Verify with a tester's eyes
 

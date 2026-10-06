@@ -830,7 +830,8 @@
       ],
       "docs": [
         "salesforce-devops-deploy-major-branches",
-        "hardis/doc/salesforce-devops-release-notes"
+        "hardis/doc/salesforce-devops-release-notes",
+        "salesforce-devops-config-overwrite"
       ],
       "panels": [
         "pipeline",
@@ -1173,7 +1174,8 @@
       ],
       "salesforce-devops-config-overwrite": [
         "lab-2-7",
-        "lab-3-4"
+        "lab-3-4",
+        "lab-3-5"
       ],
       "salesforce-devops-manual-repo-clean": [
         "lab-2-8"

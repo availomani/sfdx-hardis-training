@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
+source_rev: "8234def2c3d19cf3752d21be9c04204c40ca0ff8"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/welcome-custom-menu-3
@@ -64,16 +64,18 @@ Lisez le commentaire sfdx-hardis, de haut en bas. Quatre choses, dans cet ordre 
    merge, avec une ligne en dessous qui dit si c'est passé. L'identifiant de déploiement Salesforce
    n'est affiché nulle part : il est porté par un marqueur HTML invisible, pour qu'un job de merge
    puisse réutiliser la validation en Quick Deploy
-2. **Combien est-ce que ça déploie ?** Pas une liste. Une ligne de compteurs : combien de composants
-   ont été envoyés, combien ont changé, et combien parmi eux ont été créés, mis à jour, supprimés ou
-   laissés inchangés. Si les compteurs ne correspondent pas à la taille de la story, c'est votre
-   signal pour aller lire le diff
-3. **Qu'est-ce que ça supprime ?** Le compteur `deleted` sur cette même ligne. Les Flows ont droit à
-   davantage : une liste **Flow changes** pointant vers un commentaire de diff par Flow, et un
-   tableau **Flow deletion** quand des versions sont retirées. Il n'y a pas de section de
-   destructive changes pour quoi que ce soit d'autre : un champ supprimé apparaît donc comme un
-   nombre et rien de plus. C'est bon à savoir avant de compter sur le commentaire pour en attraper
-   un
+2. **Combien est-ce que ça déploie ?** La ligne **Simulated deployment** compte combien de
+   composants ont été validés face à l'org, combien changeraient, et combien parmi eux seraient
+   créés, mis à jour, supprimés ou laissés inchangés. En dessous, un tableau replié donne ces
+   changements par type de composant. Si les compteurs ne correspondent pas à la taille de la story,
+   c'est votre signal pour aller lire le diff
+3. **Qu'est-ce que ça supprime ?** Le compteur `deleted` sur cette même ligne, et la colonne
+   **Deleted** du tableau, qui dit quel genre de composant disparaît : un champ, une classe, une
+   présentation de page. Les Flows ont droit à davantage : une liste **Flow changes** pointant vers
+   un commentaire de diff par Flow, et un tableau **Flow deletion** quand des versions sont retirées.
+   Le commentaire ne nomme aucun autre composant supprimé : la liste, une ligne par composant, est
+   `xls/deployment-components.xlsx` dans l'artefact **sfdx-hardis reports** du contrôle (**Summary**
+   de son run, puis **Artifacts**)
 4. **Tests et couverture.** La couverture à chaque fois, et un bloc replié *Apex test classes* quand
    le job a lancé des classes de test nommées. Les échecs seulement quand il y en a
 

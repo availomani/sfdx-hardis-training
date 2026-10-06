@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "9f4eae623f9e0d447b4576a156064f2db73ad5de"
+source_rev: "8234def2c3d19cf3752d21be9c04204c40ca0ff8"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -145,10 +145,12 @@ Quand le contrôle de déploiement se termine, sfdx-hardis écrit un commentaire
 
 1. **La bannière** **(1)** dit si le déploiement simulé a réussi
 2. **Ce qui changerait** **(2)**. Pas une liste de vos fichiers : sfdx-hardis envoie le package
-   entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `36 sent to the org,
-   7 would change (1 created, 6 updated, 0 deleted, 29 unchanged)`. Le composant créé est votre
-   champ, et les composants mis à jour incluent la présentation de page et les deux permission sets
-   que vous avez modifiés
+   entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `Simulated
+   deployment: 36 components validated against the org, 7 would change (1 created, 6 updated, 0
+   deleted, 29 unchanged)`. Le composant créé est votre champ, et les composants mis à jour incluent
+   la présentation de page et les deux permission sets que vous avez modifiés. Cliquez sur la ligne
+   en dessous pour ouvrir un tableau de ces changements, par type de composant : le champ est la
+   ligne **CustomField**
 3. **La couverture Apex** **(3)**, face à l'objectif que fixe ce projet
 4. **Les tickets** **(4)**, les stories qu'il a reconnues dans votre nom de branche et vos messages
    de commit, chacune avec son titre et un lien vers sa page dans le backlog
@@ -352,8 +354,8 @@ robot sur votre ordinateur, puis lancez **Training: Level 1 > Trigger my workflo
 part qui relance les contrôles.
 
 **Le déploiement réussit mais le champ n'est pas dans l'org.**
-Regardez la liste des composants déployés dans le commentaire. Si le champ n'y est pas, c'est qu'il
-n'est pas dans `manifest/package.xml`, et le [Lab 1.5, étape 6](1-5-retrieve-commit-and-publish-your-changes.md#6-lire-le-package-avant-de-pousser) est là où vous le lisez.
+Ouvrez le tableau des changements dans le commentaire, sous la ligne de compteurs. S'il n'a pas de
+ligne **CustomField**, c'est que le champ n'est pas dans `manifest/package.xml`, et le [Lab 1.5, étape 6](1-5-retrieve-commit-and-publish-your-changes.md#6-lire-le-package-avant-de-pousser) est là où vous le lisez.
 
 ## Vérifiez votre travail
 

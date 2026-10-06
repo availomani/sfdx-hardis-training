@@ -139,9 +139,11 @@ the most useful thing on the page.
 
 1. **The banner** **(1)** says whether the simulated deployment succeeded
 2. **What would change** **(2)**. Not a list of your files: sfdx-hardis sends the whole package,
-   `manifest/package.xml`, and Salesforce answers how much of it differs: `36 sent to the org, 7
-   would change (1 created, 6 updated, 0 deleted, 29 unchanged)`. The one created is your field, and the
-   updated ones include the layout and the two permission sets you changed
+   `manifest/package.xml`, and Salesforce answers how much of it differs: `Simulated deployment: 36
+   components validated against the org, 7 would change (1 created, 6 updated, 0 deleted, 29
+   unchanged)`. The one created is your field, and the updated ones include the layout and the two
+   permission sets you changed. Click the line under it to open a table of those changes, per type
+   of component: the field is the **CustomField** row
 3. **Apex coverage** **(3)**, against the target this project sets
 4. **Tickets** **(4)**, the stories it recognised in your branch name and commit messages, each
    with its title and a link to its page in the backlog
@@ -333,8 +335,8 @@ blocked. **Pull** in the **Source Control** panel to bring the robot's commit to
 run **Training: Level 1 > Trigger my workflows**: a push of yours is what starts the checks again.
 
 **The deployment succeeds but the field is not in the org.**
-Look at the deployed components list in the comment. If the field is not there, it is not in
-`manifest/package.xml`, and [Lab 1.5 step 6](1-5-retrieve-commit-and-publish-your-changes.md#6-read-the-package-before-you-push) is where you read it.
+Open the table of changes in the comment, under the counts line. If it has no **CustomField** row,
+the field is not in `manifest/package.xml`, and [Lab 1.5 step 6](1-5-retrieve-commit-and-publish-your-changes.md#6-read-the-package-before-you-push) is where you read it.
 
 ## Check your work
 

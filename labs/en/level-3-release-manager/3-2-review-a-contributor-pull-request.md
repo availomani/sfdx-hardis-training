@@ -63,13 +63,17 @@ Read the sfdx-hardis comment, top to bottom. Four things, in this order:
    simulation)* on a check job and *Deployment Results* on a merge job, with a line under it saying
    whether it passed. The Salesforce deployment id is not printed anywhere: it is carried as an
    invisible HTML marker, so that a merge job can reuse the validation as a Quick Deploy
-2. **How much does it deploy?** Not a list. One line of counts: how many components were sent, how
-   many changed, and how many of those were created, updated, deleted or left unchanged. If the
-   counts do not match the size of the story, that is your cue to go and read the diff
-3. **What does it delete?** The `deleted` count on that same line. Flows get more: a **Flow changes**
-   list linking to a diff comment per Flow, and a **Flow deletion** table when versions are being
-   removed. There is no destructive changes section for anything else, so a deleted field shows up
-   as one number and nothing else. That is worth knowing before you rely on the comment to catch one
+2. **How much does it deploy?** The **Simulated deployment** line counts how many components were
+   validated against the org, how many would change, and how many of those would be created,
+   updated, deleted or left unchanged. Under it, a collapsed table gives the changes per type of
+   component. If the counts do not match the size of the story, that is your cue to go and read
+   the diff
+3. **What does it delete?** The `deleted` count on that same line, and the **Deleted** column of the
+   table, which says what kind of component goes: a field, a class, a layout. Flows get more: a
+   **Flow changes** list linking to a diff comment per Flow, and a **Flow deletion** table when
+   versions are being removed. The comment names no other deleted component: the list, one row per
+   component, is `xls/deployment-components.xlsx` in the **sfdx-hardis reports** artifact of the
+   check (**Summary** of its run, then **Artifacts**)
 4. **Tests and coverage.** Coverage every time, and a collapsed *Apex test classes* block when the
    job ran named test classes. Failures only when there are failures
 
