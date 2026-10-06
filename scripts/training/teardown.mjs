@@ -257,7 +257,8 @@ System.debug('Deleted ' + groups.size() + ' public group(s)');
 }
 
 /**
- * The External Client Apps Lab 3.1 deploys, one per major branch, named
+ * The External Client Apps Lab 3.1 deploys, one per branch it moves to JWT
+ * (preprod and main, all four in the earlier version of the lab), named
  * sfdxhardis<branch>. They hold nothing of the app, but they outlive it: the
  * next Add/Configure Org on the same org stops on "External Client App named
  * sfdxhardisintegration already exists ... Have you deleted it?", which is every

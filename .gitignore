@@ -36,6 +36,9 @@ site-src/
 
 # Editors and OS
 .DS_Store
+# Written by the Salesforce extensions in every working copy, never part of the project
+.vscode/settings.json
+**/lwc/jsconfig.json
 Thumbs.db
 *.swp
 

@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "044a8eacb552ef9251cdc58fd3e6a95fde210d1f"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--settings-menu
@@ -66,8 +66,10 @@ d'`uat` vers `preprod`, dans le diagramme DevOps Pipeline. GitHub s'ouvre sur la
 vers `preprod`.
 
 Son job de contrôle est le premier à se connecter à `helios-preprod`, et il le fait avec la clé et
-les secrets du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : un contrôle vert ici, c'est votre installation JWT de `preprod` qui
-fonctionne.
+les secrets du [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md). C'est la première connexion JWT du cours, alors regardez-la une fois :
+ouvrez le contrôle depuis **Checks**, dépliez **Login & Simulate deployment**, et cherchez
+`sf org login jwt`. Cette ligne, et le job qui continue au-delà, c'est votre clé de `preprod` qui
+fonctionne, même au premier passage, qui s'arrête en rouge plus bas pour une autre raison.
 
 Intitulez-la simplement :
 
@@ -89,7 +91,8 @@ surprendre en production. Une livraison qui échoue ici ne vous a rien coûté.
 ### 3. Créer la Pull Request de production
 
 La pastille **+ PR** sur la flèche de `preprod` vers `main`, de `preprod` dans `main`. Son job de
-contrôle est la première connexion JWT à `helios-prod`. Intitulez-la simplement :
+contrôle est la première connexion JWT à `helios-prod`, avec `sf org login jwt` dans son log comme à
+l'étape 2. Intitulez-la simplement :
 
 > Release 2026-09 to production
 

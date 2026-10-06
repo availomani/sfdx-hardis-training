@@ -208,8 +208,8 @@ whatever project you actually work on and count what is missing.
 **Two: delete your training orgs, or keep them deliberately.** The scratch orgs delete themselves
 after 30 days. The two Developer Edition orgs holding a fictional solar company are fine to keep as a
 place to try things, and `helios-prod` stays a Dev Hub you can create scratch orgs from. If you keep
-them, delete the `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT` secrets if they are somehow
-still there, and remember the JWT certificates in your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) are real credentials to real orgs.
+them, delete the `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT` secrets, which [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) left in
+place, and remember the JWT certificates in your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) are real credentials to real orgs.
 
 **Three: keep promotion branches as the exception.** [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) had you assemble one, and this
 week put the pipeline back. On a real project the pressure runs the other way: the first subset is

@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "4a78975a30a1ff4e3692cda141afda6db9cab7d4"
+source_rev: "b1b7ea4930f0f098ba500e1a88118e77bf570cda"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -308,6 +308,13 @@ Et une chose qu'il fait et que personne n'attend la première fois :
     branche que vous avez oubliée. La branche sur laquelle vous êtes est toujours dans le coin en bas
     à gauche de VS Code.
 
+    Une fois revenu sur votre branche, VS Code peut ensuite demander *Back on `<branch>`. Merge
+    `<parent>` into it so that your next save does not commit the backpromoted metadata as your own
+    work?* Si c'est le cas, cliquez sur **Merge `<parent>`**. Votre org contient maintenant la
+    métadonnée de vos collègues, et sans ce merge votre prochain **Save / Publish** la verrait comme
+    une modification à vous et la mettrait dans votre Pull Request. La question ne vient pas quand
+    vous êtes sur la branche parente elle-même, ni quand votre branche l'a déjà.
+
 L'historique n'est pas sur votre ordinateur non plus. sfdx-hardis note ce qui a atteint votre sandbox
 dans un **commentaire Backpromotes** sur chaque Pull Request qu'il a rapatriée, pour que le
 backpromote suivant sache où commencer, depuis n'importe quelle machine et n'importe quel collègue.
@@ -351,6 +358,16 @@ le backpromote.
 **Le déploiement échoue sur un composant qui dépend d'autre chose.**
 Prenez l'ensemble complet plutôt qu'un sous-ensemble. La métadonnée a des dépendances, et une demi-
 story ne se déploie souvent pas.
+
+**Le déploiement échoue avec `You cannot deploy to a required field: Installation__c.Crew_Size__c`.**
+L'erreur vient du permission set `Helios_Delivery_Manager`, et elle veut dire que votre org est en
+avance sur `integration` : `Crew_Size__c` y est déjà obligatoire, ce que seul le [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md) fait. Cela
+suit en général un **Reset this level** quand on était allé au-delà du [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md), parce que la
+réinitialisation laissait les orgs telles quelles. Lancez **Training: Level 2 > Set up one of my
+training orgs** sur `helios-dev`, ce que **Reset this level** propose désormais de faire pour vous,
+puis relancez le backpromote. Ou décochez `Helios_Delivery_Manager` dans la liste de l'étape 4 et
+prenez le reste, en sachant que l'accès de Romain au champ sur ce permission set reste alors hors de
+votre org.
 
 **Votre propre travail en cours a été écrasé.**
 Il était dans la liste et vous l'avez pris. Reconstruisez-le dans l'org : il est toujours dans votre

@@ -14,6 +14,7 @@ for the `Helios Delivery` app, and every one of them is a lab in this course.
 | [US-017](https://sfdx-hardis-training.github.io/BACKLOG/US-017/) | 2 | Record who signed an installation off | Romain Panda | `training/mate-us-017-sign-off` |
 | [US-018](https://sfdx-hardis-training.github.io/BACKLOG/US-018/) | 2 | Cap the crew size a planner can assign | Mariia Pyvovarchuk | `training/mate-us-018-crew-capacity` |
 | [US-019](https://sfdx-hardis-training.github.io/BACKLOG/US-019/) | 2 | Generate a quote PDF from an opportunity | Romain Panda | `training/mate-us-019-quote-pdf` |
+| [US-050](https://sfdx-hardis-training.github.io/BACKLOG/US-050/) | 3 | Configure the pipeline up to production | You | `features/US-050-pipeline-up-to-production` |
 | [US-052](https://sfdx-hardis-training.github.io/BACKLOG/US-052/) | 3 | The Installation layout in two columns | Mariia Pyvovarchuk | `training/mate-us-052-layout-columns` |
 | [US-020](https://sfdx-hardis-training.github.io/BACKLOG/US-020/) | 3 | Refactor InstallationScheduler | Mariia Pyvovarchuk | `training/mate-us-020-apex-refactor` |
 | [US-021](https://sfdx-hardis-training.github.io/BACKLOG/US-021/) | 2 | Warn the planner when a crew is too small | You | `features/US-021-crew-size-warning` |
@@ -113,6 +114,22 @@ Acceptance criteria:
 Acceptance criteria:
 
 - The permission is granted to managers
+
+<a id="US-050"></a>
+
+### US-050 - Configure the pipeline up to production
+
+**Owner**: You  
+**Branch**: `features/US-050-pipeline-up-to-production`  
+**Lab**: 3.1
+
+> As the release manager, I want the pipeline to go through preprod to production, with both orgs authenticated by JWT, so that every release reaches production the same way.
+
+Acceptance criteria:
+
+- preprod and main each name their org in their branch configuration
+- preprod and main authenticate with an External Client App and JWT
+- Contributors can start a hotfix from preprod
 
 <a id="US-052"></a>
 

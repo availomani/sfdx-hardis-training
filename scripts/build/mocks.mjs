@@ -274,14 +274,18 @@ const overlay = {
         description: usernameFor(o.alias)
       })),
     // What Add/Configure Org (hardis:project:configure:auth) is answered with in
-    // Lab 3.1: the integration branch and its scratch org, among the four major
-    // branches a Level 3 fork has
+    // Lab 3.1: the preprod branch and its Developer Edition org, among the four
+    // major branches a Level 3 fork has. integration and uat keep their auth URL
+    // secrets in the lab, so preprod is the first org it walks through
     authConfig: {
-      branchName: "integration",
-      orgAlias: "helios-integration",
+      branchName: "preprod",
+      orgAlias: "helios-preprod",
       remoteBranches: ["integration", "main", "preprod", "uat"],
-      mergeTargets: ["uat"],
-      contactEmail: "release.manager@heliostraining.invalid"
+      mergeTargets: ["main"],
+      contactEmail: "release.manager@heliostraining.invalid",
+      // helios-preprod is connected in Level 3 only, so the org lists of the
+      // other screens do not carry it: the configured org comes with the scenario
+      org: orgFor(u.orgs.find((o) => o.alias === "helios-preprod"), u.orgs.length)
     },
     // Where this project records the manual steps a deployment needs: as
     // deployment actions (manualActionsMode: sfdxHardis in the project

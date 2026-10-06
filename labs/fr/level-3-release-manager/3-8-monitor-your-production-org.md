@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "1dd2c5e890436249b27ed6079bbeaf2c97a835ff"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -109,9 +109,8 @@ La commande tourne dans un panneau et pose ses questions une à une, comme au [L
 1. **Did you configure the sfdx-hardis monitoring pre-requisites on your Git server ?** La deuxième
    réponse, *ℹ️ No, bring me to the documentation!*, ouvre cette page et met fin à la commande :
    lisez-la donc d'abord si ce n'est pas fait
-2. **Please select or connect to the org that you want to monitor** - `helios-prod`. Comme au
-   [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), en faire l'org par défaut relance la commande : rechoisissez-la donc dans le nouveau
-   panneau
+2. **Please select or connect to the org that you want to monitor** - `helios-prod`. La commande en fait votre org par défaut. Si elle vous redemande l'org,
+   choisissez à nouveau `helios-prod`
 3. **What is the address of the CI/CD repository that deploys to this org? (optional)** - l'adresse
    de votre fork, `https://github.com/<your-handle>/sfdx-hardis-training`. C'est le miroir de
    l'étape 8 : le repository de monitoring retient où vit la pipeline, pour qu'un agent de code ouvert
@@ -193,9 +192,10 @@ quelques jours, avec un utilisateur dedans et une application que vous avez dép
 ne l'alimente avec les trouvailles qu'a une org de deux ans, et un rapport qui revient presque propre
 n'est pas un rapport cassé.
 
-Presque propre, pas propre : la première exécution est rouge. Le job **Monitoring** échoue sur
-**Detect if org limits are close to be reached**, avec une limite à 100 % : `ActiveScratchOrgs`,
-3 sur 3. `helios-prod` est aussi votre Dev Hub, et vos trois scratch orgs de formation occupent tous
+Presque propre, pas propre. L'exécution, elle, est verte, et cela ne dit rien de l'org : un job de
+monitoring qui est allé jusqu'au bout reste vert même quand il a trouvé des problèmes, et ne passe
+au rouge que si le job lui-même n'a pas pu s'exécuter. Les trouvailles sont dans le rapport. **Detect if
+org limits are close to be reached** a une limite à 100 % : `ActiveScratchOrgs`, 3 sur 3. `helios-prod` est aussi votre Dev Hub, et vos trois scratch orgs de formation occupent tous
 ses emplacements. C'est une vraie trouvaille, le genre pour lequel un contrôle de limites existe :
 sur un vrai Dev Hub, cela veut dire que personne dans l'équipe ne peut créer de scratch org tant
 qu'une autre n'a pas expiré.
@@ -326,8 +326,8 @@ Documentation des commandes : [hardis:org:configure:monitoring](https://sfdx-har
 ## Ce que vous devez voir
 
 - Un second repository, créé par vous, avec une exécution du workflow **Org Monitoring sfdx-hardis** : la
-  sauvegarde, les tests Apex et MegaLinter au vert, et le job Monitoring au rouge sur
-  `ActiveScratchOrgs`
+  sauvegarde, les tests Apex, MegaLinter et le job Monitoring tous au vert
+- La limite `ActiveScratchOrgs` à 100 % dans le rapport, ce que l'exécution verte ne vous a pas dit
 - Une sauvegarde complète des sources de `helios-prod` commitée dedans
 - Un premier rapport que vous avez lu et trié, aussi court soit-il
 - Un canal de notification configuré

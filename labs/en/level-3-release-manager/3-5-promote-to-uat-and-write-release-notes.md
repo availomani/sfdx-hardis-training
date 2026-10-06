@@ -45,7 +45,7 @@ deploys to has real testers in it.
 
 - [ ] [Lab 3.4](3-4-merge-colliding-pull-requests.md) finished: US-018 and US-019 merged into `integration`
 - [ ] `helios-uat` connected: the scratch org Level 1 created, configured as the `uat` org since then
-- [ ] JWT authentication working for `uat` ([Lab 3.1](3-1-configure-the-pipeline-up-to-production.md))
+- [ ] `SFDX_AUTH_URL_UAT` still in your fork: `uat` keeps logging in with it, as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) explains
 
 ## Steps
 
@@ -363,8 +363,9 @@ next actions**. Create the same group in `helios-preprod` and `helios-prod` befo
 in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
 
 **The check fails with authentication errors for uat.**
-[Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) for the `uat` branch: the secrets, and the pre-authorisation of the External Client App in
-`helios-uat`.
+`SFDX_AUTH_URL_UAT` is missing or out of date, often because `helios-uat` expired and was rebuilt.
+**Training: Level 3 > Set up my training environment** rebuilds what expired and writes the secret
+again. Then **Re-run all jobs** on the check.
 
 **The deployment fails on something that worked in integration.**
 The orgs differ. Usually UAT is missing a feature, a licence, or a component somebody deleted there

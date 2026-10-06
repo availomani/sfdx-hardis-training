@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "9f4eae623f9e0d447b4576a156064f2db73ad5de"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/welcome-custom-menu-3
@@ -39,7 +39,7 @@ qu'on ne peut pas automatiser. Une revue après le merge est un audit : la modif
 
 ## Avant de commencer
 
-- [ ] [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) terminé : authentification JWT sur les quatre orgs
+- [ ] [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) terminé : quatre branches majeures, et l'authentification JWT sur `preprod` et `main`
 - [ ] Une copie de travail propre
 
 ## Les étapes
@@ -215,7 +215,8 @@ Le scénario a déjà tourné : chacun sert une fois. La Pull Request est dans v
 mergée.
 
 **Les contrôles ne tournent jamais après la correction de Mariia.**
-Actions est désactivé, ou les secrets JWT manquent pour `integration`. [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md).
+Actions est désactivé, ou `SFDX_AUTH_URL_INTEGRATION`, le secret avec lequel `integration` se
+connecte toujours, manque. **Training: Level 3 > Set up my training environment** le réécrit.
 
 **Vous avez mergé avant la correction.**
 Alors `Total_Capacity_kW__c` n'est plus sur la présentation de page dans `integration`. Lancez le

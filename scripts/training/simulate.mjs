@@ -241,8 +241,16 @@ export default async function simulate(args) {
   ok(`${applied.length} file(s) written`);
 
   title("3 of 4  Committing as your teammate");
-  run("git", ["add", "-A"]);
-  const hasChanges = gitOut(["status", "--porcelain"]) !== "";
+  // Only the files the scenario wrote or deleted, never the whole working tree.
+  // The Salesforce extensions write files of their own while this runs, like
+  // .vscode/settings.json and lwc/jsconfig.json: "add everything" put them in
+  // the teammate commit, MegaLinter reformatted jsconfig.json and pushed a fix
+  // on top, the Pull Request moved past the commit pushed here, and the merge
+  // further down refused it. Asked of the index rather than of the working tree
+  // for the same reason: a file somebody else wrote is not a change of the
+  // teammate's.
+  stageOnly(applied);
+  const hasChanges = run("git", ["diff", "--cached", "--quiet"], { quiet: true }).code !== 0;
   if (hasChanges) {
     // The message goes through a file: on Windows the shell stops an argument at
     // its first line break, and the body would be lost
@@ -358,7 +366,8 @@ export default async function simulate(args) {
     } else {
       const numbered = writeNumberedFiles(scenario, prNumber, movedFromPr);
       numbered.forEach((f) => info(c.dim(`    ${f}`)));
-      run("git", ["add", "-A"]);
+      // The same rule as the first commit: the files of the scenario, nothing else
+      stageOnly(numbered);
       const messageFile = path.join(ROOT, ".training-commit-message.txt");
       fs.writeFileSync(messageFile, `${scenario.prTitle}: deployment actions of #${prNumber}`, "utf8");
       const commit = run("git", [
@@ -401,6 +410,28 @@ export default async function simulate(args) {
 
   title("Done");
   info(`  ${merged && scenario.nextStepMerged ? scenario.nextStepMerged : scenario.nextStep}`);
+}
+
+/**
+ * Stages the files a scenario reported, and nothing else.
+ *
+ * applyFiles and writePlanned label what they did, "(patched)" or "(deleted)",
+ * for the lines printed to the learner; the path is what comes before. Every
+ * path is relative to the root of the repository, with forward slashes, which
+ * is what git takes as a pathspec. A deleted file is staged as a deletion by
+ * the same "add -A" when it was tracked. A path that is neither on disk nor
+ * tracked, an untracked file the scenario deleted, is left out: git refuses the
+ * whole command on a pathspec that matches nothing, and nothing would be staged.
+ * Nothing is run on an empty list either: "git add -A --" with no path at all
+ * stages the whole working tree, which is the very thing this exists to avoid.
+ */
+function stageOnly(reported) {
+  const paths = [...new Set(reported.map((line) => line.replace(/ \((patched|deleted)\)$/, "")))].filter(
+    (p) => fs.existsSync(path.join(ROOT, p)) || gitOut(["ls-files", "--", p]) !== ""
+  );
+  if (paths.length > 0) {
+    run("git", ["add", "-A", "--", ...paths]);
+  }
 }
 
 /**
@@ -456,7 +487,39 @@ async function mergeWhenGreen(slug, prUrl, pushed) {
   }
 
   ok("All checks passed");
-  const merge = run("gh", ["pr", "merge", prUrl, "--repo", slug, "--squash", "--match-head-commit", pushed], { capture: true, quiet: true });
+  // MegaLinter commits its own formatting fixes onto the branch of a Pull
+  // Request, and the head then moves past the commit pushed here. Merging with
+  // --match-head-commit is what stops anything somebody else pushed from being
+  // merged unseen, so the new head is taken only when every commit on top is
+  // that fix, committed by the GitHub Actions bot. Its checks are waited for again, once:
+  // a head that moves a second time is refused like anything else.
+  let head = pushed;
+  const fixedHead = linterFixHead(slug, prUrl, pushed);
+  if (fixedHead) {
+    info("  MegaLinter pushed a formatting fix onto the Pull Request, and the checks run again on it.");
+    for (let attempt = 0; attempt < 12 && view().headRefOid !== fixedHead; attempt++) {
+      await wait(5000);
+    }
+    const again = await waitForPullRequestChecks(slug, prUrl, { timeoutMs: 20 * 60 * 1000 });
+    if (view().state === "MERGED") {
+      return merged();
+    }
+    // No check on the fix means nothing proved it: never merge a commit no check ran on
+    if (again.none) {
+      warn("No check ran on the fix of MegaLinter, so the Pull Request was not merged.");
+      info(`  Merge it yourself on GitHub once its checks are green: ${c.cyan(prUrl)}`);
+      return false;
+    }
+    if (!again.ok) {
+      const what = again.timedOut ? "did not finish within 20 minutes" : "failed";
+      warn(`${again.failed.map((check) => check.name).join(" and ")} ${what} on the fix of MegaLinter, so the Pull Request was not merged.`);
+      info(`  Open it to read why: ${c.cyan(prUrl)}`);
+      return false;
+    }
+    ok("All checks passed on the fix of MegaLinter");
+    head = fixedHead;
+  }
+  const merge = run("gh", ["pr", "merge", prUrl, "--repo", slug, "--squash", "--match-head-commit", head], { capture: true, quiet: true });
   if (merge.code === 0) {
     return merged();
   }
@@ -477,6 +540,48 @@ async function mergeWhenGreen(slug, prUrl, pushed) {
   }
   info(`  ${c.cyan(prUrl)}`);
   return false;
+}
+
+/** The headline of the commit MegaLinter pushes, commit_message in .github/workflows/megalinter.yml. */
+const LINTER_FIX_HEADLINE = "chore(megalinter): apply linters fixes";
+
+/**
+ * The new head of the Pull Request when everything after `pushed` is the
+ * formatting fix MegaLinter commits as the GitHub Actions bot, or null: when the
+ * head did not move, when `pushed` is not in the commits of the Pull Request any
+ * more (a force push), or when any newer commit is somebody else's.
+ */
+function linterFixHead(slug, prUrl, pushed) {
+  // The REST list of the Pull Request commits, because it carries the committer: the
+  // auto-commit action of the MegaLinter workflow commits as github-actions[bot] but
+  // keeps the learner who triggered the run as the author. Measured on a learner fork.
+  const number = (prUrl.match(/\/pull\/(\d+)/) || [])[1];
+  if (!number) {
+    return null;
+  }
+  const res = run("gh", ["api", `repos/${slug}/pulls/${number}/commits?per_page=100`], { capture: true, quiet: true });
+  let commits = [];
+  try {
+    commits = JSON.parse(res.stdout || "[]");
+  } catch {
+    return null;
+  }
+  if (!Array.isArray(commits) || commits.length === 0) {
+    return null;
+  }
+  const head = commits[commits.length - 1].sha;
+  if (head === pushed) {
+    return null;
+  }
+  const at = commits.findIndex((commit) => commit.sha === pushed);
+  const newer = at < 0 ? [] : commits.slice(at + 1);
+  const committedByTheBot = (commit) =>
+    /^github-actions(\[bot\])?$/i.test(commit.committer?.login || "") ||
+    /^github-actions(\[bot\])?$/i.test(commit.commit?.committer?.name || "");
+  const headline = (commit) => (commit.commit?.message || "").split(/\r?\n/)[0];
+  const onlyFixes =
+    newer.length > 0 && newer.every((commit) => headline(commit) === LINTER_FIX_HEADLINE && committedByTheBot(commit));
+  return onlyFixes ? head : null;
 }
 
 /**

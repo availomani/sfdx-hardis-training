@@ -4,7 +4,7 @@ description: "Formation Salesforce DevOps gratuite et pratique pour admins et d�
 id: l1-home
 level: 1
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 ---
 
 # Niveau 1 - Contributeur Salesforce DevOps, les bases
@@ -63,15 +63,15 @@ seul menu. Ouvrez la **Welcome page**, et sous **CUSTOM MENUS** cliquez sur la c
 
 Elles sont sept, et les labs les appellent par ces noms :
 
-| Commande                           | Ce qu'elle fait                                                                                       |
-|------------------------------------|-------------------------------------------------------------------------------------------------------|
-| **Set up my training environment** | Forke le repository, crée vos scratch orgs avec l'application, câble la pipeline                      |
-| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                          |
-| **Check my work**                  | Vérifie le lab que vous venez de terminer                                                             |
-| **Trigger my workflows**           | Démarre les contrôles de votre Pull Request quand Actions était coupé sur le fork                     |
-| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                             |
-| **Update my course**               | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration` |
-| **Reset this level**               | Remet votre repository au début du Niveau 1                                                           |
+| Commande                           | Ce qu'elle fait                                                                                                                                          |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Set up my training environment** | Forke le repository, crée vos scratch orgs avec l'application, câble la pipeline                                                                         |
+| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                                                                             |
+| **Check my work**                  | Vérifie le lab que vous venez de terminer                                                                                                                |
+| **Trigger my workflows**           | Démarre les contrôles de votre Pull Request quand Actions était coupé sur le fork                                                                        |
+| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                                                                                |
+| **Update my course**               | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration`                                                    |
+| **Reset this level**               | Recommence le Niveau 1 : `integration`, et si vous le voulez les branches des labs et les orgs ([Recommencer le cours](../help.md#recommencer-le-cours)) |
 
 Il y a un menu par niveau, et chacun ne contient que ce dont ce niveau a besoin : rien de ce que vous
 avez sous les yeux ne concerne un lab que vous n'avez pas encore atteint.
@@ -94,8 +94,10 @@ Là où une commande apparaît, c'est dans un bloc **Sous le capot**, qui expliq
 fait. Vous n'avez jamais à la retaper.
 
 **Vous pouvez toujours repartir de zéro.** Si un lab tourne mal, Welcome page >
-**Training: Level 1** > **Reset this level** remet votre repository au début du niveau. Un lab raté ne met
-pas fin à votre formation.
+**Training: Level 1** > **Reset this level** remet `integration` au début du niveau, et propose de
+nettoyer les branches de ses labs et de remettre vos orgs en place. Un lab raté ne met pas fin à
+votre formation : [Recommencer le cours](../help.md#recommencer-le-cours) dit ce que fait chaque
+réponse.
 
 ## Si vous êtes bloqué
 

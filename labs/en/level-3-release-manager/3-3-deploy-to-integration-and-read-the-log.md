@@ -62,8 +62,9 @@ colour means. Click the marker to open the run.
 
 An sfdx-hardis deployment log has the same shape every time:
 
-**One: authentication.** Which org, which mechanism. After [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) this says JWT. If it ever says
-something else, something changed that you did not change.
+**One: authentication.** Which org, which mechanism. On `integration` it says auth URL: the
+shortcut of Level 1, which [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) left in place. On `preprod` and `main` it says JWT. If it ever
+says something else, something changed that you did not change.
 
 **Two: what to deploy.** The package it computed, and where from. This is the interesting part and
 step 3 is about it.

@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "b1b7ea4930f0f098ba500e1a88118e77bf570cda"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -217,7 +217,7 @@ fois. Parcourez-la sur le projet où vous travaillez réellement et comptez ce q
 suppriment toutes seules au bout de 30 jours. Les deux orgs Developer Edition qui contiennent une
 entreprise solaire fictive peuvent très bien rester comme terrain d'essai, et `helios-prod` reste un
 Dev Hub d'où créer des scratch orgs. Si vous les gardez, supprimez les secrets
-`SFDX_AUTH_URL_INTEGRATION` et `SFDX_AUTH_URL_UAT` s'ils traînent encore, et souvenez-vous que les
+`SFDX_AUTH_URL_INTEGRATION` et `SFDX_AUTH_URL_UAT`, que le [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) a laissés en place, et souvenez-vous que les
 certificats JWT de votre fork (votre copie personnelle du repository du cours sur GitHub, par
 exemple `github.com/my-username/sfdx-hardis-training`) sont de vrais identifiants vers de vraies
 orgs.

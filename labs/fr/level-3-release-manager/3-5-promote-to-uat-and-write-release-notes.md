@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "044a8eacb552ef9251cdc58fd3e6a95fde210d1f"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -46,7 +46,7 @@ tôt par des personnes différentes, et l'org dans laquelle elle déploie contie
 
 - [ ] [Lab 3.4](3-4-merge-colliding-pull-requests.md) terminé : US-018 et US-019 mergées dans `integration`
 - [ ] `helios-uat` connectée : la scratch org créée au Niveau 1, configurée comme org de `uat` depuis
-- [ ] Authentification JWT fonctionnelle pour `uat` ([Lab 3.1](3-1-configure-the-pipeline-up-to-production.md))
+- [ ] `SFDX_AUTH_URL_UAT` toujours dans votre fork : `uat` continue de se connecter avec, comme l'explique le [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 
 ## Les étapes
 
@@ -383,8 +383,9 @@ actions**. Créez le même groupe dans `helios-preprod` et `helios-prod` avant l
 [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
 
 **Le contrôle échoue avec des erreurs d'authentification pour uat.**
-[Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) pour la branche `uat` : les secrets, et la pré-autorisation de l'External Client App dans
-`helios-uat`.
+`SFDX_AUTH_URL_UAT` manque ou n'est plus à jour, souvent parce que `helios-uat` a expiré et a été
+reconstruite. **Training: Level 3 > Set up my training environment** reconstruit ce qui a expiré et
+réécrit le secret. Puis **Re-run all jobs** sur le contrôle.
 
 **Le déploiement échoue sur quelque chose qui marchait en integration.**
 Les orgs diffèrent. En général il manque en UAT une fonctionnalité, une licence, ou un composant que

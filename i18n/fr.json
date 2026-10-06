@@ -222,6 +222,15 @@
         "story": "En tant que commercial, je veux un bouton qui génère le PDF du devis, afin d'arrêter de le refaire dans un tableur.",
         "acceptance": ["L'autorisation est donnée aux managers"]
       },
+      "US-050": {
+        "title": "Configurer la pipeline jusqu'à la production",
+        "story": "En tant que release manager, je veux que la pipeline passe par preprod jusqu'à la production, avec les deux orgs authentifiées par JWT, afin que chaque release arrive en production de la même façon.",
+        "acceptance": [
+          "preprod et main nomment chacune leur org dans leur configuration de branch",
+          "preprod et main s'authentifient avec une External Client App et JWT",
+          "Les contributeurs peuvent démarrer un hotfix depuis preprod"
+        ]
+      },
       "US-052": {
         "title": "La présentation de page Installation sur deux colonnes",
         "story": "En tant que planificateur, je veux que la section Information d'une installation utilise ses deux colonnes, afin de voir toute l'installation sans faire défiler.",

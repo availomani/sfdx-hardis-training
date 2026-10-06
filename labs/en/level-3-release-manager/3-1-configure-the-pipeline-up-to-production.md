@@ -1,7 +1,7 @@
 ---
 id: lab-3-1
 title: "Lab 3.1 - Configure the CI/CD pipeline up to production"
-description: "Extend a two-stage Salesforce pipeline to production: branches, protections, and each org configured and authenticated with JWT by Add/Configure Org."
+description: "Extend a two-stage Salesforce pipeline to production: branches, protections, and preprod and production authenticated with JWT by Add/Configure Org."
 level: 3
 lab: 1
 lang: en
@@ -11,20 +11,21 @@ screenshots:
   - annotated/web/github-new-branch
   - annotated/web/github-branch-rules
   - annotated/web/github-branch-rule
+  - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-settings-menu--add-org
   - annotated/vscode/configure-auth-branch--branch-question
   - annotated/vscode/configure-auth-variables--secrets
   - annotated/web/github-secrets-actions
   - annotated/web/github-secret-new
+  - annotated/web/github-secret-new--key
   - annotated/vscode/pipeline-config--target-branches
   - annotated/vscode/pipeline-config-user-stories--target-branches
-  - annotated/vscode/pipeline-config-deployment--deployment-tab
   - annotated/vscode/pipeline-config-danger--promotion-branches
   - annotated/vscode/pipeline-cards--save-publish
   - annotated/vscode/work-save-completed
   - annotated/vscode/devops-pipeline-level3--four-stages
 depends_on:
-  commands: [hardis:project:configure:auth]
+  commands: [hardis:project:configure:auth, hardis:work:new]
   flags: []
   config: [availableTargetBranches, availableTargetBranchesLabels, productionBranch, mergeTargets, targetUsername, instanceUrl, orgAuthenticationMode, enablePromotionBranches, allowedPromotionSteps]
   panels: [pipeline, pipelineConfig, orgManager, commandExecution, promptInput]
@@ -35,11 +36,11 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~75 min
+**Time**: ~50 min
 
-**You will**: turn a two-stage pipeline into a four-stage one that reaches production, give every
-stage its org and a credential a real project can live with, and publish all of it the way every
-change reaches a major branch: through a Pull Request.
+**You will**: turn a two-stage pipeline into a four-stage one that reaches production, give the two
+new stages their org and a credential a real project can live with, and publish all of it the way
+every change reaches a major branch: through a Pull Request.
 
 ## The situation
 
@@ -55,8 +56,7 @@ which is exactly the kind of release nobody can say anything about afterwards.
 And the two stages that do exist reach their orgs through a shortcut. The CI logs into
 `helios-integration` and `helios-uat` with `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT`, two
 secrets holding long-lived OAuth refresh tokens. Level 1 told you they were an exception for
-throwaway scratch orgs. Three things are wrong with them on a real project, and somebody will ask
-you why you are spending an hour on this:
+throwaway scratch orgs. Three things are wrong with them on a real project:
 
 1. **They cannot be rotated.** Changing one means authenticating again, as a human, in a browser
 2. **They are bearer credentials with no scope.** Whoever reads the secret has everything that user
@@ -67,6 +67,12 @@ you why you are spending an hour on this:
 The alternative is a **JWT flow through an External Client App**: a certificate you hold, a
 pre-authorised user, no password anywhere, and revocation by deleting one app. sfdx-hardis sets it
 up for you, org by org, and writes the branch configuration while it is at it.
+
+!!! note "Two orgs here, every org on a real project"
+    On a real project, every connection the CI makes is a JWT one, `integration` and `uat`
+    included. This lab sets it up for two orgs, `helios-preprod` and `helios-prod`, because two
+    teach everything four would. `integration` and `uat` keep their Level 1 shortcut, which saves
+    you an hour of doing the same thing twice more.
 
 That is your first week. None of it is unusual: most projects start with the stages they need on day
 one, and finishing the pipeline waits until the day somebody needs to release properly.
@@ -82,7 +88,8 @@ one, and finishing the pipeline waits until the day somebody needs to release pr
       first one, and connected in **Orgs Manager** with the alias `helios-preprod`
 - [ ] Both seeded: Welcome page > **Training: Level 3** > **Set up one of my training orgs**, once
       for `helios-preprod` and once for `helios-prod`
-- [ ] `helios-integration` and `helios-uat` connected in **Orgs Manager**, as since Level 1
+- [ ] `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT` still in your fork, as since Level 1: this
+      lab leaves them alone
 - [ ] On `integration` in VS Code, with nothing waiting in the **Source Control** panel
 
 !!! note "The CI, not your workstation"
@@ -195,11 +202,37 @@ branches, branch policies, merge checks.
 
 </details>
 
-### 4. Configure integration and its org: Add/Configure Org
+### 4. Start a User Story for the configuration
+
+Every file this lab writes ends up on `integration`, and `integration` takes nothing but Pull
+Requests: the protection you just looked at is what refuses the rest. So before writing a single
+file, get onto a branch of your own. The configuration is a change like any other, it travels up
+the pipeline with the rest of the work, and it gets a User Story like any other.
+
+In the **DevOps Pipeline** panel, under **Project Contribution Workflow** **(1)**, click
+**New User Story** **(2)**, as in [Lab 1.3](../level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch.md).
+
+![The New User Story card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+
+1. The first line reads **Automatically selected target branch is integration**. Right: `preprod`
+   only joins that list in step 9
+2. **What type of User Story do you want to create?** - **Feature: a new capability or an
+   improvement**
+3. **What is the name of your new User Story?** - `US-050-pipeline-up-to-production`. The course
+   checks User Story names against the `US-nnn` pattern, and US-050 is the backlog story for this
+   work
+4. **Which Salesforce org do you want to work in?** - the last answer, **🤠 I'm hardcore, I don't
+   need an org !**, the one with no org at all. Nothing in this lab is built in an org: you edit the
+   project's files, and the commands write into the orgs themselves
+
+The command creates `features/US-050-pipeline-up-to-production` from `integration` and checks it
+out. Everything the next steps write lands there.
+
+### 5. Configure preprod and its org: Add/Configure Org
 
 Now the orgs. One command does it all for a branch: it writes the branch configuration, the org it
 deploys to and the branch it merges into, creates the credential the CI logs in with, and deploys the
-External Client App into the org. You run it once per major branch, starting with `integration`.
+External Client App into the org. You run it once per branch, starting with `preprod`.
 
 In the **DevOps Pipeline** panel, click the gear **(1)** at the top right and choose
 **Add/Configure Org** **(2)**.
@@ -207,27 +240,26 @@ In the **DevOps Pipeline** panel, click the gear **(1)** at the top right and ch
 ![The gear menu of the DevOps Pipeline panel, open on Add/Configure Org](../../_assets/annotated/vscode/pipeline-settings-menu--add-org.png)
 
 The command runs in a panel and asks one question at a time **(1)**, with the answers to click below
-it **(2)**. Here it is at the second question, with `helios-integration` already chosen.
+it **(2)**. Here it is at the second question, with `helios-preprod` already chosen.
 
 ![The Add/Configure Org command asking which git branch to configure](../../_assets/annotated/vscode/configure-auth-branch--branch-question.png)
 
 It asks a dozen questions, in this order:
 
 1. **Please select or login into the org you want to configure the SF CLI Authentication** -
-   `helios-integration`. The command makes it your default org and, because that changed, VS Code
-   starts the same command again. Pick `helios-integration` a second time in the new panel and carry
-   on from there
+   `helios-preprod`. The command makes it your default org. If it asks for the org a second time,
+   pick `helios-preprod` again
 2. **What is the name of the git branch you want to configure Automated CI/CD deployments from?** -
-   `integration`. The list is built from the branches of your fork, and branches whose name contains
-   a `/` are left out, which is why no feature branch is offered
-3. **What is the base URL or domain or the org you want to connect to, as integration related
-   org ?** Pick **🧪 Sandbox or Scratch org (test.salesforce.com)**: `helios-integration` is a
-   scratch org, and a scratch org logs in like a sandbox. The highlighted answer is the one above
-   it, **📝 Custom login URL**, so read this list rather than pressing Enter
-4. **What are the target git branches that integration will be able to merge in?** - `uat`. This is
+   `preprod`. The list is built from the branches of your fork, and branches whose name contains
+   a `/` are left out, which is why your User Story branch is not offered
+3. **What is the base URL or domain or the org you want to connect to, as preprod related
+   org ?** Pick **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)**:
+   `helios-preprod` is a Developer Edition org, which logs in the way production does. Only scratch
+   orgs and sandboxes use `test.salesforce.com`. Read the list rather than pressing Enter
+4. **What are the target git branches that preprod will be able to merge in?** - `main`. This is
    the merge path of step 1, written as `mergeTargets`
 5. **What is the Salesforce username that will be used for deployments by CI server ?** - the
-   `helios-integration` username, which it offers you already filled in
+   `helios-preprod` username, which it offers you already filled in
 6. **How do you want to provide the SSL certificate?** - **Generate a self-signed certificate
    (default)**. The other answer, CA-signed, generates nothing and only prints instructions
 7. **Do you want sfdx-hardis to configure the SF CLI External Client App or Connected App on your
@@ -235,13 +267,14 @@ It asks a dozen questions, in this order:
 8. **Which JWT certificate storage mode do you want?** - **ClientId + decryption key as secret
    variables + encrypted certificate as file (default)**. The other mode puts the certificate itself
    in a third secret and deletes the file
-9. **Please confirm when variables have been set.** This one is a stop, and step 5 is what it is
+9. **Please confirm when variables have been set.** This one is a stop, and step 6 is what it is
    waiting for. Do not click **Validate** yet
 10. Then, after you confirm: the **name** of the External Client App, a **contact email**, and the
-    **profile to pre-authorise** (`System Administrator`). The list shows the profile names in the
-    language of the org's user, so an org set to French lists `Administrateur système` instead
+    **profile to pre-authorise**. Take **System Administrator**: it is already selected, so keep it.
+    The list shows the profile names in the language of the org's user, so an org set to French
+    lists `Administrateur système` instead
 
-### 5. Store the two secrets, then let the command finish
+### 6. Store the two secrets, then let the command finish
 
 Just above question 9 the panel prints the two values the CI needs **(2)**, each with a copy button.
 Nothing prints them again, so do not close the panel. The panel keeps every question you answered
@@ -258,52 +291,58 @@ The page lists the **names** of the secrets the repository holds and never their
 Nothing, not even GitHub, can show you a stored value again. That is the whole reason the panel asks
 you not to close it.
 
+| Name                      | Value                                |
+|---------------------------|--------------------------------------|
+| `SFDX_CLIENT_ID_PREPROD`  | the consumer key the command printed |
+| `SFDX_CLIENT_KEY_PREPROD` | the passphrase the command printed   |
+
 Each secret is one form: the **Name (1)**, the **Secret (2)** pasted from the panel, then **Add
-secret (3)**. Do it twice:
+secret (3)**. The first one is `SFDX_CLIENT_ID_PREPROD`, with the consumer key:
 
 ![The New secret form, with the name and the value copied from the panel](../../_assets/annotated/web/github-secret-new.png)
 
-| Name                          | Value                                |
-|-------------------------------|--------------------------------------|
-| `SFDX_CLIENT_ID_INTEGRATION`  | the consumer key the command printed |
-| `SFDX_CLIENT_KEY_INTEGRATION` | the passphrase the command printed   |
+Then the second one. Click **New repository secret** again, and fill the same form with
+`SFDX_CLIENT_KEY_PREPROD` and the passphrase. It is the one people forget, and without it the CI
+has a key it cannot open:
 
-The suffix is **the branch name in upper case**. That is the whole convention, and it is why the
-names are not arbitrary.
+![The New secret form filled with SFDX_CLIENT_KEY_PREPROD and the passphrase copied from the panel](../../_assets/annotated/web/github-secret-new--key.png)
+
+Back on the list, both names are there. The suffix is **the branch name in upper case**. That is
+the whole convention, and it is why the names are not arbitrary.
 
 !!! note "The orange warning about your pipeline YAML"
     Under the two values, the panel warns that on GitHub a secret also has to be passed to the job
     in `.github/workflows/*.yml`. It is right, and it is the step people forget: a secret GitHub
     holds and the workflow never reads is a secret the job does not have. This course's workflows
-    already pass all eight, `SFDX_CLIENT_ID_*` and `SFDX_CLIENT_KEY_*`, for the four branches. Open
-    `.github/workflows/process-deploy.yml` and read its `env:` block once, because on your own
-    project that block is yours to write.
+    already pass all eight, `SFDX_CLIENT_ID_*` and `SFDX_CLIENT_KEY_*` for the four branches, and
+    this lab fills four of them. Open `.github/workflows/process-deploy.yml` and read its `env:`
+    block once, because on your own project that block is yours to write.
 
 Now click **Validate** on question 9, answer the last three questions, and let the command create
 the app.
 
 What it wrote, and where:
 
-| What                              | Where                                                                   | What it is                                                     |
-|-----------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------------|
-| Branch configuration              | `config/branches/.sfdx-hardis.integration.yml`                          | `targetUsername`, `instanceUrl` and `mergeTargets`             |
-| An encrypted private key          | `config/branches/.jwt/integration.key`                                  | The credential itself, meant to be committed                   |
-| A certificate                     | `integration.crt` in your home directory, deleted after the app deploys | What is uploaded into the org                                  |
-| An External Client App definition | deployed into the org by the command                                    | What Salesforce authenticates against                          |
-| Two values to store as secrets    | printed in the command panel                                            | `SFDX_CLIENT_ID_INTEGRATION` and `SFDX_CLIENT_KEY_INTEGRATION` |
+| What                              | Where                                                               | What it is                                             |
+|-----------------------------------|---------------------------------------------------------------------|--------------------------------------------------------|
+| Branch configuration              | `config/branches/.sfdx-hardis.preprod.yml`                          | `targetUsername`, `instanceUrl` and `mergeTargets`     |
+| An encrypted private key          | `config/branches/.jwt/preprod.key`                                  | The credential itself, meant to be committed           |
+| A certificate                     | `preprod.crt` in your home directory, deleted after the app deploys | What is uploaded into the org                          |
+| An External Client App definition | deployed into the org by the command                                | What Salesforce authenticates against                  |
+| Two values to store as secrets    | printed in the command panel                                        | `SFDX_CLIENT_ID_PREPROD` and `SFDX_CLIENT_KEY_PREPROD` |
 
 The private key is **encrypted**, with a passphrase the command generates at random and that only
 your secret holds. The repository alone is not enough to authenticate, which is what makes
 committing the key acceptable.
 
-### 6. Check the authorisation it did for you
+### 7. Check the authorisation it did for you
 
 The step everybody warns you about, pre-authorising the app, is the one the command already did:
 the External Client App it deploys carries `Admin approved users are pre-authorized` and the profile
 you named at the last question. Look at it once, so you know where it is when it matters.
 
-In `helios-integration`: **Setup > External Client App Manager**, open the app, whose name defaulted
-to `sfdxhardisintegration`, then **Policies**. Permitted Users reads *Admin approved users are
+In `helios-preprod`: **Setup > External Client App Manager**, open the app, whose name defaulted
+to `sfdxhardispreprod`, then **Policies**. Permitted Users reads *Admin approved users are
 pre-authorized*, and the profile is listed.
 
 It matters because of the one path where it is **not** done for you: if the app deployment fails and
@@ -311,23 +350,20 @@ the command falls back to printing manual instructions, those instructions stop 
 certificate. Follow them literally and the first CI login fails with `user hasn't approved this
 consumer`, an accurate message that reads like a bug.
 
-### 7. The same for uat, preprod and main
+### 8. The same for main
 
-Same gear, **Add/Configure Org**, three more times, one per branch and its org:
+Same gear, **Add/Configure Org**, once more, for production:
 
-| Branch    | Org              | Base URL answer                                                            | Merges into  | Secrets                                             |
-|-----------|------------------|----------------------------------------------------------------------------|--------------|-----------------------------------------------------|
-| `uat`     | `helios-uat`     | **🧪 Sandbox or Scratch org (test.salesforce.com)**                        | `preprod`    | `SFDX_CLIENT_ID_UAT`, `SFDX_CLIENT_KEY_UAT`         |
-| `preprod` | `helios-preprod` | **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)** | `main`       | `SFDX_CLIENT_ID_PREPROD`, `SFDX_CLIENT_KEY_PREPROD` |
-| `main`    | `helios-prod`    | **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)** | tick nothing | `SFDX_CLIENT_ID_MAIN`, `SFDX_CLIENT_KEY_MAIN`       |
+| Branch | Org           | Base URL answer                                                            | Merges into  | Secrets                                       |
+|--------|---------------|----------------------------------------------------------------------------|--------------|-----------------------------------------------|
+| `main` | `helios-prod` | **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)** | tick nothing | `SFDX_CLIENT_ID_MAIN`, `SFDX_CLIENT_KEY_MAIN` |
 
-Check the org twice for `main`: pointing production at the wrong org is the single most expensive
-mistake available in this lab. `preprod` and `main` are Developer Edition orgs, which log in the way
-production does, and only scratch orgs and sandboxes use `test.salesforce.com`.
+Check the org twice: pointing production at the wrong org is the single most expensive mistake
+available in this lab. And store both secrets, the ID and the key, as in step 6.
 
-Eight secrets, four External Client Apps, four keys. Tedious once, then never again.
+Four secrets, two External Client Apps, two keys. Tedious once, then never again.
 
-### 8. Let contributors start a hotfix
+### 9. Let contributors start a hotfix
 
 Contributors choose where a User Story goes from a list, and `preprod` is not in it yet.
 
@@ -363,22 +399,6 @@ reaches `uat` by promotion from `integration`, and `main` by promotion from `pre
     covers most of a configuration and not all of it is normal, and it is why the under the hood
     sections of this course keep showing you the file.
 
-### 9. Tell the panel what the project now uses
-
-`config/.sfdx-hardis.yml` carries `orgAuthenticationMode: secretsOnly`, put there when the course
-handed you the auth URL shortcut. It tells the DevOps Pipeline panel not to look for certificate key
-files, and not to warn you when there are none. There are keys now, so that line is a lie, and a
-panel told a lie stops being able to warn you.
-
-Still in **Pipeline Settings**, scope **Global Settings** **(1)**, open the **Deployment** tab
-**(2)**.
-
-![The Global Pipeline Settings panel, Deployment tab](../../_assets/annotated/vscode/pipeline-config-deployment--deployment-tab.png)
-
-**Org Authentication Mode** **(3)** reads *CI/CD secrets variables only*. Click **Edit** **(4)**,
-change it to *Encrypted certificate key files*, and **Save**. From now on the panel checks
-`config/branches/.jwt/<branch>.key` for every major branch and says so when one is missing.
-
 ### 10. Switch on promotion branches, for a week you hope not to have
 
 One more setting, on the same panel, and it is the only one in this lab you are turning on for
@@ -407,7 +427,7 @@ list is missing instead of guessing that every major branch may promote into eve
 
 **Nothing changes today.** With the feature on and no `promotion/...` branch in the repository, the
 pipeline behaves exactly as it did a minute ago. It is switched on now because of where the setting
-has to be by [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md), and the next step is about to explain why that is not obvious.
+has to be by [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md), and the block below explains why that is not obvious.
 
 <details markdown="1"><summary>Under the hood: why this cannot wait until the lab that needs it</summary>
 
@@ -430,28 +450,14 @@ Beta feature look broken when it is only late.
 
 </details>
 
-### 11. Delete the shortcut, before anything proves anything
+### 11. Publish the configuration through a Pull Request
 
-In your fork (`github.com/my-username/sfdx-hardis-training`): **Settings > Secrets and variables >
-Actions**, find `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT`, and delete both.
+Everything you did is files on your disk, on the User Story branch of step 4: the two new branch
+files, the two keys, the target branches and the two promotion branch settings. They reach
+`integration` the way every change does, through a Pull Request with green checks. The protection of
+step 3 would refuse anything else.
 
-Do it now, before you publish. The authentication step of every job looks for
-`SFDX_AUTH_URL_<BRANCH>` first and stops there when it finds one. While the two secrets exist, a
-green job proves nothing about your keys: it logged in the old way. Once they are gone, the only way
-in is the JWT one, so the next green job is the proof.
-
-### 12. Publish the configuration through a Pull Request
-
-Everything you did is files on your disk, on `integration`: the four branch files, the four keys,
-the target branches, the authentication mode and the two promotion branch settings. They reach `integration` the way every change
-does, through a Pull Request with green checks. The protection of step 3 would refuse anything else.
-
-You publish them the way you published a User Story in Level 1, with the same two buttons.
-
-**Put them on a branch of their own.** Your changes are sitting on `integration`, which accepts
-nothing directly. **Ctrl+Shift+P**, **Git: Create Branch...**, and name it
-`config/pipeline-up-to-production`. VS Code carries the uncommitted files across with you, so
-nothing is lost and nothing is on `integration` any more.
+You publish them the way you published a User Story in Level 1, with the same buttons.
 
 **Commit them.** In the **Source Control** panel, stage the configuration files and commit them as
 `Configure the pipeline up to production`, exactly as you staged metadata in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
@@ -476,18 +482,16 @@ this Pull Request **(3)**, as in [Lab 1.6](../level-1-contributor-basics/1-6-pul
     click: branch, commit, push, Pull Request. Labs 3.5 and 3.8 use it, now that you have seen what
     it stands for. A real project has no such menu entry, which is why this lab does it by hand.
 
-Open the Pull Request in your fork. Its **Simulate Deployment to Major Org** check logs into
-`helios-integration` with no auth URL secret left to use: open it from **Checks**, expand **Login &
-Process Deployment**, and look for `sf org login jwt`. That line and a green check are your key
-working.
+The check of this Pull Request logs into `helios-integration`, and it still does so with
+`SFDX_AUTH_URL_INTEGRATION`, so a green check here says nothing about your keys. They prove
+themselves the first time a Pull Request goes into `preprod` and into `main`, in
+[Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), and that lab tells you where to look.
 
 When both checks are green, merge with **Merge pull request**, not with a squash: this is not a
 feature, and the configuration has to travel to `uat`, `preprod` and `main` with the promotions,
-commit for commit ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). Then **Pull** in the **Source Control** panel: your `integration` gets
-the configuration back, merged.
-
-`uat`, `preprod` and `main` prove their keys the first time a Pull Request goes into them: the
-promotion to `uat` in [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), then `preprod` and `main` in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
+commit for commit ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). Then switch back to `integration`, from the branch name in the bottom left
+corner of VS Code, and **Pull** in the **Source Control** panel: your `integration` gets the
+configuration back, merged.
 
 <details markdown="1"><summary>Under the hood: what the JWT flow actually does</summary>
 
@@ -495,29 +499,31 @@ The command ran:
 
     sf hardis:project:configure:auth
 
-and every CI job now runs, before anything else:
+and every CI job on `preprod` or `main` now runs, before anything else:
 
     sf org login jwt \
-      --client-id $SFDX_CLIENT_ID_INTEGRATION \
+      --client-id $SFDX_CLIENT_ID_PREPROD \
       --jwt-key-file <decrypted key> \
       --username <targetUsername from the branch config> \
       --instance-url <instanceUrl from the branch config> \
-      --alias integration
+      --alias preprod
 
-The private key is decrypted at the start of the job with `SFDX_CLIENT_KEY_INTEGRATION`, used, and
+The private key is decrypted at the start of the job with `SFDX_CLIENT_KEY_PREPROD`, used, and
 never written anywhere persistent.
 
 **How the authentication hook chooses.** For a branch `<B>`, it looks for `SFDX_AUTH_URL_<B>` first,
 in that spelling and then upper-cased. If it finds one, it uses it and returns, before the JWT
 variables are even read. Only if there is none does it go on to `SFDX_CLIENT_ID_<B>` plus the key.
-That order is why step 11 comes before publishing.
+That order is why `integration` and `uat` keep working untouched: their auth URL secret is found
+first, and they have no key to look for.
 
 The JWT lookup also accepts a plain `SFDX_CLIENT_ID` with no suffix, as a last resort and with a
 warning in the log: a single unsuffixed secret left over from an old setup answers for every branch.
 
-`orgAuthenticationMode` is **not** written by this command, and no CLI command reads it. It only
-tells the VS Code pipeline panel which shape to expect: `secretsOnly` means the credentials live
-entirely in CI secrets, `encryptedCert`, the default, means every major branch has a key committed.
+`config/.sfdx-hardis.yml` still says `orgAuthenticationMode: secretsOnly`, and that is deliberate.
+That setting only tells the DevOps Pipeline panel which shape to expect, and no CLI command reads
+it: `encryptedCert` would make the panel warn about the missing keys of `integration` and `uat`,
+which on this course stay on their auth URL.
 
 <!-- command-links:start -->
 Command documentation: [hardis:project:configure:auth](https://sfdx-hardis.cloudity.com/hardis/project/configure/auth/)
@@ -535,14 +541,13 @@ Command documentation: [hardis:project:configure:auth](https://sfdx-hardis.cloud
     availableTargetBranchesLabels:
       - "The shared integration org, where every contributor merges"
       - "Hotfixes on the production version, agreed with the release manager"
-    orgAuthenticationMode: encryptedCert
     enablePromotionBranches: true
     allowedPromotionSteps:
       - source: uat
         target: preprod
 
 and `config/branches/` now holds four files, each with `targetUsername`, `instanceUrl` and
-`mergeTargets`, plus a `.jwt` folder with four encrypted keys.
+`mergeTargets`, plus a `.jwt` folder with two encrypted keys, `preprod.key` and `main.key`.
 
 **A major branch is not declared anywhere as "major".** It becomes one by having a branch
 configuration file with an org in it. That is the whole mechanism, and knowing it means you can read
@@ -563,7 +568,7 @@ Command documentation: [hardis:project:create](https://sfdx-hardis.cloudity.com/
 
 </details>
 
-### 13. Look at the diagram again
+### 12. Look at the diagram again
 
 Open the **DevOps Pipeline** panel and click **Refresh**. This is the pipeline you built:
 
@@ -583,11 +588,12 @@ the first time you click one.
 
 - Four branch protection rules in **Settings** > **Branches** of your fork, `integration`, `uat`,
   `preprod` and `main`, each requiring a Pull Request and the two checks
-- `config/branches/` on `integration` holding four files and four `.jwt/*.key` files
-- Eight secrets in your fork, none of them an auth URL
-- Your configuration Pull Request merged into `integration`, with `sf org login jwt` in the log of
-  its check
-- The DevOps Pipeline panel with four columns and no warning about a missing key
+- `config/branches/` on `integration` holding four files and two `.jwt/*.key` files, `preprod.key`
+  and `main.key`
+- Four new secrets in your fork, `SFDX_CLIENT_ID_PREPROD`, `SFDX_CLIENT_KEY_PREPROD`,
+  `SFDX_CLIENT_ID_MAIN` and `SFDX_CLIENT_KEY_MAIN`, next to the two auth URL secrets of Level 1
+- Your configuration Pull Request merged into `integration`
+- The DevOps Pipeline panel with four columns
 - `enablePromotionBranches` and one allowed step in the Danger Zone of Pipeline Settings, doing
   nothing until [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md)
 
@@ -609,15 +615,15 @@ The branch file was written for another branch name. Check `config/branches/` fo
 name has to match the branch exactly.
 
 **`user hasn't approved this consumer`.**
-Step 6: the External Client App exists but the user is not pre-authorised.
+Step 7: the External Client App exists but the user is not pre-authorised.
 
 **`invalid_grant: audience is invalid`.**
-The instance URL does not match the org type: `https://test.salesforce.com` for a scratch org,
-`https://login.salesforce.com` for a Developer Edition org. Check the branch file of the job that
-failed.
+The instance URL does not match the org type: `https://test.salesforce.com` for a scratch org or a
+sandbox, `https://login.salesforce.com` for a Developer Edition org. Check the branch file of the job
+that failed.
 
 **The job cannot decrypt the key.**
-`SFDX_CLIENT_KEY_<BRANCH>` is wrong or was copied with a trailing newline. Recreate it.
+`SFDX_CLIENT_KEY_<BRANCH>` is missing, wrong, or was copied with a trailing newline. Recreate it.
 
 **`client identifier invalid`.**
 The External Client App behind that consumer key was never created: the command stopped after it
@@ -636,13 +642,12 @@ The org list offered a `helios-` org that no longer exists, usually because a sc
 rebuilt under the same alias. See the entry above: the last answer of the list,
 **I already authenticated my org but I don't see it !**, clears that cache.
 
-**Everything passes even with the JWT secrets missing.**
-An auth URL secret is still there and still winning. Step 10.
-
-**Save / Publish has nothing to publish, or the branch could not be created.**
-You are still on `integration`: create the branch first, with **Git: Create Branch...**. If instead
-a configuration file you changed was also changed on GitHub, pull in the **Source Control** panel,
-then publish again.
+**Save / Publish is refused, and you are still on `integration`.**
+Step 4 was skipped, so the files were written on `integration`, which takes nothing directly.
+**Ctrl+Shift+P**, **Git: Create Branch...**, and name it `features/US-050-pipeline-up-to-production`:
+the new branch starts from where you are, with your commit and any file not committed yet. Then
+**Save / Publish** again. If instead a configuration file you changed was also changed on GitHub,
+pull in the **Source Control** panel, then publish again.
 
 **The check you want to require is not suggested.**
 GitHub only lists checks that reported on this repository in the last seven days. Open a Pull

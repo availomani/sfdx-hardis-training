@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "23082173246410bc567962d701d1706c73f2970c"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 ---
 
 # Aide
@@ -84,6 +84,30 @@ git branch --set-upstream-to=origin/integration integration
 
 Aucune de ces deux commandes ne modifie votre travail ni votre fork. Réclamez ensuite à nouveau :
 inutile de refaire le niveau.
+
+## Recommencer le cours
+
+Il y a deux chemins pour revenir en arrière, selon jusqu'où vous voulez remonter.
+
+**Recommencer un niveau.** Cliquez sur **Reset this level** dans le menu Training de ce niveau. Il
+ramène `integration` au début du niveau, dans votre clone et dans votre fork. Puis il propose deux
+choses de plus, et à une deuxième tentative la réponse aux deux est en général oui :
+
+- **Supprimer les branches des labs de ce niveau**, ici et dans votre fork. Supprimer une branche
+  dans votre fork ferme sa Pull Request. Cela compte plus qu'il n'y paraît : les labs donnent à
+  chaque story un nom imposé, et **New User Story** ne réutilise jamais une branche qui existe déjà,
+  ici ou dans votre fork. Si les branches de votre première tentative sont encore là, il vous
+  demande un autre nom à chaque story
+- **Remettre en place `helios-dev` et `helios-integration`**, pour que les orgs correspondent au
+  début du niveau au lieu de garder ce que vous y avez construit la première fois
+
+**Recommencer tout le cours.** Sur GitHub, ouvrez votre fork, puis **Settings**, descendez jusqu'à
+la **Danger Zone**, et cliquez sur **Delete this repository**. Supprimez aussi votre dossier local.
+Suivez ensuite à nouveau le
+[Lab 1.2](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) à partir
+de [l'étape 3, Récupérer le repository](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md#3-recuperer-le-repository) :
+votre org Developer Edition et sa connexion dans Orgs Manager sont toujours là, et
+**Set up my training environment** fait le reste, nouveau fork compris.
 
 ## De l'aide sur un vrai projet
 

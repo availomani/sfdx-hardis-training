@@ -353,7 +353,7 @@
     },
     {
       "name": "github-secrets-actions",
-      "_comment": "Lab 3.1 step 5: where a fork keeps the values the CI reads. GitHub only ever shows the names, never the values, which is why the panel says not to close it.",
+      "_comment": "Lab 3.1 step 6: where a fork keeps the values the CI reads. GitHub only ever shows the names, never the values, which is why the panel says not to close it.",
       "url": "https://github.com/nvuillam/sfdx-hardis-training/settings/secrets/actions",
       "width": 1440,
       "height": 1100,
@@ -368,14 +368,32 @@
     },
     {
       "name": "github-secret-new",
-      "_comment": "Lab 3.1 step 5: the New secret form, filled in but never submitted. The value is a fake consumer key, typed by the capture script.",
+      "_comment": "Lab 3.1 step 6: the New secret form, filled in but never submitted. The value is a fake consumer key, typed by the capture script.",
       "url": "https://github.com/nvuillam/sfdx-hardis-training/settings/secrets/actions/new",
       "width": 1440,
       "height": 1000,
       "settle": 3000,
       "hide": ["img.avatar", "img[src*='avatars.githubusercontent.com']"],
       "evaluate": [
-        "(() => { const set = (el, v) => { const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, v); el.dispatchEvent(new Event('input', { bubbles: true })); }; const name = document.querySelector('#secret_name, input[name=secret_name]'); const value = document.querySelector('#secret_value, textarea[name=secret_value]'); if (name) set(name, 'SFDX_CLIENT_ID_INTEGRATION'); if (value) set(value, '3MVG9EXAMPLE.the.consumer.key.the.panel.printed'); })()"
+        "(() => { const set = (el, v) => { const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, v); el.dispatchEvent(new Event('input', { bubbles: true })); }; const name = document.querySelector('#secret_name, input[name=secret_name]'); const value = document.querySelector('#secret_value, textarea[name=secret_value]'); if (name) set(name, 'SFDX_CLIENT_ID_PREPROD'); if (value) set(value, '3MVG9EXAMPLE.the.consumer.key.the.panel.printed'); })()"
+      ],
+      "clip": {
+        "x": 0,
+        "y": 58,
+        "width": 1440,
+        "height": 540
+      }
+    },
+    {
+      "name": "github-secret-new--key",
+      "_comment": "Lab 3.1 step 6: the same form for the second secret, the decryption key. Filled in but never submitted, with a fake passphrase typed by the capture script.",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/settings/secrets/actions/new",
+      "width": 1440,
+      "height": 1000,
+      "settle": 3000,
+      "hide": ["img.avatar", "img[src*='avatars.githubusercontent.com']"],
+      "evaluate": [
+        "(() => { const set = (el, v) => { const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, v); el.dispatchEvent(new Event('input', { bubbles: true })); }; const name = document.querySelector('#secret_name, input[name=secret_name]'); const value = document.querySelector('#secret_value, textarea[name=secret_value]'); if (name) set(name, 'SFDX_CLIENT_KEY_PREPROD'); if (value) set(value, '4f9c2a7e1b8d3f6a0c5e9b2d7a1f4c8e'); })()"
       ],
       "clip": {
         "x": 0,

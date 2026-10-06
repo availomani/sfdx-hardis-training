@@ -69,7 +69,7 @@ this project declares itself as a **Training** menu, rendered on the Welcome pag
 | **Set up one of my training orgs** | Deploys the Helios app and its data into an org you pick             |
 | **Check my work**                  | Verifies the lab you just finished                                   |
 | **Simulate my teammates**          | Creates the teammate branches and Pull Requests a lab needs          |
-| **Reset this level**               | Puts your repository back to the start of a level                    |
+| **Reset this level**               | Restarts a level: integration, its lab branches and your dev orgs    |
 | **Clean up a training org**        | Removes the Helios app and its data from an org                      |
 
 All seven run `node scripts/training.mjs <verb>`, declared under `customCommands` in

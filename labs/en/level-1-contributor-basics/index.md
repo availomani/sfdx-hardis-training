@@ -62,15 +62,15 @@ over the page:
 
 Seven of them, and the labs call them by these names:
 
-| Command                            | What it does                                                                                          |
-|------------------------------------|-------------------------------------------------------------------------------------------------------|
-| **Set up my training environment** | Forks the repository, creates your scratch orgs with the app, wires the pipeline                      |
-| **Where am I?**                    | Says which level and lab you reached, and what to do next                                             |
-| **Check my work**                  | Verifies the lab you just finished                                                                    |
-| **Trigger my workflows**           | Starts the checks of your Pull Request when your fork had Actions switched off                        |
-| **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in                                         |
-| **Update my course**               | Brings the changes the course received since you forked it, through a Pull Request into `integration` |
-| **Reset this level**               | Puts your repository back to the start of Level 1                                                     |
+| Command                            | What it does                                                                                                                                   |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Set up my training environment** | Forks the repository, creates your scratch orgs with the app, wires the pipeline                                                               |
+| **Where am I?**                    | Says which level and lab you reached, and what to do next                                                                                      |
+| **Check my work**                  | Verifies the lab you just finished                                                                                                             |
+| **Trigger my workflows**           | Starts the checks of your Pull Request when your fork had Actions switched off                                                                 |
+| **Claim my badge**                 | Checks the whole level, then opens your badge claim filled in                                                                                  |
+| **Update my course**               | Brings the changes the course received since you forked it, through a Pull Request into `integration`                                          |
+| **Reset this level**               | Starts Level 1 again: `integration`, and if you want the lab branches and the orgs ([Start the course over](../help.md#start-the-course-over)) |
 
 There is one menu per level, and each holds only what that level needs, so nothing in front of you is
 for a lab you have not reached.
@@ -92,8 +92,9 @@ Where a command appears, it is in an **Under the hood** block, which explains wh
 You never have to retype it.
 
 **You can always start over.** If a lab goes wrong, Welcome page > **Training: Level 1** > **Reset this
-level** puts your repository back to the start of the level. One botched lab does not end your
-course.
+level** puts `integration` back to the start of the level, and offers to clear the branches of its
+labs and set your orgs up again. One botched lab does not end your course: [Start the course
+over](../help.md#start-the-course-over) says what each answer does.
 
 ## If you get stuck
 

@@ -3,8 +3,18 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-06
+
+- Lab 3.1: JWT is configured for preprod and production only, the configuration starts with a New User Story, and the second secret has its own picture.
+- Labs 3.2, 3.3, 3.5, 3.6 and 3.11: integration and uat keep their auth URL secrets, and Lab 3.6 is where the JWT keys prove themselves.
+- Reset this level also deletes the branches of that level's labs and sets up helios-dev and helios-integration again.
+- Help: a new "Start the course over" section, linked from every level.
+- Lab 2.1: what to answer when VS Code offers to merge the parent branch, and what to do when the backpromote refuses a required field.
+- Simulate my teammates commits only its own files, and merges the Pull Request after a MegaLinter formatting fix.
+
 ## 2026-10-05
 
+- Lab 3.8: the first monitoring run is green even with findings, and the lab says where to read them.
 - A badge claim is answered once: the audit no longer posts the same comment twice on the issue.
 - Lab 1.1: the Git installer options are named as the installer shows them, each installer is named where the lab talks about it, and the pill of the Extensions icon sits on that icon.
 - Lab 1.2: a note says what a connected org and the default org are, and the Agentforce Vibes tip opens the GitHub CLI step instead of closing it.

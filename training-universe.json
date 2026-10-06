@@ -222,6 +222,21 @@
       "metadata": ["Helios_Delivery_Manager"]
     },
     {
+      "id": "US-050",
+      "level": 3,
+      "lab": 1,
+      "author": "you",
+      "title": "Configure the pipeline up to production",
+      "story": "As the release manager, I want the pipeline to go through preprod to production, with both orgs authenticated by JWT, so that every release reaches production the same way.",
+      "acceptance": [
+        "preprod and main each name their org in their branch configuration",
+        "preprod and main authenticate with an External Client App and JWT",
+        "Contributors can start a hotfix from preprod"
+      ],
+      "branch": "features/US-050-pipeline-up-to-production",
+      "metadata": ["config/.sfdx-hardis.yml", "config/branches"]
+    },
+    {
       "id": "US-052",
       "level": 3,
       "lab": 2,

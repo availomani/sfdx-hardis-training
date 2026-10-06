@@ -79,6 +79,28 @@ git branch --set-upstream-to=origin/integration integration
 Neither command changes your work or your fork. Then claim again: you do not need to redo the
 level.
 
+## Start the course over
+
+There are two ways back, depending on how far back you want to go.
+
+**Start one level again.** Click **Reset this level** in the Training menu of that level. It moves
+`integration` back to where the level starts, in your clone and in your fork. Then it offers two
+more things, and on a second attempt the answer to both is usually yes:
+
+- **Delete the branches of this level's labs**, here and in your fork. Deleting a branch in your
+  fork closes its Pull Request. This matters more than it looks: the labs give every story a fixed
+  name, and **New User Story** never reuses a branch that already exists, here or in your fork. With
+  the branches of your first attempt still there, it asks you for another name at every story
+- **Set up `helios-dev` and `helios-integration` again**, so the orgs match the start of the level
+  instead of carrying what you built the first time
+
+**Start the whole course again.** On GitHub, open your fork, then **Settings**, scroll down to
+**Danger Zone**, and click **Delete this repository**. Delete your local folder too. Then follow
+[Lab 1.2](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) again
+from [step 3, Get the repository](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md#3-get-the-repository):
+your Developer Edition org and its connection in Orgs Manager are still there, and
+**Set up my training environment** does the rest, a new fork included.
+
 ## Help on a real project
 
 This course runs on a fictional company, with free orgs and a repository you create for yourself.

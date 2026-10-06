@@ -4,7 +4,7 @@ description: "Affrontez ce que les vraies livraisons Salesforce vous envoient : 
 id: l2-home
 level: 2
 lang: fr
-source_rev: "4a78975a30a1ff4e3692cda141afda6db9cab7d4"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 ---
 
 # Niveau 2 - Contributeur Salesforce DevOps avancé
@@ -53,16 +53,16 @@ seul menu. Ouvrez la **Welcome page**, et sous **CUSTOM MENUS** cliquez sur la c
 
 Elles sont huit, et les labs les appellent par ces noms :
 
-| Commande                           | Ce qu'elle fait                                                                                       |
-|------------------------------------|-------------------------------------------------------------------------------------------------------|
-| **Set up my training environment** | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus                                |
-| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                          |
-| **Simulate my teammates**          | Crée les branches et Pull Requests de collègues dont un lab a besoin                                  |
-| **Set up one of my training orgs** | Déploie l'application Helios et ses données dans une org que vous choisissez                          |
-| **Check my work**                  | Vérifie le lab que vous venez de terminer                                                             |
-| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                             |
-| **Update my course**               | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration` |
-| **Reset this level**               | Remet votre repository au début du Niveau 2                                                           |
+| Commande                           | Ce qu'elle fait                                                                                                                                          |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Set up my training environment** | Reconstruit une scratch org qui a expiré, et pointe la pipeline dessus                                                                                   |
+| **Where am I?**                    | Dit à quel niveau et à quel lab vous en êtes, et ce qu'il faut faire ensuite                                                                             |
+| **Simulate my teammates**          | Crée les branches et Pull Requests de collègues dont un lab a besoin                                                                                     |
+| **Set up one of my training orgs** | Déploie l'application Helios et ses données dans une org que vous choisissez                                                                             |
+| **Check my work**                  | Vérifie le lab que vous venez de terminer                                                                                                                |
+| **Claim my badge**                 | Contrôle le niveau entier, puis ouvre votre demande de badge déjà remplie                                                                                |
+| **Update my course**               | Apporte les changements reçus par le cours depuis votre fork, par une Pull Request vers `integration`                                                    |
+| **Reset this level**               | Recommence le Niveau 2 : `integration`, et si vous le voulez les branches des labs et les orgs ([Recommencer le cours](../help.md#recommencer-le-cours)) |
 
 Il y a un menu par niveau, et chacun ne contient que ce dont ce niveau a besoin : rien de ce que vous
 avez sous les yeux ne concerne un lab que vous n'avez pas encore atteint.

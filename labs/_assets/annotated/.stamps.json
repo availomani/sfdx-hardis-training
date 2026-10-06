@@ -4,7 +4,7 @@
   "web/sf-signup.png": "e2c440650bf5b4f8",
   "web/github-fork.png": "94465b592914b28b",
   "web/github-create-fork.png": "3240204175725a89",
-  "web/github-secret-new.png": "189e3a52c7fa1131",
+  "web/github-secret-new.png": "91cdf5300cf9f807",
   "vscode/welcome.png#first-open": "b2ed9588ce3c74b6",
   "vscode/welcome.png#setup-button": "95de55a77601f933",
   "vscode/welcome.png#training-menu": "db7d8ca8b9401fb5",
@@ -93,8 +93,8 @@
   "vscode/welcome-custom-menu-2.png": "0b456ca3fb87a2bf",
   "vscode/welcome-custom-menu-3.png": "2ed3aae3227d8e98",
   "vscode/orgs-manager-actions.png": "08bc2df65097e542",
-  "vscode/configure-auth-branch.png#branch-question": "eb563e7b726162ee",
-  "vscode/configure-auth-variables.png#secrets": "66ff711b4797d10e",
+  "vscode/configure-auth-branch.png#branch-question": "d3b9748365c80c03",
+  "vscode/configure-auth-variables.png#secrets": "e95384ab24853bd9",
   "vscode/sidebar-commands-custom-menu-2.png#training-menu": "32498a4efc721627",
   "vscode/devops-pipeline-level3.png#four-stages": "5ea309b216b00056",
   "web/github-branch-rules.png": "8c4210c1933e6515",
@@ -159,5 +159,6 @@
   "web/github-pr-deployment-actions-failed.png": "49ae4e5809ad5b48",
   "web/github-pr-deployment-actions-moved.png": "eb1c91bd1cfb85c6",
   "vscode/pipeline-workflow-cards.png": "5a553e24406f9160",
-  "vscode/work-save-package-xml.png#cleaning": "0a09b3500049a25d"
+  "vscode/work-save-package-xml.png#cleaning": "0a09b3500049a25d",
+  "web/github-secret-new--key.png": "d99974daa46a59da"
 }

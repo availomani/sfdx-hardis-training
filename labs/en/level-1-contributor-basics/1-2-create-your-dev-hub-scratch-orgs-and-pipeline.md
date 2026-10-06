@@ -461,8 +461,9 @@ Seven things, each of them real work on a real project, and none of them yours t
     holding fictional solar installations, in a repository you own, for a course. The trade is: a
     beginner reaches a working pipeline in their first hour instead of their second day.
 
-    **Lab 3.1 sets up JWT properly for all four orgs, and deletes these secrets.** If you only
-    ever do Levels 1 and 2, delete the secrets when you are done: the scratch orgs delete themselves.
+    **Lab 3.1 sets up JWT properly for `preprod` and production**, and explains why every org of a
+    real project needs it. These two secrets stay for the rest of the course: delete them when you
+    are done with it, whatever level you stop at. The scratch orgs delete themselves.
 
 ### 7. Let the extension talk to GitHub
 
@@ -571,7 +572,7 @@ create, and click the card again.
 You created and deleted scratch orgs several times today. The allowance comes back within 24
 hours: click the card again tomorrow, and everything already done is kept. Deleting a scratch org
 does not give its allowance back, so resist the urge to delete and recreate: **Reset this level**
-puts the branches back without touching the orgs, and **Clean up a training org** empties one
+puts the branches back and never deletes an org, and **Clean up a training org** empties one
 without deleting it.
 
 **A command fails with `TotalRequests Limit exceeded`.**

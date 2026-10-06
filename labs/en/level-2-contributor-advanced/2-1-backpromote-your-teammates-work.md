@@ -290,6 +290,12 @@ And one thing it does that nobody expects the first time:
     nothing breaks, but anything you had in progress stays stashed behind a branch you have
     forgotten about. The branch you are on is always in the bottom left corner of VS Code.
 
+    Back on your branch, VS Code may then ask *Back on `<branch>`. Merge `<parent>` into it so that
+    your next save does not commit the backpromoted metadata as your own work?* If it does, click
+    **Merge `<parent>`**. Your org now holds your teammates' metadata, and without that merge your
+    next **Save / Publish** would see it as a change of yours and put it in your Pull Request. It
+    does not ask when you are on the parent branch itself, or when your branch already has it.
+
 The history is not on your computer either. sfdx-hardis records what reached your sandbox in a
 **Backpromotes comment** on each Pull Request it brought down, so the next backpromote knows where
 to start, from any machine and any teammate. That is also why the command needs a git provider
@@ -332,6 +338,15 @@ backpromote again.
 **The deployment fails on a component that depends on something else.**
 Take the whole set rather than a subset. Metadata has dependencies, and half a story often does not
 deploy.
+
+**The deployment fails with `You cannot deploy to a required field: Installation__c.Crew_Size__c`.**
+It comes from the permission set `Helios_Delivery_Manager`, and it means your org is ahead of
+`integration`: `Crew_Size__c` is already required there, which only [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md) does. It usually
+follows a **Reset this level** after a run that went past [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md), because the reset used to leave
+the orgs alone. Run **Training: Level 2 > Set up one of my training orgs** on `helios-dev`, which
+**Reset this level** now offers to do for you, then run the backpromote again. Or untick
+`Helios_Delivery_Manager` in the list of step 4 and take the rest, knowing that Romain's field
+access on that permission set then stays out of your org.
 
 **Your own work in progress was overwritten.**
 It was in the list and you took it. Rebuild it in the org: it is still in your branch if you

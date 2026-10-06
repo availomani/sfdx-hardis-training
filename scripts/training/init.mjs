@@ -785,7 +785,7 @@ export function setSecrets(slug, pipeline) {
     ok(`${secret} is set on ${c.bold(slug)}.`);
   }
   info(c.dim("    Each holds a long-lived refresh token for a throwaway scratch org."));
-  info(c.dim("    Lab 3.1 replaces them with JWT certificates and deletes them."));
+  info(c.dim("    Lab 3.1 uses JWT certificates for preprod and main, and leaves these two as they are."));
 }
 
 // --------------------------------------------------------------------- main
@@ -843,8 +843,10 @@ export default async function init(args) {
   // job of integration straight away: written after, the job runs with no
   // credential and the learner's pipeline is red before Lab 1.3.
   step(6, "The credentials the CI jobs use");
-  // Once Lab 3.1 moved the pipeline to JWT and deleted the auth URL secrets, running
-  // this again, to rebuild an expired scratch org, must not bring the shortcut back
+  // Lab 3.1 moves only preprod and main to JWT, and integration and uat keep these
+  // secrets: running this again, to rebuild an expired scratch org, writes them
+  // again. A fork that walked the earlier Lab 3.1 moved all four branches to JWT
+  // (encryptedCert) and deleted the secrets, and must not get the shortcut back.
   const projectConfig = gitOut(["show", `origin/${pipeline[0].branch}:config/.sfdx-hardis.yml`]);
   if (/^orgAuthenticationMode:[ \t]*["']?encryptedCert/m.test(projectConfig)) {
     ok("The pipeline logs in with JWT keys since Lab 3.1: no auth URL secret is written.");

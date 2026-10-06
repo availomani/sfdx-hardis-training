@@ -4,8 +4,9 @@
 # Pipeline panel, gear menu > Pipeline Settings, scope Branch: integration.
 #
 # Levels 1 and 2 authenticate CI with the SFDX_AUTH_URL_INTEGRATION repository secret,
-# a shortcut for throwaway training orgs only. Lab 3.1 replaces it with an External
-# Client App and JWT.
+# a shortcut for throwaway training orgs only. Lab 3.1 configures an External Client
+# App and JWT for preprod and main, and leaves integration and uat on this shortcut,
+# which a real project would not do.
 
 targetUsername: ""
 instanceUrl: ""

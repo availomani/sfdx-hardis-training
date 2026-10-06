@@ -637,7 +637,8 @@
       "file": "labs/en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md",
       "url": "https://sfdx-hardis-training.github.io/en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/",
       "commands": [
-        "hardis:project:configure:auth"
+        "hardis:project:configure:auth",
+        "hardis:work:new"
       ],
       "flags": [],
       "config": [
@@ -669,14 +670,15 @@
         "annotated/web/github-new-branch",
         "annotated/web/github-branch-rules",
         "annotated/web/github-branch-rule",
+        "annotated/vscode/pipeline-cards--new-user-story",
         "annotated/vscode/pipeline-settings-menu--add-org",
         "annotated/vscode/configure-auth-branch--branch-question",
         "annotated/vscode/configure-auth-variables--secrets",
         "annotated/web/github-secrets-actions",
         "annotated/web/github-secret-new",
+        "annotated/web/github-secret-new--key",
         "annotated/vscode/pipeline-config--target-branches",
         "annotated/vscode/pipeline-config-user-stories--target-branches",
-        "annotated/vscode/pipeline-config-deployment--deployment-tab",
         "annotated/vscode/pipeline-config-danger--promotion-branches",
         "annotated/vscode/pipeline-cards--save-publish",
         "annotated/vscode/work-save-completed",
@@ -1346,6 +1348,7 @@
         "lab-1-7",
         "lab-2-2",
         "lab-2-9",
+        "lab-3-1",
         "lab-3-7",
         "lab-3-10"
       ],

@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "3a6b3f5a9738b10c6a54060e5dbed6422f08d256"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -490,9 +490,10 @@ Sept choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vo
     une formation. Le marché est le suivant : un débutant atteint une pipeline qui marche dès sa
     première heure au lieu de son deuxième jour.
 
-    **Le Lab 3.1 met JWT en place proprement pour les quatre orgs, et supprime ces secrets.** Si vous
-    ne faites que les niveaux 1 et 2, supprimez les secrets quand vous avez terminé : les scratch
-    orgs, elles, se suppriment toutes seules.
+    **Le Lab 3.1 met JWT en place proprement pour `preprod` et la production**, et explique pourquoi
+    chaque org d'un vrai projet en a besoin. Ces deux secrets restent jusqu'à la fin du cours :
+    supprimez-les quand vous en avez terminé, quel que soit le niveau où vous vous arrêtez. Les
+    scratch orgs, elles, se suppriment toutes seules.
 
 ### 7. Laisser l'extension parler à GitHub
 
@@ -606,7 +607,7 @@ cours n'a pas créées, et recliquez sur la carte.
 Vous avez créé et supprimé des scratch orgs plusieurs fois aujourd'hui. Le quota revient sous 24
 heures : recliquez sur la carte demain, et tout ce qui est déjà fait est conservé. Supprimer une
 scratch org ne rend pas son quota, résistez donc à l'envie de supprimer et recréer :
-**Reset this level** remet les branches en place sans toucher aux orgs, et **Clean up a training
+**Reset this level** remet les branches en place et ne supprime jamais une org, et **Clean up a training
 org** en vide une sans la supprimer.
 
 **Une commande échoue avec `TotalRequests Limit exceeded`.**

@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "044a8eacb552ef9251cdc58fd3e6a95fde210d1f"
+source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -64,8 +64,9 @@ chaque couleur. Cliquez sur le marqueur pour ouvrir l'exécution.
 
 Un log de déploiement sfdx-hardis a toujours la même forme :
 
-**Un : l'authentification.** Quelle org, quel mécanisme. Après le [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), il dit JWT. S'il dit un
-jour autre chose, c'est que quelque chose a changé sans que vous le changiez.
+**Un : l'authentification.** Quelle org, quel mécanisme. Sur `integration`, il dit auth URL : le
+raccourci du Niveau 1, que le [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) a laissé en place. Sur `preprod` et `main`, il dit JWT.
+S'il dit un jour autre chose, c'est que quelque chose a changé sans que vous le changiez.
 
 **Deux : ce qu'il faut déployer.** Le package qu'il a calculé, et d'où. C'est la partie intéressante
 et l'étape 3 en parle.
