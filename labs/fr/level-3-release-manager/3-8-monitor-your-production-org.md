@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "1dd2c5e890436249b27ed6079bbeaf2c97a835ff"
+source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches

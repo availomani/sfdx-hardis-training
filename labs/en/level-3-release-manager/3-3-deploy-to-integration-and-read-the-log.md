@@ -101,7 +101,7 @@ org has to genuinely be at the commit the pipeline thinks it is at.
     **Pipeline Settings**, scope **Global Settings** **(1)**, **Deployment** tab **(2)**.
     **Use Delta Deployment** **(3)** shows **Disabled**.
 
-    The Helios app is about fifty components, so a full deployment costs a minute and delta would save
+    The Helios app is about sixty components by now, so a full deployment costs a minute and delta would save
     nothing while adding a way for the course to fail confusingly on a missing dependency. Turn it
     on when a deployment starts costing you real time, which on a real project is soon. There is a
     second key for promotions between major branches,
@@ -109,7 +109,7 @@ org has to genuinely be at the commit the pipeline thinks it is at.
     default for the same reason: a promotion carries more, and is the riskiest place to send less.
 
 Find the line `Components: N deployed` in the log, under *Deployment summary*. On a standard run of
-this course it is a little over fifty. Compare it with the one file of your Pull Request. The gap
+this course it is about sixty. Compare it with the one file of your Pull Request. The gap
 is the cost of having delta off, and it is the argument for turning it on.
 
 ### 4. Know what Smart Deploy is, and what it is not
@@ -129,7 +129,7 @@ Two things are often assumed to be part of it and are not:
 - **Cleaning is not a deployment filter.** It ran on a contributor's machine, at commit time. Step 3
   of the under the hood section below is about that
 
-So the honest answer to "why did it deploy fifty components to change one" is: because nothing was
+So the honest answer to "why did it deploy sixty components to change one" is: because nothing was
 configured to stop it. That is a decision this project made, not a thing the tool does for you.
 
 ### 5. Verify in the org, not in the log

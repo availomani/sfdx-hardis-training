@@ -20,7 +20,7 @@ import os from "os";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, runAsync, runJson,
-  select, connectedOrgs, orgChoices, universe, readProgress, writeProgress
+  select, connectedOrgs, orgChoices, universe, readProgress, writeProgress, removeTempDir
 } from "../lib/util.mjs";
 
 const MANAGER_PERMSET = "Helios_Delivery_Manager";
@@ -85,7 +85,7 @@ export function loadData(target, options = {}) {
     options.quiet ? { quiet: true, capture: true } : {}
   );
   if (workspace !== BASELINE) {
-    fs.rmSync(workspace, { recursive: true, force: true });
+    removeTempDir(workspace);
   }
   return { ok: res.code === 0, output: (res.stdout + "\n" + res.stderr).trim() };
 }
@@ -245,7 +245,7 @@ export function applyDrift(alias) {
       const tmp = path.join(ROOT, ".training-drift.apex");
       fs.writeFileSync(tmp, step.code, "utf8");
       const res = run("sf", ["apex", "run", "--file", tmp, "--target-org", alias], { quiet: true, capture: true });
-      fs.rmSync(tmp, { force: true });
+      removeTempDir(tmp);
       if (res.code === 0) {
         done.push(step.label);
       } else {
@@ -326,7 +326,7 @@ export function addPicklistValue(alias, step) {
     }
     return run("sf", ["project", "deploy", "start", "--source-dir", "force-app", "--target-org", alias, "--ignore-conflicts"], { cwd: dir, quiet: true, capture: true }).code === 0;
   } finally {
-    fs.rmSync(dir, { recursive: true, force: true });
+    removeTempDir(dir);
   }
 }
 

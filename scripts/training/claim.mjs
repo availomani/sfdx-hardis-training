@@ -85,6 +85,11 @@ function isStarred(slug) {
  * Reset this level, integration used to follow the course's start branch, and
  * showed "ahead" for commits that were on the fork all along. A branch that was
  * never pushed but holds no commit of its own is not work waiting either.
+ *
+ * A branch squash merged and then deleted on GitHub, as Lab 1.6 does, is not
+ * work waiting either: its commits are in no branch of the fork any more, but
+ * GitHub keeps them under the head of its Pull Request. claim() fetches those
+ * heads under refs/remotes/origin/pull/, so --remotes=origin counts them.
  */
 function unpushedBranches(majors) {
   return gitOut(["for-each-ref", "--format=%(refname:short)", "refs/heads"])
@@ -122,7 +127,13 @@ export default async function claim(args) {
   // so the same ground is covered here rather than on a rejected issue.
   // Read the fork as it is now: a Pull Request merged on GitHub is not in the
   // local branches until a fetch, and the badge audit reads the fork
-  run("git", ["fetch", "origin", "--prune"], { quiet: true, capture: true });
+  // The heads of the fork's Pull Requests too: the commits of a branch squash merged and deleted
+  // on GitHub live there only (unpushedBranches)
+  run(
+    "git",
+    ["fetch", "origin", "--prune", "+refs/heads/*:refs/remotes/origin/*", "+refs/pull/*/head:refs/remotes/origin/pull/*"],
+    { quiet: true, capture: true }
+  );
   const ctx = makeContext(ROOT);
   const missing = [];
   for (const levelDef of levels) {

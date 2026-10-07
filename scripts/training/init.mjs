@@ -40,7 +40,7 @@ import os from "os";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, runAsync, runJson, parseJsonOutput, git, gitOut,
-  select, confirm, connectedOrgs, orgChoices, universe, ensureGh, repoSlug, openUrl
+  select, confirm, connectedOrgs, orgChoices, universe, ensureGh, repoSlug, openUrl, removeTempDir
 } from "../lib/util.mjs";
 import { deployAppToAll, grantManager, loadData, recordSeeded, alreadySeeded } from "./seed.mjs";
 import { REQUIRED_CHECKS, protectBranches, withProtectionLifted } from "../lib/protection.mjs";
@@ -196,7 +196,7 @@ export async function ensureDevHub(alias) {
     ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", alias, "--wait", "10", "--json"],
     { quiet: true, capture: true }
   );
-  fs.rmSync(dir, { recursive: true, force: true });
+  removeTempDir(dir);
   if (res.code !== 0) {
     const json = parseJsonOutput(res.stdout);
     warn(json?.message || (res.stderr || res.stdout).trim().split("\n").slice(-5).join("\n"));

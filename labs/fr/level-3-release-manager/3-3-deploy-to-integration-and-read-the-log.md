@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
+source_rev: "1aa4b2a3986ddf7382d050bdbfa75cb5f8b7f39c"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -106,7 +106,7 @@ l'org doit vraiment être au commit où la pipeline la croit.
     **Pipeline Settings**, portée **Global Settings** **(1)**, onglet **Deployment** **(2)**.
     **Use Delta Deployment** **(3)** affiche **Disabled**.
 
-    L'application Helios fait une cinquantaine de composants : un déploiement complet coûte une
+    L'application Helios fait maintenant une soixantaine de composants : un déploiement complet coûte une
     minute et le delta n'économiserait rien tout en ajoutant une façon pour le cours d'échouer de
     manière déroutante sur une dépendance manquante. Activez-le quand un déploiement commence à vous
     coûter du temps réel, ce qui sur un vrai projet arrive vite. Il y a une deuxième clé pour les
@@ -115,7 +115,7 @@ l'org doit vraiment être au commit où la pipeline la croit.
     davantage, et c'est l'endroit le plus risqué où en envoyer moins.
 
 Trouvez la ligne `Components: N deployed` dans le log, sous *Deployment summary*. Sur une exécution
-standard de ce cours, elle est un peu au-dessus de cinquante. Comparez-la avec l'unique fichier de
+standard de ce cours, elle tourne autour de soixante. Comparez-la avec l'unique fichier de
 votre Pull Request. L'écart est le coût du delta désactivé, et c'est l'argument pour l'activer.
 
 ### 4. Savoir ce qu'est Smart Deploy, et ce qu'il n'est pas
@@ -135,7 +135,7 @@ Deux choses qu'on suppose souvent en faire partie et qui n'en font pas partie :
 - **Le nettoyage n'est pas un filtre de déploiement.** Il a tourné sur la machine d'un contributeur,
   au moment du commit. L'étape 3 de la section sous le capot ci-dessous en parle
 
-La réponse honnête à "pourquoi a-t-il déployé cinquante composants pour en changer un" est donc :
+La réponse honnête à "pourquoi a-t-il déployé soixante composants pour en changer un" est donc :
 parce que rien n'a été configuré pour l'en empêcher. C'est une décision de ce projet, pas quelque
 chose que l'outil fait pour vous.
 

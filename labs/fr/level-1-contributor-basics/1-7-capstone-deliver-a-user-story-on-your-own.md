@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "0990e9994b61a2ade22a0280849ae5fe07d2acb0"
+source_rev: "b7f5e0686a2d5a83a1ce183f8f4c30a684e0a129"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:

@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "b1b7ea4930f0f098ba500e1a88118e77bf570cda"
+source_rev: "1849e88bcff6b401a31fab9fc5b9561cbd5ab221"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -178,8 +178,8 @@ Il calcule son plan avant de vous montrer quoi que ce soit :
 1. **Target sandbox** **(1)** est l'org dans laquelle le travail est rapatrié, `helios-dev`
 2. **Parent branch** **(2)** est l'endroit d'où il vient, `integration` telle qu'elle est sur
    GitHub : le panneau fait le fetch lui-même, inutile de faire un pull avant
-3. Les trois lignes **(3)** lisent votre org, listent les Pull Requests mergées dans `integration`,
-   et calculent la différence entre les deux
+3. Les lignes **(3)** lisent votre org, listent les Pull Requests mergées dans `integration`,
+   calculent ce qui y a changé, et le comparent avec ce que contient votre org
 
 ![Le panneau Backpromote calculant son plan](../../_assets/annotated/vscode/backpromote-loading.png)
 

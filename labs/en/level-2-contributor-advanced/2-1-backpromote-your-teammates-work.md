@@ -171,8 +171,8 @@ It computes its plan before it shows you anything:
 1. **Target sandbox** **(1)** is the org the work comes down into, `helios-dev`
 2. **Parent branch** **(2)** is where it comes from, `integration` as it is on GitHub: the panel
    fetches it, so there is no need to pull first
-3. The three lines **(3)** read your org, list the Pull Requests merged in `integration`, and work
-   out the difference between the two
+3. The lines **(3)** read your org, list the Pull Requests merged in `integration`, work out what
+   changed there, and compare it with what your org holds
 
 ![The Backpromote panel computing its plan](../../_assets/annotated/vscode/backpromote-loading.png)
 

@@ -15,7 +15,7 @@ import os from "os";
 import path from "path";
 import {
   ROOT, c, title, info, ok, abort, run, runJson,
-  select, confirm, connectedOrgs, orgChoices
+  select, confirm, connectedOrgs, orgChoices, removeTempDir
 } from "../lib/util.mjs";
 
 const LAB_RECORDS = [
@@ -157,6 +157,6 @@ ${columns}
     );
     return run("sf", ["project", "deploy", "start", "--source-dir", "force-app", "--target-org", target, "--ignore-conflicts"], { cwd: dir, quiet: true, capture: true }).code === 0;
   } finally {
-    fs.rmSync(dir, { recursive: true, force: true });
+    removeTempDir(dir);
   }
 }

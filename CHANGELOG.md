@@ -7,6 +7,13 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 - Labs 1.5, 2.2 and 2.8: the Metadata Retriever screenshots show its new **Retrieve mode** list.
 - Labs 2.6 and 2.8: the Metadata Retriever now brings Profiles back whole, with only the permissions they grant, and the labs say what that changes in the file you commit.
+- Claim my badge no longer asks you to push a feature branch you squash merged and deleted on GitHub.
+- Create my lab records no longer ends on "EPERM" on Windows after creating the records, and neither do the other Training commands that deploy from a temporary folder.
+- Lab 2.1: the Backpromote panel lists four steps while it computes its plan, and the picture follows.
+- Lab 3.3: about sixty components are deployed to integration by Level 3.
+- Lab 3.5: the promotion notes count 17 tickets, the configuration story of Lab 3.1 among them.
+- The hotfix teammate of Lab 3.7 commits a message that says what the fix does.
+- The VS Code pictures taken again on sfdx-hardis 8.14, the promotion conflict question excepted: its previous picture shows every answer.
 
 ## 2026-10-06
 

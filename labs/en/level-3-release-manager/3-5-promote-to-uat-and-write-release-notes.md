@@ -278,13 +278,15 @@ On this promotion, the generated notes open like this:
 | Metric           | Value |
 |------------------|-------|
 | Pull Requests    | 22    |
-| Tickets          | 16    |
+| Tickets          | 17    |
 | Contributors     | 1     |
 | Added / Modified | 38    |
 ```
 
-The count includes the Pull Requests that carry no story: the configuration ones of [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) and
-of step 2, and the promotion itself. Yours depends on how you got here: a little over 20 after walking
+There are more Pull Requests than tickets: the configuration Pull Request of step 2 and the
+promotion itself carry no story, and some stories took two Pull Requests, like US-062 and its fix in
+[Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md). The configuration of [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) has a ticket of its own, US-050, because it went
+through its own story. Yours depends on how you got here: a little over 20 after walking
 Levels 1 and 2, far fewer after **Reset this level**, which starts Level 3 without their Pull
 Requests.
 

@@ -8,6 +8,12 @@ EXTENDS:
 # forever, for a difference nobody made.
 FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^training-manifest\.json$|^labs/link-map\.[a-z]{2}(-[A-Z]{2})?\.md$|^mkdocs-nav\.yml$|^site-src/|^redirect-site/|^megalinter-reports/)
 
+# The annotated pictures and their fingerprints. .stamps.json maps each picture to a short hash
+# of what was drawn on it, and betterleaks reads a hash next to a key such as "github-auth" as
+# an API key: there is nothing in this folder for any linter to read.
+ADDITIONAL_EXCLUDED_DIRECTORIES:
+  - annotated
+
 # jscpd's minTokens is raised to 120 in .jscpd.json. That file is schema
 # validated and rejects a comment key, so the reason lives here: every script in
 # this repository opens with the same preamble (the ESM imports, fileURLToPath,

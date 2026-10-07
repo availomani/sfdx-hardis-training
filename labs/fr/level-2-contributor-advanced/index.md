@@ -4,7 +4,7 @@ description: "Affrontez ce que les vraies livraisons Salesforce vous envoient : 
 id: l2-home
 level: 2
 lang: fr
-source_rev: "14853cbd136b499b32e1dc8bcacfb8f76cbd4578"
+source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
 ---
 
 # Niveau 2 - Contributeur Salesforce DevOps avancé
