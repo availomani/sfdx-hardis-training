@@ -3,6 +3,11 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-07
+
+- Labs 1.5, 2.2 and 2.8: the Metadata Retriever screenshots show its new **Retrieve mode** list.
+- Labs 2.6 and 2.8: the Metadata Retriever now brings Profiles back whole, with only the permissions they grant, and the labs say what that changes in the file you commit.
+
 ## 2026-10-06
 
 - Lab 2.4: the Helios project turns on the stop of the check on a pending manual step, which sfdx-hardis no longer does by default.

@@ -12,10 +12,10 @@ screenshots:
   - annotated/vscode/sidebar
   - annotated/vscode/pipeline-cards--save-publish
 depends_on:
-  commands: [hardis:work:resetselection, hardis:work:save]
-  flags: []
+  commands: [hardis:mdapi:read, hardis:work:resetselection, hardis:work:save]
+  flags: [--active-only]
   config: []
-  panels: [commandExecution, packageXml]
+  panels: [metadataRetriever, commandExecution, packageXml]
   docs: [salesforce-devops-publish-user-story, salesforce-devops-manual-repo-clean]
 ---
 
@@ -72,9 +72,9 @@ Look at the **Git Delta package.xml** report the publish offered: more than the 
 changed. Open the Pull Request and read the diff.
 
 At the very least there is **a Profile**, `Admin`, the System Administrator profile. The repository
-carries it short, a few lines, and it came back several hundred lines longer: every field you created in
-Setup since Level 1 gave that profile field-level security, and a whole-org retrieve brings all of
-it along. What else comes depends on what your org went through, and
+carries it short, a few lines, and it came back hundreds of lines longer: the Metadata Retriever
+retrieves a Profile whole, every permission, tab and page layout it has in your org, and none of it
+is your story. What else comes depends on what your org went through, and
 a whole-org retrieve on a real project usually carries some of it:
 
 - **a list view** left over from an earlier story, still in your org, or a **transaction security

@@ -5,15 +5,15 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "76638d6bc8fedd4ecbcb798f9b026bb80023e7bd"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-config
 depends_on:
-  commands: [hardis:work:save]
-  flags: []
+  commands: [hardis:mdapi:read, hardis:work:save]
+  flags: [--active-only]
   config: [autoCleanTypes, minimizeProfiles, autoRemoveUserPermissions]
-  panels: [pipelineConfig, packageXml]
+  panels: [metadataRetriever, pipelineConfig, packageXml]
   docs: [salesforce-devops-work-on-user-story-profiles]
 ---
 
@@ -68,6 +68,11 @@ Faites-en un retrieve comme d'habitude : **Commit changes**, **Recent Changes**,
 cochez le profil `Helios Crew`, récupérez, et commitez-le depuis **Source Control**. Puis
 **Save / Publish**, poussez, Pull Request, vert, merge.
 
+Le fichier est bien plus long que celui du repository. Le **Retrieve mode** du Metadata Retriever
+indique **Auto** : il récupère un profil en entier, toutes les permissions qu'il accorde dans
+`helios-dev`, donc votre nouvel accès à `Cost` s'y trouve, avec tout ce que le profil peut faire
+d'autre.
+
 ### 2. Découvrir qu'il ne s'est rien passé
 
 Ouvrez `helios-integration` et vérifiez la sécurité au niveau du champ de **Panel Batch > Cost** : la
@@ -98,12 +103,16 @@ même temps :
    d'objet, de champ, d'onglet, d'application et de classe de l'org. Deux personnes qui travaillent
    sur deux stories sans rapport produisent chacune un diff de mille lignes du même fichier, et elles
    entrent en conflit à chaque fois
-2. **Un profil récupéré dit non à ce qu'il n'avait pas.** Il liste les champs et objets de votre
-   package avec `false` partout où le profil n'avait pas accès au moment de la récupération. Si un
-   collègue en a accordé un depuis, déployer votre fichier **le lui éteint**, en silence
-3. **Ce que vous récupérez dépend de votre package.** Un profil est récupéré avec seulement les
-   permissions des composants de votre package : le même profil a donc une tête différente selon qui
-   l'a récupéré et quand
+2. **Un profil récupéré peut dire non à ce qu'il n'avait pas.** Récupéré de la façon standard, il
+   liste les champs et objets de votre package avec `false` partout où le profil n'avait pas accès
+   au moment de la récupération. Si un collègue en a accordé un depuis, déployer votre fichier
+   **le lui éteint**, en silence. Le mode **Auto** du Metadata Retriever laisse ces lignes `false`
+   de côté
+3. **Ce que vous récupérez dépend de la façon, et de l'org.** Récupéré de la façon standard, un
+   profil ne porte que les permissions des composants récupérés avec lui. Récupéré en entier, comme
+   le fait le Metadata Retriever en **Auto**, il porte tout ce que le profil a dans l'org d'où il
+   vient. Dans les deux cas, le même profil a une tête différente selon qui l'a récupéré, depuis
+   quelle org, et quand
 
 `minimizeProfiles` retire des profils tout ce qu'un permission set pourrait porter à la place, en
 laissant les profils ne contenir que ce qui ne peut vraiment vivre nulle part ailleurs : les plages
@@ -120,11 +129,14 @@ transporter finirait par supprimer celui de quelqu'un d'autre.
     chaque org. `Admin` et `Helios Crew` restent donc dans `force-app/main/default/profiles/`,
     restent dans `manifest/package.xml`, et sont déployés avec tout le reste.
 
-    Ils restent **courts** exprès. Un profil récupéré en entier liste des centaines de permissions
-    utilisateur, et Salesforce en ajoute et en retire à chaque release, trois fois par an : un profil
-    complet commité au printemps peut échouer au déploiement à l'automne sur une permission qui
-    n'existe plus. La version courte ne nomme que ce que ce projet a décidé, et `minimizeProfiles` la
-    garde courte à chaque fois que quelqu'un en publie un.
+    Ils ne portent **aucune permission de champ, d'objet, de classe ou de flow**, exprès, et aucune
+    permission utilisateur sauf sur `Admin`. Un profil récupéré en entier liste des centaines de
+    permissions utilisateur, et Salesforce en ajoute et en retire à chaque release, trois fois par an :
+    un profil complet commité au printemps peut échouer au déploiement à l'automne sur une permission
+    qui n'existe plus. `minimizeProfiles` retire ces permissions à chaque fois que quelqu'un publie un
+    profil. Ce qui reste peut quand même être long, car un profil récupéré en entier liste le réglage
+    d'onglet et la présentation de page de chaque objet de l'org : c'est exactement ce que seul un
+    profil peut porter.
 
 ### 5. Le faire comme le projet l'attend
 
@@ -223,7 +235,11 @@ L'utilisateur de CI ne peut pas accorder une permission qu'il n'a pas lui-même.
 **Training: Level 2 > Set up one of my training orgs**.
 
 **Le profil revient long de mille lignes.**
-Il a été commité après une récupération et n'est jamais passé par le nettoyage. Vérifiez que
+Un profil récupéré en entier garde, après le nettoyage, les réglages d'onglets et la mise en page
+de chaque objet de l'org, son application et ses types d'enregistrement par défaut, et sur `Admin`
+ses permissions utilisateur : ils restent exprès. S'il porte encore des
+permissions de champ, d'objet ou de classe, il a été commité après une récupération et n'est
+jamais passé par le nettoyage. Vérifiez que
 `minimizeProfiles` est toujours listé dans l'onglet **Salesforce Project** de **Pipeline Settings**,
 puis refaites **Save / Publish**. Ne raccourcissez pas le fichier à la main.
 

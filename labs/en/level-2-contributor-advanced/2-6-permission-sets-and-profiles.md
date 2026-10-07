@@ -10,10 +10,10 @@ screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-config
 depends_on:
-  commands: [hardis:work:save]
-  flags: []
+  commands: [hardis:mdapi:read, hardis:work:save]
+  flags: [--active-only]
   config: [autoCleanTypes, minimizeProfiles, autoRemoveUserPermissions]
-  panels: [pipelineConfig, packageXml]
+  panels: [metadataRetriever, pipelineConfig, packageXml]
   docs: [salesforce-devops-work-on-user-story-profiles]
 ---
 
@@ -65,6 +65,10 @@ Retrieve it the usual way: **Commit changes**, **Recent Changes**, **Search Meta
 `Helios Crew` Profile, retrieve, and commit it from **Source Control**. Then **Save / Publish**,
 push, Pull Request, green, merge.
 
+The file is much longer than the one in the repository. The **Retrieve mode** of the Metadata
+Retriever reads **Auto**: it retrieves a Profile whole, every permission it grants in `helios-dev`,
+so your new grant on `Cost` is in it, along with everything else the profile can do.
+
 ### 2. Discover that nothing happened
 
 Open `helios-integration` and check the field-level security of **Panel Batch > Cost**: the
@@ -93,12 +97,14 @@ Profiles are the single worst metadata type to version, for three reasons that a
 1. **They are enormous and they are shared.** One Profile file lists every object, field, tab, app
    and class permission in the org. Two people touching two unrelated stories both produce a
    thousand-line diff of the same file, and they conflict every time
-2. **A retrieved Profile says no to what it did not have.** It lists the fields and objects of your
-   package with `false` wherever the profile had no access when you retrieved it. If a colleague
-   granted one of them since, deploying your file **switches theirs off**, silently
-3. **What you retrieve depends on your package.** A Profile is retrieved with only the permissions
-   for the components in your package, so the same Profile looks different depending on who
-   retrieved it and when
+2. **A retrieved Profile can say no to what it did not have.** Retrieved the standard way, it lists
+   the fields and objects of your package with `false` wherever the profile had no access when you
+   retrieved it. If a colleague granted one of them since, deploying your file **switches theirs
+   off**, silently. The Metadata Retriever's **Auto** mode leaves those `false` lines out
+3. **What you retrieve depends on how, and from where.** Retrieved the standard way, a Profile only
+   holds the permissions of the components retrieved with it. Retrieved whole, as the Metadata
+   Retriever does in **Auto**, it holds everything the profile has in the org it came from. Either
+   way, the same Profile looks different depending on who retrieved it, from which org, and when
 
 `minimizeProfiles` strips from Profiles everything that a Permission Set could carry instead,
 leaving Profiles to hold only what genuinely cannot live anywhere else: login hours, IP ranges,
@@ -114,11 +120,13 @@ delete somebody else's.
     `force-app/main/default/profiles/`, stay in `manifest/package.xml`, and are deployed with
     everything else.
 
-    They stay **short** on purpose. A Profile retrieved whole lists hundreds of user permissions, and
-    Salesforce adds and removes some at every release, three times a year: a full Profile committed
-    in spring can fail to deploy in autumn on a permission that no longer exists. The short version
-    names only what this project decided, and `minimizeProfiles` keeps it short every time somebody
-    publishes one.
+    They carry **no field, object, class or Flow permission** on purpose, and no user permission
+    except on `Admin`. A Profile retrieved whole lists hundreds of user permissions, and Salesforce
+    adds and removes some at every release, three times a year: a full Profile committed in spring
+    can fail to deploy in autumn on a permission that no longer exists. `minimizeProfiles` takes
+    those permissions out every time somebody publishes a Profile. What stays can still be long,
+    because a Profile retrieved whole lists the tab setting and the page layout of every object of
+    the org: those are exactly what only a Profile can hold.
 
 ### 5. Do it the way the project expects
 
@@ -214,8 +222,10 @@ The CI user cannot grant a permission it does not have itself. Assign **Helios D
 the integration org user, which **Training: Level 2 > Set up one of my training orgs** does.
 
 **The Profile comes back a thousand lines long.**
-It was committed after a retrieve and never went through the cleaning. Check that
-`minimizeProfiles` is still listed on the **Salesforce Project** tab of **Pipeline Settings**, then
+A Profile retrieved whole keeps, after the cleaning, the tab settings and the page layout of every
+object of the org, its default app and record types, and on `Admin` its user permissions: those
+stay on purpose. If it still carries field, object or class permissions, it was committed after a retrieve and never went through the cleaning. Check
+that `minimizeProfiles` is still listed on the **Salesforce Project** tab of **Pipeline Settings**, then
 **Save / Publish** again. Do not shorten the file by hand.
 
 ## Check your work

@@ -159,7 +159,8 @@ function writeInDescription(file, text) {
   const eol = original.includes("\r\n") ? "\r\n" : "\n";
   const body = text.split("\n").join(eol);
   // Some commands type it: `public static description: string = \`...\``
-  const match = original.match(/public static description(?::\s*string)? = `([\s\S]*?)`;/);
+  // The template ends at the first backtick that is not escaped: descriptions often hold \`;
+  const match = original.match(/public static description(?::\s*string)? = `((?:\\[\s\S]|[^\\`])*)`;/);
   if (!match) {
     return null;
   }
