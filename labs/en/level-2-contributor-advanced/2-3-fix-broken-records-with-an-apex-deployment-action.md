@@ -91,7 +91,7 @@ The fix takes a minute, and the org has already done it: in `helios-dev` the ent
 from both permission sets the moment the field became required. Bring them down: **Commit changes**,
 tick `Helios_Delivery_Crew` and `Helios_Delivery_Manager`, retrieve. Source Control shows each of
 them losing its `Crew_Size__c` entry and nothing else. Commit, **Save / Publish** again. The
-sfdx-hardis comment even said so, under each error, with a link to the rule.
+sfdx-hardis comment even said so, in the tip folded under each error, with a link to the rule.
 
 !!! note "This is a good error"
     It is precise, it names both offending components, and the fix is obvious once you know the rule.
@@ -238,8 +238,10 @@ Files wait in **Source Control**, none of them committed: the four class files a
 you created in step 5, and the action the editor wrote under `scripts/actions/`, in a file named
 after your Pull Request. Commit them all, then **Save / Publish**.
 
-The check passes again, and its comment now has a **Post-deployment Actions Results** table: your
-backfill, **skipped**, because this is the validation job. Merge.
+The check passes again, and its comment now has a **Deployment actions** row in its table: your
+backfill, **🕒 1 after the merge**, because this is the validation job and it changes nothing in the
+org. Open the folded **🛠️ Deployment actions of this job (1)** below it: the backfill, **after**
+the deployment, with the reason **Runs after the merge only**. Merge.
 
 The deployment job to `integration` runs it, for real, right **after** the deployment: open its log
 in the **Actions** tab and you find the deployment, then the action starting, then the

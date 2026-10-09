@@ -94,6 +94,11 @@ more things, and on a second attempt the answer to both is usually yes:
 - **Set up `helios-dev` and `helios-integration` again**, so the orgs match the start of the level
   instead of carrying what you built the first time
 
+Last, on Level 3, it opens a Pull Request named **Deployment actions of the earlier levels** and
+merges it once its checks pass, which takes 3 to 5 minutes. The start of Level 3 holds the Level 2
+stories as one commit no Pull Request of your fork made, and a promotion only runs the deployment
+actions of the Pull Requests it carries: this one gives them a Pull Request.
+
 **Start the whole course again.** On GitHub, open your fork, then **Settings**, scroll down to
 **Danger Zone**, and click **Delete this repository**. Delete your local folder too. Then follow
 [Lab 1.2](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) again

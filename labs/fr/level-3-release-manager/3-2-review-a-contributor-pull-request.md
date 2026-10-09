@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "fff49382e26bd26cab79093288c47f1204e76179"
+source_rev: "5004bd9b727a032b01a8e13fa1eefb935db726e7"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/welcome-custom-menu-3
@@ -59,32 +59,38 @@ du cours sur GitHub, par exemple `github.com/my-username/sfdx-hardis-training`).
 
 Lisez le commentaire sfdx-hardis, de haut en bas. Quatre choses, dans cet ordre :
 
-1. **Est-ce que ça s'est déployé ?** Le commentaire s'ouvre sur une bannière indiquant *Validation
-   Results (deployment simulation)* sur un job de contrôle et *Deployment Results* sur un job de
-   merge, avec une ligne en dessous qui dit si c'est passé. L'identifiant de déploiement Salesforce
-   n'est affiché nulle part : il est porté par un marqueur HTML invisible, pour qu'un job de merge
-   puisse réutiliser la validation en Quick Deploy
-2. **Combien est-ce que ça déploie ?** La ligne **Simulated deployment** compte combien de
-   composants ont été validés face à l'org, combien changeraient, et combien parmi eux seraient
-   créés, mis à jour, supprimés ou laissés inchangés. En dessous, un tableau replié donne ces
-   changements par type de composant. Si les compteurs ne correspondent pas à la taille de la story,
-   c'est votre signal pour aller lire le diff
-3. **Qu'est-ce que ça supprime ?** Le compteur `deleted` sur cette même ligne, et la colonne
-   **Deleted** du tableau, qui dit quel genre de composant disparaît : un champ, une classe, une
-   présentation de page. Les Flows ont droit à davantage : une liste **Flow changes** pointant vers
-   un commentaire de diff par Flow, et un tableau **Flow deletion** quand des versions sont retirées.
-   Le commentaire ne nomme aucun autre composant supprimé : la liste, une ligne par composant, est
-   `xls/deployment-components.xlsx` dans l'artefact **sfdx-hardis reports** du contrôle (**Summary**
-   de son run, puis **Artifacts**)
-4. **Tests et couverture.** La couverture à chaque fois, et un bloc replié *Apex test classes* quand
-   le job a lancé des classes de test nommées. Les échecs seulement quand il y en a
+1. **Est-ce que ça s'est déployé ?** Le commentaire s'ouvre sur une bannière, *Validation* sur un
+   job de contrôle et *Deployment* sur un job de merge, puis un verdict : **✅ Ready to merge into
+   `integration`**, ou **❌ Cannot merge into `integration`** suivi de la raison, comme `1
+   deployment error`. L'identifiant de déploiement Salesforce n'est affiché nulle part : il est
+   porté par un marqueur HTML invisible, pour qu'un job de merge puisse réutiliser la validation en
+   Quick Deploy
+2. **Combien est-ce que ça déploie ?** La ligne **Metadata** du tableau **Check | Result** sous le
+   verdict compte combien de composants changeraient, répartis en créés, mis à jour et supprimés,
+   et combien ont été validés face à l'org. Plus bas, la section repliée **📋 ... components would
+   change in the org** donne ces changements par type de composant. Si les compteurs ne
+   correspondent pas à la taille de la story, c'est votre signal pour aller lire le diff
+3. **Qu'est-ce que ça supprime ?** Un compteur `deleted` sur cette même ligne, affiché seulement
+   quand quelque chose disparaît, et la colonne **🗑️ Deleted** du tableau, qui dit quel genre de
+   composant disparaît : un champ, une classe, une présentation de page. Les Flows y sont comptés
+   comme tout autre composant, et ont droit à une chose de plus : un commentaire de diff à eux,
+   **🔀 Flow** suivi de son libellé, publié en dessous pour chaque Flow modifié. Un Flow dont seul
+   le statut change, activé ou désactivé, n'a pas de commentaire de diff et n'est nommé nulle part :
+   lisez le diff pour ceux-là. Une section **Flow deletion** apparaît quand des versions sont
+   retirées. Le commentaire
+   ne nomme aucun autre composant supprimé : la liste, une ligne par composant, est
+   `xls/deployment-components.xlsx` dans l'artefact **sfdx-hardis reports** du contrôle
+   (**Summary** de son run, puis **Artifacts**)
+4. **Tests et couverture.** La ligne **Apex tests** : la couverture face à l'objectif chaque fois
+   qu'elle a été mesurée, ou pourquoi les tests n'ont pas tourné, et un bloc replié **🧪 Apex test
+   classes** quand le job a lancé des classes de test nommées. Les échecs seulement quand il y en a
 
 Le lire dans cet ordre prend deux minutes. Sur US-052 il est vert, un petit nombre de composants mis
 à jour et **rien de supprimé**, et il a raison sur tout. Les compteurs exacts sont les vôtres, pas
 ceux du lab : ils comparent votre branche avec ce que contient votre `helios-integration`
 aujourd'hui, une story qui touche un fichier peut donc quand même mettre à jour quelques composants
-quand votre org est en retard. `deleted: 0` est le nombre qui compte ici, et c'est celui dont parle
-l'étape 4. Le commentaire vous dit aussi ce qu'il ne peut pas faire à votre place, et c'est
+quand votre org est en retard. L'absence de `deleted` dans la ligne **Metadata** est ce qui compte
+ici, et c'est ce dont parle l'étape 4. Le commentaire vous dit aussi ce qu'il ne peut pas faire à votre place, et c'est
 l'étape 3.
 
 ### 3. Lire le diff, en cherchant ce que le robot ne peut pas voir
@@ -126,7 +132,7 @@ second column*. Elle ne dit rien d'un champ qui s'en va. C'est l'écart auquel s
 diff dit une chose, la description une autre, et une seule des deux est ce qui sera déployé.
 
 **Rien dans la pipeline ne peut attraper cela.** Une présentation de page avec un champ de moins est
-un déploiement valide, la ligne de compteurs dit `updated: 1`, et seul quelqu'un qui connaît l'org
+un déploiement valide, la ligne **Metadata** compte la présentation comme un composant `updated` de plus, et seul quelqu'un qui connaît l'org
 peut voir ce qui manque.
 
 ### 5. Demander la correction, sur la ligne
@@ -183,7 +189,9 @@ puis a publié le commentaire via l'API GitHub avec le token que le workflow a d
 la Pull Request ne se remplit pas de vingt commentaires de robot. Il se retrouve grâce à un marqueur
 caché porteur d'une clé de message, et il y a en fait **deux** commentaires de ce genre, mis à jour
 indépendamment : un pour le job de contrôle, un pour le job de merge. Un troisième rassemble les
-deployment actions, et les Flows en ont un chacun.
+deployment actions, et les Flows en ont un chacun, sauf un Flow dont seul le statut change, qui n'en
+a aucun. Un commentaire est limité à 50 000 caractères sur GitHub : au-delà,
+il dit ce qu'il a raccourci.
 
 Les compteurs qu'il affiche viennent de ce que Salesforce a rapporté sur le déploiement, pas du diff
 git. Les deux peuvent différer, et quand c'est le cas, le déploiement est la vérité : c'est ce que
@@ -192,7 +200,7 @@ l'org a reçu, ou aurait reçu.
 Les suppressions sont le point faible. `hardis:work:save` écrit `manifest/destructiveChanges.xml`
 quand un contributeur retire quelque chose, et un contributeur peut en produire un **sans le
 vouloir**, en décochant quelque chose dans l'écran de sélection après que cela a été commité. Le
-commentaire donne à cela un nombre dans la ligne de compteurs, et un tableau seulement quand des
+commentaire donne à cela un nombre dans la ligne **Metadata**, et un tableau seulement quand des
 Flows sont en jeu. Si les compteurs d'une Pull Request montrent quoi que ce soit de supprimé, le
 commentaire vous a dit tout ce qu'il dira : le reste, c'est le diff.
 

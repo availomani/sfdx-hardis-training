@@ -147,9 +147,9 @@ Empty fields prove nothing. Put a number in.
 
 The **Installations** tab **(1)** is how you get back to this list from anywhere in the app. On the
 right of the record sits the **Panel delivery timeline** **(2)**, which lists the pallets booked for
-this installation with their quantities. The picture was taken before this story existed, on an
-installation with no pallet booked, so there is no Panels Required in its column either. Most
-installations have two or three pallets.
+this installation with their quantities. The picture was taken before this story existed, so
+there is no Panels Required in its column yet. The installation it shows has two pallets, 23 and 16
+panels: 39 is the number you would type there. Most installations have two or three.
 
 1. On `INST-00001`, click the pencil at the right of **Panels Required**, type the number the
    timeline adds up to, and click **Save** at the bottom of the page. This page has no **Edit**

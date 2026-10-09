@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "af0ed2794b7fc66b266d5280832d5a890ceda29f"
+source_rev: "9c652820abe61fac27fa86bac9eba269af742274"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -91,8 +91,8 @@ La correction prend une minute, et l'org l'a déjà faite : dans `helios-dev` le
 des deux permission sets à l'instant où le champ est devenu obligatoire. Faites-en un retrieve :
 **Commit changes**, cochez `Helios_Delivery_Crew` et `Helios_Delivery_Manager`, récupérez. Source
 Control montre chacun d'eux perdant son entrée `Crew_Size__c` et rien d'autre. Commitez, **Save /
-Publish** à nouveau. Le commentaire sfdx-hardis le disait même, sous chaque erreur, avec un lien vers
-la règle.
+Publish** à nouveau. Le commentaire sfdx-hardis le disait même, dans l'astuce repliée sous chaque
+erreur, avec un lien vers la règle.
 
 !!! note "C'est une bonne erreur"
     Elle est précise, elle nomme les deux composants fautifs, et la correction est évidente une fois
@@ -247,8 +247,11 @@ script Apex que vous avez créés à l'étape 5, et l'action que l'éditeur a é
 `scripts/actions/`, dans un fichier nommé d'après votre Pull Request. Commitez-les tous, puis
 **Save / Publish**.
 
-Le contrôle repasse, et son commentaire a maintenant un tableau **Post-deployment Actions Results** :
-votre remplissage, **skipped**, parce que c'est le job de validation. Mergez.
+Le contrôle repasse, et son commentaire a maintenant une ligne **Deployment actions** dans son
+tableau : votre remplissage, **🕒 1 after the merge**, parce que c'est le job de validation et qu'il
+ne change rien dans l'org. Ouvrez la section repliée **🛠️ Deployment actions of this job (1)** en
+dessous : le remplissage, **after** le déploiement, avec la raison **Runs after the merge only**.
+Mergez.
 
 Le job de déploiement vers `integration` le lance, pour de vrai, juste **après** le déploiement :
 ouvrez son log dans l'onglet **Actions** et vous y trouvez le déploiement, puis l'action qui démarre,

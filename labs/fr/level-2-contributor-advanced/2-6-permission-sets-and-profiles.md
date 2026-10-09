@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "76638d6bc8fedd4ecbcb798f9b026bb80023e7bd"
+source_rev: "9c652820abe61fac27fa86bac9eba269af742274"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-config
@@ -78,8 +78,8 @@ d'autre.
 Ouvrez `helios-integration` et vérifiez la sécurité au niveau du champ de **Panel Batch > Cost** : la
 colonne **Helios Crew** n'est pas cochée. La permission n'y est pas.
 
-Retournez à la Pull Request. Le commentaire dit succès, et le profil fait partie des composants
-déployés. Sauf que ce qui a été déployé n'est pas ce que vous avez commité.
+Retournez à la Pull Request. Le commentaire de déploiement dit **✅ Deployed to `integration`**, et
+son tableau replié **📋** compte un **Profile** parmi les composants qui ont changé. Sauf que ce qui a été déployé n'est pas ce que vous avez commité.
 
 ### 3. Lire votre propre diff
 

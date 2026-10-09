@@ -155,7 +155,7 @@ you skipped Level 1, that is where it will say so, and the command says it befor
 !!! tip "If the course helped you"
     [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) is the linting engine behind
     the quality gate your Pull Requests went through. A star is how an open source project stays
-    visible: open its page and click **Star** **(1)**, at the top right. Give it a star if you liked this
+    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
     course!
 
     ![The Star button of the MegaLinter repository on GitHub](../../_assets/annotated/web/github-star-megalinter.png)

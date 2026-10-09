@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "cdca81033f1a34ba8248bf6df218a9d3e533c141"
+source_rev: "00fdcbbcf343b840d9cbbdfcc9c18e4ee5aecf07"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -168,24 +168,29 @@ atteint la production.
 
 Mergez-la avec **Merge pull request**, jamais avec un squash : une promotion transporte chaque commit
 des stories qu'elle promeut, et la promotion suivante, le retrofit et les notes de version ont tous
-besoin de les retrouver un par un ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)).
+besoin de les retrouver un par un ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). Le commentaire vert du contrôle dit la même chose sur sa ligne
+**How to merge** : **use a merge commit, never squash**.
 
 ### 4. Lire les deployment actions qu'elle transporte
 
-Une fois le contrôle lancé, le commentaire sfdx-hardis gagne deux sections, **Pre-deployment Actions
-Results** et **Post-deployment Actions Results**. Ce qu'une promotion ajoute par-dessus est le
-paragraphe qui nomme la portée **(1)** : chaque Pull Request qu'elle transporte, chacune un lien.
+Une fois le contrôle lancé, le commentaire sfdx-hardis compte les actions dans la ligne **Deployment
+actions** de son tableau, et liste chacune dans la section repliée **🛠️ Deployment actions of this
+job**. Ce qu'une promotion ajoute par-dessus est sa portée **(1)** : la section repliée **ℹ️ Where the
+deployment actions and test classes come from** dit qu'elles sont rassemblées depuis le contenu de
+cette Pull Request, et la section repliée **🎫 ... tickets · ... Pull Requests** liste chaque Pull
+Request qu'elle transporte, chacune un lien.
 
 ![Les deployment actions rassemblées sur la Pull Request de promotion](../../_assets/annotated/web/github-pr-promotion-actions.png)
 
 Chaque action que n'importe quel contributeur a déclarée sur n'importe laquelle des stories mergées
-est rassemblée dans un seul tableau, avec son libellé, son type, son statut et un lien de retour vers
-la Pull Request d'où elle vient. Tout ce qui demande un humain reçoit une **liste de cases au-dessus
-du tableau**, intitulée *Manual Actions to perform before proceeding with deployment* ou *after
-deployment*. Les deux listes atterrissent sur des jobs différents : le job de contrôle porte celle
-d'avant **(2)**, pour que vous puissiez agir pendant que vous décidez, et le job de merge porte celle
-d'après. Les actions post-déploiement **(3)** affichent **skipped** sur le contrôle : un contrôle ne
-change rien dans l'org, elles attendent donc le merge.
+est rassemblée dans ce seul tableau, avec son libellé, son moment, son résultat avec la raison en
+clair, et un lien de retour vers la Pull Request d'où elle vient. Tout ce qui demande un humain
+reçoit sa propre **liste de cases**, au-dessus des sections repliées, intitulée **👋 To do by hand in
+`uat` before the deployment** ou **after the deployment**. Les deux listes atterrissent sur des jobs
+différents : le job de contrôle porte celle d'avant **(2)**, pour que vous puissiez agir pendant que
+vous décidez, et le job de merge porte celle d'après. Les actions post-déploiement **(3)** sont
+comptées **🕒 after the merge** sur le contrôle, avec la raison **Runs after the merge only** : un
+contrôle ne change rien dans l'org, elles attendent donc le merge.
 
 **Lisez-le avant de merger.** Deux choses à chercher :
 
@@ -230,9 +235,9 @@ Type RemoteSiteSetting: 1 item(s) skipped because they already exist in the targ
 **Final package.xml to deploy** affiché juste après a un élément de moins.
 
 La Pull Request le dit aussi, sans le log : le commentaire du contrôle, et celui qu'écrit ce
-déploiement, portent une section **Protected metadata (package-no-overwrite.xml)**. Ouvrez son
-tableau, **Protected components per metadata type** : il compte **1** dans la colonne **Not
-overwritten** de la ligne **RemoteSiteSetting**. Lisez-la sur le
+déploiement, portent une section repliée **🛡️ Protected by `manifest/package-no-overwrite.xml`
+(1)**. Ouvrez-la : son tableau, **Protected components per metadata type**, compte **1** dans la
+colonne **🛡️ Not overwritten** de la ligne **RemoteSiteSetting**. Lisez-la sur le
 contrôle, avant de merger : un composant que vous pensiez déployer et qui apparaît là est un
 composant que la liste protège par erreur.
 
@@ -380,6 +385,24 @@ Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cl
 - Les notes de version dans la description de la Pull Request de promotion
 
 ## En cas de problème
+
+**Le check de la promotion est vert tout de suite, sans étape de délivrabilité à faire.**
+Les actions du Niveau 2 ne voyagent avec aucune Pull Request de cette promotion. sfdx-hardis
+collecte les deployment actions dans les Pull Requests qu'une promotion transporte, et **Reset this
+level** met les stories du Niveau 2 dans `integration` en un seul commit qu'aucune Pull Request de
+votre fork n'a fait. Sa dernière étape donne à leurs actions une Pull Request de votre fork,
+**Deployment actions of the earlier levels**, et la merge une fois ses checks passés. Cherchez-la
+dans l'onglet **Pull requests** de votre fork :
+
+- **Ouverte avec des checks verts** : si GitHub la montre encore comme un brouillon (draft), cochez
+  la case de **Set Email Deliverability to All Email** dans son commentaire de check, celle
+  d'`integration` que vous avez faite au [Lab 2.4](../level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md), puis cliquez sur **Ready for review**. Mergez-la
+  avec **Merge pull request**. La Pull Request de promotion reçoit le nouveau commit
+  d'`integration`, et son check repart, rouge cette fois, comme le dit l'étape 4
+- **Absente** : votre reset a tourné sans cette étape, le cas d'un fork dont les scripts datent
+  d'avant le 2026-10-08. Votre pipeline n'a rien de faux : continuez, et les étapes 4, 5 et 7
+  montrent moins d'actions que ce lab ne le décrit. Avant votre prochain reset, lancez **Update my
+  course**
 
 **Le job de déploiement vers uat est rouge sur « Put the delivery managers in the Crew Leads group ».**
 Votre fork date d'avant le 2026-10-05, quand le correctif de Mariia au [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) ne livrait pas encore le

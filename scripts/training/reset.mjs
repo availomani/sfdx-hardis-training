@@ -9,9 +9,16 @@ import fs from "fs";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, runStreamed, git, gitOut,
-  select, confirm, universe, repoSlug, ensureGh, connectedOrgs
+  select, confirm, universe, repoSlug, ensureGh, connectedOrgs, openPullRequest
 } from "../lib/util.mjs";
 import { withProtectionLifted } from "../lib/protection.mjs";
+import { waitForPullRequestChecks, mergeUpdatePullRequest } from "../lib/course-updates.mjs";
+import {
+  numberedActionFiles, actionFileOf, mergeActionFiles, hasPreDeployManualAction, tickPreDeployManualActions
+} from "../lib/deployment-actions.mjs";
+
+const ACTIONS_BRANCH = "course/earlier-deployment-actions";
+const ACTIONS_TITLE = "Deployment actions of the earlier levels";
 
 export default async function reset(args) {
   const u = universe();
@@ -35,6 +42,7 @@ export default async function reset(args) {
   warn(`This throws away the work on your ${c.bold("integration")} branch and replaces it with ${c.bold(start)}.`);
   info(c.dim("    Then it offers to delete the branches of this level, here and in your fork,"));
   info(c.dim("    and to set up helios-dev and helios-integration again. Each is asked first."));
+  info(c.dim("    Last, it gives the deployment actions of the earlier levels a Pull Request of your fork."));
   const sure = args.yes === true || (await confirm(`Reset integration to ${start}?`, false));
   if (!sure) {
     info("Nothing was changed.");
@@ -46,7 +54,7 @@ export default async function reset(args) {
   // GitHub refuses that push to a token without the workflow permission
   await ensureGh();
 
-  title("1 of 5  Fetching the reference branches");
+  title("1 of 6  Fetching the reference branches");
   if (run("git", ["fetch", "upstream", "--prune"]).code !== 0) {
     abort("Could not reach the training repository.", "Check your network connection and try again.");
   }
@@ -59,7 +67,7 @@ export default async function reset(args) {
   }
   ok(`upstream/${start} found`);
 
-  title("2 of 5  Moving your integration branch");
+  title("2 of 6  Moving your integration branch");
   const dirty = gitOut(["status", "--porcelain"]);
   if (dirty) {
     warn("You have uncommitted changes. They are being stashed, not deleted.");
@@ -94,7 +102,7 @@ export default async function reset(args) {
   ok(`integration now matches ${start}`);
   keepBranchConfig(pipelineConfig);
 
-  title("3 of 5  Publishing it to your fork");
+  title("3 of 6  Publishing it to your fork");
   // --force-with-lease compares the fork against what this clone last saw of
   // it, and a learner who merged a Pull Request on github.com has not seen it
   // since. Without this fetch the push is refused with "stale info", on the
@@ -109,7 +117,7 @@ export default async function reset(args) {
   run("git", ["branch", "--set-upstream-to=origin/integration", "integration"], { quiet: true, capture: true });
   if (push.code !== 0) {
     // integration only takes Pull Requests: the learner cannot push it by hand.
-    // Steps 4 and 5 stop here too: deleting the fork's branches closes their Pull
+    // Steps 4 to 6 stop here too: deleting the fork's branches closes their Pull
     // Requests, and setting up the orgs again, for a fork still holding the old
     // work, would leave the orgs and the repository disagreeing.
     warn("The push was refused, so your fork was not reset. Run Reset this level again.");
@@ -118,11 +126,14 @@ export default async function reset(args) {
   }
   ok("Your fork is level with the reset point");
 
-  title("4 of 5  Clearing the branches of this level");
+  title("4 of 6  Clearing the branches of this level");
   const branchesCleared = await clearLevelBranches(u, level, args);
 
-  title("5 of 5  Putting your orgs back");
+  title("5 of 6  Putting your orgs back");
   const orgsLeft = await reseedOrgs(args);
+
+  title("6 of 6  Giving the deployment actions of the earlier levels a Pull Request");
+  const actionsOwned = await ownEarlierDeploymentActions(args);
 
   title("Done");
   const levelDef = u.levels.find((l) => l.level === level);
@@ -132,6 +143,12 @@ export default async function reset(args) {
     info("");
     info(c.dim("  The branches of this level are still there. New User Story never reuses a branch,"));
     info(c.dim("  so it will ask you for another name at each story of this level that has one."));
+  }
+  if (!actionsOwned) {
+    info("");
+    info(c.dim("  The deployment actions of the earlier levels have no Pull Request merged into integration, so no"));
+    info(c.dim("  promotion runs them. If the Pull Request above is open, merge it once its checks are green, as Lab 3.5"));
+    info(c.dim("  says under If it goes wrong. Otherwise run Reset this level again once the lines above are solved."));
   }
   if (orgsLeft.length > 0) {
     info("");
@@ -348,6 +365,206 @@ async function reseedOrgs(args) {
     }
   }
   return left;
+}
+
+/**
+ * Step 6: the deployment actions the start branch carries, given a Pull Request
+ * of the fork.
+ *
+ * The start branch keeps the action files of the course's own Pull Requests,
+ * .sfdx-hardis.28.yml for US-026, and sfdx-hardis only runs the actions of the
+ * Pull Requests a promotion carries: no Pull Request of the fork has those
+ * numbers, so after a reset into Level 3 the first promotion to uat went green
+ * with no deliverability step, no crew capacity data and no nightly job.
+ *
+ * They are moved into one file named after a Pull Request opened now, into
+ * integration, and merged once its checks pass. Opened now, its number is lower
+ * than every story the learner opens afterwards, and actions run in Pull Request
+ * number order: the Level 2 actions run before the Level 3 ones, as they do for
+ * a learner who walked Level 2. The ids stay those of the start branch, so a
+ * second reset writes the same actions again, not new ones.
+ *
+ * It is opened as a draft: a pre-deployment manual action waiting in integration
+ * stops the check of a ready Pull Request, and only warns on a draft. The
+ * learner did that step in integration in Lab 2.4 (a scratch org already reads
+ * All email), so its box is ticked once the check has posted it, the way they
+ * ticked it then, and integration records it as done when the merge deploys.
+ *
+ * Returns true when nothing is left without a Pull Request.
+ */
+async function ownEarlierDeploymentActions(args) {
+  run("git", ["fetch", "--quiet", "origin", "integration"], { quiet: true, capture: true });
+  const base = "origin/integration";
+  const files = numberedActionFiles(gitOut(["ls-tree", "-r", "--name-only", base, "--", "scripts/actions/"]).split("\n").map((f) => f.trim()));
+  if (files.length === 0) {
+    ok("No deployment action of an earlier level to carry");
+    return true;
+  }
+  info("  The deployment actions of the earlier levels, still named after Pull Requests of the course:");
+  files.forEach(({ file }) => info(c.dim(`    ${file}`)));
+  info(c.dim("    No Pull Request of your fork has those numbers, so no promotion would run them."));
+  const sure = args.yes === true || (await confirm("Move them into one file of a new Pull Request into integration, and merge it once its checks pass?", true));
+  if (!sure) {
+    info("  They are left as they are.");
+    return false;
+  }
+  // The move is undone with git reset --hard on its own branch: a change left in
+  // integration, like a branch configuration git could not commit in step 2,
+  // would follow the switch there and be thrown away
+  if (gitOut(["status", "--porcelain", "--untracked-files=no"])) {
+    warn("You have uncommitted changes in integration, so the deployment actions were left as they are.");
+    info(c.dim("    Commit them or discard them in the Source Control panel, then run Reset this level again."));
+    return false;
+  }
+  const slug = repoSlug();
+
+  let content;
+  try {
+    content = mergeActionFiles(
+      files.map(({ file }) => ({ name: file, content: run("git", ["show", `${base}:${file}`], { capture: true, quiet: true }).stdout })),
+      [
+        "The deployment actions of the earlier levels, in the order they ran there.",
+        "Reset this level moved them here, so they belong to a Pull Request of this",
+        "fork and travel with the promotions."
+      ]
+    );
+  } catch (error) {
+    warn(`They could not be put in one file: ${error.message}.`);
+    return false;
+  }
+
+  // A Pull Request left open by a reset that stopped halfway carries the state
+  // integration had then: closed, and made again from integration as it is now
+  const open = run("gh", ["pr", "list", "--repo", slug, "--head", ACTIONS_BRANCH, "--state", "open", "--json", "number"], { capture: true, quiet: true });
+  for (const pr of jsonArray(open.stdout)) {
+    run("gh", ["pr", "close", String(pr.number), "--repo", slug], { capture: true, quiet: true });
+  }
+
+  // The file is named after the Pull Request, whose number GitHub only gives when
+  // it is opened: guessed from the newest one, and renamed when the guess was wrong
+  const newest = jsonArray(
+    run("gh", ["api", `repos/${slug}/pulls?state=all&per_page=1&sort=created&direction=desc`], { capture: true, quiet: true }).stdout
+  );
+  let number = (newest[0]?.number || 0) + 1;
+
+  if (run("git", ["switch", "--no-track", "-C", ACTIONS_BRANCH, base], { capture: true, quiet: true }).code !== 0) {
+    warn(`The branch ${ACTIONS_BRANCH} could not be made from integration.`);
+    return false;
+  }
+  // A move left half done on this branch must not follow the switch to integration
+  const backToIntegration = () => {
+    run("git", ["reset", "--hard", "--quiet"], { capture: true, quiet: true });
+    run("git", ["switch", "integration"], { capture: true, quiet: true });
+  };
+  let committed = false;
+  try {
+    // A file git could not remove would leave its actions twice in integration
+    if (run("git", ["rm", "--quiet", "--", ...files.map(({ file }) => file)], { capture: true, quiet: true }).code !== 0) {
+      throw new Error("git could not remove the files of the earlier levels");
+    }
+    // git rm takes the folder away with its last file
+    fs.mkdirSync(path.join(ROOT, path.dirname(actionFileOf(number))), { recursive: true });
+    fs.writeFileSync(path.join(ROOT, actionFileOf(number)), content, "utf8");
+    if (run("git", ["add", "--", actionFileOf(number)], { capture: true, quiet: true }).code !== 0) {
+      throw new Error(`git could not add ${actionFileOf(number)}`);
+    }
+    committed = run("git", ["commit", "-m", ACTIONS_TITLE], { capture: true, quiet: true }).code === 0;
+  } catch (error) {
+    backToIntegration();
+    warn(`The action file could not be written: ${error.message}`);
+    return false;
+  }
+  if (!committed) {
+    backToIntegration();
+    warn("The move could not be committed. Git needs a name and an email: commit once in the Source Control panel.");
+    return false;
+  }
+  if (run("git", ["push", "--force", "origin", ACTIONS_BRANCH], { capture: true, quiet: true }).code !== 0) {
+    backToIntegration();
+    warn("The branch could not be pushed to your fork.");
+    return false;
+  }
+  const body = [
+    "The deployment actions of the earlier levels, moved by **Reset this level** into one file named after this Pull Request.",
+    "",
+    ...files.map(({ file }) => `- \`${file}\``),
+    "",
+    "The start branch keeps them under the numbers of the course's own Pull Requests, and sfdx-hardis only runs the actions of the Pull Requests a promotion carries.",
+    "",
+    "Opened as a draft: the deliverability step of Lab 2.4 is to do by hand before a deployment, and the check of a draft only warns about it. Reset this level ticks it for integration, where Lab 2.4 did it, then merges."
+  ].join("\n");
+  const url = openPullRequest({ slug, base: "integration", branch: ACTIONS_BRANCH, title: ACTIONS_TITLE, body, draft: true });
+  const opened = Number((url || "").match(/\/pull\/(\d+)$/)?.[1] || 0);
+  if (!opened) {
+    backToIntegration();
+    warn("The Pull Request could not be opened.");
+    return false;
+  }
+  if (opened !== number) {
+    // Checked: an amend with nothing renamed still succeeds, and would merge a
+    // file named after another number
+    const moved = run("git", ["mv", actionFileOf(number), actionFileOf(opened)], { capture: true, quiet: true }).code === 0;
+    number = opened;
+    const amended = moved && run("git", ["commit", "--amend", "--no-edit"], { capture: true, quiet: true }).code === 0;
+    if (!amended || run("git", ["push", "--force", "origin", ACTIONS_BRANCH], { capture: true, quiet: true }).code !== 0) {
+      backToIntegration();
+      warn(`The file could not be renamed after Pull Request #${number}: ${url}`);
+      return false;
+    }
+  }
+  backToIntegration();
+  ok(`Pull Request #${number} opened, with ${actionFileOf(number)}`);
+  info(`  ${c.cyan(url)}`);
+
+  info(c.dim("  Mega-Linter and the deployment simulation usually take 3 to 5 minutes."));
+  const checks = await waitForPullRequestChecks(slug, url);
+  if (!checks.ok) {
+    warn(checks.timedOut ? "Its checks did not finish in time, so it was not merged." : "A check failed, so it was not merged:");
+    checks.failed.forEach((check) => info(c.dim(`    ${check.name}`)));
+    info(`  Open it to see why: ${c.cyan(url)}`);
+    return false;
+  }
+  const ticked = tickPreDeployManualActions(run, slug, number, "integration");
+  if (ticked.length > 0) {
+    ok(`Ticked for integration: the ${ticked.length === 1 ? "manual step" : `${ticked.length} manual steps`} Level 2 did there`);
+  } else if (hasPreDeployManualAction(content)) {
+    // Merged all the same: integration then lists the step as to do by hand,
+    // which is a line of a comment, not a stop
+    warn("Its check posted no box to tick for integration, so the manual step Level 2 did there is not recorded as done.");
+    info(c.dim(`    Tick its box In integration in the comments of ${url} once they show it.`));
+  }
+  run("gh", ["pr", "ready", url, "--repo", slug], { capture: true, quiet: true });
+  let merged = { ok: false, message: "" };
+  // GitHub can take a moment to see a draft as ready
+  for (let attempt = 1; attempt <= 3 && !merged.ok; attempt++) {
+    merged = mergeUpdatePullRequest(slug, url, `${ACTIONS_TITLE} (#${number})`);
+    if (!merged.ok && attempt < 3) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
+  }
+  if (!merged.ok) {
+    warn("GitHub refused to merge it:");
+    merged.message.split("\n").slice(0, 6).forEach((line) => info(c.dim(`    ${line}`)));
+    info(`  Open it to see why: ${c.cyan(url)}`);
+    return false;
+  }
+  run("git", ["push", "--quiet", "origin", "--delete", ACTIONS_BRANCH], { quiet: true, capture: true });
+  run("git", ["branch", "-D", ACTIONS_BRANCH], { quiet: true, capture: true });
+  run("git", ["fetch", "--quiet", "origin", "integration"], { quiet: true, capture: true });
+  run("git", ["merge", "--ff-only", "--quiet", "origin/integration"], { quiet: true, capture: true });
+  ok(`Merged into integration: the deployment actions of the earlier levels now belong to Pull Request #${number}`);
+  info(c.dim("  The deployment job of integration runs them now, and every promotion carries them on."));
+  return true;
+}
+
+/** The JSON array gh printed, or an empty one. */
+function jsonArray(text) {
+  try {
+    const value = JSON.parse((text || "").trim() || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
 }
 
 function startBranch(level) {

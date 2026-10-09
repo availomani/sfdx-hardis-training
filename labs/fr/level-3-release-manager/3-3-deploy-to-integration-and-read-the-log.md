@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "1aa4b2a3986ddf7382d050bdbfa75cb5f8b7f39c"
+source_rev: "9c652820abe61fac27fa86bac9eba269af742274"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -289,10 +289,15 @@ System.QueryException: List has no rows for assignment to SObject
 Mariia a créé le groupe à la main dans sa propre org, dans Setup, comme on en crée un le plus
 souvent : rien dans sa Pull Request ne le crée.
 
-**Le commentaire Deployment Actions** de sa Pull Request liste les trois actions sous **Failed
-actions (1)** : ❌ pour celle qui a échoué, ⏸️ pour les deux qu'elle a arrêtées, chacune avec une
-case à cocher. Le tableau **Status by org branch** **(2)** dit la même chose dans la colonne
-`integration`.
+**Le commentaire de déploiement** de sa Pull Request s'ouvre sur **❌ Deployed to `integration`, but
+an action failed after the deployment** : l'org a les nouvelles métadonnées. Sous **❌ Failed
+action**, il montre la fin de la sortie du script, et sous **⏸️ Not run, waiting for the failed
+action** les deux autres.
+
+**Le commentaire Deployment Actions** de sa Pull Request résume tout dans son verdict, **In
+integration: ❌ 1 failed · ⏸️ 2 waiting**, et liste les trois actions sous **Needs you (1)** : ❌
+pour celle qui a échoué, ⏸️ pour les deux qu'elle a arrêtées, chacune avec une case à cocher. Le
+tableau **Status by org** **(2)** dit la même chose dans la colonne `integration`.
 
 ![Le commentaire Deployment Actions avec une action en échec et deux actions arrêtées](../../_assets/annotated/web/github-pr-deployment-actions-failed.png)
 
@@ -433,7 +438,7 @@ affiche **Done** dans l'onglet.
 Le prochain déploiement vers `integration` la saute. Dans `uat` et au-delà, elle tourne toujours,
 parce que personne ne l'y a faite.
 
-Cocher sa case dans la liste **Failed actions** du commentaire de la Pull Request fait la même
+Cocher sa case dans la liste **Needs you** du commentaire Deployment Actions fait la même
 chose, enregistrée par le prochain job sfdx-hardis : utilisez-la quand vous êtes sur GitHub plutôt
 que dans VS Code.
 

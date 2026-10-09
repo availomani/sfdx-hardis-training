@@ -76,13 +76,13 @@ Verify in `helios-uat` that the stories are usable, not only deployed.
 ### Thursday: release to production
 
 Promote `uat` into `preprod` first, and check `helios-preprod` behaves. Then create the release, the Pull
-Request from `preprod` into `main`, titled `Release ...`. Read the counts line in the sfdx-hardis comment and stop if anything is being
+Request from `preprod` into `main`, titled `Release ...`. Read the **Metadata** row of the sfdx-hardis comment and stop if anything is being
 deleted that you were not expecting. Merge, watch, verify, do the manual steps.
 
 Everything [Lab 3.7](3-7-hotfix-and-retrofit.md) put in at `preprod` is already in `main`, so this release should not be moving
-it again. Read the counts line with that in mind: what goes out this week is Romain's help text,
+it again. Read the **Metadata** row with that in mind: what goes out this week is Romain's help text,
 the retrofits travelling up from `integration`, and US-058 and US-060, which have been waiting in
-`uat` since [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md). `deleted: 0` is still the number to stop on.
+`uat` since [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md). A `deleted` count in that row is still the thing to stop on.
 
 **That promotion is also what ends the exception.** US-057, US-059 and US-061 went to `preprod` on
 their own last week; this one carries US-058 and US-060 the ordinary way, and `uat` and `preprod`
@@ -184,7 +184,7 @@ machine before it opens anything, so you find out here rather than on the issue.
 !!! tip "If the course helped you"
     [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
     extension every click of this course went through. A star is how an open source project stays
-    visible: open its page and click **Star** **(1)**, at the top right. Give it a star if you liked this
+    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
     course!
 
     ![The Star button of the vscode-sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)

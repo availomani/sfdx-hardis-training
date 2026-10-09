@@ -96,8 +96,9 @@ In `helios-dev`, create:
 Then the records. Helios supports 12 combinations, three crew types by four roof types, and each
 one needs a Crew Capacity record saying how many panels a day that crew lays on that roof. Typing
 twelve records teaches nothing this lab is about, so the Training menu creates them:
-**Training: Level 2** **(1)** > **Create my lab records** **(2)**, pick **Lab 2.4 - the 12 Crew
-Capacity records**, then **helios-dev**, and answer **Yes** to **Create them?**.
+**Training: Level 2** **(1)** > **Create my lab records** **(2)**. The panel picks **Lab 2.4 - the
+12 Crew Capacity records** and **helios-dev** on its own, the only lab and the only org it offers
+here: answer **Yes** to **Create them?**.
 
 ![The Level 2 Training menu, with Create my lab records](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--lab-records.png)
 
@@ -314,10 +315,17 @@ says it is. Its log names the step and the three ways to mark it, and sfdx-hardi
 
 ![The Deployment Actions comment of the US-026 Pull Request](../../_assets/annotated/web/github-pr-deployment-actions.png)
 
-- **Pending manual actions** **(1)**: your deliverability step, with a checkbox, for `integration`
-- **Status by org branch** **(2)**: one row per action, with its moment. The deliverability step,
-  **pre-deploy**, waits for somebody; the import and the schedule, **post-deploy**, read **not run
-  in this org branch yet**, because the check stopped before them, and a check runs neither anyway
+Under its banner, a verdict reads **In integration: 👋 1 to do by hand**, then:
+
+- **Needs you** **(1)**: your deliverability step, with a checkbox, marked 👋 and followed by
+  *(org branch: integration)*
+- **Status by org** **(2)**: one row per action, with its moment. The deliverability step,
+  **pre-deploy**, is **to do by hand**; the import and the schedule, **post-deploy**, read **not
+  run in this org branch yet**, because the check stopped before them, and a check runs neither
+  anyway
+
+The check comment lists the step too, under **👋 To do by hand in `integration` before the
+deployment**, with a checkbox of its own.
 
 Do the click in `helios-integration` (it already reads **All email** on your scratch orgs, so it is
 a ten-second check), then tick the box **(1)**. In VS Code, **Mark as done in integration** on the
@@ -346,7 +354,7 @@ Do not take the green tick for it. **Open the org and look:**
 
 - The **Crew Capacity** tab of the Helios Delivery app, on its **All** list view, has 12 records
 - **Setup > Scheduled Jobs** lists `Helios crew capacity nightly`
-- The manual step reads **done** for `integration` under **Status by org branch**, with the date
+- The manual step reads **done** for `integration` under **Status by org**, with the date
   of your tick
 
 You did the click before the merge, which is what a real release needs: the person merging does it

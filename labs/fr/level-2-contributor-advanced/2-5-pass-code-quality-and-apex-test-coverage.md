@@ -5,7 +5,7 @@ description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloq
 level: 2
 lab: 5
 lang: fr
-source_rev: "ffb6aaecf99de2f613d260b80e5edd5e5d81805f"
+source_rev: "9c652820abe61fac27fa86bac9eba269af742274"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -168,8 +168,9 @@ fois, c'est le contrôle de déploiement qui **échoue** :
 [sfdx-hardis][apextest] Test run code coverage (org wide) 76.92% should be greater than 80%
 ```
 
-Le commentaire sfdx-hardis le dit aussi, en rouge : **code coverage is insufficient**. Salesforce
-seul l'aurait laissée passer, à 77 % pour son plancher de 75 % : le projet en demande davantage, et
+Le commentaire sfdx-hardis le dit aussi, dans son verdict : **❌ Cannot merge into `integration`:
+code coverage 76.92% is under the 80% target**, et sa ligne **Apex tests** dit la même chose.
+Salesforce seul l'aurait laissée passer, à 77 % pour son plancher de 75 % : le projet en demande davantage, et
 le job de contrôle l'y tient.
 
 La version avec la boucle était courte, et l'org la portait à 81 %. La correction est plus longue, et

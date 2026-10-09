@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "b7f5e0686a2d5a83a1ce183f8f4c30a684e0a129"
+source_rev: "e675a673ecb5326e65bfc6e0687d17187d034ea5"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -99,8 +99,8 @@ Puis les enregistrements. Helios prend en charge 12 combinaisons, trois types d'
 types de toiture, et chacune a besoin d'un enregistrement Crew Capacity qui dit combien de panneaux
 par jour cette équipe pose sur cette toiture. Saisir douze enregistrements n'apprend rien de ce dont
 parle ce lab, alors le menu Training les crée : **Training: Level 2** **(1)** > **Create my lab
-records** **(2)**, choisissez **Lab 2.4 - the 12 Crew Capacity records**, puis **helios-dev**, et
-répondez **Yes** à **Create them?**.
+records** **(2)**. Le panneau prend de lui-même **Lab 2.4 - the 12 Crew Capacity records** et
+**helios-dev**, le seul lab et la seule org qu'il propose ici : répondez **Yes** à **Create them?**.
 
 ![Le menu Training du Niveau 2, avec Create my lab records](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--lab-records.png)
 
@@ -324,12 +324,17 @@ marquer, et sfdx-hardis publie un commentaire **Deployment Actions** sur la Pull
 
 ![Le commentaire Deployment Actions de la Pull Request US-026](../../_assets/annotated/web/github-pr-deployment-actions.png)
 
-- **Pending manual actions** **(1)** : votre étape de délivrabilité, avec une case à cocher, pour
-  `integration`
-- **Status by org branch** **(2)** : une ligne par action, avec son moment. L'étape de délivrabilité,
-  **pre-deploy**, attend quelqu'un ; l'import et la planification, **post-deploy**, indiquent
+Sous sa bannière, un verdict indique **In integration: 👋 1 to do by hand**, puis :
+
+- **Needs you** **(1)** : votre étape de délivrabilité, avec une case à cocher, marquée 👋 et
+  suivie de *(org branch: integration)*
+- **Status by org** **(2)** : une ligne par action, avec son moment. L'étape de délivrabilité,
+  **pre-deploy**, est **to do by hand** ; l'import et la planification, **post-deploy**, indiquent
   **not run in this org branch yet**, parce que le contrôle s'est arrêté avant eux, et qu'un
   contrôle ne lance ni l'un ni l'autre de toute façon
+
+Le commentaire du contrôle liste aussi l'étape, sous **👋 To do by hand in `integration` before the
+deployment**, avec sa propre case à cocher.
 
 Faites le clic dans `helios-integration` (elle affiche déjà **All email** sur vos scratch orgs, c'est
 donc une vérification de dix secondes), puis cochez la case **(1)**. Dans VS Code, **Mark as done in
@@ -361,7 +366,7 @@ Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 - L'onglet **Crew Capacity** de l'application Helios Delivery, sur sa vue de liste **All**, a 12
   enregistrements
 - **Setup > Scheduled Jobs** liste `Helios crew capacity nightly`
-- L'étape manuelle est **done** pour `integration` sous **Status by org branch**, avec la date de
+- L'étape manuelle est **done** pour `integration` sous **Status by org**, avec la date de
   votre case
 
 Vous avez fait le clic avant le merge, ce qu'exige une vraie release : la personne qui merge le fait

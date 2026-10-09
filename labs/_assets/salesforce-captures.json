@@ -16,10 +16,10 @@
       "width": 1720,
       "height": 950,
       "clip": {
-        "x": 268,
-        "y": 162,
-        "width": 1440,
-        "height": 718
+        "x": 12,
+        "y": 150,
+        "width": 1696,
+        "height": 790
       }
     },
     {
@@ -77,9 +77,9 @@
       "width": 1720,
       "height": 1400,
       "clip": {
-        "x": 268,
-        "y": 162,
-        "width": 1440,
+        "x": 12,
+        "y": 150,
+        "width": 1696,
         "height": 850
       }
     },
@@ -140,7 +140,7 @@
     },
     {
       "name": "crew-capacity-records",
-      "_comment": "Lab 2.4 step 1: the list of the 12 Crew Capacity records that Create my lab records made. The object has no tab, and this address opens its list all the same. Needs an org holding the records: run Create my lab records on it first.",
+      "_comment": "Lab 2.4 step 1: the list of the 12 Crew Capacity records that Create my lab records made. The object has no tab, and this address opens its list all the same. Needs an org holding the records: taken with --org helios-dev right after Create my lab records.",
       "path": "/lightning/o/Crew_Capacity__c/list?filterName=All",
       "width": 1440,
       "height": 900,
@@ -155,7 +155,7 @@
     },
     {
       "name": "flow-builder-assign-crew",
-      "_comment": "Lab 2.7 step 1: the Installation Assign Crew flow in Auto-Layout, with the Flat Roof Minimum decision after Move To Scheduled. Read from helios-uat, whose flow carries the finished rule. Switching the canvas to Auto-Layout only changes the view: nothing is saved.",
+      "_comment": "Lab 2.7 step 1: the Installation Assign Crew flow in Auto-Layout, with the Flat Roof Minimum decision after Move To Scheduled. Taken with --org helios-dev right after step 1 of the lab, when the flow holds the learner's rule and not the cap yet. Switching the canvas to Auto-Layout only changes the view: nothing is saved.",
       "path": "/builder_platform_interaction/flowBuilder.app?flowId={{assignCrewFlowId}}",
       "width": 1600,
       "height": 950,

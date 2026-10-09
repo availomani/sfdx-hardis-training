@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "b7f5e0686a2d5a83a1ce183f8f4c30a684e0a129"
+source_rev: "ee3029d22ba45d5b0cbdb2c50c30d3e3aa93a291"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -143,19 +143,26 @@ Quand le contrôle de déploiement se termine, sfdx-hardis écrit un commentaire
 
 ![Le commentaire sfdx-hardis sur une Pull Request](../../_assets/annotated/web/github-pr-comment.png)
 
-1. **La bannière** **(1)** dit si le déploiement simulé a réussi
-2. **La couverture Apex** **(2)**, juste en dessous, face à l'objectif que fixe ce projet
-3. **Ce qui changerait** **(3)**. Pas une liste de vos fichiers : sfdx-hardis envoie le package
-   entier, `manifest/package.xml`, et Salesforce répond quelle part en diffère : `Simulated
-   deployment: 36 components validated against the org, 7 would change (1 created, 6 updated, 0
-   deleted, 29 unchanged)`. Le composant créé est votre champ, et les composants mis à jour incluent
-   la présentation de page et les deux permission sets que vous avez modifiés. Cliquez sur la ligne
-   en dessous pour ouvrir un tableau de ces changements, par type de composant : le champ est la
-   ligne **CustomField**
-4. **Les tickets** **(4)**, les stories qu'il a reconnues dans votre nom de branche et vos messages
-   de commit, chacune avec son titre et un lien vers sa page dans le backlog
+1. **Le verdict** **(1)**, sous la bannière : **✅ Ready to merge into `integration`**, une ligne
+   qui dit que le déploiement a seulement été simulé dans l'org `integration`, donc que rien n'y a
+   changé, et **How to merge: use Squash and merge, so the User Story arrives as one commit.**
+   L'étape 4 fait exactement cela
+2. **Apex tests** **(2)**, une ligne du tableau **Check | Result** sous le verdict : la couverture,
+   face à l'objectif que fixe ce projet
+3. **Metadata** **(3)**, la première ligne de ce tableau : ce qui changerait. Pas une liste de vos
+   fichiers : sfdx-hardis envoie le package entier, `manifest/package.xml`, et Salesforce répond
+   quelle part en diffère : `7 components would change (1 created, 6 updated), 36 validated`. Le
+   composant créé est votre champ, et les composants mis à jour incluent la présentation de page et
+   les deux permission sets que vous avez modifiés. Plus bas, cliquez sur **📋 7 components would
+   change in the org** pour ouvrir un tableau de ces changements, par type de composant : le champ
+   est la ligne **CustomField**
+4. **Les tickets** **(4)**, repliés sous **🎫 1 ticket** vers le bas : les stories qu'il a reconnues
+   dans votre nom de branche et vos messages de commit, chacune avec son titre et un lien vers sa
+   page dans le backlog
 
-En dessous, un résumé de vos commits et le nom du job qui a écrit le commentaire.
+Le tableau a une ligne de plus, **Quick Deploy** : le job de merge peut réutiliser cette validation,
+donc les tests Apex ne tourneront pas une deuxième fois. L'étape 5 le montre à l'œuvre. Le
+commentaire se termine par le nom du job qui l'a écrit.
 
 <details markdown="1"><summary>Sous le capot : d'où viennent les titres des stories</summary>
 
@@ -181,7 +188,7 @@ Azure Boards ou ServiceNow à la place.
 
 ### 4. Merger
 
-Les deux contrôles verts, le commentaire dit succès. De retour sur l'onglet **Conversation**, faites
+Les deux contrôles verts, le commentaire dit **Ready to merge**. De retour sur l'onglet **Conversation**, faites
 défiler jusqu'en bas : la boîte de merge affiche **All checks have passed** et **No conflicts with
 base branch**, et le bouton est actif.
 
@@ -255,12 +262,15 @@ de merger :
 
 ![Le commentaire que sfdx-hardis écrit après le déploiement de merge](../../_assets/annotated/web/github-pr-deployed.png)
 
-1. **Deployment successful** **(1)**, et cette fois l'org a vraiment changé
-2. **Ce qui a changé** **(2)**, sous la même forme que ce que le contrôle annonçait : `7 changed`
-   là où le contrôle disait `7 would change`
-3. **Quick Deploy** **(3)**. Le job de merge n'est pas parti de rien. Il a libéré la validation que
-   le contrôle de Pull Request avait déjà faite, c'est pourquoi il n'a pas relancé les tests Apex une
-   deuxième fois et pourquoi il a pris deux minutes plutôt que cinq
+1. **Le verdict** **(1)** : **✅ Deployed to `integration`**, et cette fois l'org a vraiment changé
+2. **Metadata** **(2)**, sous la même forme que ce que le contrôle annonçait, avec en plus la
+   façon dont il a été déployé : **✅ Full Quick Deploy: 7 components changed (1 created, 6
+   updated)** là où le contrôle disait `7 components would change`. *Full*, parce que ce projet
+   envoie le package entier à chaque fois. *Quick Deploy*, parce que le job de merge n'est pas
+   parti de rien : il a déployé la validation que le contrôle de Pull Request avait déjà faite,
+   et c'est pourquoi il a pris deux minutes plutôt que cinq
+3. **Apex tests** **(3)** : **Already run during the validation**. Le Quick Deploy a repris
+   l'exécution des tests du contrôle, donc aucun test n'a tourné à nouveau
 
 Ouvrez ensuite `helios-integration` depuis **Orgs Manager** et regardez une installation.
 
@@ -354,7 +364,8 @@ robot sur votre ordinateur, puis lancez **Training: Level 1 > Trigger my workflo
 part qui relance les contrôles.
 
 **Le déploiement réussit mais le champ n'est pas dans l'org.**
-Ouvrez le tableau des changements dans le commentaire, sous la ligne de compteurs. S'il n'a pas de
+Ouvrez la section repliée **📋 ... components would change in the org** du commentaire, sous le
+tableau des contrôles. Si elle n'a pas de
 ligne **CustomField**, c'est que le champ n'est pas dans `manifest/package.xml`, et le [Lab 1.5, étape 6](1-5-retrieve-commit-and-publish-your-changes.md#6-lire-le-package-avant-de-pousser) est là où vous le lisez.
 
 ## Vérifiez votre travail

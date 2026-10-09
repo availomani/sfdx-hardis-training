@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "227087b70542c7fdd5f235321968b5154475be67"
+source_rev: "cfe1dcea647583a742b1ae3fdbd4c161e30eb765"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -162,8 +162,8 @@ que le formulaire s'ouvre.
 !!! tip "Si ce cours vous a servi"
     [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) est le moteur de linting
     derrière la barrière de qualité que vos Pull Requests ont traversée. Une étoile est ce qui permet
-    à un projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, en haut
-    à droite. Donnez une étoile si vous avez aimé ce cours !
+    à un projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite
+    du nom du repository. Donnez une étoile si vous avez aimé ce cours !
 
     ![Le bouton Star du repository MegaLinter sur GitHub](../../_assets/annotated/web/github-star-megalinter.png)
 

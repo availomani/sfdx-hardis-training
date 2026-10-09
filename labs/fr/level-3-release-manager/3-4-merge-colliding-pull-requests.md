@@ -5,7 +5,7 @@ description: "Décidez de l'ordre dans lequel trois Pull Requests sont mergées 
 level: 3
 lab: 4
 lang: fr
-source_rev: "a56a9431039c47aac2bd6723d7f35dca0eb38c67"
+source_rev: "5004bd9b727a032b01a8e13fa1eefb935db726e7"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config--cleaning-overwrite
@@ -63,11 +63,11 @@ lancent la même chose :
 une fois : en rejouer un sur une branche qui a déjà ses fichiers signale "Nothing to commit" et
 n'ouvre rien.
 
-US-019 peut faire de même, et ce n'est pas un défaut non plus. Cela dépend de la façon dont vous êtes
-arrivé ici : l'épreuve finale du Niveau 2 merge US-019, donc si vous êtes passé directement du
-Niveau 2 au Niveau 3 elle est déjà dans `integration`, et si vous avez réinitialisé au Niveau 3 elle
-vous attend. Si elle signale "Nothing to commit", ouvrez plutôt sa Pull Request mergée et lisez-la.
-Chaque étape ci-dessous fonctionne dans les deux cas.
+US-019 fait de même, et ce n'est pas un défaut non plus. L'épreuve finale du Niveau 2 la merge, et
+**Reset this level** démarre le Niveau 3 depuis une branche qui la contient déjà : elle est donc dans
+`integration` quel que soit votre chemin. La commande dit "Nothing to commit" et, quand votre fork
+l'a, donne le lien de sa Pull Request mergée : ouvrez-la et lisez-la. Chaque étape ci-dessous
+fonctionne dans les deux cas.
 
 Deux des trois décisions de ce lab peuvent donc être des décisions que vous avez déjà prises. Les
 reprendre avec des yeux de release manager coûte moins cher que de les reprendre, et sert à peu près
@@ -234,8 +234,8 @@ nettoyage : une org neuve doit en recevoir un, et une org existante doit garder 
 ## En cas de problème
 
 **Simulate my teammates dit "Nothing to commit".**
-Ce scénario est déjà dans votre `integration`. Attendu pour US-018 toujours, et pour US-019 si vous
-arrivez directement de l'épreuve finale du Niveau 2. Lisez la Pull Request mergée plutôt que de la
+Ce scénario est déjà dans votre `integration`. Attendu pour US-018 et US-019, que le
+Niveau 3 contient dès le départ. Lisez la Pull Request mergée plutôt que de la
 recréer.
 
 **Une des deux autorisations manque dans le permission set.**

@@ -74,8 +74,8 @@ so your new grant on `Cost` is in it, along with everything else the profile can
 Open `helios-integration` and check the field-level security of **Panel Batch > Cost**: the
 **Helios Crew** column is not ticked. The permission is not there.
 
-Go back to the Pull Request. The comment says success, and the Profile is among the deployed
-components. What was deployed is not what you committed, though.
+Go back to the Pull Request. The deployment comment says **✅ Deployed to `integration`**, and its
+folded **📋** table counts a **Profile** among the components that changed. What was deployed is not what you committed, though.
 
 ### 3. Read your own diff
 

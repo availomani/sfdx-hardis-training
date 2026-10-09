@@ -157,8 +157,9 @@ Then **Save / Publish** **(1)**.
 
 Push, open the Pull Request into `integration` in your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`), and wait.
 
-The check fails, and the sfdx-hardis comment on the Pull Request names the component under
-**Deployment errors** **(1)**:
+The check fails. The sfdx-hardis comment on the Pull Request opens on **❌ Cannot merge into
+`integration`: 1 deployment error**, and names the component under **❌ Deployment errors**
+**(1)**:
 
 ![The sfdx-hardis comment of a failed deployment check](../../_assets/annotated/web/github-pr-check-failed.png)
 
@@ -167,11 +168,14 @@ Installation_Crew_Warning field integrity exception: unknown (The field "Crew_Wa
 for the object "Installation__c" doesn't exist.)
 ```
 
-Under **Flow changes** **(2)**, the comment links to a second comment of its own: the visual diff of
-the flow. It draws the flow, and colours what your story changed. The new **Mark Warning Sent**
-element is green **(1)**, and the tables under the diagram mark every changed property with a red
-square for the old value and a green one for the new: the description **(2)**, the formula **(3)**.
-A reviewer reads your flow change there, without opening Flow Builder or its XML.
+Further down, the folded line **📋 1 component failed, ... would change in the org** **(2)** opens
+a table of the components, per type, with your flow in its **❌ Failed** group. A flow is metadata
+like any other in this comment. What it gets on top is a second comment of its own, posted right
+below: **🔀 Flow Installation Crew Warning**, the visual diff of the flow. It draws the flow, and colours what your story changed. The new **Mark Warning Sent** element is green **(1)**.
+Above the diagram, a **properties changed** table gives every changed property with its value
+before and after: the description **(2)**, the formula **(3)**. The full tables of the flow are
+folded under **All properties and elements**. A reviewer reads your flow change there, without
+opening Flow Builder or its XML.
 
 ![The visual diff of the Installation Crew Warning flow, posted on the Pull Request](../../_assets/annotated/web/github-pr-flow-diff.png)
 

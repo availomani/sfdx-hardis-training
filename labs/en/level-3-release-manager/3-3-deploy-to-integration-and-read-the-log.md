@@ -275,9 +275,15 @@ System.QueryException: List has no rows for assignment to SObject
 Mariia created the group by hand in her own org, in Setup, the way most people create one: nothing
 in her Pull Request creates it.
 
-**The Deployment Actions comment** of her Pull Request lists the three actions under **Failed
-actions (1)**: ❌ for the one that failed, ⏸️ for the two it stopped, each with a checkbox. The
-**Status by org branch** table **(2)** says the same in the `integration` column.
+**The deployment comment** of her Pull Request opens on **❌ Deployed to `integration`, but an
+action failed after the deployment**: the org has the new metadata. Under **❌ Failed action** it
+shows the end of the script output, and under **⏸️ Not run, waiting for the failed action** the two
+others.
+
+**The Deployment Actions comment** of her Pull Request sums it up in its verdict, **In integration:
+❌ 1 failed · ⏸️ 2 waiting**, and lists the three actions under **Needs you (1)**: ❌ for the one
+that failed, ⏸️ for the two it stopped, each with a checkbox. The **Status by org** table **(2)**
+says the same in the `integration` column.
 
 ![The Deployment Actions comment with one failed action and two stopped ones](../../_assets/annotated/web/github-pr-deployment-actions-failed.png)
 
@@ -405,7 +411,7 @@ comments. The button reads **Marking as done...** until the action shows **Done*
 The next deployment to `integration` skips it. In `uat` and beyond it still runs, because nobody
 did it there.
 
-Ticking its checkbox in the **Failed actions** list of the Pull Request comment does the same,
+Ticking its checkbox in the **Needs you** list of the Deployment Actions comment does the same,
 recorded by the next sfdx-hardis job: use it when you are on GitHub rather than in VS Code.
 
 <details markdown="1"><summary>Under the hood: what the three ways out leave behind</summary>

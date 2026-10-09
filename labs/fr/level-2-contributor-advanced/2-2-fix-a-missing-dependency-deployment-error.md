@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "d0a3a04d32929b6ab52a1f9590ff383010fc3ea1"
+source_rev: "ee3029d22ba45d5b0cbdb2c50c30d3e3aa93a291"
 screenshots:
   - annotated/vscode/package-xml-filtered
   - annotated/vscode/editor-field-file
@@ -165,8 +165,9 @@ Poussez, ouvrez la Pull Request vers `integration` dans votre fork (votre copie 
 repository du cours sur GitHub, par exemple `github.com/my-username/sfdx-hardis-training`), et
 attendez.
 
-Le contrôle échoue, et le commentaire sfdx-hardis sur la Pull Request nomme le composant sous
-**Deployment errors** **(1)** :
+Le contrôle échoue. Le commentaire sfdx-hardis sur la Pull Request s'ouvre sur **❌ Cannot merge
+into `integration`: 1 deployment error**, et nomme le composant sous **❌ Deployment errors**
+**(1)** :
 
 ![Le commentaire sfdx-hardis d'un contrôle de déploiement en échec](../../_assets/annotated/web/github-pr-check-failed.png)
 
@@ -175,12 +176,15 @@ Installation_Crew_Warning field integrity exception: unknown (The field "Crew_Wa
 for the object "Installation__c" doesn't exist.)
 ```
 
-Sous **Flow changes** **(2)**, le commentaire pointe vers un deuxième commentaire à lui : le diff
-visuel du flow. Il dessine le flow, et colore ce que votre story a modifié. Le nouvel élément
-**Mark Warning Sent** est en vert **(1)**, et les tableaux sous le schéma marquent chaque propriété
-modifiée avec un carré rouge pour l'ancienne valeur et un vert pour la nouvelle : la description
-**(2)**, la formule **(3)**. Un relecteur lit votre modification de flow là, sans ouvrir Flow Builder
-ni son XML.
+Plus bas, la ligne repliée **📋 1 component failed, ... would change in the org** **(2)** ouvre un
+tableau des composants, par type, avec votre flow dans son groupe **❌ Failed**. Un flow est une
+métadonnée comme les autres dans ce commentaire. Ce qu'il a en plus, c'est un deuxième commentaire à
+lui, publié juste en dessous : **🔀 Flow Installation Crew Warning**, le diff visuel du flow. Il
+dessine le flow, et colore ce que votre story a modifié. Le nouvel élément **Mark Warning Sent** est
+en vert **(1)**. Au-dessus du schéma, un tableau **properties changed** donne chaque propriété
+modifiée avec sa valeur avant et après : la description **(2)**, la formule **(3)**. Les tableaux
+complets du flow sont repliés sous **All properties and elements**. Un relecteur lit votre
+modification de flow là, sans ouvrir Flow Builder ni son XML.
 
 ![Le diff visuel du flow Installation Crew Warning, publié sur la Pull Request](../../_assets/annotated/web/github-pr-flow-diff.png)
 

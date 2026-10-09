@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
+source_rev: "c98da3b813f71676c4d6a1e45058d6e95c01e60d"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--settings-menu
@@ -105,12 +105,12 @@ case, **Re-run all jobs**, et lisez le contrôle vert qui suit.
 Quand le contrôle se termine, lisez le commentaire sfdx-hardis comme le [Lab 3.2](3-2-review-a-contributor-pull-request.md) l'a enseigné, et
 ajoutez deux questions qui ne valent que pour la production :
 
-| Question                                     | Où regarder                                                                                                                        |
-|----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Est-ce que cela supprime quelque chose ?** | Le chiffre `deleted` de la ligne de compteurs. Une suppression en production est définitive et emporte des données avec elle       |
-| **Combien de temps cela va-t-il prendre ?**  | La durée du contrôle est une estimation raisonnable. Si c'est 40 minutes, ce sont 40 minutes pendant lesquelles l'org est modifiée |
+| Question                                     | Où regarder                                                                                                                                                              |
+|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Est-ce que cela supprime quelque chose ?** | Le chiffre `deleted` de la ligne **Metadata**, affiché seulement quand quelque chose part. Une suppression en production est définitive et emporte des données avec elle |
+| **Combien de temps cela va-t-il prendre ?**  | La durée du contrôle est une estimation raisonnable. Si c'est 40 minutes, ce sont 40 minutes pendant lesquelles l'org est modifiée                                       |
 
-Si ce chiffre n'est pas zéro et que vous ne vous y attendiez pas, **arrêtez-vous**. Le commentaire ne
+Si ce chiffre est là et que vous ne vous y attendiez pas, **arrêtez-vous**. Le commentaire ne
 vous dira pas ce qui part : `manifest/destructiveChanges.xml` et le diff, si. Découvrez de quoi il
 s'agit et qui l'a voulu. Ce n'est pas de la prudence, c'est le métier.
 

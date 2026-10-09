@@ -107,6 +107,8 @@ export function run(command, args, options = {}) {
     stdio: options.capture ? "pipe" : "inherit",
     shell: WINDOWS,
     encoding: "utf8",
+    // What the command reads on stdin, for a text too long for a command line
+    ...(options.input !== undefined ? { input: options.input } : {}),
     env: { ...process.env, ...(options.env || {}) }
   });
   return {
@@ -754,7 +756,7 @@ export function stamp() {
  * commits between" or "head ref not found". The body goes through a file, which
  * is removed whatever happens.
  */
-export function openPullRequest({ slug, base, branch, title, body }) {
+export function openPullRequest({ slug, base, branch, title, body, draft = false }) {
   if (!slug || !hasGh()) {
     return null;
   }
@@ -765,7 +767,7 @@ export function openPullRequest({ slug, base, branch, title, body }) {
     for (let attempt = 1; attempt <= 3 && !url; attempt++) {
       // Captured: the address of the Pull Request is what the learner opens
       // next, and what gh prints goes nowhere they can see in the panel
-      const pr = run("gh", ["pr", "create", "--repo", slug, "--base", base, "--head", branch, "--title", title, "--body-file", bodyFile], {
+      const pr = run("gh", ["pr", "create", "--repo", slug, "--base", base, "--head", branch, "--title", title, "--body-file", bodyFile, ...(draft ? ["--draft"] : [])], {
         capture: true,
         quiet: true
       });

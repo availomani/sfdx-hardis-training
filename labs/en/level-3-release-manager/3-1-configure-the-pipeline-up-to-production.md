@@ -463,8 +463,9 @@ You publish them the way you published a User Story in Level 1, with the same bu
 `Configure the pipeline up to production`, exactly as you staged metadata in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
 
 **Publish.** In the **DevOps Pipeline** panel, click the **Save / Publish** card **(1)**, the one
-every story has gone through since [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). It asks the target branch: `integration`. It commits
-what is left, runs the cleaning, and pushes the branch.
+every story has gone through since [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). It does not ask for the target branch:
+New User Story recorded `integration` in step 4. Answer that your commit is ready and that it can
+push: it commits what is left, runs the cleaning, and pushes the branch.
 
 ![The Save / Publish card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--save-publish.png)
 
@@ -487,11 +488,11 @@ The check of this Pull Request logs into `helios-integration`, and it still does
 themselves the first time a Pull Request goes into `preprod` and into `main`, in
 [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), and that lab tells you where to look.
 
-When both checks are green, merge with **Merge pull request**, not with a squash: this is not a
-feature, and the configuration has to travel to `uat`, `preprod` and `main` with the promotions,
-commit for commit ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). Then switch back to `integration`, from the branch name in the bottom left
-corner of VS Code, and **Pull** in the **Source Control** panel: your `integration` gets the
-configuration back, merged.
+When both checks are green, merge the way the **How to merge** line of the check comment says:
+**Squash and merge**, like every User Story. The configuration still travels to `uat`, `preprod`
+and `main` with the promotions, as this one commit. Then switch back to `integration`, from the
+branch name in the bottom left corner of VS Code, and **Pull** in the **Source Control** panel:
+your `integration` gets the configuration back, merged.
 
 <details markdown="1"><summary>Under the hood: what the JWT flow actually does</summary>
 

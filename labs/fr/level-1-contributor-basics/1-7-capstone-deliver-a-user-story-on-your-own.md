@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "b7f5e0686a2d5a83a1ce183f8f4c30a684e0a129"
+source_rev: "cfe1dcea647583a742b1ae3fdbd4c161e30eb765"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -131,7 +131,7 @@ formalité.
 !!! tip "Si ce cours vous a servi"
     [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis) est le projet open
     source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme celui-ci de
-    rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, en haut à droite. Donnez une étoile si
+    rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du nom du repository. Donnez une étoile si
     vous avez aimé ce cours !
 
     ![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)

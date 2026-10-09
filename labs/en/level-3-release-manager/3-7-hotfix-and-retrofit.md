@@ -9,7 +9,7 @@ source_rev: ""
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
-  - annotated/web/github-pr-files
+  - annotated/web/github-pr-files-hotfix
   - annotated/web/github-pr-merge
   - annotated/vscode/devops-pipeline-level3--release-to-prod
   - annotated/web/github-pr-deployed
@@ -111,7 +111,7 @@ was cut from `preprod`, which is what **New User Story** does when the target is
 Open the Pull Request, **Files changed** **(1)**. One file, the validation rule **(2)**, and the
 change is the added line **(3)**:
 
-![The Files changed tab of a Pull Request](../../_assets/annotated/web/github-pr-files.png)
+![The Files changed tab of the hotfix Pull Request, one validation rule and one added line](../../_assets/annotated/web/github-pr-files-hotfix.png)
 
 ```
   NOT(ISPICKVAL(Status__c, "Cancelled"))
@@ -130,7 +130,7 @@ again, and nothing else changes.** That is a hotfix.
 
 When the check is green, merge it with **Squash and merge**, from the arrow beside **Merge pull
 request** **(1)**: Romain's branch is a fix, and a fix is squashed like every User Story
-([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). The promotion into `main` that follows is merged, not squashed.
+([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)), which the **How to merge** line of the green check comment says too. The promotion into `main` that follows is merged, not squashed.
 
 ![Merging a Pull Request on GitHub](../../_assets/annotated/web/github-pr-merge.png)
 
@@ -155,10 +155,11 @@ the same gate, on the real org, taking two minutes.
 ### 6. Confirm it is live
 
 Merge, and watch the **Process Deployment (sfdx-hardis)** run on `main`. When it finishes, the
-sfdx-hardis comment says what reached the org: the banner **(1)**, the counts line **(2)**, and the
-Quick Deploy line **(3)**: the merge released the validation its check had already run on
-production, rather than deploying again. The picture is the comment of an earlier deployment, so
-your counts are different.
+sfdx-hardis comment says what reached the org: the verdict **✅ Deployed to `main`** **(1)**, the
+**Metadata** row **(2)**, which says how it was deployed, for example **Full Quick Deploy**, and
+what changed, and the **Apex tests** row **(3)**, **Already run during the validation**: the merge
+deployed the validation its check had already run on production, rather than deploying again. The
+picture is the comment of an earlier deployment, so your counts are different.
 
 ![The sfdx-hardis comment on a merged Pull Request](../../_assets/annotated/web/github-pr-deployed.png)
 
@@ -236,7 +237,9 @@ a retrofit carries what production already has and declares nothing new.
 ![The end of Save / Publish, with its actions bar](../../_assets/annotated/vscode/work-save-completed.png)
 
 Open the Pull Request into `integration`, title it `Retrofit: US-045 back down into integration`,
-wait for its checks, and merge it. `integration` now carries everything production carries, and the
+wait for its checks, and merge it with **Merge pull request**, never a squash. The green check comment
+says why on its **How to merge** line: a retrofit brings back commits of another major branch, which
+must stay as they are. `integration` now carries everything production carries, and the
 next story built on it cannot take the fix away.
 
 <details markdown="1"><summary>Under the hood: the hotfix and the retrofit, in commands</summary>

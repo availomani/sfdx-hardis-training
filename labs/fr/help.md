@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
+source_rev: "3dd227f4916bb7c9147520286f09bec246abf391"
 ---
 
 # Aide
@@ -100,6 +100,12 @@ choses de plus, et à une deuxième tentative la réponse aux deux est en géné
   demande un autre nom à chaque story
 - **Remettre en place `helios-dev` et `helios-integration`**, pour que les orgs correspondent au
   début du niveau au lieu de garder ce que vous y avez construit la première fois
+
+Enfin, au Niveau 3, il ouvre une Pull Request nommée **Deployment actions of the earlier levels** et
+la merge une fois ses checks passés, ce qui prend 3 à 5 minutes. Le début du Niveau 3 contient les
+stories du Niveau 2 en un seul commit qu'aucune Pull Request de votre fork n'a fait, et une promotion
+ne lance que les deployment actions des Pull Requests qu'elle transporte : celle-ci leur donne une
+Pull Request.
 
 **Recommencer tout le cours.** Sur GitHub, ouvrez votre fork, puis **Settings**, descendez jusqu'à
 la **Danger Zone**, et cliquez sur **Delete this repository**. Supprimez aussi votre dossier local.

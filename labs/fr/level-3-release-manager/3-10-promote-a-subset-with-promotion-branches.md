@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "af0ed2794b7fc66b266d5280832d5a890ceda29f"
+source_rev: "2ff0edf311c71f4e0e8a37a0b86a132984b4883e"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -215,7 +215,8 @@ de promotion autorisée et que `preprod` en est la cible.
 
 La fenêtre liste les cinq stories de la plus récente à la plus ancienne : US-061, US-060, US-059,
 US-057, US-058. Cochez la **première, la troisième et la quatrième**, US-061, US-059 et US-057, et
-laissez US-060 et US-058 tranquilles. Le libellé du bouton compte ce que vous avez coché : **Create
+laissez US-060 et US-058 tranquilles. Les Pull Requests en dessous, le retrofit du [Lab 3.7](3-7-hotfix-and-retrofit.md) et la
+configuration du [Lab 3.8](3-8-monitor-your-production-org.md), sont plus anciennes : ne les cochez pas non plus. Le libellé du bouton compte ce que vous avez coché : **Create
 promotion from uat (3 selected) (Beta)**. Cliquez dessus.
 
 Un onglet d'exécution de commande s'ouvre. Il liste ce qui attend dans `uat`, puis pose une seule
@@ -399,9 +400,10 @@ métadonnées Salesforce. Le même texte se trouve dans
 commande vous a proposé. L'étape 6 utilise l'un ou l'autre.
 
 Regardez maintenant les **Checks** de la Pull Request. L'exécution **Check deployment** est rouge,
-et le commentaire sfdx-hardis dit pourquoi, en un paragraphe :
+et le commentaire sfdx-hardis dit pourquoi : son verdict indique **❌ Cannot merge into `preprod`: Git
+conflict markers in the promotion branch**, et un paragraphe en dessous nomme les fichiers :
 
-> ❌ Nothing was deployed: the promotion branch `promotion/uat/preprod/2026-09-24-0930` still
+> Nothing was deployed: the promotion branch `promotion/uat/preprod/2026-09-24-0930` still
 > contains git conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in 2 file(s). Solve them on the
 > branch, by hand or with the prompt for a coding agent embedded in this Pull Request description
 > (also saved in `hardis-report/`), then commit and push: the job runs again from there.
@@ -525,12 +527,15 @@ Helios_Delivery_Manager (#63): preprod had no Warranty Years grant; the story ad
 
 **Commit**, puis **Sync Changes** pour pousser.
 
-Quelle que soit la voie prise, le push relance le contrôle. Il est vert cette fois, et la première
-ligne du commentaire sfdx-hardis est celle d'une promotion ordinaire :
+Quelle que soit la voie prise, le push relance le contrôle. Il est vert cette fois. Ouvrez la section
+repliée **ℹ️ Where the deployment actions and test classes come from** en bas du commentaire
+sfdx-hardis : sa première ligne est celle d'une promotion ordinaire,
 
 > ℹ️ `promotion/uat/preprod/2026-09-24-0930` is a promotion branch carrying 3 Pull Request(s)
-> declared in its description: #62, #63, #65. Deployment actions, Apex test classes and custom
-> behaviors of those Pull Requests are processed.
+> declared in its description.
+
+suivie de ce que le job a rassemblé depuis elles. La section repliée **🎫** à côté liste les trois
+Pull Requests, #62, #63 et #65.
 
 Si cette ligne manque, ou si elle dit qu'aucune des Pull Requests déclarées n'a pu être utilisée,
 **arrêtez-vous et corrigez avant de merger**. Cela veut dire que le job n'a pas lu la déclaration, et
@@ -572,7 +577,7 @@ utilisable par la personne qui lira ça dans six mois :
 
 Mergez ensuite avec **Merge pull request**. Jamais de squash : les commits cherry-pickés et leurs
 lignes de traçabilité sont ce que la prochaine promotion, le retrofit et les notes de version lisent
-tous.
+tous. La ligne **How to merge** du commentaire vert du contrôle le dit aussi.
 
 L'exécution **Process Deployment (sfdx-hardis)** démarre sur `preprod`. Quand elle est verte, ouvrez
 `helios-preprod` et vérifiez les deux moitiés de ce que vous avez fait :
@@ -643,7 +648,8 @@ Les deux fichiers atterrissent sous **Staged Changes** avec le message `Merge re
 'origin/preprod'` déjà écrit. **Commit**, puis **Save / Publish User Story** comme au [Lab 3.7](3-7-hotfix-and-retrofit.md)
 étape 9, et ouvrez la Pull Request vers `integration`, intitulée `Retrofit: the promotion of US-057,
 US-059 and US-061 back down into integration`. Son onglet **Files changed** est vide, et c'est
-normal : lisez le bloc ci-dessous. Attendez son contrôle, et mergez-la avec **Merge pull request**.
+normal : lisez le bloc ci-dessous. Attendez son contrôle, et mergez-la avec **Merge pull request**,
+comme le demande la ligne **How to merge** de son commentaire.
 
 <details markdown="1"><summary>Sous le capot : une Pull Request qui ne change aucun fichier, et pourquoi elle compte quand même</summary>
 

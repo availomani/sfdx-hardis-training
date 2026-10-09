@@ -137,18 +137,24 @@ the most useful thing on the page.
 
 ![The sfdx-hardis comment on a Pull Request](../../_assets/annotated/web/github-pr-comment.png)
 
-1. **The banner** **(1)** says whether the simulated deployment succeeded
-2. **Apex coverage** **(2)**, right under it, against the target this project sets
-3. **What would change** **(3)**. Not a list of your files: sfdx-hardis sends the whole package,
-   `manifest/package.xml`, and Salesforce answers how much of it differs: `Simulated deployment: 36
-   components validated against the org, 7 would change (1 created, 6 updated, 0 deleted, 29
-   unchanged)`. The one created is your field, and the updated ones include the layout and the two
-   permission sets you changed. Click the line under it to open a table of those changes, per type
-   of component: the field is the **CustomField** row
-4. **Tickets** **(4)**, the stories it recognised in your branch name and commit messages, each
-   with its title and a link to its page in the backlog
+1. **The verdict** **(1)**, under the banner: **✅ Ready to merge into `integration`**, a line
+   saying the deployment was only simulated in the `integration` org, so nothing changed there,
+   and **How to merge: use Squash and merge, so the User Story arrives as one commit.** Step 4
+   does exactly that
+2. **Apex tests** **(2)**, a row of the **Check | Result** table under the verdict: the coverage,
+   against the target this project sets
+3. **Metadata** **(3)**, the first row of that table: what would change. Not a list of your files:
+   sfdx-hardis sends the whole package, `manifest/package.xml`, and Salesforce answers how much of
+   it differs: `7 components would change (1 created, 6 updated), 36 validated`. The one created is
+   your field, and the updated ones include the layout and the two permission sets you changed.
+   Further down, click **📋 7 components would change in the org** to open a table of those
+   changes, per type of component: the field is the **CustomField** row
+4. **Tickets** **(4)**, folded under **🎫 1 ticket** near the bottom: the stories it recognised in
+   your branch name and commit messages, each with its title and a link to its page in the backlog
 
-Below those, a summary of your commits and the name of the job that wrote the comment.
+The table has one more row, **Quick Deploy**: the merge job can reuse this validation, so the Apex
+tests will not run again. Step 5 shows it at work. The comment ends with the name of the job that
+wrote it.
 
 <details markdown="1"><summary>Under the hood: where the story titles come from</summary>
 
@@ -172,7 +178,7 @@ ServiceNow connector instead.
 
 ### 4. Merge
 
-Both checks green, the comment says success. Back on the **Conversation** tab, scroll to the bottom:
+Both checks green, the comment says **Ready to merge**. Back on the **Conversation** tab, scroll to the bottom:
 the merge box says **All checks have passed** and **No conflicts with base branch**, and the button
 is live.
 
@@ -240,12 +246,15 @@ When the deployment finishes, it writes a second comment on the Pull Request you
 
 ![The comment sfdx-hardis writes after the merge deployment](../../_assets/annotated/web/github-pr-deployed.png)
 
-1. **Deployment successful** **(1)**, and this time the org really changed
-2. **What changed** **(2)**, in the same shape as the check said it would: `7 changed` where the
-   check said `7 would change`
-3. **Quick Deploy** **(3)**. The merge job did not start from nothing. It released the validation
-   the Pull Request check had already done, which is why it did not run the Apex tests a second
-   time and why it took two minutes rather than five
+1. **The verdict** **(1)**: **✅ Deployed to `integration`**, and this time the org really changed
+2. **Metadata** **(2)**, in the same shape as the check said it would, plus how it was
+   deployed: **✅ Full Quick Deploy: 7 components changed (1 created, 6 updated)** where the check
+   said `7 components would change`. *Full*, because this project sends the whole package every
+   time. *Quick Deploy*, because the merge job did not start from nothing: it deployed the
+   validation the Pull Request check had already done, which is why it took two minutes rather
+   than five
+3. **Apex tests** **(3)**: **Already run during the validation**. The Quick Deploy reused the test
+   run of the check, so no test ran again
 
 Then open `helios-integration` from **Orgs Manager** and look at an installation.
 
@@ -335,7 +344,8 @@ blocked. **Pull** in the **Source Control** panel to bring the robot's commit to
 run **Training: Level 1 > Trigger my workflows**: a push of yours is what starts the checks again.
 
 **The deployment succeeds but the field is not in the org.**
-Open the table of changes in the comment, under the counts line. If it has no **CustomField** row,
+Open the folded **📋 ... components would change in the org** section of the comment, under the table of
+checks. If it has no **CustomField** row,
 the field is not in `manifest/package.xml`, and [Lab 1.5 step 6](1-5-retrieve-commit-and-publish-your-changes.md#6-read-the-package-before-you-push) is where you read it.
 
 ## Check your work

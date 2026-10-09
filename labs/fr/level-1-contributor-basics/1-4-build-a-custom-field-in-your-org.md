@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "d0a3a04d32929b6ab52a1f9590ff383010fc3ea1"
+source_rev: "b8f15a3b5c9230c4d7da4bbad3be6fd083b50379"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -150,8 +150,9 @@ Un champ vide ne prouve rien. Mettez-y un nombre.
 L'onglet **Installations** **(1)** est la façon de revenir à cette liste depuis n'importe où dans
 l'application. À droite de l'enregistrement se trouve le **Panel delivery timeline** **(2)**, qui
 liste les palettes réservées pour cette installation avec leurs quantités. L'image a été prise avant
-que cette story existe, sur une installation sans palette réservée : il n'y a donc pas non plus de
-Panels Required dans sa colonne. La plupart des installations ont deux ou trois palettes.
+que cette story existe : il n'y a donc pas encore de Panels Required dans sa colonne. L'installation
+qu'elle montre a deux palettes, de 23 et 16 panneaux : 39 est le nombre à y saisir. La plupart des
+installations en ont deux ou trois.
 
 1. Sur `INST-00001`, cliquez sur le crayon à droite de **Panels Required**, tapez le nombre auquel
    la timeline aboutit, et cliquez sur **Save** en bas de la page. Cette page n'a pas de bouton

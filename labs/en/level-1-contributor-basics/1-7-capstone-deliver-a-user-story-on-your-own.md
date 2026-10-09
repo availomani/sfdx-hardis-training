@@ -124,7 +124,7 @@ name rather than a formality.
 !!! tip "If the course helped you"
     [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis) is the open source
     project this whole course is about. A star is how a project like it stays visible: open its
-    page and click **Star** **(1)**, at the top right. Give it a star if you liked this course!
+    page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this course!
 
     ![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
