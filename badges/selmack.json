@@ -27,6 +27,33 @@
       "superbadge": false,
       "checksPassed": 6,
       "checksTotal": 6
+    },
+    {
+      "type": "Achievement",
+      "level": 2,
+      "name": "sfdx-hardis Contributor Advanced",
+      "description": "Solves deployment errors, declares deployment actions, resolves conflicts.",
+      "issuer": {
+        "name": "Cloudity",
+        "url": "https://cloudity.com",
+        "course": "https://sfdx-hardis-training.github.io"
+      },
+      "issuedOn": "2026-10-10",
+      "evidence": [
+        {
+          "type": "Repository",
+          "url": "https://github.com/selmack1/sfdx-hardis-training.git"
+        },
+        {
+          "type": "ClaimIssue",
+          "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/110"
+        }
+      ],
+      "image": "https://sfdx-hardis-training.github.io/badges/img/selmack-level-2.svg",
+      "bannerImage": "https://sfdx-hardis-training.github.io/badges/img/banner-level-2.svg",
+      "superbadge": false,
+      "checksPassed": 14,
+      "checksTotal": 14
     }
   ],
   "trailblazer": "selmack",
