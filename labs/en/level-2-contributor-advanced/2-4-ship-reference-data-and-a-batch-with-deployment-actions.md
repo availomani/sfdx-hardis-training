@@ -256,13 +256,14 @@ email at all is a setting in Setup that no deployment can change. The batch emai
 summary when it finishes, and in an org where deliverability is not **All email**, that email is
 dropped without a word.
 
-| Field        | Value                                   |
-|--------------|-----------------------------------------|
-| Type         | **Manual**                              |
-| Label        | `Set Email Deliverability to All Email` |
-| When         | **Before Metadata Deployment**          |
-| Instructions | the four numbered lines below           |
-| Target orgs  | All target orgs                         |
+| Field              | Value                                   |
+|--------------------|-----------------------------------------|
+| Type               | **Manual**                              |
+| Label              | `Set Email Deliverability to All Email` |
+| When               | **Before Metadata Deployment**          |
+| Execution Contexts | Validation and Deployment jobs          |
+| Instructions       | the four numbered lines below           |
+| Target orgs        | All target orgs                         |
 
 ```
 1. Open **Setup**, type `Deliverability` in the Quick Find box, and open it.
@@ -283,6 +284,11 @@ takes Markdown: number the clicks, and finish with what the person should see af
 email before anything that sends one arrives in it, so the person merging does this click first,
 then merges. A manual step declared before the deployment is listed first in the Pull Request
 comment, which is where they read it.
+
+**Execution Contexts** is **Validation and Deployment jobs**, unlike the two others too: the check
+of the Pull Request has to see the step to ask for it before the merge. Once **When** reads
+**Before Metadata Deployment**, a manual step offers nothing else. If your dialog still lists three
+contexts, your extension is older: pick this one.
 
 A manual step does not do anything. It **appears in the Pull Request comment and in the deployment
 report**, so the person releasing to production is told, in the release itself, that there is a
@@ -449,6 +455,14 @@ Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com
 - The manual step listed in the deployment report, ticked off by you
 
 ## If it goes wrong
+
+**The action file is called `.sfdx-hardis.draft.yml`, or the check stops on *Draft deployment actions file found*.**
+You added the action while the panel knew no Pull Request for your branch: the **My Pull Request**
+card read *Pull Request not created yet*, so the action was kept in a draft. The pipeline only reads
+`scripts/actions/.sfdx-hardis.` followed by the number of the Pull Request and `.yml`, so a draft, or
+a file renamed to a name of your own, is never run. Once your Pull Request exists, open the
+**DevOps Pipeline** panel again and click **Refresh**: it renames the draft after your Pull Request
+and tells you so in a notification. Commit the renamed file, then **Save / Publish**.
 
 **The Crew Capacity tab is missing from the app in `helios-integration`.**
 Either the tab or the `Helios_Delivery` app was not in your Pull Request, or the tab is not

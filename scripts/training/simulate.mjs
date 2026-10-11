@@ -176,7 +176,15 @@ export default async function simulate(args) {
   }
 
   title("1 of 4  Creating the teammate branch");
-  run("git", ["fetch", "origin", "--prune"]);
+  // Checked: a fetch that failed leaves the fork's branches as this computer last saw them, and
+  // the teammate would start from an old commit without anything saying so
+  if (run("git", ["fetch", "origin", "--prune"]).code !== 0) {
+    restore();
+    abort(
+      "Your fork could not be read, so nothing was simulated.",
+      "Check your connection and your GitHub sign-in in VS Code, then run Simulate my teammates again."
+    );
+  }
   if (scenario.continues) {
     if (!gitOut(["rev-parse", "--verify", "--quiet", `origin/${scenario.branch}`])) {
       abort(
@@ -190,6 +198,21 @@ export default async function simulate(args) {
       abort(`There is no ${from} branch to branch from.`, "Run Reset this level first, from the Training menu of your level.");
     }
     run("git", ["pull", "--ff-only", "origin", from], { quiet: true });
+    // The pull is allowed to fail, and a local branch left behind the fork would give the
+    // teammate a branch cut from an old commit: a hotfix cut from a preprod that never saw the
+    // releases carries the pipeline configuration of Level 1. When the local branch does not hold
+    // what the fork holds, the teammate starts from the fork.
+    const forkHead = gitOut(["rev-parse", "--verify", "--quiet", `origin/${from}`]);
+    if (forkHead && run("git", ["merge-base", "--is-ancestor", forkHead, "HEAD"], { quiet: true }).code !== 0) {
+      warn(`Your local ${from} does not hold what the ${from} of your fork holds, and could not be updated. The teammate branch is cut from the one of your fork. Your own ${from} stays as it is: pull it from the Source Control panel before you work on it.`);
+      if (run("git", ["checkout", "--detach", forkHead], { quiet: true }).code !== 0) {
+        restore();
+        abort(
+          `Your local ${from} does not hold what the ${from} of your fork holds, and the fork's could not be checked out.`,
+          `Switch to ${from}, pull it from the Source Control panel, then run Simulate my teammates again.`
+        );
+      }
+    }
     // Checked on the branch the story is cut from, once it is up to date: the
     // story under this one has to be merged there, not merely simulated.
     const under = scenario.basedOn ? all.find((s) => s.id === scenario.basedOn) : null;

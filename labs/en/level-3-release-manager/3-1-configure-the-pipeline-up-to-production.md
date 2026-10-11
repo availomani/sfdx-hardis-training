@@ -21,6 +21,7 @@ screenshots:
   - annotated/vscode/pipeline-config--target-branches
   - annotated/vscode/pipeline-config-user-stories--target-branches
   - annotated/vscode/pipeline-config-danger--promotion-branches
+  - annotated/vscode/pipeline-config-branch-merge-target
   - annotated/vscode/pipeline-cards--save-publish
   - annotated/vscode/work-save-completed
   - annotated/vscode/devops-pipeline-level3--four-stages
@@ -268,9 +269,10 @@ It asks a dozen questions, in this order:
    variables + encrypted certificate as file (default)**. The other mode puts the certificate itself
    in a third secret and deletes the file
 9. **Please confirm when variables have been set.** This one is a stop, and step 6 is what it is
-   waiting for. Do not click **Validate** yet
-10. Then, after you confirm: the **name** of the External Client App, a **contact email**, and the
-    **profile to pre-authorise**. Take **System Administrator**: it is already selected, so keep it.
+   waiting for. It is a **Yes** or **No** question: do not answer it yet
+10. Three more questions come once you have answered **Yes**, which is the end of step 6 below, so
+    read them now and answer them then: the **name** of the External Client App, a **contact
+    email**, and the **profile to pre-authorise**. Take **System Administrator**: it is already selected, so keep it.
     The list shows the profile names in the language of the org's user, so an org set to French
     lists `Administrateur système` instead
 
@@ -318,7 +320,7 @@ the whole convention, and it is why the names are not arbitrary.
     this lab fills four of them. Open `.github/workflows/process-deploy.yml` and read its `env:`
     block once, because on your own project that block is yours to write.
 
-Now click **Validate** on question 9, answer the last three questions, and let the command create
+Now answer **Yes** to question 9, answer the last three questions, and let the command create
 the app.
 
 What it wrote, and where:
@@ -362,6 +364,18 @@ Check the org twice: pointing production at the wrong org is the single most exp
 available in this lab. And store both secrets, the ID and the key, as in step 6.
 
 Four secrets, two External Client Apps, two keys. Tedious once, then never again.
+
+**Then tell `uat` where its work goes next.** The command wrote that `preprod` merges into
+`main`. Nothing has said yet that `uat` merges into `preprod`: until now `uat` was the end of the
+pipeline, and its branch file says so. In the **DevOps Pipeline** panel, gear menu, **Pipeline
+Settings**, switch the scope selector at the top right to **Branch: uat** **(1)**, open the
+**Deployment** tab **(2)** and click **Edit**. In **Merge target branches** **(3)**, type
+`preprod`, then **Save** **(4)**, which took the place of **Edit**.
+
+![The Deployment tab of the uat branch settings, unlocked, with preprod as its merge target](../../_assets/annotated/vscode/pipeline-config-branch-merge-target.png)
+
+Without it the diagram draws no arrow from `uat` to `preprod`, and [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) has no **+ PR**
+chip to click there. Step 11 publishes it with the rest.
 
 ### 9. Let contributors start a hotfix
 

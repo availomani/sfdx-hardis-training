@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "cfe1dcea647583a742b1ae3fdbd4c161e30eb765"
+source_rev: "2ab56900f82bc3abac169e136c506e64cf27a10d"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -13,7 +13,7 @@ depends_on:
   commands: [hardis:project:deploy:smart, hardis:doc:release-notes, hardis:doc:dora-report]
   flags: []
   config: [mergeTargets, productionBranch]
-  panels: [pipeline]
+  panels: [pipeline, doraMetrics]
   docs: [salesforce-devops-release-home, salesforce-devops-setup-checklist]
 ---
 
@@ -102,9 +102,15 @@ quoi sert cette livraison, et mettez-les dans la description de la Pull Request 
 
 ### Vendredi : mesurer
 
-Mettez `helios-prod` comme org par défaut dans **Orgs Manager**, pour que le rapport mesure la
-production et non votre sandbox, puis lancez le rapport DORA et comparez-le à la ligne de base que
-vous avez prise au [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
+Ouvrez le panneau **DORA metrics** depuis le menu engrenage du **DevOps Pipeline**, comme au
+[Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), et lisez **Time to production** dans le pipeline flow, la ligne de `main`, puis celle d'`integration`. Exportez de nouveau le rapport,
+**Export** puis **Markdown report**, et comparez-le à la ligne de base que vous avez prise au
+[Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
+
+Le panneau compare lui-même chaque nombre avec la période précédente, par une flèche. Votre
+pipeline est plus jeune que les 90 jours d'une période : la période d'avant est donc vide et aucune
+flèche n'est encore dessinée. Cette semaine, le fichier de la ligne de base reste ce avec quoi vous
+comparez.
 
 Relisez ensuite votre semaine, et répondez pour vous-même à trois questions, celles que poserait un
 successeur :

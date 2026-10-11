@@ -12,7 +12,7 @@ screenshots:
 depends_on:
   commands: [hardis:project:deploy:smart]
   flags: []
-  config: [autoCleanTypes, packageNoOverwritePath, useDeltaDeployment]
+  config: [autoCleanTypes, useDeltaDeployment]
   panels: [pipeline, pipelineConfig, packageXml]
   docs: [salesforce-devops-config-cleaning, salesforce-devops-config-delta-deployment, salesforce-devops-config-overwrite]
 ---
@@ -172,16 +172,16 @@ on, and it is why these two grants were two small blocks in a permission set rat
 in a thousand-line Profile. A Profile conflict is a bad afternoon. This is most of the reason the
 project bans permissions on Profiles.
 
-**The overwrite manager** (`packageNoOverwritePath`) protects components that are deliberately
-different per org. Anything listed in `manifest/package-no-overwrite.xml` is removed from the package
-when the target org already has it, so a deployment cannot flatten a named credential that points at
-a different endpoint in each environment. The project starts with the list every sfdx-hardis project
-gets. It covers reports, dashboards, connected apps and credentials, Helios deploys none of those,
-so nothing it deploys is protected yet: [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) adds the first entry that matters, before the first promotion to `uat`. Its location can be changed per
-branch, which is why you will not find it on the global **Deployment** tab **(2)**: switch the scope
-to `Branch: integration` and it is there, as **Branch-scoped custom Package-No-Overwrite path**.
+**The overwrite manager** protects components that are deliberately different per org. Anything
+listed in `manifest/package-no-overwrite.xml` is removed from the package when the target org
+already has it, so a deployment cannot flatten a named credential that points at a different
+endpoint in each environment. The project starts with the list every sfdx-hardis project gets. It
+covers reports, dashboards, connected apps and credentials, Helios deploys none of those, so
+nothing it deploys is protected yet: [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) adds the first entry that matters, before the first promotion to `uat`. The list
+is a file: you open it from the **Deployment packages** menu of the DevOps Pipeline panel, not
+from a tab of this one.
 
-**Delta deployment** is **Use Delta Deployment** **(3)**, on the global **Deployment** tab, and
+**Delta deployment** is **Use Delta Deployment** **(3)**, on the global **Deployment** tab **(2)**, and
 [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) showed you it is **Disabled** here. With it on, each merge deploys the components that changed
 rather than the declared package. It is a speed and blast-radius decision, not a safety net: it does
 not stop one merge overwriting another, because both deployments send what their own commit
@@ -189,11 +189,11 @@ contains.
 
 <details markdown="1"><summary>Under the hood: the three mechanisms and where each one lives</summary>
 
-| Mechanism         | Configuration                                                     | What it does                                                                          |
-|-------------------|-------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| Cleaning          | `autoCleanTypes` in `config/.sfdx-hardis.yml`                     | Rewrites the sources **at commit time**, in the contributor branch                    |
-| Overwrite manager | `packageNoOverwritePath` plus `manifest/package-no-overwrite.xml` | Removes components from the package **at deploy time**, when the org already has them |
-| Delta             | `useDeltaDeployment`                                              | Reduces the package to what changed since the last deployed commit                    |
+| Mechanism         | Configuration                                 | What it does                                                                          |
+|-------------------|-----------------------------------------------|---------------------------------------------------------------------------------------|
+| Cleaning          | `autoCleanTypes` in `config/.sfdx-hardis.yml` | Rewrites the sources **at commit time**, in the contributor branch                    |
+| Overwrite manager | `manifest/package-no-overwrite.xml`           | Removes components from the package **at deploy time**, when the org already has them |
+| Delta             | `useDeltaDeployment`                          | Reduces the package to what changed since the last deployed commit                    |
 
 The distinction between the first two is worth keeping straight, because they fail differently.
 

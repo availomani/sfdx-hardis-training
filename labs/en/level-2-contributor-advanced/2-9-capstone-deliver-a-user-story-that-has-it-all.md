@@ -73,7 +73,8 @@ handle all three.
    data load of the second trap needs it, as in [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md)
 6. **Retrieve it**: **Commit changes**, **Recent Changes**, and take what you made and nothing
    else. Commit it
-7. **Publish, Pull Request, green, merge**
+7. **Publish, Pull Request, green, merge**, in the order the three things below ask for: the
+   teammate comes before your Pull Request, the data action after it
 
 ### The three things waiting for you
 

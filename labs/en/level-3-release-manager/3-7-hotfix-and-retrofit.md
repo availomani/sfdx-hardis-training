@@ -249,9 +249,11 @@ branch, which cuts his branch from `preprod`, and `hardis:work:save` computed th
 `preprod`. The pipeline treats `preprod` as any other major branch. What makes it a hotfix is the
 target, not a mode.
 
-The branch prefix is worth a second of thought, for a reason beyond tidiness: the DORA **rework
-rate** of [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) counts hotfix Pull Requests, and recognises one by a `hotfix/`, `fix/` or
-`bugfix/` branch prefix. This project calls its fix branches `fix/`, so this one counts.
+The branch prefix is worth a second of thought, for a reason beyond tidiness: the DORA **Rework**
+rate of [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) counts hotfix Pull Requests, and recognises one by a `hotfix/`, `fix/` or
+`bugfix/` branch prefix. This project calls its fix branches `fix/`, so this one counts, on the
+branch it was merged into: `preprod`. The release that carries it on to `main` comes from
+`preprod`, so the **Rework** of `main` does not move.
 
 **The retrofit** is Git from end to end, and nothing is retrieved from any org:
 
@@ -283,6 +285,15 @@ Command documentation: [hardis:work:new](https://sfdx-hardis.cloudity.com/hardis
   `integration`
 
 ## If it goes wrong
+
+**The DevOps Pipeline panel shows `integration` alone, and the hotfix Pull Request points at a lonely `preprod` box.**
+The panel draws the pipeline from the files of the branch VS Code is on, and you are on a branch
+that dates from before [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), so it knows one major branch. Nothing is lost: `uat`, `preprod`
+and `main` are in your fork with their configuration. Click the branch name at the bottom left of
+VS Code, pick `integration`, then **Source Control** > **...** > **Pull**, and refresh the panel.
+If the Pull Request of the hotfix lists far more than one file, its branch was cut from that same
+old commit: close it, click **Training: Level 3** > **Update my course**, then **Simulate my
+teammates** again.
 
 **The Pull Request of the hotfix targets `integration`.**
 The simulation opens it into `preprod`. If you see `integration`, you are looking at a different

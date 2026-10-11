@@ -3,6 +3,32 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-11
+
+- Lab 3.8: step 8 says that Publish my pipeline configuration opens its Pull Request itself, and a new troubleshooting entry covers the files a backup run from your computer leaves in the monitoring repository.
+- Lab 3.1: new step giving `uat` its merge target to `preprod`, without which the diagram had no arrow between them. The confirmation of the secrets is described as the Yes or No question it is.
+- Lab 2.9: the last step of the list no longer contradicts the order the three traps ask for.
+- Labs 2.3 and 2.4: new troubleshooting entry for an action kept in a draft file, which the pipeline never runs.
+- Lab 2.4: the manual step is declared for the validation and deployment jobs. Declared for the deployment job only, it never stopped the check, in this lab and again in Lab 3.5.
+- Lab 3.5: the lab says that the promotion Pull Request is yours to create, what the number on the `integration` box counts, and how to leave a story out of a promotion.
+- Labs 3.5, 3.7 and 3.8: new troubleshooting entries for a promotion check that is green with no step to do, a pipeline that shows `integration` alone, and a monitoring push GitHub refuses for a missing `workflow` permission.
+- Lab 3.4 no longer mentions the setting that moves the no-overwrite list, which almost no project uses.
+- Simulate my teammates: the hotfix of Lab 3.7 is cut from the `preprod` of your fork, even when the one on your computer is behind.
+- Lab 3.6: the DORA metrics are read in the new DORA metrics panel of VS Code, one row per org of the pipeline, then exported as a Markdown report. No default org to set any more: the numbers come from the deployment jobs and the Pull Requests on GitHub.
+- Lab 3.6: the Overview now opens on the pipeline flow, which says how long a User Story takes to reach production and where it waits. The lead time of `main` is the one of the User Stories, 5.7 days, where the release Pull Request alone read 0.1.
+- Lab 3.6: new pictures of the gear menu, the Overview, the production tab and the Export menu, showing what a pipeline that released once looks like.
+- Labs 3.5, 3.7, 3.11 and the Level 3 introduction follow the same change. Lab 3.7 says which branch the hotfix counts on.
+- Lab 3.1: the gear menu picture shows the renamed DORA metrics entry.
+
+## 2026-10-10
+
+- Lab 1.6: the Pull Request window of VS Code is also shown while the check is still running, with the time the job has been going on, and a finished job says how long it took.
+
+## 2026-10-09
+
+- Lab 1.6: after the comment on GitHub, the lab opens the Pull Request window of VS Code, with the same comment and the Files button that lists the reports of the check.
+- Lab 3.2: the list of the components of a Pull Request is opened from its window in VS Code, with the Files button, instead of from the job page on GitHub.
+
 ## 2026-10-08
 
 - The labs follow the latest Pull Request comments: no Flows row, the deployment mode in the Metadata row, and a How to merge line on a green check.

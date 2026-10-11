@@ -776,7 +776,7 @@
           "lab": 6,
           "slug": "3-6-release-to-production-and-read-dora-metrics",
           "title": "Release to production and read your DORA metrics",
-          "description": "Release through preprod to your production org, verify it, then measure deployment frequency, lead time and failure rate with a DORA report.",
+          "description": "Release through preprod to your production org, verify it, then read deployment frequency, lead time and failure rate in the DORA metrics panel.",
           "time": "35 min"
         },
         {

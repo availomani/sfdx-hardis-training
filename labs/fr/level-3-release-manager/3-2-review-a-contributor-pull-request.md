@@ -5,12 +5,14 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "5004bd9b727a032b01a8e13fa1eefb935db726e7"
+source_rev: "25aeff99274df302016863e0d99ac39596ec6f4f"
 screenshots:
   - annotated/web/github-pr-files
+  - annotated/vscode/pipeline-review-pr
+  - annotated/vscode/pipeline-pr-window-review-files
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
-  commands: [hardis:project:deploy:smart]
+  commands: [hardis:project:deploy:smart, hardis:git:artifacts:download]
   flags: [--check]
   config: []
   panels: [pipeline]
@@ -78,9 +80,8 @@ Lisez le commentaire sfdx-hardis, de haut en bas. Quatre choses, dans cet ordre 
    le statut change, activé ou désactivé, n'a pas de commentaire de diff et n'est nommé nulle part :
    lisez le diff pour ceux-là. Une section **Flow deletion** apparaît quand des versions sont
    retirées. Le commentaire
-   ne nomme aucun autre composant supprimé : la liste, une ligne par composant, est
-   `xls/deployment-components.xlsx` dans l'artefact **sfdx-hardis reports** du contrôle
-   (**Summary** de son run, puis **Artifacts**)
+   ne nomme aucun autre composant supprimé : la liste, une ligne par composant, est dans les
+   fichiers que le contrôle a gardés, et la fin de cette étape l'ouvre
 4. **Tests et couverture.** La ligne **Apex tests** : la couverture face à l'objectif chaque fois
    qu'elle a été mesurée, ou pourquoi les tests n'ont pas tourné, et un bloc replié **🧪 Apex test
    classes** quand le job a lancé des classes de test nommées. Les échecs seulement quand il y en a
@@ -92,6 +93,25 @@ aujourd'hui, une story qui touche un fichier peut donc quand même mettre à jou
 quand votre org est en retard. L'absence de `deleted` dans la ligne **Metadata** est ce qui compte
 ici, et c'est ce dont parle l'étape 4. Le commentaire vous dit aussi ce qu'il ne peut pas faire à votre place, et c'est
 l'étape 3.
+
+**La liste des composants, sans quitter VS Code.** Le commentaire donne des compteurs, et le
+contrôle a gardé la liste. Ouvrez le panneau **DevOps Pipeline** et activez **Show feature
+branches** **(1)** : la branche de Mariia apparaît, avec le numéro de sa Pull Request à côté
+**(2)**. Cliquez sur le numéro.
+
+![Le panneau DevOps Pipeline, avec la Pull Request de Mariia à côté de sa branche](../../_assets/annotated/vscode/pipeline-review-pr.png)
+
+La fenêtre de la Pull Request s'ouvre. Sur son onglet **Validation**, cliquez sur **Files** **(1)**,
+puis sur `deployment-components.csv` **(2)**. Il s'ouvre dans VS Code : une ligne par composant du
+package, avec son **Status**, `Created`, `Updated`, `Deleted` ou `Unchanged`. Un composant
+supprimé y serait nommé. `xls/deployment-components.xlsx`, sur la ligne suivante, est la même
+liste pour un tableur.
+
+![Le bouton Files du job de validation de la Pull Request de Mariia, ouvert sur ses rapports](../../_assets/annotated/vscode/pipeline-pr-window-review-files.png)
+
+Votre numéro n'est pas `#64`. Si la fenêtre n'a pas de bouton **Files**, votre sfdx-hardis est
+plus ancien que la fonctionnalité : **Open job** mène aux mêmes fichiers sur GitHub, dans le
+**Summary** de l'exécution, sous **Artifacts**, **sfdx-hardis reports**.
 
 ### 3. Lire le diff, en cherchant ce que le robot ne peut pas voir
 

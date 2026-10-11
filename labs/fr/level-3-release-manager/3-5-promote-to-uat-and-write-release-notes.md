@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "00fdcbbcf343b840d9cbbdfcc9c18e4ee5aecf07"
+source_rev: "e459fdee8f6ebfde36d3a957bc1787020da9231d"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -17,7 +17,7 @@ screenshots:
 depends_on:
   commands: [hardis:doc:release-notes, hardis:project:deploy:smart]
   flags: []
-  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
+  config: [mergeTargets, availableTargetBranches, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
   docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes, salesforce-devops-config-overwrite]
 ---
@@ -136,9 +136,13 @@ de pipeline, comme le reste.
 
 ### 3. Créer la Pull Request de promotion
 
+Rien n'est encore ouvert entre `integration` et `uat` : la Pull Request de promotion, c'est à vous
+de la créer, maintenant. Le nombre dans la bulle au coin de la boîte `integration` n'est pas une
+Pull Request : il compte les User Stories qui y attendent, la liste lue à l'étape 1.
+
 Dans le diagramme **DevOps Pipeline**, la flèche d'`integration` vers `uat` porte une pastille
 **+ PR** **(1)**. Cliquez dessus : GitHub s'ouvre sur une nouvelle Pull Request d'`integration` vers
-`uat`, les deux branches déjà renseignées.
+`uat`, les deux branches déjà renseignées. Cliquez-y sur **Create pull request**.
 
 ![La pastille + PR sur la flèche d'integration vers uat](../../_assets/annotated/vscode/devops-pipeline-level3--create-promotion.png)
 
@@ -156,6 +160,12 @@ une, la pastille est remplacée par le numéro de la Pull Request et son statut.
     semaine où le métier valide une story et pas celle d'à côté. Ce que vous faites ici, c'est tout
     promouvoir, ce que transporte une simple Pull Request d'une branche vers la suivante, et ce que
     vous devriez faire presque toutes les semaines. Le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) est l'exception.
+
+!!! note "Une story de la liste ne doit pas partir ?"
+    Une promotion ordinaire transporte toute la branche : on ne peut pas en retirer une Pull
+    Request. Laisser une story de côté, c'est le rôle du bouton de promotion de la note ci-dessus :
+    il crée une promotion avec les stories que vous cochez, et en créer une nouvelle remplace celle
+    qui est déjà ouverte. Le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) le déroule.
 
 Intitulez-la pour les humains qui la liront, pas pour git, et appelez-la une **promotion** :
 
@@ -353,8 +363,7 @@ manquant qu'une livraison vide.
 depuis le commit que sa Pull Request a laissé sur `integration`, commit de merge ou commit unique
 d'un squash indifféremment : c'est pourquoi une Pull Request de feature peut être squashée. Une
 promotion squashée dans `uat` remplacerait tous ces commits par un seul qu'aucune story n'a produit,
-et les notes d'`uat` nommeraient la promotion et rien de ce qu'elle transportait. Le rapport DORA du
-[Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) s'appuie sur le même lien.
+et les notes d'`uat` nommeraient la promotion et rien de ce qu'elle transportait.
 
 **Une promotion est une Pull Request ordinaire.** Il n'y a pas de machinerie de promotion spéciale
 dans l'installation par défaut : `integration` dans `uat` est une branche mergée dans une autre
@@ -387,7 +396,14 @@ Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cl
 ## En cas de problème
 
 **Le check de la promotion est vert tout de suite, sans étape de délivrabilité à faire.**
-Les actions du Niveau 2 ne voyagent avec aucune Pull Request de cette promotion. sfdx-hardis
+Deux causes. Ouvrez d'abord la section repliée **🛠️ Deployment actions of this job** du commentaire
+du check. Quand la ligne de **Set Email Deliverability to All Email** indique *skipped: Runs after
+the merge only*, votre étape du [Lab 2.4](../level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) a été enregistrée avec **Execution Contexts** sur **Deployment job
+only**, et le sfdx-hardis de votre check l'a alors laissée de côté. Rien n'est perdu : faites le
+clic dans `helios-uat` maintenant, mergez, et cochez sa case dans le commentaire du job de
+déploiement. Le sfdx-hardis actuel arrête le check sur une telle étape, quel que soit son contexte.
+
+Quand l'étape n'est pas listée du tout, les actions du Niveau 2 ne voyagent avec aucune Pull Request de cette promotion. sfdx-hardis
 collecte les deployment actions dans les Pull Requests qu'une promotion transporte, et **Reset this
 level** met les stories du Niveau 2 dans `integration` en un seul commit qu'aucune Pull Request de
 votre fork n'a fait. Sa dernière étape donne à leurs actions une Pull Request de votre fork,

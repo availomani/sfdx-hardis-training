@@ -96,8 +96,9 @@ Manager** with the alias `helios-preprod`. Then seed both Developer Edition orgs
 **Training: Level 3 > Set up one of my training orgs**: `helios-preprod`, and `helios-prod`, which
 until now only created the others and held nothing.
 
-`helios-prod` gets the same sources as the other orgs. Nothing seeds a deployment history, so the
-DORA report in Lab 3.6 sees only the seeding and the deployments you make yourself.
+`helios-prod` gets the same sources as the other orgs. Nothing seeds a deployment history, and the
+seeding itself is not a deployment of the pipeline, so the DORA metrics of Lab 3.6 hold only the
+deployment jobs your own merges ran.
 
 If a scratch org expired since Level 2, **Training: Level 3 > Set up my training environment**
 rebuilds it first.

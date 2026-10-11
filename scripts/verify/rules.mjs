@@ -1010,7 +1010,7 @@ export const RULES = [
       const reports = fs.existsSync(doraDir) ? fs.readdirSync(doraDir).filter((f) => /^dora-report.*\.md$/.test(f)) : [];
       return reports.length > 0
         ? pass("Production has the work, and the DORA report is there to read")
-        : miss("no DORA report was generated", "docs/dora/ in your project. Lab 3.6 step 7, Generate DORA Metrics Report");
+        : miss("no DORA report was exported", "docs/dora/ in your project. Lab 3.6 step 9: Export, then Markdown report, in the DORA metrics panel");
     },
     check: (ctx) => {
       if (!ctx.hasBranch("main")) {

@@ -8,9 +8,11 @@ lang: en
 source_rev: ""
 screenshots:
   - annotated/web/github-pr-files
+  - annotated/vscode/pipeline-review-pr
+  - annotated/vscode/pipeline-pr-window-review-files
   - annotated/vscode/welcome-custom-menu-3
 depends_on:
-  commands: [hardis:project:deploy:smart]
+  commands: [hardis:project:deploy:smart, hardis:git:artifacts:download]
   flags: [--check]
   config: []
   panels: [pipeline]
@@ -75,8 +77,8 @@ Read the sfdx-hardis comment, top to bottom. Four things, in this order:
    diff comment of their own, **🔀 Flow** and its label, posted below for each changed Flow. A Flow
    whose only change is its status, activated or deactivated, gets no diff comment and is named
    nowhere, so read the diff for those. A **Flow deletion** section appears when versions are being
-   removed. The comment names no other deleted component: the list, one row per component, is `xls/deployment-components.xlsx`
-   in the **sfdx-hardis reports** artifact of the check (**Summary** of its run, then **Artifacts**)
+   removed. The comment names no other deleted component: the list, one row per component, is in
+   the files the check kept, and the end of this step opens it
 4. **Tests and coverage.** The **Apex tests** row: the coverage against the target every time it
    was measured, or why the tests did not run, and a folded **🧪 Apex test classes** block when the
    job ran named test classes. Failures only when there are failures
@@ -87,6 +89,24 @@ the lab's: they compare your branch with what your `helios-integration` holds to
 touches one file can still update a few components when your org is behind. No `deleted` in the
 **Metadata** row is what matters here, and it is what step 4 is about. The comment also tells you what it
 cannot do for you, which is step 3.
+
+**The list of components, without leaving VS Code.** The comment gives counts, and the check kept
+the list. Open the **DevOps Pipeline** panel and turn **Show feature branches** **(1)** on: Mariia's
+branch appears, with the number of her Pull Request next to it **(2)**. Click the number.
+
+![The DevOps Pipeline panel, with Mariia's Pull Request next to its branch](../../_assets/annotated/vscode/pipeline-review-pr.png)
+
+The window of the Pull Request opens. On its **Validation** tab, click **Files** **(1)**, then
+`deployment-components.csv` **(2)**. It opens in VS Code: one row per component of the package,
+with its **Status**, `Created`, `Updated`, `Deleted` or `Unchanged`. A deleted component would
+be named there. `xls/deployment-components.xlsx`, on the next row, is the same list for a
+spreadsheet.
+
+![The Files button of the validation job of Mariia's Pull Request, opened on its reports](../../_assets/annotated/vscode/pipeline-pr-window-review-files.png)
+
+Your number is not `#64`. If the window has no **Files** button, your sfdx-hardis is older than
+the feature: **Open job** leads to the same files on GitHub, in the **Summary** of the run, under
+**Artifacts**, **sfdx-hardis reports**.
 
 ### 3. Read the diff, looking for what the robot cannot see
 

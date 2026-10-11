@@ -17,7 +17,7 @@ screenshots:
 depends_on:
   commands: [hardis:doc:release-notes, hardis:project:deploy:smart]
   flags: []
-  config: [mergeTargets, availableTargetBranches, packageNoOverwritePath, failValidationOnPendingManualActions]
+  config: [mergeTargets, availableTargetBranches, failValidationOnPendingManualActions]
   panels: [pipeline, deploymentAction]
   docs: [salesforce-devops-deploy-major-branches, hardis/doc/salesforce-devops-release-notes, salesforce-devops-config-overwrite]
 ---
@@ -130,9 +130,13 @@ rest.
 
 ### 3. Create the promotion Pull Request
 
+Nothing is open between `integration` and `uat` yet: the promotion Pull Request is yours to create,
+now. The number in the bubble at the corner of the `integration` box is not a Pull Request: it
+counts the User Stories waiting there, the list you read in step 1.
+
 In the **DevOps Pipeline** diagram, the arrow from `integration` to `uat` carries a **+ PR** chip
 **(1)**. Click it: GitHub opens on a new Pull Request from `integration` into `uat`, both branches
-already filled in.
+already filled in. Click **Create pull request** there.
 
 ![The + PR chip on the arrow from integration to uat](../../_assets/annotated/vscode/devops-pipeline-level3--create-promotion.png)
 
@@ -149,6 +153,12 @@ replaced by the Pull Request number and its status.
     signs off one story and not the one next to it. What you are doing here is promoting
     everything, which is what a plain Pull Request from one branch to the next carries, and what
     you should be doing almost every week. [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) is the exception.
+
+!!! note "A story in the list should not go out?"
+    A plain promotion carries the whole branch, so a Pull Request cannot be taken out of it.
+    Leaving a story behind is what the promotion button of the note above is for: it creates a
+    promotion with the stories you tick, and creating one again replaces the one already open.
+    [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) walks it.
 
 Title it for the humans who will read it, not for git, and call it a **promotion**:
 
@@ -336,7 +346,7 @@ with nothing in it. An empty release note is more often a missing token than an 
 Pull Request left on `integration`, a merge commit or the single commit of a squash alike: that is
 why a feature Pull Request can be squashed. A promotion squashed into `uat` would replace all of
 those commits by one that no story produced, and the notes of `uat` would name the promotion and
-nothing it carried. The DORA report in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) leans on the same link.
+nothing it carried.
 
 **A promotion is an ordinary Pull Request.** There is no special promotion machinery in the default
 setup: `integration` into `uat` is a branch merged into another branch, and the deployment job on
@@ -367,7 +377,14 @@ Command documentation: [hardis:doc:release-notes](https://sfdx-hardis.cloudity.c
 ## If it goes wrong
 
 **The check of the promotion is green at once, with no deliverability step to do.**
-The actions of Level 2 travel with no Pull Request of this promotion. sfdx-hardis collects deployment
+Two causes. Open the folded **🛠️ Deployment actions of this job** of the check comment first. When
+the row of **Set Email Deliverability to All Email** reads *skipped: Runs after the merge only*,
+your step of [Lab 2.4](../level-2-contributor-advanced/2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) was saved with **Execution Contexts** on **Deployment job only**, and the
+sfdx-hardis your check ran then left it out. Nothing is lost: do the click in `helios-uat` now,
+merge, and tick its box in the comment of the deployment job. The current sfdx-hardis stops the
+check on such a step whatever its context.
+
+When the step is not listed at all, the actions of Level 2 travel with no Pull Request of this promotion. sfdx-hardis collects deployment
 actions from the Pull Requests a promotion carries, and **Reset this level** puts the Level 2 stories
 in `integration` as one commit that no Pull Request of your fork made. Its last step gives their
 actions a Pull Request of your fork, **Deployment actions of the earlier levels**, and merges it once

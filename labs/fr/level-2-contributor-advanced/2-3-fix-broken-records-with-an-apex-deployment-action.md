@@ -314,6 +314,15 @@ Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis
 
 ## En cas de problème
 
+**Le fichier d'actions s'appelle `.sfdx-hardis.draft.yml`, ou le check s'arrête sur *Draft deployment actions file found*.**
+Vous avez ajouté l'action alors que le panneau ne connaissait aucune Pull Request pour votre
+branche : la carte **My Pull Request** indiquait *Pull Request not created yet*, et l'action a été
+gardée dans un brouillon. Le pipeline ne lit que `scripts/actions/.sfdx-hardis.` suivi du numéro de
+la Pull Request et de `.yml` : un brouillon, ou un fichier renommé à votre idée, n'est jamais
+exécuté. Une fois votre Pull Request créée, rouvrez le panneau **DevOps Pipeline** et cliquez sur
+**Refresh** : il renomme le brouillon d'après votre Pull Request et vous le dit dans une
+notification. Committez le fichier renommé, puis **Save / Publish**.
+
 **L'action n'apparaît pas dans l'onglet Deployment Actions.**
 Le panneau lit la Pull Request depuis votre fork (votre copie personnelle du repository du cours sur
 GitHub, par exemple `github.com/my-username/sfdx-hardis-training`). Si la Pull Request a été ouverte

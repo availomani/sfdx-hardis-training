@@ -254,6 +254,11 @@ repository**: **Edit**, paste the address of your monitoring repository,
 `https://github.com/<your-handle>/sfdx-hardis-training-monitoring`, and **Save**. Then **Training:
 Level 3** > **Publish my pipeline configuration**: it is pipeline configuration, like the rest.
 
+That command does the whole trip on its own, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): it creates a branch, commits the
+configuration, pushes it and opens the Pull Request. You have nothing to commit and no Pull
+Request to create: wait for its checks, merge it with **Merge pull request**, then **Pull** in the
+**Source Control** panel.
+
 From then on, the **Org Monitoring Workbench** opened from the source repository offers **Open
 Monitoring Repository** instead of a dead end.
 
@@ -318,6 +323,29 @@ Command documentation: [hardis:org:configure:monitoring](https://sfdx-hardis.clo
   and an `AGENTS.md` at the root of that branch
 
 ## If it goes wrong
+
+**Source Control shows hundreds of files to commit after Publish my pipeline configuration.**
+Look at which repository they are under: with both folders open in one window, **Source Control**
+lists the two repositories one above the other. The files are in `sfdx-hardis-training-monitoring`,
+not in your fork, and Publish my pipeline configuration never touches that one. They are a backup
+taken from your computer, when the **Metadata Backup** card of the **Org Monitoring Workbench** runs
+there instead of in the nightly job. Do not commit them: the job commits its own backup. On that
+repository, **...** > **Changes** > **Discard All Changes**, then **Pull**, and you have what the
+job saved.
+
+**The push is refused: *refusing to allow an OAuth App to create or update workflow ... without `workflow` scope*.**
+The monitoring branch carries a GitHub workflow file, and GitHub only lets credentials that have
+the `workflow` permission push one. The ones VS Code used do not. Click the **Accounts** icon at the
+bottom of the activity bar, sign out of GitHub, then click **Install Org Monitoring** again: VS Code
+asks you to sign in, and the permissions it requests include workflows. The command can be run
+again safely. Do not push the branch another way and move on: the command also writes the workflow
+on `main` at the end, and without that step the workflow keeps its example branch names and never
+runs your org.
+
+**The workflow run fails on a branch called `monitoring_myclient`.**
+The workflow on `main` still lists the example branches: the command did not reach its last step,
+most often after the refused push above. Click **Install Org Monitoring** again once the push
+works: it rewrites the workflow on `main` with your branch and its two secrets.
 
 **The monitoring workflow fails at authentication.**
 Same as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): the External Client App needs the user pre-authorised, and the secrets have to be in

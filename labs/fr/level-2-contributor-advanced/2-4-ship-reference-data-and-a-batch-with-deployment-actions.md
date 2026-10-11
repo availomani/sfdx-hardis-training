@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "e675a673ecb5326e65bfc6e0687d17187d034ea5"
+source_rev: "f35a02fc7be6e5ee84fd8352d9667770467392de"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -261,13 +261,14 @@ org d'envoyer des e-mails tout court est un réglage de Setup qu'aucun déploiem
 batch envoie au planificateur une synthèse quand il a fini, et dans une org où la délivrabilité n'est
 pas sur **All email**, cet e-mail est jeté sans un mot.
 
-| Champ        | Valeur                                  |
-|--------------|-----------------------------------------|
-| Type         | **Manual**                              |
-| Label        | `Set Email Deliverability to All Email` |
-| When         | **Before Metadata Deployment**          |
-| Instructions | les quatre lignes numérotées ci-dessous |
-| Target orgs  | All target orgs                         |
+| Champ              | Valeur                                  |
+|--------------------|-----------------------------------------|
+| Type               | **Manual**                              |
+| Label              | `Set Email Deliverability to All Email` |
+| When               | **Before Metadata Deployment**          |
+| Execution Contexts | Validation and Deployment jobs          |
+| Instructions       | les quatre lignes numérotées ci-dessous |
+| Target orgs        | All target orgs                         |
 
 ```
 1. Open **Setup**, type `Deliverability` in the Quick Find box, and open it.
@@ -290,6 +291,11 @@ org.
 droit d'envoyer des e-mails avant que quoi que ce soit qui en envoie y arrive : la personne qui merge
 fait donc ce clic d'abord, puis merge. Une étape manuelle déclarée avant le déploiement est listée en
 premier dans le commentaire de la Pull Request, c'est là qu'elle la lit.
+
+**Execution Contexts** est sur **Validation and Deployment jobs**, contrairement aux deux autres là
+aussi : le check de la Pull Request doit voir l'étape pour la réclamer avant le merge. Dès que
+**When** indique **Before Metadata Deployment**, une étape manuelle ne propose rien d'autre. Si
+votre fenêtre liste encore trois contextes, votre extension est plus ancienne : choisissez celui-ci.
 
 Une étape manuelle ne fait rien. Elle **apparaît dans le commentaire de la Pull Request et dans le
 rapport de déploiement**, de sorte que la personne qui livre en production est prévenue, dans la
@@ -464,6 +470,15 @@ Documentation de la commande : [hardis:org:data:import](https://sfdx-hardis.clou
 - L'étape manuelle listée dans le rapport de déploiement, cochée par vous
 
 ## En cas de problème
+
+**Le fichier d'actions s'appelle `.sfdx-hardis.draft.yml`, ou le check s'arrête sur *Draft deployment actions file found*.**
+Vous avez ajouté l'action alors que le panneau ne connaissait aucune Pull Request pour votre
+branche : la carte **My Pull Request** indiquait *Pull Request not created yet*, et l'action a été
+gardée dans un brouillon. Le pipeline ne lit que `scripts/actions/.sfdx-hardis.` suivi du numéro de
+la Pull Request et de `.yml` : un brouillon, ou un fichier renommé à votre idée, n'est jamais
+exécuté. Une fois votre Pull Request créée, rouvrez le panneau **DevOps Pipeline** et cliquez sur
+**Refresh** : il renomme le brouillon d'après votre Pull Request et vous le dit dans une
+notification. Committez le fichier renommé, puis **Save / Publish**.
 
 **L'onglet Crew Capacity manque dans l'application de `helios-integration`.**
 L'onglet ou l'application `Helios_Delivery` n'était pas dans votre Pull Request, ou l'onglet n'est

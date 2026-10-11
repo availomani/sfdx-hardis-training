@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
+source_rev: "a198e6c6c15445b9c557bc430c2432f1ebc7d778"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -271,6 +271,11 @@ endroit où il regardera est le projet. De retour dans le repository de sources 
 **Training: Level 3** > **Publish my pipeline configuration** : c'est de la configuration de
 pipeline, comme le reste.
 
+Cette commande fait tout le trajet seule, comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : elle crée une branche, committe la
+configuration, la pousse et ouvre la Pull Request. Vous n'avez rien à committer et aucune Pull
+Request à créer : attendez ses checks, mergez-la avec **Merge pull request**, puis **Pull** dans le
+panneau **Source Control**.
+
 À partir de là, l'**Org Monitoring Workbench** ouvert depuis le repository de sources propose
 **Open Monitoring Repository** au lieu d'une impasse.
 
@@ -336,6 +341,31 @@ Documentation des commandes : [hardis:org:configure:monitoring](https://sfdx-har
   fork, et un `AGENTS.md` à la racine de cette branche
 
 ## En cas de problème
+
+**Source Control affiche des centaines de fichiers à committer après Publish my pipeline configuration.**
+Regardez sous quel repository ils se trouvent : avec les deux dossiers ouverts dans une même
+fenêtre, **Source Control** liste les deux repositories l'un au-dessus de l'autre. Les fichiers sont
+dans `sfdx-hardis-training-monitoring`, pas dans votre fork, et Publish my pipeline configuration
+ne touche jamais à celui-là. C'est un backup pris depuis votre ordinateur, quand la carte
+**Metadata Backup** de l'**Org Monitoring Workbench** tourne là plutôt que dans le job de nuit. Ne les
+committez pas : le job committe son propre backup. Sur ce repository, **...** > **Changes** >
+**Discard All Changes**, puis **Pull**, et vous avez ce que le job a enregistré.
+
+**Le push est refusé : *refusing to allow an OAuth App to create or update workflow ... without `workflow` scope*.**
+La branche de monitoring contient un fichier de workflow GitHub, et GitHub ne laisse pousser un tel
+fichier qu'avec des identifiants qui ont la permission `workflow`. Ceux que VS Code a utilisés ne
+l'ont pas. Cliquez sur l'icône **Accounts** en bas de la barre d'activité, déconnectez-vous de
+GitHub, puis cliquez de nouveau sur **Install Org Monitoring** : VS Code vous demande de vous
+connecter, et les permissions qu'il demande incluent les workflows. La commande peut être relancée
+sans risque. Ne poussez pas la branche par un autre moyen pour continuer : la commande écrit aussi
+le workflow sur `main` à la fin, et sans cette étape le workflow garde ses noms de branches
+d'exemple et ne traite jamais votre org.
+
+**Le workflow échoue sur une branche appelée `monitoring_myclient`.**
+Le workflow sur `main` liste encore les branches d'exemple : la commande n'a pas atteint sa
+dernière étape, le plus souvent après le push refusé ci-dessus. Cliquez de nouveau sur **Install
+Org Monitoring** une fois que le push passe : elle réécrit le workflow sur `main` avec votre
+branche et ses deux secrets.
 
 **Le workflow de monitoring échoue à l'authentification.**
 Comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : l'External Client App a besoin

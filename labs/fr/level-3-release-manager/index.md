@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "1651e48fae090ca8a17bcdbaee369e4501394d2a"
+source_rev: "e3ae8060a6bf0588628035705fe023145aa5e899"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -103,8 +103,8 @@ avec **Training: Level 3 > Set up one of my training orgs** : `helios-preprod`, 
 qui jusqu'ici ne faisait que créer les autres et ne contenait rien.
 
 `helios-prod` reçoit les mêmes sources que les autres orgs. Rien n'alimente un historique de
-déploiement : le rapport DORA du Lab 3.6 ne voit donc que l'alimentation et les déploiements que vous
-faites vous-même.
+déploiement, et l'alimentation elle-même n'est pas un déploiement du pipeline : les métriques DORA
+du Lab 3.6 ne contiennent donc que les jobs de déploiement que vos propres merges ont lancés.
 
 Si une scratch org a expiré depuis le Niveau 2, **Training: Level 3 > Set up my training
 environment** la reconstruit d'abord.

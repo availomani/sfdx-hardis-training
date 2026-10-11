@@ -13,7 +13,7 @@ depends_on:
   commands: [hardis:project:deploy:smart, hardis:doc:release-notes, hardis:doc:dora-report]
   flags: []
   config: [mergeTargets, productionBranch]
-  panels: [pipeline]
+  panels: [pipeline, doraMetrics]
   docs: [salesforce-devops-release-home, salesforce-devops-setup-checklist]
 ---
 
@@ -99,8 +99,13 @@ this release is for, and put them in the description of the Pull Request from `p
 
 ### Friday: measure
 
-Set `helios-prod` as your default org in **Orgs Manager**, so the report measures production rather
-than your sandbox, then run the DORA report and compare it with the baseline you took in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
+Open the **DORA metrics** panel from the gear menu of the **DevOps Pipeline**, as in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), and
+read **Time to production** in the pipeline flow, the row of `main`, then the one of
+`integration`. Export the report again, **Export** then **Markdown report**, and compare it with the baseline you took in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
+
+The panel compares each number with the previous period by itself, with an arrow. Your pipeline is
+younger than the 90 days of a period, so the period before is empty and no arrow is drawn yet: this
+week, the baseline file is still what you compare with.
 
 Then read back over the week, and answer three questions for yourself, the ones a successor would
 ask:

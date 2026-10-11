@@ -21,6 +21,7 @@ screenshots:
   - annotated/vscode/pipeline-config--target-branches
   - annotated/vscode/pipeline-config-user-stories--target-branches
   - annotated/vscode/pipeline-config-danger--promotion-branches
+  - annotated/vscode/pipeline-config-branch-merge-target
   - annotated/vscode/pipeline-cards--save-publish
   - annotated/vscode/work-save-completed
   - annotated/vscode/devops-pipeline-level3--four-stages
@@ -281,9 +282,10 @@ Elle pose une douzaine de questions, dans cet ordre :
    variables + encrypted certificate as file (default)**. L'autre mode met le certificat lui-même
    dans un troisième secret et supprime le fichier
 9. **Please confirm when variables have been set.** Celle-ci est un arrêt, et l'étape 6 est ce
-   qu'elle attend. Ne cliquez pas encore sur **Validate**
-10. Puis, après votre confirmation : le **nom** de l'External Client App, un **e-mail de contact**,
-    et le **profil à pré-autoriser**. Prenez **System Administrator** : il est déjà sélectionné,
+   qu'elle attend. C'est une question **Yes** ou **No** : n'y répondez pas encore
+10. Trois questions suivent une fois que vous avez répondu **Yes**, c'est-à-dire à la fin de
+    l'étape 6 ci-dessous : lisez-les maintenant, vous y répondrez à ce moment-là. Le **nom** de
+    l'External Client App, un **e-mail de contact**, et le **profil à pré-autoriser**. Prenez **System Administrator** : il est déjà sélectionné,
     gardez-le. La liste affiche les noms de profils dans la langue de l'utilisateur de l'org : une
     org réglée en français liste donc `Administrateur système` à la place
 
@@ -333,7 +335,7 @@ majuscules**. C'est toute la convention, et c'est pourquoi les noms ne sont pas 
     lisez son bloc `env:` une fois, parce que sur votre propre projet ce bloc, c'est à vous de
     l'écrire.
 
-Cliquez maintenant sur **Validate** à la question 9, répondez aux trois dernières questions, et
+Répondez maintenant **Yes** à la question 9, répondez aux trois dernières questions, et
 laissez la commande créer l'application.
 
 Ce qu'elle a écrit, et où :
@@ -379,6 +381,18 @@ Vérifiez l'org deux fois : pointer la production vers la mauvaise org est l'err
 disponible dans ce lab. Et stockez les deux secrets, l'ID et la clé, comme à l'étape 6.
 
 Quatre secrets, deux External Client Apps, deux clés. Fastidieux une fois, puis plus jamais.
+
+**Dites ensuite à `uat` où va son travail.** La commande a écrit que `preprod` se merge dans
+`main`. Rien n'a encore dit que `uat` se merge dans `preprod` : jusqu'ici `uat` était la fin du
+pipeline, et son fichier de branche le dit. Dans le panneau **DevOps Pipeline**, menu engrenage,
+**Pipeline Settings**, passez le sélecteur de portée en haut à droite sur **Branch: uat** **(1)**,
+ouvrez l'onglet **Deployment** **(2)** et cliquez sur **Edit**. Dans **Merge target branches**
+**(3)**, saisissez `preprod`, puis **Save** **(4)**, qui a pris la place d'**Edit**.
+
+![L'onglet Deployment des réglages de la branche uat, déverrouillé, avec preprod comme cible de merge](../../_assets/annotated/vscode/pipeline-config-branch-merge-target.png)
+
+Sans cela le diagramme ne dessine aucune flèche de `uat` vers `preprod`, et le [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) n'a pas
+de pastille **+ PR** où cliquer. L'étape 11 le publie avec le reste.
 
 ### 9. Laisser les contributeurs démarrer un hotfix
 

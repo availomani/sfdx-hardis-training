@@ -5,14 +5,14 @@ description: "Décidez de l'ordre dans lequel trois Pull Requests sont mergées 
 level: 3
 lab: 4
 lang: fr
-source_rev: "5004bd9b727a032b01a8e13fa1eefb935db726e7"
+source_rev: "9a2a621d604ae10d338c78e9dd31d214612c837a"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config--cleaning-overwrite
 depends_on:
   commands: [hardis:project:deploy:smart]
   flags: []
-  config: [autoCleanTypes, packageNoOverwritePath, useDeltaDeployment]
+  config: [autoCleanTypes, useDeltaDeployment]
   panels: [pipeline, pipelineConfig, packageXml]
   docs: [salesforce-devops-config-cleaning, salesforce-devops-config-delta-deployment, salesforce-devops-config-overwrite]
 ---
@@ -185,18 +185,17 @@ permission set plutôt que deux modifications dans un profil de mille lignes. Un
 un mauvais après-midi. C'est l'essentiel de la raison pour laquelle le projet interdit les
 permissions sur les profils.
 
-**Le gestionnaire d'écrasement** (`packageNoOverwritePath`) protège les composants délibérément
+**Le gestionnaire d'écrasement** protège les composants délibérément
 différents d'une org à l'autre. Tout ce qui est listé dans `manifest/package-no-overwrite.xml` est
 retiré du package quand l'org cible le possède déjà, pour qu'un déploiement ne puisse pas aplatir un
 named credential qui pointe vers un endpoint différent dans chaque environnement. Le projet démarre
 avec la liste que reçoit tout projet sfdx-hardis. Elle couvre rapports, tableaux de bord, connected
 apps et credentials, Helios ne déploie rien de tout cela, donc rien de ce qu'il déploie n'est encore
 protégé : le [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) y ajoute la première entrée qui compte, avant la première promotion
-vers `uat`. Son emplacement peut être changé par branche, c'est pourquoi vous ne le trouverez pas
-dans l'onglet **Deployment** **(2)** global : basculez la portée sur `Branch: integration` et il y
-est, sous **Branch-scoped custom Package-No-Overwrite path**.
+vers `uat`. La liste est un fichier : on l'ouvre depuis le menu **Deployment packages** du panneau
+DevOps Pipeline, pas depuis un onglet de celui-ci.
 
-**Le déploiement delta** est **Use Delta Deployment** **(3)**, dans l'onglet **Deployment** global,
+**Le déploiement delta** est **Use Delta Deployment** **(3)**, dans l'onglet **Deployment** **(2)** global,
 et le [Lab 3.3](3-3-deploy-to-integration-and-read-the-log.md) vous a montré qu'il est **Disabled** ici. Activé, chaque merge déploie les composants
 qui ont changé plutôt que le package déclaré. C'est une décision de rapidité et de rayon d'impact,
 pas un filet de sécurité : il n'empêche pas un merge d'en écraser un autre, parce que les deux
@@ -204,11 +203,11 @@ déploiements envoient ce que leur propre commit contient.
 
 <details markdown="1"><summary>Sous le capot : les trois mécanismes et où chacun vit</summary>
 
-| Mécanisme                 | Configuration                                                     | Ce qu'il fait                                                                               |
-|---------------------------|-------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| Nettoyage                 | `autoCleanTypes` dans `config/.sfdx-hardis.yml`                   | Réécrit les sources **au moment du commit**, dans la branche du contributeur                |
-| Gestionnaire d'écrasement | `packageNoOverwritePath` plus `manifest/package-no-overwrite.xml` | Retire des composants du package **au moment du déploiement**, quand l'org les possède déjà |
-| Delta                     | `useDeltaDeployment`                                              | Réduit le package à ce qui a changé depuis le dernier commit déployé                        |
+| Mécanisme                 | Configuration                                   | Ce qu'il fait                                                                               |
+|---------------------------|-------------------------------------------------|---------------------------------------------------------------------------------------------|
+| Nettoyage                 | `autoCleanTypes` dans `config/.sfdx-hardis.yml` | Réécrit les sources **au moment du commit**, dans la branche du contributeur                |
+| Gestionnaire d'écrasement | `manifest/package-no-overwrite.xml`             | Retire des composants du package **au moment du déploiement**, quand l'org les possède déjà |
+| Delta                     | `useDeltaDeployment`                            | Réduit le package à ce qui a changé depuis le dernier commit déployé                        |
 
 La distinction entre les deux premiers mérite d'être tenue au clair, parce qu'ils échouent
 différemment.
