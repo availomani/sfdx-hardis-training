@@ -22,13 +22,29 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { PILL_PALETTE } from "./annotate.mjs";
 import { strings, universeText, fill } from "../lib/strings.mjs";
-import { backlogPage, storyPage, badgesPage, badgePage } from "../lib/pages.mjs";
+import { backlogPage, storyPage, badgesPage, badgePage, statsPage } from "../lib/pages.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 const OUT = path.join(ROOT, "site-src");
 
 const universe = JSON.parse(fs.readFileSync(path.join(ROOT, "training-universe.json"), "utf8"));
+
+// The figures of the course, committed once a week by the course-stats workflow,
+// or null before its first run. Nothing is read from GitHub here: a site build
+// stays a matter of files.
+const courseStats = (() => {
+  const file = path.join(ROOT, "stats", "course-stats.json");
+  if (!fs.existsSync(file)) {
+    return null;
+  }
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (error) {
+    console.warn(`stats/course-stats.json could not be read, the Statistics page says there are no numbers: ${error.message}`);
+    return null;
+  }
+})();
 
 // The language the site leads with: its home page is the home page of the site,
 // and its backlog, stories and badges keep the URLs the outside world holds.
@@ -505,6 +521,25 @@ const holders = (fs.existsSync(badgesDir)
   })
   .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }) || a.key.localeCompare(b.key));
 
+// How many of each badge were awarded. The maintainers of the course and the
+// accounts its end to end tests run under hold badges too, and are not counted:
+// the same list as the course statistics leave out.
+const ignoredHandles = (() => {
+  try {
+    const list = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts", "stats", "ignore.json"), "utf8"));
+    return new Set((list.handles || []).map((handle) => String(handle).toLowerCase()));
+  } catch {
+    return new Set();
+  }
+})();
+const counted = holders.filter((holder) =>
+  !ignoredHandles.has(String(holder.recipient || "").toLowerCase()) && !ignoredHandles.has(holder.key.toLowerCase()));
+const badgeTotals = universe.levels.map((level) => ({
+  level: level.level,
+  badge: level.badge,
+  count: counted.filter((holder) => (holder.record.badges || []).some((badge) => badge.level === level.level)).length
+}));
+
 /**
  * The badges index and one page per holder, in every language.
  *
@@ -532,6 +567,7 @@ function badgePages() {
     const index = badgesPage({
       s,
       holders,
+      totals: badgeTotals,
       badgeHref: (key) => `${key}.md`,
       badgeImage: (key, level) => `${images}/${key}-level-${level}.svg`,
       claimUrl,
@@ -592,4 +628,32 @@ function badgePages() {
 }
 const badgePageCount = badgePages();
 
-console.log(`site-src assembled: ${pages} lab page(s), ${backlogs} backlog page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePageCount} badge page(s), ${badgeRecords} badge record(s), ${locales.length} locale(s)`);
+/**
+ * The statistics of the course, in every language.
+ *
+ * stats/course-stats.json is committed once a week by the course-stats
+ * workflow. Nothing is read from GitHub here: a site build stays a matter of
+ * files, and before the first weekly run the page says there are no numbers.
+ */
+function statsPages() {
+  const stats = courseStats;
+  for (const locale of locales) {
+    const s = strings(locale);
+    const dir = path.join(OUT, localePrefix(locale), "stats");
+    fs.mkdirSync(dir, { recursive: true });
+    const alternates = {};
+    for (const other of locales) {
+      alternates[other] = `${localePrefix(other)}stats/`;
+    }
+    const page = statsPage({ s, text: universeText(locale, universe), universe, stats });
+    fs.writeFileSync(
+      path.join(dir, "index.md"),
+      withAlternates(frontMatter({ title: s.stats.title, description: s.stats.description }) + page, alternates, locale),
+      "utf8"
+    );
+  }
+  return locales.length;
+}
+const statsPageCount = statsPages();
+
+console.log(`site-src assembled: ${pages} lab page(s), ${backlogs} backlog page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePageCount} badge page(s), ${statsPageCount} statistics page(s), ${badgeRecords} badge record(s), ${locales.length} locale(s)`);

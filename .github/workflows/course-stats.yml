@@ -1,0 +1,120 @@
+---
+# The statistics of the course, once a week.
+#
+# Reads the forks of the course and the badge claims, and commits
+# stats/course-stats.json: how many learners start and finish each level, and
+# the median time of the labs. The site build makes the Statistics page from it,
+# and STATS.md is the same page for a reader of the repository.
+#
+# Then writes the observed times into the markdown of the labs, in every
+# language, so the pages announce what learners take and the change is a diff
+# anybody can read.
+#
+# THREE RULES. Read them before changing anything in this file.
+#
+#  1. Only what is public is read, with the token of this workflow and nothing
+#     else. No secret belongs here.
+#  2. Nothing of a learner's repository is cloned or executed. The script asks
+#     the GitHub API for dates and branch names.
+#  3. The file this commits holds counts and medians. The report that names
+#     each learner (--details) is for a maintainer's own machine: never run it
+#     here, and never upload it as an artifact, which any signed-in user of
+#     GitHub could download.
+name: Course statistics
+
+on:
+  schedule:
+    # Monday, before Europe starts its week
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions: read-all
+
+# Its own group, not the one of the badge claims: a group keeps a single
+# pending run, and a weekly job waiting there would cancel a learner's claim.
+concurrency:
+  group: course-stats
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    name: Read the forks and the claims, commit the figures
+    # The statistics are about the forks of the course. A fork has none of its
+    # own, and would commit an empty file to a learner's main every Monday.
+    if: github.repository == 'hardisgroupcom/sfdx-hardis-training'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      # To start the site build and the reset branches below. A push made with
+      # GITHUB_TOKEN never triggers a workflow.
+      actions: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - name: The arithmetic still holds
+        run: node --test scripts/stats/compute.test.mjs
+
+      - name: Read GitHub and write the figures
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/stats/course-stats.mjs
+
+      - name: Write the observed times into the pages
+        run: node scripts/build/lab-times.mjs
+
+      - name: Commit the figures
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/course-stats.json STATS.md labs
+          if git diff --cached --quiet; then
+            echo "The figures did not change."
+            exit 0
+          fi
+          git commit -m "stats: course statistics of $(date -u +%Y-%m-%d)"
+          # A badge claim may have committed while this ran
+          push_to_main() {
+            for attempt in 1 2 3 4 5; do
+              if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                return 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((attempt * 5))
+            done
+            return 1
+          }
+          if ! push_to_main; then
+            echo "The figures could not be pushed after 5 attempts: next week's run writes them."
+            exit 1
+          fi
+          # The translations this run rewrote still say what their English page
+          # says, so they are stamped with the commit of that page. Only now: a
+          # stamp names a commit, and the rebase of the push above gives the
+          # commit a new name. Stamped before it, they would name one that no
+          # longer exists, and every one of them would read as out of date.
+          node scripts/build/lab-times.mjs --stamp
+          git add labs
+          if ! git diff --cached --quiet; then
+            git commit -m "stats: translations stamped with their English page"
+            if ! push_to_main; then
+              echo "The stamps could not be pushed: the translations read as behind until somebody stamps them."
+              exit 1
+            fi
+          fi
+          # The push above starts no workflow. The reset branches are built from
+          # main and must not lag it, and the page needs a site build.
+          if ! gh workflow run "Publish the reset branches" --ref "${GITHUB_REF_NAME}"; then
+            echo "The reset branches could not be republished: the next push to main does it."
+          fi
+          if ! gh workflow run "Build and publish the training site" --ref "${GITHUB_REF_NAME}"; then
+            echo "The site build could not be started: the page follows on the next build."
+          fi

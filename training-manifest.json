@@ -980,7 +980,8 @@
       "docs": [
         "salesforce-monitoring-home",
         "salesforce-monitoring-config-github",
-        "salesforce-monitoring-grafana-v2"
+        "salesforce-monitoring-grafana-v2",
+        "salesforce-devops-setup-integration-email"
       ],
       "panels": [
         "monitoringConfig",
@@ -1249,6 +1250,9 @@
         "lab-3-8"
       ],
       "salesforce-monitoring-grafana-v2": [
+        "lab-3-8"
+      ],
+      "salesforce-devops-setup-integration-email": [
         "lab-3-8"
       ],
       "salesforce-project-doc-generate": [

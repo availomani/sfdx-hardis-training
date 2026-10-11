@@ -190,6 +190,19 @@ if (fs.existsSync(recordsDir) && SITE_URL) {
   }
 }
 
+// The statistics page is generated, like the badges, and is in the menu of every
+// language: a build that skipped it leaves a menu entry that answers 404.
+const labLocales = fs
+  .readdirSync(path.join(ROOT, "labs"), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && /^[a-z]{2}(-[A-Z]{2})?$/.test(entry.name))
+  .map((entry) => entry.name);
+for (const locale of labLocales) {
+  const page = path.join(locale === "en" ? "" : locale, "stats", "index.html");
+  if (!fs.existsSync(path.join(SITE, page))) {
+    problems.push(`/${page.replace(/\\/g, "/")} (the statistics page of ${locale} was not built)`);
+  }
+}
+
 console.log(
   `${pages.length} page(s), ${references} local asset reference(s), ${links_checked} internal link(s), ${cards} share card(s), ${badgeImages} badge image(s) in records.`
 );

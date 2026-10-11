@@ -30,7 +30,7 @@ depends_on:
 
 **Level**: 1 Contributor basics
 
-**Time**: ~20 min
+**Time**: ~25 min<!-- observed --> (observed: median 28 min, 8 learners, fastest 12 min)<!-- /observed -->
 
 **You will**: have a robot check your work before a human does, read what it says, and put US-014
 into the shared integration org.
@@ -184,6 +184,10 @@ ServiceNow connector instead.
 panel. Under **Project Contribution Workflow**, the **My Pull Request** card **(1)** now names your
 Pull Request. Click it.
 
+If the card still reads *Pull Request not created yet*, the panel is showing what it knew before you
+created it: click **Refresh** in its top bar, and the card catches up. It also does so by itself
+within a minute.
+
 ![The My Pull Request card of the DevOps Pipeline panel, naming the Pull Request of US-014](../../_assets/annotated/vscode/pipeline-cards-first-pr--my-pull-request.png)
 
 A window opens on your Pull Request, and it gathers what GitHub spreads over several pages:
@@ -292,6 +296,14 @@ more thing in everyone's list for no benefit.
     merge, like the deployment check. [Lab 2.5](../level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage.md) has you meet one finding that only warns, and
     one check that blocks.
 
+!!! warning "The yellow banner that follows"
+    Once `integration` has moved, the home page of your fork may show a yellow banner: **integration
+    had recent pushes**, with a **Compare & pull request** button. Leave it alone. It offers to send
+    `integration` to the **original** repository, the one every learner forked, and that is never
+    what you want. If you opened one by mistake, **Close pull request** at the bottom of its page
+    undoes it, and nothing of yours is lost: your `integration` branch lives in your fork and stays
+    there.
+
 ### 5. Watch the real deployment
 
 Merging into `integration` starts a second job, and this one is not a check: it deploys for real.
@@ -375,6 +387,21 @@ Command documentation: [hardis:project:deploy:smart](https://sfdx-hardis.cloudit
 That is one full delivery loop. Every story for the rest of your life on this project is this loop.
 
 ## If it goes wrong
+
+**The My Pull Request card still says *Pull Request not created yet*.**
+Three causes, in the order they happen:
+
+- the panel has not looked since you created the Pull Request. Click **Refresh** in the top bar of
+  the **DevOps Pipeline** panel
+- VS Code is on another branch. The card is about the branch you are on: check the bottom left of
+  the status bar, and if it does not read `features/US-014-panels-required`, click it and pick that
+  branch
+- the Pull Request was opened on the original repository instead of your fork. Its address then
+  starts with `github.com/hardisgroupcom/`, and the card only looks in your fork. Close it there,
+  and open it again as step 1 says, with **base** in your own fork
+
+None of them stops the lab: the checks, the comment and the merge of steps 2 to 4 all happen on
+GitHub, and that is where the lab is checked.
 
 **The checks never start.**
 Actions are still disabled on your fork (`github.com/my-username/sfdx-hardis-training`). GitHub hides

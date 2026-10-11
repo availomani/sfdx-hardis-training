@@ -55,3 +55,11 @@ jobs:
 
       - name: Translations behind their source
         run: node scripts/i18n/check-translations.mjs
+
+      # The Statistics page is built from a committed file, and that file must
+      # never name a learner
+      - name: The course statistics add up, and name nobody
+        run: |
+          node --test scripts/stats/compute.test.mjs
+          node scripts/stats/course-stats.mjs --check
+          node scripts/build/lab-times.mjs --check

@@ -537,12 +537,36 @@ export function writeProgress(progress) {
   fs.writeFileSync(path.join(ROOT, PROGRESS_FILE), JSON.stringify(progress, null, 2) + "\n", "utf8");
 }
 
+/**
+ * When a lab passed for the first time, or null when it never did.
+ *
+ * The receipt of a lab keeps that moment. Check my work runs over the whole
+ * level, and Claim my badge does too, so a receipt stamped at every run said
+ * when the claim was made and nothing about the lab.
+ */
+export function firstPassedAt(id) {
+  const receipt = (readProgress().receipts || []).find((r) => r.id === id);
+  const at = receipt ? receipt.firstPassedAt || receipt.at : null;
+  return at && !Number.isNaN(Date.parse(at)) ? at : null;
+}
+
 export function recordReceipt(receipt) {
   const progress = readProgress();
+  const previous = (progress.receipts || []).find((r) => r.id === receipt.id);
   progress.receipts = (progress.receipts || []).filter((r) => r.id !== receipt.id);
-  progress.receipts.push(receipt);
+  progress.receipts.push({ ...receipt, firstPassedAt: (previous && (previous.firstPassedAt || previous.at)) || receipt.at });
   progress.receipts.sort((a, b) => a.id.localeCompare(b.id));
   writeProgress(progress);
+}
+
+/** Forgets the receipts of a level and of the ones after it: Reset this level starts them over. */
+export function clearReceipts(fromLevel) {
+  const progress = readProgress();
+  const kept = (progress.receipts || []).filter((r) => Number(String(r.id).split(".")[0]) < fromLevel);
+  if (kept.length !== (progress.receipts || []).length) {
+    progress.receipts = kept;
+    writeProgress(progress);
+  }
 }
 
 // ------------------------------------------------------------------ args

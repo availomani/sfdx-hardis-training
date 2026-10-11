@@ -9,7 +9,7 @@ import fs from "fs";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, runStreamed, git, gitOut,
-  select, confirm, universe, repoSlug, ensureGh, connectedOrgs, openPullRequest
+  select, confirm, universe, repoSlug, ensureGh, connectedOrgs, openPullRequest, clearReceipts
 } from "../lib/util.mjs";
 import { withProtectionLifted } from "../lib/protection.mjs";
 import { waitForPullRequestChecks, mergeUpdatePullRequest } from "../lib/course-updates.mjs";
@@ -125,6 +125,9 @@ export default async function reset(args) {
     return;
   }
   ok("Your fork is level with the reset point");
+  // The labs of this level are about to be done again, and their receipts say
+  // when they passed the first time round
+  clearReceipts(level);
 
   title("4 of 6  Clearing the branches of this level");
   const branchesCleared = await clearLevelBranches(u, level, args);

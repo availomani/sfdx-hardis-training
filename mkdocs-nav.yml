@@ -36,6 +36,7 @@ nav:
   - Help: en/help.md
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
+  - Statistics: stats/index.md
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
       - Commencer ici: fr/level-1-contributor-basics/index.md
@@ -73,4 +74,5 @@ nav:
   - Aide: fr/help.md
   - Backlog: fr/BACKLOG.md
   - Badges: fr/badges/index.md
+  - Statistiques: fr/stats/index.md
   - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/

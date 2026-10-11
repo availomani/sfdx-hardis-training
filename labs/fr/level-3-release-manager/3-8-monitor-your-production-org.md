@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "a198e6c6c15445b9c557bc430c2432f1ebc7d778"
+source_rev: "3219bbc355f39836e8b85079b90658946e978f2f"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -16,7 +16,7 @@ depends_on:
   flags: []
   config: [monitoringRepository, deploymentRepository, monitoringCommands, monitoringDisable, notificationConfig, msTeamsWebhookUrl]
   panels: [monitoringConfig, orgMonitoring]
-  docs: [salesforce-monitoring-home, salesforce-monitoring-config-github, salesforce-monitoring-grafana-v2]
+  docs: [salesforce-monitoring-home, salesforce-monitoring-config-github, salesforce-monitoring-grafana-v2, salesforce-devops-setup-integration-email]
 ---
 
 # Lab 3.8 - Monitorer votre org de production
@@ -40,11 +40,34 @@ Personne ne regarde, parce que regarder suppose de penser à regarder.
 
 Le monitoring est la part du métier de release manager qui se joue quand rien n'est livré.
 
+Ce qu'il vous donne, chaque nuit, tient en trois choses, et aucune n'est un fichier de log à fouiller :
+
+| Quoi                               | Où vous le lisez                                                                                                                        |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| **Une sauvegarde des métadonnées** | L'historique git du repository de monitoring : chaque changement fait au paramétrage de la production, daté                             |
+| **Des indicateurs**                | Un par contrôle : un nombre et une sévérité, avec un fichier de rapport derrière. Utilisateurs inactifs, limites, tests en échec        |
+| **Des alertes**                    | Les indicateurs qui ont dépassé une sévérité que vous avez choisie, envoyés chez vous : un message dans un canal d'équipe, ou un e-mail |
+
+La sauvegarde est une sauvegarde des **métadonnées** : objets, champs, flows, Apex, permission sets,
+mises en page, la façon dont l'org est construite. Ce n'est **pas une sauvegarde des données**. Aucun
+compte, aucun contact, aucun enregistrement d'installation ne s'y trouve, et elle n'en restaurera
+jamais un. Perdre des enregistrements est un autre risque, couvert par un outil de sauvegarde de
+données, et une équipe qui entend "la production est sauvegardée toutes les nuits" doit savoir de
+laquelle des deux on parle.
+
+Les alertes sont la façon dont le monitoring se lit au quotidien : personne n'ouvre un rapport tous
+les matins, et un message qui arrive est lu. Sur un vrai projet elles partent vers **Slack,
+Microsoft Teams ou Google Chat**, dans un canal que toute l'équipe voit. Ce lab utilise
+**l'e-mail**, parce qu'il ne demande rien d'autre qu'une adresse que vous avez déjà. Les indicateurs
+peuvent aussi être envoyés à Grafana, où ils deviennent des courbes sur plusieurs mois. C'est hors
+périmètre ici.
+
 ## Avant de commencer
 
 - [ ] [Lab 3.7](3-7-hotfix-and-retrofit.md) terminé
 - [ ] `helios-prod` connectée dans **Orgs Manager**
 - [ ] Un repository GitHub vide à vous, avec `monitoring` dans son nom
+- [ ] Une adresse e-mail que vous pouvez lire, pour les alertes
 - [ ] Environ 20 de ces 35 minutes seront la première exécution du monitoring
 
 ## Les étapes
@@ -154,6 +177,33 @@ d'autres hebdomadaires, d'autres mensuels. C'est le bon défaut et le mauvais r�
 Pour une première exécution, laissez tout activé. Vous êtes sur le point de découvrir lesquels disent
 quelque chose d'utile sur **cette** org-là, et cela ne se sait pas d'avance.
 
+Donnez maintenant à l'exécution un endroit où envoyer ses alertes, avant qu'elle tourne. Deux
+choses, et il faut les deux :
+
+**Une adresse.** Sur GitHub, dans le repository de **monitoring** : **Settings > Secrets and variables >
+Actions**, puis **New repository secret**, le même formulaire qu'au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) étape 6. Nommez-le
+`NOTIF_EMAIL_ADDRESS` et donnez-lui votre adresse e-mail comme valeur. Plusieurs adresses vont dans
+le même secret, séparées par des virgules. Le workflow lit déjà ce secret : il a été écrit pour.
+
+**Une sévérité.** Une adresse seule peut ne rien vous apporter. Regardez la colonne **Email** : la
+plupart des contrôles y affichent **Disabled** ou **Error**, donc une org où rien ne va mal n'envoie
+aucun e-mail, ce qui est le bon réglage pour une équipe et le mauvais pour une première exécution.
+Sur la ligne **Detect if org limits are close to be reached**, mettez **Email** sur **All**. Ce
+contrôle vous écrira désormais chaque nuit, quoi qu'il ait trouvé.
+
+Le panneau enregistre à chaque clic, dans `.sfdx-hardis.yml` à la racine du repository de
+monitoring, et le job nocturne lit ce fichier sur GitHub, pas sur votre ordinateur. Publiez-le
+donc : dans le panneau **Source Control**, stagez `.sfdx-hardis.yml` avec le **+** de sa ligne,
+tapez un message comme `Email me the org limits`, **Commit**, puis **Sync Changes**.
+
+!!! note "Pourquoi l'e-mail, et ce que fait un vrai projet"
+    L'e-mail est le canal qui ne demande ni workspace, ni canal, ni webhook, et c'est pour cela que
+    ce lab l'utilise. Un vrai projet envoie ses alertes vers **Slack, Microsoft Teams ou Google
+    Chat**, où toute l'équipe les voit et peut répondre dans un fil, et garde souvent l'e-mail pour
+    une personne ou un contrôle : l'équipe sécurité et l'audit trail, par exemple. La colonne
+    **Messaging** est le même réglage pour ces trois-là, et les liens de la section Pour aller plus
+    loin configurent chacun d'eux.
+
 ### 4. Le lancer une fois à la main
 
 N'attendez pas cette nuit. Le workflow, **Org Monitoring sfdx-hardis**, est planifié à `0 0 * * *`
@@ -167,11 +217,23 @@ N'attendez pas cette nuit. Le workflow, **Org Monitoring sfdx-hardis**, est plan
 L'exécution apparaît dans la liste quelques secondes plus tard : cliquez dessus pour la suivre.
 
 Elle prend un moment, l'essentiel étant la sauvegarde de l'org. Quand elle se termine, le repository
-contient une sauvegarde complète des sources de la production et un jeu de rapports.
+contient une sauvegarde complète des sources de la production, ses métadonnées et aucun de ses
+enregistrements, et un jeu de rapports.
 
 ### 5. Lire le premier rapport
 
-Ouvrez le panneau **Org Monitoring Workbench** dans VS Code, pointé sur le repository de monitoring.
+Commencez par votre boîte mail, parce que c'est là que le monitoring vous trouve désormais.
+L'exécution a envoyé un e-mail dont l'objet commence par `[sfdx-hardis]`, depuis votre propre org :
+regardez dans les indésirables s'il n'est pas dans la boîte de réception. Il contient ce dont un
+release manager a besoin avant le premier café : quelle org, ce que le contrôle a trouvé, la liste
+de ce qui ne va pas quand il y en a une, le rapport complet en pièce jointe sous forme de tableur,
+et un lien vers le job qui l'a produit.
+
+Cet e-mail est un indicateur, sur une journée. Chaque contrôle en produit un semblable, et les
+colonnes **Email** et **Messaging** de l'étape 3 décident lesquels méritent de déranger quelqu'un.
+
+Puis la vue d'ensemble. Ouvrez le panneau **Org Monitoring Workbench** dans VS Code, pointé sur le
+repository de monitoring.
 
 ![L'Org Monitoring Workbench, ouvert sur le repository CI/CD au lieu du repository de monitoring](../../_assets/annotated/vscode/org-monitoring--first-report.png)
 
@@ -247,15 +309,22 @@ vous en connaissance de cause.
 
 ### 7. Router une notification
 
-Un rapport que personne n'ouvre n'est pas du monitoring.
+Un rapport que personne n'ouvre n'est pas du monitoring, et vous venez de voir l'autre moitié :
+l'e-mail de l'étape 5 vous est parvenu sans que vous ouvriez quoi que ce soit.
 
-Configurez **un** canal : Slack, Teams, Google Chat ou e-mail. Un seul suffit, et plus d'un le
-premier jour veut dire le même message qui arrive deux fois et qui est ignoré des deux côtés.
+Il était aussi réglé à l'envers pour le long terme, exprès. **All** sur le contrôle des limites veut
+dire un message chaque nuit pour dire que tout va bien, et un message nocturne "tout va bien" est lu
+une semaine et filtré pour toujours ensuite. De retour dans le **Monitoring Config Workbench**,
+remettez l'**Email** de cette ligne sur **Error**, et publiez le fichier comme à l'étape 3. Dès
+cette nuit, on vous écrit quand une limite est presque atteinte, et seulement là.
 
-De retour dans le **Monitoring Config Workbench**, les colonnes **Messaging**, **Email** et **API**
-contiennent la sévérité à partir de laquelle chaque canal est alimenté, par contrôle. Réglez-les pour
-que seuls les échecs et les trouvailles critiques soient envoyés. Un message nocturne "tout va bien"
-est lu une semaine et filtré pour toujours ensuite.
+C'est la règle pour chaque ligne : les colonnes **Messaging**, **Email** et **API** contiennent la
+sévérité à partir de laquelle chaque canal est alimenté, par contrôle, et elles ne doivent laisser
+passer que les échecs et les trouvailles critiques. **Disabled** est une valeur légitime.
+
+Gardez **un** canal. Sur un vrai projet, ce canal est Slack, Microsoft Teams ou Google Chat plutôt
+que l'e-mail, et un seul suffit : deux le premier jour veut dire le même message qui arrive deux
+fois et qui est ignoré des deux côtés.
 
 Ces réglages sont écrits sous `notificationConfig` dans le `.sfdx-hardis.yml` du repository de
 monitoring, une entrée par type de notification, fusionnée par-dessus les valeurs par défaut du
@@ -333,9 +402,11 @@ Documentation des commandes : [hardis:org:configure:monitoring](https://sfdx-har
 - Un second repository, créé par vous, avec une exécution du workflow **Org Monitoring sfdx-hardis** : la
   sauvegarde, les tests Apex, MegaLinter et le job Monitoring tous au vert
 - La limite `ActiveScratchOrgs` à 100 % dans le rapport, ce que l'exécution verte ne vous a pas dit
-- Une sauvegarde complète des sources de `helios-prod` commitée dedans
+- Une sauvegarde complète des métadonnées de `helios-prod` commitée dedans : ses sources, pas ses enregistrements
 - Un premier rapport que vous avez lu et trié, aussi court soit-il
-- Un canal de notification configuré
+- Un e-mail de la première exécution dans votre boîte, dont l'objet commence par `[sfdx-hardis]`,
+  avec le rapport des limites de l'org en pièce jointe
+- L'**Email** du contrôle des limites revenu sur **Error**, commité et poussé
 - `monitoringRepository` dans `config/.sfdx-hardis.yml` sur `integration`, pointant dessus
 - `deploymentRepository` dans le `.sfdx-hardis.yml` de la branche de monitoring, pointant vers votre
   fork, et un `AGENTS.md` à la racine de cette branche
@@ -381,7 +452,24 @@ monitoring vers `main` et suivez les commentaires `MANUAL` qu'il contient.
 Une grosse org met longtemps. Sur une org Developer Edition cela ne devrait pas arriver : si c'est le
 cas, regardez sur quel type de métadonnée elle bloque et excluez-le.
 
-**Les notifications n'arrivent jamais.**
+**Aucun e-mail n'est arrivé.**
+Ouvrez l'exécution sur GitHub, le job **Monitoring**, et cherchez `Email` dans son log. Il dit
+laquelle de trois choses s'est produite :
+
+- *Skipped email notification for ORG_LIMITS (severity log, threshold error)* : l'adresse est là
+  et la sévérité non. La colonne **Email** affiche encore **Error**, ou la modification de
+  l'étape 3 n'a pas été commitée et poussée : le job lit `.sfdx-hardis.yml` sur GitHub
+- aucune ligne sur l'e-mail : le job n'a pas d'adresse. Le secret manque, est mal orthographié, ou
+  est rangé dans votre fork au lieu du repository de **monitoring**. C'est `NOTIF_EMAIL_ADDRESS`,
+  exactement
+- *Sent email to ...* : il est parti. Regardez dans les indésirables : l'expéditeur est votre
+  propre org Salesforce
+
+L'e-mail est envoyé par l'org elle-même, donc il compte dans la limite quotidienne de l'org, qui
+est de 15 sur une org Developer Edition. Si le log dit que l'org a refusé l'envoi, dans
+`helios-prod` : **Setup > Email > Deliverability**, **Access level** sur **All email**.
+
+**Les notifications n'arrivent jamais dans Slack, Teams ou Google Chat.**
 Le webhook est faux, ou le seuil est au-dessus de ce que le rapport a produit. Baissez le seuil
 temporairement pour prouver que le canal fonctionne, puis remontez-le.
 
@@ -401,6 +489,9 @@ Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **L
 
 - [Monitoring d'org](https://sfdx-hardis.cloudity.com/salesforce-monitoring-home/)
 - [Monitoring sur GitHub](https://sfdx-hardis.cloudity.com/salesforce-monitoring-config-github/)
+- Notifications : [e-mail](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-email/),
+  [Slack](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-slack/),
+  [Microsoft Teams](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-ms-teams/)
 - [Tableaux de bord Grafana](https://sfdx-hardis.cloudity.com/salesforce-monitoring-grafana-v2/)
 
 [Suite : Lab 3.9 - Générer la documentation du projet Salesforce](3-9-generate-the-project-documentation.md){ .md-button .md-button--primary }

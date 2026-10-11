@@ -1,6 +1,6 @@
 /**
  * The pages this site generates rather than writes: the backlog, one page per
- * User Story, the badges index and one page per badge holder.
+ * User Story, the badges index, one page per badge holder and the statistics.
  *
  * They are built here, once, and called with the words of a locale, so the
  * French backlog cannot drift from the English one: what differs between them
@@ -13,6 +13,7 @@
  * is published.
  */
 import { fill } from "./strings.mjs";
+import { duration } from "../stats/lab-times.mjs";
 
 const separator = (columns) => `|${columns.map(() => "---").join("|")}|`;
 const row = (cells) => `| ${cells.join(" | ")} |`;
@@ -93,7 +94,7 @@ export function storyPage({ universe, s, text, story, owner, labLink, backlogLin
 }
 
 /** The badges index: everybody who claimed one, and how to claim yours. */
-export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, recordUrlPattern, bannerExample }) {
+export function badgesPage({ s, holders, totals, badgeHref, badgeImage, claimUrl, recordUrlPattern, bannerExample }) {
   const rows = holders.map((holder) => {
     // An <img> and not markdown: the badge is drawn 320 square, and a table cell
     // wants a thumbnail. Plain HTML sizes it without depending on an extension.
@@ -112,6 +113,10 @@ export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, record
     "",
     ...s.badges.intro,
     "",
+    // How many of each badge were awarded, when there is one to count
+    ...(totals && totals.some((one) => one.count > 0)
+      ? [s.badges.totals, "", ...totals.map((one) => `- **${one.count}** ${one.badge}`), ""]
+      : []),
     holders.length === 0 ? s.badges.nobody : [row(s.badges.columns), separator(s.badges.columns), ...rows].join("\n"),
     "",
     `## ${s.badges.claim.heading}`,
@@ -143,6 +148,86 @@ export function badgesPage({ s, holders, badgeHref, badgeImage, claimUrl, record
         ]
       : [])
   ].join("\n");
+}
+
+/**
+ * The statistics of the course: who starts and finishes each level, and how
+ * long the labs take next to what they announce.
+ *
+ * stats is stats/course-stats.json, which scripts/stats/course-stats.mjs writes
+ * once a week, or null before its first run. It holds counts and medians: a
+ * median over too few learners is null there, and reads "not enough data" here.
+ */
+export function statsPage({ s, text, universe, stats }) {
+  const w = s.stats;
+  if (!stats) {
+    return [`# ${w.heading}`, "", w.empty, ""].join("\n");
+  }
+  const levelName = (level) => {
+    const found = universe.levels.find((one) => one.level === level);
+    return fill(w.level, { level, name: found ? text.level(found) : "" });
+  };
+  const share = (part, whole) => (whole > 0 ? fill(w.percent, { value: Math.round((part / whole) * 100) }) : "");
+  const announced = (row) => (typeof row.announcedMinutes === "number" ? duration(row.announcedMinutes) : "");
+  const measured = (row) => (typeof row.medianMinutes === "number" ? duration(row.medianMinutes) : w.notEnough);
+  // The fastest time the lab could be done in, which the figures already sorted out
+  const fastest = (one) => (typeof one.fastestMinutes === "number" ? duration(one.fastestMinutes) : "");
+  const figures = (one) => [announced(one), measured(one), fastest(one), one.sample];
+  const labs = (list) => (list.length === 1
+    ? fill(w.lab, { lab: list[0] })
+    : fill(list.length === 2 ? w.labsPair : w.labs, { first: list[0], last: list[list.length - 1] }));
+
+  const lines = [
+    `# ${w.heading}`,
+    "",
+    ...w.intro.map((line) => fill(line, { date: String(stats.generatedAt).slice(0, 10), learners: stats.learners })),
+    "",
+    `## ${w.funnel.heading}`,
+    "",
+    ...w.funnel.intro,
+    "",
+    row(w.funnel.columns),
+    separator(w.funnel.columns),
+    ...stats.levels.map((level) => row([
+      levelName(level.level),
+      level.started,
+      share(level.started, stats.learners),
+      level.completed,
+      share(level.completed, level.started)
+    ])),
+    "",
+    `## ${w.time.heading}`,
+    "",
+    ...w.time.intro.map((line) => fill(line, { cutoff: stats.idleCutoffMinutes, minSample: stats.minSample })),
+    "",
+    row(w.time.levelColumns),
+    separator(w.time.levelColumns),
+    ...stats.levels.map((level) => row([levelName(level.level), ...figures(level)])),
+    ""
+  ];
+  for (const level of stats.levels) {
+    const segments = stats.segments.filter((segment) => segment.level === level.level);
+    // A level nobody was timed through yet has its row above, and no table of its own
+    if (segments.every((segment) => typeof segment.medianMinutes !== "number")) {
+      continue;
+    }
+    lines.push(`### ${levelName(level.level)}`, "", row(w.time.labColumns), separator(w.time.labColumns));
+    for (const segment of segments) {
+      lines.push(row([labs(segment.labs), ...figures(segment)]));
+    }
+    lines.push("");
+  }
+  // Lab by lab, from the learners whose receipts say when each lab passed
+  const byLab = (stats.labs || []).filter((lab) => typeof lab.medianMinutes === "number");
+  if (byLab.length > 0) {
+    lines.push(`### ${w.time.byLab.heading}`, "", ...w.time.byLab.intro, "", row(w.time.labColumns), separator(w.time.labColumns));
+    for (const lab of byLab) {
+      lines.push(row([fill(w.lab, { lab: lab.lab }), ...figures(lab)]));
+    }
+    lines.push("");
+  }
+  lines.push(`## ${w.method.heading}`, "", ...w.method.body.map((line) => fill(line, { cutoff: stats.idleCutoffMinutes, minSample: stats.minSample })), "");
+  return lines.join("\n");
 }
 
 /** The name of the highest badge a holder earned, as a post says it. */

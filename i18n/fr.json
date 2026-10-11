@@ -26,6 +26,83 @@
     "backToBacklog": "Toutes les stories du backlog",
     "labLink": "Lab {level}.{lab} - {title}"
   },
+  "stats": {
+    "title": "Statistiques de la formation Salesforce DevOps",
+    "description": "Combien de personnes commencent et terminent chaque niveau de la formation Salesforce DevOps gratuite avec sfdx-hardis, et le temps que les labs leur prennent vraiment.",
+    "heading": "Statistiques du cours",
+    "intro": [
+      "Lues une fois par semaine dans les repositories publics des {learners} personnes qui ont installé le cours, et dans les badges qu'elles ont réclamés.",
+      "Dernière mise à jour : {date}."
+    ],
+    "level": "Niveau {level} - {name}",
+    "lab": "Lab {lab}",
+    "labs": "Labs {first} à {last}",
+    "labsPair": "Labs {first} et {last}",
+    "percent": "{value} %",
+    "notEnough": "pas encore assez de données",
+    "observed": "(observé : médiane {median}, {learners}{fastest})",
+    "learnerOne": "1 participant",
+    "learnerMany": "{sample} participants",
+    "fastest": ", le plus rapide {time}",
+    "observedTogether": "({labs} observés ensemble : médiane {median}, {learners}{fastest})",
+    "observedLevel": "Observé sur les {labs} : médiane {median}, {learners}{fastest}.",
+    "empty": "Pas encore de chiffres. Ils sont lus une fois par semaine, et la première lecture n'a pas eu lieu.",
+    "funnel": {
+      "heading": "Commencés et terminés",
+      "intro": [
+        "Un niveau est commencé quand sa première branche existe dans le repository de la personne, et terminé quand son badge a été décerné."
+      ],
+      "columns": [
+        "Niveau",
+        "Commencé",
+        "Part des participants",
+        "Terminé",
+        "Part des commencés"
+      ]
+    },
+    "time": {
+      "heading": "Temps passé",
+      "intro": [
+        "Le temps médian des personnes qui sont allées au bout, à côté de l'estimation avec laquelle chaque lab a été écrit. Un chiffre apparaît quand {minSample} personnes sont derrière lui, et c'est alors le temps que la page du lab annonce. En dessous, le lab garde son estimation."
+      ],
+      "levelColumns": [
+        "Niveau",
+        "Estimation initiale",
+        "Médiane",
+        "Le plus rapide",
+        "Participants"
+      ],
+      "labColumns": [
+        "Labs",
+        "Estimation initiale",
+        "Médiane",
+        "Le plus rapide",
+        "Participants"
+      ],
+      "byLab": {
+        "heading": "Lab par lab",
+        "intro": [
+          "D'après les personnes qui ont lancé **Check my work** à la fin de chaque lab : leurs reçus disent quand chacun est passé."
+        ]
+      }
+    },
+    "method": {
+      "heading": "Comment le temps est mesuré",
+      "body": [
+        "Personne n'est chronométré. Le temps est lu après coup, entre les commits, les Pull Requests et les commentaires de Pull Request de chaque repository : un lab se termine quand sa Pull Request est mergée, et commence à la fin du précédent.",
+        "",
+        "Une pause de plus de {cutoff} minutes n'est pas comptée, donc une personne qui s'arrête pour la nuit n'ajoute rien. Le travail fait dans l'org ne laisse aucune trace sur GitHub, ce qui fait de chaque chiffre une estimation basse.",
+        "",
+        "Les Labs 1.1 et 1.2 installent les outils et créent les orgs avant que le repository existe. Ils ne sont pas mesurés, et le Niveau 1 est compté à partir du Lab 1.3.",
+        "",
+        "Les labs qui partagent une Pull Request sont mesurés ensemble.",
+        "",
+        "Le plus rapide est le temps le plus court dans lequel quelqu'un a pu faire le lab. Un chiffre de moins de cinq minutes, ou de moins d'un quart de la médiane, correspond à deux labs vérifiés à la suite et est écarté. Le plus lent n'est pas affiché : c'est quelqu'un qui a été interrompu.",
+        "",
+        "Le temps qu'annonce la page d'un lab est cette médiane, arrondie aux cinq minutes inférieures, et le temps d'un niveau est arrondi au quart d'heure inférieur. Un lab mesuré avec d'autres prend sa part de leur temps, et un lab que moins de {minSample} personnes ont terminé garde son estimation. Les pages sont réécrites d'après les chiffres chaque semaine."
+      ]
+    }
+  },
   "badges": {
     "title": "Badges de la formation Salesforce DevOps",
     "description": "Les personnes qui ont terminé un niveau de la formation Salesforce DevOps gratuite avec sfdx-hardis, vérifiées par un job qui a lu leur repository public.",
@@ -38,6 +115,7 @@
     ],
     "columns": ["", "Nom", "Badge le plus élevé", "GitHub", "Trailblazer"],
     "nobody": "Personne n'a encore réclamé de badge. Soyez la première personne.",
+    "totals": "Décernés à ce jour :",
     "claim": {
       "heading": "Réclamer le vôtre",
       "body": [
@@ -391,5 +469,5 @@
       }
     }
   },
-  "source_rev": "49867d0ab53fa391f400568c0766825218f86b28"
+  "source_rev": "d808912a1ea08b30dc62161257240c1a35a9e849"
 }

@@ -30,7 +30,7 @@ depends_on:
 
 **Niveau** : 1 Contributeur, les bases
 
-**Durée** : ~20 min
+**Durée** : ~25 min<!-- observed --> (observé : médiane 28 min, 8 participants, le plus rapide 12 min)<!-- /observed -->
 
 **Vous allez** : faire contrôler votre travail par un robot avant qu'un humain le fasse, lire ce
 qu'il dit, et mettre US-014 dans l'org d'intégration partagée.
@@ -194,6 +194,10 @@ Azure Boards ou ServiceNow à la place.
 Pipeline**. Sous **Project Contribution Workflow**, la carte **My Pull Request** **(1)** porte
 maintenant le nom de votre Pull Request. Cliquez dessus.
 
+Si la carte affiche encore *Pull Request not created yet*, le panneau montre ce qu'il savait avant
+que vous la créiez : cliquez sur **Refresh** dans sa barre du haut, et la carte se met à jour. Elle
+le fait aussi toute seule en moins d'une minute.
+
 ![La carte My Pull Request du panneau DevOps Pipeline, qui nomme la Pull Request de US-014](../../_assets/annotated/vscode/pipeline-cards-first-pr--my-pull-request.png)
 
 Une fenêtre s'ouvre sur votre Pull Request, et elle rassemble ce que GitHub répartit sur plusieurs
@@ -307,6 +311,14 @@ une chose de plus dans la liste de tout le monde, sans aucun bénéfice.
     [Lab 2.5](../level-2-contributor-advanced/2-5-pass-code-quality-and-apex-test-coverage.md) vous fait rencontrer une trouvaille qui ne fait qu'avertir, et un contrôle
     qui bloque.
 
+!!! warning "Le bandeau jaune qui suit"
+    Une fois qu'`integration` a bougé, la page d'accueil de votre fork peut afficher un bandeau
+    jaune : **integration had recent pushes**, avec un bouton **Compare & pull request**. N'y touchez
+    pas. Il propose d'envoyer `integration` vers le repository **d'origine**, celui que tous les
+    participants ont forké, et ce n'est jamais ce que vous voulez. Si vous en avez ouvert une par
+    erreur, **Close pull request** en bas de sa page l'annule, et rien de ce qui est à vous n'est
+    perdu : votre branche `integration` vit dans votre fork et y reste.
+
 ### 5. Regarder le vrai déploiement
 
 Merger dans `integration` démarre un deuxième job, et celui-là n'est pas un contrôle : il déploie
@@ -394,6 +406,21 @@ C'est une boucle de livraison complète. Chaque story, pendant tout le temps que
 projet, sera cette boucle.
 
 ## En cas de problème
+
+**La carte My Pull Request affiche encore *Pull Request not created yet*.**
+Trois causes, dans l'ordre où elles arrivent :
+
+- le panneau n'a pas regardé depuis que vous avez créé la Pull Request. Cliquez sur **Refresh** dans
+  la barre du haut du panneau **DevOps Pipeline**
+- VS Code est sur une autre branche. La carte parle de la branche sur laquelle vous êtes : regardez
+  en bas à gauche de la barre d'état, et si elle n'indique pas `features/US-014-panels-required`,
+  cliquez dessus et choisissez cette branche
+- la Pull Request a été ouverte sur le repository d'origine au lieu de votre fork. Son adresse
+  commence alors par `github.com/hardisgroupcom/`, et la carte ne regarde que dans votre fork.
+  Fermez-la là-bas, et rouvrez-la comme le dit l'étape 1, avec **base** dans votre propre fork
+
+Aucune n'arrête le lab : les contrôles, le commentaire et le merge des étapes 2 à 4 se passent tous
+sur GitHub, et c'est là que le lab est vérifié.
 
 **Les contrôles ne démarrent jamais.**
 Actions est encore désactivé sur votre fork (`github.com/my-username/sfdx-hardis-training`). GitHub

@@ -3,8 +3,20 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-12
+
+- A lab or a level shows the time learners took once three of them went through it. Under that it keeps its estimate.
+- A Pull Request opened on the course repository by mistake, instead of in your fork, is now closed at once with a comment saying where it belongs and how to open it there.
+- Lab 1.6: what to do when the My Pull Request card still says the Pull Request does not exist, and a warning about the yellow GitHub banner that opens a Pull Request on the original repository instead of your fork.
+- Lab 3.8 says what monitoring gives you (a metadata backup, which is not a data backup, indicators and alerts) and where each one is read. You now receive a real alert by email from the first run, and the lab says that a real project sends them to Slack, Microsoft Teams or Google Chat.
+- Lab 3.8: new troubleshooting entry for an email that does not arrive.
+
 ## 2026-10-11
 
+- New Statistics page on the site: how many learners start and finish each level, and the median time the labs really take next to the time they announce. Updated every week, and also readable in `STATS.md` of the repository.
+- The time a lab or a level announces on the site is now the time learners were observed to take, rounded down, with the median and the fastest time next to it. The pages are rewritten from the figures every week. A lab fewer than three learners went through keeps its estimate.
+- The Badges page says how many of each badge were awarded.
+- Check my work: the receipt of a lab keeps the time it first passed, instead of the time of the last check.
 - Lab 3.8: step 8 says that Publish my pipeline configuration opens its Pull Request itself, and a new troubleshooting entry covers the files a backup run from your computer leaves in the monitoring repository.
 - Lab 3.1: new step giving `uat` its merge target to `preprod`, without which the diagram had no arrow between them. The confirmation of the secrets is described as the Yes or No question it is.
 - Lab 2.9: the last step of the list no longer contradicts the order the three traps ask for.

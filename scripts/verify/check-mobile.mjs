@@ -43,6 +43,9 @@ const PAGES = [
   // The French backlog: the same five columns as the English one, with longer
   // words in them, which is how a table starts overflowing
   "fr/BACKLOG/index.html",
+  // The statistics: a five-column table of figures, and a page made to be shared
+  "stats/index.html",
+  "fr/stats/index.html",
 ];
 
 const PHONE = { width: 412, height: 915 };

@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "e3ae8060a6bf0588628035705fe023145aa5e899"
+source_rev: "d808912a1ea08b30dc62161257240c1a35a9e849"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -22,7 +22,7 @@ autres. C'est exactement ce que le Niveau 2 vous fait traverser. Quelqu'un qui n
 erreur de déploiement ne peut pas juger si un contributeur a bien résolu la sienne, et les revues
 qu'il fera porteront sur la mise en forme.
 
-Si vous avez sauté le Niveau 2, faites-le. Ce sont quatre heures, et c'est la différence entre
+Si vous avez sauté le Niveau 2, faites-le. Ce sont quelques heures, et c'est la différence entre
 approuver des Pull Requests et les comprendre.
 
 ## L'histoire

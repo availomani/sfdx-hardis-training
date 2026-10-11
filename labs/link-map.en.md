@@ -80,6 +80,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | salesforce-devops-setup-checklist | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-checklist/ |
 | salesforce-devops-setup-existing-org | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-existing-org/ |
 | salesforce-devops-setup-home | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-home/ |
+| salesforce-devops-setup-integration-email | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-email/ |
 | salesforce-devops-setup-integration-generic-ticketing | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-generic-ticketing/ |
 | salesforce-devops-smart-deployment | https://sfdx-hardis.cloudity.com/salesforce-devops-smart-deployment/ |
 | salesforce-devops-solve-deployment-errors | https://sfdx-hardis.cloudity.com/salesforce-devops-solve-deployment-errors/ |

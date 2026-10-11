@@ -28,7 +28,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~30 min
+**Time**: ~45 min<!-- observed --> (observed: median 45 min, 9 learners, fastest 31 min)<!-- /observed -->
 
 **You will**: meet the worst kind of failure, the one where nothing fails, and fix it with three
 deployment actions of three different kinds.

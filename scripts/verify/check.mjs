@@ -9,11 +9,15 @@
  * Usually you click Welcome page > Training: Level N > Check my work instead.
  */
 import { pathToFileURL } from "url";
-import { ROOT, c, title, info, ok, fail, warn, parseArgs, githubHandle, gitOut, recordReceipt, runJson } from "../lib/util.mjs";
+import { ROOT, c, title, info, ok, fail, warn, parseArgs, githubHandle, gitOut, recordReceipt, firstPassedAt, runJson } from "../lib/util.mjs";
 import { makeContext, rulesForLevel, findRule } from "./rules.mjs";
 
-export function receiptLine(rule, handle, commit) {
-  const stamp = new Date().toISOString().slice(0, 16) + "Z";
+/**
+ * The receipt of a lab. Its time is the first time the lab passed, which is
+ * what the course statistics read: a lab checked again keeps the time it had.
+ */
+export function receiptLine(rule, handle, commit, at = new Date().toISOString()) {
+  const stamp = new Date(at).toISOString().slice(0, 16) + "Z";
   return `LAB ${rule.id} OK  handle=${handle || "unknown"}  commit=${commit}  ${stamp}`;
 }
 
@@ -44,11 +48,12 @@ export function printResults(results, handle, commit, { record = false } = {}) {
         info(c.dim(`      ${r.detail}`));
       }
       if (record) {
-        const line = receiptLine(r.rule, handle, commit);
+        const now = new Date().toISOString();
+        const line = receiptLine(r.rule, handle, commit, firstPassedAt(r.rule.id) || now);
         // info(), not console.log(): the receipt is the one line of this command
         // worth keeping, and the panel only shows what goes through info()
         info(c.green(`      ${line}`));
-        recordReceipt({ id: r.rule.id, line, at: new Date().toISOString() });
+        recordReceipt({ id: r.rule.id, line, at: now });
       }
     } else {
       fail(label);

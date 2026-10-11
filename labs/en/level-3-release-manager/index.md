@@ -20,7 +20,7 @@ are exactly what Level 2 puts you through. Somebody who has never solved a deplo
 judge whether a contributor solved theirs properly, and the reviews they give will be about
 formatting.
 
-If you skipped Level 2, do it. It is four hours and it is the difference between approving Pull
+If you skipped Level 2, do it. It is a few hours and it is the difference between approving Pull
 Requests and understanding them.
 
 ## The story

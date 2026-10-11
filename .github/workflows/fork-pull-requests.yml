@@ -1,0 +1,106 @@
+---
+# A Pull Request a learner opened here by mistake is closed, with the way back.
+#
+# A learner works in a fork of this repository, and GitHub offers the original
+# repository as the base of every Pull Request a fork opens: the yellow
+# "had recent pushes" banner does it, and so does the compare page when the
+# base is not checked. So Pull Requests meant for a learner's own `integration`
+# land here. They can never turn green, they notify the maintainers, and the
+# learner is left wondering why nothing deploys.
+#
+# This closes them and says where the Pull Request belongs. It only closes the
+# ones that cannot be anything else: the head branch is a branch of the course
+# (a major branch, a User Story, a teammate branch, a course update). Any other
+# Pull Request from a fork is a contribution to the course and is left alone.
+#
+# FOUR RULES. Read them before changing anything in this file.
+#
+#  1. This runs on `pull_request_target`, with a token that can write to this
+#     repository, for a Pull Request anybody can open. So it NEVER checks out
+#     anything, and never runs a script of the repository or of the fork.
+#  2. Every field of the Pull Request is untrusted input, the branch name
+#     first. It reaches the shell through the environment, never by
+#     interpolation into the script.
+#  3. Only `opened`. A contributor whose Pull Request was closed by mistake
+#     reopens it, and it must stay open: acting on `reopened` would close it
+#     again, forever.
+#  4. Its permissions are pull-requests: write and nothing else.
+name: Close a Pull Request opened here by mistake
+
+on:
+  pull_request_target:
+    types: [opened]
+    # A learner's fork carries this file too, and every workflow of a fork is
+    # switched on. A Pull Request opened by mistake lands on `main` here, and the
+    # Pull Requests of a learner go to `integration` in Levels 1 and 2: with this
+    # filter the workflow does not even start on those, so it adds no line to
+    # the checks the labs show. It still starts, and skips, on the releases to
+    # `main` of Level 3.
+    branches: [main]
+
+permissions: read-all
+
+jobs:
+  close:
+    name: Say where it belongs, and close it
+    # Here only, and only for a Pull Request that comes from a fork. A fork of
+    # the course has forks of its own in theory, and must not close anything.
+    if: >-
+      github.repository == 'hardisgroupcom/sfdx-hardis-training' &&
+      github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Is the head a branch of the course?
+        id: branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          # The branches a learner's fork carries because the course creates
+          # them: the major branches, the User Stories and what the labs branch
+          # from them, the teammates, the course updates.
+          pattern='^(integration|uat|preprod|features/US-[0-9]+.*|fix/US-[0-9]+.*|retrofit/.*|hotfix/.*|promotion/.*|backpromote/.*|training/.*|course/.*)$'
+          if printf '%s' "$HEAD_REF" | grep -Eq "$pattern"; then
+            echo "learner=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "learner=false" >> "$GITHUB_OUTPUT"
+            echo "Not a branch of the course: left open, it is a contribution."
+          fi
+
+      - name: Comment and close
+        if: steps.branch.outputs.learner == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          FORK: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          # The compare page of the fork, with the base inside the fork. A major
+          # branch has no Pull Request to open in Levels 1 and 2, so it gets the
+          # home page of the fork instead of a link that would mislead.
+          case "$HEAD_REF" in
+            integration|uat|preprod) target="https://github.com/$FORK" ;;
+            *) target="https://github.com/$FORK/compare/integration...$HEAD_REF" ;;
+          esac
+          {
+            echo "## This Pull Request was opened on the course repository"
+            echo
+            echo "It looks like a Pull Request of your own training: its branch, \`$HEAD_REF\`, is one the course creates in your fork. It was opened here, on the repository every learner forked, so it is closed. Nothing of yours is lost: your branch is still in your fork."
+            echo
+            echo "It happens to many learners, because GitHub offers the original repository as the base of a Pull Request opened from a fork. Two places do it: the yellow **had recent pushes** banner, and the **base repository** box of the compare page."
+            echo
+            echo "**Where it belongs:** $target"
+            echo
+            echo "- A User Story is opened from VS Code, with **Create Pull Request** at the end of **Save / Publish**: the base is your own fork, already filled in."
+            echo "- If you open one on GitHub, check that **base repository** is your fork, \`$FORK\`, before clicking **Create pull request**."
+            echo "- The yellow banner about \`integration\` is not something to click: \`integration\` is where your Pull Requests are merged, it has none to open."
+            echo
+            echo "_Français : cette Pull Request a été ouverte sur le repository du cours et non dans votre fork, elle est donc fermée. Rien n'est perdu, votre branche est toujours dans votre fork. Ouvrez-la depuis VS Code avec **Create Pull Request**, ou vérifiez sur GitHub que **base repository** est bien votre fork._"
+            echo
+            echo "_If this is a contribution to the course itself, sorry: reopen it and it will stay open._"
+          } > "$RUNNER_TEMP/comment.md"
+          gh pr comment "$NUMBER" --body-file "$RUNNER_TEMP/comment.md"
+          gh pr close "$NUMBER"

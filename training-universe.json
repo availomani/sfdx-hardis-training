@@ -598,7 +598,7 @@
       "level": 1,
       "slug": "level-1-contributor-basics",
       "name": "Contributor basics",
-      "duration": "about 2 h",
+      "duration": "about 2 h 15",
       "prerequisite": null,
       "badge": "sfdx-hardis Contributor Basics",
       "star": "hardisgroupcom/sfdx-hardis",
@@ -732,7 +732,7 @@
       "level": 3,
       "slug": "level-3-release-manager",
       "name": "Release Manager",
-      "duration": "about 7 h 20",
+      "duration": "about 6 h 55",
       "prerequisite": 2,
       "badge": "sfdx-hardis Release Manager",
       "star": "hardisgroupcom/vscode-sfdx-hardis",
@@ -742,7 +742,7 @@
           "slug": "3-1-configure-the-pipeline-up-to-production",
           "title": "Configure the CI/CD pipeline up to production",
           "description": "Extend a two-stage Salesforce pipeline to production: branches, protections, and each org configured and authenticated with JWT by Add/Configure Org.",
-          "time": "75 min"
+          "time": "50 min"
         },
         {
           "lab": 2,

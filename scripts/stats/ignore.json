@@ -1,0 +1,5 @@
+{
+  "$comment": "Who the course statistics leave out: the maintainers of the course and the accounts its end to end tests run under. A handle is a GitHub handle, whatever its case. A repository pattern is a regular expression tested against owner/name.",
+  "handles": ["nvuillam", "nvuillamy"],
+  "repositoryPatterns": []
+}
