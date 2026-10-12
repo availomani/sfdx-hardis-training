@@ -4,7 +4,7 @@ Three free learning paths that take you from "I have never used Git" to "I own t
 [sfdx-hardis](https://sfdx-hardis.cloudity.com/) and its
 [VS Code extension](https://marketplace.visualstudio.com/items?itemName=NicolasVuillamy.vscode-sfdx-hardis).
 
-**Start here: [sfdx-hardis-training.github.io](https://sfdx-hardis-training.github.io/)**
+**Start here: [sfdx-hardis-training.cloudity.com](https://sfdx-hardis-training.cloudity.com/)**
 
 | Level                        | Audience                                                         | Time | Prerequisite   |
 |------------------------------|------------------------------------------------------------------|------|----------------|
@@ -38,10 +38,10 @@ Each level awards a **Cloudity badge**. It is a badge, not a certification.
    (`helios-dev`, `helios-integration`, `helios-uat`), and wires the `integration` and `uat`
    branches to them
 
-[Lab 1.1](https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis/) is
+[Lab 1.1](https://sfdx-hardis-training.cloudity.com/en/level-1-contributor-basics/1-1-install-vs-code-and-sfdx-hardis/) is
 the first block, with screenshots, and it stands on its own: finish it and stop if you only came to
 set a machine up.
-[Lab 1.2](https://sfdx-hardis-training.github.io/en/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline/) is
+[Lab 1.2](https://sfdx-hardis-training.cloudity.com/en/level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline/) is
 the second.
 
 ## Everything happens in your own copy
@@ -123,7 +123,7 @@ neither is committed.
 
 The course is published in **English** and in **French**, and the language selector in the header of
 the site switches between them. The French labs are at
-[/fr/](https://sfdx-hardis-training.github.io/fr/).
+[/fr/](https://sfdx-hardis-training.cloudity.com/fr/).
 
 Both walk through the same clicks on the same screenshots, so they assume sfdx-hardis, its VS Code
 extension and your Salesforce orgs are in **English**: a translated lab translates the prose and
@@ -138,7 +138,8 @@ The site is built here and published to
 [sfdx-hardis-training/sfdx-hardis-training.github.io](https://github.com/sfdx-hardis-training/sfdx-hardis-training.github.io).
 Its `gh-pages` branch is written by the build and force-pushed on every run, so nothing should ever
 be committed to it by hand. That repository is an organization site, so it serves at the root of its
-host, which is the base path the custom domain will answer on.
+host, and its custom domain is `sfdx-hardis-training.cloudity.com`: the build writes the `CNAME` file
+on every run, and `https://sfdx-hardis-training.github.io` redirects there.
 
 The address this repository used to serve, `hardisgroupcom.github.io/sfdx-hardis-training`, keeps
 answering. `scripts/build/redirect-site.mjs` builds what it serves: one redirect page per page of

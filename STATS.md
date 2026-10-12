@@ -71,4 +71,4 @@ The fastest is the fastest time somebody could have done the lab in. A figure un
 
 The time a lab page announces is this median, rounded down to five minutes, and the time of a level is rounded down to a quarter of an hour. A lab measured with others takes its share of their time, and a lab fewer than 3 learners went through keeps its estimate. The pages are rewritten from the figures every week.
 
-The same page on the course site: <https://sfdx-hardis-training.github.io/stats/>
+The same page on the course site: <https://sfdx-hardis-training.cloudity.com/stats/>

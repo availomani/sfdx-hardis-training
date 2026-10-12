@@ -78,6 +78,19 @@ if (SITE_URL !== `${CANONICAL_SITE_URL}/`) {
     `course-site.yml site_url is ${SITE_URL || "missing"}, scripts/lib/urls.mjs SITE_URL is ${CANONICAL_SITE_URL}`
   );
 }
+
+// The publish step force-pushes an orphan branch, so the CNAME file it writes is
+// the only thing that keeps the custom domain on the host. A cname that names
+// another host, or none, takes the course off its address at the next push.
+const publishedCname = (() => {
+  const match = fs.readFileSync(path.join(ROOT, ".github", "workflows", "pages.yml"), "utf8").match(/^\s*cname:\s*(\S+)/m);
+  return match ? match[1] : null;
+})();
+if (publishedCname !== new URL(CANONICAL_SITE_URL).host) {
+  problems.push(
+    `.github/workflows/pages.yml publishes cname ${publishedCname || "missing"}, scripts/lib/urls.mjs SITE_URL is ${CANONICAL_SITE_URL}`
+  );
+}
 let references = 0;
 let links_checked = 0;
 let cards = 0;

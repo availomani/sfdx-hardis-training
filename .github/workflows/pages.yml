@@ -2,12 +2,14 @@
 # Builds the training site, publishes it to the host that serves it, and keeps
 # the address it used to have answering.
 #
-# The course is served from sfdx-hardis-training/sfdx-hardis-training.github.io.
+# The course is served at https://sfdx-hardis-training.cloudity.com, the custom
+# domain of sfdx-hardis-training/sfdx-hardis-training.github.io.
 # This workflow force-pushes the built site there, to a gh-pages branch, over a
 # deploy key. That repository is an organization site, so it serves at the root
-# of its host rather than under a repository name, which is the base path the
-# custom domain answers on: the copy published there already has the URLs it
-# keeps.
+# of its host rather than under a repository name. The branch is an orphan on
+# every run, so the CNAME file that holds the custom domain is written on every
+# run too. https://sfdx-hardis-training.github.io, where the course was from
+# 2026-10-02, is redirected by GitHub itself and needs nothing built.
 #
 # This repository's own Pages setting stays **Source: GitHub Actions**, and the
 # artifact uploaded at the end of the build is what its URL serves: the redirect
@@ -96,13 +98,16 @@ jobs:
       # The host the course is served from. This runs before the Pages artifact
       # is uploaded on purpose: a failure here stops the old URL from publishing
       # redirects to a copy that was never updated.
-      - name: Publish the site to sfdx-hardis-training.github.io
+      - name: Publish the site to sfdx-hardis-training.cloudity.com
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
           deploy_key: ${{ secrets.SFDX_HARDIS_TRAINING_GITHUB_IO_SSH_PRIVATE_KEY }}
           external_repository: sfdx-hardis-training/sfdx-hardis-training.github.io
           publish_branch: gh-pages
           publish_dir: ./site
+          # The custom domain. Without it the next push takes the course off
+          # its address: check-site.mjs compares it with the course URL.
+          cname: sfdx-hardis-training.cloudity.com
           # A built site has no history worth keeping, and without this the branch
           # grows by a full copy of 50 MB of screenshots on every push.
           force_orphan: true

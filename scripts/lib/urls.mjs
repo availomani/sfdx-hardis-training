@@ -3,9 +3,8 @@
  *
  * The site is built here and published to
  * sfdx-hardis-training/sfdx-hardis-training.github.io, an organization site,
- * which serves at the root of its host rather than under a repository name. That
- * is the base path the custom domain will answer on, so the URLs the course has
- * now are the URLs it keeps.
+ * which serves at the root of its host rather than under a repository name. Its
+ * custom domain, sfdx-hardis-training.cloudity.com, is the address of the course.
  *
  * SITE_URL is read from training-universe.json rather than written here, because
  * course.site already generates the badge records, the backlog links and the
@@ -19,6 +18,11 @@
  * Trailhead trailmixes, in the sfdx-hardis command descriptions, in the VS Code
  * extension fixtures and in the ticketing configuration of every learner's fork,
  * so it keeps answering: scripts/build/redirect-site.mjs builds what it serves.
+ *
+ * https://sfdx-hardis-training.github.io is where the organization site answered
+ * from 2026-10-02 until its custom domain. GitHub redirects every URL under it to
+ * the same path on the custom domain, so it has no constant here and nothing is
+ * built for it.
  *
  * Neither carries a trailing slash. A base URL that sometimes ends in one and
  * sometimes does not is how a joined path gains a double slash.

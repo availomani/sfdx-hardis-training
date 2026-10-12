@@ -223,10 +223,10 @@ jobs:
             cat /tmp/report.md
             echo
             # Keyed by the Trailblazer username, not the GitHub handle
-            echo "Your badge page: https://sfdx-hardis-training.github.io/badges/$TRAILBLAZER/"
+            echo "Your badge page: https://sfdx-hardis-training.cloudity.com/badges/$TRAILBLAZER/"
             echo
             echo "It is also readable as JSON, which is what lets other sites show this badge:"
-            echo "https://sfdx-hardis-training.github.io/badges/$TRAILBLAZER.json"
+            echo "https://sfdx-hardis-training.cloudity.com/badges/$TRAILBLAZER.json"
           } > /tmp/comment.md
           gh issue comment "$ISSUE" --body-file /tmp/comment.md
           gh issue edit "$ISSUE" --remove-label needs-work || true

@@ -9,7 +9,7 @@
       "issuer": {
         "name": "Cloudity",
         "url": "https://cloudity.com",
-        "course": "https://sfdx-hardis-training.github.io"
+        "course": "https://sfdx-hardis-training.cloudity.com"
       },
       "issuedOn": "2026-10-11",
       "evidence": [
@@ -22,8 +22,8 @@
           "url": "https://github.com/hardisgroupcom/sfdx-hardis-training/issues/121"
         }
       ],
-      "image": "https://sfdx-hardis-training.github.io/badges/img/salik-level-1.svg",
-      "bannerImage": "https://sfdx-hardis-training.github.io/badges/img/banner-level-1.svg",
+      "image": "https://sfdx-hardis-training.cloudity.com/badges/img/salik-level-1.svg",
+      "bannerImage": "https://sfdx-hardis-training.cloudity.com/badges/img/banner-level-1.svg",
       "superbadge": false,
       "checksPassed": 6,
       "checksTotal": 6

@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-12
 
+- The course has its own address, <https://sfdx-hardis-training.cloudity.com>. The two addresses it had before redirect to it, so the links and badges you already shared keep working.
 - A translation is now stamped with the content of the English page it was made from, not with a commit: French pages no longer read as behind after every squash merge.
 - A lab or a level shows the time learners took once three of them went through it. Under that it keeps its estimate.
 - A Pull Request opened on the course repository by mistake, instead of in your fork, is now closed at once with a comment saying where it belongs and how to open it there.
