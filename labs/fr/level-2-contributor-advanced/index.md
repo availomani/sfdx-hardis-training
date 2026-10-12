@@ -9,7 +9,7 @@ source_rev: "8db88451a13a927b2725a0342fedc9d50614c20d"
 
 # Niveau 2 - Contributeur Salesforce DevOps avancé
 
-**Durée** : environ 6 h.<!-- observed --> Observé sur les Labs 2.1 à 2.9 : médiane 8 h 09, 3 participants, le plus rapide 6 h 04.<!-- /observed -->
+**Durée** : environ 6 h 15.<!-- observed --> Observé sur les Labs 2.1 à 2.9 : médiane 8 h 09, 3 participants, le plus rapide 6 h 04.<!-- /observed -->
 
 **Prérequis** : le [Niveau 1](../level-1-contributor-basics/index.md). Pas facultatif : chaque lab
 d'ici suppose que la boucle est automatique pour vous.
