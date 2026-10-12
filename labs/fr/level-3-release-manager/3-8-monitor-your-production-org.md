@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "3219bbc355f39836e8b85079b90658946e978f2f"
+source_rev: "bcfe74950d81afeadd6cd454f157421ff454898c"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -268,6 +268,10 @@ Developer Edition elle est ouverte à tout utilisateur capable de se connecter. 
 production, c'est la première trouvaille à porter à l'équipe sécurité : un admin peut la restreindre
 aux utilisateurs approuvés, et la CLI continue de fonctionner pour eux.
 
+Le même rapport peut en lister une deuxième, `orgfarm_app_1`. Elle n'est pas à vous : elle
+appartient au service Salesforce qui a créé votre org Developer Edition, et une org de production
+ne l'a pas.
+
 Ce que vous lisez, c'est la **forme** de chaque trouvaille, pour la reconnaître sur une vraie org :
 
 | Trouvaille sur une vraie org                  | Ce que cela veut dire vraiment                                                                        |
@@ -333,8 +337,9 @@ produit.
 ### 8. Le rendre trouvable
 
 Le prochain release manager aura besoin du repository de monitoring dès son premier jour, et le seul
-endroit où il regardera est le projet. De retour dans le repository de sources : **DevOps Pipeline**
-> menu engrenage > **Pipeline Settings**, portée **Global Settings**, onglet **Salesforce Project**.
+endroit où il regardera est le projet. De retour dans le repository de sources : **DevOps
+Pipeline** > menu engrenage > **Pipeline Settings**, portée **Global Settings**, onglet **Salesforce
+Project**.
 **Monitoring repository** : **Edit**, collez l'adresse de votre repository de monitoring,
 `https://github.com/<votre-pseudo>/sfdx-hardis-training-monitoring`, et **Save**. Puis
 **Training: Level 3** > **Publish my pipeline configuration** : c'est de la configuration de
@@ -342,7 +347,8 @@ pipeline, comme le reste.
 
 Cette commande fait tout le trajet seule, comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : elle crée une branche, committe la
 configuration, la pousse et ouvre la Pull Request. Vous n'avez rien à committer et aucune Pull
-Request à créer : attendez ses checks, mergez-la avec **Merge pull request**, puis **Pull** dans le
+Request à créer : attendez ses checks, mergez-la avec **Squash and merge**, comme le dit sa ligne
+**How to merge** et comme au [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), puis **Pull** dans le
 panneau **Source Control**.
 
 À partir de là, l'**Org Monitoring Workbench** ouvert depuis le repository de sources propose

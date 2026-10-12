@@ -185,9 +185,11 @@ When the checks are green, merge with **Squash and merge**, as for every feature
 1.6): the two commits become one line in the history of `integration`, titled like the Pull Request.
 On a real project, this is where you click **Approve** first.
 
-### 7. Delete the branch
+### 7. See the branch go
 
-GitHub offers the button. Take it.
+The line under the merge says the branch was **deleted**: your fork does it for every merged
+Pull Request, and so should your real project (**Settings > General > Automatically delete head
+branches**). The major branches are safe from it, because a protected branch cannot be deleted.
 
 <details markdown="1"><summary>Under the hood: what produced the comment you just read</summary>
 
@@ -237,10 +239,10 @@ Actions are disabled, or `SFDX_AUTH_URL_INTEGRATION`, the secret `integration` s
 missing. **Training: Level 3 > Set up my training environment** writes it again.
 
 **You merged before the fix.**
-Then `Total_Capacity_kW__c` is off the layout in `integration`. Run the fix scenario anyway: it
-opens the fix as a new Pull Request from the same branch, and you review and merge that one. If you
-already deleted her branch, click **Restore branch** at the bottom of the merged Pull Request
-first.
+Then `Total_Capacity_kW__c` is off the layout in `integration`, and the merge deleted Mariia's
+branch, which her fix starts from. Click **Restore branch** at the bottom of the merged Pull
+Request, then run the fix scenario: it opens the fix as a new Pull Request from the same branch, and
+you review and merge that one.
 
 ## Check your work
 

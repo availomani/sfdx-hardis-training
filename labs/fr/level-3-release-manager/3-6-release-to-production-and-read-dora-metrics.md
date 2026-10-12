@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "2ab56900f82bc3abac169e136c506e64cf27a10d"
+source_rev: "2b0dc62840da13a2613c3860700434b06ed77975"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/pipeline-settings-menu-level3--dora
@@ -190,7 +190,10 @@ Lisez le cadre avant les nombres :
   marquée **production**. Une ligne ouvre l'onglet de sa branche, celui de `main` étant **(6)**
 
 **Pipeline flow** répond à la question que le tableau laisse sans réponse : combien de temps une
-User Story met-elle pour atteindre la production, et où attend-elle. Lisez-le de gauche à droite :
+User Story met-elle pour atteindre la production, et où attend-elle. Les chiffres cités ci-dessous
+sont ceux de l'image, un apprenant qui a étalé le cours sur une semaine : les vôtres suivent les jours que votre propre cours a pris et le nombre de
+User Stories que vous avez livrées, et un cours fait d'une traite se lit en heures, pas en jours.
+Lisez-le de gauche à droite :
 
 - Chaque case est une org du pipeline. Elle dit combien de User Stories sont dans cette org sans
   être allées plus loin, et depuis combien de temps la plus ancienne y est. Les vôtres affichent

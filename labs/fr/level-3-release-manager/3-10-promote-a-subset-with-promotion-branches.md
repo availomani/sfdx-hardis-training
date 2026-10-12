@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "2ff0edf311c71f4e0e8a37a0b86a132984b4883e"
+source_rev: "0d093a8b13329f2e9f15578d4f0e6d7de3899dca"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -118,7 +118,7 @@ dans une org d'intégration qui est reconstruite depuis la branche de toute faç
 `sf hardis:project:promotion:create` refuse purement et simplement de tourner tant que la liste est
 absente, plutôt que de deviner que chaque branche majeure peut promouvoir vers toutes les autres.
 
-<details markdown="1"><summary>Sous le capot : pourquoi un réglage publié au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) compte maintenant</summary>
+<details markdown="1"><summary>Sous le capot : pourquoi un réglage publié au Lab 3.1 compte maintenant</summary>
 
 Les deux réglages sont au niveau projet, dans `config/.sfdx-hardis.yml` :
 
@@ -357,7 +357,7 @@ Tickets: US-057, US-059, US-061
 
 ## Committed with conflict markers
 
-- #63 US-059 Record the supplier of a panel batch
+- US-059 Record the supplier of a panel batch (#63)
   - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
   - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
 
@@ -399,7 +399,7 @@ métadonnées Salesforce. Le même texte se trouve dans
 `hardis-report/promotion-conflicts-prompt-<date>.md`, le fichier de rapport que le panneau de
 commande vous a proposé. L'étape 6 utilise l'un ou l'autre.
 
-Regardez maintenant les **Checks** de la Pull Request. L'exécution **Check deployment** est rouge,
+Regardez maintenant les **Checks** de la Pull Request. Le check **Simulate Deployment to Major Org** est rouge,
 et le commentaire sfdx-hardis dit pourquoi : son verdict indique **❌ Cannot merge into `preprod`: Git
 conflict markers in the promotion branch**, et un paragraphe en dessous nomme les fichiers :
 

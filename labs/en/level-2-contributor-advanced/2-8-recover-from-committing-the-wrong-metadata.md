@@ -58,7 +58,8 @@ In `helios-dev`, make one small real change: on the Installation layout, move `C
 
 Now open **Commit changes**, search the recent changes, and this time click the tick box in the
 **table header** **(1)**, which selects every row at once. Retrieve them all, commit them all from
-**Source Control**, publish and push.
+**Source Control**, publish, push, and open the Pull Request into `integration`, as for any story.
+Do not merge it.
 
 ![The Metadata Retriever, with every row selected](../../_assets/annotated/vscode/metadata-retriever-recent-changes--select-all.png)
 
@@ -69,7 +70,7 @@ untick those rows and retrieve again.
 ### 2. Look at what you did
 
 Look at the **Git Delta package.xml** report the publish offered: more than the one layout your story
-changed. Open the Pull Request and read the diff.
+changed. On GitHub, open the **Files changed** tab of your Pull Request and read the diff.
 
 At the very least there is **a Profile**, `Admin`, the System Administrator profile. The repository
 carries it short, a few lines, and it came back hundreds of lines longer: the Metadata Retriever
@@ -157,6 +158,9 @@ The **Git Delta package.xml** report now names one component, the layout, and th
 over the old branch without asking: the reset authorised it. The Pull Request now shows one file,
 your layout.
 
+Wait for its check to go green, then merge it with **Squash and merge**, like every story: **Check
+my work** looks for the layout change in `integration`.
+
 ### 6. The habit that prevents this
 
 Three checks, each about ten seconds, before every push:
@@ -200,7 +204,7 @@ Command documentation: [hardis:work:resetselection](https://sfdx-hardis.cloudity
 ## What you should see
 
 - The **Git Delta package.xml** report naming a single `Layout`
-- A Pull Request diff of one file: the layout
+- A Pull Request diff of one file, the layout, then that Pull Request merged
 - Your layout change still present in `helios-dev`
 
 ## If it goes wrong

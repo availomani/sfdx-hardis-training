@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "ee3029d22ba45d5b0cbdb2c50c30d3e3aa93a291"
+source_rev: "4b54cba5c5b2ad541892fc9c9072f8bafef1cbad"
 screenshots:
   - annotated/vscode/package-xml-filtered
   - annotated/vscode/editor-field-file
@@ -80,11 +80,13 @@ D'abord le champ dont le flow a besoin pour ne pas avertir deux fois. Dans `heli
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Décoché                |
 
-Sur l'écran de sécurité au niveau du champ, cochez **Visible** pour **System Administrator**
-seulement (*Administrateur système* dans une org en français), et sur le dernier écran décochez **Installation Layout** : personne d'autre que le flow n'a
+L'écran de sécurité au niveau du champ arrive avec **Visible** coché pour presque tous les profils,
+comme dans le [Lab 1.4](../level-1-contributor-basics/1-4-build-a-custom-field-in-your-org.md) : videz la colonne avec la case de son en-tête, puis cochez **Visible** pour
+**System Administrator** seulement (*Administrateur système* dans une org en français). Sur le
+dernier écran, décochez **Installation Layout** : personne d'autre que le flow n'a
 besoin de cette case, elle ne va donc sur aucune page. Cette seule coche est pour vous, pas pour le
 flow : Flow Builder ne propose que les champs que la personne qui édite le flow peut lire, et sans
-elle **Crew Warning Sent** manque dans la liste de l'étape 2. Le flow lui-même tourne en mode système
+elle **Crew Warning Sent** manque dans les listes de Flow Builder ci-dessous. Le flow lui-même tourne en mode système
 et n'a besoin d'aucun droit.
 
 Puis le flow. **Setup > Flows**, ouvrez **Installation Crew Warning**. Il est actif, Flow Builder

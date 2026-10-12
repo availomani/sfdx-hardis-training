@@ -111,8 +111,10 @@ You finished Level 1.
 Welcome page > **Training: Level 1** > **Claim my badge**.
 
 It checks the whole level again first and refuses to claim anything that does not pass: a claim that
-would be rejected is a claim not worth opening. Then it opens the claim form of the training
-repository in your browser, with the level, your username, your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) and your receipts already in
+would be rejected is a claim not worth opening. It then asks one question, your Trailblazer
+username, because your badge page links to your Trailhead profile: it is the last part of the
+address of that profile, and the command says where to find it. Then it opens the claim form of the training
+repository in your browser, with the level, that username, your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) and your receipts already in
 it. One field is not filled in: pick your level in the **Level** dropdown, because GitHub does
 not prefill a dropdown from a link and the form refuses to submit while it says *None*. Then tick
 the three boxes and click **Create**.

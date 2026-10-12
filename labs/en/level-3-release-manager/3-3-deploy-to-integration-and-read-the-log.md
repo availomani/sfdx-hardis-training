@@ -287,7 +287,12 @@ says the same in the `integration` column.
 
 ![The Deployment Actions comment with one failed action and two stopped ones](../../_assets/annotated/web/github-pr-deployment-actions-failed.png)
 
-**The DevOps Pipeline**: click `integration`, then the **Deployment Actions** tab. The actions are
+**The DevOps Pipeline** needs two things from you first. Check out `integration` and pull it, from
+the branch name in the status bar and the Source Control panel: the panel reads the actions from
+the branch you have checked out, and Mariia's actions file reached `integration` with her merge.
+Then click **Refresh** in the top bar of the panel, so it reads the deployment that just failed.
+
+Now click `integration`, then the **Deployment Actions** tab. The actions are
 grouped by Pull Request, numbered in the order they run. The **Status** column **(1)** gives each
 action its state in the org of `integration`, and the failed one carries **Retry** and **Mark as
 done in integration** buttons **(2)**. The menu at the end of each row holds the rest, **Move to my Pull Request**
@@ -312,9 +317,8 @@ The first action is right: the org is missing its group. Create it in `helios-in
    Quick Find box, and click **New**
 2. **Label** `Crew Leads`, **Group Name** `Helios_Crew_Leads`, then **Save**
 
-The action definition is read from the branch you have checked out. Check out `integration` and
-pull it, from the branch name in the status bar and the Source Control panel, so Mariia's actions
-file is there.
+The action definition is read from the branch you have checked out, which is why step 10 had you
+check out `integration` and pull it. If you switched branch since, come back to it.
 
 Back in the **Deployment Actions** tab, click **Retry** on the row of **Put the delivery managers in
 the Crew Leads group**. The command runs in VS Code, against `helios-integration`:
@@ -401,7 +405,10 @@ The last action adds the deployment user to Crew Leads. Retrying it would work, 
 twenty seconds, so do it by hand, the way a release manager does when a release cannot wait:
 
 1. In `helios-integration`, **Setup** > **Public Groups** > **Crew Leads** > **Edit**
-2. Add your user to **Selected Members**, then **Save**
+2. Look at **Selected Members**. Your user is already there: the first action, which you ran again
+   in step 11, put every delivery manager in the group, and you are one. There is nothing to add,
+   so click **Cancel**. On a real project the deployment user is a technical user that no other
+   action adds: you would move it to **Selected Members** here, then **Save**
 
 Then, in the **Deployment Actions** tab, open the menu of **Add the deployment user to the Crew
 Leads group** and click **Mark as done in integration**. Nothing opens: sfdx-hardis records it in the background

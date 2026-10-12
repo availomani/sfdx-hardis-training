@@ -5,7 +5,7 @@ description: "Générez une documentation lisible d'une org Salesforce non docum
 level: 3
 lab: 9
 lang: fr
-source_rev: "810d4dfb1955110f1f91b4b18f7de130b2a1cc98"
+source_rev: "d67b625e41a231ca2d18e3e57c46bf925f2f75d1"
 screenshots:
   - annotated/vscode/documentation-workbench--generate-and-deploy
 depends_on:
@@ -44,6 +44,8 @@ est exactement celle qui mérite le temps d'une personne.
 ## Les étapes
 
 ### 1. Ouvrir le Documentation Workbench
+
+Depuis la Welcome page, cliquez sur la carte **Documentation Workbench**.
 
 ![Le Documentation Workbench, avec les parties à inclure, le bouton Generate et les cibles de publication](../../_assets/annotated/vscode/documentation-workbench--generate-and-deploy.png)
 
@@ -213,9 +215,10 @@ rencontrez un.
 **Les pages d'objets sont presque vides.**
 Les sources sont là mais les descriptions non. C'est l'org, pas l'outil.
 
-**Le dossier docs est énorme et la Pull Request impossible à relire.**
-Attendu la première fois. Dites-le dans la description de la Pull Request. Les régénérations
-suivantes produisent de petits diffs.
+**Source Control liste des centaines de nouveaux fichiers sous `docs/`.**
+Il ne devrait en lister aucun : ce cours garde `docs/` et `mkdocs.yml` hors de git. Vérifiez que
+`.gitignore` les liste toujours, et ne les commitez pas. Un projet qui commite sa documentation a
+une première Pull Request énorme, et des petites ensuite.
 
 ## Vérifiez votre travail
 

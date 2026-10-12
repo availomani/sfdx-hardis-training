@@ -26,9 +26,9 @@ function git(args) {
 }
 
 /**
- * Whether this clone knows that commit. A source_rev naming one it does not,
- * a squashed or rebased SHA for instance, cannot be compared with anything,
- * and staying silent would pass a stale translation forever.
+ * Whether this clone knows that commit. Only for the stamps of the time when
+ * source_rev named a commit: one it does not know, or a content hash the English
+ * file no longer has, is a translation behind its source either way.
  */
 function isKnownCommit(rev) {
   const res = spawnSync("git", ["cat-file", "-e", `${rev}^{commit}`], { cwd: ROOT, encoding: "utf8" });
@@ -94,11 +94,16 @@ for (const locale of locales) {
     }
     const rev = sourceRev(path.join(LABS, locale, rel));
     if (!rev) {
-      console.log(`  NO REV    ${rel}  (set source_rev to the SHA of the English file)`);
+      console.log(`  NO REV    ${rel}  (run scripts/i18n/stamp-source-rev.mjs once the translation is up to date)`);
       untracked++;
       continue;
     }
     const englishPath = `labs/en/${rel}`;
+    // The stamp is the content hash of the English file: see stamp-source-rev.mjs
+    if (git(["hash-object", "--", englishPath]) === rev) {
+      continue;
+    }
+    // A stamp from before that, which names a commit: readable as long as the commit exists
     const latest = git(["log", "-1", "--format=%H", "--", englishPath]);
     if (!latest) {
       continue;
@@ -107,7 +112,7 @@ for (const locale of locales) {
       continue;
     }
     if (!isKnownCommit(rev)) {
-      console.log(`  UNKNOWN   ${rel}  (source_rev ${rev} is not a commit this clone knows)`);
+      console.log(`  BEHIND    ${rel}  (the English file changed since source_rev ${rev.slice(0, 8)})`);
       behind++;
       continue;
     }

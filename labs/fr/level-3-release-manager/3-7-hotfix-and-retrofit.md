@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "e459fdee8f6ebfde36d3a957bc1787020da9231d"
+source_rev: "ae400d16869786c148c53aa786ce76cce3265b61"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3

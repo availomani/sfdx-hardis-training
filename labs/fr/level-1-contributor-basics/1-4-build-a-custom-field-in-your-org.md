@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "b8f15a3b5c9230c4d7da4bbad3be6fd083b50379"
+source_rev: "ddbc597339a4710123bd29f47579dc4e93764d76"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -37,7 +37,8 @@ dans `helios-dev`, votre propre org, jamais dans l'org partagée.
 ## Avant de commencer
 
 - [ ] [Lab 1.3](1-3-start-a-user-story-on-a-git-branch.md) terminé : vous êtes sur `features/US-014-panels-required`
-- [ ] La section Status du panneau sfdx-hardis affiche `helios-dev` comme org courante
+- [ ] La section Status du panneau sfdx-hardis affiche le nom d'utilisateur de `helios-dev` comme org
+      courante : celui de la ligne `helios-dev` d'**Orgs Manager**, car cette section n'affiche jamais d'alias
 
 ## Les étapes
 

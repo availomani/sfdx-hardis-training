@@ -5,7 +5,7 @@ description: "Rapatriez vos modifications d'org dans Git avec le Metadata Retrie
 level: 1
 lab: 5
 lang: fr
-source_rev: "9426c8e05eb9a9fa84c6b2848c577247d131bd11"
+source_rev: "07a0f9a86252bda3850e9e2b6c93950c77d0482b"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -322,9 +322,10 @@ qui a effectué, dans cet ordre :
 3. **Retiré des Profiles les permissions utilisateur** listées sous `autoRemoveUserPermissions`, que
    ce projet a décidé de ne jamais laisser voyager d'une org à l'autre par un déploiement. Les
    Profiles uniquement : un Permission Set garde tout ce qu'on lui a donné
-4. **Commité ce qu'il a modifié**, sous `chore(sfdx-hardis): update package content` et
-   `chore(sfdx-hardis): clean sfdx project`. Ces commits sont ceux de l'outil, pas les vôtres : le
-   vôtre est celui que vous avez écrit à l'étape 4
+4. **Commité ce qu'il a modifié**, sous `chore(sfdx-hardis): update package content`, et sous
+   `chore(sfdx-hardis): clean sfdx project` quand le nettoyage a modifié un fichier. Sur cette story
+   il n'a rien modifié, votre branche gagne donc un seul commit. Ces commits sont ceux de l'outil,
+   pas les vôtres : le vôtre est celui que vous avez écrit à l'étape 4
 5. **Poussé** la branche sur votre fork
 
 Chacune de ces étapes est de la configuration, pas de la magie. Tout ce qu'il a fait est dans

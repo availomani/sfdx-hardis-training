@@ -336,7 +336,7 @@
     {
       "name": "github-pr-deployment-actions",
       "_comment": "Lab 2.4 step 5: the Deployment Actions comment sfdx-hardis keeps on a Pull Request, after the check of US-026 and before the merge.",
-      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/53",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/25",
       "width": 1440,
       "height": 2400,
       "settle": 5000,
@@ -350,7 +350,7 @@
       "name": "github-pr-promotion-actions",
       "fresh": true,
       "_comment": "Lab 3.5 step 4: the deployment actions a promotion Pull Request collects from every story it carries, with the manual checklist above the folded sections. The fold of the actions of the job is opened, so the reason of each skip can be read.",
-      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/70",
+      "url": "https://github.com/nvuillam/sfdx-hardis-training/pull/24",
       "width": 1440,
       "height": 2400,
       "settle": 5000,

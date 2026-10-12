@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "f35a02fc7be6e5ee84fd8352d9667770467392de"
+source_rev: "8d32208ddce7e5120a4e6ee73b195db77837684e"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -121,7 +121,9 @@ L'entrée du menu a lancé :
 
 qui a chargé `scripts/lab-records/lab-2-4/Crew_Capacity__c.csv` dans `helios-dev` avec
 `sf data upsert bulk`, en rapprochant sur `External_Id__c`, et a ajouté une vue de liste **All** à
-l'objet s'il n'en avait pas, pour que le lien ait une liste à ouvrir. Sur un vrai projet, quelqu'un saisit ces
+l'objet s'il n'en avait pas, pour que le lien ait une liste à ouvrir. Cette vue de liste est une
+métadonnée, comme l'objet : elle fait partie de ce que l'étape 2 récupère. Sur un vrai projet,
+quelqu'un saisit ces
 enregistrements dans l'org, ou les charge depuis un tableur : dans les deux cas ils n'existent que
 dans une org, et c'est le problème que la suite de ce lab résout.
 
@@ -129,15 +131,18 @@ dans une org, et c'est le problème que la suite de ce lab résout.
 
 ### 2. Publier et regarder rien échouer
 
-Récupérez l'objet, ses champs, son onglet, l'application `Helios_Delivery` et
-`Helios_Delivery_Manager` avec **Commit changes**. Les deux classes Apex ne se récupèrent pas : ce
+Récupérez l'objet, ses champs, son onglet, sa vue de liste **All** (la ligne `ListView` nommée
+`Crew_Capacity__c.All`), l'application `Helios_Delivery` et `Helios_Delivery_Manager` avec **Commit
+changes**. Sans la vue de liste, l'onglet s'ouvrirait dans les autres orgs sur **Recently Viewed**,
+qui ne montre à chacun que les enregistrements qu'il a lui-même ouverts. Les deux classes Apex ne se récupèrent pas : ce
 sont déjà des fichiers du projet, et Source Control liste les quatre que vous avez copiés à côté de
 ce que vous avez récupéré. Commitez le tout, puis **Save / Publish**, poussez, Pull Request. Le
 contrôle est vert. Mergez. Le déploiement est vert.
 
 Ouvrez maintenant `helios-integration` et regardez :
 
-- L'onglet **Crew Capacity** est dans l'application Helios Delivery, **avec zéro enregistrement**
+- L'onglet **Crew Capacity** est dans l'application Helios Delivery et sa vue de liste **All** est
+  là, **avec zéro enregistrement**
 - `CrewCapacityBatch` existe, **planifié nulle part**
 - Personne n'a vérifié que l'org a le droit d'envoyer l'e-mail de synthèse du batch
 
@@ -369,8 +374,8 @@ sfdx-hardis ne fait que lister l'étape : le projet Helios active l'arrêt avec
 
 Ne vous contentez pas de la coche verte. **Ouvrez l'org et regardez :**
 
-- L'onglet **Crew Capacity** de l'application Helios Delivery, sur sa vue de liste **All**, a 12
-  enregistrements
+- La vue de liste **All** de l'onglet **Crew Capacity**, dans l'application Helios Delivery, a
+  12 enregistrements
 - **Setup > Scheduled Jobs** liste `Helios crew capacity nightly`
 - L'étape manuelle est **done** pour `integration` sous **Status by org**, avec la date de
   votre case
@@ -436,6 +441,7 @@ Les trois sont des entrées du même fichier YAML sous `scripts/actions/` :
         parameters:
           sfdmuProject: HeliosCrewRefData
         context: process-deployment-only
+        runOnlyOnceByOrg: true
       - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000002
         label: Schedule the nightly crew capacity recalculation
         type: schedule-batch

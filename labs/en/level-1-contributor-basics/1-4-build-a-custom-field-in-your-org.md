@@ -37,7 +37,8 @@ your own org, never in the shared one.
 ## Before you start
 
 - [ ] [Lab 1.3](1-3-start-a-user-story-on-a-git-branch.md) finished: you are on `features/US-014-panels-required`
-- [ ] The Status section of the sfdx-hardis panel shows `helios-dev` as the current org
+- [ ] The Status section of the sfdx-hardis panel shows the username of `helios-dev` as the current
+      org: the one on the `helios-dev` row of **Orgs Manager**, since that section never shows an alias
 
 ## Steps
 

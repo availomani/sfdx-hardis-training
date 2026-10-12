@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "9c652820abe61fac27fa86bac9eba269af742274"
+source_rev: "46181112ca0f8c4fc2f70e1e0be02dbb5a59c7b3"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -301,7 +301,13 @@ tableau **Status by org** **(2)** dit la même chose dans la colonne `integratio
 
 ![Le commentaire Deployment Actions avec une action en échec et deux actions arrêtées](../../_assets/annotated/web/github-pr-deployment-actions-failed.png)
 
-**La DevOps Pipeline** : cliquez sur `integration`, puis sur l'onglet **Deployment Actions**. Les
+**La DevOps Pipeline** vous demande d'abord deux choses. Récupérez `integration` et faites un pull,
+depuis le nom de branche de la barre d'état et le panneau Source Control : le panneau lit les
+actions dans la branche que vous avez récupérée, et le fichier d'actions de Mariia est arrivé sur
+`integration` avec son merge. Cliquez ensuite sur **Refresh** dans la barre du haut du panneau,
+pour qu'il lise le déploiement qui vient d'échouer.
+
+Cliquez maintenant sur `integration`, puis sur l'onglet **Deployment Actions**. Les
 actions sont regroupées par Pull Request, numérotées dans l'ordre où elles tournent. La colonne
 **Status** **(1)** donne l'état de chaque action dans l'org d'`integration`, et celle en échec porte
 les boutons **Retry** et **Mark as done in integration** **(2)**. Le menu au bout de chaque ligne contient le reste,
@@ -328,9 +334,9 @@ La première action est juste : c'est l'org à qui il manque son groupe. Créez-
    la boîte Quick Find, et cliquez sur **New**
 2. **Label** `Crew Leads`, **Group Name** `Helios_Crew_Leads`, puis **Save**
 
-La définition de l'action est lue dans la branche que vous avez récupérée. Récupérez `integration`
-et faites un pull, depuis le nom de branche de la barre d'état et le panneau Source Control, pour
-que le fichier d'actions de Mariia soit là.
+La définition de l'action est lue dans la branche que vous avez récupérée, et c'est pourquoi
+l'étape 10 vous a fait récupérer `integration` et faire un pull. Si vous avez changé de branche
+depuis, revenez-y.
 
 De retour dans l'onglet **Deployment Actions**, cliquez sur **Retry** sur la ligne de **Put the
 delivery managers in the Crew Leads group**. La commande tourne dans VS Code, sur
@@ -427,7 +433,11 @@ faire prend vingt secondes : faites-la à la main, comme un release manager le f
 livraison ne peut pas attendre :
 
 1. Dans `helios-integration`, **Setup** > **Public Groups** > **Crew Leads** > **Edit**
-2. Ajoutez votre utilisateur dans **Selected Members**, puis **Save**
+2. Regardez **Selected Members**. Votre utilisateur y est déjà : la première action, que vous avez
+   relancée à l'étape 11, a mis chaque delivery manager dans le groupe, et vous en êtes un. Il n'y
+   a rien à ajouter, cliquez donc sur **Cancel**. Sur un vrai projet l'utilisateur de déploiement
+   est un utilisateur technique qu'aucune autre action n'ajoute : vous le passeriez ici dans
+   **Selected Members**, puis **Save**
 
 Ensuite, dans l'onglet **Deployment Actions**, ouvrez le menu de **Add the deployment user to the
 Crew Leads group** et cliquez sur **Mark as done in integration**. Rien ne s'ouvre : sfdx-hardis l'enregistre en

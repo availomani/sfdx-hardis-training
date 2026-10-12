@@ -186,6 +186,10 @@ A Level 3 claim re-runs the **Level 1 and Level 2 audits first**. That is how th
 enforced, because a Trailmix cannot gate anything. The command runs those same audits on your
 machine before it opens anything, so you find out here rather than on the issue.
 
+Then, as for the two other levels: it asks for your Trailblazer username, the last part of the
+address of your Trailhead profile, and opens the claim form filled in. Pick your level in the
+**Level** dropdown, which a link cannot prefill, then tick the three boxes and submit.
+
 !!! tip "If the course helped you"
     [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
     extension every click of this course went through. A star is how an open source project stays

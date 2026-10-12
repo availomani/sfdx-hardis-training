@@ -1,6 +1,7 @@
 {
   "orgName": "Helios Energy",
   "edition": "Developer",
+  "language": "en_US",
   "hasSampleData": false,
   "features": [],
   "settings": {
@@ -9,6 +10,12 @@
     },
     "mobileSettings": {
       "enableS1EncryptedStoragePref2": false
+    },
+    "fieldServiceSettings": {
+      "fieldServiceOrgPref": false
+    },
+    "workDotComSettings": {
+      "enableWorkThanksPref": false
     }
   }
 }

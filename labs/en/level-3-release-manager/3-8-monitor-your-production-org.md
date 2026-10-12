@@ -251,6 +251,9 @@ app every `sf org login` goes through, yours included, and on a Developer Editio
 any user who can log in. On a production org that is the first finding to take to the security team:
 an admin can restrict it to approved users, and the CLI keeps working for them.
 
+The same report may list a second one, `orgfarm_app_1`. It is not yours: it belongs to the Salesforce
+service that created your Developer Edition org, and a production org does not have it.
+
 What you are reading for is the **shape** of each finding, so that you recognise it on a real org:
 
 | Finding on a real org           | What it actually means                                                     |
@@ -320,7 +323,8 @@ Level 3** > **Publish my pipeline configuration**: it is pipeline configuration,
 
 That command does the whole trip on its own, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): it creates a branch, commits the
 configuration, pushes it and opens the Pull Request. You have nothing to commit and no Pull
-Request to create: wait for its checks, merge it with **Merge pull request**, then **Pull** in the
+Request to create: wait for its checks, merge it with **Squash and merge**, as its **How to merge**
+line says and as in [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), then **Pull** in the
 **Source Control** panel.
 
 From then on, the **Org Monitoring Workbench** opened from the source repository offers **Open

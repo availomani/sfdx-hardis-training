@@ -182,7 +182,9 @@ Read the frame before the numbers:
   **production**. A row opens the tab of its branch, the one of `main` being **(6)**
 
 **Pipeline flow** answers the question the table cannot: how long does a User Story take to reach
-production, and where does it wait. Read it from left to right:
+production, and where does it wait. The figures quoted below are the ones of the picture, a learner
+who spread the course over a week: yours follow the days your own course took and the number of
+User Stories you delivered, and a course done in one sitting reads hours, not days. Read it from left to right:
 
 - Each box is an org of the pipeline. It says how many User Stories are in that org and went no
   further, and how long the oldest has been there. Yours all read **Nothing waiting**: you have

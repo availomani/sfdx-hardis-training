@@ -80,10 +80,12 @@ First, the field the flow needs so it does not warn twice. In `helios-dev`,
 | Field Name    | `Crew_Warning_Sent__c` |
 | Default Value | Unchecked              |
 
-On the field-level security screen, tick **Visible** for **System Administrator** only, and on the
-last screen untick **Installation Layout**: nobody but the flow needs this checkbox, so it goes on no
+The field-level security screen arrives with **Visible** ticked for nearly every profile, as in
+[Lab 1.4](../level-1-contributor-basics/1-4-build-a-custom-field-in-your-org.md): clear the column with the checkbox in its header, then tick **Visible** for **System
+Administrator** only. On the last screen untick **Installation Layout**: nobody but the flow needs this checkbox, so it goes on no
 page. That one tick is for you, not for the flow: Flow Builder only offers the fields the person
-editing the flow can read, and without it **Crew Warning Sent** is missing from the list of step 2.
+editing the flow can read, and without it **Crew Warning Sent** is missing from the lists of Flow
+Builder below.
 The flow itself runs in system mode and needs no grant.
 
 Then the flow. **Setup > Flows**, open **Installation Crew Warning**. It is active, so Flow Builder

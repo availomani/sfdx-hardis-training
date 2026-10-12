@@ -203,6 +203,8 @@ other row does nothing:
 
 - **chore: the state a level 2 learner starts from** and **Keep my pipeline configuration**, if you
   reset: commits, not Pull Requests
+- **Point the pipeline at my training orgs**, if you did Level 1: the commit **Set up my training
+  environment** made in [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 - dozens of commits of the course itself, which your `integration` inherited when you made your
   copy of the repository. Some end with a number in brackets, like **(#77)**: that is a Pull
   Request of the course repository, not of your fork. Your org has them already
@@ -310,7 +312,8 @@ Command documentation: [hardis:work:backpromote](https://sfdx-hardis.cloudity.co
 ## What you should see
 
 Open `helios-dev` and check that Romain's story is there: open an installation, his **Signed Off
-By** field is at the bottom of the field column, under **Crew Notes**.
+By** field is at the bottom of the field column. The layout places it under **Crew Notes**, which
+you do not see on the record yourself: [Lab 1.7](../level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md) granted that field to the crew only.
 
 ## If it goes wrong
 

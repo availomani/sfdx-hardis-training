@@ -71,8 +71,9 @@ panel. Branch `US-027-schedule-by-availability`, target `integration`, org `heli
 
 The planner wants to check several installations at once. Open
 `force-app/main/default/classes/InstallationScheduler.cls`, the file the pipeline already deploys,
-and paste in the method below, exactly as the developer who wrote it first did. It is the obvious
-way to do it, and that is the point:
+and paste in the method below, exactly as the developer who wrote it first did. It goes at the end
+of the class: just above the last line of the file, which is the closing `}` of the class. It is the
+obvious way to do it, and that is the point:
 
 ```apex
     /**
@@ -123,7 +124,9 @@ works perfectly for a planner checking five installations and throws
 one. It will pass every test you write and fail on a busy Monday.
 
 The fix is the one Apex pattern worth knowing by heart: **query once, outside the loop, and index
-what you get back**.
+what you get back**. In `InstallationScheduler.cls`, replace the method you pasted in step 2, from
+its `public static List<Id> schedulableOn` line to its closing `}`, with this one, and keep the
+comment above it:
 
 ```apex
     public static List<Id> schedulableOn(List<Id> installationIds, Date wanted) {
@@ -172,7 +175,8 @@ holds it to that.
 
 The loop version was short, and the org carried it at 81%. The fix is longer, and every one of its
 new lines is a line no test runs. You added a method with three branches and no test. Add them to
-`force-app/main/default/classes/InstallationSchedulerTest.cls`:
+`force-app/main/default/classes/InstallationSchedulerTest.cls`, the same way, just above the last
+`}` of the file:
 
 ```apex
     @isTest

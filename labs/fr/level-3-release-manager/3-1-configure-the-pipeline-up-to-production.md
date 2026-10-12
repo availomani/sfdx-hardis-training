@@ -5,7 +5,7 @@ description: "Étendez une pipeline Salesforce à deux étages jusqu'à la produ
 level: 3
 lab: 1
 lang: fr
-source_rev: "5004bd9b727a032b01a8e13fa1eefb935db726e7"
+source_rev: "b1294747a173fecb2e76017ac9507e74f95da911"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
   - annotated/web/github-new-branch
@@ -93,7 +93,11 @@ a besoin de livrer correctement.
       [developer.salesforce.com/signup](https://developer.salesforce.com/signup) exactement comme la
       première, et connectée dans **Orgs Manager** avec l'alias `helios-preprod`
 - [ ] Les deux alimentées : Welcome page > **Training: Level 3** > **Set up one of my training
-      orgs**, une fois pour `helios-preprod` et une fois pour `helios-prod`
+      orgs**, une fois pour `helios-preprod` et une fois pour `helios-prod`. La commande commence
+      par passer votre utilisateur en anglais dans cette org, s'il ne l'est pas déjà : on travaille
+      dans une seule langue dans toutes les orgs d'un pipeline, parce que Salesforce nomme les
+      présentations de page qu'il crée dans la langue de l'utilisateur au travail, et qu'un profil
+      attribue une présentation de page par son nom
 - [ ] `SFDX_AUTH_URL_INTEGRATION` et `SFDX_AUTH_URL_UAT` toujours dans votre fork, comme depuis le
       Niveau 1 : ce lab n'y touche pas
 - [ ] Sur `integration` dans VS Code, avec rien en attente dans le panneau **Source Control**
@@ -151,6 +155,10 @@ contrôles sont verts, et GitHub l'impose au lieu de faire confiance à chacun p
 Depuis le [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md), `integration` et `uat` fonctionnent ainsi : la mise en place de l'environnement
 les a protégées. `preprod` et `main` sont à vous de protéger, et un release manager le fait le jour
 où les branches rejoignent la pipeline, pas après le premier mauvais merge.
+
+Votre fork vous donne une deuxième raison. Il supprime une branche une fois sa Pull Request mergée,
+et une release est une Pull Request dont la source est `preprod`. Seule une branche protégée est
+conservée : sans sa règle, `preprod` partirait avec votre première release.
 
 Dans votre fork (`github.com/my-username/sfdx-hardis-training`), cliquez sur **Settings** **(1)**,
 puis **Branches** **(2)** dans le menu de gauche. Les deux règles **(4)** sont celles que la mise en
@@ -697,6 +705,12 @@ commit et tout fichier pas encore commité. Puis relancez **Save / Publish**. Si
 fichier de configuration que vous avez modifié a aussi été modifié sur GitHub, tirez dans le panneau
 **Source Control**, puis republiez.
 
+**GitHub affiche une page Confirm access quand vous cliquez sur Create, ou sur Add secret.**
+GitHub redemande qui vous êtes avant un changement sensible, quand vous ne l'avez pas confirmé
+depuis quelques heures. Confirmez avec la méthode proposée, GitHub Mobile, une passkey ou un code
+par e-mail. Regardez ensuite la liste : si la règle ou le secret n'y est pas, remplissez le
+formulaire à nouveau.
+
 **Le contrôle que vous voulez exiger n'est pas proposé.**
 GitHub ne liste que les contrôles qui ont rendu compte sur ce repository dans les sept derniers
 jours. Ouvrez une Pull Request vers `integration`, laissez ses contrôles tourner, et revenez à la
@@ -713,6 +727,15 @@ laisser **Set up my training environment** en construire un nouveau.
 **Set up one of my training orgs échoue sur `helios-prod`.**
 La cause habituelle est une connexion expirée : reconnectez-la dans **Orgs Manager** sous le même
 alias, et relancez.
+
+**Set up one of my training orgs échoue sur `Profile Helios Crew`, avec `no Layout named ...` ou
+`no CustomTab named ...`.**
+Le profil que vous avez publié au [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
+nomme une présentation de page ou un onglet que votre scratch org a et que cette org Developer
+Edition n'a pas. C'est la première fois que ce profil rencontre une org d'un autre genre, d'où
+l'erreur ici et pas plus tôt. La section **En cas de problème** du [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) explique comment trouver
+laquelle des deux orgs fait exception, et quoi changer. Une fois le correctif mergé dans
+`integration`, revenez dessus, **Pull**, et relancez **Set up one of my training orgs**.
 
 ## Vérifiez votre travail
 

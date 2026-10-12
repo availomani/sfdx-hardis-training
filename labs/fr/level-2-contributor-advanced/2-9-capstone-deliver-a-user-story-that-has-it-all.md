@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "cfe1dcea647583a742b1ae3fdbd4c161e30eb765"
+source_rev: "39f9ffa6aa117226591908f52ce8478100dba88b"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -152,9 +152,10 @@ Neuf contrôles.
 
 Welcome page > **Training: Level 2** > **Claim my badge**.
 
-Comme au Niveau 1 : il recontrôle tout ce qui précède et ouvre le formulaire de demande déjà rempli.
-Choisissez votre niveau dans la liste **Level**, qu'un lien ne peut pas pré-remplir, puis cochez les
-trois cases et soumettez.
+Comme au Niveau 1 : il recontrôle tout ce qui précède, demande votre nom d'utilisateur Trailblazer,
+la dernière partie de l'adresse de votre profil Trailhead, et ouvre le formulaire de demande déjà
+rempli. Choisissez votre niveau dans la liste **Level**, qu'un lien ne peut pas pré-remplir, puis
+cochez les trois cases et soumettez.
 
 Une demande de Niveau 2 rejoue **aussi l'audit du Niveau 1**, parce que le badge dit que vous savez
 faire les deux. Si vous avez sauté le Niveau 1, c'est là qu'il le dira, et la commande le dit avant

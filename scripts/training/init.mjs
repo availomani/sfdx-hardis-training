@@ -40,16 +40,20 @@ import os from "os";
 import path from "path";
 import {
   ROOT, c, title, info, ok, warn, abort, run, runAsync, runJson, parseJsonOutput, git, gitOut,
-  select, confirm, connectedOrgs, orgChoices, universe, ensureGh, repoSlug, openUrl, removeTempDir
+  select, confirm, connectedOrgs, orgChoices, universe, ensureGh, repoSlug, openUrl, removeTempDir,
+  readProgress, writeProgress
 } from "../lib/util.mjs";
-import { deployAppToAll, grantManager, loadData, recordSeeded, alreadySeeded } from "./seed.mjs";
-import { REQUIRED_CHECKS, protectBranches, withProtectionLifted } from "../lib/protection.mjs";
+import { deployAppToAll, grantManager, loadData, recordSeeded, alreadySeeded, workInEnglish } from "./seed.mjs";
+import { REQUIRED_CHECKS, protectBranches, deleteMergedBranches, withProtectionLifted } from "../lib/protection.mjs";
 
 const UPSTREAM = "hardisgroupcom/sfdx-hardis-training";
 const SCRATCH_DEF = path.join("config", "project-scratch-def.json");
 // The longest a scratch org can live. Setting the maximum is what lets a learner
 // take the course over a few weeks without meeting an expired org.
 const DURATION_DAYS = 30;
+// The settings of the scratch definition that switch a Salesforce feature off, which a scratch
+// org created before they were added still has on: see alignScratchOrgs.
+const SHAPE_SETTINGS = ["fieldServiceSettings", "workDotComSettings"];
 // Branches the fork needs for Levels 1 and 2. main exists in every fork, and
 // preprod is created by the release manager in Lab 3.1, from main.
 const PIPELINE_BRANCHES = ["integration", "uat"];
@@ -237,6 +241,7 @@ export async function ensureScratchOrgs(devHub, aliases) {
   const orgs = connectedOrgs();
   const hubUsername = (orgs.find((o) => (o.aliases || []).includes(devHub) || o.username === devHub) || {}).username;
   const usernames = {};
+  const kept = [];
   const missing = [];
   for (const alias of aliases) {
     const existing = orgs.find((o) => (o.aliases || []).includes(alias));
@@ -244,6 +249,7 @@ export async function ensureScratchOrgs(devHub, aliases) {
       (!existing.devHubUsername || !hubUsername || existing.devHubUsername === hubUsername);
     if (alive) {
       usernames[alias] = existing.username;
+      kept.push(existing.username);
       ok(`${c.bold(alias)} already exists${existing.expirationDate ? `, until ${existing.expirationDate}` : ""}.`);
     } else {
       if (existing) {
@@ -307,6 +313,9 @@ export async function ensureScratchOrgs(devHub, aliases) {
       warn(`${alias} could not be created: ${json?.message || (res.stderr || res.stdout).trim().split("\n").pop()}`);
     }
   }
+  // Before the stop below: an org this run created has the features of the definition, and the
+  // next run, which keeps it, must not take it for an older one
+  rememberShape(Object.values(usernames).filter((username) => !kept.includes(username)));
   if (failures.length > 0) {
     abort(
       `${failures.length} scratch org(s) could not be created.`,
@@ -314,6 +323,99 @@ export async function ensureScratchOrgs(devHub, aliases) {
     );
   }
   return usernames;
+}
+
+/**
+ * Switches off, in the scratch orgs created before the scratch definition did
+ * it, the Salesforce features a Developer Edition org does not have.
+ *
+ * A scratch org comes with Field Service and the Thanks badges on, and a
+ * Developer Edition org with both off. A Profile retrieved whole lists the page
+ * layout and the tab of every object of its org, those two features' included,
+ * so the Profile of Lab 2.6 could not be deployed to the two Developer Edition
+ * orgs of Level 3. The definition switches them off in a new scratch org; this
+ * does the same in one that already exists, once.
+ */
+export async function alignScratchOrgs(usernames) {
+  const shape = scratchShape();
+  const done = readProgress().scratchShapes || {};
+  const todo = Object.keys(usernames).filter((alias) => done[usernames[alias]] !== shape.id);
+  if (todo.length === 0) {
+    return;
+  }
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "helios-shape-"));
+  fs.mkdirSync(path.join(dir, "settings"));
+  fs.writeFileSync(
+    path.join(dir, "package.xml"),
+    [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<Package xmlns="http://soap.sforce.com/2006/04/metadata">',
+      "    <types>",
+      ...shape.settings.map((setting) => `        <members>${setting.name}</members>`),
+      "        <name>Settings</name>",
+      "    </types>",
+      "    <version>64.0</version>",
+      "</Package>",
+      ""
+    ].join("\n"),
+    "utf8"
+  );
+  for (const setting of shape.settings) {
+    fs.writeFileSync(
+      path.join(dir, "settings", `${setting.name}.settings`),
+      [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        `<${setting.name}Settings xmlns="http://soap.sforce.com/2006/04/metadata">`,
+        ...Object.entries(setting.values).map(([key, value]) => `    <${key}>${value}</${key}>`),
+        `</${setting.name}Settings>`,
+        ""
+      ].join("\n"),
+      "utf8"
+    );
+  }
+  const results = await Promise.all(
+    todo.map(async (alias) => ({
+      alias,
+      res: await runAsync("sf", ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", alias, "--wait", "10", "--json"])
+    }))
+  );
+  removeTempDir(dir);
+  const aligned = [];
+  for (const { alias, res } of results) {
+    if (res.code === 0) {
+      aligned.push(usernames[alias]);
+      ok(`${c.bold(alias)} has the same Salesforce features as a Developer Edition org.`);
+    } else {
+      // Not fatal: the org works, and only a Profile retrieved whole from it would show the difference
+      warn(`${alias} keeps Field Service and the Thanks badges on: ${parseJsonOutput(res.stdout)?.message || "the settings could not be deployed"}`);
+    }
+  }
+  rememberShape(aligned);
+}
+
+/** The feature settings of the scratch definition, and an id that changes when they do. */
+function scratchShape() {
+  const definition = JSON.parse(fs.readFileSync(path.join(ROOT, SCRATCH_DEF), "utf8"));
+  const settings = SHAPE_SETTINGS.filter((key) => definition.settings?.[key]).map((key) => ({
+    // fieldServiceSettings in the definition is the FieldService setting of the Metadata API
+    name: key.charAt(0).toUpperCase() + key.slice(1).replace(/Settings$/, ""),
+    values: definition.settings[key]
+  }));
+  return { settings, id: JSON.stringify(settings) };
+}
+
+/** Records the scratch orgs that have the features of the current definition. */
+function rememberShape(scratchUsernames) {
+  if (scratchUsernames.length === 0) {
+    return;
+  }
+  const progress = readProgress();
+  const { id } = scratchShape();
+  progress.scratchShapes = progress.scratchShapes || {};
+  scratchUsernames.forEach((username) => {
+    progress.scratchShapes[username] = id;
+  });
+  writeProgress(progress);
 }
 
 /** Deploys the app into every scratch org that has not had it yet, then its permissions and data. */
@@ -820,6 +922,7 @@ export default async function init(args) {
   }
   const devHub = await findDevHub(orgs, args.org);
 
+  info(c.dim(`    Your user in ${devHub} will work in English from now on, like the scratch orgs and the labs.`));
   if (!args.yes && !(await confirm(`Build your training environment from ${devHub}?`, true))) {
     info("Nothing was changed.");
     return;
@@ -831,9 +934,14 @@ export default async function init(args) {
 
   step(3, "Your Dev Hub");
   await ensureDevHub(devHub);
+  // Before the scratch orgs, which are all created in English: see workInEnglish.
+  if (!workInEnglish(devHub)) {
+    warn(`The language of your user in ${devHub} could not be set to English. Set it yourself: your picture, top right > Settings > Language & Time Zone.`);
+  }
 
   step(4, "Your three scratch orgs");
   const usernames = await ensureScratchOrgs(devHub, scratch.map((o) => o.alias));
+  await alignScratchOrgs(usernames);
   pointProjectAt(devHub, devAlias);
 
   step(5, "The Helios app in each of them");
@@ -862,6 +970,11 @@ export default async function init(args) {
   step(8, "Changes through a Pull Request, merged once green");
   info(c.dim(`    A Pull Request into ${pipeline.map((s) => s.branch).join(" or ")} merges only once ${REQUIRED_CHECKS.join(" and ")} are green.`));
   const protectedBranches = protectBranches(slug, pipeline.map((s) => s.branch));
+  // Only once the major branches are protected: that is what keeps them when a
+  // promotion, whose source is a major branch, is merged.
+  if (protectedBranches) {
+    deleteMergedBranches(slug, pipeline.map((s) => s.branch));
+  }
 
   title("Done");
   info(`Your fork:               https://github.com/${slug}`);

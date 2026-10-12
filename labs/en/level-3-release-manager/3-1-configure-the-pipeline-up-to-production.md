@@ -88,7 +88,10 @@ one, and finishing the pipeline waits until the day somebody needs to release pr
       [developer.salesforce.com/signup](https://developer.salesforce.com/signup) exactly like the
       first one, and connected in **Orgs Manager** with the alias `helios-preprod`
 - [ ] Both seeded: Welcome page > **Training: Level 3** > **Set up one of my training orgs**, once
-      for `helios-preprod` and once for `helios-prod`
+      for `helios-preprod` and once for `helios-prod`. It first sets the language of your user to
+      English in that org, if it is not already: every org of a pipeline is worked in one language,
+      because Salesforce names the page layouts it creates in the language of the user at work, and a
+      Profile assigns a page layout by its name
 - [ ] `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT` still in your fork, as since Level 1: this
       lab leaves them alone
 - [ ] On `integration` in VS Code, with nothing waiting in the **Source Control** panel
@@ -144,6 +147,10 @@ enforces it rather than trusting everybody to remember. Since [Lab 1.2](../level
 work that way: setting up the environment protected them. `preprod` and `main` are yours to
 protect, and a release manager does it the day the branches join the pipeline, not after the first
 bad merge.
+
+Your fork gives you a second reason. It deletes a branch once its Pull Request is merged, and a
+release is a Pull Request whose source is `preprod`. Only a protected branch is kept: without its
+rule, `preprod` would go with your first release.
 
 In your fork (`github.com/my-username/sfdx-hardis-training`), click **Settings** **(1)**, then
 **Branches** **(2)** in the left menu. The two rules **(4)** are the ones setting up your environment
@@ -664,6 +671,11 @@ the new branch starts from where you are, with your commit and any file not comm
 **Save / Publish** again. If instead a configuration file you changed was also changed on GitHub,
 pull in the **Source Control** panel, then publish again.
 
+**GitHub shows a Confirm access page when you click Create, or Add secret.**
+GitHub asks who you are again before a sensitive change, when you have not confirmed it for a few
+hours. Confirm with the method it offers, GitHub Mobile, a passkey or a code by email. Then look at
+the list: if the rule or the secret is not in it, fill the form again.
+
 **The check you want to require is not suggested.**
 GitHub only lists checks that reported on this repository in the last seven days. Open a Pull
 Request into `integration`, let its checks run, and come back to the rule.
@@ -679,6 +691,15 @@ there, then run **Set up my training environment** again. On a scratch org it is
 **Set up one of my training orgs fails on `helios-prod`.**
 The usual cause is an expired connection: reconnect it in **Orgs Manager** under the same alias, and
 run it again.
+
+**Set up one of my training orgs fails on `Profile Helios Crew`, with `no Layout named ...` or
+`no CustomTab named ...`.**
+The Profile you published in [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
+names a page layout or a tab your scratch org has and this Developer Edition org does not. It is the
+first time that Profile meets an org of another kind, which is why it shows here and not earlier.
+The **If it goes wrong** section of [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) walks through finding which of the two orgs is the odd
+one, and what to change. Once the fix is merged into `integration`, switch back to it, **Pull**,
+and run **Set up one of my training orgs** again.
 
 ## Check your work
 

@@ -150,8 +150,8 @@ course, and giving it its final name now means nothing gets renamed later.
 
 That name is called an **alias**, and it is what you will see and click from now on: in this panel,
 in the pipeline diagram, everywhere the course names an org. The three orgs step 5 creates get
-theirs automatically, and they appear in this table under those names **(2)**, each with a green
-**Connected** **(3)**. **This panel is how you connect to an org for the rest of the course**, and
+theirs automatically, and they appear in the Orgs Manager table under those names, each with a
+green **Connected**: **(2)** and **(3)** in the first picture of this step. **This panel is how you connect to an org for the rest of the course**, and
 also how you check which org you are pointed at, which saves more confusion than anything else in
 this training.
 
@@ -345,6 +345,7 @@ OK  integration now names the org of every branch, and is pushed.
 8 of 8  Changes through a Pull Request, merged once green
 OK  integration now takes changes through a Pull Request only, merged once its checks are green.
 OK  uat now takes changes through a Pull Request only, merged once its checks are green.
+OK  A branch is now deleted once its Pull Request is merged. integration and uat stay: a protected branch cannot be deleted.
 ```
 
 Count on fifteen to twenty minutes, nearly all of it steps 4 and 5, when Salesforce creates the orgs
@@ -371,6 +372,18 @@ deployed as metadata. Each scratch org is:
 
     sf org create scratch --definition-file config/project-scratch-def.json \
       --alias helios-dev --target-dev-hub helios-prod --duration-days 30
+
+The definition file is short, and two of its lines are there for Level 3. A scratch org comes with
+Salesforce features a Developer Edition org does not have, Field Service and the Thanks badges, and
+with them dozens of standard objects. The file switches both off, so that the orgs of your pipeline
+hold the same objects: a deployment that names an object one org lacks is refused there.
+
+For the same reason the command sets the language of your user in `helios-prod` to English, when
+it is not already, and tells you so. Scratch orgs are created in English, and Salesforce names
+what it creates in the language of the user at work: the page layout of a new object is
+`Crew Capacity Layout` for one user and `Présentation Crew Capacity` for another. The labs name
+every Salesforce screen in English too. A real project has the same rule: whoever configures and
+deploys works in one language, in every org of the pipeline.
 
 and each of them is then seeded:
 
@@ -404,6 +417,15 @@ rule on `preprod` and `main` in [Lab 3.1](../level-3-release-manager/3-1-configu
 merge on red. Setting up the environment and resetting a level lift that protection for the one
 push they make to those branches themselves, and put it back straight after.
 
+Last, it told GitHub to delete a branch once its Pull Request is merged, which is the
+**Automatically delete head branches** box of the repository settings:
+
+    gh api -X PATCH repos/<your-handle>/sfdx-hardis-training -F delete_branch_on_merge=true
+
+The setting belongs to the whole repository, so it also applies to a Pull Request whose source is
+`integration` or `uat`. Those two stay, because a protected branch cannot be deleted: that is why
+the protection comes first.
+
 <!-- command-links:start -->
 Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com/hardis/org/data/import/)
 <!-- command-links:end -->
@@ -412,7 +434,7 @@ Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com
 
 ### 6. What it just did
 
-Seven things, each of them real work on a real project, and none of them yours to repeat:
+Eight things, each of them real work on a real project, and none of them yours to repeat:
 
 - **Your own copy of the repository**, its *fork*, under your GitHub account. Your clone pushes
   there now, and still pulls from the team's repository. The fork carries the two branches the
@@ -438,6 +460,9 @@ Seven things, each of them real work on a real project, and none of them yours t
   every check GitHub runs on it has finished green, and that rule holds for you too, the owner of
   the fork. On a real project somebody set this up on day one: a merge on a red check deploys
   nothing, or half of something, and the next person to merge finds out
+- **Merged branches deleted by GitHub.** Once a Pull Request is merged, the branch it came from
+  has nothing left to say, and your fork deletes it. `integration` and `uat` are never deleted:
+  they are protected
 - **A credential for each CI job.** CI jobs are the automated jobs GitHub runs for you, on its own
   machines rather than on yours, and those machines cannot reach a Salesforce org without one. They
   are kept as repository secrets, named `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT`

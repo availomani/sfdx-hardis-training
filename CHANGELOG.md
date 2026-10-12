@@ -5,11 +5,39 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-12
 
+- A translation is now stamped with the content of the English page it was made from, not with a commit: French pages no longer read as behind after every squash merge.
 - A lab or a level shows the time learners took once three of them went through it. Under that it keeps its estimate.
 - A Pull Request opened on the course repository by mistake, instead of in your fork, is now closed at once with a comment saying where it belongs and how to open it there.
 - Lab 1.6: what to do when the My Pull Request card still says the Pull Request does not exist, and a warning about the yellow GitHub banner that opens a Pull Request on the original repository instead of your fork.
 - Lab 3.8 says what monitoring gives you (a metadata backup, which is not a data backup, indicators and alerts) and where each one is read. You now receive a real alert by email from the first run, and the lab says that a real project sends them to Slack, Microsoft Teams or Google Chat.
 - Lab 3.8: new troubleshooting entry for an email that does not arrive.
+- Labs 1.3 and 1.4 no longer tell you to look for `helios-dev` in the Status section, which shows a username and never an alias: compare it with the `helios-dev` row of Orgs Manager.
+- Lab 1.5 says Save / Publish adds one commit of its own on this story, not two.
+- Lab 1.7 mentions the Trailblazer username that Claim my badge asks for.
+- The VS Code pictures were taken again on sfdx-hardis 8.17.0.
+- Check my work no longer counts Lab 2.8 as done before you start it: it now looks for the layout change of the story in `integration`, and the lab tells you to open, then merge, its Pull Request.
+- Lab 2.1 no longer says Signed Off By sits under Crew Notes on the record, a field you cannot see yourself.
+- Lab 2.2 says how to clear the Visible column before ticking System Administrator.
+- Lab 2.5 says where to paste each block of Apex, and that the fixed method replaces the first one.
+- Lab 2.6: the Setup path of step 5 was cut in two on the site.
+- Lab 2.7 mentions the two files of your teammate that wait under Staged Changes during the merge.
+- Lab 2.9 mentions the Trailblazer username that Claim my badge asks for.
+- Lab 2.8: the first pill of the command list picture no longer covers the row above it.
+- Level 3 could not start for a learner coming from Level 2: the Helios Crew profile published in Lab 2.6 named page layouts and tabs that the two Developer Edition orgs do not have. New scratch orgs no longer have Field Service and the Thanks badges, and Set up my training environment switches both off in the scratch orgs you already have.
+- Set up my training environment and Set up one of my training orgs set the language of your user to English in the Developer Edition orgs, so Salesforce names page layouts the same way in every org.
+- Lab 2.6: new troubleshooting entry for a Profile refused with `no Layout named` or `no CustomTab named`: how to find which org differs, and what to change.
+- Your fork now deletes a branch once its Pull Request is merged, so Labs 1.6 and 3.2 no longer ask you to. The major branches stay: a protected branch cannot be deleted.
+- Lab 2.4 retrieves the All list view of Crew Capacity with the object, so the tab lists the 12 records in every org.
+- Check my work no longer counts Lab 3.4 as done before Level 3 starts: it now also looks for the Pull Request of US-020 in your fork.
+- Lab 3.1: new troubleshooting entry for the Confirm access page GitHub shows before saving a branch rule or a secret.
+- Lab 3.3 no longer asks you to add your user to the Crew Leads group: the first action already put you there, and the step says so.
+- Lab 3.3 has you check out `integration`, pull it and click Refresh before you open the Deployment Actions tab, not after: the tab reads the actions from your branch.
+- Lab 3.6 says the Pipeline flow figures it quotes are those of the picture, not yours.
+- Lab 3.8 says to squash the Pull Request of the monitoring repository setting, as its check comment asks, and names the second unsecured app a Developer Edition org lists.
+- Lab 3.9 says where the Documentation Workbench opens from, and no longer speaks of a Pull Request this course never opens.
+- Lab 3.10: the title of a folded block no longer shows a raw link, the red check is called by the name GitHub gives it, and the conflict question picture shows its four answers again.
+- Lab 3.11 mentions the Trailblazer username that Claim my badge asks for.
+- Pictures: the Deployment Actions comment of Lab 2.4 reads Retry, as the product does, and the promotion comment of Lab 3.5 shows the actions of a learner who walked Level 2.
 
 ## 2026-10-11
 

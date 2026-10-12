@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Stamps every translated lab with the SHA of the English file it matches.
+ * Stamps every translated lab with the content hash of the English file it matches.
  *
  *   node scripts/i18n/stamp-source-rev.mjs            every locale
  *   node scripts/i18n/stamp-source-rev.mjs fr          one locale
@@ -9,12 +9,17 @@
  * `source_rev` is what makes a translation checkable: it names the version of
  * the English page the translation was made from, so
  * scripts/i18n/check-translations.mjs can say which ones the source has moved
- * past. Writing those SHAs by hand, thirty at a time, is how they end up wrong.
+ * past. Writing those hashes by hand, thirty at a time, is how they end up wrong.
  *
- * **Run it after the English side of the change is committed.** The SHA it
- * stamps is the last commit that touched labs/en/<file>, so a stamp taken while
- * the English file is still uncommitted is a stamp for the version before yours,
- * and it says the translation is up to date when it is not.
+ * The hash is the one git gives the content of labs/en/<file> (`git hash-object`),
+ * not a commit. A commit SHA does not survive a squash merge, which is how this
+ * repository merges: every stamp taken on a branch named a commit that no longer
+ * existed once the Pull Request was merged, and every file of that Pull Request
+ * read as behind. The content of a file is the same before and after a squash.
+ *
+ * **Run it once the translation matches the English file as it is on disk**,
+ * committed or not, and only for the files you translated: a stamp says "this
+ * translation was made from that English text".
  *
  * It refuses to stamp a translation whose English source does not exist, and it
  * leaves everything else in the file alone: only the source_rev line changes.
@@ -76,9 +81,9 @@ for (const locale of locales) {
       problems.push(`labs/${locale}/${rel} has no English source at ${englishPath}`);
       continue;
     }
-    const sha = git(["log", "-1", "--format=%H", "--", englishPath]);
+    const sha = git(["hash-object", "--", englishPath]);
     if (!sha) {
-      problems.push(`${englishPath} has no commit yet: commit the English side first, then stamp`);
+      problems.push(`${englishPath} could not be hashed`);
       continue;
     }
     const text = fs.readFileSync(target, "utf8");

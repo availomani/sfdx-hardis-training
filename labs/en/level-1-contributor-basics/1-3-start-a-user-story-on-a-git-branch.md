@@ -213,8 +213,9 @@ Three things, all visible without leaving VS Code:
 
 1. **Bottom left of the status bar**: the branch is now `features/US-014-panels-required`
 2. **The sfdx-hardis panel, Status section**: *Current Org* names the scratch org you picked. It
-   shows the org's own name, the one Salesforce invented, rather than the `helios-dev` alias, so
-   check the username rather than looking for the alias you know
+   shows the org's own address and username, the ones Salesforce invented, and never the
+   `helios-dev` alias. To be sure it is the right org, compare that username with the one on the
+   `helios-dev` row of **Orgs Manager**
 3. **The DevOps Pipeline panel**: `integration` and `uat`, unchanged. **Your new branch is not
    there, and that is correct.** The diagram draws the major branches and the Pull Requests open
    against them, and your branch has neither a Pull Request nor an org of its own yet. It appears

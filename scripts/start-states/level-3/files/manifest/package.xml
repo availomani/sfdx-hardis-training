@@ -75,6 +75,7 @@
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>Crew_Capacity__c.All</members>
         <members>Installation__c.All_Installations</members>
         <members>Installation__c.Open_Installations</members>
         <members>Panel_Batch__c.All_Panel_Batches</members>

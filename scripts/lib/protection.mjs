@@ -134,3 +134,24 @@ export function withProtectionLifted(slug, branches, action) {
     }
   }
 }
+
+/**
+ * Has GitHub delete a branch once its Pull Request is merged.
+ *
+ * A merged branch that stays is one more line in every branch list for no
+ * benefit, and New User Story refuses a name that still exists. The setting
+ * belongs to the repository, not to a branch, so it also applies to a Pull
+ * Request from one major branch to the next: those branches stay because a
+ * protected branch cannot be deleted, which is why this runs after
+ * protectBranches. Returns true when the setting is on.
+ */
+export function deleteMergedBranches(slug, keptBranches) {
+  const res = ghApi(["-X", "PATCH", `repos/${slug}`, "-F", "delete_branch_on_merge=true", "-q", ".delete_branch_on_merge"]);
+  if (res.code === 0 && res.stdout.trim() === "true") {
+    ok(`A branch is now deleted once its Pull Request is merged. ${keptBranches.map((branch) => c.bold(branch)).join(" and ")} stay: a protected branch cannot be deleted.`);
+    return true;
+  }
+  warn("Merged branches will not be deleted on their own.");
+  info(`    Open https://github.com/${slug}/settings, and under ${c.bold("Pull Requests")} tick ${c.bold("Automatically delete head branches")}.`);
+  return false;
+}

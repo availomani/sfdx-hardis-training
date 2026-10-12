@@ -24,6 +24,7 @@ import {
 } from "../lib/util.mjs";
 
 const MANAGER_PERMSET = "Helios_Delivery_Manager";
+const ENGLISH = "en_US";
 
 /** The command that puts the Helios app into an org, shared by both routes in. */
 function deployArgs(target) {
@@ -70,6 +71,43 @@ export function grantManager(target, options = {}) {
     { quiet: options.quiet === true, capture: true }
   );
   return res.code === 0 || /duplicate/i.test(res.stdout + res.stderr);
+}
+
+/**
+ * Makes the user of an org work in English, and says so when it changed something.
+ *
+ * Salesforce names what it creates in the language of the user who is working: a
+ * page layout made in an org used in French is "Présentation ..." where the same
+ * layout is "... Layout" in the scratch orgs, and a Profile assigns a layout by
+ * its name. A Developer Edition org takes the language of whoever signed up for
+ * it, so the two orgs Level 3 adds would differ from the scratch orgs on names
+ * alone. The labs name every Salesforce screen in English too.
+ */
+export function workInEnglish(target) {
+  const username = runJson("sf", ["org", "display", "--target-org", target, "--json"])?.result?.username;
+  if (!username) {
+    return false;
+  }
+  const where = `Username='${String(username).replace(/'/g, "")}'`;
+  const user = runJson("sf", [
+    "data", "query", "--query", `SELECT LanguageLocaleKey FROM User WHERE ${where}`,
+    "--target-org", target, "--json"
+  ])?.result?.records?.[0];
+  if (!user) {
+    return false;
+  }
+  // en_GB and the others name what Salesforce creates like en_US does
+  if (/^en(_|$)/.test(user.LanguageLocaleKey || "")) {
+    return true;
+  }
+  const res = run("sf", [
+    "data", "update", "record", "--sobject", "User", "--where", where,
+    "--values", `LanguageLocaleKey=${ENGLISH}`, "--target-org", target
+  ], { quiet: true, capture: true });
+  if (res.code === 0) {
+    ok(`Your user in ${c.bold(target)} works in English now, like the labs and the other orgs of the course.`);
+  }
+  return res.code === 0;
 }
 
 /**
@@ -177,6 +215,10 @@ export default async function seed(args) {
   info("");
   info(`This will put the ${c.bold("Helios Delivery")} app and its sample data into ${c.bold(target)}.`);
   info(c.dim("Nothing is deleted. Running this twice is harmless."));
+
+  if (!workInEnglish(target)) {
+    warn(`The language of your user in ${target} could not be set to English. Set it yourself: your picture, top right > Settings > Language & Time Zone.`);
+  }
 
   // ------------------------------------------------------- 1. metadata
   title("1 of 4  Deploying the Helios Delivery app");

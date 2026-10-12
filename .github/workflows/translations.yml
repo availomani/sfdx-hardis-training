@@ -35,8 +35,8 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           persist-credentials: false
-          # source_rev names a commit, and comparing it with the history of the
-          # English file needs that history
+          # a source_rev stamped before it became a content hash names a commit, and
+          # comparing it with the history of the English file needs that history
           fetch-depth: 0
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0

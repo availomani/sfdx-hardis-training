@@ -119,7 +119,8 @@ The menu entry ran:
 
 which loaded `scripts/lab-records/lab-2-4/Crew_Capacity__c.csv` into `helios-dev` with
 `sf data upsert bulk`, matching on `External_Id__c`, and added an **All** list view to the object
-when it had none, so the link has a list to open. On a real project somebody enters these
+when it had none, so the link has a list to open. That list view is metadata, like the object: it
+is one of the things step 2 retrieves. On a real project somebody enters these
 records in the org, or loads them from a spreadsheet: either way they exist in one org only, which
 is the problem the rest of this lab solves.
 
@@ -127,14 +128,17 @@ is the problem the rest of this lab solves.
 
 ### 2. Publish and watch nothing fail
 
-Retrieve the object, its fields, its tab, the `Helios_Delivery` app and `Helios_Delivery_Manager`
-with **Commit changes**. The two Apex classes are not retrieved: they are already files of the
+Retrieve the object, its fields, its tab, its **All** list view (the `ListView` row named
+`Crew_Capacity__c.All`), the `Helios_Delivery` app and `Helios_Delivery_Manager` with **Commit
+changes**. Without the list view, the tab would open in the other orgs on **Recently Viewed**,
+which shows each person only the records they opened themselves. The two Apex classes are not retrieved: they are already files of the
 project, and Source Control lists the four you copied next to what you retrieved. Commit all of it,
 then **Save / Publish**, push, Pull Request. The check is green. Merge. The deployment is green.
 
 Now open `helios-integration` and look:
 
-- The **Crew Capacity** tab is in the Helios Delivery app, **with zero records**
+- The **Crew Capacity** tab is in the Helios Delivery app and its **All** list view is there,
+  **with zero records**
 - `CrewCapacityBatch` exists, **scheduled nowhere**
 - Nobody checked that the org is allowed to send the batch's summary email
 
@@ -358,7 +362,7 @@ the Helios project turns the stop on with `failValidationOnPendingManualActions:
 
 Do not take the green tick for it. **Open the org and look:**
 
-- The **Crew Capacity** tab of the Helios Delivery app, on its **All** list view, has 12 records
+- The **All** list view of the **Crew Capacity** tab, in the Helios Delivery app, has 12 records
 - **Setup > Scheduled Jobs** lists `Helios crew capacity nightly`
 - The manual step reads **done** for `integration` under **Status by org**, with the date
   of your tick
@@ -421,6 +425,7 @@ All three are entries in the same YAML file under `scripts/actions/`:
         parameters:
           sfdmuProject: HeliosCrewRefData
         context: process-deployment-only
+        runOnlyOnceByOrg: true
       - id: 5b2e8c71-0a3d-4f6e-9c1b-026000000002
         label: Schedule the nightly crew capacity recalculation
         type: schedule-batch

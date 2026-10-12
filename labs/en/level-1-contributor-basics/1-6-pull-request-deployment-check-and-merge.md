@@ -283,8 +283,11 @@ when they promote.
 
 GitHub remembers the method you picked last, so check the button label before every merge.
 
-Then delete the branch. GitHub offers a button for it. A merged branch that stays around is one
-more thing in everyone's list for no benefit.
+You do not have to delete the branch: your fork does it at the merge, and GitHub says so under
+the merge box. A merged branch that stays around is one more thing in everyone's list for no
+benefit, so a real project turns the same setting on (**Settings > General > Automatically delete
+head branches**). If the branch is still there, your fork was set up before the course turned it
+on: click **Delete branch**, and tick that setting in your fork.
 
 !!! note "What the linter is for, and why its comment can show a warning"
     MegaLinter reads the whole repository, not only your change, and reports anything that breaks
