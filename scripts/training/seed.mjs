@@ -19,7 +19,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import {
-  ROOT, c, title, info, ok, warn, abort, run, runAsync, runJson,
+  ROOT, c, title, info, ok, warn, abort, run, runAsync, runStreamed, runJson,
   select, connectedOrgs, orgChoices, universe, readProgress, writeProgress, removeTempDir
 } from "../lib/util.mjs";
 
@@ -39,6 +39,18 @@ function deployArgs(target) {
     // as a source tracking conflict: this clone has never seen the org
     "--ignore-conflicts"
   ];
+}
+
+/**
+ * What to do about a failed deployment, read from what it printed. A Profile naming a page
+ * layout or a tab the org does not have is not a connection problem, and saying it was sent a
+ * learner to reconnect an org that was connected.
+ */
+function deployFailureHint(output) {
+  if (/no (Layout|CustomTab) named/i.test(output)) {
+    return "A Profile names a page layout or a tab this org does not have: the errors above say which. The If it goes wrong section of Lab 2.6 explains why, and what to change.";
+  }
+  return "Read the errors above. The most common cause is a connection that expired: reconnect the org in Orgs Manager and run this again.";
 }
 
 /**
@@ -223,11 +235,11 @@ export default async function seed(args) {
   // ------------------------------------------------------- 1. metadata
   title("1 of 4  Deploying the Helios Delivery app");
   info(c.dim("    On a brand new org this takes a few minutes."));
-  if (run("sf", deployArgs(target)).code !== 0) {
-    abort(
-      `The deployment to ${target} failed.`,
-      "Read the errors above. The most common cause is a connection that expired: reconnect the org in Orgs Manager and run this again."
-    );
+  // Streamed to the panel: with the console alone, the errors went to an output channel nobody
+  // has open, and "Read the errors above" pointed at nothing
+  const deployment = await runStreamed("sf", deployArgs(target));
+  if (deployment.code !== 0) {
+    abort(`The deployment to ${target} failed.`, deployFailureHint(deployment.output));
   }
   ok("The app is deployed");
 

@@ -317,7 +317,7 @@ almost always a component that `integration` changed and `main` has not seen, no
 
 ## Check your work
 
-**Training: Level 3** > **Check my work**.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.7**.
 
 It looks for the `Cancelled` exemption on `preprod` and on `main`, and for the same line on
 `integration`: the hotfix shipped, and the retrofit brought it back down.

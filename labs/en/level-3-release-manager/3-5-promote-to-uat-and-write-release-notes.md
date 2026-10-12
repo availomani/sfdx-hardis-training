@@ -136,7 +136,7 @@ counts the User Stories waiting there, the list you read in step 1.
 
 In the **DevOps Pipeline** diagram, the arrow from `integration` to `uat` carries a **+ PR** chip
 **(1)**. Click it: GitHub opens on a new Pull Request from `integration` into `uat`, both branches
-already filled in. Click **Create pull request** there.
+already filled in. Do not click **Create pull request** yet: the title comes first, below.
 
 ![The + PR chip on the arrow from integration to uat](../../_assets/annotated/vscode/devops-pipeline-level3--create-promotion.png)
 
@@ -160,13 +160,16 @@ replaced by the Pull Request number and its status.
     promotion with the stories you tick, and creating one again replaces the one already open.
     [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) walks it.
 
-Title it for the humans who will read it, not for git, and call it a **promotion**:
+Back on the GitHub page, replace what **Add a title** proposes. Title the Pull Request for the
+humans who will read it, not for git, and call it a **promotion**:
 
 > Promotion 2026-09: crew capacity cap, quote PDF
 
 **Release** is the word for the Pull Request into `main`, production, and for nothing else. The
 business reads "release" as "it is live", and a Pull Request into `uat` puts nothing live. Keep the
 two words apart and a list of Pull Requests reads like the history of what reached production.
+
+Now click **Create pull request**.
 
 Merge it with **Merge pull request**, never with a squash: a promotion carries every commit of the
 stories it promotes, and the next promotion, the retrofit and the release notes all need to find
@@ -309,12 +312,16 @@ metadata changed by type, and the deployment actions with their status in `uat`:
 deliverability step **success**, ticked before the merge, the imports and the schedule
 **success**.
 
-Read it and then improve it. Generated notes are a complete list, and a release note the business
-reads needs two things the generator cannot know:
+Read it, then write the release note from it. Do not paste the generated document: it is a complete
+list, for whoever wants every detail, and it stays where it was written. What the business reads is
+a short text of your own, and it starts with two things the generator cannot know:
 
 1. **One sentence at the top saying what this release is for.** "Crews can no longer be
    over-staffed, and sales can generate quote PDFs."
 2. **The manual steps, stated as instructions to a named person**, not as a technical list
+
+Under them, keep one line per story from the tickets table of the generated notes, reworded as what
+changes for the business, and name the generated file for whoever wants the rest.
 
 Then give them to the people who read them. Open the promotion Pull Request you merged, **...** at
 the top right of its description, **Edit**, and paste the improved notes in place of the one-line

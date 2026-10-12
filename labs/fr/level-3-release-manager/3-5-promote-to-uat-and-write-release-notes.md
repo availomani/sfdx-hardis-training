@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "cfc9f94b58d5e8b90a9fa85e2d25c4989c21146b"
+source_rev: "f25960a8cc88a556eb27b6b6e1c8446b343c9b48"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -142,7 +142,8 @@ Pull Request : il compte les User Stories qui y attendent, la liste lue à l'ét
 
 Dans le diagramme **DevOps Pipeline**, la flèche d'`integration` vers `uat` porte une pastille
 **+ PR** **(1)**. Cliquez dessus : GitHub s'ouvre sur une nouvelle Pull Request d'`integration` vers
-`uat`, les deux branches déjà renseignées. Cliquez-y sur **Create pull request**.
+`uat`, les deux branches déjà renseignées. Ne cliquez pas encore sur **Create pull request** : le
+titre vient d'abord, plus bas.
 
 ![La pastille + PR sur la flèche d'integration vers uat](../../_assets/annotated/vscode/devops-pipeline-level3--create-promotion.png)
 
@@ -167,7 +168,8 @@ une, la pastille est remplacée par le numéro de la Pull Request et son statut.
     il crée une promotion avec les stories que vous cochez, et en créer une nouvelle remplace celle
     qui est déjà ouverte. Le [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) le déroule.
 
-Intitulez-la pour les humains qui la liront, pas pour git, et appelez-la une **promotion** :
+De retour sur la page GitHub, remplacez ce que propose **Add a title**. Intitulez la Pull Request
+pour les humains qui la liront, pas pour git, et appelez-la une **promotion** :
 
 > Promotion 2026-09: crew capacity cap, quote PDF
 
@@ -175,6 +177,8 @@ Intitulez-la pour les humains qui la liront, pas pour git, et appelez-la une **p
 métier lit "release" comme "c'est en ligne", et une Pull Request vers `uat` ne met rien en ligne.
 Gardez les deux mots distincts et une liste de Pull Requests se lit comme l'histoire de ce qui a
 atteint la production.
+
+Cliquez maintenant sur **Create pull request**.
 
 Mergez-la avec **Merge pull request**, jamais avec un squash : une promotion transporte chaque commit
 des stories qu'elle promeut, et la promotion suivante, le retrofit et les notes de version ont tous
@@ -323,13 +327,18 @@ les métadonnées modifiées par type, et les deployment actions avec leur statu
 manuelle de délivrabilité **success**, cochée avant le merge, les imports et la planification
 **success**.
 
-Lisez-les puis améliorez-les. Des notes générées sont une liste complète, et une note de version que
-le métier lit a besoin de deux choses que le générateur ne peut pas connaître :
+Lisez-les, puis écrivez la note de version à partir d'elles. Ne collez pas le document généré :
+c'est une liste complète, pour qui veut chaque détail, et il reste là où il a été écrit. Ce que le
+métier lit est un texte court, le vôtre, et il commence par deux choses que le générateur ne peut pas
+connaître :
 
 1. **Une phrase en haut disant à quoi sert cette livraison.** "Les équipes ne peuvent plus être
    surdimensionnées, et les commerciaux peuvent générer des PDF de devis."
 2. **Les étapes manuelles, formulées comme des instructions à une personne nommée**, pas comme une
    liste technique
+
+En dessous, gardez une ligne par story du tableau des tickets des notes générées, reformulée en ce
+qui change pour le métier, et nommez le fichier généré pour qui veut le reste.
 
 Puis donnez-les aux gens qui les lisent. Ouvrez la Pull Request de promotion que vous avez mergée,
 **...** en haut à droite de sa description, **Edit**, et collez les notes améliorées à la place de la

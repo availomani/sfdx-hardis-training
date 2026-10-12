@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "ae400d16869786c148c53aa786ce76cce3265b61"
+source_rev: "6728ea0bdbef0642d26d73e6d790d7b664597e03"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
@@ -329,7 +329,7 @@ le hotfix lui-même.
 
 ## Vérifiez votre travail
 
-**Training: Level 3** > **Check my work**.
+Welcome page > **Training: Level 3** > **Check my work**, puis choisissez **Lab 3.7**.
 
 Il cherche l'exemption `Cancelled` sur `preprod` et sur `main`, et la même ligne sur `integration` :
 le hotfix est parti, et le retrofit l'a ramené.

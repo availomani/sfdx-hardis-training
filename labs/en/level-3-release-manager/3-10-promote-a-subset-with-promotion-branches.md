@@ -743,7 +743,7 @@ The retrofit of step 9 is missing, or it was merged with the `preprod` side kept
 
 ## Check your work
 
-Welcome page > **Training: Level 3** > **Check my work**, then pick Lab 3.10.
+Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.10**.
 
 It looks for the three promoted stories on `preprod`, for a promotion branch in its history, for no
 conflict marker left in its metadata, and for `integration` being able to take `preprod` back

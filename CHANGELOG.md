@@ -5,6 +5,10 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-12
 
+- Set up one of my training orgs now shows the errors of a failed deployment in its panel, and points to Lab 2.6 when the Helios Crew Profile is the cause instead of blaming the connection.
+- Lab 3.5: the title of the promotion Pull Request comes before the click on Create pull request, and the lab says the release note is a short text you write from the generated notes, not a paste of them.
+- Lab 3.7: Check your work names the lab to pick.
+- Level 3 home page: a pointer to the troubleshooting of Lab 3.1 when seeding an org stops on the Helios Crew Profile.
 - The course has its own address, <https://sfdx-hardis-training.cloudity.com>. The two addresses it had before redirect to it, so the links and badges you already shared keep working.
 - A translation is now stamped with the content of the English page it was made from, not with a commit: French pages no longer read as behind after every squash merge.
 - A lab or a level shows the time learners took once three of them went through it. Under that it keeps its estimate.

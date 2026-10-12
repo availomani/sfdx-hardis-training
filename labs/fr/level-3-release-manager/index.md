@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "689af9a878099865e820ddc153c880b4c577980e"
+source_rev: "7c275ac9d5e1a73834f5f25dd2eeee476e8ae95a"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -100,7 +100,9 @@ Avant le Lab 3.1, inscrivez-vous à une org Developer Edition gratuite de plus s
 [developer.salesforce.com/signup](https://developer.salesforce.com/signup) et connectez-la dans
 **Orgs Manager** avec l'alias `helios-preprod`. Alimentez ensuite les deux orgs Developer Edition
 avec **Training: Level 3 > Set up one of my training orgs** : `helios-preprod`, et `helios-prod`,
-qui jusqu'ici ne faisait que créer les autres et ne contenait rien.
+qui jusqu'ici ne faisait que créer les autres et ne contenait rien. S'il s'arrête sur
+`Profile Helios Crew`, la section **En cas de problème** du
+[Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) dit pourquoi.
 
 `helios-prod` reçoit les mêmes sources que les autres orgs. Rien n'alimente un historique de
 déploiement, et l'alimentation elle-même n'est pas un déploiement du pipeline : les métriques DORA
