@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "b412a0d8a9271e0d2ba5488cb9d41a36a7b1d25c"
+source_rev: "8babffc34a9f1135abf822b19152ce7a51f52332"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -87,7 +87,7 @@ Dans `helios-dev`, créez :
   `force-app/main/default/classes/`, dans l'Explorer, par copier-coller, comme au [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md). Ce qu'elles
   calculent importe bien moins ici que le fait que quelqu'un doive les planifier dans chaque org, ce
   qui est tout l'objet du lab
-- Les accès, sur **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity,
+- Les accès, sur le permission set **Helios Delivery Manager** : **Read**, **Create** et **Edit** sur Crew Capacity,
   **Read** et **Edit** sur ses quatre champs, et sous **Tab Settings** sur la même page, **Available**
   et **Visible**. Les planificateurs entretiennent ces nombres, et c'est aussi le permission set que
   porte l'utilisateur de la pipeline dans chaque org : sans lui, le chargement de données de
@@ -476,6 +476,13 @@ Documentation de la commande : [hardis:org:data:import](https://sfdx-hardis.clou
 - L'étape manuelle listée dans le rapport de déploiement, cochée par vous
 
 ## En cas de problème
+
+**Le check reste vert à l'étape 5, alors que l'étape manuelle n'est pas marquée comme faite.**
+Votre fork ne contient pas le réglage qui arrête le check : le cours l'a reçu le 2026-10-07, et un
+fork mis à jour avant ce jour se contente de lister l'étape dans le commentaire. Rien n'est cassé,
+mais rien n'empêche le merge non plus. Cliquez sur **Welcome page** > **Training: Level 2** >
+**Update my course**, mergez la Pull Request qu'il ouvre, puis ramenez `integration` dans votre
+branche comme au [Lab 2.1](2-1-backpromote-your-teammates-work.md) et publiez : le check suivant s'arrête sur l'étape.
 
 **Le fichier d'actions s'appelle `.sfdx-hardis.draft.yml`, ou le check s'arrête sur *Draft deployment actions file found*.**
 Vous avez ajouté l'action alors que le panneau ne connaissait aucune Pull Request pour votre

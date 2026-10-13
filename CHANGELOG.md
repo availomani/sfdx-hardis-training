@@ -18,6 +18,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 - The Level 1 training menu is shown with its seven commands, **Update my course** included.
 - Lab 2.8: the picture of the command list shows the whole **Reset selected list of items to merge** row.
 - Lab 2.4: the data action in the pictures carries the label the lab asks you to type.
+- Lab 2.4: step 1 names the permission set, and the troubleshooting says what to do when the check of step 5 stays green on a fork updated before 2026-10-07.
 
 ## 2026-10-12
 
