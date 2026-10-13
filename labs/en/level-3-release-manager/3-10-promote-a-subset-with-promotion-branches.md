@@ -409,11 +409,12 @@ Request number and its red check, where the **+ PR** chip used to be: it is not 
 pipeline, it is something moving between two of them, and it lives exactly as long as its Pull
 Request.
 
-The counter on the `uat` node **(2)** still reads five User Stories waiting, and that is right:
-nothing has moved yet. A promotion that is open is a proposal. Merge it, come back, and the counter
-reads two, because **a Pull Request appears in one place only**: from then on US-057, US-059 and
-US-061 are listed in the window of `preprod`, the branch they reached, and no longer in the window
-of `uat`, the branch they left.
+The counter on the `uat` node **(2)** still reads seven, and that is right: nothing has moved yet.
+It counts Pull Requests, so the five stories, plus the retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of
+[Lab 3.8](3-8-monitor-your-production-org.md) that sit under them in the window. A promotion that is open is a proposal. Merge it, come
+back, and the counter reads four, because **a Pull Request appears in one place only**: from then on
+US-057, US-059 and US-061 are listed in the window of `preprod`, the branch they reached, and no
+longer in the window of `uat`, the branch they left.
 
 ### 6. Solve the conflict on the promotion branch
 
@@ -512,7 +513,9 @@ comment: its first line is the one from an ordinary promotion,
 > declared in its description.
 
 followed by what the job collected from them. The folded **🎫** section next to it lists the three
-Pull Requests, #62, #63 and #65.
+Pull Requests, those of US-057, US-059 and US-061. On the course's own fork they are #62, #63 and
+
+# 65; yours carry other numbers
 
 If that line is missing, or says none of the declared Pull Requests could be used, **stop and fix it
 before merging**. It means the job did not read the declaration, and the deployment about to run is
@@ -680,7 +683,8 @@ production too.
   **Scaffolding Required** there
 - No `<<<<<<<` left in the two files on `preprod`
 - A merged retrofit Pull Request into `integration` with no changed file
-- The `uat` node of the diagram counting two User Stories still waiting
+- The `uat` node of the diagram counting four Pull Requests still waiting: US-058, US-060, the
+  retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of [Lab 3.8](3-8-monitor-your-production-org.md)
 
 ## If it goes wrong
 

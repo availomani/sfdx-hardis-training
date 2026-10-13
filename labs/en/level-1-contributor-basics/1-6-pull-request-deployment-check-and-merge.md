@@ -320,7 +320,7 @@ org yet" without leaving the editor.
 
 The picture was taken later in the course, with teammates' branches on the left of `integration`.
 Yours shows only `integration` and `uat`: the pill **(1)** on the arrow to the org is the part to look
-at.
+at, and the legend under the diagram **(2)** says what each colour means.
 
 The pill is also a link: click it and GitHub opens on the log of that run, **Process Deployment
 (sfdx-hardis)**, which takes about three minutes. You do not need to read it today. It is there for

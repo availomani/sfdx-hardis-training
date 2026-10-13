@@ -5,7 +5,7 @@ description: "Étendez une pipeline Salesforce à deux étages jusqu'à la produ
 level: 3
 lab: 1
 lang: fr
-source_rev: "b1294747a173fecb2e76017ac9507e74f95da911"
+source_rev: "5452f86972ca4fa9991c123ac7e504ba995a68d3"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
   - annotated/web/github-new-branch
@@ -384,6 +384,10 @@ Même engrenage, **Add/Configure Org**, une fois de plus, pour la production :
 | Branche | Org           | Réponse pour l'URL de base                                                 | Merge dans     | Secrets                                       |
 |---------|---------------|----------------------------------------------------------------------------|----------------|-----------------------------------------------|
 | `main`  | `helios-prod` | **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)** | ne cochez rien | `SFDX_CLIENT_ID_MAIN`, `SFDX_CLIENT_KEY_MAIN` |
+
+Une réponse diffère de celles de `preprod`. À **What are the target git branches that main will be
+able to merge in?**, la liste propose `integration`, `uat` et `preprod` : **n'en cochez aucune**
+et validez la réponse vide. `main` est la fin du pipeline, et ne merge dans rien.
 
 Vérifiez l'org deux fois : pointer la production vers la mauvaise org est l'erreur la plus coûteuse
 disponible dans ce lab. Et stockez les deux secrets, l'ID et la clé, comme à l'étape 6.

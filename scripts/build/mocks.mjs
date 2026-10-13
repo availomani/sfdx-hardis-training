@@ -508,6 +508,9 @@ writeJson(path.join(OUT, "git-provider-mock.json"), {
 // runUiTest.ts in the extension). It is the state Lab 3.10 walks: five User
 // Stories waiting in uat, three of them approved, and the promotion carrying
 // those three to preprod, one of them committed with its conflict markers.
+// Under the five stories the window holds two older Pull Requests, the retrofit
+// of Lab 3.7 and the configuration of Lab 3.8, so uat counts seven, as it does
+// on a learner's fork.
 // Kept apart from the fixture above so every other screenshot of the course
 // still shows a project with no promotion in flight.
 const PROMOTION_BRANCH_NAME = "promotion/uat/preprod/2026-09-24-0930";
@@ -550,6 +553,29 @@ const promotionStories = PROMOTION_MERGE_ORDER.map((id, i) => {
     }
   };
 });
+// Merged into integration before the five stories and promoted to uat with
+// them: never ticked, and still waiting in uat once the promotion is merged
+const PROMOTION_OLDER = [
+  { number: 59, title: "Retrofit: US-045 back down into integration", branch: "retrofit/US-045-retrofit", commit: "4e8a1f6", day: 19, hour: 15 },
+  { number: 60, title: "Pipeline configuration, from the release manager", branch: "config/pipeline-2026-09-20-0905", commit: "a6c03d2", day: 20, hour: 9 }
+].map((pr) => ({
+  ...pr,
+  merged: {
+    id: pr.number,
+    number: pr.number,
+    title: pr.title,
+    sourceBranch: pr.branch,
+    targetBranch: "integration",
+    author: { name: "You", username: "you" },
+    authorLabel: "You",
+    state: "merged",
+    mergeDate: iso(pr.day, pr.hour),
+    createdAt: iso(pr.day, pr.hour),
+    webUrl: `${WEB}/pull/${pr.number}`,
+    jobsStatus: "success",
+    relatedTickets: []
+  }
+}));
 const carriedStories = promotionStories.filter((s) => s.carried);
 const conflicting = promotionStories.find((s) => s.story.id === PROMOTION_CONFLICTING);
 
@@ -662,7 +688,7 @@ writeJson(path.join(OUT, "git-provider-mock-promotion.json"), {
   ],
   mergedPullRequestsByBranch: {
     // Newest first, the way the branch window lists them
-    uat: [...promotionStories].reverse().map((s) => s.merged)
+    uat: [...PROMOTION_OLDER, ...promotionStories].reverse().map((s) => s.merged)
   }
 });
 
@@ -718,13 +744,13 @@ overlay.scenario.promotionCreate = {
   allowedSteps: "uat > preprod",
   branchName: PROMOTION_BRANCH_NAME,
   // Oldest first, the order the candidate table and the cherry-picks follow
-  candidates: promotionStories.map((s) => ({
+  candidates: [...PROMOTION_OLDER, ...promotionStories].map((s) => ({
     number: s.number,
     title: s.merged.title,
     author: login("you"),
     commit: s.commit,
     date: s.merged.mergeDate.replace("T", " ").slice(0, 16),
-    branch: s.story.branch
+    branch: s.merged.sourceBranch
   })),
   selected: carriedStories.map((s) => s.number),
   conflict: { number: conflicting.number, files: PROMOTION_CONFLICT_FILES },
@@ -1038,7 +1064,7 @@ const ACTIONS_YAML = `commandsPreDeploy:
     context: all
 commandsPostDeploy:
   - id: 7a1c3d2e-2d0b-4f1e-8e3b-024b00000002
-    label: Load the crew capacity reference data
+    label: Load crew capacity reference data
     type: data
     when: post-deploy
     parameters:

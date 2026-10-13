@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "82f8111dd277655d6485a5761ff9f6d6c295aeb6"
+source_rev: "4d75e753f59abe54ca136f71871766e142010aa3"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -251,7 +251,9 @@ Le contrôle repasse, et son commentaire a maintenant une ligne **Deployment act
 tableau : votre remplissage, **🕒 1 after the merge**, parce que c'est le job de validation et qu'il
 ne change rien dans l'org. Ouvrez la section repliée **🛠️ Deployment actions of this job (1)** en
 dessous : le remplissage, **after** le déploiement, avec la raison **Runs after the merge only**.
-Mergez.
+
+**Mergez maintenant la Pull Request.** Sur sa page GitHub, choisissez **Squash and merge**, puis
+cliquez sur **Squash and merge** et **Confirm squash and merge**, comme au [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md).
 
 Le job de déploiement vers `integration` le lance, pour de vrai, juste **après** le déploiement :
 ouvrez son log dans l'onglet **Actions** et vous y trouvez le déploiement, puis l'action qui démarre,

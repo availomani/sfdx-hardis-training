@@ -96,8 +96,9 @@ keeps running until you activate yours.
 
 Three changes, and the picture above shows where each one starts:
 
-1. **Start** element: click **Edit** **(1)** on it. Under **Set Entry Conditions**, the flow already
-   runs when `Crew Size` is not null **(1)**. Click **Add Condition** **(2)** and add the second one,
+1. **Start** element: click **Edit** **(1)** on it. A panel opens, the one of the next picture, and
+   its numbers are its own: under **Set Entry Conditions**, the flow already runs when `Crew Size`
+   is not null **(1)**. Click **Add Condition** **(2)** and add the second one,
    `Panels Required`, **Is Null**, `False`. This panel has no **Done** button: the condition is kept
    as you fill it in, and the **X** **(3)** at the top right closes the panel
 
@@ -138,7 +139,9 @@ new version.
     that a fault path exists. The original flow already had one, and your new element follows it.
 
 Test it: open an installation, set `Panels Required` to 40 and `Crew Size` to 2, save. A task
-appears in its **Activity**. Save again: no second task. That is the story working, in your org.
+appears on the right of the record, in the activity panel under the **Panel delivery timeline**, in
+its **Upcoming & Overdue** section. Click **Refresh** in that panel if it is slow to show. Save
+again: no second task. That is the story working, in your org.
 The checkbox itself stays out of sight: no permission set grants it, because nobody but the flow
 needs it, and the only person who can read it is the administrator who built the flow.
 
@@ -197,7 +200,7 @@ Open the package: in the **DevOps Pipeline** panel, the **Deployment packages** 
 
 ![The Deployment packages menu of the DevOps Pipeline panel, with Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
 
-Type `Crew_Warning` in its filter box **(1)**. One row is left, **Flow** **(2)**: the package
+Type `crew_warning` in its filter box **(1)**. One row is left, **Flow** **(2)**: the package
 carries your flow. There is no **CustomField** row at all: the package does not carry
 `Installation__c.Crew_Warning_Sent__c`.
 

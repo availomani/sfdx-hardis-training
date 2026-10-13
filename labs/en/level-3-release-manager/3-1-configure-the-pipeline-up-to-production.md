@@ -367,6 +367,10 @@ Same gear, **Add/Configure Org**, once more, for production:
 |--------|---------------|----------------------------------------------------------------------------|--------------|-----------------------------------------------|
 | `main` | `helios-prod` | **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)** | tick nothing | `SFDX_CLIENT_ID_MAIN`, `SFDX_CLIENT_KEY_MAIN` |
 
+One answer differs from `preprod`. At **What are the target git branches that main will be able to
+merge in?**, the list offers `integration`, `uat` and `preprod`: **tick none of them** and validate
+the empty answer. `main` is the end of the pipeline, and it merges into nothing.
+
 Check the org twice: pointing production at the wrong org is the single most expensive mistake
 available in this lab. And store both secrets, the ID and the key, as in step 6.
 

@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "8266fa69290558e89fcd23a7e9bb1347d21c7ba3"
+source_rev: "3f527fc39c085666e55c195cd2529a53629e507d"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -337,7 +337,8 @@ répond à "est-ce que mon travail est dans l'org" sans quitter l'éditeur.
 
 La capture a été prise plus loin dans le cours, avec les branches des collègues à gauche
 d'`integration`. La vôtre ne montre que `integration` et `uat` : c'est la pastille **(1)** sur la
-flèche vers l'org qu'il faut regarder.
+flèche vers l'org qu'il faut regarder, et la légende sous le diagramme **(2)** dit ce que chaque
+couleur signifie.
 
 La pastille est aussi un lien : cliquez dessus et GitHub s'ouvre sur le log de cette exécution,
 **Process Deployment (sfdx-hardis)**, qui prend environ trois minutes. Vous n'avez pas besoin de le

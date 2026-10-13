@@ -5,11 +5,11 @@ description: "Vous avez publié bien plus que votre story. Voyez ce que cela fai
 level: 2
 lab: 8
 lang: fr
-source_rev: "01a905e7e9151601fa78faa31ef3915280f99ef7"
+source_rev: "326367933807a5b666b0837389619ca9b945d915"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--select-all
-  - annotated/vscode/sidebar
+  - annotated/vscode/sidebar-commands-collapsed--reset-selection
   - annotated/vscode/pipeline-cards--save-publish
 depends_on:
   commands: [hardis:mdapi:read, hardis:work:resetselection, hardis:work:save]
@@ -102,7 +102,7 @@ toutes les commandes sfdx-hardis, qu'un panneau les expose ou non.
 
 Ouvrez-la, puis **CI/CD (simple)** **(1)**, puis **Reset selected list of items to merge** **(2)**.
 
-![La liste des commandes SFDX HARDIS, avec le groupe CI/CD (simple) ouvert](../../_assets/annotated/vscode/sidebar.png)
+![La liste des commandes SFDX HARDIS, avec le groupe CI/CD (simple) ouvert](../../_assets/annotated/vscode/sidebar-commands-collapsed--reset-selection.png)
 
 Elle fait plus que ce que son nom laisse entendre, et savoir exactement quoi vous évite de la défaire
 deux fois. En une passe, elle :

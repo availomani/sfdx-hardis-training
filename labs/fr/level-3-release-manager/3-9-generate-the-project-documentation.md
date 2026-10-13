@@ -5,7 +5,7 @@ description: "Générez une documentation lisible d'une org Salesforce non docum
 level: 3
 lab: 9
 lang: fr
-source_rev: "d67b625e41a231ca2d18e3e57c46bf925f2f75d1"
+source_rev: "6c14a769fc07dbf259c4c3d0da2e9cff8b1224ff"
 screenshots:
   - annotated/vscode/documentation-workbench--generate-and-deploy
 depends_on:
@@ -79,7 +79,10 @@ Quatre sortes de pages, et il vaut la peine de les distinguer :
 | **Pages Apex**                      | Les classes, leurs méthodes, leur ApexDoc                                                                                        | Un développeur                                                      |
 | **Pages de packages et de profils** | Ce qui est installé, ce que les permission sets accordent                                                                        | Un audit                                                            |
 
-Ouvrez `docs/objects/Installation__c.md`. Chaque champ que vous et vos collègues avez créé au fil des
+Ouvrez `docs/objects/Installation__c.md`. VS Code affiche un fichier markdown sous sa forme
+source : pour le lire comme une page, appuyez sur `Ctrl+Shift+V` (`Cmd+Shift+V` sur un Mac), ou
+faites un clic droit sur l'onglet du fichier et choisissez **Open Preview**. Faites de même pour
+chaque page que ce lab ouvre. Chaque champ que vous et vos collègues avez créé au fil des
 trois niveaux y est, avec les descriptions que vous avez écrites dans Setup.
 
 **Les champs sans description produisent une ligne avec une cellule vide.** C'est la sortie honnête,

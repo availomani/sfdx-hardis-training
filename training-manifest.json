@@ -597,7 +597,7 @@
       "screenshots": [
         "annotated/vscode/pipeline-cards--new-user-story",
         "annotated/vscode/metadata-retriever-recent-changes--select-all",
-        "annotated/vscode/sidebar",
+        "annotated/vscode/sidebar-commands-collapsed--reset-selection",
         "annotated/vscode/pipeline-cards--save-publish"
       ],
       "translations": {

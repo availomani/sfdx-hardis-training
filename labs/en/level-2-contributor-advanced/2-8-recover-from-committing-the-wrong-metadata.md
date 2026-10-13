@@ -9,7 +9,7 @@ source_rev: ""
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--select-all
-  - annotated/vscode/sidebar
+  - annotated/vscode/sidebar-commands-collapsed--reset-selection
   - annotated/vscode/pipeline-cards--save-publish
 depends_on:
   commands: [hardis:mdapi:read, hardis:work:resetselection, hardis:work:save]
@@ -99,7 +99,7 @@ whether or not a panel exposes it.
 
 Open it, then **CI/CD (simple)** **(1)**, then **Reset selected list of items to merge** **(2)**.
 
-![The SFDX HARDIS command list, with the CI/CD (simple) group open](../../_assets/annotated/vscode/sidebar.png)
+![The SFDX HARDIS command list, with the CI/CD (simple) group open](../../_assets/annotated/vscode/sidebar-commands-collapsed--reset-selection.png)
 
 It does more than its name suggests, and knowing exactly what saves you from undoing it twice. In
 one pass it:

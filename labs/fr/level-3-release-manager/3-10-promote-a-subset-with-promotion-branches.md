@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "a8a219ce3b443745a52b3f00bcf3a9241131e7e2"
+source_rev: "73875a7c2ed4b564cca87b9872d700f4240131c1"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -426,9 +426,10 @@ Pull Request et son contrôle rouge, là où se trouvait la pastille **+ PR** : 
 branche de votre pipeline, c'est quelque chose qui se déplace entre deux d'entre elles, et cela vit
 exactement le temps de sa Pull Request.
 
-Le compteur sur le nœud `uat` **(2)** affiche toujours cinq User Stories en attente, et c'est
-correct : rien n'a encore bougé. Une promotion ouverte est une proposition. Mergez-la, revenez, et
-le compteur affiche deux, parce qu'**une Pull Request n'apparaît qu'à un seul endroit** : à partir
+Le compteur sur le nœud `uat` **(2)** affiche toujours sept, et c'est correct : rien n'a encore
+bougé. Il compte des Pull Requests : les cinq stories, plus le retrofit du [Lab 3.7](3-7-hotfix-and-retrofit.md) et la
+configuration du [Lab 3.8](3-8-monitor-your-production-org.md) qui se trouvent sous elles dans la fenêtre. Une promotion ouverte est une
+proposition. Mergez-la, revenez, et le compteur affiche quatre, parce qu'**une Pull Request n'apparaît qu'à un seul endroit** : à partir
 de là US-057, US-059 et US-061 sont listées dans la fenêtre de `preprod`, la branche qu'elles ont
 atteinte, et plus dans celle de `uat`, la branche qu'elles ont quittée.
 
@@ -535,7 +536,9 @@ sfdx-hardis : sa première ligne est celle d'une promotion ordinaire,
 > declared in its description.
 
 suivie de ce que le job a rassemblé depuis elles. La section repliée **🎫** à côté liste les trois
-Pull Requests, #62, #63 et #65.
+Pull Requests, celles de US-057, US-059 et US-061. Sur le fork du cours ce sont les #62, #63 et
+
+# 65 ; les vôtres portent d'autres numéros
 
 Si cette ligne manque, ou si elle dit qu'aucune des Pull Requests déclarées n'a pu être utilisée,
 **arrêtez-vous et corrigez avant de merger**. Cela veut dire que le job n'a pas lu la déclaration, et
@@ -710,7 +713,8 @@ leurs deployment actions s'exécutent en production aussi.
   **Scaffolding Required** là-bas
 - Aucun `<<<<<<<` restant dans les deux fichiers sur `preprod`
 - Une Pull Request de retrofit mergée dans `integration` sans aucun fichier modifié
-- Le nœud `uat` du diagramme qui compte deux User Stories encore en attente
+- Le nœud `uat` du diagramme qui compte quatre Pull Requests encore en attente : US-058, US-060,
+  le retrofit du [Lab 3.7](3-7-hotfix-and-retrofit.md) et la configuration du [Lab 3.8](3-8-monitor-your-production-org.md)
 
 ## En cas de problème
 

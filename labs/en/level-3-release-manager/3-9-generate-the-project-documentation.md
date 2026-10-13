@@ -78,7 +78,9 @@ Four kinds of page, and they are worth knowing apart:
 | **Apex pages**                | Classes, their methods, their ApexDoc                                                                           | A developer                                                               |
 | **Package and profile pages** | What is installed, what the permission sets grant                                                               | An audit                                                                  |
 
-Open `docs/objects/Installation__c.md`. Every field you and your teammates created across three
+Open `docs/objects/Installation__c.md`. VS Code shows a markdown file as its source: to read it as
+a page, press `Ctrl+Shift+V` (`Cmd+Shift+V` on a Mac), or right-click the tab of the file and choose
+**Open Preview**. Do the same for every page this lab opens. Every field you and your teammates created across three
 levels is there, with the descriptions you wrote in Setup.
 
 **Fields with no description produce a row with a blank cell.** That is the honest output, and it is
