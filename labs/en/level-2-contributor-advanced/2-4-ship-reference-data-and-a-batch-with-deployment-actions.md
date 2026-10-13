@@ -86,7 +86,7 @@ In `helios-dev`, create:
   `force-app/main/default/classes/`, in the Explorer, with copy and paste, as in [Lab 2.3](2-3-fix-broken-records-with-an-apex-deployment-action.md). What they
   compute matters far less here than the fact that somebody has to schedule them in every org,
   which is the whole point of the lab
-- The access, on **Helios Delivery Manager**: **Read**, **Create** and **Edit** on Crew Capacity,
+- The access, on the **Helios Delivery Manager** permission set: **Read**, **Create** and **Edit** on Crew Capacity,
   **Read** and **Edit** on its four fields, and under **Tab Settings** on the same page, **Available**
   and **Visible**. Planners maintain these numbers, and it is also the permission set the pipeline's
   own user holds in every org: without it the data load of step 4 would find fields it is not
@@ -460,6 +460,13 @@ Command documentation: [hardis:org:data:import](https://sfdx-hardis.cloudity.com
 - The manual step listed in the deployment report, ticked off by you
 
 ## If it goes wrong
+
+**The check stays green in step 5, although the manual step is not marked as done.**
+Your fork does not hold the setting that makes the check stop: the course received it on
+2026-10-07, and a fork updated before that day only lists the step in the comment. Nothing is
+broken, but nothing stops the merge either. Click **Welcome page** > **Training: Level 2** >
+**Update my course**, merge the Pull Request it opens, then bring `integration` into your branch
+as in [Lab 2.1](2-1-backpromote-your-teammates-work.md) and publish: the next check stops on the step.
 
 **The action file is called `.sfdx-hardis.draft.yml`, or the check stops on *Draft deployment actions file found*.**
 You added the action while the panel knew no Pull Request for your branch: the **My Pull Request**
