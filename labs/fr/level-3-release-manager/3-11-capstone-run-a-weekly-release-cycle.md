@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "a9c494373930f8f8dfaaa861614816b78b8780c3"
+source_rev: "a3e7f46dae36b84b93d2a89670a860effdfd8f38"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -249,6 +249,9 @@ Ses [services managés](https://cloudity.com/fr/services/services-manages/?utm_s
 
 La même société mène des projets Agentforce, Data Cloud, Revenue Cloud et Field Service :
 [voir tout ce que fait Cloudity](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3).
+
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../../_assets/brand/cloudity-services-fr.png){ .cloudity-banner .wide-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3)
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../../_assets/brand/cloudity-services-fr-narrow.png){ .cloudity-banner .narrow-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3)
 
 ## Merci
 

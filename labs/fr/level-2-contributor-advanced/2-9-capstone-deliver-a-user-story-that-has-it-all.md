@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "c1c713b9334e794c37d15700c90ddf64f87f3d5d"
+source_rev: "9b11a4fe7b1326ad52e54eeef6eefb81354aef3b"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -198,3 +198,6 @@ d'une release. [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-hom
 de delivery et reste joignable après la mise en production. Elle mène aussi ses propres projets
 Salesforce, d'Agentforce et Revenue Cloud à Field Service :
 [voir ce qu'elle fait](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-2).
+
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../../_assets/brand/cloudity-services-fr.png){ .cloudity-banner .wide-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-2)
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../../_assets/brand/cloudity-services-fr-narrow.png){ .cloudity-banner .narrow-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-2)

@@ -243,37 +243,6 @@
   box-shadow: 0 1px 4px rgb(0 0 0 / 55%);
 }
 
-/* The "work in progress" banner above the header.
-
-   It has to read as a warning rather than as more chrome, so it takes the amber
-   the admonitions use for a caution instead of the header purple. Remove this
-   block together with site-overrides/main.html when the course is released. */
-.md-banner {
-  background-color: #ffb400;
-  color: #2b1a00;
-}
-
-.md-banner a,
-.md-banner a:hover {
-  color: #2b1a00;
-  text-decoration: underline;
-}
-
-[data-md-color-scheme="slate"] .md-banner {
-  background-color: #6b4a00;
-  color: #ffe9b0;
-}
-
-[data-md-color-scheme="slate"] .md-banner a,
-[data-md-color-scheme="slate"] .md-banner a:hover {
-  color: #ffe9b0;
-}
-
-.md-banner__inner {
-  font-size: 0.72rem;
-  margin: 0.6rem auto;
-}
-
 /* The footer band is plum in both schemes, but the theme paints the text inside it from the
    page foreground token rather than from --md-footer-fg-color. In the light scheme that
    resolves to navy on plum: about 1.1:1, so the previous and next links, the copyright and

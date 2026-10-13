@@ -316,7 +316,7 @@ function shareButtons({ s, holder, pageUrl, post }) {
  * every language, so a claim never has to write a page per locale and an old
  * badge gains the new languages by itself.
  */
-export function badgePage({ s, holder, badgeImage, bannerImage, postImage, courseUrl, pageUrl, recordUrl }) {
+export function badgePage({ s, holder, badgeImage, bannerImage, postImage, cloudityBanner, courseUrl, pageUrl, recordUrl }) {
   // The holder, not the raw record: a record written before names were stored
   // has only its key, and site.mjs is where that is filled in. Reading the
   // record here put "undefined" on the page while the index listed the person
@@ -390,7 +390,15 @@ export function badgePage({ s, holder, badgeImage, bannerImage, postImage, cours
     ...s.badge.cloudity.body,
     "",
     s.badge.cloudity.link,
-    ""
+    "",
+    // The same banner as the home page, wide and stacked: a screen shows the one it can read
+    ...(cloudityBanner
+      ? [
+          `[![${s.badge.cloudity.bannerAlt}](${cloudityBanner.wide}){ .cloudity-banner .wide-only loading=lazy }](${s.badge.cloudity.bannerUrl})`,
+          `[![${s.badge.cloudity.bannerAlt}](${cloudityBanner.narrow}){ .cloudity-banner .narrow-only loading=lazy }](${s.badge.cloudity.bannerUrl})`,
+          ""
+        ]
+      : [])
   ].join("\n");
 }
 

@@ -559,6 +559,8 @@ function badgePages() {
     // The example Trailhead banner lives with the lab assets, one tree up from
     // the badges folder of the site language and two up from any other.
     const exampleBanner = `${locale === SITE_LANG ? ".." : "../.."}/_assets/badges/trailhead-banner.png`;
+    // The Cloudity services banner of this language, in the same tree
+    const brand = `${locale === SITE_LANG ? ".." : "../.."}/_assets/brand/cloudity-services-${locale}`;
 
     const indexAlternates = {};
     for (const other of locales) {
@@ -596,6 +598,7 @@ function badgePages() {
         // The banner version: one file per level, next to the badge images
         bannerImage: (level) => `${images}/banner-level-${level}.svg`,
         postImage: post ? `${images.replace(/img$/, "post")}/${holder.key}.png` : null,
+        cloudityBanner: { wide: `${brand}.png`, narrow: `${brand}-narrow.png` },
         // The course in the language of the page, which is the one a reader of
         // the post most likely reads too
         courseUrl: `${universe.course.site}/${localePrefix(locale)}`,

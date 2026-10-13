@@ -3,6 +3,11 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-14
+
+- The three capstones and every badge page show the Cloudity services banner, as the home page and the Help page do.
+- Levels 2 and 3 no longer show the amber "This level is in QA" banner: the three levels are released.
+
 ## 2026-10-13
 
 - The Badges page lists the holders by badge, Release Manager first, with the date and time of each award and the latest one on top.

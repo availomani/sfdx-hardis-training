@@ -212,7 +212,9 @@
         "consulting company that builds sfdx-hardis and runs its own projects with it: Agentforce and Data Cloud,",
         "Revenue Cloud, Field Service, Managed Services and Salesforce DevOps."
       ],
-      "link": "[See what Cloudity does](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=badge)"
+      "link": "[See what Cloudity does](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=badge)",
+      "bannerAlt": "Cloudity, Salesforce consulting: Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, Integration, Managed Services, DevOps",
+      "bannerUrl": "https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=badge"
     },
     "takeTheCourse": "Take the course",
     "description": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",
