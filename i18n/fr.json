@@ -138,7 +138,8 @@
       "C'est un badge, pas une certification : il n'y a pas d'examen ici. Ce qu'il dit, c'est qu'un job a",
       "lu le repository public de la personne et y a trouvé le travail."
     ],
-    "columns": ["", "Nom", "Badge le plus élevé", "GitHub", "Trailblazer"],
+    "columns": ["", "Nom", "Obtenu le", "GitHub", "Trailblazer"],
+    "awardedAt": "{date} {time} UTC",
     "nobody": "Personne n'a encore réclamé de badge. Soyez la première personne.",
     "totals": "Décernés à ce jour :",
     "claim": {
@@ -503,5 +504,5 @@
       }
     }
   },
-  "source_rev": "75949af2612c2b84e83eca636313d0c250f42993"
+  "source_rev": "003d8a9bbcc5fc8445ed61164a304e9818a04331"
 }

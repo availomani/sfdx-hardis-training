@@ -132,7 +132,8 @@
       "It is a badge, not a certification: there is no exam here. What it says is that a job read the",
       "person's public repository and found the work."
     ],
-    "columns": ["", "Name", "Highest badge", "GitHub", "Trailblazer"],
+    "columns": ["", "Name", "Awarded", "GitHub", "Trailblazer"],
+    "awardedAt": "{date} {time} UTC",
     "nobody": "Nobody has claimed a badge yet. Be the first.",
     "totals": "Awarded so far:",
     "claim": {

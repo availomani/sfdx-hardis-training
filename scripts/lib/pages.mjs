@@ -19,6 +19,18 @@ const separator = (columns) => `|${columns.map(() => "---").join("|")}|`;
 const row = (cells) => `| ${cells.join(" | ")} |`;
 
 /**
+ * When a badge was awarded, as something that sorts: the moment the claim
+ * passed, or the day alone for a record written before the time was kept.
+ */
+const awardTime = (badge) => String(badge.issuedAt || badge.issuedOn || "");
+
+/** The same, as the badges index prints it: the day and the minute, in UTC. */
+const awardedAt = (s, badge) => {
+  const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/.exec(awardTime(badge));
+  return match ? fill(s.badges.awardedAt, { date: match[1], time: match[2] }) : awardTime(badge);
+};
+
+/**
  * The backlog: the table of the stories, each one in full, and the team.
  *
  * storyLink is what a story id points at, which is the site page on the
@@ -93,19 +105,39 @@ export function storyPage({ universe, s, text, story, owner, labLink, backlogLin
   ].join("\n");
 }
 
-/** The badges index: everybody who claimed one, and how to claim yours. */
+/**
+ * The badges index: everybody who claimed one, and how to claim yours.
+ *
+ * One table per badge, the highest level first, and each holder once, under the
+ * highest badge they earned. Inside a table the latest award comes first, so the
+ * top rows are who just got a badge.
+ */
 export function badgesPage({ s, holders, totals, badgeHref, badgeImage, claimUrl, recordUrlPattern, bannerExample }) {
-  const rows = holders.map((holder) => {
+  const holderRow = (holder) => {
     // An <img> and not markdown: the badge is drawn 320 square, and a table cell
     // wants a thumbnail. Plain HTML sizes it without depending on an extension.
-    const image = holder.highest
-      ? `<img src="${badgeImage(holder.key, holder.highest.level)}" alt="${holder.highest.name}" width="72"/>`
-      : "";
+    const image = `<img src="${badgeImage(holder.key, holder.highest.level)}" alt="${holder.highest.name}" width="72"/>`;
     const trailblazer = holder.trailblazer
       ? `[${holder.trailblazer}](https://www.salesforce.com/trailblazer/${holder.trailblazer})`
       : "";
     const github = holder.recipient ? `[@${holder.recipient}](https://github.com/${holder.recipient})` : "";
-    return row([image, `[${holder.name}](${badgeHref(holder.key)})`, holder.highest ? holder.highest.name : "", github, trailblazer]);
+    return row([image, `[${holder.name}](${badgeHref(holder.key)})`, awardedAt(s, holder.highest), github, trailblazer]);
+  };
+  const levels = [...new Set(holders.filter((holder) => holder.highest).map((holder) => holder.highest.level))]
+    .sort((one, other) => other - one);
+  const tables = levels.flatMap((level) => {
+    const group = holders
+      .filter((holder) => holder.highest && holder.highest.level === level)
+      // sort() is stable: two awards of the same second stay in name order
+      .sort((one, other) => awardTime(other.highest).localeCompare(awardTime(one.highest)));
+    return [
+      `## ${group[0].highest.name}`,
+      "",
+      row(s.badges.columns),
+      separator(s.badges.columns),
+      ...group.map(holderRow),
+      ""
+    ];
   });
 
   return [
@@ -117,8 +149,7 @@ export function badgesPage({ s, holders, totals, badgeHref, badgeImage, claimUrl
     ...(totals && totals.some((one) => one.count > 0)
       ? [s.badges.totals, "", ...totals.map((one) => `- **${one.count}** ${one.badge}`), ""]
       : []),
-    holders.length === 0 ? s.badges.nobody : [row(s.badges.columns), separator(s.badges.columns), ...rows].join("\n"),
-    "",
+    ...(tables.length === 0 ? [s.badges.nobody, ""] : tables),
     `## ${s.badges.claim.heading}`,
     "",
     ...s.badges.claim.body.map((line) => fill(line, { claimUrl })),

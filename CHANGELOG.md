@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-13
 
+- The Badges page lists the holders by badge, Release Manager first, with the date and time of each award and the latest one on top.
 - The home page opens on a banner of the course and a Start button, and shows the DevOps Pipeline panel in motion before the list of levels.
 - The home page, the Help page, the last lab of each level and every badge page say who offers the course: Cloudity, and what it does on real projects, from Agentforce and Revenue Cloud to Field Service, Managed Services and DevOps.
 - Every page ends with one line about Cloudity in its footer, and each menu has a link to the Cloudity site in its language.
