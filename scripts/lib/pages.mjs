@@ -351,6 +351,14 @@ export function badgePage({ s, holder, badgeImage, bannerImage, postImage, cours
       : []),
     ...(pageUrl ? shareSection({ s, holder, pageUrl, courseUrl, postImage }) : []),
     `[${s.badge.takeTheCourse}](${courseUrl}){ .md-button }`,
+    "",
+    // A badge page is read by the holder's network, who never saw the course:
+    // it ends on who offers it
+    `## ${s.badge.cloudity.heading}`,
+    "",
+    ...s.badge.cloudity.body,
+    "",
+    s.badge.cloudity.link,
     ""
   ].join("\n");
 }

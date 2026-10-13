@@ -7,7 +7,12 @@ lang: en
 
 # Salesforce DevOps training with sfdx-hardis
 
+[![Free hands-on Salesforce DevOps course with sfdx-hardis, in three levels with a badge each](../_assets/brand/course-banner-en.png){ .course-banner }](level-1-contributor-basics/index.md)
+
 Three free learning paths that take you from "I have never used Git" to "I own the pipeline".
+
+[Start Level 1](level-1-contributor-basics/index.md){ .md-button .md-button--primary }
+[See the three levels](#the-three-levels){ .md-button }
 
 You will work on a real repository for a fictional solar installer, **Helios Energy**, with free
 Salesforce orgs that come pre-loaded with the app and its data. Everything you do here is
@@ -16,6 +21,11 @@ what a real Salesforce team does every day, with the same tools.
 If Git is new to you, that is the expected starting point. Level 1 defines the six words you need,
 repository and fork among them, at the moment you first meet each one, and the VS Code extension
 runs the Git commands for you.
+
+![The DevOps Pipeline panel of sfdx-hardis in VS Code, following a Pull Request from review to production](../_assets/brand/devops-pipeline.gif){ .course-demo loading=lazy }
+
+*The DevOps Pipeline panel of the VS Code extension: where you start each User Story and follow its
+Pull Request to production.*
 
 ## The three levels
 
@@ -87,5 +97,25 @@ memory.
 ## Start
 
 [Level 1 - Contributor basics](level-1-contributor-basics/index.md){ .md-button .md-button--primary }
+
+## Who is behind this course
+
+[Cloudity](https://cloudity.com/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home) is a Salesforce consulting company. It builds sfdx-hardis for its
+own delivery teams, releases it as open source, and offers this course for free. Nothing here is a
+trial: there is no paid version of the course, and none of the product.
+
+What Cloudity sells is the work on real projects:
+[Agentforce and Data Cloud](https://cloudity.com/services/ai-and-data/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+[Revenue Cloud](https://cloudity.com/services/revenue-lifecycle-management/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+[Field Service](https://cloudity.com/services/field-service-management/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+[Marketing Cloud](https://cloudity.com/services/marketing-engagement-and-personalization/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+[integration](https://cloudity.com/services/salesforce-implementation-integration/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+[Managed Services](https://cloudity.com/services/managed-services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home),
+and [Salesforce DevOps](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity) with the tools this course teaches.
+
+[![Cloudity, Salesforce consulting: Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, Integration, Managed Services, DevOps](../_assets/brand/cloudity-services-en.png){ .cloudity-banner .wide-only loading=lazy }](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home)
+[![Cloudity, Salesforce consulting: Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, Integration, Managed Services, DevOps](../_assets/brand/cloudity-services-en-narrow.png){ .cloudity-banner .narrow-only loading=lazy }](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home)
+
+[Talk to Cloudity](https://cloudity.com/contact-us/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=home){ .md-button }
 
 [Lire ce cours en français](../fr/index.md)

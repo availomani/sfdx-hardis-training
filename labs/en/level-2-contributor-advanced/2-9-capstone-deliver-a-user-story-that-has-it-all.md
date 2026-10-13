@@ -181,3 +181,10 @@ The project you have been contributing to stops at `integration`: no UAT, no pro
 CI authentication, no monitoring. Level 3 is finishing it.
 
 [Continue to Level 3 - Release Manager](../level-3-release-manager/index.md){ .md-button .md-button--primary }
+
+## On a real project
+
+Everything Level 2 put in your way happens on real projects too, usually on the day of a release.
+[Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), the company behind sfdx-hardis and this course, trains delivery teams and
+stays reachable after go-live. It also runs Salesforce projects of its own, from Agentforce and
+Revenue Cloud to Field Service: [see what it does](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-2).

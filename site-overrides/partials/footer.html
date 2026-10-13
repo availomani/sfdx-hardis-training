@@ -22,6 +22,15 @@
 {% set next_lang = ((page.next_page | d({}, true)).meta | d({}, true)).lang | d("") %}
 {% set previous_page = page.previous_page if not (page_lang and prev_lang and page_lang != prev_lang) %}
 {% set next_page = page.next_page if not (page_lang and next_lang and page_lang != next_lang) %}
+{#- Each menu ends with a link to the Cloudity site, which is not a page of the
+    course: an arrow never leads there, and the first page of a language does
+    not come back from it. -#}
+{% if previous_page and (previous_page.url | d("", true))[:21] == "https://cloudity.com/" %}
+  {% set previous_page = none %}
+{% endif %}
+{% if next_page and (next_page.url | d("", true))[:21] == "https://cloudity.com/" %}
+  {% set next_page = none %}
+{% endif %}
 <footer class="md-footer">
   {% if "navigation.footer" in features %}
     {% if previous_page or next_page %}
@@ -67,6 +76,24 @@
     {% endif %}
   {% endif %}
   <div class="md-footer-meta md-typeset">
+    {#-
+      Who offers the course, on every page, in the language of the page. One
+      line, under the arrows and above the copyright, so it is never in the way
+      of a lab. A page that declares no language reads the English one.
+    -#}
+    <div class="md-footer-cloudity md-grid">
+      {% if page_lang == "fr" %}
+        Ce cours est gratuit. Il est offert par
+        <a href="https://cloudity.com/fr/?utm_source=sfdx-hardis-training&amp;utm_medium=referral&amp;utm_campaign=footer" target="_blank" rel="noopener">Cloudity</a>,
+        conseil Salesforce : Agentforce, Revenue Cloud, Field Service, services managés, DevOps.
+        <a href="https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&amp;utm_medium=referral&amp;utm_campaign=footer" target="_blank" rel="noopener">Découvrir nos services</a>
+      {% else %}
+        This course is free. It is offered by
+        <a href="https://cloudity.com/?utm_source=sfdx-hardis-training&amp;utm_medium=referral&amp;utm_campaign=footer" target="_blank" rel="noopener">Cloudity</a>,
+        Salesforce consulting: Agentforce, Revenue Cloud, Field Service, Managed Services, DevOps.
+        <a href="https://cloudity.com/services/?utm_source=sfdx-hardis-training&amp;utm_medium=referral&amp;utm_campaign=footer" target="_blank" rel="noopener">See what we do</a>
+      {% endif %}
+    </div>
     <div class="md-footer-meta__inner md-grid">
       {% include "partials/copyright.html" %}
       {% if config.extra.social %}

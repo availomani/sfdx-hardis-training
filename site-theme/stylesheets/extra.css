@@ -493,3 +493,69 @@ body.sfh-lightbox-open {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+/* The home page opens on a banner and shows the product moving a few lines down.
+   Neither is a screenshot of a step, so neither takes the frame the screenshots
+   get: the banner has its own rounded corners, and the animation a border that
+   holds in both schemes. */
+.md-typeset img.course-banner,
+.md-typeset img.cloudity-banner {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 6px 22px rgb(27 10 63 / 28%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.md-typeset a:hover > img.course-banner,
+.md-typeset a:hover > img.cloudity-banner {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgb(27 10 63 / 38%);
+}
+
+/* The services banner comes twice, wide and stacked, and a screen shows the one it can read */
+.md-typeset img.cloudity-banner.narrow-only {
+  display: none;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .md-typeset img.cloudity-banner.wide-only {
+    display: none;
+  }
+
+  .md-typeset img.cloudity-banner.narrow-only {
+    display: block;
+  }
+}
+
+.md-typeset img.course-demo {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid rgb(102 15 242 / 22%);
+  border-radius: 8px;
+  box-shadow: 0 6px 22px rgb(27 10 63 / 18%);
+}
+
+/* Who offers the course, one line in the footer of every page. The theme paints
+   footer links from the page foreground, hence the same shape of selector as the
+   copyright rule above. */
+.md-footer-cloudity {
+  padding: 0.7rem 0.8rem 0;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--md-footer-fg-color--light);
+}
+
+html .md-footer-meta.md-typeset .md-footer-cloudity a:not(:focus, :hover) {
+  color: var(--md-footer-fg-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* A primary button in the dark scheme. The link colour set for that scheme above
+   also reached the button, whose background is that same purple: the label was
+   there and nobody could read it. */
+[data-md-color-scheme="slate"] .md-typeset a.md-button--primary,
+[data-md-color-scheme="slate"] .md-typeset a.md-button--primary:hover {
+  color: #0A0620;
+}

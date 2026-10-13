@@ -1,6 +1,31 @@
 {
   "$comment": "The words of the pages this site generates: the backlog, a story, the badges index and a badge page. The labs are plain markdown under labs/<locale>/ and are not here. English is the reference: a locale is this file translated, plus the story, cast and level text of training-universe.json, which is written in English there. Read by scripts/lib/strings.mjs.",
   "lang": "en",
+  "banners": {
+    "course": {
+      "eyebrow": "FREE HANDS-ON COURSE",
+      "title": "Salesforce DevOps",
+      "titleLight": "with sfdx-hardis",
+      "subtitle": "From your first Pull Request to owning the pipeline",
+      "chips": [
+        "{levels} levels",
+        "{labs} labs",
+        "{levels} badges",
+        "100% free"
+      ],
+      "offeredBy": "offered to you by"
+    },
+    "services": {
+      "eyebrow": "This free course is offered by",
+      "tagline": "Salesforce consulting",
+      "practices": [
+        ["Agentforce", "Data Cloud", "Revenue Cloud"],
+        ["Field Service", "Marketing Cloud", "Integration"],
+        ["Managed Services", "DevOps"]
+      ],
+      "button": "DISCOVER WHAT WE DO"
+    }
+  },
   "backlog": {
     "title": "Helios Energy backlog: the User Stories of the course",
     "description": "Every User Story of the Salesforce DevOps training with sfdx-hardis, with its acceptance criteria, its Git branch and the lab that delivers it.",
@@ -178,6 +203,15 @@
         "There is no exam and no accreditation here. Share this page under *Featured* on LinkedIn, or as a",
         "course. Not under *Licenses & certifications*."
       ]
+    },
+    "cloudity": {
+      "heading": "Who is behind this badge",
+      "body": [
+        "The course is free and open source. It is offered by [Cloudity](https://cloudity.com/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=badge), the Salesforce",
+        "consulting company that builds sfdx-hardis and runs its own projects with it: Agentforce and Data Cloud,",
+        "Revenue Cloud, Field Service, Managed Services and Salesforce DevOps."
+      ],
+      "link": "[See what Cloudity does](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=badge)"
     },
     "takeTheCourse": "Take the course",
     "description": "{name} earned the {badge} badge of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",

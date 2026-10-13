@@ -225,6 +225,9 @@ jobs:
             # Keyed by the Trailblazer username, not the GitHub handle
             echo "Your badge page: https://sfdx-hardis-training.cloudity.com/badges/$TRAILBLAZER/"
             echo
+            # The site build started above is what publishes the page
+            echo "Give it a few minutes before opening it: the site is being published again with your badge, and until that is done the link shows a page not found."
+            echo
             echo "It is also readable as JSON, which is what lets other sites show this badge:"
             echo "https://sfdx-hardis-training.cloudity.com/badges/$TRAILBLAZER.json"
           } > /tmp/comment.md

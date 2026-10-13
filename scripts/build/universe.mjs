@@ -362,6 +362,12 @@ const NAV_LABELS = {
 // in English. It sits with the backlog and the badges at the end of every menu.
 const DOC_SITE_ENTRY = `  - sfdx-hardis documentation: ${DOC}/`;
 
+// Who offers the course. Its site has an edition per language, so each menu ends
+// with its own link, and site-overrides/partials/nav.html tells them apart by
+// their address. A locale the Cloudity site does not speak gets the English one.
+const CLOUDITY_SITES = { en: "https://cloudity.com/", fr: "https://cloudity.com/fr/" };
+const CLOUDITY_TRACKING = "utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=menu";
+
 /**
  * The navigation, one flat course per locale.
  *
@@ -405,6 +411,7 @@ function nav() {
     lines.push(`  - ${labels.backlog}: ${prefix}BACKLOG.md`);
     lines.push(`  - ${labels.badges}: ${prefix}badges/index.md`);
     lines.push(`  - ${labels.stats || NAV_LABELS.en.stats}: ${prefix}stats/index.md`);
+    lines.push(`  - Cloudity: ${CLOUDITY_SITES[locale] || CLOUDITY_SITES.en}?${CLOUDITY_TRACKING}`);
   }
   lines.push(DOC_SITE_ENTRY);
   return lines.join("\n") + "\n";

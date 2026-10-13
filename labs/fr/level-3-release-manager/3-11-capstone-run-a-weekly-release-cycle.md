@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "fa62e59bc61bab8334d6c17735028eaf2276960c"
+source_rev: "a9c494373930f8f8dfaaa861614816b78b8780c3"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -239,6 +239,16 @@ l'autre sens : le premier sous-ensemble est accepté pour une bonne raison, le d
 premier a marché, et au bout d'un trimestre plus personne ne sait ce que contient chaque org. Si vous
 vous retrouvez à en assembler une toutes les semaines, ce qu'il faut corriger est la validation, pas
 l'outillage.
+
+## Quand vous préférez ne pas le faire seul
+
+Vous savez maintenant ce que coûte un cycle de release : quelqu'un au poste, chaque semaine. Quand
+personne dans votre équipe ne peut le tenir, [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), la société derrière sfdx-hardis
+et ce cours, met la pipeline en place, forme l'équipe, et fournit un release manager en prestation.
+Ses [services managés](https://cloudity.com/fr/services/services-manages/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3) vont plus loin et exploitent l'org pour vous.
+
+La même société mène des projets Agentforce, Data Cloud, Revenue Cloud et Field Service :
+[voir tout ce que fait Cloudity](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3).
 
 ## Merci
 

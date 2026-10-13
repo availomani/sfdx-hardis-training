@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "39f9ffa6aa117226591908f52ce8478100dba88b"
+source_rev: "c1c713b9334e794c37d15700c90ddf64f87f3d5d"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -190,3 +190,11 @@ Le projet auquel vous avez contribué s'arrête à `integration` : pas d'UAT, pa
 d'authentification de CI correcte, pas de monitoring. Le Niveau 3, c'est le terminer.
 
 [Continuer vers le Niveau 3 - Release Manager](../level-3-release-manager/index.md){ .md-button .md-button--primary }
+
+## Sur un vrai projet
+
+Tout ce que le Niveau 2 a mis sur votre route arrive aussi sur les vrais projets, en général le jour
+d'une release. [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), la société derrière sfdx-hardis et ce cours, forme les équipes
+de delivery et reste joignable après la mise en production. Elle mène aussi ses propres projets
+Salesforce, d'Agentforce et Revenue Cloud à Field Service :
+[voir ce qu'elle fait](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-2).

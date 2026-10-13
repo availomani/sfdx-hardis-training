@@ -18,8 +18,9 @@
  * It also fails on a lab that points at a raw screenshot rather than the
  * annotated copy, and on an annotated file nothing references.
  *
- * labs/_assets/badges/ is out of scope: it holds illustrations drawn by hand,
- * not captures of a step, so there is nothing to pill and nothing to drift.
+ * labs/_assets/badges/ and labs/_assets/brand/ are out of scope: they hold
+ * illustrations and banners, not captures of a step, so there is nothing to pill
+ * and nothing to drift.
  */
 import fs from "fs";
 import path from "path";
@@ -31,7 +32,7 @@ const LABS = path.join(ROOT, "labs");
 const SPEC = path.join(LABS, "_assets", "annotations.json");
 
 // Illustrations, not screenshots of a step. See the header.
-const NOT_A_SCREENSHOT = /_assets\/badges\//;
+const NOT_A_SCREENSHOT = /_assets\/(badges|brand)\//;
 
 function walk(dir, out = []) {
   if (!fs.existsSync(dir)) {

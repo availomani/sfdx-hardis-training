@@ -120,6 +120,17 @@ that work as a service, on top of the same open-source product this course teach
 - **Support.** A subscription that keeps a Cloudity expert reachable after go-live, with priority
   on deployment incidents, and a release manager as a service when you have nobody in the seat.
 
+DevOps is one practice among several. The same company delivers whole Salesforce projects:
+[Agentforce and Data Cloud](https://cloudity.com/services/ai-and-data/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Revenue Cloud](https://cloudity.com/services/revenue-lifecycle-management/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Field Service](https://cloudity.com/services/field-service-management/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Marketing Cloud](https://cloudity.com/services/marketing-engagement-and-personalization/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[integration](https://cloudity.com/services/salesforce-implementation-integration/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+and [Managed Services](https://cloudity.com/services/managed-services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help) for a team that would rather have its org run for it.
+
+[![Cloudity, Salesforce consulting: Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, Integration, Managed Services, DevOps](../_assets/brand/cloudity-services-en.png){ .cloudity-banner .wide-only loading=lazy }](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help)
+[![Cloudity, Salesforce consulting: Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, Integration, Managed Services, DevOps](../_assets/brand/cloudity-services-en-narrow.png){ .cloudity-banner .narrow-only loading=lazy }](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help)
+
 ## Support is what keeps sfdx-hardis maintained
 
 sfdx-hardis is free to use. It is not free to maintain. Three Salesforce releases a year, metadata
@@ -131,4 +142,5 @@ Support subscriptions are what pays for it, and for this course being free. If y
 deliveries on sfdx-hardis, a subscription is the most direct way to keep the project alive and
 moving, and it puts your feature requests in front of the people who decide what ships next.
 
-[What Cloudity offers](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity){ .md-button .md-button--primary }
+[What Cloudity offers for DevOps](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity){ .md-button .md-button--primary }
+[All Cloudity services](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help){ .md-button }

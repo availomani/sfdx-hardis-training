@@ -156,3 +156,10 @@ teammate who edited the same flow as you.
 It is recommended for any contributor, and **required** before Level 3.
 
 [Continue to Level 2 - Contributor advanced](../level-2-contributor-advanced/index.md){ .md-button .md-button--primary }
+
+## On a real project
+
+Your own team has no pipeline like this one yet? Setting one up on an org with years of history in
+it is what [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), the company behind sfdx-hardis and this course, does for its
+customers: setup, training and support. It is one of its practices, next to Agentforce, Revenue
+Cloud, Field Service and [the others](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-1).

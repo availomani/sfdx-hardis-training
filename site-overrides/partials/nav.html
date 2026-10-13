@@ -59,6 +59,15 @@
           which language it belongs to. -#}
       {% set leaf = (nav_item.children | first) if nav_item.children else nav_item %}
       {% set item_lang = (leaf.meta | d({}, true)).lang | d("") %}
+      {#- A link out of the site has no front matter to say its language. The
+          Cloudity site has a French edition, so each menu gets its own link:
+          the address tells which one. -#}
+      {% set item_url = nav_item.url | d("", true) %}
+      {% if item_url[:24] == "https://cloudity.com/fr/" %}
+        {% set item_lang = "fr" %}
+      {% elif item_url[:21] == "https://cloudity.com/" %}
+        {% set item_lang = "en" %}
+      {% endif %}
       {% if item_lang == "" or item_lang == page_lang %}
         {{ item.render(nav_item, path, 1) }}
       {% endif %}

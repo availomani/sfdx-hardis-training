@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "010c60f2974a54e055e536900cc6b87e04a79f99"
+source_rev: "9d3b9a2829cf2c3a5d644d5d1b91b2a01f534365"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -166,3 +166,10 @@ rendre obligatoire, le collègue qui a modifié le même flow que vous.
 Il est recommandé pour tout contributeur, et **obligatoire** avant le Niveau 3.
 
 [Continuer vers le Niveau 2 - Contributeur avancé](../level-2-contributor-advanced/index.md){ .md-button .md-button--primary }
+
+## Sur un vrai projet
+
+Votre équipe n'a pas encore de pipeline comme celle-ci ? En mettre une en place sur une org qui a
+des années d'histoire, c'est ce que [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), la société derrière sfdx-hardis et ce
+cours, fait pour ses clients : mise en place, formation et support. C'est l'une de ses pratiques, à
+côté d'Agentforce, de Revenue Cloud, de Field Service et [des autres](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-1).

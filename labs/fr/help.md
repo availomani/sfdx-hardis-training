@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "7d01814c62cd6d8a441d992608d7690ebd779c19"
+source_rev: "7ddf86df78ef1e161167f267a9607b3a58e86ae1"
 ---
 
 # Aide
@@ -133,6 +133,18 @@ open source que ce cours enseigne.
   avec une priorité sur les incidents de déploiement, et un release manager en prestation quand
   personne n'occupe le poste.
 
+Le DevOps est une pratique parmi d'autres. La même société mène des projets Salesforce complets :
+[Agentforce et Data Cloud](https://cloudity.com/fr/services/ia-et-data/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Revenue Cloud](https://cloudity.com/fr/services/gestion-du-cycle-de-vie-des-revenus/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Field Service](https://cloudity.com/fr/services/gestion-des-interventions-terrain/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[Marketing Cloud](https://cloudity.com/fr/services/engagement-marketing-et-personnalisation/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+[intégration](https://cloudity.com/fr/services/implementation-et-integration-salesforce/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help),
+et des [services managés](https://cloudity.com/fr/services/services-manages/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help) pour une équipe qui préfère confier l'exploitation
+de son org.
+
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../_assets/brand/cloudity-services-fr.png){ .cloudity-banner .wide-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help)
+[![Cloudity, conseil Salesforce : Agentforce, Data Cloud, Revenue Cloud, Field Service, Marketing Cloud, intégration, services managés, DevOps](../_assets/brand/cloudity-services-fr-narrow.png){ .cloudity-banner .narrow-only loading=lazy }](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help)
+
 ## Le support est ce qui finance la maintenance de sfdx-hardis
 
 sfdx-hardis est gratuit à utiliser. Il n'est pas gratuit à maintenir. Trois releases Salesforce par
@@ -145,4 +157,5 @@ votre équipe fait ses livraisons avec sfdx-hardis, un abonnement est le moyen l
 garder le projet vivant et en mouvement, et il met vos demandes d'évolution devant les personnes
 qui décident de ce qui sort ensuite.
 
-[Ce que propose Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity){ .md-button .md-button--primary }
+[Ce que propose Cloudity pour le DevOps](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity){ .md-button .md-button--primary }
+[Tous les services de Cloudity](https://cloudity.com/fr/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=help){ .md-button }

@@ -226,6 +226,16 @@ agreed for a good reason, the second because the first one worked, and after a q
 say what any org contains. If you find yourself assembling one every week, the thing to fix is the
 sign-off, not the tooling.
 
+## When you would rather not do it alone
+
+You now know what a release cycle costs: somebody in the seat, every week. When nobody on your team
+can hold it, [Cloudity](https://sfdx-hardis.cloudity.com/salesforce-devops-home/#get-help-from-cloudity), the company behind sfdx-hardis and this course, sets the
+pipeline up, trains the team, and provides a release manager as a service. Its
+[Managed Services](https://cloudity.com/services/managed-services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3) go further and run the org for you.
+
+The same company delivers Agentforce, Data Cloud, Revenue Cloud and Field Service projects:
+[see everything Cloudity does](https://cloudity.com/services/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=capstone-3).
+
 ## Thank you
 
 If a lab was unclear, wrong, or assumed something it should not have, say so: open an issue on the

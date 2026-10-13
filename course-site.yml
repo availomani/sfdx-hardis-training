@@ -223,8 +223,10 @@ nav:
   # added or a lab renamed.
   #
   # The backlog and the badges are generated per language, so each course block
-  # ends with its own. The one entry in no language is the link to the
-  # sfdx-hardis documentation: another site, written once, in English.
+  # ends with its own, and with the link to Cloudity, whose site has an edition
+  # per language: nav.html tells them apart by their address. The one entry in
+  # no language is the link to the sfdx-hardis documentation: another site,
+  # written once, in English.
   - Home: index.md
   - "Level 1 - Contributor basics":
       - Start here: en/level-1-contributor-basics/index.md
@@ -263,6 +265,7 @@ nav:
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
   - Statistics: stats/index.md
+  - Cloudity: https://cloudity.com/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=menu
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
       - Commencer ici: fr/level-1-contributor-basics/index.md
@@ -301,4 +304,5 @@ nav:
   - Backlog: fr/BACKLOG.md
   - Badges: fr/badges/index.md
   - Statistiques: fr/stats/index.md
+  - Cloudity: https://cloudity.com/fr/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=menu
   - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/
