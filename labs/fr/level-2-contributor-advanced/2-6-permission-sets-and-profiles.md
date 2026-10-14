@@ -5,9 +5,10 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "124acb5d76418568e17fdff77e55a92c8703e1bb"
+source_rev: "fbd807a35b1b968f5a7f2c9a48bdbf154109b86e"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/vscode/pipeline-config
 depends_on:
   commands: [hardis:mdapi:read, hardis:work:save]
@@ -55,8 +56,12 @@ Pipeline. Nom `US-033-batch-cost-visibility`, org `helios-dev`.
 
 Les équipes de pose se connectent avec le profil **Helios Crew**. C'est l'un des deux profils que
 porte ce repository, à côté d'`Admin`, le profil System Administrator : dans le panneau **DevOps
-Pipeline**, ouvrez le menu **Deployment packages**, puis **Package XML**, et la ligne **Profile**
-liste les deux.
+Pipeline**, ouvrez le menu **Deployment packages** **(1)**, l'icône d'une boîte avec une flèche dans
+l'en-tête, qui n'affiche son nom qu'au survol, puis **Package XML** **(2)**, comme au
+[Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). La ligne
+**Profile** liste les deux.
+
+![Le menu Deployment packages du panneau DevOps Pipeline, avec Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
 
 Dans `helios-dev`, la voie rapide : **Setup > Object Manager > Panel Batch > Fields & Relationships >
 Cost > Set Field-Level Security**, cochez **Visible** pour le profil **Helios Crew**, **Save**.

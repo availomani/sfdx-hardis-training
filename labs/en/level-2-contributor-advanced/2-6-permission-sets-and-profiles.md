@@ -8,6 +8,7 @@ lang: en
 source_rev: ""
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/vscode/pipeline-config
 depends_on:
   commands: [hardis:mdapi:read, hardis:work:save]
@@ -54,7 +55,12 @@ panel. Name `US-033-batch-cost-visibility`, org `helios-dev`.
 
 The crews log in with the **Helios Crew** profile. It is one of the two Profiles this repository
 carries, next to `Admin`, the System Administrator profile: in the **DevOps Pipeline** panel, open
-the **Deployment packages** menu, then **Package XML**, and the **Profile** row lists both.
+the **Deployment packages** menu **(1)**, the icon of a box with an arrow in the header, which shows
+its name only when you hover it, then **Package XML** **(2)**, as in
+[Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). The
+**Profile** row lists both.
+
+![The Deployment packages menu of the DevOps Pipeline panel, with Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
 
 In `helios-dev`, the quick way: **Setup > Object Manager > Panel Batch > Fields & Relationships >
 Cost > Set Field-Level Security**, tick **Visible** for the **Helios Crew** profile, **Save**.

@@ -5,11 +5,12 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "46181112ca0f8c4fc2f70e1e0be02dbb5a59c7b3"
+source_rev: "cd91e712529ccef72c755207cb7602b84227c099"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--deployment-status
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/web/github-pr-deployment-actions-failed
   - annotated/vscode/pipeline-branch-modal-actions-failed
   - annotated/vscode/action-run-prompts
@@ -85,10 +86,13 @@ pourquoi il ne lance lui-même aucun test.
 
 Vous avez modifié un composant. Lisez maintenant ce que le job a réellement envoyé.
 
-Ouvrez le package : panneau **DevOps Pipeline**, menu **Deployment packages**, **Package XML**. Il
-liste toute l'application Helios, quelques dizaines de composants, et **c'est cela le package** : sur
-ce projet chaque déploiement vers `integration` envoie le tout, quoi qu'ait dit le diff. Le compteur
-de composants envoyés du log le dira.
+Ouvrez le package : panneau **DevOps Pipeline**, le menu **Deployment packages** **(1)**, l'icône
+d'une boîte avec une flèche dans l'en-tête, puis **Package XML** **(2)**. Il liste toute
+l'application Helios, quelques dizaines de composants, et **c'est cela le package** : sur ce projet
+chaque déploiement vers `integration` envoie le tout, quoi qu'ait dit le diff. Le compteur de
+composants envoyés du log le dira.
+
+![Le menu Deployment packages du panneau DevOps Pipeline, avec Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
 
 C'est le comportement par défaut, et il vaut la peine de le ressentir une fois avant d'apprendre ce
 qui le corrige.

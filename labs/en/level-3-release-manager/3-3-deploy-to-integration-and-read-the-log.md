@@ -10,6 +10,7 @@ screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
   - annotated/vscode/devops-pipeline--deployment-status
+  - annotated/vscode/pipeline-packages-menu--package-xml
   - annotated/web/github-pr-deployment-actions-failed
   - annotated/vscode/pipeline-branch-modal-actions-failed
   - annotated/vscode/action-run-prompts
@@ -82,9 +83,12 @@ validation rather than deploy again. That is why it takes seconds, and why it ru
 
 You changed one component. Now read what the job actually sent.
 
-Open the package: **DevOps Pipeline** panel, **Deployment packages** menu, **Package XML**. It lists
-the whole Helios app, a few dozen components, and **that is the package**: on this project every deployment to `integration` sends all of it, whatever the diff
-said. The log's count of components sent will say so.
+Open the package: **DevOps Pipeline** panel, the **Deployment packages** menu **(1)**, the icon of a
+box with an arrow in the header, then **Package XML** **(2)**. It lists the whole Helios app, a few
+dozen components, and **that is the package**: on this project every deployment to `integration`
+sends all of it, whatever the diff said. The log's count of components sent will say so.
+
+![The Deployment packages menu of the DevOps Pipeline panel, with Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
 
 That is the default, and it is worth feeling once before you learn the thing that fixes it.
 

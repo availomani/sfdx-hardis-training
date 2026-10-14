@@ -517,6 +517,7 @@
       ],
       "screenshots": [
         "annotated/vscode/pipeline-cards--new-user-story",
+        "annotated/vscode/pipeline-packages-menu--package-xml",
         "annotated/vscode/pipeline-config"
       ],
       "translations": {
@@ -777,6 +778,7 @@
         "annotated/vscode/pipeline-config-deployment--delta",
         "annotated/vscode/orgs-manager",
         "annotated/vscode/devops-pipeline--deployment-status",
+        "annotated/vscode/pipeline-packages-menu--package-xml",
         "annotated/web/github-pr-deployment-actions-failed",
         "annotated/vscode/pipeline-branch-modal-actions-failed",
         "annotated/vscode/action-run-prompts",

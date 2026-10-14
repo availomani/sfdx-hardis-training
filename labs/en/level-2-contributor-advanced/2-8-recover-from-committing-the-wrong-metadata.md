@@ -57,15 +57,17 @@ In `helios-dev`, make one small real change: on the Installation layout, move `C
 `Install Date`.
 
 Now open **Commit changes**, search the recent changes, and this time click the tick box in the
-**table header** **(1)**, which selects every row at once. Retrieve them all, commit them all from
-**Source Control**, publish, push, and open the Pull Request into `integration`, as for any story.
-Do not merge it.
+**table header** **(1)**, which selects every row at once.
 
 ![The Metadata Retriever, with every row selected](../../_assets/annotated/vscode/metadata-retriever-recent-changes--select-all.png)
 
-In an org where Agentforce is on, the list can also carry `GenOpAgentConfig` rows, named after
-your flows. The Salesforce CLI does not know that type yet, so the retrieve stops and names it:
-untick those rows and retrieve again.
+Before you retrieve, look for `GenOpAgentConfig` rows, named after your flows: an org where
+Agentforce is on carries them, the Salesforce CLI does not know that type yet, and the retrieve
+would stop on them. Untick those rows first.
+
+Then retrieve them all. It takes longer than the retrieves of the earlier labs, ninety rows and
+every Profile among them comes whole, so let it run. Commit them all from **Source Control**,
+publish, push, and open the Pull Request into `integration`, as for any story. Do not merge it.
 
 ### 2. Look at what you did
 

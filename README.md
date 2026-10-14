@@ -193,8 +193,7 @@ the rules.
 ```bash
 node scripts/stats/course-stats.mjs            # read GitHub, write stats/course-stats.json and STATS.md
 node scripts/stats/course-stats.mjs --render   # no network: rewrite STATS.md after changing its words
-node scripts/build/lab-times.mjs               # no network: write the observed times into the lab pages
-node scripts/build/lab-times.mjs --stamp       # after committing labs/en: stamp the translations it rewrote
+node scripts/build/lab-times.mjs               # no network: write the observed times into the lab pages, and restamp the translations that were current
 ```
 
 Stamp only once the English commit has its final name: a rebase renames it, and a stamp written

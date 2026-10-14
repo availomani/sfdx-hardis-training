@@ -4,7 +4,6 @@
  *
  *   node scripts/build/lab-times.mjs            every locale
  *   node scripts/build/lab-times.mjs --check    writes nothing, fails when a page is out of date
- *   node scripts/build/lab-times.mjs --stamp    after committing: the translations this run touched
  *
  * Three kinds of page announce a time, in every locale:
  *
@@ -22,15 +21,15 @@
  * Nobody edits a time by hand to follow the figures. The weekly workflow runs
  * this and commits what it changed.
  *
- * About --stamp. A translation names the commit of the English page it was
- * made from, and this script changes the English page and its translations
- * together. Once the English side is committed, the translations that were up
- * to date before the run are stamped with the new commit: they still say what
- * the English page says. A translation that was already behind is left alone,
- * because this run did not catch it up.
- *
- * Stamp once the English commit has its final name. A rebase renames it, and a
- * stamp written before would name a commit that no longer exists.
+ * About the translations. A translation names, in source_rev, the content hash
+ * of the English page it was made from (git hash-object, as stamp-source-rev.mjs
+ * writes it: a commit would not survive the squash merge of a Pull Request), and
+ * this script changes the English page and its translations together. A
+ * translation that was up to date before the run still says what the English
+ * page says, so the run restamps it with the hash of the rewritten English page,
+ * once the tables are aligned, since the alignment is part of the content. A
+ * translation that was already behind is left alone: this run did not catch it
+ * up. Nothing to commit first and nothing to stamp afterwards.
  */
 import fs from "fs";
 import path from "path";
@@ -44,17 +43,11 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
 const LABS = path.join(ROOT, "labs");
 const REFERENCE = "en";
-// What --stamp has to do, written by the run before it. Git ignores .cache/
-const PENDING = path.join(ROOT, ".cache", "lab-times-stamp.json");
 
 const args = process.argv.slice(2);
 const CHECK = args.includes("--check");
 
-if (args.includes("--stamp")) {
-  stamp();
-} else {
-  run();
-}
+run();
 
 function run() {
   const universe = JSON.parse(fs.readFileSync(path.join(ROOT, "training-universe.json"), "utf8"));
@@ -67,12 +60,18 @@ function run() {
     .filter((entry) => entry.isDirectory() && /^[a-z]{2}(-[A-Z]{2})?$/.test(entry.name))
     .map((entry) => entry.name);
 
+  // The English pages as they are before anything is rewritten: a translation
+  // whose stamp matches is current, and stays so once both are rewritten together
+  const englishBefore = new Map();
+  for (const rel of pagesOf(universe)) {
+    const english = `labs/${REFERENCE}/${rel}`;
+    if (fs.existsSync(path.join(ROOT, english))) {
+      englishBefore.set(rel, hashObject(english));
+    }
+  }
+
   const changed = [];
-  // A run before this one may be waiting for its stamp. What it noted about a
-  // translation is what counts: by now that page has been rewritten once, and
-  // comparing it again would say nothing about how it stood before.
-  const waiting = !CHECK && fs.existsSync(PENDING) ? JSON.parse(fs.readFileSync(PENDING, "utf8")) : [];
-  const pending = [...waiting];
+  const englishChanged = new Set();
   for (const locale of locales) {
     const describe = observedIn(locale);
     for (const rel of pagesOf(universe)) {
@@ -89,10 +88,8 @@ function run() {
       if (CHECK) {
         continue;
       }
-      if (locale !== REFERENCE && !waiting.some((one) => one.file === `labs/${locale}/${rel}`)) {
-        const english = `labs/${REFERENCE}/${rel}`;
-        const rev = (before.match(/^source_rev:\s*"?([0-9a-f]+)"?\s*$/m) || [])[1];
-        pending.push({ file: `labs/${locale}/${rel}`, english, wasCurrent: Boolean(rev) && rev === lastCommit(english) });
+      if (locale === REFERENCE) {
+        englishChanged.add(rel);
       }
       fs.writeFileSync(file, after, "utf8");
     }
@@ -117,12 +114,33 @@ function run() {
     console.error(`The tables could not be aligned again:\n${aligned.stdout}${aligned.stderr}`);
     process.exit(1);
   }
-  fs.mkdirSync(path.dirname(PENDING), { recursive: true });
-  fs.writeFileSync(PENDING, JSON.stringify(pending, null, 2) + "\n", "utf8");
+  // A translation that was current before the run still says what its rewritten
+  // English page says, whether the run touched it or not: stamp it with that page
+  // as it is now, aligned tables included
+  let stamped = 0;
+  for (const rel of englishChanged) {
+    const rev = hashObject(`labs/${REFERENCE}/${rel}`);
+    for (const locale of locales.filter((one) => one !== REFERENCE)) {
+      const file = path.join(LABS, locale, rel);
+      if (!rev || !fs.existsSync(file)) {
+        continue;
+      }
+      const text = fs.readFileSync(file, "utf8");
+      const was = (text.match(/^source_rev:\s*"?([0-9a-f]+)"?\s*$/m) || [])[1];
+      if (!was || was !== englishBefore.get(rel)) {
+        continue;
+      }
+      const next = text.replace(/^source_rev:.*$/m, `source_rev: "${rev}"`);
+      if (next !== text) {
+        fs.writeFileSync(file, next, "utf8");
+        stamped++;
+      }
+    }
+  }
   console.log(`${changed.length} page(s) written:`);
   changed.forEach((file) => console.log(`  ${file}`));
-  if (pending.some((one) => one.wasCurrent)) {
-    console.log(`Commit labs/${REFERENCE}/, then run: node scripts/build/lab-times.mjs --stamp`);
+  if (stamped > 0) {
+    console.log(`${stamped} translation(s) stamped with their rewritten English page.`);
   }
 }
 
@@ -171,29 +189,8 @@ function observedIn(locale) {
   };
 }
 
-/** The last commit that touched a file, or null. */
-function lastCommit(file) {
-  const res = spawnSync("git", ["log", "-1", "--format=%H", "--", file], { cwd: ROOT, encoding: "utf8" });
+/** The content hash git gives a file as it is on disk, the one source_rev holds, or null. */
+function hashObject(file) {
+  const res = spawnSync("git", ["hash-object", "--", file], { cwd: ROOT, encoding: "utf8" });
   return res.status === 0 && res.stdout.trim() ? res.stdout.trim() : null;
-}
-
-function stamp() {
-  if (!fs.existsSync(PENDING)) {
-    console.log("Nothing to stamp: no run wrote a translation since the last stamp.");
-    return;
-  }
-  const pending = JSON.parse(fs.readFileSync(PENDING, "utf8"));
-  let stamped = 0;
-  for (const one of pending.filter((entry) => entry.wasCurrent)) {
-    const file = path.join(ROOT, one.file);
-    const rev = lastCommit(one.english);
-    const text = fs.readFileSync(file, "utf8");
-    const next = text.replace(/^source_rev:.*$/m, `source_rev: "${rev}"`);
-    if (rev && next !== text) {
-      fs.writeFileSync(file, next, "utf8");
-      stamped++;
-    }
-  }
-  fs.rmSync(PENDING, { force: true });
-  console.log(`${stamped} translation(s) stamped with the commit of their English page.`);
 }

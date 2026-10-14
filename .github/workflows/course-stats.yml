@@ -92,23 +92,11 @@ jobs:
             done
             return 1
           }
+          # The translations this run rewrote were restamped by the run itself,
+          # with the content hash of their English page: they are in the commit
           if ! push_to_main; then
             echo "The figures could not be pushed after 5 attempts: next week's run writes them."
             exit 1
-          fi
-          # The translations this run rewrote still say what their English page
-          # says, so they are stamped with the commit of that page. Only now: a
-          # stamp names a commit, and the rebase of the push above gives the
-          # commit a new name. Stamped before it, they would name one that no
-          # longer exists, and every one of them would read as out of date.
-          node scripts/build/lab-times.mjs --stamp
-          git add labs
-          if ! git diff --cached --quiet; then
-            git commit -m "stats: translations stamped with their English page"
-            if ! push_to_main; then
-              echo "The stamps could not be pushed: the translations read as behind until somebody stamps them."
-              exit 1
-            fi
           fi
           # The push above starts no workflow. The reset branches are built from
           # main and must not lag it, and the page needs a site build.
