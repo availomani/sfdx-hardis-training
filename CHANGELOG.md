@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-14
 
+- Lab 3.3 quotes the deployment comment of a failed action with its new verdict, "⚠️ Deployed to integration, but an action failed after the deployment".
 - The three capstones and every badge page show the Cloudity services banner, as the home page and the Help page do.
 - Levels 2 and 3 no longer show the amber "This level is in QA" banner: the three levels are released.
 

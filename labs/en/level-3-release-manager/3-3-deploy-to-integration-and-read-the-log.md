@@ -275,7 +275,7 @@ System.QueryException: List has no rows for assignment to SObject
 Mariia created the group by hand in her own org, in Setup, the way most people create one: nothing
 in her Pull Request creates it.
 
-**The deployment comment** of her Pull Request opens on **❌ Deployed to `integration`, but an
+**The deployment comment** of her Pull Request opens on **⚠️ Deployed to `integration`, but an
 action failed after the deployment**: the org has the new metadata. Under **❌ Failed action** it
 shows the end of the script output, and under **⏸️ Not run, waiting for the failed action** the two
 others.

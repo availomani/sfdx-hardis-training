@@ -289,7 +289,7 @@ System.QueryException: List has no rows for assignment to SObject
 Mariia a créé le groupe à la main dans sa propre org, dans Setup, comme on en crée un le plus
 souvent : rien dans sa Pull Request ne le crée.
 
-**Le commentaire de déploiement** de sa Pull Request s'ouvre sur **❌ Deployed to `integration`, but
+**Le commentaire de déploiement** de sa Pull Request s'ouvre sur **⚠️ Deployed to `integration`, but
 an action failed after the deployment** : l'org a les nouvelles métadonnées. Sous **❌ Failed
 action**, il montre la fin de la sortie du script, et sous **⏸️ Not run, waiting for the failed
 action** les deux autres.
