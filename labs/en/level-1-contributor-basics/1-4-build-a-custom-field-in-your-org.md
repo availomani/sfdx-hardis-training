@@ -57,6 +57,12 @@ entry is **Open** **(1)**.
 Your browser opens the org, already logged in. No password, no login page: the extension used the
 credential it stored when you connected the org in [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
 
+!!! tip "In Agentforce Vibes, the org opens in a new tab"
+    VS Code runs in your browser, so the org cannot open next to it: it opens in a new tab of the
+    same browser. VS Code may first ask whether to open the external website: answer **Open**. If
+    no tab appears at all, update the extension: older versions ran the open command inside the
+    tab's own environment, where no browser can be opened, and showed nothing.
+
 Opening the org from this panel rather than from a bookmark is a habit worth forming. It is the
 difference between "the org I meant" and "the org that happened to be open in that tab".
 
@@ -176,11 +182,16 @@ You are in the wrong org. Check the Status section in VS Code, then reopen the o
 Manager**.
 
 **You click Open and no browser tab appears.**
-Older versions of the extension could fail to open the org without saying why. Update the
-extension, which is what **Auto Update** in [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md) is
-for, and click **Open** again. Until then there is a second way in: in the **Status** section of the
-sfdx-hardis panel, under **Current Org**, click the first line, the address of the org. It opens
-your default org, which is `helios-dev` here.
+Older versions of the extension could fail to open the org without saying why, and in Agentforce
+Vibes they opened nothing at all: the command ran inside the tab's own environment, where no
+browser can be opened. Update the extension, which is what **Auto Update** in
+[Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md) is for, and click **Open** again. Until then
+there is a second way in: in the **Status** section of the sfdx-hardis panel, under **Current
+Org**, click the first line, the address of the org. It opens your default org, which is
+`helios-dev` here. In Agentforce Vibes that line has the same problem, so open a terminal
+(**Terminal > New Terminal**), type `sf org open --url-only` and click the link it prints, right
+away: it holds a one-time code that expires after a few minutes, and a copy pasted later lands on
+the login page.
 
 **Orgs Manager shows your scratch orgs as disconnected, and offers Reconnect instead of Open.**
 Older versions of the extension read only the connection probe, which a scratch org never carries:
