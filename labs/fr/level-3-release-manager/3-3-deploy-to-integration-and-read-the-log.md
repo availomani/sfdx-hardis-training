@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "cd91e712529ccef72c755207cb7602b84227c099"
+source_rev: "5d75b0205ade6bdfa2bbb578cf2f46453b2a9fc7"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -28,7 +28,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~45 min
+**Durée** : ~3 h 05<!-- observed --> (observé : médiane 3 h 05, 3 participants, le plus rapide 1 h 30)<!-- /observed -->
 
 **Vous allez** : lire correctement un log de déploiement, relire une Pull Request dont le contrôle
 échoue sur un champ qui est pourtant dans son diff et trouver le fichier qui le cache, puis

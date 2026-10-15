@@ -24,7 +24,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~35 min
+**Time**: ~1 h 25<!-- observed --> (observed: median 1 h 27, 3 learners, fastest 1 h 01)<!-- /observed -->
 
 **You will**: release to production, and then measure whether your pipeline is any good.
 

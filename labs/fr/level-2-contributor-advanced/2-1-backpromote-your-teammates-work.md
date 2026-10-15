@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "b7454067edc4ccbf675224de0d1f09952b6e3b16"
+source_rev: "d729f5e1f22a4842b032994ac27d289613522f67"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -27,7 +27,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~20 min<!-- observed --> (Labs 2.1 et 2.2 observés ensemble : médiane 57 min, 14 participants, le plus rapide 28 min)<!-- /observed -->
+**Durée** : ~20 min<!-- observed --> (Labs 2.1 et 2.2 observés ensemble : médiane 55 min, 20 participants, le plus rapide 21 min)<!-- /observed -->
 
 **Vous allez** : rapatrier dans votre propre org de dev la story mergée par un collègue, décider
 quoi garder quand l'outil vous le demande, et apprendre ce qu'un backpromote ne fera jamais pour
