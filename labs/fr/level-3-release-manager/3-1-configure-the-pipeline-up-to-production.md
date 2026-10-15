@@ -5,7 +5,7 @@ description: "Étendez une pipeline Salesforce à deux étages jusqu'à la produ
 level: 3
 lab: 1
 lang: fr
-source_rev: "5452f86972ca4fa9991c123ac7e504ba995a68d3"
+source_rev: "db684c474190ab51ddd30e0e24ef72162ab3cb3f"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
   - annotated/web/github-new-branch
@@ -719,6 +719,17 @@ formulaire à nouveau.
 GitHub ne liste que les contrôles qui ont rendu compte sur ce repository dans les sept derniers
 jours. Ouvrez une Pull Request vers `integration`, laissez ses contrôles tourner, et revenez à la
 règle.
+
+**La Pull Request attend sur `Expected - Waiting for status to be reported`, et son onglet Checks
+est vide.**
+Rien n'a tourné : GitHub n'a pas lancé les workflows de votre fork, donc les deux contrôles que ce
+lab a rendus obligatoires n'ont jamais rendu compte, et le merge les attend. Ouvrez l'onglet
+**Actions** de votre fork (`github.com/my-username/sfdx-hardis-training`). Un bandeau avec **I
+understand my workflows, go ahead and enable them** veut dire qu'Actions est coupé : cliquez dessus.
+Sans bandeau, ouvrez **Settings > Actions > General** et vérifiez qu'Actions est autorisé. Ensuite,
+sur votre branche de User Story, lancez **Training: Level 1 > Trigger my workflows** : il vérifie
+que les workflows ont le droit de tourner, et pousse une ligne, ce qui lance les contrôles d'une
+Pull Request ouverte quand ils ne le pouvaient pas.
 
 **Set up my training environment échoue avec `There is already a Child Relationship named
 Installations on Account`.**

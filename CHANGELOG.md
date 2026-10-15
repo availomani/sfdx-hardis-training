@@ -3,6 +3,13 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-15
+
+- Lab 2.8 makes the mess with twenty recent rows and the Admin Profile instead of every row, so the retrieve is short and skips the Agentforce rows (feedback from a learner).
+- Lab 2.9 creates a tab with the Handover Item object, and lists its steps in the order they run, from the count to the merge (feedback from a learner).
+- Lab 3.1 explains a Pull Request stuck on "Expected - Waiting for status to be reported" with no check running (feedback from a learner).
+- The Statistics page and the times of the labs are recalculated after every badge awarded, not only on Mondays.
+
 ## 2026-10-14
 
 - Lab 1.4 says that in Agentforce Vibes the org opens in a new browser tab, and what to do while the extension that opened nothing there is being updated (issue #163).

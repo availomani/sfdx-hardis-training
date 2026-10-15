@@ -1,7 +1,7 @@
 ---
 # Badge claim audit.
 #
-# SIX RULES. Read them before changing anything in this file.
+# SEVEN RULES. Read them before changing anything in this file.
 #
 #  1. NEVER execute anything from the learner's clone. No npm install, no npm run,
 #     no build, no script of theirs. The audit only reads files and git history,
@@ -18,6 +18,10 @@
 #     push made with GITHUB_TOKEN never triggers a workflow, so nothing else will:
 #     the badge page this workflow links to would not exist, and the reset
 #     branches would lag main by every badge commit.
+#  7. The course statistics are recalculated in the job and committed with the
+#     badge: one commit per badge, not a badge commit then a statistics commit.
+#     They read only the public GitHub API and the badges/ folder (the three
+#     rules of course-stats.yml), and a failure there never holds a badge back.
 #
 # The learner's code is never checked out into the workspace: it is cloned into a
 # temporary directory and read. That is what keeps this simple, and it is why the
@@ -183,12 +187,30 @@ jobs:
             --trailblazer "$TRAILBLAZER" --trailblazer-name "$TRAILBLAZER_NAME" --name "$FULL_NAME"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BADGE_MESSAGE="badge: level $(node -p "require('/tmp/audit.json').level") for $TRAILBLAZER ($(node -p "require('/tmp/audit.json').handle"))"
+          # Rule 7: the figures of the course, recalculated from the badges/
+          # folder as it is now, the new badge included, and committed with it.
+          # The badge never depends on them: when they fail, the commit carries
+          # the badge alone and next Monday's run of Course statistics counts it.
+          recalculate_stats() {
+            if node scripts/stats/course-stats.mjs && node scripts/build/lab-times.mjs; then
+              git add stats/course-stats.json STATS.md labs
+            else
+              echo "The statistics could not be recalculated: the badge is committed without them."
+              git checkout -- stats STATS.md labs 2>/dev/null || true
+            fi
+          }
           git add badges
           if git diff --cached --quiet; then
             echo "Nothing changed in badges/"
           else
-            git commit -m "badge: level $(node -p "require('/tmp/audit.json').level") for $TRAILBLAZER ($(node -p "require('/tmp/audit.json').handle"))"
-            # Rule 5: another claim may have committed while this one ran
+            recalculate_stats
+            git commit -m "$BADGE_MESSAGE"
+            BADGE_COMMIT=$(git rev-parse HEAD)
+            # Rule 5: another claim, or the Monday statistics, may have committed
+            # while this one ran. The figures are the file both write: when the
+            # rebase stops on them, start again from main with this badge and
+            # recalculate, rather than merge two sets of figures by hand.
             pushed=false
             for attempt in 1 2 3 4 5; do
               if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
@@ -196,6 +218,12 @@ jobs:
                 break
               fi
               git rebase --abort 2>/dev/null || true
+              git fetch origin "${GITHUB_REF_NAME}"
+              git reset --hard "origin/${GITHUB_REF_NAME}"
+              git checkout "$BADGE_COMMIT" -- badges
+              git add badges
+              recalculate_stats
+              git commit -m "$BADGE_MESSAGE"
               sleep $((attempt * 5))
             done
             if [ "$pushed" != "true" ]; then

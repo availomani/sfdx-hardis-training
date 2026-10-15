@@ -56,7 +56,7 @@
     "description": "How many learners start and finish each level of the free Salesforce DevOps training with sfdx-hardis, and how long the labs really take them.",
     "heading": "Course statistics",
     "intro": [
-      "Read once a week from the public repositories of the {learners} learners who set up the course, and from the badges they claimed.",
+      "Read every Monday and after every badge awarded, from the public repositories of the {learners} learners who set up the course, and from the badges they claimed.",
       "Last update: {date}."
     ],
     "level": "Level {level} - {name}",
@@ -71,7 +71,7 @@
     "fastest": ", fastest {time}",
     "observedTogether": "({labs} observed together: median {median}, {learners}{fastest})",
     "observedLevel": "Observed on {labs}: median {median}, {learners}{fastest}.",
-    "empty": "No numbers yet. They are read once a week, and the first reading has not happened.",
+    "empty": "No numbers yet. They are read every Monday and after every badge awarded, and the first reading has not happened.",
     "funnel": {
       "heading": "Started and completed",
       "intro": [
@@ -118,7 +118,7 @@
         "",
         "The fastest is the fastest time somebody could have done the lab in. A figure under five minutes, or under a quarter of the median, is two labs checked in a row and is set aside. The slowest is not shown: it is somebody who was interrupted.",
         "",
-        "The time a lab page announces is this median, rounded down to five minutes, and the time of a level is rounded down to a quarter of an hour. A lab measured with others takes its share of their time, and a lab fewer than {minSample} learners went through keeps its estimate. The pages are rewritten from the figures every week."
+        "The time a lab page announces is this median, rounded down to five minutes, and the time of a level is rounded down to a quarter of an hour. A lab measured with others takes its share of their time, and a lab fewer than {minSample} learners went through keeps its estimate. The pages are rewritten from the figures every Monday and after every badge awarded."
       ]
     }
   },

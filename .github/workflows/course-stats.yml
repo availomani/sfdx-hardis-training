@@ -1,6 +1,11 @@
 ---
 # The statistics of the course, once a week.
 #
+# The badge claim workflow (claim.yml) also recalculates them, with the same two
+# scripts, and commits them with each badge it awards: a level finished is a new
+# figure, and the Statistics page should not wait for Monday to show it. This
+# run catches what changed without a badge: new forks, labs merged since.
+#
 # Reads the forks of the course and the badge claims, and commits
 # stats/course-stats.json: how many learners start and finish each level, and
 # the median time of the labs. The site build makes the Statistics page from it,

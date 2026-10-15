@@ -56,7 +56,7 @@
     "description": "Combien de personnes commencent et terminent chaque niveau de la formation Salesforce DevOps gratuite avec sfdx-hardis, et le temps que les labs leur prennent vraiment.",
     "heading": "Statistiques du cours",
     "intro": [
-      "Lues une fois par semaine dans les repositories publics des {learners} personnes qui ont installé le cours, et dans les badges qu'elles ont réclamés.",
+      "Lues chaque lundi et après chaque badge attribué, dans les repositories publics des {learners} personnes qui ont installé le cours, et dans les badges qu'elles ont réclamés.",
       "Dernière mise à jour : {date}."
     ],
     "level": "Niveau {level} - {name}",
@@ -71,7 +71,7 @@
     "fastest": ", le plus rapide {time}",
     "observedTogether": "({labs} observés ensemble : médiane {median}, {learners}{fastest})",
     "observedLevel": "Observé sur les {labs} : médiane {median}, {learners}{fastest}.",
-    "empty": "Pas encore de chiffres. Ils sont lus une fois par semaine, et la première lecture n'a pas eu lieu.",
+    "empty": "Pas encore de chiffres. Ils sont lus chaque lundi et après chaque badge attribué, et la première lecture n'a pas eu lieu.",
     "funnel": {
       "heading": "Commencés et terminés",
       "intro": [
@@ -124,7 +124,7 @@
         "",
         "Le plus rapide est le temps le plus court dans lequel quelqu'un a pu faire le lab. Un chiffre de moins de cinq minutes, ou de moins d'un quart de la médiane, correspond à deux labs vérifiés à la suite et est écarté. Le plus lent n'est pas affiché : c'est quelqu'un qui a été interrompu.",
         "",
-        "Le temps qu'annonce la page d'un lab est cette médiane, arrondie aux cinq minutes inférieures, et le temps d'un niveau est arrondi au quart d'heure inférieur. Un lab mesuré avec d'autres prend sa part de leur temps, et un lab que moins de {minSample} personnes ont terminé garde son estimation. Les pages sont réécrites d'après les chiffres chaque semaine."
+        "Le temps qu'annonce la page d'un lab est cette médiane, arrondie aux cinq minutes inférieures, et le temps d'un niveau est arrondi au quart d'heure inférieur. Un lab mesuré avec d'autres prend sa part de leur temps, et un lab que moins de {minSample} personnes ont terminé garde son estimation. Les pages sont réécrites d'après les chiffres chaque lundi et après chaque badge attribué."
       ]
     }
   },

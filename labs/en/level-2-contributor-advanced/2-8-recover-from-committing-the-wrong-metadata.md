@@ -8,7 +8,7 @@ lang: en
 source_rev: ""
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
-  - annotated/vscode/metadata-retriever-recent-changes--select-all
+  - annotated/vscode/metadata-retriever-recent-changes--pick-rows
   - annotated/vscode/sidebar-commands-collapsed--reset-selection
   - annotated/vscode/pipeline-cards--save-publish
 depends_on:
@@ -56,18 +56,21 @@ panel. Name `US-038-installation-notes-tidy`, org `helios-dev`.
 In `helios-dev`, make one small real change: on the Installation layout, move `Crew Size` above
 `Install Date`.
 
-Now open **Commit changes**, search the recent changes, and this time click the tick box in the
-**table header** **(1)**, which selects every row at once.
+Now open **Commit changes** and search the recent changes. Click the **Last Updated Date** header
+**(1)**, twice if needed, so the newest come first, and tick the first **twenty** rows **(2)**,
+whatever they are: your layout is among them. Then type `Admin` in **Search in results** **(3)**,
+tick the `Admin` row of type **Profile**, and clear the search. The twenty rows stay ticked.
 
-![The Metadata Retriever, with every row selected](../../_assets/annotated/vscode/metadata-retriever-recent-changes--select-all.png)
+![The Metadata Retriever, sorted newest first, with the tick boxes and the search in results](../../_assets/annotated/vscode/metadata-retriever-recent-changes--pick-rows.png)
 
-Before you retrieve, look for `GenOpAgentConfig` rows, named after your flows: an org where
-Agentforce is on carries them, the Salesforce CLI does not know that type yet, and the retrieve
-would stop on them. Untick those rows first.
+On a real project this mistake is the tick box in the table header, every row at once. Twenty rows
+and a Profile make the same mess and retrieve in a fraction of the time. If one of your rows is a
+`GenOpAgentConfig`, named after one of your flows, untick it: an org where Agentforce is on carries
+them, the Salesforce CLI does not know that type yet, and the retrieve would stop on it.
 
-Then retrieve them all. It takes longer than the retrieves of the earlier labs, ninety rows and
-every Profile among them comes whole, so let it run. Commit them all from **Source Control**,
-publish, push, and open the Pull Request into `integration`, as for any story. Do not merge it.
+Then retrieve them. The Profile comes whole, so it takes a little longer than the retrieves of the
+earlier labs. Commit them all from **Source Control**, publish, push, and open the Pull Request
+into `integration`, as for any story. Do not merge it.
 
 ### 2. Look at what you did
 

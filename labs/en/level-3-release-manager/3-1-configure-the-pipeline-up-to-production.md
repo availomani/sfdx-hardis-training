@@ -684,6 +684,16 @@ the list: if the rule or the secret is not in it, fill the form again.
 GitHub only lists checks that reported on this repository in the last seven days. Open a Pull
 Request into `integration`, let its checks run, and come back to the rule.
 
+**The Pull Request waits on `Expected - Waiting for status to be reported`, and its Checks tab is
+empty.**
+Nothing ran: GitHub did not start the workflows of your fork, so the two checks this lab made
+required never reported, and the merge waits for them. Open the **Actions** tab of your fork
+(`github.com/my-username/sfdx-hardis-training`). A banner with **I understand my workflows, go
+ahead and enable them** means Actions are off: click it. With no banner, open **Settings >
+Actions > General** and check that Actions are allowed. Then, on your User Story branch, run
+**Training: Level 1 > Trigger my workflows**: it checks that the workflows may run, and pushes one
+line, which is what starts the checks of a Pull Request opened while they could not.
+
 **Set up my training environment fails with `There is already a Child Relationship named
 Installations on Account`.**
 You cleaned that org up with **Clean up a training org** and are now putting the app back. Deleting

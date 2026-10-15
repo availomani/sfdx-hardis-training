@@ -173,5 +173,6 @@
   "vscode/dora-metrics-production.png": "18cc5a8fcbcff81f",
   "vscode/dora-metrics-export-menu.png": "70e0f082768ddee3",
   "vscode/pipeline-config-branch-merge-target.png": "29cfeeb620a8ea72",
-  "vscode/sidebar-commands-collapsed.png#reset-selection": "3dd0990d668fc39d"
+  "vscode/sidebar-commands-collapsed.png#reset-selection": "3dd0990d668fc39d",
+  "vscode/metadata-retriever-recent-changes.png#pick-rows": "59a9849db434ca10"
 }
