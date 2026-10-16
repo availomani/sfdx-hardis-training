@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "b1847ba5b119cd997ce046a558d349d157d15c22"
+source_rev: "3129f53cff9f9ae0cbb8875a7337a7545040fe4c"
 screenshots:
   - annotated/salesforce/flow-builder-assign-crew
   - annotated/salesforce/flow-builder-assign-crew-full
@@ -30,7 +30,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~30 min<!-- observed --> (observé : médiane 32 min, 9 participants, le plus rapide 13 min)<!-- /observed -->
+**Durée** : ~35 min<!-- observed --> (observé : médiane 37 min, 5 participants, le plus rapide 10 min)<!-- /observed -->
 
 **Vous allez** : affronter un vrai conflit de merge sur deux fichiers qui entrent en conflit de façon
 très différente, et résoudre les deux sans perdre le travail de personne.

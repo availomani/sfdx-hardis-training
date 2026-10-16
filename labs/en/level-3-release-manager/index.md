@@ -8,7 +8,7 @@ lang: en
 
 # Level 3 - Salesforce DevOps release manager
 
-**Time**: about 10 h 45.
+**Time**: about 11 h.
 
 **Before you start**: [Level 1](../level-1-contributor-basics/index.md) **and** [Level 2](../level-2-contributor-advanced/index.md). Both
 are required, and the badge audit checks both before it looks at anything here.
@@ -73,7 +73,7 @@ Either route runs the same thing.
 | Lab                                                       | Title                                                        | Time   |
 |-----------------------------------------------------------|--------------------------------------------------------------|--------|
 | [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configure the CI/CD pipeline up to production                | 45 min |
-| [3.2](3-2-review-a-contributor-pull-request.md)           | Review and merge a contributor Pull Request                  | 25 min |
+| [3.2](3-2-review-a-contributor-pull-request.md)           | Review and merge a contributor Pull Request                  | 30 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Read the deployment log, and what .forceignore hides from it | 3 h 05 |
 | [3.4](3-4-merge-colliding-pull-requests.md)               | Three Pull Requests collide: choose the merge order          | 35 min |
 | [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promote to UAT and write the release notes                   | 35 min |

@@ -24,7 +24,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~45 min<!-- observed --> (observed: median 47 min, 19 learners, fastest 12 min)<!-- /observed -->
+**Time**: ~30 min<!-- observed --> (observed: median 31 min, 5 learners, fastest 15 min)<!-- /observed -->
 
 **You will**: hit a failure that no amount of metadata fixing solves, and learn the tool that exists
 for it: a deployment action.

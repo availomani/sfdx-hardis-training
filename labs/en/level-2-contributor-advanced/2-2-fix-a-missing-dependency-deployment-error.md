@@ -31,7 +31,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~30 min<!-- observed --> (Labs 2.1 and 2.2 observed together: median 54 min, 21 learners, fastest 14 min)<!-- /observed -->
+**Time**: ~15 min<!-- observed --> (observed: median 18 min, 5 learners, fastest 8 min)<!-- /observed -->
 
 **You will**: update a flow that already runs in production, meet your first failing deployment
 check, read the error properly, and find what your package forgot.
