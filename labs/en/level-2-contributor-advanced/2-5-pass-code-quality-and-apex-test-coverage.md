@@ -21,7 +21,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~25 min<!-- observed --> (observed: median 29 min, 5 learners, fastest 13 min)<!-- /observed -->
+**Time**: ~20 min<!-- observed --> (observed: median 23 min, 6 learners, fastest 6 min)<!-- /observed -->
 
 **You will**: get blocked twice by robots, fix both properly rather than around them, and learn to
 run the checks before pushing.
