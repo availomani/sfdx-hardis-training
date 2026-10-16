@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "2610ebccf0373eff6db002d3a559ced8d4526f39"
+source_rev: "1ce6027396f68d719735a8b4eda478a6e7727ef5"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -20,7 +20,7 @@ depends_on:
 
 **Niveau** : 1 Contributeur, les bases
 
-**Durée** : ~30 min<!-- observed --> (observé : médiane 32 min, 17 participants, le plus rapide 11 min)<!-- /observed -->
+**Durée** : ~30 min<!-- observed --> (observé : médiane 32 min, 18 participants, le plus rapide 11 min)<!-- /observed -->
 
 **Vous allez** : refaire toute la boucle sans pas-à-pas, la seule façon de savoir si vous l'avez
 apprise.
