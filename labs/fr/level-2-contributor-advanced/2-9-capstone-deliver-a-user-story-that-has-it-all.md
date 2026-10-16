@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "8457b9d912c1a56b592795702dde35ed55af4143"
+source_rev: "8623cba947f94ad4f2c70fe61ab8939cfbee7664"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -20,7 +20,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~1 h 10<!-- observed --> (observé : médiane 1 h 13, 6 participants, le plus rapide 39 min)<!-- /observed -->
+**Durée** : ~55 min<!-- observed --> (observé : médiane 57 min, 8 participants, le plus rapide 23 min)<!-- /observed -->
 
 **Vous allez** : livrer une story qui contient une dépendance à vérifier, une deployment action de
 données et un collègue qui travaille sur le même permission set, sans pas-à-pas.
