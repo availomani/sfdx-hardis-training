@@ -55,24 +55,25 @@ handle all three.
    Number`, `HI-{00000}`, **Starting Number** `0`, as [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) did for Crew Capacity, with `External_Id__c` (Text 40, external
    id, unique), `Installation__c` (Lookup to Installation), `Label__c` (Text 255), `Sequence__c`
    (Number 3, 0), `Is_Done__c` and `Is_Template__c` (Checkbox, unchecked). When you create it, tick **Launch New Custom Tab Wizard after saving this custom object**, pick any tab
-   style and keep the other defaults of the wizard: the tab is how you reach the records in step 3
-3. **Build the reference data**: 10 template `Handover_Item__c` records with no installation, the
+   style and keep the other defaults of the wizard: the tab is how you reach the records in step 4
+3. **Grant the new object and its fields**, before you create any record: on the `Helios Delivery
+   Manager` permission set, never on a Profile, the way [Lab 2.6](2-6-permission-sets-and-profiles.md) had you do: **Read**, **Create** and **Edit** on Handover Item, and
+   **Read** and **Edit** on its fields. You hold that permission set in `helios-dev`, so this is the
+   access the records and the flow of the next two steps need. The pipeline's user holds it too, and
+   the data load of the second trap needs it, as in [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md)
+4. **Build the reference data**: 10 template `Handover_Item__c` records with no installation, the
    checklist every job starts from. **You create these by hand, in `helios-dev`**, like any record:
    open the org from **Orgs Manager**, search **Handover Items** in the App Launcher, and click
    **New** ten times. For each record, give an **External Id**
    (`HANDOVER-TPL-01` to `HANDOVER-TPL-10`), a **Label** (`Panels fixed and torqued`,
    `Inverter commissioned`, `Isolator labelled`...), a **Sequence** (10, 20, 30...), tick
    **Is Template**, and leave **Installation** empty
-4. **Update the close check**: the flow `Installation Close Check` already refuses to close an
+5. **Update the close check**: the flow `Installation Close Check` already refuses to close an
    installation with no install date. Save a new version of it that also refuses while any related
    handover item is not done: after its date decision, a **Get Records** of one `Handover Item` of
    this installation with `Is Done` false, a decision on whether one was found, and a **Custom
    Error**. Describe every element you add, and give the Get Records a fault path, the way [Lab 2.2](2-2-fix-a-missing-dependency-deployment-error.md)
    had you do
-5. **Grant the new object and its fields** on the `Helios Delivery Manager` permission set, never
-   on a Profile, the way [Lab 2.6](2-6-permission-sets-and-profiles.md) had you do: **Read**, **Create** and **Edit** on Handover Item, and
-   **Read** and **Edit** on its fields. The pipeline's user holds that permission set too, and the
-   data load of the second trap needs it, as in [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md)
 6. **Retrieve it**: **Commit changes**, **Recent Changes**, and take what you made and nothing
    else, the tab included. The tab wizard also touched Profiles and apps: leave those rows. Commit it
 7. **Count before you push**: what you created, then the same again in `force-app/` (**One**, below)

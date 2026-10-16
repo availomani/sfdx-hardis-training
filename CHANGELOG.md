@@ -11,6 +11,9 @@ a day, newest first, and a change goes under the date of the day it is made.
 - Lab 2.4 and Lab 2.9 give the Record Name settings and the type of every field of their new objects.
 - Lab 2.5 explains why the Apex Tests card of `helios-dev` and the check of the Pull Request can read a different coverage.
 - Lab 2.6 says where to remove a layout the target org lacks when the lab's own Pull Request goes red.
+- Lab 2.9 grants the new object and its fields before you create its records and edit the flow (feedback from a learner).
+- Lab 3.5: **Publish my pipeline configuration** works when your local `integration` is behind GitHub, and names the file when your change collides with one merged there (feedback from a learner).
+- The help page says to switch GitHub Actions back on before resetting a level (feedback from a learner).
 - Lab 2.7 and Lab 3.10 give the whole merge message and the Continue button that ends a merge.
 - Lab 3.1 names what the External Client App page shows, and commits the configuration as US-050 so the promotion of Lab 3.5 finds its ticket.
 - Lab 3.10 no longer shows a stray heading in step 6, which the linter reported on every learner's first Pull Request.

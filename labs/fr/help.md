@@ -3,7 +3,7 @@ title: "Aide"
 description: "Où poser votre question quand une étape du cours ne fonctionne pas, et ce que Cloudity propose à une équipe qui utilise sfdx-hardis sur un vrai projet Salesforce : mise en place, formation et support."
 id: help
 lang: fr
-source_rev: "7ddf86df78ef1e161167f267a9607b3a58e86ae1"
+source_rev: "b8c2c02fae21fd84d79b67e1341fbfdab9edb63a"
 ---
 
 # Aide
@@ -106,6 +106,12 @@ la merge une fois ses checks passés, ce qui prend 3 à 5 minutes. Le début du 
 stories du Niveau 2 en un seul commit qu'aucune Pull Request de votre fork n'a fait, et une promotion
 ne lance que les deployment actions des Pull Requests qu'elle transporte : celle-ci leur donne une
 Pull Request.
+
+Le reset n'active ni ne désactive GitHub Actions. Si vous les avez désactivées dans votre fork entre
+deux tentatives, réactivez-les avant **Reset this level** : au Niveau 3, il attend les checks de
+cette Pull Request, et avec Actions désactivées ils ne démarrent jamais. L'onglet **Actions** de
+votre fork montre dans quel état il est, et **Trigger my workflows** dans le menu Training du
+Niveau 1 le vérifie pour vous.
 
 **Recommencer tout le cours.** Sur GitHub, ouvrez votre fork, puis **Settings**, descendez jusqu'à
 la **Danger Zone**, et cliquez sur **Delete this repository**. Supprimez aussi votre dossier local.

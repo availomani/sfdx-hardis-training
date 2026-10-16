@@ -383,6 +383,26 @@ Command documentation: [hardis:doc:release-notes](https://sfdx-hardis.cloudity.c
 
 ## If it goes wrong
 
+**Publish my pipeline configuration stops on "A file you changed differs on GitHub too".**
+Your local `integration` is behind the one of GitHub: the Pull Requests you merged there since your
+last **Pull** are not on your disk, and one of them changed a file you just edited. The scripts of
+your fork date from before 2026-10-16, when **Publish my pipeline configuration** needed your local
+copy to be up to date. Click **Update my course**, merge its Pull Request, then run **Publish my
+pipeline configuration** again: it now builds its branch from the `integration` of GitHub, whatever
+your local copy holds. Your edit is still on your disk, nothing to redo.
+
+**Publish my pipeline configuration says your change and a change merged on GitHub touch the same lines.**
+Somebody changed the same lines of that file on GitHub since your last **Pull**, and git will not
+guess which version wins. Bring the two together on your disk, from the **...** menu of the Source
+Control panel:
+
+1. **Stash** > **Stash (Include Untracked)**: your edits are put aside
+2. **Pull**: your `integration` catches up with GitHub
+3. **Stash** > **Pop Latest Stash**: your edits come back, and the file shows as a conflict
+4. Open it, click **Accept Both Changes** above the conflict, save, and click **+** on its row
+
+Then run **Publish my pipeline configuration** again.
+
 **The check of the promotion is green at once, with no deliverability step to do.**
 Two causes. Open the folded **🛠️ Deployment actions of this job** of the check comment first. When
 the row of **Set Email Deliverability to All Email** reads *skipped: Runs after the merge only*,

@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "f25960a8cc88a556eb27b6b6e1c8446b343c9b48"
+source_rev: "b7552eb18cc8592205d3c766f71d249fb9bd320a"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -403,6 +403,28 @@ Documentation de la commande : [hardis:doc:release-notes](https://sfdx-hardis.cl
 - Les notes de version dans la description de la Pull Request de promotion
 
 ## En cas de problème
+
+**Publish my pipeline configuration s'arrête sur "A file you changed differs on GitHub too".**
+Votre `integration` locale est en retard sur celle de GitHub : les Pull Requests que vous y avez
+mergées depuis votre dernier **Pull** ne sont pas sur votre disque, et l'une d'elles a modifié un
+fichier que vous venez de changer. Les scripts de votre fork datent d'avant le 2026-10-16, quand
+**Publish my pipeline configuration** avait besoin d'une copie locale à jour. Cliquez sur **Update
+my course**, mergez sa Pull Request, puis relancez **Publish my pipeline configuration** : il
+construit maintenant sa branche depuis l'`integration` de GitHub, quel que soit l'état de votre
+copie locale. Votre modification est toujours sur votre disque, rien à refaire.
+
+**Publish my pipeline configuration dit que votre modification et une modification mergée sur GitHub touchent les mêmes lignes.**
+Quelqu'un a modifié les mêmes lignes de ce fichier sur GitHub depuis votre dernier **Pull**, et git
+ne devine pas quelle version l'emporte. Réunissez les deux sur votre disque, depuis le menu **...**
+du panneau Source Control :
+
+1. **Stash** > **Stash (Include Untracked)** : vos modifications sont mises de côté
+2. **Pull** : votre `integration` rattrape GitHub
+3. **Stash** > **Pop Latest Stash** : vos modifications reviennent, et le fichier apparaît en conflit
+4. Ouvrez-le, cliquez sur **Accept Both Changes** au-dessus du conflit, enregistrez, et cliquez sur
+   **+** sur sa ligne
+
+Relancez ensuite **Publish my pipeline configuration**.
 
 **Le check de la promotion est vert tout de suite, sans étape de délivrabilité à faire.**
 Deux causes. Ouvrez d'abord la section repliée **🛠️ Deployment actions of this job** du commentaire

@@ -99,6 +99,11 @@ merges it once its checks pass, which takes 3 to 5 minutes. The start of Level 3
 stories as one commit no Pull Request of your fork made, and a promotion only runs the deployment
 actions of the Pull Requests it carries: this one gives them a Pull Request.
 
+The reset does not turn GitHub Actions on or off. If you switched them off in your fork between two
+attempts, switch them back on before **Reset this level**: on Level 3 it waits for the checks of
+that Pull Request, and with Actions off they never start. The **Actions** tab of your fork shows
+which state it is in, and **Trigger my workflows** in the Training menu of Level 1 checks it for you.
+
 **Start the whole course again.** On GitHub, open your fork, then **Settings**, scroll down to
 **Danger Zone**, and click **Delete this repository**. Delete your local folder too. Then follow
 [Lab 1.2](level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) again
