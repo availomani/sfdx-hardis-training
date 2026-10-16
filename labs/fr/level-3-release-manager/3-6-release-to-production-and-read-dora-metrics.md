@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "a8aa05a7f8b341b0cacdd7994e3c998bf23b822e"
+source_rev: "bcaeecc0f384f6759823c897136e47a919dd4ac9"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/pipeline-settings-menu-level3--dora
@@ -24,7 +24,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~1 h 25<!-- observed --> (observé : médiane 1 h 27, 3 participants, le plus rapide 1 h 01)<!-- /observed -->
+**Durée** : ~1 h 10<!-- observed --> (observé : médiane 1 h 14, 4 participants, le plus rapide 21 min)<!-- /observed -->
 
 **Vous allez** : livrer en production, puis mesurer si votre pipeline vaut quelque chose.
 

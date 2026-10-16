@@ -28,7 +28,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~3 h 05<!-- observed --> (observed: median 3 h 05, 3 learners, fastest 1 h 30)<!-- /observed -->
+**Time**: ~1 h 30<!-- observed --> (observed: median 1 h 30, 5 learners, fastest 51 min)<!-- /observed -->
 
 **You will**: read a deployment log properly, review a Pull Request whose check fails on a field
 that is right there in its diff and find the file that hides it, then recover post-deployment

@@ -3,7 +3,7 @@ title: "Formation Salesforce DevOps gratuite et pratique"
 description: "Formation Salesforce DevOps gratuite et pratique en trois niveaux : Git, Pull Requests, pipelines CI/CD et gestion des releases avec sfdx-hardis et VS Code."
 id: home
 lang: fr
-source_rev: "93cbb39bdc5a7d09434f39a54d4a06e2072b0f8f"
+source_rev: "c2bce5c16cb15a8a05b18f3cdb02729321be345f"
 ---
 
 # Formation Salesforce DevOps avec sfdx-hardis
@@ -40,9 +40,9 @@ que vous suivez sa Pull Request jusqu'à la production.*
 
 | Niveau                                                                 | Pour qui                                                            | Durée  | Prérequis          | À la fin, vous savez                                                                                               |
 |------------------------------------------------------------------------|---------------------------------------------------------------------|--------|--------------------|--------------------------------------------------------------------------------------------------------------------|
-| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant une pipeline | 2 h 15 | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
+| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant une pipeline | 2 h    | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
 | [**2 - Contributeur avancé**](level-2-contributor-advanced/index.md)   | Les mêmes, une fois les histoires faciles derrière eux              | 3 h 45 | Niveau 1           | Résoudre les erreurs de déploiement, déclarer des deployment actions, gérer les écrasements, résoudre les conflits |
-| [**3 - Release Manager**](level-3-release-manager/index.md)            | Celui ou celle qui tient la pipeline, les orgs et les releases      | 11 h   | Niveaux 1 **et** 2 | Reprendre une org sans pipeline, relire et merger, livrer en UAT et en production, faire un hotfix, monitorer      |
+| [**3 - Release Manager**](level-3-release-manager/index.md)            | Celui ou celle qui tient la pipeline, les orgs et les releases      | 8 h 15 | Niveaux 1 **et** 2 | Reprendre une org sans pipeline, relire et merger, livrer en UAT et en production, faire un hotfix, monitorer      |
 
 Les niveaux 1 et 2 forment ensemble le parcours contributeur, et ils s'adressent **autant aux admins
 qu'aux développeurs**. Nul besoin de connaître Git, la CLI Salesforce ou le DevOps : chaque étape est
