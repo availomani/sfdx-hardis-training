@@ -3,6 +3,10 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-17
+
+- Contributors: Claude Code loads the MegaLinter skills and agents from the MegaLinter plugin, enabled in `.claude/settings.json`.
+
 ## 2026-10-16
 
 - Lab 1.7 names the data type as the field wizard lists it, Text Area (Long).
