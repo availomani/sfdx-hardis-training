@@ -5,7 +5,7 @@ description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloq
 level: 2
 lab: 5
 lang: fr
-source_rev: "2ed63c31d48f18444b1658d88831a9f7b43ead4d"
+source_rev: "70047568aaa01b1af9376d11cb02a11c36af691d"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -237,6 +237,11 @@ Elle lance les tests Apex de l'org et vérifie le même seuil de couverture que 
 donc le succès, l'échec et le pourcentage sans rien pousser. Laissez-lui quelques minutes : une
 scratch org met ses exécutions de tests en file d'attente, et la première de la journée peut prendre
 dix minutes.
+
+Le pourcentage est celui de `helios-dev`, et ce n'est pas celui qu'affiche le contrôle. Les deux
+classes batch des Labs 2.3 et 2.4 sont allées dans `helios-integration` par la pipeline, et n'arrivent
+dans votre org que par un backpromote : d'ici là, `helios-dev` compte moins de lignes, et affiche plus. Ce que la carte vous dit
+à coup sûr, c'est si vos tests passent, et si votre propre classe est couverte.
 
 !!! note "La bannière du haut est normale"
     *Org Monitoring Not Present (CI/CD Repo)* veut dire que ce repository est une pipeline de livraison et

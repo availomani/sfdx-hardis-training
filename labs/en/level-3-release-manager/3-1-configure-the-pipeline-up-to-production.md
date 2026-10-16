@@ -351,8 +351,9 @@ the External Client App it deploys carries `Admin approved users are pre-authori
 you named at the last question. Look at it once, so you know where it is when it matters.
 
 In `helios-preprod`: **Setup > External Client App Manager**, open the app, whose name defaulted
-to `sfdxhardispreprod`, then **Policies**. Permitted Users reads *Admin approved users are
-pre-authorized*, and the profile is listed.
+to `sfdxhardispreprod`. Above the tabs, **App Authorization** reads *Admin approved users are
+pre-authorized*. On the **Policies** tab, under **App Policies**, **Selected Profiles** lists the
+profile.
 
 It matters because of the one path where it is **not** done for you: if the app deployment fails and
 the command falls back to printing manual instructions, those instructions stop at uploading the
@@ -485,7 +486,10 @@ step 3 would refuse anything else.
 You publish them the way you published a User Story in Level 1, with the same buttons.
 
 **Commit them.** In the **Source Control** panel, stage the configuration files and commit them as
-`Configure the pipeline up to production`, exactly as you staged metadata in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
+`US-050 Configure the pipeline up to production`, exactly as you staged metadata in [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
+Keep the story number at the start, and check that the title of the Pull Request starts with it
+too, editing it if needed: that title becomes the commit of the squash, and it is what links
+this configuration to US-050 in the release notes of [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), long after the branch name is gone.
 
 **Publish.** In the **DevOps Pipeline** panel, click the **Save / Publish** card **(1)**, the one
 every story has gone through since [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). It does not ask for the target branch:

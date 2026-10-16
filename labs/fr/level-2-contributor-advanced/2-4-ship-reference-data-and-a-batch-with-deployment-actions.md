@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "a9d35fe5b81b2fbc32d0824a31351bb2f985dbf1"
+source_rev: "e816afe0c1c416df8345bd1ff3335c4fbc249ae5"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -28,7 +28,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~45 min<!-- observed --> (observé : médiane 49 min, 12 participants, le plus rapide 20 min)<!-- /observed -->
+**Durée** : ~45 min<!-- observed --> (observé : médiane 47 min, 12 participants, le plus rapide 20 min)<!-- /observed -->
 
 **Vous allez** : rencontrer la pire espèce d'échec, celle où rien n'échoue, et la corriger avec trois
 deployment actions de trois types différents.
@@ -69,7 +69,10 @@ Pipeline. Nom `US-026-crew-capacity-data`, org `helios-dev`.
 
 Dans `helios-dev`, créez :
 
-- Un objet personnalisé **Crew Capacity** (`Crew_Capacity__c`), avec :
+- Un objet personnalisé **Crew Capacity** (`Crew_Capacity__c`). Sur sa page de création, mettez
+  **Record Name** à `Crew Capacity Number`, **Data Type** à **Auto Number**, **Display Format** à
+  `CAP-{00000}` et **Starting Number** à `0` : les enregistrements s'appellent alors CAP-00000 à
+  CAP-00011 plutôt que leur id. Puis ajoutez quatre champs :
   - `External_Id__c`, Text 40, **External Id**, **Unique**
   - `Crew_Type__c`, Picklist : `Roof`, `Ground`, `Electrical`
   - `Roof_Type__c`, Picklist : `Tile`, `Slate`, `Flat`, `Metal`
@@ -107,7 +110,7 @@ records** **(2)**. Le panneau prend de lui-même **Lab 2.4 - the 12 Crew Capacit
 Le panneau vérifie d'abord que votre objet et ses quatre champs sont dans l'org, puis crée les
 enregistrements, les liste, et termine par un lien **See them in the org**. Ouvrez-le, ou ouvrez
 l'onglet **Crew Capacity** de l'application Helios Delivery et choisissez la vue de liste **All** :
-elle indique **12 items** **(1)**, de `CAP-ROOF-TILE` à `CAP-ELECTRICAL-METAL`.
+elle indique **12 items** **(1)**, nommés `CAP-00000` à `CAP-00011`.
 Si le panneau dit qu'un champ manque, terminez d'abord l'objet, puis relancez-le : il met à jour les
 mêmes douze enregistrements au lieu d'en créer d'autres.
 

@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "73875a7c2ed4b564cca87b9872d700f4240131c1"
+source_rev: "2f0ad8e1bd7f22c5db0641c2226c112ae4d39976"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -536,9 +536,8 @@ sfdx-hardis : sa première ligne est celle d'une promotion ordinaire,
 > declared in its description.
 
 suivie de ce que le job a rassemblé depuis elles. La section repliée **🎫** à côté liste les trois
-Pull Requests, celles de US-057, US-059 et US-061. Sur le fork du cours ce sont les #62, #63 et
-
-# 65 ; les vôtres portent d'autres numéros
+Pull Requests, celles de US-057, US-059 et US-061. Sur le fork du cours ce sont les Pull Requests 62, 63 et 65 ;
+les vôtres portent d'autres numéros.
 
 Si cette ligne manque, ou si elle dit qu'aucune des Pull Requests déclarées n'a pu être utilisée,
 **arrêtez-vous et corrigez avant de merger**. Cela veut dire que le job n'a pas lu la déclaration, et
@@ -647,8 +646,10 @@ Merge**. `integration` est là où vit US-058 et d'où elle sera validée, donc 
 d'autre n'entre en conflit, parce que les trois stories promues sont le même contenu des deux
 côtés.
 
-Les deux fichiers atterrissent sous **Staged Changes** avec le message `Merge remote-tracking branch
-'origin/preprod'` déjà écrit. **Commit**, puis **Save / Publish User Story** comme au [Lab 3.7](3-7-hotfix-and-retrofit.md)
+Les deux fichiers atterrissent sous **Staged Changes** avec le message
+`Merge remote-tracking branch 'origin/preprod' into retrofit/US-059-retrofit` déjà écrit, et le
+bouton bleu en dessous affiche **Continue** tant qu'un merge est en cours, comme au
+[Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md). Cliquez dessus, puis **Save / Publish User Story** comme au [Lab 3.7](3-7-hotfix-and-retrofit.md)
 étape 9, et ouvrez la Pull Request vers `integration`, intitulée `Retrofit: the promotion of US-057,
 US-059 and US-061 back down into integration`. Son onglet **Files changed** est vide, et c'est
 normal : lisez le bloc ci-dessous. Attendez son contrôle, et mergez-la avec **Merge pull request**,

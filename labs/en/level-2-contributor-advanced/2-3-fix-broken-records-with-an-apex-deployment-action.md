@@ -64,10 +64,11 @@ panel. Name `US-024-crew-size-required`, org `helios-dev`.
 ![The New User Story card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
 
 In `helios-dev`: **Setup > Object Manager > Installation > Fields & Relationships > Crew Size >
-Edit**, tick **Required**, **Save**.
+Edit**, tick **Required**.
 
-Salesforce warns you about API and Apex callers, asks you to **Confirm**, and saves it. Not a word
-about your data, although most installations in your org have no crew size.
+The moment the box is ticked, Salesforce warns you about API and Apex callers and asks you to
+**Confirm**. Confirm, then **Save**. Not a word about your data, although most installations in
+your org have no crew size.
 Remember that: it is the whole of this lab.
 
 Bring the field down with **Commit changes** (the field, nothing else), commit it, **Save /
@@ -102,11 +103,17 @@ sfdx-hardis comment even said so, in the tip folded under each error, with a lin
 
 The check passes. **Do not merge yet.**
 
-Open `helios-dev`, find an installation with no crew size, change anything at all on it, and save.
+Open `helios-dev`, find an installation with no crew size, change anything at all on it, and
+save. The record refuses:
 
 ```
-Required fields are missing: [Crew_Size__c]
+We hit a snag.
+Review the following fields
+  • Crew Size
 ```
+
+The same refusal reads `Required fields are missing: [Crew_Size__c]` when it comes from Apex or
+the API, which is how a script meets it.
 
 **Salesforce enforces a required field on save, not on the data that is already there.** It was
 perfectly happy to make the field required while most installations had it empty, and the green

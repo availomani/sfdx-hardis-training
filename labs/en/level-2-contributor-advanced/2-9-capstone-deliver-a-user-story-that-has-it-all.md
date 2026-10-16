@@ -51,9 +51,10 @@ handle all three.
 ### The story
 
 1. **Take it.** Name `US-041-handover-checklist`, org `helios-dev`
-2. **Build the object**: `Handover_Item__c`, with `External_Id__c` (Text 40, external id, unique),
-   `Installation__c` (lookup), `Label__c`, `Sequence__c`, `Is_Done__c`, `Is_Template__c`. When you
-   create it, tick **Launch New Custom Tab Wizard after saving this custom object**, pick any tab
+2. **Build the object**: `Handover_Item__c`, its **Record Name** an Auto Number `Handover Item
+   Number`, `HI-{00000}`, **Starting Number** `0`, as [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) did for Crew Capacity, with `External_Id__c` (Text 40, external
+   id, unique), `Installation__c` (Lookup to Installation), `Label__c` (Text 255), `Sequence__c`
+   (Number 3, 0), `Is_Done__c` and `Is_Template__c` (Checkbox, unchecked). When you create it, tick **Launch New Custom Tab Wizard after saving this custom object**, pick any tab
    style and keep the other defaults of the wizard: the tab is how you reach the records in step 3
 3. **Build the reference data**: 10 template `Handover_Item__c` records with no installation, the
    checklist every job starts from. **You create these by hand, in `helios-dev`**, like any record:

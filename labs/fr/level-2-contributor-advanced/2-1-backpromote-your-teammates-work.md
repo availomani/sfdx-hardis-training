@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "d729f5e1f22a4842b032994ac27d289613522f67"
+source_rev: "2dcedecd93e850090387ef6c49a1017adfe0838c"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -316,6 +316,15 @@ Et une chose qu'il fait et que personne n'attend la première fois :
     métadonnée de vos collègues, et sans ce merge votre prochain **Save / Publish** la verrait comme
     une modification à vous et la mettrait dans votre Pull Request. La question ne vient pas quand
     vous êtes sur la branche parente elle-même, ni quand votre branche l'a déjà.
+
+    Une exception, et c'est le cas juste après le Niveau 1 : la branche sur laquelle vous revenez
+    est une story dont la Pull Request est déjà mergée, comme `features/US-016-crew-notes`. Cette
+    branche est terminée : si VS Code pose la question, fermez-la au lieu de cliquer sur
+    **Merge `<parent>`**. Le merge
+    s'arrêterait sur un conflit dans le layout d'Installation, parce qu'`integration` contient votre
+    story en un seul commit squashé, avec le champ de Romain à côté.
+    Le [Lab 2.2](2-2-fix-a-missing-dependency-deployment-error.md) démarre une nouvelle story depuis
+    `integration`, qui a tout.
 
 L'historique n'est pas sur votre ordinateur non plus. sfdx-hardis note ce qui a atteint votre sandbox
 dans un **commentaire Backpromotes** sur chaque Pull Request qu'il a rapatriée, pour que le

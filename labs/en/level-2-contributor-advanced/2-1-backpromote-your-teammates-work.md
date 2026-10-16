@@ -298,6 +298,14 @@ And one thing it does that nobody expects the first time:
     next **Save / Publish** would see it as a change of yours and put it in your Pull Request. It
     does not ask when you are on the parent branch itself, or when your branch already has it.
 
+    One exception, and it is the case right after Level 1: the branch you come back to is a story
+    whose Pull Request is already merged, such as `features/US-016-crew-notes`. That branch is
+    finished: if VS Code asks, close the question instead of clicking **Merge `<parent>`**.
+    The merge would stop on a
+    conflict in the Installation layout, because `integration` holds your story as one squashed
+    commit with Romain's field next to it. [Lab 2.2](2-2-fix-a-missing-dependency-deployment-error.md)
+    starts a new story from `integration`, and that one has everything.
+
 The history is not on your computer either. sfdx-hardis records what reached your sandbox in a
 **Backpromotes comment** on each Pull Request it brought down, so the next backpromote knows where
 to start, from any machine and any teammate. That is also why the command needs a git provider

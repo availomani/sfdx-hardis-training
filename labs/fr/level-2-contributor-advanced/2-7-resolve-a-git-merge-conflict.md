@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "adbbbe84529603a9a940520f1a46709a0d2b938c"
+source_rev: "d19fd391bde5e2a51476c0bcf572953487350db8"
 screenshots:
   - annotated/salesforce/flow-builder-assign-crew
   - annotated/salesforce/flow-builder-assign-crew-full
@@ -342,7 +342,8 @@ de ce projet ne couvre.
 
 **Complete Merge** a déplacé chaque fichier de **Merge Changes** vers **Staged Changes**. Quand les
 deux y sont, la zone de message affiche déjà
-`Merge remote-tracking branch 'origin/integration'` : cliquez sur **Commit**, puis sur
+`Merge remote-tracking branch 'origin/integration' into features/US-034-crew-override`, et le
+bouton bleu en dessous affiche **Continue** tant qu'un merge est en cours : cliquez dessus, puis sur
 **Sync Changes** pour pousser.
 
 Puis **republiez** : **Save / Publish User Story**. Cela compte. Le merge a produit du XML à la main,

@@ -53,8 +53,8 @@ No numbered clicks this time. The loop, in order:
 1. **Start the User Story.** Branch `US-016-crew-notes`, target `integration`, then **Scratch org**
    and **Reuse scratch org helios-dev**. Your org already has US-014, because you built it there
 2. **Build it in `helios-dev`**
-   - A **Long Text Area** field `Crew_Notes__c` on `Installation__c`, 4000 characters, with a
-     description and help text
+   - A **Long Text Area** field `Crew_Notes__c` on `Installation__c`, the data type the field
+     wizard lists as **Text Area (Long)**, 4000 characters, with a description and help text
    - Grant it **Read** and **Edit** on `Helios Delivery Crew`, because a crew member writes notes.
      Nobody else gets it yet: the planners' turn comes in Level 2
    - On the Installation page layout

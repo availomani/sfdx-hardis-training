@@ -3,6 +3,18 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-16
+
+- Lab 1.7 names the data type as the field wizard lists it, Text Area (Long).
+- Lab 2.1 says to close the question that offers to merge `integration` into the finished Level 1 branch after Back.
+- Lab 2.3 says that Salesforce asks to confirm as soon as Required is ticked, and that a record page shows "We hit a snag".
+- Lab 2.4 and Lab 2.9 give the Record Name settings and the type of every field of their new objects.
+- Lab 2.5 explains why the Apex Tests card of `helios-dev` and the check of the Pull Request can read a different coverage.
+- Lab 2.6 says where to remove a layout the target org lacks when the lab's own Pull Request goes red.
+- Lab 2.7 and Lab 3.10 give the whole merge message and the Continue button that ends a merge.
+- Lab 3.1 names what the External Client App page shows, and commits the configuration as US-050 so the promotion of Lab 3.5 finds its ticket.
+- Lab 3.10 no longer shows a stray heading in step 6, which the linter reported on every learner's first Pull Request.
+
 ## 2026-10-15
 
 - Lab 2.8 makes the mess with twenty recent rows and the Admin Profile instead of every row, so the retrieve is short and skips the Agentforce rows (feedback from a learner).

@@ -233,6 +233,11 @@ It runs the org's Apex tests and checks the same coverage threshold the pipeline
 the pass, the fail and the percentage without pushing anything. Give it a few minutes: a scratch
 org queues its test runs, and the first one of the day can take ten.
 
+The percentage is the one of `helios-dev`, and it is not the one the check prints. The two batch
+classes of Labs 2.3 and 2.4 went to `helios-integration` through the pipeline, and reach your
+org only with a backpromote: until then `helios-dev` counts fewer lines, and reads higher. What the card tells you for sure is
+whether your tests pass, and whether your own class is covered.
+
 !!! note "The banner at the top is expected"
     *Org Monitoring Not Present (CI/CD Repo)* means this repository is a delivery pipeline and not a
     monitoring repository. The cards below it still work, against your default org. Lab 3.8 is

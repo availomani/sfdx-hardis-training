@@ -5,7 +5,7 @@ description: "Étendez une pipeline Salesforce à deux étages jusqu'à la produ
 level: 3
 lab: 1
 lang: fr
-source_rev: "991128be45a89e9809c7727459e6576289f2f1ea"
+source_rev: "fb0349c738648dc1de48087e48e34116ccca7095"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
   - annotated/web/github-new-branch
@@ -368,8 +368,9 @@ la commande a déjà faite : l'External Client App qu'elle déploie porte
 Regardez-la une fois, pour savoir où elle est le jour où cela compte.
 
 Dans `helios-preprod` : **Setup > External Client App Manager**, ouvrez l'application, dont le
-nom par défaut était `sfdxhardispreprod`, puis **Policies**. Permitted Users affiche
-*Admin approved users are pre-authorized*, et le profil est listé.
+nom par défaut était `sfdxhardispreprod`. Au-dessus des onglets, **App Authorization** affiche
+*Admin approved users are pre-authorized*. Dans l'onglet **Policies**, sous **App Policies**,
+**Selected Profiles** liste le profil.
 
 Cela compte à cause du seul chemin où ce n'est **pas** fait pour vous : si le déploiement de
 l'application échoue et que la commande retombe sur l'affichage d'instructions manuelles, ces
@@ -508,8 +509,11 @@ Request aux contrôles verts. La protection de l'étape 3 refuserait tout le res
 Vous les publiez comme vous avez publié une User Story au Niveau 1, avec les mêmes boutons.
 
 **Commitez-les.** Dans le panneau **Source Control**, stagez les fichiers de configuration et
-commitez-les sous `Configure the pipeline up to production`, exactement comme vous stagiez de la
+commitez-les sous `US-050 Configure the pipeline up to production`, exactement comme vous stagiez de la
 métadonnée au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md).
+Gardez le numéro de la story au début, et vérifiez que le titre de la Pull Request commence aussi
+par lui, quitte à le corriger : ce titre devient le commit du squash, et c'est lui qui relie
+cette configuration à US-050 dans les release notes du [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), bien après la disparition du nom de branche.
 
 **Publiez.** Dans le panneau **DevOps Pipeline**, cliquez sur la carte **Save / Publish** **(1)**,
 celle par laquelle chaque story est passée depuis le [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). Elle ne demande pas la branche cible :

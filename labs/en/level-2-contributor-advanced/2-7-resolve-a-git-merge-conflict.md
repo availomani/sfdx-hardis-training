@@ -322,8 +322,9 @@ not intend, which no check catches and no test in this project covers.
 ### 7. Finish the merge and re-validate
 
 **Complete Merge** moved each file from **Merge Changes** to **Staged Changes**. When both are
-there, the message box already reads `Merge remote-tracking branch 'origin/integration'`: click
-**Commit**, then **Sync Changes** to push.
+there, the message box already reads `Merge remote-tracking branch 'origin/integration' into
+features/US-034-crew-override`, and the blue button under it reads **Continue** while a merge is in
+progress: click it, then **Sync Changes** to push.
 
 Then **re-publish**: **Save / Publish User Story**. This matters. The merge produced XML by hand,
 and publishing re-runs the cleaning rules over it and rebuilds `manifest/package.xml` from what your

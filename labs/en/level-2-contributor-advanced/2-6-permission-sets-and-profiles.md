@@ -263,8 +263,10 @@ message names it, as `Object-Layout name`: start there.
    the org you build in, and retrieve the Profile again. A language: set your user to English in
    the target org, **your picture > Settings > Language & Time Zone**, and rename the layout
    there. Anything else, on an object your project does not use: the line has no business in the
-   repository. In a **Fix** User Story, open the Profile file, delete the `<layoutAssignments>`
-   block that names the layout, or the `<tabVisibilities>` block that names the tab, and publish
+   repository. Open the Profile file, delete the `<layoutAssignments>` block that names the
+   layout, or the `<tabVisibilities>` block that names the tab, commit, and **Save / Publish**:
+   on the branch of this lab when it is its own Pull Request that went red, in a **Fix** User
+   Story when the Profile is already merged
 
 Salesforce reports one missing name per deployment, so a second one can hide behind the first.
 

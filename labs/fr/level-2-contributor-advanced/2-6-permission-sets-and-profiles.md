@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "95069b371636266b86c654e69b3649cb11a5d7f6"
+source_rev: "92089c459bec9e0ea2c6541948c6085273a24ba2"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -277,9 +277,11 @@ cible n'a pas. Le message la nomme, sous la forme `Objet-Nom de la présentation
    manager, ou en la désactivant dans l'org où vous construisez, puis récupérez le profil de
    nouveau. Une langue : passez votre utilisateur en anglais dans l'org cible, **votre photo >
    Settings > Language & Time Zone**, et renommez-y la présentation. Tout le reste, sur un objet
-   que votre projet n'utilise pas : la ligne n'a rien à faire dans le repository. Dans une User
-   Story **Fix**, ouvrez le fichier du profil, supprimez le bloc `<layoutAssignments>` qui nomme
-   la présentation, ou le bloc `<tabVisibilities>` qui nomme l'onglet, et publiez
+   que votre projet n'utilise pas : la ligne n'a rien à faire dans le repository. Ouvrez le
+   fichier du profil, supprimez le bloc `<layoutAssignments>` qui nomme la présentation, ou le
+   bloc `<tabVisibilities>` qui nomme l'onglet, commitez, et faites **Save / Publish** : sur la
+   branche de ce lab quand c'est sa propre Pull Request qui est rouge, dans une User Story **Fix**
+   quand le profil est déjà mergé
 
 Salesforce signale un seul nom manquant par déploiement : un deuxième peut se cacher derrière le
 premier.

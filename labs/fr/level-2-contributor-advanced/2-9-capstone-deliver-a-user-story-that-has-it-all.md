@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "b2ec6fed8c2fe92d8defda3c142682fc90730942"
+source_rev: "8457b9d912c1a56b592795702dde35ed55af4143"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -20,7 +20,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~1 h 10<!-- observed --> (observé : médiane 1 h 10, 7 participants, le plus rapide 39 min)<!-- /observed -->
+**Durée** : ~1 h 10<!-- observed --> (observé : médiane 1 h 13, 6 participants, le plus rapide 39 min)<!-- /observed -->
 
 **Vous allez** : livrer une story qui contient une dépendance à vérifier, une deployment action de
 données et un collègue qui travaille sur le même permission set, sans pas-à-pas.
@@ -51,8 +51,10 @@ savez déjà traiter les trois.
 ### La story
 
 1. **Prenez-la.** Nom `US-041-handover-checklist`, org `helios-dev`
-2. **Construisez l'objet** : `Handover_Item__c`, avec `External_Id__c` (Text 40, identifiant externe,
-   unique), `Installation__c` (lookup), `Label__c`, `Sequence__c`, `Is_Done__c`, `Is_Template__c`.
+2. **Construisez l'objet** : `Handover_Item__c`, son **Record Name** en Auto Number
+   `Handover Item Number`, `HI-{00000}`, **Starting Number** à `0`, comme le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) pour Crew Capacity, avec `External_Id__c`
+   (Text 40, identifiant externe, unique), `Installation__c` (Lookup vers Installation), `Label__c`
+   (Text 255), `Sequence__c` (Number 3, 0), `Is_Done__c` et `Is_Template__c` (Checkbox, décochées).
    En le créant, cochez **Launch New Custom Tab Wizard after saving this custom object**, choisissez
    n'importe quel style d'onglet et gardez les autres valeurs par défaut de l'assistant : l'onglet est
    ce qui vous mène aux enregistrements à l'étape 3
