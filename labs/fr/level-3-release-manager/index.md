@@ -4,12 +4,12 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "bcc268319ac55487e11909a57a6dc1416cde8157"
+source_rev: "dda7d496d9e1c92831b291daf804ba3739c22487"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
 
-**Durée** : environ 8 h.
+**Durée** : environ 8 h 15.
 
 **Prérequis** : le [Niveau 1](../level-1-contributor-basics/index.md) **et** le
 [Niveau 2](../level-2-contributor-advanced/index.md). Les deux sont obligatoires, et l'audit du
@@ -78,8 +78,8 @@ Les mêmes commandes sont dans la vue **SFDX HARDIS** de la barre de gauche, sou
 
 | Lab                                                       | Titre                                                          | Durée  |
 |-----------------------------------------------------------|----------------------------------------------------------------|--------|
-| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production             | 1 h 05 |
-| [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur             | 20 min |
+| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production             | 1 h 15 |
+| [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur             | 25 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache   | 1 h 15 |
 | [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge    | 35 min |
 | [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promouvoir en UAT et écrire les notes de version               | 35 min |

@@ -8,7 +8,7 @@ lang: en
 
 # Level 1 - Salesforce DevOps contributor basics
 
-**Time**: about 2 h, in one sitting or seven.<!-- observed --> Observed on Labs 1.3 to 1.7: median 1 h 14, 34 learners, fastest 19 min.<!-- /observed -->
+**Time**: about 2 h, in one sitting or seven.<!-- observed --> Observed on Labs 1.3 to 1.7: median 1 h 13, 35 learners, fastest 19 min.<!-- /observed -->
 
 **Before you start**: nothing. This is the first level.
 
@@ -50,7 +50,7 @@ part.
 | [1.4](1-4-build-a-custom-field-in-your-org.md)              | Build a custom field in your Salesforce org           | 10 min |
 | [1.5](1-5-retrieve-commit-and-publish-your-changes.md)      | Retrieve, commit and publish your Salesforce changes  | 15 min |
 | [1.6](1-6-pull-request-deployment-check-and-merge.md)       | Open a Pull Request, pass the deployment check, merge | 15 min |
-| [1.7](1-7-capstone-deliver-a-user-story-on-your-own.md)     | Capstone: deliver a User Story on your own            | 30 min |
+| [1.7](1-7-capstone-deliver-a-user-story-on-your-own.md)     | Capstone: deliver a User Story on your own            | 25 min |
 
 ## The Training menu
 
