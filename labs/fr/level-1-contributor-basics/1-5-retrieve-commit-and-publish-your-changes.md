@@ -5,7 +5,7 @@ description: "Rapatriez vos modifications d'org dans Git avec le Metadata Retrie
 level: 1
 lab: 5
 lang: fr
-source_rev: "dabee6e34211deb9fcfe214ad818eba93a516c1b"
+source_rev: "065d2966f4e888c443675c9bc1c417325639ad76"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--commit-changes
   - annotated/vscode/metadata-retriever-recent-changes--find
@@ -29,7 +29,7 @@ depends_on:
 
 **Niveau** : 1 Contributeur, les bases
 
-**Durée** : ~15 min<!-- observed --> (observé : médiane 17 min, 20 participants, le plus rapide 8 min)<!-- /observed -->
+**Durée** : ~15 min<!-- observed --> (observé : médiane 18 min, 21 participants, le plus rapide 8 min)<!-- /observed -->
 
 **Vous allez** : rapatrier vos modifications d'org dans le repository, décider lesquelles appartiennent
 à votre story, et pousser une branche prête à être relue.
