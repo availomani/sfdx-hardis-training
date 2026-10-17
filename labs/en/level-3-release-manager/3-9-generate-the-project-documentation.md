@@ -20,7 +20,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~20 min<!-- observed --> (Labs 3.8 to 3.10 observed together: median 1 h 52, 4 learners, fastest 51 min)<!-- /observed -->
+**Time**: ~15 min<!-- observed --> (Labs 3.8 to 3.10 observed together: median 1 h 29, 6 learners, fastest 51 min)<!-- /observed -->
 
 **You will**: produce readable documentation of an org nobody has documented in two years, from the
 sources you already have.

@@ -21,7 +21,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~20 min<!-- observed --> (observed: median 20 min, 3 learners, fastest 9 min)<!-- /observed -->
+**Time**: ~20 min<!-- observed --> (observed: median 24 min, 4 learners, fastest 9 min)<!-- /observed -->
 
 **You will**: do a whole week in one sitting, with no step-by-step, and end with something you could
 show somebody.

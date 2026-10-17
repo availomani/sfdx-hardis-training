@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "72457dfcc3ef65ed766d3e11b088f07b2d893e59"
+source_rev: "7a3cb30f34ead57962f0ba387f440e4aa6500b9e"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -23,7 +23,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~35 min<!-- observed --> (Labs 3.8 à 3.10 observés ensemble : médiane 1 h 52, 4 participants, le plus rapide 51 min)<!-- /observed -->
+**Durée** : ~25 min<!-- observed --> (Labs 3.8 à 3.10 observés ensemble : médiane 1 h 29, 6 participants, le plus rapide 51 min)<!-- /observed -->
 
 **Vous allez** : mettre en place un monitoring nocturne sur la production, lire son premier rapport,
 et décider de ce qui mérite qu'on vous en parle.
