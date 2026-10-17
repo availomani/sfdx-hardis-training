@@ -21,7 +21,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~5 min<!-- observed --> (observed: median 6 min, 3 learners, fastest 6 min)<!-- /observed -->
+**Time**: ~10 min<!-- observed --> (observed: median 12 min, 4 learners, fastest 6 min)<!-- /observed -->
 
 **You will**: go back over the order two Pull Requests on the same file went in, check that
 neither lost anything, and send back a third one that does not work.
