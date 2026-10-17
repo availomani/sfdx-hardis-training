@@ -4,12 +4,12 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "f621adadaf0c6f70b4ef05c0b8ded01f5015c080"
+source_rev: "bcc268319ac55487e11909a57a6dc1416cde8157"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
 
-**Durée** : environ 8 h 15.
+**Durée** : environ 8 h.
 
 **Prérequis** : le [Niveau 1](../level-1-contributor-basics/index.md) **et** le
 [Niveau 2](../level-2-contributor-advanced/index.md). Les deux sont obligatoires, et l'audit du
@@ -80,7 +80,7 @@ Les mêmes commandes sont dans la vue **SFDX HARDIS** de la barre de gauche, sou
 |-----------------------------------------------------------|----------------------------------------------------------------|--------|
 | [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production             | 1 h 05 |
 | [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur             | 20 min |
-| [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache   | 1 h 30 |
+| [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache   | 1 h 15 |
 | [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge    | 35 min |
 | [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promouvoir en UAT et écrire les notes de version               | 35 min |
 | [3.6](3-6-release-to-production-and-read-dora-metrics.md) | Livrer en production et lire vos métriques DORA                | 1 h 10 |
