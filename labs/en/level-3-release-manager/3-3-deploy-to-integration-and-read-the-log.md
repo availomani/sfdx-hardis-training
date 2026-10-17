@@ -515,4 +515,4 @@ Welcome page > **Training: Level 3** > **Check my work**, then pick **Lab 3.3**.
 - [Smart Deploy internals](https://sfdx-hardis.cloudity.com/salesforce-devops-smart-deployment/)
 - [Recover a failed deployment action](https://sfdx-hardis.cloudity.com/salesforce-devops-work-on-user-story-deployment-actions/#recover-a-failed-action)
 
-[Next: Lab 3.4 - Three Pull Requests collide: choose the merge order](3-4-merge-colliding-pull-requests.md){ .md-button .md-button--primary }
+[Next: Lab 3.4 - Three Pull Requests in one release: review the merge order](3-4-merge-colliding-pull-requests.md){ .md-button .md-button--primary }

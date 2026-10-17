@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "58869d40f96611549ffcebf5d1d8b3da9c53f111"
+source_rev: "a379d19cd2494f395f43a1379eb6a8cc33133b8a"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -549,4 +549,4 @@ Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **L
 - [Les rouages de Smart Deploy](https://sfdx-hardis.cloudity.com/salesforce-devops-smart-deployment/)
 - [Rattraper une action de déploiement en échec](https://sfdx-hardis.cloudity.com/salesforce-devops-work-on-user-story-deployment-actions/#recover-a-failed-action)
 
-[Suite : Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge](3-4-merge-colliding-pull-requests.md){ .md-button .md-button--primary }
+[Suite : Lab 3.4 - Trois Pull Requests pour une release : revoir l'ordre de merge](3-4-merge-colliding-pull-requests.md){ .md-button .md-button--primary }

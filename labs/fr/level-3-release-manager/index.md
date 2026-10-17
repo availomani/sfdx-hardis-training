@@ -4,7 +4,7 @@ description: "Tenez une pipeline CI/CD Salesforce avec sfdx-hardis : environneme
 id: l3-home
 level: 3
 lang: fr
-source_rev: "66eff42dfc3a563601bcf3f2b966627be143ed55"
+source_rev: "e83efbfea94d3b3cf6b8ee6516a5acf8fdf841dc"
 ---
 
 # Niveau 3 - Release manager Salesforce DevOps
@@ -81,7 +81,7 @@ Les mêmes commandes sont dans la vue **SFDX HARDIS** de la barre de gauche, sou
 | [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configurer la pipeline CI/CD jusqu'à la production             | 1 h 15 |
 | [3.2](3-2-review-a-contributor-pull-request.md)           | Relire et merger la Pull Request d'un contributeur             | 25 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Lire le log de déploiement, et ce que .forceignore lui cache   | 1 h 05 |
-| [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests se percutent : choisir l'ordre de merge    | 35 min |
+| [3.4](3-4-merge-colliding-pull-requests.md)               | Trois Pull Requests pour une release : revoir l'ordre de merge | 35 min |
 | [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promouvoir en UAT et écrire les notes de version               | 35 min |
 | [3.6](3-6-release-to-production-and-read-dora-metrics.md) | Livrer en production et lire vos métriques DORA                | 1 h    |
 | [3.7](3-7-hotfix-and-retrofit.md)                         | La production est cassée : hotfix et retrofit                  | 40 min |

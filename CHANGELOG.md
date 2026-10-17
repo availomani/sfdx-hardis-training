@@ -5,6 +5,9 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-17
 
+- Lab 3.4 says plainly that US-018 and US-019 are already merged when it starts, and reviews their merge order instead of promising a live collision.
+- Lab 3.6 explains the conflict in `config/.sfdx-hardis.yml` on the first Pull Request into `preprod` when a course update was squashed, and Lab 3.1 warns about it.
+- Update my course reminds you to merge its Pull Request with a merge commit whenever it hands it over to you.
 - Contributors: Claude Code loads the MegaLinter skills and agents from the MegaLinter plugin, enabled in `.claude/settings.json`.
 
 ## 2026-10-16

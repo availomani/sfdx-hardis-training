@@ -965,7 +965,7 @@ export const RULES = [
   },
   {
     id: "3.4", level: 3, lab: 4,
-    title: "The colliding Pull Requests were ordered, and both grants survived",
+    title: "The merge order was reviewed, both grants survived, and US-020 was received",
     check: (ctx) => {
       // US-020 is never merged: Lab 3.4 sends it back to its author. Its fields are therefore
       // not looked for in integration, and only its branch is, at the end of this check.

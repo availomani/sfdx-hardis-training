@@ -75,7 +75,7 @@ Either route runs the same thing.
 | [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configure the CI/CD pipeline up to production                | 1 h 15 |
 | [3.2](3-2-review-a-contributor-pull-request.md)           | Review and merge a contributor Pull Request                  | 25 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Read the deployment log, and what .forceignore hides from it | 1 h 05 |
-| [3.4](3-4-merge-colliding-pull-requests.md)               | Three Pull Requests collide: choose the merge order          | 35 min |
+| [3.4](3-4-merge-colliding-pull-requests.md)               | Three Pull Requests in one release: review the merge order   | 35 min |
 | [3.5](3-5-promote-to-uat-and-write-release-notes.md)      | Promote to UAT and write the release notes                   | 35 min |
 | [3.6](3-6-release-to-production-and-read-dora-metrics.md) | Release to production and read your DORA metrics             | 1 h    |
 | [3.7](3-7-hotfix-and-retrofit.md)                         | Production is broken: hotfix and retrofit                    | 40 min |

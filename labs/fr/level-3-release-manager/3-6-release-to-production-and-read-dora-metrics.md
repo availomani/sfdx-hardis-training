@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "a8c21c272578b9ce9cf366a2caf9772d7e6faa62"
+source_rev: "a2d6cd497b49902c737ff70c98dedd223ec4037b"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/pipeline-settings-menu-level3--dora
@@ -412,6 +412,27 @@ Documentation de la commande : [hardis:doc:dora-report](https://sfdx-hardis.clou
 - Un rapport DORA dans `docs/dora/`
 
 ## En cas de problème
+
+**La Pull Request de `uat` vers `preprod` a un conflit dans `config/.sfdx-hardis.yml`.**
+Deux choses ensemble le provoquent. Votre `preprod` est partie d'un `main` plus récent que le cours
+dont votre `integration` est partie (**Sync fork** sur GitHub fait avancer `main`), et une mise à
+jour du cours est arrivée dans `integration` par un **Squash and merge** au lieu du merge commit que
+fait **Update my course**. Git ne voit alors pas que les deux branches portent les mêmes changements
+du cours, et il s'arrête là où vos réglages de pipeline touchent une ligne que le cours a modifiée.
+Rien n'est perdu : `uat` contient le bon fichier. Amenez `preprod` dans `uat` par une branche à part,
+depuis la **Command Palette** de VS Code :
+
+1. **Git: Fetch**
+2. **Git: Create Branch From...**, choisissez **origin/uat**, et nommez-la `fix/merge-preprod-into-uat`
+3. **Git: Merge...**, et choisissez **origin/preprod**, sous **remote branches**
+4. Ouvrez `config/.sfdx-hardis.yml` sous **Merge Changes**, cliquez **Accept Current Change**
+   au-dessus de chaque conflit, enregistrez, cliquez **+** sur sa ligne, puis **Commit**. Current
+   est `uat`, qui a déjà les changements du cours et vos réglages
+5. **Publish Branch**, puis sur GitHub ouvrez sa Pull Request vers `uat`, attendez les contrôles, et
+   mergez-la avec **Merge pull request**, jamais en squash : un squash fait revenir le conflit
+
+La Pull Request vers `preprod` n'a alors plus de conflit. Son contrôle repart et s'arrête sur
+l'étape de délivrabilité, comme le dit l'étape 2.
 
 **Le déploiement en production échoue sur un composant qui marchait en preprod.**
 La production a dérivé, ou elle a quelque chose que preprod n'a pas : une règle de validation en

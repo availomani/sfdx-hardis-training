@@ -38,6 +38,9 @@ import {
 } from "../lib/course-updates.mjs";
 
 const MERGE_MESSAGE = "Update the course from the training repository";
+// Said whenever the learner may end up merging the update by hand: a squash makes git forget
+// what the update brought, and the next update or the first promotion into preprod conflicts
+const MERGE_BY_HAND = "If you merge it yourself on GitHub, choose Create a merge commit, never Squash and merge.";
 
 /**
  * A local update branch that already holds every course change, left behind by
@@ -285,6 +288,7 @@ export default async function update(args) {
       if (!prUrl || !/\/pull\/\d+$/.test(prUrl)) {
         fail("The Pull Request could not be opened.");
         info(`  The update is pushed on ${branch}. Run ${c.bold("Update my course")} again: it opens the Pull Request and goes on from there.`);
+        info(`  ${MERGE_BY_HAND}`);
         process.exitCode = 1;
         return;
       }
@@ -305,6 +309,7 @@ export default async function update(args) {
     checks.failed.forEach((check) => info(c.dim(`    ${check.name}`)));
     info(`  Open it to see why: ${c.cyan(prUrl)}`);
     info(`  Once it is fixed, or the checks are run again, click ${c.bold("Update my course")} again: it picks this Pull Request up and merges it.`);
+    info(`  ${MERGE_BY_HAND}`);
     process.exitCode = 1;
     return;
   }
@@ -314,6 +319,7 @@ export default async function update(args) {
     fail("GitHub refused to merge the update Pull Request:");
     merged.message.split("\n").slice(0, 6).forEach((line) => info(c.dim(`    ${line}`)));
     info(`  Open it to see why: ${c.cyan(prUrl)}`);
+    info(`  ${MERGE_BY_HAND}`);
     process.exitCode = 1;
     return;
   }

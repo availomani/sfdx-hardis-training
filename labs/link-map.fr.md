@@ -41,7 +41,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production/ |
 | Lab 3.2 - Relire et merger la Pull Request d'un contributeur | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-2-review-a-contributor-pull-request/ |
 | Lab 3.3 - Lire le log de déploiement, et ce que .forceignore lui cache | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log/ |
-| Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-4-merge-colliding-pull-requests/ |
+| Lab 3.4 - Trois Pull Requests pour une release : revoir l'ordre de merge | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-4-merge-colliding-pull-requests/ |
 | Lab 3.5 - Promouvoir en UAT et écrire les notes de version | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes/ |
 | Lab 3.6 - Livrer en production et lire vos métriques DORA | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics/ |
 | Lab 3.7 - La production est cassée : hotfix et retrofit | https://sfdx-hardis-training.cloudity.com/fr/level-3-release-manager/3-7-hotfix-and-retrofit/ |

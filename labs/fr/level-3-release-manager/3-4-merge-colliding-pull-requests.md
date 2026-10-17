@@ -1,11 +1,11 @@
 ---
 id: lab-3-4
-title: "Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge"
-description: "Décidez de l'ordre dans lequel trois Pull Requests sont mergées quand deux modifient le même fichier et qu'une échoue à son contrôle, en release manager Salesforce."
+title: "Lab 3.4 - Trois Pull Requests pour une release : revoir l'ordre de merge"
+description: "Revoyez l'ordre de merge de deux Pull Requests qui ont modifié le même permission set, et renvoyez une troisième en échec, en release manager."
 level: 3
 lab: 4
 lang: fr
-source_rev: "0348042416e5bf545f12b0f36df02195f8b4b42a"
+source_rev: "ef839f01fdf6c1805a65e6447294285384ee319a"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config--cleaning-overwrite
@@ -17,29 +17,34 @@ depends_on:
   docs: [salesforce-devops-config-cleaning, salesforce-devops-config-delta-deployment, salesforce-devops-config-overwrite]
 ---
 
-# Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge
+# Lab 3.4 - Trois Pull Requests pour une release : revoir l'ordre de merge
 
 **Niveau** : 3 Release Manager
 
 **Durée** : ~35 min
 
-**Vous allez** : décider de l'ordre dans lequel trois Pull Requests passent, quand deux d'entre elles
-se disputent le même fichier et qu'une troisième ne marche pas.
+**Vous allez** : revenir sur l'ordre dans lequel deux Pull Requests sur le même fichier sont
+passées, vérifier qu'aucune n'a rien perdu, et renvoyer une troisième qui ne marche pas.
 
 ## La situation
 
-Vendredi après-midi. Trois stories portent la semaine :
+Vendredi après-midi. Trois stories étaient prévues pour la release de la semaine :
 
-| Pull Request                              | Auteur             | Contrôles    | Ce qu'elle touche                                |
-|-------------------------------------------|--------------------|--------------|--------------------------------------------------|
-| **US-018** Cap the crew size              | Mariia Pyvovarchuk | verts        | le flow d'affectation, `Helios_Delivery_Manager` |
-| **US-019** Quote PDF                      | Romain Panda       | verts        | `Helios_Delivery_Manager`                        |
-| **US-020** Refactor InstallationScheduler | Mariia Pyvovarchuk | **en échec** | `InstallationScheduler`                          |
+| Pull Request                              | Auteur             | Contrôles    | Ce qu'elle touche                                | Où elle en est                  |
+|-------------------------------------------|--------------------|--------------|--------------------------------------------------|---------------------------------|
+| **US-018** Cap the crew size              | Mariia Pyvovarchuk | verts        | le flow d'affectation, `Helios_Delivery_Manager` | mergée, au Niveau 2             |
+| **US-019** Quote PDF                      | Romain Panda       | verts        | `Helios_Delivery_Manager`                        | mergée, à l'épreuve du Niveau 2 |
+| **US-020** Refactor InstallationScheduler | Mariia Pyvovarchuk | **en échec** | `InstallationScheduler`                          | pas encore ouverte              |
 
-Deux d'entre elles modifient le même permission set. Une ne se déploie pas. Tout le monde veut
-rentrer chez soi.
+Deux d'entre elles ont modifié le même permission set, et elles sont déjà dans `integration` : vous
+les avez mergées en contributeur au Niveau 2, sans qu'un release manager décide de quoi que ce soit.
+**Reset this level** démarre le Niveau 3 depuis une branche qui les contient aussi. Rien ne se
+percute donc sous vos yeux dans ce lab. Ce que vous faites, c'est la moitié release manager du
+travail, après coup : l'ordre était-il le bon, le second merge a-t-il gardé ce que le premier avait
+apporté, et que devient la troisième, qui ne marche pas.
 
-Décider de ce qui passe, dans quel ordre, et de ce qui attend, c'est le métier.
+Sur un vrai projet, les deux premières questions se posent avant le merge. Se les poser sur deux
+merges que vous pouvez encore lire en entier est la façon la moins chère d'apprendre à se les poser.
 
 ## Avant de commencer
 
@@ -48,10 +53,9 @@ Décider de ce qui passe, dans quel ordre, et de ce qui attend, c'est le métier
 
 ## Les étapes
 
-### 1. Créer les Pull Requests que vous pouvez encore créer
+### 1. Recevoir la seule Pull Request encore à venir
 
-**Training: Level 3** > **Simulate my teammates**, deux fois : **US-020 Refactor
-InstallationScheduler**, et **US-019 Generate a quote PDF from an opportunity**.
+**Training: Level 3** > **Simulate my teammates**, puis **US-020 Refactor InstallationScheduler**.
 
 C'est sur la Welcome page, où chaque menu de niveau est une page de cartes, et dans la vue
 **SFDX HARDIS** de la barre de gauche, où chaque niveau est un dossier à déplier. Les deux chemins
@@ -59,21 +63,13 @@ lancent la même chose :
 
 ![Le menu Training du niveau 3 sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
 
-**US-018 n'en fait pas partie.** Vous l'avez mergée au [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), et chaque scénario de collègue sert
-une fois : en rejouer un sur une branche qui a déjà ses fichiers signale "Nothing to commit" et
-n'ouvre rien.
+Ne simulez ni US-018 ni US-019. Chaque scénario de collègue sert une fois, et les deux sont déjà dans
+`integration` : la commande dirait "Nothing to commit" et n'ouvrirait rien. Retrouvez plutôt leurs
+Pull Requests mergées, dans l'onglet **Pull Requests** de la fenêtre `integration` du panneau DevOps
+Pipeline, ou dans la liste **Closed** des Pull Requests de votre fork sur GitHub. Gardez-les
+ouvertes, les étapes suivantes les lisent.
 
-US-019 fait de même, et ce n'est pas un défaut non plus. L'épreuve finale du Niveau 2 la merge, et
-**Reset this level** démarre le Niveau 3 depuis une branche qui la contient déjà : elle est donc dans
-`integration` quel que soit votre chemin. La commande dit "Nothing to commit" et, quand votre fork
-l'a, donne le lien de sa Pull Request mergée : ouvrez-la et lisez-la. Chaque étape ci-dessous
-fonctionne dans les deux cas.
-
-Deux des trois décisions de ce lab peuvent donc être des décisions que vous avez déjà prises. Les
-reprendre avec des yeux de release manager coûte moins cher que de les reprendre, et sert à peu près
-autant.
-
-Attendez les contrôles. Ceux de US-020 échoueront.
+Attendez les contrôles de US-020. Ils échoueront.
 
 ### 2. Trier avant de toucher à quoi que ce soit
 
@@ -83,16 +79,18 @@ Classez les trois, dans cet ordre de questions :
 son auteur. Ne passez pas votre vendredi à réparer le refactor de Mariia.
 
 **Lesquelles touchent le même fichier ?** US-018 et US-019 modifient toutes deux
-`Helios_Delivery_Manager`. Celle qui merge en second hérite de ce que la première a fait à ce
-fichier, et l'étape 5 parle de ce que "hériter" veut dire au juste.
+`Helios_Delivery_Manager`. Celle qui a mergé en second a hérité de ce que la première avait fait à
+ce fichier, et l'étape 5 parle de ce que "hériter" a voulu dire au juste.
 
 **Laquelle est la plus petite ?** Toutes choses égales par ailleurs, mergez la plus petite d'abord.
 Son auteur a moins à refaire si l'autre atterrit mal.
 
-L'ordre que vous voulez : **US-019 d'abord** (petite, verte, personne ne dépend d'elle), puis
-**US-018** (verte, plus grosse), et **US-020 repart chez Mariia**. Là où elles sont déjà mergées,
-l'onglet **Pull Requests** de la fenêtre `integration` du panneau DevOps Pipeline les liste dans
-l'ordre où elles sont passées, ce qui est la même question posée à l'envers.
+L'ordre qu'un release manager aurait choisi : **US-019 d'abord** (petite, verte, personne ne dépend
+d'elle), puis **US-018** (verte, plus grosse), et **US-020 repart chez Mariia**. Comparez maintenant
+avec ce qui s'est passé : l'onglet **Pull Requests** de la fenêtre `integration` les liste dans
+l'ordre où elles sont passées. Au Niveau 2, US-018 est passée en premier, parce que le [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) en
+avait besoin. Rien n'a cassé, et l'étape 5 montre pourquoi. Savoir si l'ordre comptait est une
+question à laquelle on ne répond qu'en lisant ce qu'a fait le second merge.
 
 ### 3. Renvoyer US-020, correctement
 
@@ -120,14 +118,15 @@ ici.
     C'est plus rapide une fois et coûteux toutes les fois suivantes. L'auteur n'apprend pas l'échec,
     et vous devenez la personne à qui l'on remonte chaque contrôle en échec.
 
-### 4. Merger US-019, ou lire comment elle est passée
+### 4. Lire comment US-019 est passée
 
 Regardez son diff sur `Helios_Delivery_Manager` : un nouveau bloc `<fieldPermissions>` pour
 `Panel_Batch__c.Quote_Pdf_Url__c`, ajouté vers le bas du fichier, là où vivent les autorisations
 `Panel_Batch__c`.
 
-Verte, petite, rien sur son chemin. Relisez-la comme le [Lab 3.2](3-2-review-a-contributor-pull-request.md) l'a enseigné, puis mergez. Si elle
-est déjà mergée, lisez plutôt celle qui l'est et notez combien il y avait peu à en dire.
+Verte, petite, rien sur son chemin. Lisez-la comme le [Lab 3.2](3-2-review-a-contributor-pull-request.md) vous a appris à en relire une, et notez
+combien il y avait peu à en dire. Si elle avait encore été ouverte, vous l'auriez mergée sur cette
+lecture.
 
 Rien ici n'a été difficile, et c'est exactement pour cela qu'il vaut la peine de savoir ce qui s'est
 passé ensuite.
@@ -234,8 +233,8 @@ nettoyage : une org neuve doit en recevoir un, et une org existante doit garder 
 
 **Simulate my teammates dit "Nothing to commit".**
 Ce scénario est déjà dans votre `integration`. Attendu pour US-018 et US-019, que le
-Niveau 3 contient dès le départ. Lisez la Pull Request mergée plutôt que de la
-recréer.
+Niveau 3 contient dès le départ. Pour US-020, cela veut dire que vous l'avez déjà reçue : sa Pull
+Request est ouverte dans votre fork.
 
 **Une des deux autorisations manque dans le permission set.**
 Quelque chose a pris un côté du fichier en bloc, très probablement un merge manuel pendant le

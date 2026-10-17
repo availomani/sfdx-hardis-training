@@ -1,7 +1,7 @@
 ---
 id: lab-3-4
-title: "Lab 3.4 - Three Pull Requests collide: choose the merge order"
-description: "Decide the order three Pull Requests are merged in when two change the same file and one fails its check, as a Salesforce release manager."
+title: "Lab 3.4 - Three Pull Requests in one release: review the merge order"
+description: "Review the merge order of two Pull Requests that changed the same permission set, and send back a third that fails its check, as a release manager."
 level: 3
 lab: 4
 lang: en
@@ -17,28 +17,33 @@ depends_on:
   docs: [salesforce-devops-config-cleaning, salesforce-devops-config-delta-deployment, salesforce-devops-config-overwrite]
 ---
 
-# Lab 3.4 - Three Pull Requests collide: choose the merge order
+# Lab 3.4 - Three Pull Requests in one release: review the merge order
 
 **Level**: 3 Release Manager
 
 **Time**: ~35 min
 
-**You will**: decide the order three Pull Requests go in, when two of them fight over the same file
-and one of them does not work.
+**You will**: go back over the order two Pull Requests on the same file went in, check that
+neither lost anything, and send back a third one that does not work.
 
 ## The situation
 
-Friday afternoon. Three stories carry this week:
+Friday afternoon. Three stories were planned for this week's release:
 
-| Pull Request                              | Author             | Checks      | What it touches                            |
-|-------------------------------------------|--------------------|-------------|--------------------------------------------|
-| **US-018** Cap the crew size              | Mariia Pyvovarchuk | green       | the assign flow, `Helios_Delivery_Manager` |
-| **US-019** Quote PDF                      | Romain Panda       | green       | `Helios_Delivery_Manager`                  |
-| **US-020** Refactor InstallationScheduler | Mariia Pyvovarchuk | **failing** | `InstallationScheduler`                    |
+| Pull Request                              | Author             | Checks      | What it touches                            | Where it is now                 |
+|-------------------------------------------|--------------------|-------------|--------------------------------------------|---------------------------------|
+| **US-018** Cap the crew size              | Mariia Pyvovarchuk | green       | the assign flow, `Helios_Delivery_Manager` | merged, in Level 2              |
+| **US-019** Quote PDF                      | Romain Panda       | green       | `Helios_Delivery_Manager`                  | merged, in the Level 2 capstone |
+| **US-020** Refactor InstallationScheduler | Mariia Pyvovarchuk | **failing** | `InstallationScheduler`                    | not opened yet                  |
 
-Two of them edit the same permission set. One does not deploy. Everyone wants to go home.
+Two of them edited the same permission set, and they are already in `integration`: you merged them
+as a contributor in Level 2, without a release manager deciding anything. **Reset this level**
+starts Level 3 from a branch that holds them too. So nothing collides in front of you in this lab.
+What you do is the release manager's half of it, after the fact: was the order right, did the
+second merge keep what the first one brought, and what happens to the third, which does not work.
 
-Deciding what goes in, in what order, and what waits, is the job.
+On a real project the first two questions come before the merge. Asking them about two merges you
+can still read in full is the cheapest way to learn to ask them.
 
 ## Before you start
 
@@ -47,29 +52,22 @@ Deciding what goes in, in what order, and what waits, is the job.
 
 ## Steps
 
-### 1. Create the Pull Requests you still can
+### 1. Receive the one Pull Request still to come
 
-**Training: Level 3** > **Simulate my teammates**, twice: **US-020 Refactor InstallationScheduler**,
-and **US-019 Generate a quote PDF from an opportunity**.
+**Training: Level 3** > **Simulate my teammates**, then **US-020 Refactor InstallationScheduler**.
 
 It is on the Welcome page, where each level menu is a page of cards, and in the **SFDX HARDIS** view
 of the left bar, where each level is a folder you unfold. Either route runs the same thing:
 
 ![The Level 3 training menu on the Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
 
-**US-018 is not among them.** You merged it in [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), and each teammate scenario is used
-once: replaying one onto a branch that already has its files reports "Nothing to commit" and opens
-nothing.
+Do not simulate US-018 or US-019. Each teammate scenario is used once, and both are already in
+`integration`: the command would say "Nothing to commit" and open nothing. Find their merged Pull
+Requests instead, in the **Pull Requests** tab of the `integration` window of the DevOps Pipeline
+panel, or in the **Closed** list of the Pull Requests of your fork on GitHub. Keep both open, the
+next steps read them.
 
-US-019 does the same, and that is not a fault either. The Level 2 capstone merges it, and
-**Reset this level** starts Level 3 from a branch that already holds it, so it is in `integration`
-whichever way you got here. The command says "Nothing to commit" and, when your fork has it, gives
-the link of its merged Pull Request: open that and read it. Every step below works either way.
-
-Two of the three decisions in this lab may therefore be decisions you already made. Going back over
-them with a release manager's eyes is cheaper than making them again, and about as useful.
-
-Wait for the checks. US-020's will fail.
+Wait for the checks of US-020. They will fail.
 
 ### 2. Triage before you touch anything
 
@@ -79,16 +77,17 @@ Sort the three, in this order of questions:
 not spend your Friday fixing Mariia's refactor.
 
 **Which ones touch the same file?** US-018 and US-019 both edit `Helios_Delivery_Manager`. Whichever
-merges second inherits whatever the first one did to that file, and step 5 is about what "inherits"
-turns out to mean.
+merged second inherited whatever the first one did to that file, and step 5 is about what "inherits"
+turned out to mean.
 
 **Which one is smaller?** All else equal, merge the smaller one first. Its author has less to redo
 if the other one lands badly.
 
-The order you want: **US-019 first** (small, green, no dependants), then **US-018** (green, bigger),
-and **US-020 goes back to Mariia**. Where they are already merged, the **Pull Requests** tab of the
-`integration` window in the DevOps Pipeline panel lists them in the order they went in, which is the
-same question asked backwards.
+The order a release manager would have picked: **US-019 first** (small, green, no dependants), then
+**US-018** (green, bigger), and **US-020 goes back to Mariia**. Now compare with what happened: the
+**Pull Requests** tab of the `integration` window lists them in the order they went in. In Level 2,
+US-018 went first, because [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) needed it there. Nothing broke, and step 5 shows why. Whether the
+order mattered is a question you can only answer by reading what the second merge did.
 
 ### 3. Send US-020 back, properly
 
@@ -115,14 +114,14 @@ opened from yours, so a plain comment does the job here.
     It is faster once and expensive every time after. The author does not learn the failure, and you
     become the person every failing check is escalated to.
 
-### 4. Merge US-019, or read how it went in
+### 4. Read how US-019 went in
 
 Look at its diff on `Helios_Delivery_Manager`: one new `<fieldPermissions>` block for
 `Panel_Batch__c.Quote_Pdf_Url__c`, added near the bottom of the file where the `Panel_Batch__c`
 grants live.
 
-Green, small, nothing in its way. Review it the way [Lab 3.2](3-2-review-a-contributor-pull-request.md) taught, then merge. If it is already
-merged, read the merged one instead and note how little there was to it.
+Green, small, nothing in its way. Read it the way [Lab 3.2](3-2-review-a-contributor-pull-request.md) taught you to review one, and note how
+little there was to it. Had it still been open, you would have merged it on that reading.
 
 Nothing here was hard, which is exactly why it is worth knowing what happened next.
 
@@ -219,7 +218,7 @@ org must get one, and an existing org must keep its own.
 
 **Simulate my teammates says "Nothing to commit".**
 That scenario is already in your `integration`. Expected for US-018 and US-019, which Level 3
-starts with. Read the merged Pull Request instead of recreating it.
+starts with. For US-020, it means you received it already: its Pull Request is open in your fork.
 
 **One of the two grants is missing from the permission set.**
 Something took one side of the file wholesale, most likely a manual merge during Level 2. Put it

@@ -796,7 +796,7 @@
       "id": "lab-3-4",
       "level": 3,
       "lab": 4,
-      "title": "Three Pull Requests collide: choose the merge order",
+      "title": "Three Pull Requests in one release: review the merge order",
       "file": "labs/en/level-3-release-manager/3-4-merge-colliding-pull-requests.md",
       "url": "https://sfdx-hardis-training.cloudity.com/en/level-3-release-manager/3-4-merge-colliding-pull-requests/",
       "commands": [

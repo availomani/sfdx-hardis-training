@@ -25,7 +25,7 @@ nav:
       - "Lab 3.1 - Configure the CI/CD pipeline up to production": en/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
       - "Lab 3.2 - Review and merge a contributor Pull Request": en/level-3-release-manager/3-2-review-a-contributor-pull-request.md
       - "Lab 3.3 - Read the deployment log, and what .forceignore hides from it": en/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md
-      - "Lab 3.4 - Three Pull Requests collide: choose the merge order": en/level-3-release-manager/3-4-merge-colliding-pull-requests.md
+      - "Lab 3.4 - Three Pull Requests in one release: review the merge order": en/level-3-release-manager/3-4-merge-colliding-pull-requests.md
       - "Lab 3.5 - Promote to UAT and write the release notes": en/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md
       - "Lab 3.6 - Release to production and read your DORA metrics": en/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics.md
       - "Lab 3.7 - Production is broken: hotfix and retrofit": en/level-3-release-manager/3-7-hotfix-and-retrofit.md
@@ -64,7 +64,7 @@ nav:
       - "Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production": fr/level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md
       - "Lab 3.2 - Relire et merger la Pull Request d'un contributeur": fr/level-3-release-manager/3-2-review-a-contributor-pull-request.md
       - "Lab 3.3 - Lire le log de déploiement, et ce que .forceignore lui cache": fr/level-3-release-manager/3-3-deploy-to-integration-and-read-the-log.md
-      - "Lab 3.4 - Trois Pull Requests se percutent : choisir l'ordre de merge": fr/level-3-release-manager/3-4-merge-colliding-pull-requests.md
+      - "Lab 3.4 - Trois Pull Requests pour une release : revoir l'ordre de merge": fr/level-3-release-manager/3-4-merge-colliding-pull-requests.md
       - "Lab 3.5 - Promouvoir en UAT et écrire les notes de version": fr/level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md
       - "Lab 3.6 - Livrer en production et lire vos métriques DORA": fr/level-3-release-manager/3-6-release-to-production-and-read-dora-metrics.md
       - "Lab 3.7 - La production est cassée : hotfix et retrofit": fr/level-3-release-manager/3-7-hotfix-and-retrofit.md
