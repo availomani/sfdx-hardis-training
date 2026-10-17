@@ -125,6 +125,13 @@ export function run(command, args, options = {}) {
  * orgs: running them one after the other would triple a wait that is already
  * the longest part of the setup. Output is captured rather than streamed,
  * because three commands writing to one terminal at once is unreadable.
+ *
+ * It is also the one to use before a long wait the panel has to show: run()
+ * blocks this process, so nothing else, not even a "still waiting" line, can
+ * happen until the child ends.
+ *
+ * `timeoutMs` stops the child and everything it started once that time is up,
+ * and resolves with `timedOut: true`.
  */
 export function runAsync(command, args, options = {}) {
   const spawnCommand = WINDOWS ? [quoteArg(command), ...args.map(quoteArg)].join(" ") : command;
@@ -137,11 +144,34 @@ export function runAsync(command, args, options = {}) {
     });
     let stdout = "";
     let stderr = "";
+    let timedOut = false;
+    const timer = options.timeoutMs
+      ? setTimeout(() => {
+          timedOut = true;
+          killTree(child);
+        }, options.timeoutMs)
+      : null;
+    const done = (result) => {
+      clearTimeout(timer);
+      resolve(timedOut ? { ...result, code: 1, timedOut: true } : result);
+    };
     child.stdout.on("data", (chunk) => (stdout += chunk));
     child.stderr.on("data", (chunk) => (stderr += chunk));
-    child.on("error", (error) => resolve({ code: 1, stdout, stderr: stderr + error.message }));
-    child.on("close", (code) => resolve({ code: code === null ? 1 : code, stdout, stderr }));
+    child.on("error", (error) => done({ code: 1, stdout, stderr: stderr + error.message }));
+    child.on("close", (code) => done({ code: code === null ? 1 : code, stdout, stderr }));
   });
+}
+
+/**
+ * Stops a child and what it started. On Windows the child is the shell that
+ * runs the .cmd shim, and killing only the shell leaves the CLI running.
+ */
+function killTree(child) {
+  if (WINDOWS) {
+    spawnSync("taskkill", ["/PID", String(child.pid), "/T", "/F"], { stdio: "ignore" });
+  } else {
+    child.kill("SIGTERM");
+  }
 }
 
 /**

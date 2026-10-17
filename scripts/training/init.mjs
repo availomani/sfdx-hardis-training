@@ -149,23 +149,32 @@ export async function findDevHub(orgs, preselected) {
   return select("Which org is your Developer Edition org?", orgChoices(candidates), null);
 }
 
-/** True when the org answers the one query only a Dev Hub can. */
-function isDevHub(alias) {
-  const res = runJson("sf", ["data", "query", "--query", "SELECT Id FROM ScratchOrgInfo LIMIT 1", "--target-org", alias, "--json"]);
-  return res?.status === 0;
-}
+const DEV_HUB_QUERY_TIMEOUT_MS = 2 * 60 * 1000;
+// The deploy waits 10 minutes itself, this is only for a CLI that never returns
+const DEV_HUB_DEPLOY_TIMEOUT_MS = 11 * 60 * 1000;
+const DEV_HUB_BY_HAND = "Open the org, go to Setup > Dev Hub, switch Enable Dev Hub on, then click Set up my training environment again.";
 
 /**
  * Turns Dev Hub on, which is one setting in Setup and cannot be turned off again.
  * On a throwaway Developer Edition org that costs nothing. It is deployed as
  * metadata rather than clicked, so nobody has to find the page.
+ *
+ * Every wait is announced before it starts, and the deploy says every minute
+ * that it is still running: without that, a slow deploy and a stuck one look
+ * the same in the panel.
  */
 export async function ensureDevHub(alias) {
-  if (isDevHub(alias)) {
+  info(`Checking whether ${c.bold(alias)} is a Dev Hub...`);
+  const before = await isDevHub(alias);
+  if (before === "timeout") {
+    abort(`${alias} did not answer within ${DEV_HUB_QUERY_TIMEOUT_MS / 60000} minutes.`, DEV_HUB_BY_HAND);
+  }
+  if (before) {
     ok(`${c.bold(alias)} is already a Dev Hub.`);
     return;
   }
-  info(`Turning Dev Hub on in ${c.bold(alias)}.`);
+  info(`Turning Dev Hub on in ${c.bold(alias)}: deploying the Dev Hub setting, up to 10 minutes.`);
+  info(c.dim(`    If it takes too long: open ${alias}, Setup > Dev Hub, switch Enable Dev Hub on, then click Set up my training environment again.`));
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "helios-devhub-"));
   fs.mkdirSync(path.join(dir, "settings"));
   fs.writeFileSync(
@@ -195,25 +204,40 @@ export async function ensureDevHub(alias) {
     ].join("\n"),
     "utf8"
   );
-  const res = run(
-    "sf",
-    ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", alias, "--wait", "10", "--json"],
-    { quiet: true, capture: true }
-  );
-  removeTempDir(dir);
-  if (res.code !== 0) {
+  const started = Date.now();
+  const ticker = setInterval(() => {
+    const minutes = Math.round((Date.now() - started) / 60000);
+    info(c.dim(`    Still deploying the Dev Hub setting (${minutes} min)...`));
+  }, 60 * 1000);
+  let res;
+  try {
+    res = await runAsync(
+      "sf",
+      ["project", "deploy", "start", "--metadata-dir", dir, "--target-org", alias, "--wait", "10", "--json"],
+      { timeoutMs: DEV_HUB_DEPLOY_TIMEOUT_MS }
+    );
+  } finally {
+    clearInterval(ticker);
+    removeTempDir(dir);
+  }
+  if (res.timedOut) {
+    warn(`The deploy of the Dev Hub setting to ${alias} did not end within ${DEV_HUB_DEPLOY_TIMEOUT_MS / 60000} minutes.`);
+  } else if (res.code !== 0) {
     const json = parseJsonOutput(res.stdout);
     warn(json?.message || (res.stderr || res.stdout).trim().split("\n").slice(-5).join("\n"));
   }
   // The setting is saved before the objects behind it answer queries
-  for (let attempt = 0; res.code === 0 && attempt < 12 && !isDevHub(alias); attempt++) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+  let after = false;
+  if (res.code === 0) {
+    info(`Waiting for Dev Hub to take effect in ${c.bold(alias)}, up to a minute...`);
+    after = await isDevHub(alias);
+    for (let attempt = 0; after !== true && attempt < 12; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      after = await isDevHub(alias);
+    }
   }
-  if (res.code !== 0 || !isDevHub(alias)) {
-    abort(
-      `Dev Hub could not be turned on in ${alias}.`,
-      "Open the org, go to Setup > Dev Hub, switch Enable Dev Hub on, then click Set up my training environment again."
-    );
+  if (after !== true) {
+    abort(`Dev Hub could not be turned on in ${alias}.`, DEV_HUB_BY_HAND);
   }
   // The org answers the query, but the CLI still has "not a Dev Hub" in the
   // auth file it wrote when the org was connected, and `sf org create scratch`
@@ -221,6 +245,22 @@ export async function ensureDevHub(alias) {
   // NotADevHubError on an org that is one.
   run("sf", ["org", "list", "--json"], { quiet: true, capture: true });
   ok(`${c.bold(alias)} is a Dev Hub now.`);
+}
+
+/**
+ * True when the org answers the one query only a Dev Hub can, "timeout" when it
+ * does not answer at all.
+ */
+async function isDevHub(alias) {
+  const res = await runAsync(
+    "sf",
+    ["data", "query", "--query", "SELECT Id FROM ScratchOrgInfo LIMIT 1", "--target-org", alias, "--json"],
+    { timeoutMs: DEV_HUB_QUERY_TIMEOUT_MS }
+  );
+  if (res.timedOut) {
+    return "timeout";
+  }
+  return parseJsonOutput(res.stdout.trim())?.status === 0;
 }
 
 // ------------------------------------------------------------ scratch orgs

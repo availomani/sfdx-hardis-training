@@ -3,6 +3,10 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-18
+
+- Set up my training environment says what it waits for while it turns Dev Hub on, and stops with a clear message when the org does not answer.
+
 ## 2026-10-17
 
 - Lab 3.4 says plainly that US-018 and US-019 are already merged when it starts, and reviews their merge order instead of promising a live collision.
