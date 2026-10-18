@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "18f239fe55c0fb415b7e3372e997bfe9a3b873fd"
+source_rev: "67bd5ed051b499371d44a8597671e4191d17414c"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -26,7 +26,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~50 min<!-- observed --> (observé : médiane 53 min, 4 participants, le plus rapide 29 min)<!-- /observed -->
+**Durée** : ~50 min<!-- observed --> (observé : médiane 52 min, 5 participants, le plus rapide 29 min)<!-- /observed -->
 
 **Vous allez** : protéger un réglage que l'UAT garde pour elle, faire votre première promotion entre
 deux branches majeures, lire les deployment actions qu'elle transporte, et produire le document que

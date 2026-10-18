@@ -31,7 +31,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~40 min<!-- observed --> (observed: median 41 min, 7 learners, fastest 16 min)<!-- /observed -->
+**Time**: ~35 min<!-- observed --> (observed: median 38 min, 5 learners, fastest 16 min)<!-- /observed -->
 
 **You will**: take one broken formula from production to a fix that is live, then bring that fix
 back down into the pipeline so nothing undoes it.
