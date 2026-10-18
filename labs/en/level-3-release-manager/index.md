@@ -8,7 +8,7 @@ lang: en
 
 # Level 3 - Salesforce DevOps release manager
 
-**Time**: about 8 h 15.<!-- observed --> Observed on Labs 3.1 to 3.11: median 10 h 58, 4 learners, fastest 7 h 36.<!-- /observed -->
+**Time**: about 7 h 30.<!-- observed --> Observed on Labs 3.1 to 3.11: median 10 h 58, 4 learners, fastest 7 h 36.<!-- /observed -->
 
 **Before you start**: [Level 1](../level-1-contributor-basics/index.md) **and** [Level 2](../level-2-contributor-advanced/index.md). Both
 are required, and the badge audit checks both before it looks at anything here.
@@ -72,7 +72,7 @@ Either route runs the same thing.
 
 | Lab                                                       | Title                                                        | Time   |
 |-----------------------------------------------------------|--------------------------------------------------------------|--------|
-| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configure the CI/CD pipeline up to production                | 2 h    |
+| [3.1](3-1-configure-the-pipeline-up-to-production.md)     | Configure the CI/CD pipeline up to production                | 1 h 25 |
 | [3.2](3-2-review-a-contributor-pull-request.md)           | Review and merge a contributor Pull Request                  | 25 min |
 | [3.3](3-3-deploy-to-integration-and-read-the-log.md)      | Read the deployment log, and what .forceignore hides from it | 1 h 05 |
 | [3.4](3-4-merge-colliding-pull-requests.md)               | Three Pull Requests in one release: review the merge order   | 10 min |
@@ -82,7 +82,7 @@ Either route runs the same thing.
 | [3.8](3-8-monitor-your-production-org.md)                 | Monitor your production org                                  | 25 min |
 | [3.9](3-9-generate-the-project-documentation.md)          | Generate the Salesforce project documentation                | 15 min |
 | [3.10](3-10-promote-a-subset-with-promotion-branches.md)  | Promote a subset with promotion branches (Beta)              | 40 min |
-| [3.11](3-11-capstone-run-a-weekly-release-cycle.md)       | Capstone: run a weekly release cycle                         | 25 min |
+| [3.11](3-11-capstone-run-a-weekly-release-cycle.md)       | Capstone: run a weekly release cycle                         | 20 min |
 
 ## One more org
 
