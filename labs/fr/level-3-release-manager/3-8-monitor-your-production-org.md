@@ -5,7 +5,7 @@ description: "Mettez en place le monitoring nocturne sfdx-hardis sur votre org S
 level: 3
 lab: 8
 lang: fr
-source_rev: "c8044eec6f1b1e496c55d1c623ba67523271dda1"
+source_rev: "bc6e3874001ddb8060b7946e8f62e07e7a107d12"
 screenshots:
   - annotated/vscode/org-monitoring--not-a-monitoring-repo
   - annotated/vscode/monitoring-config--what-it-watches
@@ -338,7 +338,7 @@ produit.
 
 Le prochain release manager aura besoin du repository de monitoring dès son premier jour, et le seul
 endroit où il regardera est le projet. De retour dans le repository de sources : **DevOps
-Pipeline** > menu engrenage > **Pipeline Settings**, portée **Global Settings**, onglet **Salesforce
+Pipeline** > menu engrenage > **Configure Pipeline Settings**, portée **Global Settings**, onglet **Salesforce
 Project**.
 **Monitoring repository** : **Edit**, collez l'adresse de votre repository de monitoring,
 `https://github.com/<votre-pseudo>/sfdx-hardis-training-monitoring`, et **Save**. Puis

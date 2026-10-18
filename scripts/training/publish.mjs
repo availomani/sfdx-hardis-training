@@ -2,7 +2,7 @@
  * Training > Level 3 > Publish my pipeline configuration.
  *
  * The release manager owns the pipeline configuration: what the DevOps Pipeline
- * settings wrote, the certificates of Add/Configure Org, the .forceignore and the
+ * settings wrote, the certificates of Add or Reconnect a Major Org, the .forceignore and the
  * package-no-overwrite list. Nobody pushes to a major branch, the release manager
  * included, and the branch protection refuses it: configuration goes through a
  * Pull Request into integration like everything else, and reaches the other major

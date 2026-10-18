@@ -280,7 +280,7 @@ const overlay = {
         value: o.alias,
         description: usernameFor(o.alias)
       })),
-    // What Add/Configure Org (hardis:project:configure:auth) is answered with in
+    // What Add or Reconnect a Major Org (hardis:project:configure:auth) is answered with in
     // Lab 3.1: the preprod branch and its Developer Edition org, among the four
     // major branches a Level 3 fork has. integration and uat keep their auth URL
     // secrets in the lab, so preprod is the first org it walks through
@@ -844,6 +844,189 @@ writeJson(path.join(OUT, "git-provider-mock-review-pr.json"), {
     }
   ]
 });
+
+/*
+ * Three panels Lab 3.1 only shows, for settings Helios never switches on: the
+ * Org Initialization steps, a Scratch Org Pool and the Replacement Rules. They
+ * describe what Helios would have if it used them, so the pictures match the
+ * project around them. The shapes are the ones of the extension's own fixtures
+ * in test/fixtures/sf-shim, which the built-in replacement rules are read from.
+ */
+const SHIM = path.join(FIX, "sf-shim");
+const shimFixture = (name) => JSON.parse(fs.readFileSync(path.join(SHIM, name), "utf8"));
+const PERMISSION_SETS = ["Helios_Delivery_Crew", "Helios_Delivery_Manager"];
+const MAJOR_BRANCHES = ["integration", "uat", "preprod", "main"];
+
+const baseOrgInit = shimFixture("org-init.json");
+overlay.orgInit = {
+  ...baseOrgInit,
+  source: "orgInitSteps",
+  legacyKeys: [],
+  steps: [
+    {
+      id: "deploy-sources",
+      label: "Deploy project sources",
+      type: "deploy-sources",
+      orgTypes: ["scratch"],
+      enabled: true,
+      allowFailure: false,
+      runAtPoolFill: true
+    },
+    {
+      id: "assign-permission-sets",
+      label: "Assign the Helios Delivery permission sets",
+      type: "assign-permission-sets",
+      parameters: { permissionSets: PERMISSION_SETS },
+      orgTypes: ["scratch", "sandbox"],
+      enabled: true,
+      allowFailure: true,
+      runAtPoolFill: true
+    },
+    {
+      id: "load-baseline",
+      label: "Load the Helios baseline records",
+      type: "data",
+      parameters: { sfdmuProject: "HeliosBaseline" },
+      orgTypes: ["scratch"],
+      enabled: true,
+      allowFailure: false,
+      runAtPoolFill: true
+    },
+    {
+      id: "load-crew-reference-data",
+      label: "Load the crew reference data",
+      type: "data",
+      parameters: { sfdmuProject: "HeliosCrewRefData" },
+      orgTypes: ["scratch", "sandbox"],
+      enabled: true,
+      allowFailure: false,
+      runAtPoolFill: false
+    }
+  ],
+  definitionErrors: [],
+  scratchDef: {
+    path: "config/project-scratch-def.json",
+    exists: true,
+    content: JSON.parse(fs.readFileSync(path.join(ROOT, "config", "project-scratch-def.json"), "utf8")),
+    issues: []
+  },
+  scratchOrgDuration: 30,
+  scratchOrgMajorBranch: "integration",
+  scratchOrgShapes: {
+    global: null,
+    branches: Object.fromEntries(MAJOR_BRANCHES.map((branch) => [branch, null])),
+    majorBranches: MAJOR_BRANCHES
+  }
+};
+
+// Four scratch orgs ready of five, filled every night from integration
+const poolOrg = (day) => {
+  const stamp = `202609${String(day).padStart(2, "0")}`;
+  const expires = new Date(Date.UTC(2026, 8, day + 30));
+  return {
+    alias: `PO-h3Lx-integration_${stamp}_0312`,
+    username: `helios.deploy+po-h3lx-${stamp}@heliostraining.invalid`,
+    instanceUrl: `https://helios-po-h3lx-${stamp.slice(4)}-dev-ed.scratch.my.salesforce.com`,
+    createdDate: `2026-09-${String(day).padStart(2, "0")}T03:12:41.000Z`,
+    expirationDate: expires.toISOString().slice(0, 10),
+    daysLeft: day + 30 - 25
+  };
+};
+const poolJob = (id) => `${WEB}/actions/runs/${id}`;
+overlay.scratchOrgPool = {
+  storageService: "gitProvider",
+  dashboardUrl: `${WEB}/issues/7`,
+  available: 4,
+  max: 5,
+  canTake: true,
+  keyStatus: "ok",
+  orgs: [18, 21, 23, 25].map(poolOrg),
+  history: [
+    { date: iso(24, 14), by: login("mariia"), branch: "training/mate-us-019-quote-pdf", pullRequest: "", jobUrl: "", alias: "PO-h3Lx-integration_20260917_0312" },
+    { date: iso(22, 9), by: "github-actions[bot]", branch: "training/mate-us-020-apex-refactor", pullRequest: "#3", jobUrl: poolJob(18110452071), alias: "PO-h3Lx-integration_20260916_0312" },
+    { date: iso(19, 10), by: login("victor"), branch: "features/US-024-crew-size-required", pullRequest: "", jobUrl: "", alias: "PO-h3Lx-integration_20260915_0312" }
+  ],
+  failures: [],
+  lastRefresh: { date: "2026-09-25T03:12:48.000Z", jobUrl: poolJob(18110987345) },
+  devHubLimits: {
+    activeScratchOrgs: { used: 8, max: 40 },
+    dailyScratchOrgs: { used: 2, max: 80 }
+  }
+};
+
+// The warehouse URL of each org (Helios_Warehouse says so itself), and ViewSetup off in production
+const baseRules = shimFixture("replacement-rules.json");
+const WAREHOUSE = {
+  integration: "https://warehouse-int.helios.invalid",
+  uat: "https://warehouse-uat.helios.invalid",
+  preprod: "https://warehouse-preprod.helios.invalid",
+  main: "https://warehouse.helios.invalid",
+  default: "https://warehouse-dev.helios.invalid"
+};
+const HELIOS_RULES = [
+  {
+    id: "warehouse-url",
+    description: "Each org books panel batches with its own warehouse system",
+    type: "xml-value",
+    files: "**/remoteSiteSettings/Helios_Warehouse.remoteSite-meta.xml",
+    xmlPath: "RemoteSiteSetting/url",
+    values: WAREHOUSE,
+    required: true
+  },
+  {
+    id: "remove-view-setup-in-production",
+    description: "Crew members see Setup in the sandboxes only",
+    type: "xml-remove",
+    files: "**/profiles/Helios Crew.profile-meta.xml",
+    xmlPath: "Profile/userPermissions[name=ViewSetup]",
+    includeTargetBranches: ["main"]
+  }
+];
+const effectiveFor = (branch) => [
+  ...HELIOS_RULES.map((rule) => {
+    const applies = !rule.includeTargetBranches || rule.includeTargetBranches.includes(branch);
+    const resolved = rule.values ? { source: "branch", value: rule.values[branch] } : { source: "none" };
+    return { ...rule, enabled: true, origins: ["project"], builtIn: false, applies, resolved };
+  }),
+  ...(baseRules.list.effective.integration || []).filter((rule) => rule.builtIn)
+];
+const builtInCount = baseRules.list.builtInRules.length;
+overlay.replacementRules = {
+  ...baseRules,
+  list: {
+    ...baseRules.list,
+    outputString: `${HELIOS_RULES.length} replacement rules (${HELIOS_RULES.length} in project), ${builtInCount} built-in rules`,
+    definitions: HELIOS_RULES.map((rule) => ({ layer: "project", file: "config/.sfdx-hardis.yml", rule, overrides: [] })),
+    effective: Object.fromEntries([...MAJOR_BRANCHES, "default"].map((branch) => [branch, effectiveFor(branch)])),
+    layers: {
+      project: { file: "config/.sfdx-hardis.yml", count: HELIOS_RULES.length },
+      branches: [],
+      issue: { available: true, number: 0, url: "", count: 0 }
+    },
+    majorBranches: baseRules.list.majorBranches,
+    secretLookups: {},
+    issues: []
+  },
+  preview: Object.fromEntries(
+    ["uat", "main"].map((branch) => [
+      branch,
+      {
+        target: { targetBranch: branch, label: branch, apiVersion: 68 },
+        results: [
+          {
+            file: "force-app/main/default/remoteSiteSettings/Helios_Warehouse.remoteSite-meta.xml",
+            ruleId: "warehouse-url",
+            origins: ["project"],
+            status: "changed",
+            count: 1
+          }
+        ],
+        warnings: [],
+        appliedRules: [{ id: "warehouse-url", origins: ["project"], files: 1 }]
+      }
+    ])
+  )
+};
 
 writeJson(path.join(OUT, "sf-mock-overlay.json"), overlay);
 

@@ -664,20 +664,29 @@
         "instanceUrl",
         "orgAuthenticationMode",
         "enablePromotionBranches",
-        "allowedPromotionSteps"
+        "allowedPromotionSteps",
+        "poolConfig",
+        "orgInitSteps",
+        "replacementRules"
       ],
       "docs": [
         "salesforce-devops-setup-home",
         "salesforce-devops-setup-auth",
         "salesforce-devops-setup-auth-github",
-        "salesforce-devops-setup-existing-org"
+        "salesforce-devops-setup-existing-org",
+        "salesforce-devops-setup-scratch-org-pool",
+        "salesforce-devops-org-initialization",
+        "salesforce-devops-config-replacement-rules"
       ],
       "panels": [
         "pipeline",
         "pipelineConfig",
         "orgManager",
         "commandExecution",
-        "promptInput"
+        "promptInput",
+        "scratchOrgPool",
+        "orgInit",
+        "replacementRules"
       ],
       "screenshots": [
         "annotated/vscode/devops-pipeline--one-column",
@@ -697,7 +706,10 @@
         "annotated/vscode/pipeline-config-branch-merge-target",
         "annotated/vscode/pipeline-cards--save-publish",
         "annotated/vscode/work-save-completed",
-        "annotated/vscode/devops-pipeline-level3--four-stages"
+        "annotated/vscode/devops-pipeline-level3--four-stages",
+        "annotated/vscode/scratch-org-pool",
+        "annotated/vscode/org-initialization",
+        "annotated/vscode/replacement-rules"
       ],
       "translations": {
         "fr": {
@@ -1218,6 +1230,15 @@
       "salesforce-devops-setup-existing-org": [
         "lab-3-1"
       ],
+      "salesforce-devops-setup-scratch-org-pool": [
+        "lab-3-1"
+      ],
+      "salesforce-devops-org-initialization": [
+        "lab-3-1"
+      ],
+      "salesforce-devops-config-replacement-rules": [
+        "lab-3-1"
+      ],
       "salesforce-devops-validate-merge-request": [
         "lab-3-2"
       ],
@@ -1357,6 +1378,15 @@
         "lab-3-1",
         "lab-3-4",
         "lab-3-10"
+      ],
+      "scratchOrgPool": [
+        "lab-3-1"
+      ],
+      "orgInit": [
+        "lab-3-1"
+      ],
+      "replacementRules": [
+        "lab-3-1"
       ],
       "doraMetrics": [
         "lab-3-6",
@@ -1585,6 +1615,15 @@
       "allowedPromotionSteps": [
         "lab-3-1",
         "lab-3-10"
+      ],
+      "poolConfig": [
+        "lab-3-1"
+      ],
+      "orgInitSteps": [
+        "lab-3-1"
+      ],
+      "replacementRules": [
+        "lab-3-1"
       ],
       "useDeltaDeployment": [
         "lab-3-3",

@@ -809,7 +809,7 @@ export const RULES = [
       const configs = ctx.listOn("main", "config/branches/").concat(ctx.listOn(DEV, "config/branches/"));
       const missing = ["preprod", "main"].filter((b) => !configs.some((f) => f.endsWith(`.sfdx-hardis.${b}.yml`)));
       if (missing.length > 0) {
-        return miss(`missing branch configuration: ${missing.join(", ")}`, "config/branches/. Add/Configure Org writes it, Lab 3.1 step 5 for preprod and step 8 for main");
+        return miss(`missing branch configuration: ${missing.join(", ")}`, "config/branches/. Add or Reconnect a Major Org writes it, Lab 3.1 step 5 for preprod and step 8 for main");
       }
       const branches = ["integration", "uat", "preprod", "main"];
       const notConfigured = [];
@@ -829,7 +829,7 @@ export const RULES = [
       if (notConfigured.length > 0) {
         return miss(
           `targetUsername or instanceUrl is missing for: ${notConfigured.join(", ")}`,
-          "config/branches/. Set up my training environment writes integration and uat, Add/Configure Org writes preprod (Lab 3.1 step 5) and main (step 8)"
+          "config/branches/. Set up my training environment writes integration and uat, Add or Reconnect a Major Org writes preprod (Lab 3.1 step 5) and main (step 8)"
         );
       }
       // Lab 3.1 moves preprod and main to JWT, and only those two: integration
@@ -844,7 +844,7 @@ export const RULES = [
       if (noKey.length > 0) {
         return miss(
           `no encrypted key file for: ${noKey.join(", ")}`,
-          "config/branches/.jwt/ on integration. Add/Configure Org writes them (Lab 3.1 steps 5 and 8), and the Pull Request of Lab 3.1 step 11 puts them there"
+          "config/branches/.jwt/ on integration. Add or Reconnect a Major Org writes them (Lab 3.1 steps 5 and 8), and the Pull Request of Lab 3.1 step 11 puts them there"
         );
       }
       // The secrets of the fork are only visible from the learner's machine, through gh
@@ -865,7 +865,7 @@ export const RULES = [
         if (missingSecrets.length > 0) {
           return miss(
             `these secrets are missing: ${missingSecrets.join(", ")}`,
-            "your fork, Settings > Secrets and variables > Actions: the two values Add/Configure Org prints, Lab 3.1 step 6 (step 8 for main)"
+            "your fork, Settings > Secrets and variables > Actions: the two values Add or Reconnect a Major Org prints, Lab 3.1 step 6 (step 8 for main)"
           );
         }
       }

@@ -3,8 +3,13 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-19
+
+- Lab 3.1 shows what the scratch org pool, org initialization and replacement rules are for, with a picture of each and its documentation page, without asking you to set them up.
+
 ## 2026-10-18
 
+- Labs 3.1 and 3.6 follow the new gear menu of the DevOps Pipeline: Configure Pipeline Settings, Add or Reconnect a Major Org, Configure Org Initialization, Configure Replacement Rules and Generate DORA Metrics, with their screenshots taken again.
 - Set up my training environment says what it waits for while it turns Dev Hub on, and stops with a clear message when the org does not answer.
 
 ## 2026-10-17

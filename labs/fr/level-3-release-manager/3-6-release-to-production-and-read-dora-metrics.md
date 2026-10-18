@@ -5,7 +5,7 @@ description: "Livrez via preprod vers votre org de production, vérifiez-la, pui
 level: 3
 lab: 6
 lang: fr
-source_rev: "92d4a52853387b29ca0e1a40a1d4d5442eb947c5"
+source_rev: "06a0ac8a2da3aa0b2b91d615aa755a4a49576ed5"
 screenshots:
   - annotated/vscode/orgs-manager
   - annotated/vscode/pipeline-settings-menu-level3--dora
@@ -154,10 +154,14 @@ Vous avez livré. La question qu'on pose ensuite à un release manager est "où 
 mérite mieux qu'une impression.
 
 Ouvrez le panneau **DevOps Pipeline**, cliquez sur l'engrenage **(1)** en haut à droite, et
-choisissez **DORA metrics** **(2)**. Le menu contient trois entrées et vous avez utilisé les deux
-autres au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) : **Pipeline Settings** et **Add/Configure Org**.
+choisissez **Generate DORA Metrics** **(2)**. Vous avez utilisé **Configure Pipeline Settings** et **Add or Reconnect a
+Major Org** du même menu au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md).
+**Configure Org Initialization** et **Configure Replacement Rules** sont deux réglages que ce cours
+laisse de côté : le
+[Lab 3.1](3-1-configure-the-pipeline-up-to-production.md#trois-reglages-que-ce-cours-laisse-de-cote) dit à
+quoi ils servent.
 
-![Le menu engrenage du panneau DevOps Pipeline, ouvert sur DORA metrics](../../_assets/annotated/vscode/pipeline-settings-menu-level3--dora.png)
+![Le menu engrenage du panneau DevOps Pipeline, ouvert sur Generate DORA Metrics](../../_assets/annotated/vscode/pipeline-settings-menu-level3--dora.png)
 
 Un onglet **DORA metrics** s'ouvre et dit, pendant quelques secondes, qu'il lit les jobs de
 déploiement et les Pull Requests depuis GitHub. Cette phrase est toute la conception. Rien n'est

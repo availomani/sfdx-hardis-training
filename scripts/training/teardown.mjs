@@ -272,12 +272,12 @@ System.debug('Deleted ' + groups.size() + ' public group(s)');
  * The External Client Apps Lab 3.1 deploys, one per branch it moves to JWT
  * (preprod and main, all four in the earlier version of the lab), named
  * sfdxhardis<branch>. They hold nothing of the app, but they outlive it: the
- * next Add/Configure Org on the same org stops on "External Client App named
+ * next Add or Reconnect a Major Org on the same org stops on "External Client App named
  * sfdxhardisintegration already exists ... Have you deleted it?", which is every
  * learner who walks Level 3 twice on the same orgs. The app and its four
  * settings records go in one destructive deploy. Allowed to fail, like the rest.
  */
-// Only the names the course creates: Add/Configure Org names its app sfdxhardis<branch>,
+// Only the names the course creates: Add or Reconnect a Major Org names its app sfdxhardis<branch>,
 // Install Org Monitoring sfdxhardismon_<org>, and the settings records start with the
 // app name. Every sfdx-hardis project names its apps the same way, so matching any
 // sfdxhardis* app would also take another project's app off the learner's own Dev Hub.

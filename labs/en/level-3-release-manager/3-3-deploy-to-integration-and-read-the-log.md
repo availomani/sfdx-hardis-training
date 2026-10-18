@@ -102,7 +102,7 @@ org has to genuinely be at the commit the pipeline thinks it is at.
 !!! note "This project has delta off, on purpose"
     `useDeltaDeployment` is absent from `config/.sfdx-hardis.yml`, so every deployment in this
     course sends the full package. Read it for yourself: **DevOps Pipeline**, gear menu,
-    **Pipeline Settings**, scope **Global Settings** **(1)**, **Deployment** tab **(2)**.
+    **Configure Pipeline Settings**, scope **Global Settings** **(1)**, **Deployment** tab **(2)**.
     **Use Delta Deployment** **(3)** shows **Disabled**.
 
     The Helios app is about sixty components by now, so a full deployment costs a minute and delta would save

@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "a05e14c9ddb9705fbe1bfa3092ea33c211259efc"
+source_rev: "0af2cd60817d219928bbe7e9bc5860dd8d29e385"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -170,7 +170,7 @@ de pose porte ce permission set, quel que soit son profil.
 
 ### 6. Regarder l'autre protection, tant que vous y êtes
 
-Ouvrez le panneau **DevOps Pipeline**, puis **Pipeline Settings** dans le menu engrenage. Laissez le
+Ouvrez le panneau **DevOps Pipeline**, puis **Configure Pipeline Settings** dans le menu engrenage. Laissez le
 sélecteur de portée **(1)** sur **Global Settings** : ce sont des règles de projet, identiques pour
 chaque branche.
 

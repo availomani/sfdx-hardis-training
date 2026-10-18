@@ -109,7 +109,7 @@
   "vscode/git-merge-editor.png#parts": "c6b94f7991e01224",
   "vscode/git-merge-editor.png#accept-both": "dd2a1421bb044ed9",
   "vscode/git-merge-editor-accepted.png#result": "277e69d0f8e36422",
-  "vscode/pipeline-settings-menu.png#add-org": "f389a5a18ff8c61a",
+  "vscode/pipeline-settings-menu.png#add-org": "3d97f62fefeb16be",
   "web/github-new-branch.png": "89e1defa001db2ef",
   "web/github-pr-merge-squash.png": "c3e6afdbaea141dd",
   "vscode/package-no-overwrite-edit.png#add-type": "26845e51b2e10085",
@@ -168,11 +168,14 @@
   "vscode/pipeline-review-pr.png": "3323522c806f5047",
   "vscode/pipeline-pr-window-review-files.png": "3f58c73998a99938",
   "vscode/pipeline-pr-window-running.png": "374d66e608385d2f",
-  "vscode/pipeline-settings-menu-level3.png#dora": "fbe757d5bc8a85f2",
+  "vscode/pipeline-settings-menu-level3.png#dora": "0926b3434cb99561",
   "vscode/dora-metrics.png": "f65b3c9f12c47614",
   "vscode/dora-metrics-production.png": "18cc5a8fcbcff81f",
   "vscode/dora-metrics-export-menu.png": "70e0f082768ddee3",
   "vscode/pipeline-config-branch-merge-target.png": "29cfeeb620a8ea72",
   "vscode/sidebar-commands-collapsed.png#reset-selection": "3dd0990d668fc39d",
-  "vscode/metadata-retriever-recent-changes.png#pick-rows": "59a9849db434ca10"
+  "vscode/metadata-retriever-recent-changes.png#pick-rows": "59a9849db434ca10",
+  "vscode/scratch-org-pool.png": "f150ee1c09200229",
+  "vscode/org-initialization.png": "6a087bf7f0e22f71",
+  "vscode/replacement-rules.png": "ed91304460213e18"
 }

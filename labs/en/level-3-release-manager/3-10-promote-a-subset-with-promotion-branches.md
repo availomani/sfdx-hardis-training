@@ -90,7 +90,7 @@ included.
 The two settings this lab needs were published in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) and have been travelling up the
 pipeline with every promotion since. Look at them before you rely on them.
 
-Open the **DevOps Pipeline** panel, the gear menu, **Pipeline Settings**, scope **Global Settings**,
+Open the **DevOps Pipeline** panel, the gear menu, **Configure Pipeline Settings**, scope **Global Settings**,
 and the **Danger Zone** tab.
 
 ![The Danger Zone of the Global Pipeline Settings, with the two promotion branch settings](../../_assets/annotated/vscode/pipeline-config-danger--promotion-branches.png)

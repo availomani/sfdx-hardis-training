@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "ee14d734953f1a4720cb39478e8f1c155610e731"
+source_rev: "8e5740dac524264cdace81a72c7c7e0ef381d29b"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -102,7 +102,7 @@ quoi sert cette livraison, et mettez-les dans la description de la Pull Request 
 
 ### Vendredi : mesurer
 
-Ouvrez le panneau **DORA metrics** depuis le menu engrenage du **DevOps Pipeline**, comme au
+Ouvrez le panneau **DORA metrics** avec **Generate DORA Metrics** dans le menu engrenage du **DevOps Pipeline**, comme au
 [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), et lisez **Time to production** dans le pipeline flow, la ligne de `main`, puis celle d'`integration`. Exportez de nouveau le rapport,
 **Export** puis **Markdown report**, et comparez-le à la ligne de base que vous avez prise au
 [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).

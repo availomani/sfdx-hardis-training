@@ -99,7 +99,7 @@ this release is for, and put them in the description of the Pull Request from `p
 
 ### Friday: measure
 
-Open the **DORA metrics** panel from the gear menu of the **DevOps Pipeline**, as in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), and
+Open the **DORA metrics** panel with **Generate DORA Metrics** in the gear menu of the **DevOps Pipeline**, as in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md), and
 read **Time to production** in the pipeline flow, the row of `main`, then the one of
 `integration`. Export the report again, **Export** then **Markdown report**, and compare it with the baseline you took in [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md).
 

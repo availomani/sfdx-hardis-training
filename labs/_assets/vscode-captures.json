@@ -199,6 +199,18 @@
       "file": "pipeline-settings-menu",
       "state": "level3"
     },
+    "scratch-org-pool": {
+      "_comment": "Lab 3.1: the Scratch Org Pool panel Helios would have, from the scratchOrgPool key mocks.mjs writes. Listed here until the first capture writes its gate into .shot-gates.json.",
+      "gate": "scratch-org-pool"
+    },
+    "org-initialization": {
+      "_comment": "Lab 3.1: the Org Initialization panel with the steps a new Helios scratch org would get (orgInit key of mocks.mjs).",
+      "gate": "org-initialization"
+    },
+    "replacement-rules": {
+      "_comment": "Lab 3.1: the Replacement Rules panel with the warehouse URL of each Helios org (replacementRules key of mocks.mjs).",
+      "gate": "replacement-rules"
+    },
     "dora-metrics": {
       "_comment": "Lab 3.6: the DORA metrics panel on its Overview tab. The report is the Helios one mocks.mjs generates, the evening of the first release.",
       "gate": "dora-metrics",

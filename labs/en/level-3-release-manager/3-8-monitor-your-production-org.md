@@ -316,7 +316,7 @@ one entry per notification type, merged over the product's defaults.
 
 The next release manager will need the monitoring repository on their first day, and the one place
 they will look is the project. Back in the source repository: **DevOps Pipeline** > gear menu >
-**Pipeline Settings**, scope **Global Settings**, tab **Salesforce Project**. **Monitoring
+**Configure Pipeline Settings**, scope **Global Settings**, tab **Salesforce Project**. **Monitoring
 repository**: **Edit**, paste the address of your monitoring repository,
 `https://github.com/<your-handle>/sfdx-hardis-training-monitoring`, and **Save**. Then **Training:
 Level 3** > **Publish my pipeline configuration**: it is pipeline configuration, like the rest.

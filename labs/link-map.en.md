@@ -63,12 +63,14 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | salesforce-devops-config-cleaning | https://sfdx-hardis.cloudity.com/salesforce-devops-config-cleaning/ |
 | salesforce-devops-config-delta-deployment | https://sfdx-hardis.cloudity.com/salesforce-devops-config-delta-deployment/ |
 | salesforce-devops-config-overwrite | https://sfdx-hardis.cloudity.com/salesforce-devops-config-overwrite/ |
+| salesforce-devops-config-replacement-rules | https://sfdx-hardis.cloudity.com/salesforce-devops-config-replacement-rules/ |
 | salesforce-devops-create-new-user-story | https://sfdx-hardis.cloudity.com/salesforce-devops-create-new-user-story/ |
 | salesforce-devops-deploy-major-branches | https://sfdx-hardis.cloudity.com/salesforce-devops-deploy-major-branches/ |
 | salesforce-devops-git-tokens | https://sfdx-hardis.cloudity.com/salesforce-devops-git-tokens/ |
 | salesforce-devops-handle-merge-request-results | https://sfdx-hardis.cloudity.com/salesforce-devops-handle-merge-request-results/ |
 | salesforce-devops-hotfixes | https://sfdx-hardis.cloudity.com/salesforce-devops-hotfixes/ |
 | salesforce-devops-manual-repo-clean | https://sfdx-hardis.cloudity.com/salesforce-devops-manual-repo-clean/ |
+| salesforce-devops-org-initialization | https://sfdx-hardis.cloudity.com/salesforce-devops-org-initialization/ |
 | salesforce-devops-promotion-branches | https://sfdx-hardis.cloudity.com/salesforce-devops-promotion-branches/ |
 | salesforce-devops-publish-user-story | https://sfdx-hardis.cloudity.com/salesforce-devops-publish-user-story/ |
 | salesforce-devops-pull-request-github | https://sfdx-hardis.cloudity.com/salesforce-devops-pull-request-github/ |
@@ -82,6 +84,7 @@ so a renamed documentation page fails CI here rather than surprising a learner.
 | salesforce-devops-setup-home | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-home/ |
 | salesforce-devops-setup-integration-email | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-email/ |
 | salesforce-devops-setup-integration-generic-ticketing | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-integration-generic-ticketing/ |
+| salesforce-devops-setup-scratch-org-pool | https://sfdx-hardis.cloudity.com/salesforce-devops-setup-scratch-org-pool/ |
 | salesforce-devops-smart-deployment | https://sfdx-hardis.cloudity.com/salesforce-devops-smart-deployment/ |
 | salesforce-devops-solve-deployment-errors | https://sfdx-hardis.cloudity.com/salesforce-devops-solve-deployment-errors/ |
 | salesforce-devops-solve-megalinter-errors | https://sfdx-hardis.cloudity.com/salesforce-devops-solve-megalinter-errors/ |

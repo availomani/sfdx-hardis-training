@@ -1,11 +1,11 @@
 ---
 id: lab-3-1
 title: "Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production"
-description: "Étendez une pipeline Salesforce à deux étages jusqu'à la production : branches, protections, et preprod et production authentifiées en JWT par Add/Configure Org."
+description: "Étendez une pipeline Salesforce à deux étages jusqu'à la production : branches, protections, et chaque org authentifiée en JWT par Add or Reconnect a Major Org."
 level: 3
 lab: 1
 lang: fr
-source_rev: "a23e4c00dca2dfd478b1eb97a36eabba9f20606d"
+source_rev: "4ebb4c994c3d1ed03800c8d833bbf55dd48f5130"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
   - annotated/web/github-new-branch
@@ -25,12 +25,15 @@ screenshots:
   - annotated/vscode/pipeline-cards--save-publish
   - annotated/vscode/work-save-completed
   - annotated/vscode/devops-pipeline-level3--four-stages
+  - annotated/vscode/scratch-org-pool
+  - annotated/vscode/org-initialization
+  - annotated/vscode/replacement-rules
 depends_on:
   commands: [hardis:project:configure:auth, hardis:work:new]
   flags: []
-  config: [availableTargetBranches, availableTargetBranchesLabels, productionBranch, mergeTargets, targetUsername, instanceUrl, orgAuthenticationMode, enablePromotionBranches, allowedPromotionSteps]
-  panels: [pipeline, pipelineConfig, orgManager, commandExecution, promptInput]
-  docs: [salesforce-devops-setup-home, salesforce-devops-setup-auth, salesforce-devops-setup-auth-github, salesforce-devops-setup-existing-org]
+  config: [availableTargetBranches, availableTargetBranchesLabels, productionBranch, mergeTargets, targetUsername, instanceUrl, orgAuthenticationMode, enablePromotionBranches, allowedPromotionSteps, poolConfig, orgInitSteps, replacementRules]
+  panels: [pipeline, pipelineConfig, orgManager, commandExecution, promptInput, scratchOrgPool, orgInit, replacementRules]
+  docs: [salesforce-devops-setup-home, salesforce-devops-setup-auth, salesforce-devops-setup-auth-github, salesforce-devops-setup-existing-org, salesforce-devops-setup-scratch-org-pool, salesforce-devops-org-initialization, salesforce-devops-config-replacement-rules]
 ---
 
 # Lab 3.1 - Configurer la pipeline CI/CD jusqu'à la production
@@ -256,7 +259,7 @@ Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow** **(1
 La commande crée `features/US-050-pipeline-up-to-production` à partir d'`integration` et s'y
 positionne. Tout ce que les étapes suivantes écrivent atterrit là.
 
-### 5. Configurer preprod et son org : Add/Configure Org
+### 5. Configurer preprod et son org : Add or Reconnect a Major Org
 
 Passons aux orgs. Une seule commande fait tout pour une branche : elle écrit la configuration de
 branche, l'org dans laquelle elle déploie et la branche dans laquelle elle merge, crée l'identifiant
@@ -264,14 +267,14 @@ avec lequel la CI se connecte, et déploie l'External Client App dans l'org. Vou
 par branche, en commençant par `preprod`.
 
 Dans le panneau **DevOps Pipeline**, cliquez sur l'engrenage **(1)** en haut à droite et choisissez
-**Add/Configure Org** **(2)**.
+**Add or Reconnect a Major Org** **(2)**.
 
-![Le menu engrenage du panneau DevOps Pipeline, ouvert sur Add/Configure Org](../../_assets/annotated/vscode/pipeline-settings-menu--add-org.png)
+![Le menu engrenage du panneau DevOps Pipeline, ouvert sur Add or Reconnect a Major Org](../../_assets/annotated/vscode/pipeline-settings-menu--add-org.png)
 
 La commande tourne dans un panneau et pose une question à la fois **(1)**, avec les réponses à
 cliquer en dessous **(2)**. La voici à la deuxième question, avec `helios-preprod` déjà choisie.
 
-![La commande Add/Configure Org demandant quelle branche git configurer](../../_assets/annotated/vscode/configure-auth-branch--branch-question.png)
+![La commande Add or Reconnect a Major Org demandant quelle branche git configurer](../../_assets/annotated/vscode/configure-auth-branch--branch-question.png)
 
 Elle pose une douzaine de questions, dans cet ordre :
 
@@ -313,7 +316,7 @@ chacune avec un bouton de copie. Rien ne les réaffiche, ne fermez donc pas le p
 garde chaque question à laquelle vous avez répondu **(1)**, et les fichiers qu'il a écrits sont dans
 la barre de rapports en bas **(3)**.
 
-![La commande Add/Configure Org affichant les deux secrets et attendant qu'ils soient stockés](../../_assets/annotated/vscode/configure-auth-variables--secrets.png)
+![La commande Add or Reconnect a Major Org affichant les deux secrets et attendant qu'ils soient stockés](../../_assets/annotated/vscode/configure-auth-variables--secrets.png)
 
 Dans votre fork (`github.com/my-username/sfdx-hardis-training`), ouvrez **Settings > Secrets and
 variables > Actions (1)**, puis cliquez sur **New repository secret (2)** :
@@ -389,7 +392,7 @@ un bug.
 
 ### 8. La même chose pour main
 
-Même engrenage, **Add/Configure Org**, une fois de plus, pour la production :
+Même engrenage, **Add or Reconnect a Major Org**, une fois de plus, pour la production :
 
 | Branche | Org           | Réponse pour l'URL de base                                                 | Merge dans     | Secrets                                       |
 |---------|---------------|----------------------------------------------------------------------------|----------------|-----------------------------------------------|
@@ -407,7 +410,7 @@ Quatre secrets, deux External Client Apps, deux clés. Fastidieux une fois, puis
 **Dites ensuite à `uat` où va son travail.** La commande a écrit que `preprod` se merge dans
 `main`. Rien n'a encore dit que `uat` se merge dans `preprod` : jusqu'ici `uat` était la fin du
 pipeline, et son fichier de branche le dit. Dans le panneau **DevOps Pipeline**, menu engrenage,
-**Pipeline Settings**, passez le sélecteur de portée en haut à droite sur **Branch: uat** **(1)**,
+**Configure Pipeline Settings**, passez le sélecteur de portée en haut à droite sur **Branch: uat** **(1)**,
 ouvrez l'onglet **Deployment** **(2)** et cliquez sur **Edit**. Dans **Merge target branches**
 **(3)**, saisissez `preprod`, puis **Save** **(4)**, qui a pris la place d'**Edit**.
 
@@ -420,7 +423,7 @@ de pastille **+ PR** où cliquer. L'étape 11 le publie avec le reste.
 
 Les contributeurs choisissent où va une User Story dans une liste, et `preprod` n'y est pas encore.
 
-Ouvrez le panneau **DevOps Pipeline**, le menu engrenage, **Pipeline Settings**. Le titre de la page
+Ouvrez le panneau **DevOps Pipeline**, le menu engrenage, **Configure Pipeline Settings**. Le titre de la page
 indique **Global Pipeline Settings**, et le sélecteur de portée **(1)** indique **Global Settings**.
 
 ![L'écran Global Pipeline Settings, avec le sélecteur de portée, le bouton Edit et l'onglet User Stories](../../_assets/annotated/vscode/pipeline-config--target-branches.png)
@@ -626,7 +629,7 @@ Pipeline Settings compris, lit ce dossier.
 `sf hardis:project:create` aurait généré le squelette d'un nouveau projet : les workflows de chaque
 fournisseur git, `.mega-linter.yml`, `projectName`, `developmentBranch` et `autoCleanTypes`. Il
 n'écrit aucun fichier `config/branches/` et ne demande aucune org à part le Dev Hub : les fichiers
-de branche sont le travail d'Add/Configure Org, comme ci-dessus. La commande qui prend une org
+de branche sont le travail d'Add or Reconnect a Major Org, comme ci-dessus. La commande qui prend une org
 existante sans aucun repository et produit le premier commit est `sf
 hardis:org:retrieve:sources:dx`, le vrai point de départ de la plupart des projets.
 
@@ -654,6 +657,40 @@ Ce diagramme est désormais la vérité sur ce projet, et ce que vous montrez du
 prenante demande "alors, ça en est où ?". Les boutons **+ PR** sur les flèches sont les Pull Requests
 de promotion, et le [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) est la première fois que vous en cliquez un.
 
+## Trois réglages que ce cours laisse de côté
+
+Helios est un petit projet, et trois réglages restent éteints pendant tout le cours. Vous les
+rencontrerez sur un vrai projet. Chacun se règle une fois, en général par le release manager ou un
+tech lead, et sa page de documentation explique comment. Rien à faire ici : regardez les images et
+retenez qu'ils existent.
+
+**Pool de scratch orgs.** Créer une scratch org et y charger le projet peut prendre vingt minutes. Un
+pool en garde quelques-unes prêtes : un job planifié les crée et les initialise chaque nuit, et
+**New User Story** en prend une en quelques secondes. Helios crée ses scratch orgs une seule fois,
+dans **Set up my training environment**, il n'a donc pas de pool. Le panneau est **Scratch Org
+Pool**, dans les commandes **Setup Configuration**. Voir
+[Mettre en place un pool de scratch orgs](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-scratch-org-pool/).
+
+![Le panneau Scratch Org Pool, avec quatre scratch orgs prêtes sur cinq](../../_assets/annotated/vscode/scratch-org-pool.png)
+
+**Initialisation des orgs (Beta).** Elle liste ce que reçoit chaque nouvelle scratch org ou sandbox,
+dans l'ordre : packages, sources du projet, permission sets, données, scripts Apex. Le pool exécute
+les mêmes étapes quand il se remplit. Menu engrenage du DevOps Pipeline, **Configure Org
+Initialization**. Voir
+[Initialiser les scratch orgs et les sandboxes](https://sfdx-hardis.cloudity.com/salesforce-devops-org-initialization/).
+
+![Le panneau Org Initialization, avec les étapes que recevrait une nouvelle scratch org Helios](../../_assets/annotated/vscode/org-initialization.png)
+
+**Règles de remplacement (Beta).** Certaines métadonnées doivent changer d'une org à l'autre : une URL
+d'endpoint, un mot de passe lu dans un secret de la CI, une permission que la production ne doit pas
+accorder. Une règle de remplacement modifie les fichiers juste avant chaque déploiement, pour l'org
+visée, et le repository garde une seule version. Helios a un cas : chaque org réserve ses lots de
+panneaux auprès de son propre système d'entrepôt, et le remote site `Helios_Warehouse` contient une
+seule URL. Menu engrenage du DevOps Pipeline, **Configure Replacement Rules**. Voir
+[Règles de remplacement](https://sfdx-hardis.cloudity.com/salesforce-devops-config-replacement-rules/).
+
+![Le panneau Replacement Rules, avec l'URL d'entrepôt de chaque org Helios](../../_assets/annotated/vscode/replacement-rules.png)
+
 ## Ce que vous devez voir
 
 - Quatre règles de protection de branche dans **Settings** > **Branches** de votre fork,
@@ -669,7 +706,7 @@ de promotion, et le [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) est
 
 ## En cas de problème
 
-**preprod n'est pas dans la liste de branches d'Add/Configure Org.**
+**preprod n'est pas dans la liste de branches d'Add or Reconnect a Major Org.**
 VS Code ne l'a pas récupérée. Panneau **Source Control**, menu **...**, **Pull, Push** > **Fetch**,
 puis relancez la commande.
 
@@ -679,7 +716,7 @@ une nouvelle sous le même alias : la commande liste les orgs depuis un cache, e
 encore l'ancienne. La choisir fait s'arrêter la commande juste après "Selected Org", sans qu'aucune
 question soit posée. La dernière réponse de la liste est la sortie :
 **😱 I already authenticated my org but I don't see it !** vide ce cache. Relancez ensuite
-**Add/Configure Org** et la liste est juste.
+**Add or Reconnect a Major Org** et la liste est juste.
 
 **La colonne preprod apparaît sans org.**
 Le fichier de branche a été écrit pour un autre nom de branche. Cherchez une faute de frappe dans
@@ -699,17 +736,17 @@ Recréez-la.
 
 **`client identifier invalid`.**
 L'External Client App derrière cette consumer key n'a jamais été créée : la commande s'est arrêtée
-après avoir affiché les deux valeurs. Relancez **Add/Configure Org** pour cette branche, stockez les
+après avoir affiché les deux valeurs. Relancez **Add or Reconnect a Major Org** pour cette branche, stockez les
 deux nouvelles valeurs, et republiez.
 
-**Add/Configure Org s'arrête en demandant si vous avez supprimé l'External Client App.**
+**Add or Reconnect a Major Org s'arrête en demandant si vous avez supprimé l'External Client App.**
 Vous lancez la commande une deuxième fois pour cette branche, et l'app qu'elle déploie est déjà dans
 l'org : elle vous demande donc de retirer l'ancienne d'abord (*External Client App named
 `sfdxhardis<branche>` already exists ... Have you deleted it?*). Dans l'org, **Setup > External
 Client App Manager**, supprimez cette app, puis répondez oui. C'est le chemin normal dès que l'une
-des entrées ci-dessus vous renvoie dans **Add/Configure Org**.
+des entrées ci-dessus vous renvoie dans **Add or Reconnect a Major Org**.
 
-**Add/Configure Org s'arrête juste après "Selected Org", sans poser aucune question.**
+**Add or Reconnect a Major Org s'arrête juste après "Selected Org", sans poser aucune question.**
 La liste des orgs a proposé un org `helios-` qui n'existe plus, en général parce qu'un scratch org a
 été reconstruit sous le même alias. Voir l'entrée ci-dessus : la dernière réponse de la liste,
 **I already authenticated my org but I don't see it !**, vide ce cache.
@@ -775,5 +812,8 @@ Welcome page > **Training: Level 3** > **Check my work**, puis choisissez le **L
 - [Configurer l'authentification de la CI](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-auth/)
 - [Authentification GitHub Actions](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-auth-github/)
 - [Récupérer une org existante](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-existing-org/)
+- [Mettre en place un pool de scratch orgs](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-scratch-org-pool/)
+- [Initialiser les scratch orgs et les sandboxes (Beta)](https://sfdx-hardis.cloudity.com/salesforce-devops-org-initialization/)
+- [Règles de remplacement (Beta)](https://sfdx-hardis.cloudity.com/salesforce-devops-config-replacement-rules/)
 
 [Suite : Lab 3.2 - Relire et merger la Pull Request d'un contributeur](3-2-review-a-contributor-pull-request.md){ .md-button .md-button--primary }

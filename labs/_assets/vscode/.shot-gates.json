@@ -110,6 +110,9 @@
   "monitoring-config": {
     "gate": "monitoring-config"
   },
+  "org-initialization": {
+    "gate": "org-initialization"
+  },
   "org-monitoring": {
     "gate": "org-monitoring"
   },
@@ -232,6 +235,15 @@
   },
   "promotion-settings": {
     "gate": "promotion"
+  },
+  "replacement-rules": {
+    "gate": "replacement-rules"
+  },
+  "scratch-org-pool": {
+    "gate": "scratch-org-pool"
+  },
+  "scratch-org-pool-full": {
+    "gate": "scratch-org-pool"
   },
   "setup": {
     "gate": "setup"

@@ -741,7 +741,7 @@
           "lab": 1,
           "slug": "3-1-configure-the-pipeline-up-to-production",
           "title": "Configure the CI/CD pipeline up to production",
-          "description": "Extend a two-stage Salesforce pipeline to production: branches, protections, and each org configured and authenticated with JWT by Add/Configure Org.",
+          "description": "Extend a two-stage Salesforce pipeline to production: branches, protections, and each org authenticated with JWT by Add or Reconnect a Major Org.",
           "time": "50 min"
         },
         {

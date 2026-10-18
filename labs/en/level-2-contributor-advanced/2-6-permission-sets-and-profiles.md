@@ -161,7 +161,7 @@ permission set, whatever their Profile.
 
 ### 6. Look at the other protection while you are here
 
-Open the **DevOps Pipeline** panel, then **Pipeline Settings** in the gear menu. Leave the scope
+Open the **DevOps Pipeline** panel, then **Configure Pipeline Settings** in the gear menu. Leave the scope
 selector **(1)** on **Global Settings**: these are project rules, identical for every branch.
 
 ![The Global Pipeline Settings panel, on its Deployment tab](../../_assets/annotated/vscode/pipeline-config.png)
