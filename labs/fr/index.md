@@ -3,7 +3,7 @@ title: "Formation Salesforce DevOps gratuite et pratique"
 description: "Formation Salesforce DevOps gratuite et pratique en trois niveaux : Git, Pull Requests, pipelines CI/CD et gestion des releases avec sfdx-hardis et VS Code."
 id: home
 lang: fr
-source_rev: "6c19f3380c9f6eb7e97d7a578cd8ae3e38ab4737"
+source_rev: "5f753090e2404610bff8331c97cbd399b8552f3f"
 ---
 
 # Formation Salesforce DevOps avec sfdx-hardis
@@ -40,7 +40,7 @@ que vous suivez sa Pull Request jusqu'à la production.*
 
 | Niveau                                                                 | Pour qui                                                            | Durée  | Prérequis          | À la fin, vous savez                                                                                               |
 |------------------------------------------------------------------------|---------------------------------------------------------------------|--------|--------------------|--------------------------------------------------------------------------------------------------------------------|
-| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant une pipeline | 2 h    | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
+| [**1 - Contributeur, les bases**](level-1-contributor-basics/index.md) | Admins et développeurs qui rejoignent une équipe ayant une pipeline | 2 h 15 | Rien               | Prendre une User Story, la construire, la publier, obtenir une Pull Request verte, la merger                       |
 | [**2 - Contributeur avancé**](level-2-contributor-advanced/index.md)   | Les mêmes, une fois les histoires faciles derrière eux              | 4 h 15 | Niveau 1           | Résoudre les erreurs de déploiement, déclarer des deployment actions, gérer les écrasements, résoudre les conflits |
 | [**3 - Release Manager**](level-3-release-manager/index.md)            | Celui ou celle qui tient la pipeline, les orgs et les releases      | 9 h 30 | Niveaux 1 **et** 2 | Reprendre une org sans pipeline, relire et merger, livrer en UAT et en production, faire un hotfix, monitorer      |
 
