@@ -5,6 +5,10 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-19
 
+- Links to another site (GitHub, Salesforce, the sfdx-hardis documentation) open in a new tab, so the lab stays open.
+- Lab 2.3 says to copy only its four Apex files, and explains the check that fails on the Lab 2.4 batch when it is copied too.
+- Lab 3.8 says what to do when GitHub refuses a push during the configuration: never merge the monitoring branch into `main`, and store the two new secrets of each run.
+
 - Lab 3.1 shows what the scratch org pool, org initialization and replacement rules are for, with a picture of each and its documentation page, without asking you to set them up.
 
 ## 2026-10-18

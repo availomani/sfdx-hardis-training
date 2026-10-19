@@ -146,6 +146,12 @@ monitoring_...*. GitHub only schedules the workflows of the default branch, and 
 workflow** for those, so the workflow that runs every monitored org lives on `main` and lists each
 monitoring branch.
 
+If GitHub refuses a push on the way, the command says *GitHub refused this push* and names the
+`workflow` scope: the first entry of **If it goes wrong** below is the way out. Do not get past it by
+merging the monitoring branch into `main`, even through a Pull Request. `main` carries the workflow
+and nothing else, each monitored org lives on its own branch, and such a merge brings the example
+workflow of the branch to `main`, whose jobs fail on branches called `monitoring_myclient`.
+
 It never asks for a repository name to create or for a git provider, because it creates neither: the one address it asks for, your fork, it only records. The authentication is the same code as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): External Client App, JWT, two secrets to store,
 this time in the **monitoring** repository. The key lands in `./.ssh/` rather than
 `config/branches/.jwt/`, and the configuration in a `.sfdx-hardis.yml` at the repository root, on a
@@ -408,9 +414,11 @@ The monitoring branch carries a GitHub workflow file, and GitHub only lets crede
 the `workflow` permission push one. The ones VS Code used do not. Click the **Accounts** icon at the
 bottom of the activity bar, sign out of GitHub, then click **Install Org Monitoring** again: VS Code
 asks you to sign in, and the permissions it requests include workflows. The command can be run
-again safely. Do not push the branch another way and move on: the command also writes the workflow
-on `main` at the end, and without that step the workflow keeps its example branch names and never
-runs your org.
+again safely. Each run makes a new certificate, though: store the two secrets it gives this time,
+in place of the ones of the first run, or the job fails at authentication. Do not push the branch
+another way and move on, and do not merge it into `main`: the command also writes the workflow on
+`main` at the end, and without that step the workflow keeps its example branch names and never runs
+your org.
 
 **The workflow run fails on a branch called `monitoring_myclient`.**
 The workflow on `main` still lists the example branches: the command did not reach its last step,
@@ -419,7 +427,8 @@ works: it rewrites the workflow on `main` with your branch and its two secrets.
 
 **The monitoring workflow fails at authentication.**
 Same as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): the External Client App needs the user pre-authorised, and the secrets have to be in
-the **monitoring** repository, not the source one.
+the **monitoring** repository, not the source one. After a second run of the command, they also
+have to be the two it gave the last time: each run replaces the certificate.
 
 **Actions offers no Run workflow for Org Monitoring sfdx-hardis.**
 The workflow is not on `main`. The command writes it there at the end, on GitHub, and says so. If it

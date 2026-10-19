@@ -154,6 +154,10 @@ into `force-app/main/default/classes/`, in the Explorer, with copy and paste:
 - `CrewSizeBackfillBatchTest.cls` and `CrewSizeBackfillBatchTest.cls-meta.xml`: its test. Salesforce
   deploys no Apex without one, and [Lab 2.5](2-5-pass-code-quality-and-apex-test-coverage.md) is about that gate
 
+Those four and no others, and copied, not moved. The folder also holds `CrewCapacityBatch` and its
+test, which are for [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md): they need an object this story does not bring, the check of your Pull
+Request fails on them, and [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) copies them from this folder.
+
 Then the script the action runs: create the file `scripts/apex/backfill-crew-size.apex` and copy
 this into it.
 
@@ -325,6 +329,13 @@ repository, it cannot see it. Close it and reopen it with the right base.
 **The Apex script fails with `Invalid type: CrewSizeBackfillBatch`.**
 The class is not in the org the script ran in. Either the action runs **before** the deployment,
 when the class does not exist yet, or the class files were not committed with the story.
+
+**The check fails with `ApexClass CrewCapacityBatch: Invalid type: Crew_Capacity__c`.**
+The [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) batch went into `force-app/main/default/classes/` with the one of this lab, and
+`manifest/package.xml` lists `CrewCapacityBatch` and `CrewCapacityBatchTest`. Delete their four files
+from `force-app/main/default/classes/`, keep a copy in `scripts/apex/samples/` (put it back there if
+you moved it), remove their two `<members>` lines from `manifest/package.xml`, commit, and push:
+the check runs again.
 
 **The deployment still fails on the permission sets.**
 They still carry `fieldPermissions` for `Installation__c.Crew_Size__c`. A required field cannot have

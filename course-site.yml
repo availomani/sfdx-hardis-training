@@ -135,6 +135,9 @@ extra_javascript:
   # translate widget kept the links of the page the reader landed on. This
   # rebuilds them on every page change. See language-switch.js.
   - theme/javascripts/language-switch.js
+  # Links to another site open in a new tab, so the lab stays open beside VS
+  # Code. See external-links.js.
+  - theme/javascripts/external-links.js
 
 extra:
   # Google Analytics, on the course's own data stream inside the sfdx-hardis
