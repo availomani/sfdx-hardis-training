@@ -5,7 +5,7 @@
     "Read by the lab driver of the extension (vscode-sfdx-hardis, yarn test:ui:labs), which opens",
     "a real Extension Development Host on a learner's clone and drives the real panels against the",
     "real Salesforce CLI and the real orgs. The same rule shape is understood by the headless",
-    "harness of the training-e2e skill, so a lab's answers are written once and can be replayed at",
+    "harness of the training scenario of the e2e skill, so a lab's answers are written once and can be replayed at",
     "either fidelity.",
     "",
     "A rule fires once, in the order it appears here:",
@@ -124,7 +124,7 @@
     {
       "id": "3.1",
       "title": "Configure the CI/CD pipeline up to production",
-      "skip": "answers not recorded yet: see scripts/auth.mjs of the training-e2e skill for the rules it uses headless"
+      "skip": "answers not recorded yet: see scripts/auth.mjs of the training scenario of the e2e skill for the rules it uses headless"
     },
     {
       "id": "3.5",
