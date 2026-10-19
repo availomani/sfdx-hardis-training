@@ -67,7 +67,9 @@ Requests instead, in the **Pull Requests** tab of the `integration` window of th
 panel, or in the **Closed** list of the Pull Requests of your fork on GitHub. Keep both open, the
 next steps read them.
 
-Wait for the checks of US-020. They will fail.
+The command opens Mariia's Pull Request into `integration` for you, prints its address, and ends
+with an **Open the Pull Request** button at the bottom of the panel. Wait for the checks of US-020.
+They will fail.
 
 ### 2. Triage before you touch anything
 

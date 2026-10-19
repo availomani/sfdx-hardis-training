@@ -5,9 +5,10 @@ description: "Étendez une pipeline Salesforce à deux étages jusqu'à la produ
 level: 3
 lab: 1
 lang: fr
-source_rev: "4ebb4c994c3d1ed03800c8d833bbf55dd48f5130"
+source_rev: "fd3a419fa3203c26da485c1d0aa36bd374d78acf"
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
+  - annotated/vscode/devops-pipeline-level3-split
   - annotated/web/github-new-branch
   - annotated/web/github-branch-rules
   - annotated/web/github-branch-rule
@@ -407,17 +408,29 @@ disponible dans ce lab. Et stockez les deux secrets, l'ID et la clé, comme à l
 
 Quatre secrets, deux External Client Apps, deux clés. Fastidieux une fois, puis plus jamais.
 
+Regardez maintenant le panneau **DevOps Pipeline**. Il dessine deux morceaux séparés,
+`integration` → `uat` et `preprod` → `main`, sans rien entre `uat` et `preprod`. Ce trou est
+normal, et le paragraphe suivant le comble.
+
+![Le DevOps Pipeline au milieu de l'étape 8 : integration vers uat, et preprod vers main, sans flèche entre uat et preprod](../../_assets/annotated/vscode/devops-pipeline-level3-split.png)
+
 **Dites ensuite à `uat` où va son travail.** La commande a écrit que `preprod` se merge dans
 `main`. Rien n'a encore dit que `uat` se merge dans `preprod` : jusqu'ici `uat` était la fin du
-pipeline, et son fichier de branche le dit. Dans le panneau **DevOps Pipeline**, menu engrenage,
-**Configure Pipeline Settings**, passez le sélecteur de portée en haut à droite sur **Branch: uat** **(1)**,
-ouvrez l'onglet **Deployment** **(2)** et cliquez sur **Edit**. Dans **Merge target branches**
-**(3)**, saisissez `preprod`, puis **Save** **(4)**, qui a pris la place d'**Edit**.
+pipeline, et son fichier de branche le dit.
+
+1. Dans le panneau **DevOps Pipeline**, menu engrenage, cliquez sur **Configure Pipeline Settings**
+2. Passez le sélecteur de portée en haut à droite sur **Branch: uat** **(1)**
+3. Ouvrez l'onglet **Deployment** **(2)** et cliquez sur **Edit**
+4. Dans **Merge target branches** **(3)**, saisissez `preprod`
+5. Cliquez sur **Save** **(4)**, qui a pris la place d'**Edit**
 
 ![L'onglet Deployment des réglages de la branche uat, déverrouillé, avec preprod comme cible de merge](../../_assets/annotated/vscode/pipeline-config-branch-merge-target.png)
 
 Sans cela le diagramme ne dessine aucune flèche de `uat` vers `preprod`, et le [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) n'a pas
 de pastille **+ PR** où cliquer. L'étape 11 le publie avec le reste.
+
+Le diagramme dessine maintenant une seule ligne de quatre branches, `integration` → `uat` →
+`preprod` → `main`, comme sur l'image de l'[étape 12](#12-regarder-le-diagramme-a-nouveau).
 
 ### 9. Laisser les contributeurs démarrer un hotfix
 
@@ -475,9 +488,12 @@ L'onglet s'ouvre sur un avertissement, *Use these settings with caution, be sure
 impact as they drift from DevOps best practices*, et il vaut pour chaque réglage qui s'y trouve,
 celui-ci compris.
 
-Cliquez sur **Edit**, activez **Enable promotion branches (Beta)** **(1)**, puis ajoutez une ligne à
-**Allowed promotion steps (Beta)** **(2)** avec **Source branch** `uat` et **Target branch**
-`preprod`. **Save**.
+1. Cliquez sur **Edit**
+2. Activez **Enable promotion branches (Beta)** **(1)**
+3. Ajoutez une ligne à **Allowed promotion steps (Beta)** **(2)** :
+   - **Source branch** : `uat`
+   - **Target branch** : `preprod`
+4. Cliquez sur **Save**
 
 Le second réglage est exigé par le premier, et c'est une vraie décision plutôt que de la paperasse :
 il dit qu'un release manager sur ce projet peut assembler un sous-ensemble en entrant dans `preprod`,

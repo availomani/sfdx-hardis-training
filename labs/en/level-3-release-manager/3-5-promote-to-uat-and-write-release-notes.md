@@ -171,7 +171,10 @@ two words apart and a list of Pull Requests reads like the history of what reach
 
 Now click **Create pull request**.
 
-Merge it with **Merge pull request**, never with a squash: a promotion carries every commit of the
+Merge it with a merge commit, never with a squash: click the arrow beside the green button, choose
+**Create a merge commit**, then click **Merge pull request**. GitHub remembers the method you used
+last, so after all the squashed feature Pull Requests the button may read **Squash and merge**
+until you switch it. A promotion carries every commit of the
 stories it promotes, and the next promotion, the retrofit and the release notes all need to find
 them one by one ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). The green check comment says the same on its **How to merge** line:
 **use a merge commit, never squash**.

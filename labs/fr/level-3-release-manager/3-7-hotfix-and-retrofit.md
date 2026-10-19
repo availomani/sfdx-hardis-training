@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "05c917bf5c5e557cb76e2b31b94fe5f9b6cb49ba"
+source_rev: "9ebdf1baaa426ee5abbc6a706ee07cb9f621bd8e"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
@@ -67,7 +67,8 @@ et ramènerait l'incident. Ramener `main` vers le bas est le **retrofit**, et il
 
 ### 1. Voir ce qui est cassé, en production
 
-Ouvrez `helios-prod` et regardez la règle elle-même : **Setup > Object Manager > Installation >
+Ouvrez `helios-prod` depuis **Orgs Manager**, avec son action **Open**. Cela ne change pas votre
+org par défaut, il n'y a donc rien à basculer en bas de VS Code. Regardez la règle elle-même : **Setup > Object Manager > Installation >
 Validation Rules** **(1)**, puis `Installation_Date_Not_Past` **(2)**.
 
 ![Les règles de validation d'Installation dans Setup](../../_assets/annotated/salesforce/validation-rule.png)
@@ -95,6 +96,12 @@ reproduit, sur la vraie org, en trente secondes.
 
 ### 2. Le développeur branche le correctif depuis preprod
 
+!!! danger "Ne branchez jamais un hotfix depuis integration"
+    `integration` porte le travail de la semaine prochaine. Un correctif branché depuis elle livre le
+    travail de la semaine prochaine en production ce soir, par-dessus un incident, sans que personne
+    l'ait testé. C'est l'erreur la plus coûteuse disponible dans ce lab, et la raison d'être de
+    `preprod`.
+
 Le correctif est à Romain de l'écrire, pas à vous : un release manager relit et livre ce que les
 contributeurs envoient, et n'écrit pas leurs fonctionnalités. **Training: Level 3** > **Simulate my
 teammates**, et choisissez **US-045 Hotfix: cancelled installations can be back-dated again**.
@@ -103,12 +110,6 @@ teammates**, et choisissez **US-045 Hotfix: cancelled installations can be back-
 
 Cela ouvre sa Pull Request de `fix/US-045-installation-date-hotfix` vers **`preprod`**. Sa branche a
 été tirée de `preprod`, ce que fait **New User Story** quand la cible est `preprod`.
-
-!!! danger "Ne branchez jamais un hotfix depuis integration"
-    `integration` porte le travail de la semaine prochaine. Un correctif branché depuis elle livre le
-    travail de la semaine prochaine en production ce soir, par-dessus un incident, sans que personne
-    l'ait testé. C'est l'erreur la plus coûteuse disponible dans ce lab, et la raison d'être de
-    `preprod`.
 
 ### 3. Relire le correctif
 
@@ -132,8 +133,8 @@ Petite, et son rayon d'impact tient en une phrase : **les installations annulée
 
 ### 4. Le merger dans preprod
 
-Quand le contrôle est vert, mergez-la avec **Squash and merge**, depuis la flèche à côté de **Merge
-pull request** **(1)** : la branche de Romain est un correctif, et un correctif se squashe comme
+Quand le contrôle est vert, mergez-la avec **Squash and merge**, depuis la flèche à côté du bouton
+vert **(1)** : la branche de Romain est un correctif, et un correctif se squashe comme
 chaque User Story ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)), ce que dit aussi la ligne **How to merge** du commentaire vert du contrôle. La promotion vers `main` qui suit est mergée, pas squashée.
 
 ![Merger une Pull Request sur GitHub](../../_assets/annotated/web/github-pr-merge.png)
@@ -245,8 +246,8 @@ nouveau.
 ![La fin de Save / Publish, avec sa barre d'actions](../../_assets/annotated/vscode/work-save-completed.png)
 
 Ouvrez la Pull Request vers `integration`, intitulez-la
-`Retrofit: US-045 back down into integration`, attendez ses contrôles, et mergez-la avec **Merge pull
-request**, jamais avec un squash. Le commentaire vert du contrôle dit pourquoi sur sa ligne **How to
+`Retrofit: US-045 back down into integration`, attendez ses contrôles, et mergez-la avec un merge commit
+(**Create a merge commit**, sous la flèche du bouton vert), jamais avec un squash. Le commentaire vert du contrôle dit pourquoi sur sa ligne **How to
 merge** : un retrofit rapporte des commits d'une autre branche majeure, qui doivent rester tels
 quels. `integration`
 porte maintenant tout ce que la production porte, et la prochaine story construite dessus ne peut
@@ -316,7 +317,8 @@ vos fichiers quand vous faites un fetch.
 
 **Le merge n'a rien ramené.**
 Vous avez choisi `main` plutôt que `origin/main`. Relancez **Git: Merge...** et prenez l'entrée
-listée sous **remote branches**.
+listée sous **remote branches**. Si vous avez déjà ouvert la Pull Request de retrofit, relancez **Save / Publish User Story** :
+elle reçoit le merge, et son contrôle repart.
 
 **La Pull Request de retrofit montre des centaines de fichiers modifiés.**
 Votre branche a été tirée d'autre chose que la dernière `integration`. Supprimez-la et reprenez

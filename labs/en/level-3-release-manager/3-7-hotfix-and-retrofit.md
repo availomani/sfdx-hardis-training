@@ -66,7 +66,8 @@ incident back. Bringing `main` back down is the **retrofit**, and it is not opti
 
 ### 1. See what is broken, in production
 
-Open `helios-prod` and look at the rule itself: **Setup > Object Manager > Installation >
+Open `helios-prod` from **Orgs Manager**, with its **Open** action. That does not change your default
+org, so there is nothing to switch at the bottom of VS Code. Look at the rule itself: **Setup > Object Manager > Installation >
 Validation Rules** **(1)**, then `Installation_Date_Not_Past` **(2)**.
 
 ![The validation rules of Installation in Setup](../../_assets/annotated/salesforce/validation-rule.png)
@@ -92,6 +93,11 @@ picture above is what you get. That is the report reproduced, on the real org, i
 
 ### 2. The developer branches the fix from preprod
 
+!!! danger "Never branch a hotfix from integration"
+    `integration` carries next week's work. A fix branched from it ships next week's work to
+    production tonight, on top of an incident, untested by anybody. This is the single most
+    expensive mistake available in this lab, and the reason `preprod` exists.
+
 The fix is Romain's to write, not yours: a release manager reviews and ships what contributors send,
 and does not write their features. **Training: Level 3** > **Simulate my teammates**, and pick
 **US-045 Hotfix: cancelled installations can be back-dated again**.
@@ -100,11 +106,6 @@ and does not write their features. **Training: Level 3** > **Simulate my teammat
 
 It opens his Pull Request from `fix/US-045-installation-date-hotfix` into **`preprod`**. His branch
 was cut from `preprod`, which is what **New User Story** does when the target is `preprod`.
-
-!!! danger "Never branch a hotfix from integration"
-    `integration` carries next week's work. A fix branched from it ships next week's work to
-    production tonight, on top of an incident, untested by anybody. This is the single most
-    expensive mistake available in this lab, and the reason `preprod` exists.
 
 ### 3. Review the fix
 
@@ -128,8 +129,8 @@ again, and nothing else changes.** That is a hotfix.
 
 ### 4. Merge it into preprod
 
-When the check is green, merge it with **Squash and merge**, from the arrow beside **Merge pull
-request** **(1)**: Romain's branch is a fix, and a fix is squashed like every User Story
+When the check is green, merge it with **Squash and merge**, from the arrow beside the green button
+**(1)**: Romain's branch is a fix, and a fix is squashed like every User Story
 ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)), which the **How to merge** line of the green check comment says too. The promotion into `main` that follows is merged, not squashed.
 
 ![Merging a Pull Request on GitHub](../../_assets/annotated/web/github-pr-merge.png)
@@ -237,7 +238,8 @@ a retrofit carries what production already has and declares nothing new.
 ![The end of Save / Publish, with its actions bar](../../_assets/annotated/vscode/work-save-completed.png)
 
 Open the Pull Request into `integration`, title it `Retrofit: US-045 back down into integration`,
-wait for its checks, and merge it with **Merge pull request**, never a squash. The green check comment
+wait for its checks, and merge it with a merge commit (**Create a merge commit**, under the arrow of
+the green button), never a squash. The green check comment
 says why on its **How to merge** line: a retrofit brings back commits of another major branch, which
 must stay as they are. `integration` now carries everything production carries, and the
 next story built on it cannot take the fix away.
@@ -305,7 +307,8 @@ changes when you fetch.
 
 **The merge brought nothing down.**
 You picked `main` rather than `origin/main`. Run **Git: Merge...** again and take the entry listed
-under **remote branches**.
+under **remote branches**. If you already opened the retrofit Pull Request, run **Save / Publish User Story** again: it takes
+the merge, and its check runs again.
 
 **The retrofit Pull Request shows hundreds of changed files.**
 Your branch was cut from something other than the latest `integration`. Delete it and start step 7

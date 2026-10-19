@@ -405,7 +405,8 @@ settings sit next to a line the course changed. Nothing is lost: `uat` holds the
    conflict, save, click **+** on its row, then **Commit**. Current is `uat`, which already has the
    course changes and your settings
 5. **Publish Branch**, then on GitHub open its Pull Request into `uat`, wait for the checks, and
-   merge it with **Merge pull request**, never a squash: a squash brings the conflict back
+   merge it with a merge commit (**Create a merge commit**, under the arrow of the green button),
+   never a squash: a squash brings the conflict back
 
 The Pull Request into `preprod` then has no conflict. Its check runs again and stops on the
 deliverability step, as step 2 says.

@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "f8e19f65fa8c62b369e31883ac3263668123c01d"
+source_rev: "9cc8a540e22699bed1f036baa1a7126bc1977ce5"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -166,7 +166,8 @@ Relisez chacune avec les quatre questions du [Lab 3.2](3-2-review-a-contributor-
 toute Pull Request de fonctionnalité de ce cours. Vous n'avez pas à attendre chaque déploiement
 avant de merger la suivante : ils se mettent en file sur `integration`. Quand le dernier est vert,
 promouvez `integration` vers `uat` comme au [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) : la pastille **+ PR** sur la flèche, un titre
-lisible par un humain, **Merge pull request** et jamais de squash.
+lisible par un humain, un merge commit (**Create a merge commit**, sous la flèche du bouton vert) et
+jamais de squash.
 
 Les cinq stories sont maintenant dans `uat`, déployées dans `helios-uat`, et c'est le moment que
 toute vraie semaine finit par atteindre : tout est testable, et une partie seulement est approuvée.
@@ -577,7 +578,8 @@ utilisable par la personne qui lira ça dans six mois :
 > until the wording is approved, expected Wednesday next week, and US-060 until the crews have
 > been briefed.
 
-Mergez ensuite avec **Merge pull request**. Jamais de squash : les commits cherry-pickés et leurs
+Mergez ensuite avec un merge commit : **Create a merge commit**, sous la flèche du bouton vert.
+Jamais de squash : les commits cherry-pickés et leurs
 lignes de traçabilité sont ce que la prochaine promotion, le retrofit et les notes de version lisent
 tous. La ligne **How to merge** du commentaire vert du contrôle le dit aussi.
 
@@ -652,8 +654,8 @@ bouton bleu en dessous affiche **Continue** tant qu'un merge est en cours, comme
 [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md). Cliquez dessus, puis **Save / Publish User Story** comme au [Lab 3.7](3-7-hotfix-and-retrofit.md)
 étape 9, et ouvrez la Pull Request vers `integration`, intitulée `Retrofit: the promotion of US-057,
 US-059 and US-061 back down into integration`. Son onglet **Files changed** est vide, et c'est
-normal : lisez le bloc ci-dessous. Attendez son contrôle, et mergez-la avec **Merge pull request**,
-comme le demande la ligne **How to merge** de son commentaire.
+normal : lisez le bloc ci-dessous. Attendez son contrôle, et mergez-la avec un merge commit (**Create a
+merge commit**), comme le demande la ligne **How to merge** de son commentaire.
 
 <details markdown="1"><summary>Sous le capot : une Pull Request qui ne change aucun fichier, et pourquoi elle compte quand même</summary>
 

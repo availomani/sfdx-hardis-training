@@ -690,6 +690,7 @@
       ],
       "screenshots": [
         "annotated/vscode/devops-pipeline--one-column",
+        "annotated/vscode/devops-pipeline-level3-split",
         "annotated/web/github-new-branch",
         "annotated/web/github-branch-rules",
         "annotated/web/github-branch-rule",

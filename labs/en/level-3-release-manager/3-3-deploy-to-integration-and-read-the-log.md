@@ -324,6 +324,11 @@ The first action is right: the org is missing its group. Create it in `helios-in
 The action definition is read from the branch you have checked out, which is why step 10 had you
 check out `integration` and pull it. If you switched branch since, come back to it.
 
+!!! warning "No Retry on the row, only Mark as done?"
+    VS Code is not on `integration`, so the action definition is not in your checkout.
+    Check it out, pull it, and click **Refresh**. Do not re-run the job on GitHub instead: it
+    deploys everything again, without the Quick Deploy, and runs the actions from the start.
+
 Back in the **Deployment Actions** tab, click **Retry** on the row of **Put the delivery managers in
 the Crew Leads group**. The command runs in VS Code, against `helios-integration`:
 
@@ -490,6 +495,11 @@ Request: GitHub merges `integration` into it, and the check runs again.
 The status comes from sfdx-hardis, which needs a recent version and your GitHub connection: update
 it from the **Dependencies** panel, and check the git provider icon of the DevOps Pipeline is
 connected. A row offers Retry only when its action failed or was stopped, after the deployment.
+
+**The failed row has no Retry, only Mark as done.**
+Your checked out branch is not `integration`. Check it out, pull it, click **Refresh**. Re-running
+the deployment job on GitHub is not the same thing: it deploys everything again, without the Quick
+Deploy, and the first action fails until the group exists.
 
 **Retry says no org of helios-integration is connected.**
 Connect `helios-integration` in **Orgs Manager**, then click **Retry** again.

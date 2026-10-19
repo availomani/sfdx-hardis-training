@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "67bd5ed051b499371d44a8597671e4191d17414c"
+source_rev: "0bc58525d863e6f6592a0dddbd593a4f87f5b49b"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -180,7 +180,11 @@ atteint la production.
 
 Cliquez maintenant sur **Create pull request**.
 
-Mergez-la avec **Merge pull request**, jamais avec un squash : une promotion transporte chaque commit
+Mergez-la avec un merge commit, jamais avec un squash : cliquez sur la flèche à côté du bouton vert,
+choisissez **Create a merge commit**, puis cliquez sur **Merge pull request**. GitHub retient la
+méthode utilisée en dernier, donc après toutes les Pull Requests de fonctionnalité mergées en
+squash, le bouton peut afficher **Squash and merge** tant que vous ne le changez pas. Une promotion
+transporte chaque commit
 des stories qu'elle promeut, et la promotion suivante, le retrofit et les notes de version ont tous
 besoin de les retrouver un par un ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)). Le commentaire vert du contrôle dit la même chose sur sa ligne
 **How to merge** : **use a merge commit, never squash**.

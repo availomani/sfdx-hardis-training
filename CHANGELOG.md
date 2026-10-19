@@ -3,6 +3,14 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-20
+
+- Labs 3.5, 3.6, 3.7 and 3.10 name the GitHub option to pick for a promotion: Create a merge commit, under the arrow of the green button.
+- Lab 3.1 shows the DevOps Pipeline in the middle of step 8, and its two settings steps are numbered lists.
+- Lab 3.3 says why a failed action has no Retry button, and why re-running the job on GitHub is not the same thing.
+- Simulate my teammates ends with a button that opens the Pull Request it created.
+- Lab 3.7 opens production from Orgs Manager, warns about hotfixes from integration at the top of step 2, and says what to do with a retrofit that brought nothing down.
+
 ## 2026-10-19
 
 - Trainers: the lab drivers point to the training scenario of the `e2e` skill of sfdx-hardis, which replaces the `training-e2e` skill.

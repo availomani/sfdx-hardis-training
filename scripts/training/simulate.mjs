@@ -48,6 +48,7 @@ import {
   select, confirm, universe, hasGh, repoSlug
 } from "../lib/util.mjs";
 import { waitForPullRequestChecks } from "../lib/course-updates.mjs";
+import { report } from "../lib/panel.mjs";
 
 const SIMULATE_DIR = path.join(ROOT, "scripts", "simulate");
 
@@ -433,6 +434,10 @@ export default async function simulate(args) {
 
   title("Done");
   info(`  ${merged && scenario.nextStepMerged ? scenario.nextStepMerged : scenario.nextStep}`);
+  // A button at the bottom of the panel, so nobody copies the address by hand
+  if (prUrl && /\/pull\/\d+/.test(prUrl)) {
+    report(prUrl, "Open the Pull Request", "actionUrl");
+  }
 }
 
 /**

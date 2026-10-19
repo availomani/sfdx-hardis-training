@@ -8,6 +8,7 @@ lang: en
 source_rev: ""
 screenshots:
   - annotated/vscode/devops-pipeline--one-column
+  - annotated/vscode/devops-pipeline-level3-split
   - annotated/web/github-new-branch
   - annotated/web/github-branch-rules
   - annotated/web/github-branch-rule
@@ -389,17 +390,29 @@ available in this lab. And store both secrets, the ID and the key, as in step 6.
 
 Four secrets, two External Client Apps, two keys. Tedious once, then never again.
 
+Look at the **DevOps Pipeline** panel now. It draws two separate pieces, `integration` → `uat`
+and `preprod` → `main`, with nothing between `uat` and `preprod`. That gap is expected, and the
+next paragraph closes it.
+
+![The DevOps Pipeline in the middle of step 8: integration to uat, and preprod to main, with no arrow between uat and preprod](../../_assets/annotated/vscode/devops-pipeline-level3-split.png)
+
 **Then tell `uat` where its work goes next.** The command wrote that `preprod` merges into
 `main`. Nothing has said yet that `uat` merges into `preprod`: until now `uat` was the end of the
-pipeline, and its branch file says so. In the **DevOps Pipeline** panel, gear menu, **Configure Pipeline
-Settings**, switch the scope selector at the top right to **Branch: uat** **(1)**, open the
-**Deployment** tab **(2)** and click **Edit**. In **Merge target branches** **(3)**, type
-`preprod`, then **Save** **(4)**, which took the place of **Edit**.
+pipeline, and its branch file says so.
+
+1. In the **DevOps Pipeline** panel, gear menu, click **Configure Pipeline Settings**
+2. Switch the scope selector at the top right to **Branch: uat** **(1)**
+3. Open the **Deployment** tab **(2)** and click **Edit**
+4. In **Merge target branches** **(3)**, type `preprod`
+5. Click **Save** **(4)**, which took the place of **Edit**
 
 ![The Deployment tab of the uat branch settings, unlocked, with preprod as its merge target](../../_assets/annotated/vscode/pipeline-config-branch-merge-target.png)
 
 Without it the diagram draws no arrow from `uat` to `preprod`, and [Lab 3.6](3-6-release-to-production-and-read-dora-metrics.md) has no **+ PR**
 chip to click there. Step 11 publishes it with the rest.
+
+The diagram now draws one line of four branches, `integration` → `uat` → `preprod` → `main`, as
+in the picture of [step 12](#12-look-at-the-diagram-again).
 
 ### 9. Let contributors start a hotfix
 
@@ -454,9 +467,12 @@ Still in **Pipeline Settings**, scope **Global Settings**, open the **Danger Zon
 The tab opens on a warning, *Use these settings with caution, be sure to understand their impact as
 they drift from DevOps best practices*, and it is there for every setting on it, this one included.
 
-Click **Edit**, turn **Enable promotion branches (Beta)** **(1)** on, then add one row to **Allowed
-promotion steps (Beta)** **(2)** with **Source branch** `uat` and **Target branch** `preprod`.
-**Save**.
+1. Click **Edit**
+2. Turn **Enable promotion branches (Beta)** **(1)** on
+3. Add one row to **Allowed promotion steps (Beta)** **(2)**:
+   - **Source branch**: `uat`
+   - **Target branch**: `preprod`
+4. Click **Save**
 
 The second setting is required by the first, and it is a real decision rather than paperwork: it
 says a release manager on this project may assemble a subset on the way into `preprod`, the stage in

@@ -5,7 +5,7 @@ description: "Lisez un log de déploiement sfdx-hardis, trouvez ce qu'un joker .
 level: 3
 lab: 3
 lang: fr
-source_rev: "dedbee6351e8a899ded3a97d8417e23e2b64f67d"
+source_rev: "c4d307ed701a3a65a3dcd6ab39442c7f5a48a0e5"
 screenshots:
   - annotated/vscode/pipeline-config-deployment--delta
   - annotated/vscode/orgs-manager
@@ -342,6 +342,12 @@ La définition de l'action est lue dans la branche que vous avez récupérée, e
 l'étape 10 vous a fait récupérer `integration` et faire un pull. Si vous avez changé de branche
 depuis, revenez-y.
 
+!!! warning "Pas de Retry sur la ligne, seulement Mark as done ?"
+    VS Code n'est pas sur `integration`, donc la définition de l'action n'est pas dans votre
+    copie de travail. Récupérez `integration`, faites un pull, et cliquez sur **Refresh**. Ne relancez pas le
+    job sur GitHub à la place : il redéploie tout, sans le Quick Deploy, et rejoue les actions
+    depuis le début.
+
 De retour dans l'onglet **Deployment Actions**, cliquez sur **Retry** sur la ligne de **Put the
 delivery managers in the Crew Leads group**. La commande tourne dans VS Code, sur
 `helios-integration` :
@@ -523,6 +529,11 @@ L'état vient de sfdx-hardis, qui demande une version récente et votre connexio
 jour depuis le panneau **Dependencies**, et vérifiez que l'icône du fournisseur git de la DevOps
 Pipeline est connectée. Une ligne ne propose Retry que si son action a échoué ou a été arrêtée,
 après le déploiement.
+
+**La ligne en échec n'a pas de Retry, seulement Mark as done.**
+La branche que vous avez récupérée n'est pas `integration`. Récupérez-la, faites un pull, cliquez
+sur **Refresh**. Relancer le job de déploiement sur GitHub n'est pas la même chose : il redéploie
+tout, sans le Quick Deploy, et la première action échoue tant que le groupe n'existe pas.
 
 **Retry dit qu'aucune org de helios-integration n'est connectée.**
 Connectez `helios-integration` dans **Orgs Manager**, puis cliquez à nouveau sur **Retry**.

@@ -17,6 +17,11 @@
       "file": "devops-pipeline",
       "state": "level3"
     },
+    "devops-pipeline-level3-split": {
+      "gate": "devops-pipeline",
+      "file": "devops-pipeline",
+      "state": "level3-split"
+    },
     "pipeline-branch-modal-uat": {
       "gate": "pipeline-modals",
       "file": "pipeline-branch-modal",
