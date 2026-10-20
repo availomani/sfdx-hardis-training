@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "6dbfefd0555802e73d14a18c95b4e534fde78f76"
+source_rev: "8775e127def6163d5be25fb8dc14d7e392f80c9e"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -24,7 +24,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~35 min<!-- observed --> (observé : médiane 39 min, 6 participants, le plus rapide 15 min)<!-- /observed -->
+**Durée** : ~45 min<!-- observed --> (observé : médiane 47 min, 7 participants, le plus rapide 15 min)<!-- /observed -->
 
 **Vous allez** : rencontrer un échec qu'aucune correction de métadonnée ne résout, et découvrir
 l'outil qui existe pour cela : une deployment action.

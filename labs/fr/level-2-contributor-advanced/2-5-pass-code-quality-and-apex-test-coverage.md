@@ -5,7 +5,7 @@ description: "Corrigez une trouvaille PMD et la couverture de code Apex qui bloq
 level: 2
 lab: 5
 lang: fr
-source_rev: "b7cbcd96df80fd7a64c3dc45f9aa26da8ca2e9a6"
+source_rev: "919d383b45ac515dbb0290e85c22d02368ef289f"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/org-monitoring--apex-tests
@@ -21,7 +21,7 @@ depends_on:
 
 **Niveau** : 2 Contributeur avancé
 
-**Durée** : ~20 min<!-- observed --> (observé : médiane 23 min, 6 participants, le plus rapide 6 min)<!-- /observed -->
+**Durée** : ~25 min<!-- observed --> (observé : médiane 29 min, 7 participants, le plus rapide 13 min)<!-- /observed -->
 
 **Vous allez** : être bloqué deux fois par des robots, corriger les deux correctement plutôt que de
 les contourner, et apprendre à lancer les contrôles avant de pousser.

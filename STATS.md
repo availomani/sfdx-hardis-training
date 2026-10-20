@@ -12,7 +12,7 @@ A level is started when its first branch exists in the learner's repository, and
 | Level | Started | Share of learners | Completed | Share of started |
 |---|---|---|---|---|
 | Level 1 - Contributor basics | 69 | 100% | 44 | 64% |
-| Level 2 - Contributor advanced | 32 | 46% | 14 | 44% |
+| Level 2 - Contributor advanced | 33 | 48% | 15 | 45% |
 | Level 3 - Release Manager | 15 | 22% | 7 | 47% |
 
 ## Time spent
@@ -22,7 +22,7 @@ The median time of the learners who went through, next to the estimate each lab 
 | Level | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
 | Level 1 - Contributor basics | 1 h 30 | 1 h 24 | 39 min | 39 |
-| Level 2 - Contributor advanced | 4 h | 5 h 45 | 1 h 31 | 11 |
+| Level 2 - Contributor advanced | 4 h | 5 h 45 | 1 h 31 | 13 |
 | Level 3 - Release Manager | 6 h 55 | 12 h 12 | 7 h 36 | 5 |
 
 ### Level 1 - Contributor basics
@@ -36,14 +36,14 @@ The median time of the learners who went through, next to the estimate each lab 
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Labs 2.1 and 2.2 | 40 min | 53 min | 26 min | 26 |
-| Lab 2.3 | 30 min | 48 min | 15 min | 25 |
-| Lab 2.4 | 30 min | 50 min | 20 min | 19 |
-| Lab 2.5 | 30 min | 23 min | 6 min | 16 |
-| Lab 2.6 | 25 min | 28 min | 8 min | 15 |
-| Lab 2.7 | 35 min | 35 min | 10 min | 12 |
-| Lab 2.8 | 20 min | 24 min | 6 min | 12 |
-| Lab 2.9 | 30 min | 52 min | 23 min | 12 |
+| Labs 2.1 and 2.2 | 40 min | 54 min | 26 min | 27 |
+| Lab 2.3 | 30 min | 49 min | 15 min | 26 |
+| Lab 2.4 | 30 min | 49 min | 17 min | 21 |
+| Lab 2.5 | 30 min | 22 min | 6 min | 17 |
+| Lab 2.6 | 25 min | 29 min | 10 min | 16 |
+| Lab 2.7 | 35 min | 35 min | 10 min | 14 |
+| Lab 2.8 | 20 min | 24 min | 6 min | 14 |
+| Lab 2.9 | 30 min | 46 min | 12 min | 14 |
 
 ### Level 3 - Release Manager
 
@@ -70,15 +70,15 @@ From the learners who ran **Check my work** at the end of each lab: their receip
 | Lab 1.5 | 20 min | 19 min | 8 min | 23 |
 | Lab 1.6 | 20 min | 18 min | 5 min | 22 |
 | Lab 1.7 | 25 min | 32 min | 11 min | 24 |
-| Lab 2.1 | 15 min | 21 min | 16 min | 6 |
-| Lab 2.2 | 25 min | 27 min | 8 min | 6 |
-| Lab 2.3 | 30 min | 39 min | 15 min | 6 |
-| Lab 2.4 | 30 min | 41 min | 20 min | 6 |
-| Lab 2.5 | 30 min | 23 min | 6 min | 6 |
-| Lab 2.6 | 25 min | 36 min | 10 min | 6 |
-| Lab 2.7 | 35 min | 37 min | 10 min | 6 |
-| Lab 2.8 | 20 min | 18 min | 6 min | 6 |
-| Lab 2.9 | 30 min | 41 min | 11 min | 6 |
+| Lab 2.1 | 15 min | 26 min | 16 min | 7 |
+| Lab 2.2 | 25 min | 25 min | 8 min | 7 |
+| Lab 2.3 | 30 min | 47 min | 15 min | 7 |
+| Lab 2.4 | 30 min | 50 min | 20 min | 7 |
+| Lab 2.5 | 30 min | 29 min | 13 min | 7 |
+| Lab 2.6 | 25 min | 34 min | 10 min | 7 |
+| Lab 2.7 | 35 min | 37 min | 10 min | 7 |
+| Lab 2.8 | 20 min | 20 min | 6 min | 7 |
+| Lab 2.9 | 30 min | 43 min | 11 min | 7 |
 | Lab 3.1 | 50 min | 2 h 09 | 2 h | 5 |
 | Lab 3.2 | 25 min | 26 min | 18 min | 5 |
 | Lab 3.3 | 45 min | 1 h 37 | 38 min | 5 |
