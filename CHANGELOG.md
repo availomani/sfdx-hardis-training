@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-21
 
+- Every screenshot says it can be enlarged: "click to enlarge" at the end of its caption, and a magnifier when the mouse is over it.
 - The comments under each page show the newest first. The Oldest button above them still switches back.
 - The notes that only some learners need are tip boxes again, as before the step template: Agentforce Vibes and the other editors in Labs 1.1 to 1.4, and the star and LinkedIn banner asides of the three capstones. Lab 1.4 no longer sends anyone to a terminal to open an org.
 

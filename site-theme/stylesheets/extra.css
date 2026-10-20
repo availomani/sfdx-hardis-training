@@ -744,6 +744,48 @@ article:has(.lab-meta) th strong {
   color: var(--md-default-fg-color);
 }
 
+/* A screenshot shows the panel at about 40% of its size, so it says it can be
+   enlarged: "click to enlarge" in its caption, always, and a magnifier in its
+   corner on hover only, so it never hides part of the picture while reading. */
+.md-typeset .lab-figure > a.glightbox {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.md-typeset .lab-figure > a.glightbox::after {
+  content: "";
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background-color: #6610F2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 25%);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  pointer-events: none;
+}
+
+.md-typeset .lab-figure > a.glightbox:hover::after,
+.md-typeset .lab-figure > a.glightbox:focus-visible::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.md-typeset .lab-figure .lab-figure-zoom {
+  margin-left: 0.4em;
+  color: var(--md-typeset-a-color);
+  cursor: zoom-in;
+  white-space: nowrap;
+}
+
 /* The titles of code blocks: Type this, Output, Config, Edit this file */
 .md-typeset .highlight > .filename {
   font-size: 0.62rem;

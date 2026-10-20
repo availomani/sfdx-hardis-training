@@ -18,8 +18,8 @@
  */
 (function () {
   var WORDS = {
-    en: { figure: "Figure", done: "Done" },
-    fr: { figure: "Figure", done: "Terminé" }
+    en: { figure: "Figure", done: "Done", enlarge: "click to enlarge" },
+    fr: { figure: "Figure", done: "Terminé", enlarge: "cliquer pour agrandir" }
   };
 
   function words() {
@@ -73,6 +73,16 @@
       number.textContent = label + " " + count;
       caption.appendChild(number);
       caption.appendChild(document.createTextNode(" · " + alt));
+      if (holder.tagName === "A") {
+        // the screenshot is shown small: say it opens full size, and let the words open it too
+        var zoom = document.createElement("span");
+        zoom.className = "lab-figure-zoom";
+        zoom.textContent = "(" + words().enlarge + ")";
+        zoom.addEventListener("click", function () {
+          image.click();
+        });
+        caption.appendChild(zoom);
+      }
       paragraph.parentNode.replaceChild(figure, paragraph);
       figure.appendChild(holder);
       figure.appendChild(caption);
