@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "63640c4c20b5bea3cc2b33a1062d23e192e95e90"
+source_rev: "0c2424adc144984b02264c0fdb178bda1b74f5db"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -21,7 +21,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~55 min<!-- observed --> (observé : médiane 59 min, 6 participants, le plus rapide 20 min)<!-- /observed -->
+**Durée** : ~50 min<!-- observed --> (observé : médiane 54 min, 7 participants, le plus rapide 20 min)<!-- /observed -->
 
 **Vous allez** : faire une semaine entière d'une traite, sans pas-à-pas, et finir avec quelque chose
 que vous pourriez montrer à quelqu'un.
