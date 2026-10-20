@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "bf9c7b836c7d1a3a8580e4a44ae1a434ed87b425"
+source_rev: "f88457a39bd57b77ff9ad6443cb58ef2e9804c58"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -70,12 +70,13 @@ se ressemblent donc partout sauf dans la colonne **ALIAS**.
 Pas de mot de passe, pas de page de connexion : l'extension a utilisé l'identifiant qu'elle a rangé
 quand vous avez connecté l'org au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
 
-Dans Agentforce Vibes, VS Code tourne dans votre navigateur, l'org ne peut donc pas s'ouvrir à côté.
-Les anciennes versions de l'extension lançaient la commande d'ouverture dans l'environnement de
-l'onglet, où aucun navigateur ne peut s'ouvrir, et n'affichaient rien.
-
 Ouvrir l'org depuis ce panneau plutôt que depuis un favori est une habitude à prendre. C'est la
 différence entre "l'org que je voulais" et "l'org qui se trouvait ouverte dans cet onglet".
+
+!!! tip "Dans Agentforce Vibes"
+    VS Code tourne dans votre navigateur, l'org ne peut donc pas s'ouvrir à côté. Les anciennes
+    versions de l'extension lançaient la commande d'ouverture dans l'environnement de l'onglet, où
+    aucun navigateur ne peut s'ouvrir, et n'affichaient rien.
 
 #### Vous devriez voir
 
@@ -256,12 +257,9 @@ Les anciennes versions de l'extension pouvaient échouer à ouvrir l'org sans di
 Agentforce Vibes elles n'ouvraient rien du tout : la commande tournait dans l'environnement de
 l'onglet, où aucun navigateur ne peut s'ouvrir. Mettez l'extension à jour, c'est à cela que sert
 **Auto Update** dans le [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md), et cliquez de nouveau
-sur **Open**. En attendant, il existe une seconde entrée : dans la section **Status** du panneau
-sfdx-hardis, sous **Current Org**, cliquez sur la première ligne, l'adresse de l'org. Elle ouvre
-votre org par défaut, qui est `helios-dev` ici. Dans Agentforce Vibes cette ligne a le même
-problème : ouvrez un terminal (**Terminal > New Terminal**), tapez `sf org open --url-only` et
-cliquez tout de suite sur le lien affiché : il contient un code à usage unique qui expire après
-quelques minutes, et une copie collée plus tard tombe sur la page de connexion.
+sur **Open**. En attendant, hors d'Agentforce Vibes, il existe une seconde entrée : dans la section
+**Status** du panneau sfdx-hardis, sous **Current Org**, cliquez sur la première ligne, l'adresse de
+l'org. Elle ouvre votre org par défaut, qui est `helios-dev` ici.
 
 **Orgs Manager affiche vos scratch orgs comme déconnectées, et propose Reconnect au lieu d'Open.**
 Les anciennes versions de l'extension ne lisaient que la sonde de connexion, qu'une scratch org ne

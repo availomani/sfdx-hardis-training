@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "5f5201a0e4d597ac17185340417d3bafe7b26599"
+source_rev: "827c3b1b2bbcd96d955be577664d7f1629c4c73f"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download
@@ -48,21 +48,21 @@ et Bitbucket fonctionnent tous pareil à partir d'ici.
     gratuites, repository d'entraînement, données fictives. Rien de tout cela n'a sa place sur un
     vrai projet.
 
-Pas de VS Code ? Un onglet ou un autre éditeur suffit.
-[Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) est VS Code dans Google Chrome, lancé depuis une org Salesforce :
-une sandbox de développement, ou l'org Developer Edition gratuite pour laquelle le
-[Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) vous inscrit, ce qui veut dire
-que ce chemin ne coûte rien et ne demande rien que vous ne créiez déjà ici. Tout ce cours y
-fonctionne. Deux différences et pas une
-de plus : la CLI Salesforce est déjà là, donc la partie du panneau Setup qui l'installe n'a rien
-à faire, et l'extension vient d'[Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis)
-et non du Visual Studio Marketplace. Chaque panneau, chaque bouton et chaque étape ci-dessous
-sont les mêmes, et les captures d'écran aussi : elles ont été prises dans VS Code de bureau, qui
-est le même éditeur.
+!!! tip "Pas de VS Code ? Un onglet ou un autre éditeur suffit"
+    [Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) est VS Code dans Google Chrome, lancé depuis une org Salesforce :
+    une sandbox de développement, ou l'org Developer Edition gratuite pour laquelle le
+    [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) vous inscrit, ce qui veut dire
+    que ce chemin ne coûte rien et ne demande rien que vous ne créiez déjà ici. Tout ce cours y
+    fonctionne. Deux différences et pas une
+    de plus : la CLI Salesforce est déjà là, donc la partie du panneau Setup qui l'installe n'a rien
+    à faire, et l'extension vient d'[Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis)
+    et non du Visual Studio Marketplace. Chaque panneau, chaque bouton et chaque étape ci-dessous
+    sont les mêmes, et les captures d'écran aussi : elles ont été prises dans VS Code de bureau, qui
+    est le même éditeur.
 
-[Cursor](https://cursor.com/) et les autres éditeurs construits sur VS Code fonctionnent pareil, et depuis
-le même Open VSX. Quel que soit celui que vous utilisez, la suite de ce lab est écrite pour ce
-que vous y voyez.
+    [Cursor](https://cursor.com/) et les autres éditeurs construits sur VS Code fonctionnent pareil, et depuis
+    le même Open VSX. Quel que soit celui que vous utilisez, la suite de ce lab est écrite pour ce
+    que vous y voyez.
 
 ## Avant de commencer
 
@@ -183,13 +183,13 @@ Le pack installe sfdx-hardis lui-même ainsi que les outils qui vont avec : Git 
 branches, le support YAML et Markdown que les fichiers de configuration utilisent, et le visualiseur
 de logs Apex. Les niveaux suivants s'en servent, prenez donc le pack plutôt que l'extension seule.
 
-Dans Agentforce Vibes, les trois téléchargements sont déjà dans l'onglet : Git, Node.js et l'éditeur
-lui-même viennent avec. Une différence aux extensions : la vue Extensions d'un IDE dans le
-navigateur cherche dans
-[Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) et non dans le
-Visual Studio Marketplace, et le pack est le même, sous le même nom. Recharger l'onglet du
-navigateur fait la même chose que redémarrer VS Code, c'est-à-dire permettre à l'éditeur de voir ce
-qui vient d'être installé.
+!!! tip "Dans Agentforce Vibes"
+    Les trois téléchargements sont déjà dans l'onglet : Git, Node.js et l'éditeur lui-même
+    viennent avec. Une différence aux extensions : la vue Extensions d'un IDE dans le navigateur
+    cherche dans [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) et
+    non dans le Visual Studio Marketplace, et le pack est le même, sous le même nom. Recharger
+    l'onglet du navigateur fait la même chose que redémarrer VS Code, c'est-à-dire permettre à
+    l'éditeur de voir ce qui vient d'être installé.
 
 #### Vous devriez voir
 
@@ -225,9 +225,13 @@ l'extension a un panneau qui vérifie ce qui manque et l'installe.
    **Run pending installs** **(1)**
 
 4. Cliquez sur **Run pending installs** **(1)** : il met toute la liste en file d'attente et rend
-   compte de chaque élément au fur et à mesure. Dans Agentforce Vibes, la carte **Salesforce CLI**
-   est verte avant même que vous commenciez, et le panneau n'a plus que les plugins à installer :
-   lancez le même **Run pending installs** et lisez la même liste ; elle est simplement plus courte
+   compte de chaque élément au fur et à mesure
+
+  !!! tip "Dans Agentforce Vibes"
+      La carte **Salesforce CLI** est verte avant même que vous commenciez, et le panneau n'a plus
+      que les plugins à installer : lancez le même **Run pending installs** et lisez la même liste ;
+      elle est simplement plus courte.
+
 5. Attendez la fin. Cela prend quelques minutes
 
 !!! warning "Redémarrez VS Code une fois les installations terminées"

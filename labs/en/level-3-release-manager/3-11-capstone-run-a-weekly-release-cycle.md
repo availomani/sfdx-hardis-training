@@ -190,18 +190,20 @@ Then, as for the two other levels: it asks for your Trailblazer username, the la
 address of your Trailhead profile, and opens the claim form filled in. Pick your level in the
 **Level** dropdown, which a link cannot prefill, then tick the three boxes and submit.
 
-If the course helped you: [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
-extension every click of this course went through. A star is how an open source project stays
-visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
-course!
-
-![The Star button of the vscode-sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
-
 The badge is **sfdx-hardis Release Manager**.
 
-Put it on your LinkedIn banner: [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
-username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
-username, generate the picture, and set it as your LinkedIn cover.
+!!! tip "If the course helped you"
+    [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
+    extension every click of this course went through. A star is how an open source project stays
+    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
+    course!
+
+    ![The Star button of the vscode-sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
+
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+    username, generate the picture, and set it as your LinkedIn cover.
 
 ## What to do with all this
 

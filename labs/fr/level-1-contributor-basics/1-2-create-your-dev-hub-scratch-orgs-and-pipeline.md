@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "0a86aa16f31cce7f69f43ec3e9488053fc237c01"
+source_rev: "d82a755e4de3c0f4a6f11202e27a206fad0aa0b9"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -248,9 +248,10 @@ et l'étape 5 la transforme en la vôtre.
 Les deux boutons de l'image n'apparaissent que tant qu'aucun dossier n'est ouvert : dès qu'il y en a
 un, le panneau Source Control affiche les modifications de ce dossier à la place.
 
-Dans Agentforce Vibes, l'onglet ouvre son propre espace de travail, déjà court, déjà hors de tout
-client de synchronisation. Il n'y a pas de `C:\git` à créer, et un chemin que vous inventez là est
-un endroit que l'onglet ne gardera pas forcément.
+!!! tip "Dans Agentforce Vibes"
+    L'onglet ouvre son propre espace de travail, déjà court, déjà hors de tout client de
+    synchronisation. Il n'y a pas de `C:\git` à créer, et un chemin que vous inventez là est un
+    endroit que l'onglet ne gardera pas forcément.
 
 <details markdown="1"><summary>Sous le capot : ce que l'ouverture du dossier a appris à l'extension</summary>
 
@@ -287,7 +288,8 @@ place son automatisation.
    **(2)**, ou **macOS - Download binary**
 
   !!! tip "Dans Agentforce Vibes"
-      Sautez cette étape : `gh` est déjà installé dans l'onglet. Passez directement à l'étape 5.
+      Sautez cette étape : `gh` est déjà installé dans l'onglet, et la première commande qui en a
+      besoin vous connecte. Passez directement à l'étape 5.
 
    ![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
 
@@ -311,8 +313,7 @@ DevOps et Bitbucket fonctionnent exactement pareil sans elle. Sur un vrai projet
 repository qui existe déjà, avec son automatisation déjà en marche, et vous n'installeriez jamais
 ceci.
 
-Dans Agentforce Vibes, il ne manque rien ici : la première commande qui a besoin de `gh` vous
-connecte. `gh` ne sert pas qu'à cette étape, et c'est pour cela qu'il vaut la peine de savoir qu'il
+`gh` ne sert pas qu'à cette étape, et c'est pour cela qu'il vaut la peine de savoir qu'il
 est là. Les commandes derrière **Publish my work**, **Simulate my teammates**, **Check my work** et
 **Claim my badge** l'appellent toutes : il ouvre vos Pull Requests, joue les merges de vos
 collègues, lit les secrets de votre fork pour vérifier un niveau, et regarde votre étoile et la
@@ -347,7 +348,11 @@ Helios, et une pipeline câblée dessus, le tout construit par une seule command
    [github.com/login/device](https://github.com/login/device) dans votre navigateur. Saisissez le
    code là-bas, puis acceptez tout ce que github.com demande : l'écran d'autorisation et chacune
    des permissions listées. Si le navigateur ne s'est pas ouvert, l'adresse est affichée juste sous
-   le code. Dans Agentforce Vibes il ne s'ouvre pas tout seul : cliquez sur le lien affiché
+   le code
+
+  !!! tip "Dans Agentforce Vibes"
+      Le navigateur ne s'ouvre pas tout seul : cliquez sur le lien affiché.
+
 6. Revenez dans VS Code : la commande repart toute seule et ne redemandera plus rien
 7. Elle ouvre ensuite l'onglet **Actions** de votre fork dans votre navigateur, et attend. Cliquez
    sur **I understand my workflows, go ahead and enable them**, et revenez dans VS Code : la
@@ -425,14 +430,15 @@ Puis elle vous demande un clic sur GitHub. GitHub désactive les workflows de ch
 derrière une bannière qu'aucune commande ne peut presser. Sans ce clic, rien ne vérifierait ni ne
 déploierait jamais votre travail.
 
-Dans Agentforce Vibes, c'est beaucoup plus rapide. Les mêmes huit étapes ont pris environ trois
-minutes dans l'onglet, parce que la machine qui les exécute est à côté de Salesforce et non au bout
-de votre connexion. Quinze à vingt minutes, c'est le chiffre à prévoir sur un portable ; plus rapide
-est une bonne surprise.
-
 La lancer deux fois est sans danger : chaque étape vérifie avant d'agir, et une org qui existe déjà
 est conservée. Si l'une des étapes ne peut pas être faite depuis ici, elle le dit et vous indique sur
 quel bouton cliquer à la place.
+
+!!! tip "Dans Agentforce Vibes"
+    C'est beaucoup plus rapide. Les mêmes huit étapes ont pris environ trois minutes dans l'onglet,
+    parce que la machine qui les exécute est à côté de Salesforce et non au bout de votre connexion.
+    Quinze à vingt minutes, c'est le chiffre à prévoir sur un portable ; plus rapide est une bonne
+    surprise.
 
 <details markdown="1"><summary>Sous le capot : ce que "Set up my training environment" vient de faire</summary>
 

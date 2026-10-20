@@ -14,7 +14,10 @@
  *     blocks of the template, nothing else. One exception: a tip nested inside
  *     a task of a Do block, indented 2 spaces, for what only some learners need
  *     (another IDE, an older version, a way back after a mistake). Numbered, it
- *     would read as a task for everybody; after the list, it would come too late
+ *     would read as a task for everybody; after the list, it would come too late.
+ *     A tip at the top level is also fine outside the numbered steps (The
+ *     situation, Check your work, Claim your badge) and right after the text of
+ *     a Why block, for an aside about some learners only
  *   - a code fence without an allowed title, or with the Under the hood title
  *     outside an Under the hood block
  *   - a bold run that is a sentence (it ends with a full stop, an exclamation
@@ -119,8 +122,11 @@ export function checkLab(content, locale) {
     }
     const box = line.match(/^(!!!|\?\?\?\+?) (\w+)/);
     if (box) {
-      if (["note", "tip", "info", "danger"].includes(box[2])) {
-        const hint = box[2] === "tip" ? "nest it inside the task it belongs to, indented 4 spaces" : "use a Do, Why or Careful block (warning) instead";
+      // a tip at the top level is fine outside the numbered steps, and right after the text of a Why
+      // block; anywhere else it would split a Do list or land between blocks
+      const tipAllowed = box[2] === "tip" && (!step || block === "why");
+      if (["note", "tip", "info", "danger"].includes(box[2]) && !tipAllowed) {
+        const hint = box[2] === "tip" ? `nest it inside the task it belongs to, indented 2 spaces, or put it after the text of the "#### ${words.why}" block` : "use a Do, Why or Careful block (warning) instead";
         report(index, `"${box[1]} ${box[2]}" box: ${hint}`);
       }
       block = null;

@@ -5,7 +5,7 @@ description: "Prenez votre premier ticket du backlog et créez sa branche Git et
 level: 1
 lab: 3
 lang: fr
-source_rev: "01b7b1a0b45c309e427328f0ac5d16321ea653f5"
+source_rev: "b78b63526cbda94dc938d2de0da5b83d3510d867"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type
@@ -343,10 +343,11 @@ Il cherche votre branche de story, `features/US-014-...`, la seule chose que ce 
 lui. Votre travail n'a pas encore atteint `integration`, et rien ici ne s'y attend : c'est le
 [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md).
 
-Dans Agentforce Vibes, si le panneau dit que le contenu est bloqué : un IDE dans le navigateur perd
-parfois le cadre dans lequel tourne un panneau, et affiche *the content is blocked* à la place de la
-commande. Rien ne cloche dans votre travail : rechargez l'onglet du navigateur et recliquez sur
-**Check my work**. Cela arrive à n'importe quel panneau, pas seulement à celui-ci.
+!!! tip "Dans Agentforce Vibes, si le panneau dit que le contenu est bloqué"
+    Un IDE dans le navigateur perd parfois le cadre dans lequel tourne un panneau, et affiche
+    *the content is blocked* à la place de la commande. Rien ne cloche dans votre travail : rechargez
+    l'onglet du navigateur et recliquez sur **Check my work**. Cela arrive à n'importe quel panneau,
+    pas seulement à celui-ci.
 
 ## Pour aller plus loin
 

@@ -123,13 +123,6 @@ Those three boxes are yours to tick, and nothing ticks them for you. They say yo
 and your GitHub handle becomes public in the training repository, which is a decision about your
 name rather than a formality.
 
-If the course helped you: [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
-is the open source project this whole course is about. A star is how a project like it stays
-visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a
-star if you liked this course!
-
-![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
-
 A job then clones your fork, re-runs every check above against it, and answers on the issue. Nobody
 reviews it by hand, so it usually takes a couple of minutes. If something does not verify, the
 comment names the exact lab and what it looked for, you fix it, and you edit the issue to run it
@@ -142,9 +135,18 @@ make it public.
     There is no exam and no accreditation here. Share it under *Featured* on LinkedIn, not under
     *Licenses & certifications*.
 
-To put it on your LinkedIn banner: [Trailhead Banner](https://thb.nabondance.me/) draws a
-LinkedIn cover image from a Trailblazer username, and it shows the highest sfdx-hardis training
-badge you claimed here. Type your username, generate the picture, and set it as your LinkedIn cover.
+!!! tip "If the course helped you"
+    [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
+    is the open source project this whole course is about. A star is how a project like it stays
+    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a
+    star if you liked this course!
+
+    ![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
+
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a
+    LinkedIn cover image from a Trailblazer username, and it shows the highest sfdx-hardis training
+    badge you claimed here. Type your username, generate the picture, and set it as your LinkedIn cover.
 
 ## What comes next
 

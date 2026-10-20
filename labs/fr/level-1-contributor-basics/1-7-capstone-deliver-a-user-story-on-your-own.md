@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "147fe81a558cd87506ce118dafd26bbcf4120364"
+source_rev: "42bc2a078e74eeca9ea9bac99d522515c6965fd9"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -131,13 +131,6 @@ fork est public et que votre pseudo GitHub devient
 public dans le repository de formation, ce qui est une décision à propos de votre nom plutôt qu'une
 formalité.
 
-Si ce cours vous a servi : [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
-est le projet open source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme
-celui-ci de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du nom du
-repository. Donnez une étoile si vous avez aimé ce cours !
-
-![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
-
 Un job clone ensuite votre fork, rejoue sur lui tous
 les contrôles ci-dessus, et répond sur l'issue. Personne ne le relit à la main, cela prend donc
 généralement deux minutes. Si quelque chose ne se vérifie pas, le commentaire nomme le lab exact et
@@ -150,10 +143,19 @@ puisse le lire. S'il est privé, la commande propose de le rendre public.
     Il n'y a ici ni examen ni accréditation. Partagez-le dans *Featured* sur LinkedIn, pas dans
     *Licenses & certifications*.
 
-Pour la mettre en bannière LinkedIn : [Trailhead Banner](https://thb.nabondance.me/) dessine une
-image de couverture LinkedIn à partir d'un nom d'utilisateur Trailblazer, et il y affiche le badge
-sfdx-hardis le plus élevé que vous avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image,
-et mettez-la en bannière de votre profil LinkedIn.
+!!! tip "Si ce cours vous a servi"
+    [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
+    est le projet open source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme
+    celui-ci de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du nom du
+    repository. Donnez une étoile si vous avez aimé ce cours !
+
+    ![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
+
+!!! tip "La mettre en bannière LinkedIn"
+    [Trailhead Banner](https://thb.nabondance.me/) dessine une
+    image de couverture LinkedIn à partir d'un nom d'utilisateur Trailblazer, et il y affiche le badge
+    sfdx-hardis le plus élevé que vous avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image,
+    et mettez-la en bannière de votre profil LinkedIn.
 
 ## La suite
 

@@ -46,19 +46,19 @@ GitHub, GitLab, Azure DevOps and Bitbucket all work the same from here.
     is where the training-specific part starts: free Salesforce orgs, a training repository,
     fictional data. None of that belongs on a real project.
 
-No VS Code? A browser tab or another editor does it.
-[Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) is VS Code inside Google Chrome, launched from a Salesforce org:
-a developer sandbox, or the free Developer Edition org [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
-signs you up for, which means this path costs nothing and needs nothing you do not already
-create here. The whole course runs in it. Two differences and no others: the
-Salesforce CLI is already there, so the part of the Setup panel that installs it has nothing to
-do, and the extension comes from [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis)
-rather than the Visual Studio Marketplace. Every panel, every button and every step below is
-the same, and so are the screenshots: they were taken in desktop VS Code, which is the same
-editor.
+!!! tip "No VS Code? A browser tab or another editor does it"
+    [Agentforce Vibes](https://www.salesforce.com/agentforce/developers/vibe-coding/ide/) is VS Code inside Google Chrome, launched from a Salesforce org:
+    a developer sandbox, or the free Developer Edition org [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+    signs you up for, which means this path costs nothing and needs nothing you do not already
+    create here. The whole course runs in it. Two differences and no others: the
+    Salesforce CLI is already there, so the part of the Setup panel that installs it has nothing to
+    do, and the extension comes from [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis)
+    rather than the Visual Studio Marketplace. Every panel, every button and every step below is
+    the same, and so are the screenshots: they were taken in desktop VS Code, which is the same
+    editor.
 
-[Cursor](https://cursor.com/) and the other editors built on VS Code work the same way, and from the same
-Open VSX listing. Whichever one you use, the rest of this lab is written for what you see in it.
+    [Cursor](https://cursor.com/) and the other editors built on VS Code work the same way, and from the same
+    Open VSX listing. Whichever one you use, the rest of this lab is written for what you see in it.
 
 ## Before you start
 
@@ -170,12 +170,13 @@ The pack installs sfdx-hardis itself along with the tools that go with it: Git G
 your branches, the YAML and Markdown support the configuration files use, and the Apex log viewer.
 Later levels use them, so take the pack rather than the single extension.
 
-In Agentforce Vibes, the three downloads are already in the tab: Git, Node.js and the editor itself
-come with it. One difference at the extensions: the Extensions view of a browser IDE searches
-[Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) rather than the
-Visual Studio Marketplace, and the pack is the same one under the same name. Reloading the browser
-tab does the same thing as restarting VS Code, which is to let the editor see what was just
-installed.
+!!! tip "In Agentforce Vibes"
+    The three downloads are already in the tab: Git, Node.js and the editor itself come with it.
+    One difference at the extensions: the Extensions view of a browser IDE searches
+    [Open VSX](https://open-vsx.org/extension/NicolasVuillamy/vscode-sfdx-hardis) rather than the
+    Visual Studio Marketplace, and the pack is the same one under the same name. Reloading the
+    browser tab does the same thing as restarting VS Code, which is to let the editor see what was
+    just installed.
 
 #### You should now see
 
@@ -211,9 +212,13 @@ extension has a panel that checks what is missing and installs it.
    installs** **(1)**
 
 4. Click **Run pending installs** **(1)**: it queues the whole list and reports each item as it
-   finishes. In Agentforce Vibes, the **Salesforce CLI** card is green before you start, and the
-   panel has only the plugins left to install: run the same **Run pending installs** and read the
-   same list; there is simply less of it
+   finishes
+
+  !!! tip "In Agentforce Vibes"
+      The **Salesforce CLI** card is green before you start, and the panel has only the plugins
+      left to install: run the same **Run pending installs** and read the same list; there is
+      simply less of it.
+
 5. Wait for it to finish. This takes a few minutes
 
 !!! warning "Restart VS Code once the installs are finished"

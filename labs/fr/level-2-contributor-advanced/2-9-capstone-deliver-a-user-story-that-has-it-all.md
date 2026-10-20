@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce avec une dépendance à vérifier
 level: 2
 lab: 9
 lang: fr
-source_rev: "6f1d56982df2e0634ddb80e735f534a44cbb342d"
+source_rev: "9f19ff3425453fc9a229806445154888fff2a6ab"
 screenshots:
   - annotated/web/github-star-megalinter
 depends_on:
@@ -188,20 +188,22 @@ Une demande de Niveau 2 rejoue aussi l'audit du Niveau 1, parce que le badge dit
 faire les deux. Si vous avez sauté le Niveau 1, c'est là qu'il le dira, et la commande le dit avant
 que le formulaire s'ouvre.
 
-Si ce cours vous a servi : [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) est le moteur de linting
-derrière la barrière de qualité que vos Pull Requests ont traversée. Une étoile est ce qui permet
-à un projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite
-du nom du repository. Donnez une étoile si vous avez aimé ce cours !
-
-![Le bouton Star du repository MegaLinter sur GitHub](../../_assets/annotated/web/github-star-megalinter.png)
-
 Le badge de ce niveau s'appelle **sfdx-hardis Contributor Advanced**. Le Niveau 1 vous rend capable
 de livrer une User Story ; le Niveau 2 vous rend capable de traiter tout ce qui tourne mal en chemin.
 
-Pour la mettre en bannière LinkedIn : [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
-d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
-avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
-votre profil LinkedIn.
+!!! tip "Si ce cours vous a servi"
+    [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) est le moteur de linting
+    derrière la barrière de qualité que vos Pull Requests ont traversée. Une étoile est ce qui permet
+    à un projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite
+    du nom du repository. Donnez une étoile si vous avez aimé ce cours !
+
+    ![Le bouton Star du repository MegaLinter sur GitHub](../../_assets/annotated/web/github-star-megalinter.png)
+
+!!! tip "La mettre en bannière LinkedIn"
+    [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
+    d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
+    avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
+    votre profil LinkedIn.
 
 ## La suite
 

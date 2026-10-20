@@ -328,10 +328,10 @@ Welcome page > **Training: Level 1** > **Check my work**, then pick **Lab 1.3**.
 It looks for your story branch, `features/US-014-...`, the one thing this lab leaves behind. Your
 work has not reached `integration` yet, and nothing here expects it to: that is [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md).
 
-In Agentforce Vibes, if the panel says the content is blocked: a browser IDE sometimes loses the
-frame a panel runs in, and shows *the content is blocked* where the command should be. Nothing is
-wrong with your work: reload the browser tab and click **Check my work** again. It happens to any
-panel, not only this one.
+!!! tip "In Agentforce Vibes, if the panel says the content is blocked"
+    A browser IDE sometimes loses the frame a panel runs in, and shows *the content is blocked*
+    where the command should be. Nothing is wrong with your work: reload the browser tab and click
+    **Check my work** again. It happens to any panel, not only this one.
 
 ## Go deeper
 

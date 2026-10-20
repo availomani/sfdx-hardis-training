@@ -5,7 +5,7 @@ description: "Menez une semaine entière de release manager Salesforce sans pas-
 level: 3
 lab: 11
 lang: fr
-source_rev: "0c2424adc144984b02264c0fdb178bda1b74f5db"
+source_rev: "310db8e756466a85af33acab572260cc1c0d70a2"
 screenshots:
   - annotated/web/github-star-vscode-sfdx-hardis
   - annotated/vscode/welcome-custom-menu-3
@@ -199,19 +199,21 @@ dernière partie de l'adresse de votre profil Trailhead, et ouvre le formulaire 
 rempli. Choisissez votre niveau dans la liste **Level**, qu'un lien ne peut pas pré-remplir, puis
 cochez les trois cases et soumettez.
 
-Si ce cours vous a servi : [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) est
-l'extension par laquelle est passé chaque clic de ce cours. Une étoile est ce qui permet à un
-projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du
-nom du repository. Donnez une étoile si vous avez aimé ce cours !
-
-![Le bouton Star du repository vscode-sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
-
 Le badge s'appelle **sfdx-hardis Release Manager**.
 
-Pour la mettre en bannière LinkedIn : [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
-d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
-avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
-votre profil LinkedIn.
+!!! tip "Si ce cours vous a servi"
+    [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) est
+    l'extension par laquelle est passé chaque clic de ce cours. Une étoile est ce qui permet à un
+    projet open source de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du
+    nom du repository. Donnez une étoile si vous avez aimé ce cours !
+
+    ![Le bouton Star du repository vscode-sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
+
+!!! tip "La mettre en bannière LinkedIn"
+    [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
+    d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
+    avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
+    votre profil LinkedIn.
 
 ## Que faire de tout cela
 

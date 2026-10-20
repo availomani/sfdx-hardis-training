@@ -19,6 +19,9 @@
  *
  *   #### Why this order            the reasons, open, muted
  *
+ *   !!! tip "In Agentforce Vibes"  after the Why text, for an aside about some
+ *       ...                        learners only (also fine outside the steps)
+ *
  *   <details> Under the hood       unchanged
  *
  *   #### You should now see        always last

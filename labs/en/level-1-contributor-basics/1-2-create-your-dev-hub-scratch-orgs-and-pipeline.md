@@ -234,9 +234,9 @@ it. Take the team's copy for now: it is read-only, and step 5 turns it into your
 The two buttons in the picture only appear while no folder is open: once one is, the Source Control
 panel shows that folder's changes instead.
 
-In Agentforce Vibes, the tab opens on a workspace of its own, already short, already outside any
-sync client. There is no `C:\git` to make, and a path you invent there is somewhere the tab may not
-keep.
+!!! tip "In Agentforce Vibes"
+    The tab opens on a workspace of its own, already short, already outside any sync client. There
+    is no `C:\git` to make, and a path you invent there is somewhere the tab may not keep.
 
 <details markdown="1"><summary>Under the hood: what opening the folder told the extension</summary>
 
@@ -272,7 +272,8 @@ automation up.
    binary**
 
   !!! tip "In Agentforce Vibes"
-      Skip this step: `gh` is already installed in the tab. Go straight to step 5.
+      Skip this step: `gh` is already installed in the tab, and the first command that needs it
+      signs you in. Go straight to step 5.
 
    ![The GitHub CLI home page, with the install list open on the Windows MSI](../../_assets/annotated/web/gh-cli-download.png)
 
@@ -294,8 +295,7 @@ does: this project happens to live on GitHub, and GitLab, Azure DevOps and Bitbu
 exactly the same way without it. On a real project you would join a repository that already exists,
 with its automation already running, and you would never install this.
 
-In Agentforce Vibes, nothing here is missing: the first command that needs `gh` signs you in. `gh`
-is not only for this step, which is why it is worth knowing it is there. The commands behind
+`gh` is not only for this step, which is why it is worth knowing it is there. The commands behind
 **Publish my work**, **Simulate my teammates**, **Check my work** and **Claim my badge** all call
 it: it opens your Pull Requests, plays your teammates' merges, reads the secrets of your fork to
 check a level, and looks at your star and your repository's visibility when you claim.
@@ -328,8 +328,11 @@ wired to them, all built by one command.
 5. It stops on a line like `Your one-time code is 5989-F9D9` and opens
    [github.com/login/device](https://github.com/login/device) in your browser. Type the code there,
    then accept everything github.com asks for: the authorisation screen and each permission it
-   lists. If the browser did not open, the address is printed right under the code. In Agentforce
-   Vibes it does not open on its own: click the printed link
+   lists. If the browser did not open, the address is printed right under the code
+
+  !!! tip "In Agentforce Vibes"
+      The browser does not open on its own: click the printed link.
+
 6. Come back to VS Code: the command carries on by itself, and never asks again
 7. It then opens the **Actions** tab of your fork in your browser and waits. Click **I understand my
    workflows, go ahead and enable them**, and come back to VS Code: the command carries on by itself
@@ -402,14 +405,14 @@ and to write the secrets the CI jobs read, which is the whole of what this step 
 Then it asks for one click on GitHub. GitHub switches off the workflows of every new fork, behind a
 banner that no command can press. Without that click, nothing would ever check or deploy your work.
 
-In Agentforce Vibes it is much faster. The same eight steps took about three minutes in the tab,
-because the machine running them sits next to Salesforce rather than at the end of your home
-connection. Fifteen to twenty is the figure to plan for on a laptop; anything faster is a good
-surprise.
-
 Running it twice is harmless: every step checks before it acts, and an org that already exists is
 kept. If one of the steps cannot be done from here, it says so and tells you which button to click
 instead.
+
+!!! tip "In Agentforce Vibes"
+    It is much faster. The same eight steps took about three minutes in the tab, because the machine
+    running them sits next to Salesforce rather than at the end of your home connection. Fifteen to
+    twenty is the figure to plan for on a laptop; anything faster is a good surprise.
 
 <details markdown="1"><summary>Under the hood: what "Set up my training environment" just did</summary>
 

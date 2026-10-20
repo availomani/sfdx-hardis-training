@@ -176,19 +176,21 @@ the address of your Trailhead profile, and opens the claim form filled in. Pick 
 A Level 2 claim re-runs the Level 1 audit as well, because the badge says you can do both. If
 you skipped Level 1, that is where it will say so, and the command says it before the form opens.
 
-If the course helped you: [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) is the linting engine behind
-the quality gate your Pull Requests went through. A star is how an open source project stays
-visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
-course!
-
-![The Star button of the MegaLinter repository on GitHub](../../_assets/annotated/web/github-star-megalinter.png)
-
 The badge for this level is called **sfdx-hardis Contributor Advanced**. Level 1 makes you able to
 deliver a User Story; Level 2 makes you able to deal with everything that goes wrong on the way.
 
-Put it on your LinkedIn banner: [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
-username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
-username, generate the picture, and set it as your LinkedIn cover.
+!!! tip "If the course helped you"
+    [oxsecurity/megalinter](https://github.com/oxsecurity/megalinter) is the linting engine behind
+    the quality gate your Pull Requests went through. A star is how an open source project stays
+    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
+    course!
+
+    ![The Star button of the MegaLinter repository on GitHub](../../_assets/annotated/web/github-star-megalinter.png)
+
+!!! tip "Put it on your LinkedIn banner"
+    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+    username, generate the picture, and set it as your LinkedIn cover.
 
 ## What comes next
 
