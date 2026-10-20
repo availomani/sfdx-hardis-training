@@ -162,6 +162,12 @@
   color: #fff !important;
 }
 
+/* A wider page than the theme's 61rem: the two menus keep their width and the text
+   column gets the room, about 950px instead of 736px on a 1440px screen. */
+.md-grid {
+  max-width: 72rem;
+}
+
 .md-typeset__table {
   min-width: 100%;
 }
@@ -666,7 +672,9 @@ html .md-footer-meta.md-typeset .md-footer-cloudity a:not(:focus, :hover) {
   text-align: center;
 }
 
+/* A closed box like the other blocks, the thick left bar telling it apart */
 .md-typeset .blk-why {
+  border: 1px solid var(--md-default-fg-color--lightest);
   border-left: 3px solid var(--md-default-fg-color--lighter);
   background: var(--lab-why-bg);
   color: var(--lab-why);
