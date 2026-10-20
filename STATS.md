@@ -40,7 +40,7 @@ The median time of the learners who went through, next to the estimate each lab 
 | Lab 2.3 | 30 min | 49 min | 15 min | 26 |
 | Lab 2.4 | 30 min | 49 min | 17 min | 21 |
 | Lab 2.5 | 30 min | 24 min | 6 min | 19 |
-| Lab 2.6 | 25 min | 31 min | 10 min | 18 |
+| Lab 2.6 | 25 min | 30 min | 10 min | 19 |
 | Lab 2.7 | 35 min | 37 min | 10 min | 16 |
 | Lab 2.8 | 20 min | 27 min | 7 min | 15 |
 | Lab 2.9 | 30 min | 48 min | 12 min | 15 |
