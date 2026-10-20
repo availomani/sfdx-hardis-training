@@ -344,7 +344,7 @@ If the list has dozens of names, all standard objects, your scratch orgs were cr
 course switched Field Service and the Thanks badges off in them. **Training: Level 2 > Update my
 course**, then **Training: Level 1 > Set up my training environment** again: it switches both off
 in the scratch orgs you have, and deletes nothing. Then a **Fix** User Story from `helios-dev`,
-retrieve `Helios Crew` again as in step 3, and **Save / Publish**.
+retrieve `Helios Crew` again as in step 1, and **Save / Publish**.
 
 ## Check your work
 

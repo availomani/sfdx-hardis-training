@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "0e7831b42eb06361c17f8cca55cd89381959a1c1"
+source_rev: "b8cda848b90cdffdefa68e912cc660bf971343c9"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -254,11 +254,12 @@ arrivent au même endroit.
 
    ![Le panneau DevOps Pipeline, avec la branche de feature et la pastille de sa Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
 
-2. Ou, au lieu du diagramme, faites défiler jusqu'à **Project Contribution Workflow** et cliquez sur
-   la carte **My Pull Request** **(1)**, qui pointe toujours vers la Pull Request de la branche sur
-   laquelle vous êtes
+  !!! tip "Un autre chemin"
+      Au lieu du diagramme, faites défiler jusqu'à **Project Contribution Workflow** et cliquez
+      sur la carte **My Pull Request** **(1)**, qui pointe toujours vers la Pull Request de la
+      branche sur laquelle vous êtes.
 
-   ![La carte My Pull Request du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
+      ![La carte My Pull Request du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
 
 #### À faire : ajouter l'action
 

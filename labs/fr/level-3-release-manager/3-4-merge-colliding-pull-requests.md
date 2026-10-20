@@ -5,7 +5,7 @@ description: "Revoyez l'ordre de merge de deux Pull Requests qui ont modifié le
 level: 3
 lab: 4
 lang: fr
-source_rev: "5dcc08f68f4b886c962475f6735e2ef0f1ccf4c6"
+source_rev: "a026db7b43899c5626643f936bbe4ec5633e0707"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config--cleaning-overwrite
@@ -233,8 +233,6 @@ permissions de champ.
 
 1. Dans `helios-integration`, vérifiez que `Helios_Delivery_Manager` a les deux nouvelles
    permissions de champ : `Crew_Capacity_Cap__c` sur Installation et `Quote_Pdf_Url__c` sur Panel Batch
-2. S'il en manque une, quelque chose l'a perdue entre la branche et l'org : corrigez avec une Pull
-   Request de suite, pas une modification dans l'org
 
 #### Vous devriez voir
 

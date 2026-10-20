@@ -5,6 +5,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 
 ## 2026-10-20
 
+- Numbered tasks are only what every learner does: the Agentforce Vibes instructions, the ways back when something went wrong and the other ways in are now tip boxes inside the task they belong to.
 - Every step of every lab reads the same way: its goal, what to do as numbered tasks with each screenshot under its task, why, and what you should now see, with a box to tick when it is done. Proposed by [fkramer690](https://github.com/fkramer690) in [#142](https://github.com/hardisgroupcom/sfdx-hardis-training/discussions/142).
 - Labs 3.5, 3.6, 3.7 and 3.10 name the GitHub option to pick for a promotion: Create a merge commit, under the arrow of the green button.
 - Lab 3.1 shows the DevOps Pipeline in the middle of step 8, and its two settings steps are numbered lists.

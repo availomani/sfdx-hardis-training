@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "99d0efd1a5a5426d92e8955789b2eb8428751b17"
+source_rev: "2665df0ee4c47cddf6ed36fa446547b9a108181b"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -360,7 +360,7 @@ Si la liste compte des dizaines de noms, tous des objets standard, vos scratch o
 avant que ce cours n'y désactive Field Service et les badges Thanks. **Training: Level 2 > Update my
 course**, puis de nouveau **Training: Level 1 > Set up my training environment** : il désactive les
 deux dans les scratch orgs que vous avez, et ne supprime rien. Ensuite une User Story **Fix** depuis
-`helios-dev`, récupérez `Helios Crew` de nouveau comme à l'étape 3, et **Save / Publish**.
+`helios-dev`, récupérez `Helios Crew` de nouveau comme à l'étape 1, et **Save / Publish**.
 
 ## Vérifiez votre travail
 

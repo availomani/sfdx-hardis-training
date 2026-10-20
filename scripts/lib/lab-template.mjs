@@ -11,6 +11,10 @@
  *   #### Do
  *   1. numbered tasks, one action per line, the screenshot under its task
  *
+ *     !!! tip "In Agentforce Vibes"     inside its task, 2 spaces, body at 6: only
+ *         ...                           for what some learners need, never a task
+ *                                       of its own (any other indent prints as text)
+ *
  *   !!! warning "Careful"          only when something fails or is hard to undo
  *
  *   #### Why this order            the reasons, open, muted

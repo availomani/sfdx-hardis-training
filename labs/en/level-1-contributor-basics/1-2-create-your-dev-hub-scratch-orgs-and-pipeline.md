@@ -220,10 +220,14 @@ it. Take the team's copy for now: it is read-only, and step 5 turns it into your
    such place yet, make one: `C:\git` on Windows, `~/git` on macOS and Linux. Short path, no
    spaces, not inside OneDrive or any folder that syncs, because a sync client and a git repository
    fight over the same files
-4. In Agentforce Vibes, keep the folder it offers: take the folder the dialog suggests rather than
-   typing a path
-5. When it asks, click **Open** to work in the clone
-6. If GitHub asks you to sign in, let VS Code handle it: **Sign in with your browser** is enough
+
+  !!! tip "In Agentforce Vibes"
+      Keep the folder the dialog suggests rather than typing a path.
+
+4. When it asks, click **Open** to work in the clone
+
+  !!! tip "If GitHub asks you to sign in"
+      Let VS Code handle it: **Sign in with your browser** is enough.
 
 #### Why
 
@@ -263,14 +267,16 @@ automation up.
 
 #### Do
 
-1. In Agentforce Vibes, skip this step: `gh` is already installed in the tab. Go straight to step 5
-2. On the home page of the [GitHub CLI](https://cli.github.com/), open the install list **(1)** and
+1. On the home page of the [GitHub CLI](https://cli.github.com/), open the install list **(1)** and
    take the download for your machine: **Windows - Download MSI** **(2)**, or **macOS - Download
    binary**
 
+  !!! tip "In Agentforce Vibes"
+      Skip this step: `gh` is already installed in the tab. Go straight to step 5.
+
    ![The GitHub CLI home page, with the install list open on the Windows MSI](../../_assets/annotated/web/gh-cli-download.png)
 
-3. Run the installer and accept its defaults
+2. Run the installer and accept its defaults
 
 !!! warning "Restart VS Code after installing it"
     The installer adds `gh` to the PATH, and a VS Code that was already open does not see the

@@ -5,7 +5,7 @@ description: "Un déploiement vert n'est pas une fonctionnalité qui marche. Liv
 level: 2
 lab: 4
 lang: fr
-source_rev: "b7227658fe46acdc268e319f4d07b293eb9807a4"
+source_rev: "2ab26832e302644acec9cbec28d360e9184464e2"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--lab-records
   - annotated/salesforce/crew-capacity-records
@@ -122,9 +122,12 @@ ne voyage jamais.
 
 2. Le panneau prend de lui-même **Lab 2.4 - the 12 Crew Capacity records** et **helios-dev**, le
    seul lab et la seule org qu'il propose ici : répondez **Yes** à **Create them?**
-3. Si le panneau dit qu'un champ manque, terminez d'abord l'objet, puis relancez-le : il met à jour
-   les mêmes douze enregistrements au lieu d'en créer d'autres
-4. Ouvrez le lien **See them in the org** par lequel le panneau termine, ou ouvrez l'onglet **Crew
+
+  !!! tip "Si un champ manque"
+      Si le panneau dit qu'un champ manque, terminez d'abord l'objet, puis relancez-le : il met à
+      jour les mêmes douze enregistrements au lieu d'en créer d'autres.
+
+3. Ouvrez le lien **See them in the org** par lequel le panneau termine, ou ouvrez l'onglet **Crew
    Capacity** de l'application Helios Delivery et choisissez la vue de liste **All**
 
 #### Pourquoi le menu les crée
@@ -340,8 +343,9 @@ déploie, et la classe y est avant qu'elle ne tourne.
 
    ![La boîte Edit Deployment Action, avec le type Manual sélectionné](../../_assets/annotated/vscode/pipeline-edit-action-manual.png)
 
-2. Si votre fenêtre liste encore trois contextes sous **Execution Contexts**, votre extension est
-   plus ancienne : choisissez **Validation and Deployment jobs**
+  !!! tip "Avec une extension plus ancienne"
+      Si votre fenêtre liste encore trois contextes sous **Execution Contexts**, votre extension
+      est plus ancienne : choisissez **Validation and Deployment jobs**.
 
 | Champ              | Valeur                                  |
 |--------------------|-----------------------------------------|

@@ -5,7 +5,7 @@ description: "Protégez ce que l'UAT garde pour elle avec package-no-overwrite, 
 level: 3
 lab: 5
 lang: fr
-source_rev: "faba8d4282f0b29e835d46320de751acabfc2568"
+source_rev: "104fb9823c016e8f9ef87c7ceae1719464e172b3"
 screenshots:
   - annotated/vscode/devops-pipeline-level3--create-promotion
   - annotated/vscode/pipeline-branch-modal-level3--what-it-carries
@@ -145,9 +145,9 @@ encore, et vous n'avez pas à écrire de XML pour les ajouter.
    ![La fenêtre Add Metadata Type du visualiseur de package](../../_assets/annotated/vscode/package-no-overwrite-add-type--type.png)
 
 4. Sur la nouvelle ligne **RemoteSiteSetting**, cliquez sur **Add member**, tapez
-   `Helios_Warehouse`, et cliquez sur **Add**
-5. Si vous voulez voir le fichier, **Edit File** l'ouvre en texte
-6. Cliquez sur **Training: Level 3** > **Publish my pipeline configuration**, et mergez sa Pull
+   `Helios_Warehouse`, et cliquez sur **Add**. Si vous voulez voir le fichier, **Edit File** l'ouvre
+   en texte
+5. Cliquez sur **Training: Level 3** > **Publish my pipeline configuration**, et mergez sa Pull
    Request une fois verte, comme au [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 
 #### Pourquoi cette liste

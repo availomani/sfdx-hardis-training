@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "93d2ffa932e66ab61db1b7a134d702618a0c8770"
+source_rev: "0dd17c287d826e99e428fa5251742115b0c35921"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -74,24 +74,26 @@ Rappel : [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md)
 
    ![La fin de la commande Save / Publish, avec sa barre d'actions](../../_assets/annotated/vscode/work-save-completed.png)
 
-2. Si vous avez fermé ce panneau, rien n'est perdu, et il y a deux chemins de retour. Relancez
-   **Save / Publish my User Story** : chaque étape vérifie avant d'agir, il n'y a plus rien à
-   commiter ni à pousser, et elle se termine sur la même barre d'actions. Ou ouvrez votre fork
-   (`github.com/my-username/sfdx-hardis-training`) sur GitHub : il affiche une bannière qui propose
-   d'ouvrir une Pull Request pour la branche que vous venez de pousser
-3. Vérifiez deux choses avant de cliquer, à chaque fois sans exception :
+  !!! tip "Panneau fermé ?"
+      Rien n'est perdu, et il y a deux chemins de retour. Relancez **Save / Publish my User
+      Story** : chaque étape vérifie avant d'agir, il n'y a plus rien à commiter ni à pousser, et
+      elle se termine sur la même barre d'actions. Ou ouvrez votre fork
+      (`github.com/my-username/sfdx-hardis-training`) sur GitHub : il affiche une bannière qui
+      propose d'ouvrir une Pull Request pour la branche que vous venez de pousser.
+
+2. Vérifiez deux choses avant de cliquer, à chaque fois sans exception :
 
    1. **base** est `integration`, dans votre fork
    2. **compare** est `features/US-014-panels-required`
 
-4. Remplacez le titre, qui indique **Features/us 014 panels required**, par la première ligne du
+3. Remplacez le titre, qui indique **Features/us 014 panels required**, par la première ligne du
    message de commit que vous avez écrit au [Lab 1.5, étape 4](1-5-retrieve-commit-and-publish-your-changes.md), `US-014 Panels
    Required on Installation`
-5. Remplacez entièrement le contenu de la zone de description. Sous **What this changes**, collez le
+4. Remplacez entièrement le contenu de la zone de description. Sous **What this changes**, collez le
    reste de ce même message de commit, le paragraphe qui explique pourquoi ; renseignez
    l'identifiant de la story ; et dites où le relecteur doit regarder
-6. Supprimez les lignes de commentaire et tout titre sous lequel vous n'avez rien à mettre
-7. Cliquez sur **Create pull request**
+5. Supprimez les lignes de commentaire et tout titre sous lequel vous n'avez rien à mettre
+6. Cliquez sur **Create pull request**
 
 !!! warning "Vérifiez le repository de base"
     GitHub met par défaut comme base d'une Pull Request de fork le repository d'origine. Si la base
@@ -225,12 +227,14 @@ Azure Boards ou ServiceNow à la place.
 1. Revenez dans VS Code et ouvrez le panneau **DevOps Pipeline**
 2. Sous **Project Contribution Workflow**, la carte **My Pull Request** **(1)** porte maintenant le
    nom de votre Pull Request. Cliquez dessus
-3. Si la carte affiche encore *Pull Request not created yet*, cliquez sur **Refresh** dans sa barre
-   du haut, et la carte se met à jour
 
    ![La carte My Pull Request du panneau DevOps Pipeline, qui nomme la Pull Request de US-014](../../_assets/annotated/vscode/pipeline-cards-first-pr--my-pull-request.png)
 
-4. Lisez la fenêtre qui s'ouvre sur votre Pull Request :
+  !!! tip "Carte pas à jour ?"
+      Si la carte affiche encore *Pull Request not created yet*, cliquez sur **Refresh** dans sa
+      barre du haut, et la carte se met à jour.
+
+3. Lisez la fenêtre qui s'ouvre sur votre Pull Request :
 
    1. Les onglets **(1)** : **Validation** est le contrôle de déploiement, **Code Quality** est
       Mega-Linter, et **Deployment** se remplit une fois le merge fait. **Tickets** contient la
@@ -241,17 +245,17 @@ Azure Boards ou ServiceNow à la place.
 
    ![La fenêtre d'une Pull Request dans VS Code, sur son onglet Validation](../../_assets/annotated/vscode/pipeline-pr-window-validation.png)
 
-5. Si vous l'avez ouverte pendant qu'un contrôle tournait encore, la fenêtre le dit, et vous n'avez
-   pas besoin de GitHub pour savoir où en est le contrôle :
+  !!! tip "Ouverte pendant qu'un contrôle tournait ?"
+      La fenêtre le dit, et vous n'avez pas besoin de GitHub pour savoir où en est le contrôle :
 
-   1. L'onglet **(1)** porte un spinner tant que son job tourne, **Code Quality** compris, et
-      l'étape **Validation** au-dessus des onglets bouge
-   2. Le job en cours **(2)** vient en premier : quand il a démarré, depuis combien de temps il
-      tourne, compté chaque seconde, et **Open job** pour son log sur GitHub
-   3. En dessous **(3)**, ce que l'exécution précédente a laissé. Sur une première Pull Request
-      il n'y a encore rien : le commentaire arrive quand le job se termine
+      1. L'onglet **(1)** porte un spinner tant que son job tourne, **Code Quality** compris, et
+         l'étape **Validation** au-dessus des onglets bouge
+      2. Le job en cours **(2)** vient en premier : quand il a démarré, depuis combien de temps
+         il tourne, compté chaque seconde, et **Open job** pour son log sur GitHub
+      3. En dessous **(3)**, ce que l'exécution précédente a laissé. Sur une première Pull
+         Request il n'y a encore rien : le commentaire arrive quand le job se termine
 
-   ![La fenêtre d'une Pull Request dans VS Code pendant que son contrôle de déploiement tourne](../../_assets/annotated/vscode/pipeline-pr-window-running.png)
+      ![La fenêtre d'une Pull Request dans VS Code pendant que son contrôle de déploiement tourne](../../_assets/annotated/vscode/pipeline-pr-window-running.png)
 
 #### Pourquoi
 
@@ -269,15 +273,17 @@ durée du job.
 
 1. Cliquez sur **Files** **(1)**. Le contrôle a gardé ses rapports, et sfdx-hardis les liste sous le
    job **(2)**
+
+  !!! tip "Pas de bouton Files ?"
+      Votre sfdx-hardis est trop ancien. Ouvrez le panneau **Setup** du
+      [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md) : quand la carte `sfdx-hardis` affiche
+      **Upgrade**, cliquez dessus, puis rouvrez la fenêtre. **Open job** mène aux mêmes fichiers
+      en attendant : le **Summary** de l'exécution, puis **Artifacts**.
+
 2. Cliquez sur l'un d'eux pour l'ouvrir dans VS Code : `deployment-components.csv` est la liste
    derrière **7 components would change**, une ligne par composant
 
    ![Le bouton Files du job de validation, ouvert sur les rapports que le job a gardés](../../_assets/annotated/vscode/pipeline-pr-window-files.png)
-
-3. S'il n'y a pas de bouton **Files**, votre sfdx-hardis est trop ancien. Ouvrez le panneau
-   **Setup** du [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md) : quand la carte `sfdx-hardis` affiche **Upgrade**, cliquez dessus, puis
-   rouvrez la fenêtre. **Open job** mène aux mêmes fichiers en attendant : le **Summary** de
-   l'exécution, puis **Artifacts**
 
 #### Pourquoi
 
@@ -327,8 +333,10 @@ Objectif : US-014 mergée dans `integration`, en un seul commit.
 
 4. Vérifiez l'étiquette du bouton, puis cliquez sur **Squash and merge** et **Confirm squash and
    merge**
-5. Si la branche est toujours là après le merge, cliquez sur **Delete branch**, et cochez
-   **Settings > General > Automatically delete head branches** dans votre fork
+
+  !!! tip "La branche est toujours là ?"
+      Cliquez sur **Delete branch**, et cochez **Settings > General > Automatically delete head
+      branches** dans votre fork.
 
 !!! warning "Le squash est pour les Pull Requests de feature, et pour rien d'autre"
     **Squash and merge** est juste dans exactement un cas : une Pull Request venant d'une branche

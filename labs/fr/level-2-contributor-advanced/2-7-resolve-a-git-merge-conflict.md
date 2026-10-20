@@ -5,7 +5,7 @@ description: "Une collègue a mergé en premier sur le même flow et le même pe
 level: 2
 lab: 7
 lang: fr
-source_rev: "bd284c6000f3bdc751f960454a362f501460ba31"
+source_rev: "2f56c1f3f73e1f90b004e1cc4119969d9e8d3952"
 screenshots:
   - annotated/salesforce/flow-builder-assign-crew
   - annotated/salesforce/flow-builder-assign-crew-full
@@ -114,11 +114,13 @@ fork pour que vous puissiez réellement le relire et le merger.
    | Merge it for you once its checks pass? | **Yes**, sauf si vous voulez la merger vous-même sur GitHub |
 
 3. Avec **Yes**, laissez le panneau attendre les checks, deux à quatre minutes : il merge la Pull
-   Request et écrit **Pull Request merged into its base branch**
-4. Avec **No**, ouvrez l'adresse affichée, jetez un œil à **Files changed**, et mergez-la avec
-   **Squash and merge** une fois les checks verts : les mêmes clics qu'au
-   [Lab 2.1](2-1-backpromote-your-teammates-work.md), étape 1b, où chacun a sa capture d'écran.
-   Si vous la mergez sur GitHub pendant que le panneau attend encore, il s'en aperçoit et s'arrête
+   Request et écrit **Pull Request merged into its base branch**. Si vous la mergez sur GitHub
+   pendant que le panneau attend encore, il s'en aperçoit et s'arrête
+
+  !!! tip "Si vous avez répondu No"
+      Avec **No**, ouvrez l'adresse affichée, jetez un œil à **Files changed**, et mergez-la avec
+      **Squash and merge** une fois les checks verts : les mêmes clics qu'au
+      [Lab 2.1](2-1-backpromote-your-teammates-work.md), étape 1b, où chacun a sa capture d'écran.
 
 #### Pourquoi après votre modification
 

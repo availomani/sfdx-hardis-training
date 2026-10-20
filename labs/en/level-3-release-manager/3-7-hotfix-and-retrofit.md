@@ -315,8 +315,9 @@ Refresher: [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-con
 
    ![The branch picker, with origin main](../../_assets/annotated/vscode/git-retrofit-pick--origin-main.png)
 
-4. If the merge conflicts, open each file under **Merge Changes**, **Resolve in Merge Editor**, and
-   keep both intents, the hotfix exception and whatever `integration` added
+  !!! tip "If the merge conflicts"
+      Open each file under **Merge Changes**, **Resolve in Merge Editor**, and keep both
+      intents, the hotfix exception and whatever `integration` added.
 
 !!! warning "origin/main, not main"
     `main` on its own is the copy on your machine, which you have not updated since before the
@@ -327,7 +328,8 @@ Refresher: [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-con
 
 Tonight this merges on its own: nobody else touched that validation rule this week. When it does
 conflict, it is because somebody changed the same lines in `integration`, and the answer is the one
-from [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), task 4 above. Neither side loses its work.
+from [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md): keep both
+intents. Neither side loses its work.
 
 #### You should now see
 

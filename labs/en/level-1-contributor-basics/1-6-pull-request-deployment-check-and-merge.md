@@ -72,24 +72,26 @@ Refresher: [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md)
 
    ![The end of the Save / Publish command, with its actions bar](../../_assets/annotated/vscode/work-save-completed.png)
 
-2. If you closed that panel, nothing is lost, and there are two ways back. Run **Save / Publish my
-   User Story** again: every step checks before it acts, there is nothing left to commit or push,
-   and it finishes on the same actions bar. Or open your fork
-   (`github.com/my-username/sfdx-hardis-training`) on GitHub, which shows a banner offering to open
-   a Pull Request for the branch you just pushed
-3. Check two things before clicking, every single time:
+  !!! tip "Closed the panel?"
+      Nothing is lost, and there are two ways back. Run **Save / Publish my User Story** again:
+      every step checks before it acts, there is nothing left to commit or push, and it finishes
+      on the same actions bar. Or open your fork (`github.com/my-username/sfdx-hardis-training`)
+      on GitHub, which shows a banner offering to open a Pull Request for the branch you just
+      pushed.
+
+2. Check two things before clicking, every single time:
 
    1. **base** is `integration`, in your fork
    2. **compare** is `features/US-014-panels-required`
 
-4. Replace the title, which reads **Features/us 014 panels required**, with the first line of the
+3. Replace the title, which reads **Features/us 014 panels required**, with the first line of the
    commit message you wrote in [Lab 1.5 step 4](1-5-retrieve-commit-and-publish-your-changes.md),
    `US-014 Panels Required on Installation`
-5. Replace the whole of the description box. Under **What this changes**, paste the rest of that
+4. Replace the whole of the description box. Under **What this changes**, paste the rest of that
    same commit message, the paragraph explaining why; fill in the story id; and say where a reviewer
    should look
-6. Delete the comment lines and any heading you have nothing to put under
-7. Click **Create pull request**
+5. Delete the comment lines and any heading you have nothing to put under
+6. Click **Create pull request**
 
 !!! warning "Check the base repository"
     GitHub defaults the base of a fork's Pull Request to the original repository. If the base
@@ -218,12 +220,14 @@ ServiceNow connector instead.
 1. Go back to VS Code and open the **DevOps Pipeline** panel
 2. Under **Project Contribution Workflow**, the **My Pull Request** card **(1)** now names your
    Pull Request. Click it
-3. If the card still reads *Pull Request not created yet*, click **Refresh** in its top bar, and
-   the card catches up
 
    ![The My Pull Request card of the DevOps Pipeline panel, naming the Pull Request of US-014](../../_assets/annotated/vscode/pipeline-cards-first-pr--my-pull-request.png)
 
-4. Read the window that opens on your Pull Request:
+  !!! tip "Card not updated?"
+      If the card still reads *Pull Request not created yet*, click **Refresh** in its top bar,
+      and the card catches up.
+
+3. Read the window that opens on your Pull Request:
 
    1. The tabs **(1)**: **Validation** is the deployment check, **Code Quality** is Mega-Linter,
       and **Deployment** fills in once you have merged. **Tickets** holds the story found in your
@@ -234,17 +238,17 @@ ServiceNow connector instead.
 
    ![The window of a Pull Request in VS Code, on its Validation tab](../../_assets/annotated/vscode/pipeline-pr-window-validation.png)
 
-5. If you opened it while a check was still running, the window says so, and you do not need
-   GitHub to know where the check stands:
+  !!! tip "Opened it while a check was running?"
+      The window says so, and you do not need GitHub to know where the check stands:
 
-   1. The tab **(1)** carries a spinner for as long as its job runs, **Code Quality** included,
-      and the **Validation** step above the tabs moves
-   2. The running job **(2)** comes first: when it started, for how long it has been going on,
-      counted every second, and **Open job** for its log on GitHub
-   3. Under it **(3)**, what the previous run left. On a first Pull Request there is nothing
-      there yet: the comment arrives when the job ends
+      1. The tab **(1)** carries a spinner for as long as its job runs, **Code Quality**
+         included, and the **Validation** step above the tabs moves
+      2. The running job **(2)** comes first: when it started, for how long it has been going
+         on, counted every second, and **Open job** for its log on GitHub
+      3. Under it **(3)**, what the previous run left. On a first Pull Request there is nothing
+         there yet: the comment arrives when the job ends
 
-   ![The window of a Pull Request in VS Code while its deployment check is running](../../_assets/annotated/vscode/pipeline-pr-window-running.png)
+      ![The window of a Pull Request in VS Code while its deployment check is running](../../_assets/annotated/vscode/pipeline-pr-window-running.png)
 
 #### Why
 
@@ -261,15 +265,17 @@ When the job ends, its row leaves and the comment takes its place, with the time
 
 1. Click **Files** **(1)**. The check kept its reports, and sfdx-hardis lists them under the job
    **(2)**
+
+  !!! tip "No Files button?"
+      Your sfdx-hardis is too old for it. Open the **Setup** panel of
+      [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md): when the `sfdx-hardis` card reads
+      **Upgrade**, click it, then reopen the window. **Open job** leads to the same files in the
+      meantime: the **Summary** of the run, then **Artifacts**.
+
 2. Click one to open it in VS Code: `deployment-components.csv` is the list behind
    **7 components would change**, one row per component
 
    ![The Files button of the validation job, opened on the reports the job kept](../../_assets/annotated/vscode/pipeline-pr-window-files.png)
-
-3. If there is no **Files** button, your sfdx-hardis is too old for it. Open the **Setup** panel of
-   [Lab 1.1](1-1-install-vs-code-and-sfdx-hardis.md): when the `sfdx-hardis` card reads **Upgrade**, click it, then reopen the window.
-   **Open job** leads to the same files in the meantime: the **Summary** of the run, then
-   **Artifacts**
 
 #### Why
 
@@ -317,8 +323,10 @@ Goal: US-014 merged into `integration`, as one commit.
    ![The merge method menu of a Pull Request, with Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
 
 4. Check the button label, then click **Squash and merge** and **Confirm squash and merge**
-5. If the branch is still there after the merge, click **Delete branch**, and tick **Settings >
-   General > Automatically delete head branches** in your fork
+
+  !!! tip "Branch still there?"
+      Click **Delete branch**, and tick **Settings > General > Automatically delete head
+      branches** in your fork.
 
 !!! warning "Squash is for feature Pull Requests, and for nothing else"
     **Squash and merge** is right in exactly one case: a Pull Request from a feature branch, a

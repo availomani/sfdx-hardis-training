@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "b9ff8125578d4c1a045ad7469430181b705376f3"
+source_rev: "0a86aa16f31cce7f69f43ec3e9488053fc237c01"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -234,11 +234,14 @@ et l'étape 5 la transforme en la vôtre.
    `~/git` sous macOS et Linux. Chemin court, pas d'espaces, et pas dans OneDrive ni dans un dossier
    qui se synchronise, parce qu'un client de synchronisation et un repository git se disputent les mêmes
    fichiers
-4. Dans Agentforce Vibes, gardez le dossier proposé : prenez le dossier que la boîte de dialogue
-   propose plutôt que de saisir un chemin
-5. Quand on vous le demande, cliquez sur **Open** pour travailler dans le clone
-6. Si GitHub vous demande de vous connecter, laissez VS Code s'en charger : **Sign in with your
-   browser** suffit
+
+  !!! tip "Dans Agentforce Vibes"
+      Gardez le dossier que la boîte de dialogue propose plutôt que de saisir un chemin.
+
+4. Quand on vous le demande, cliquez sur **Open** pour travailler dans le clone
+
+  !!! tip "Si GitHub vous demande de vous connecter"
+      Laissez VS Code s'en charger : **Sign in with your browser** suffit.
 
 #### Pourquoi
 
@@ -279,15 +282,16 @@ place son automatisation.
 
 #### À faire
 
-1. Dans Agentforce Vibes, sautez cette étape : `gh` est déjà installé dans l'onglet. Passez
-   directement à l'étape 5
-2. Sur la page d'accueil de la [CLI GitHub](https://cli.github.com/), ouvrez la liste
+1. Sur la page d'accueil de la [CLI GitHub](https://cli.github.com/), ouvrez la liste
    d'installation **(1)** et prenez le téléchargement de votre machine : **Windows - Download MSI**
    **(2)**, ou **macOS - Download binary**
 
+  !!! tip "Dans Agentforce Vibes"
+      Sautez cette étape : `gh` est déjà installé dans l'onglet. Passez directement à l'étape 5.
+
    ![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
 
-3. Lancez l'installeur et acceptez ses valeurs par défaut
+2. Lancez l'installeur et acceptez ses valeurs par défaut
 
 !!! warning "Redémarrez VS Code après l'avoir installée"
     L'installeur ajoute `gh` au PATH, et un VS Code déjà ouvert ne voit pas le changement avant

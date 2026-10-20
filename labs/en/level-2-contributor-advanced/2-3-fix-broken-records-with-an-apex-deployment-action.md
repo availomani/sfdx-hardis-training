@@ -250,10 +250,12 @@ same place.
 
    ![The DevOps Pipeline panel, with the feature branch and the badge of its Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
 
-2. Or, instead of the diagram, scroll to **Project Contribution Workflow** and click the **My Pull
-   Request** card **(1)**, which always points at the Pull Request of the branch you are standing on
+  !!! tip "Another way in"
+      Instead of the diagram, scroll to **Project Contribution Workflow** and click the **My Pull
+      Request** card **(1)**, which always points at the Pull Request of the branch you are
+      standing on.
 
-   ![The My Pull Request card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
+      ![The My Pull Request card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
 
 #### Do: add the action
 

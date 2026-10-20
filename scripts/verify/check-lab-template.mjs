@@ -11,7 +11,10 @@
  *   - a numbered step with no "You should now see" block, or one followed by
  *     another block, a Careful box or an Under the hood block
  *   - a note, tip, info or danger box: a lab has Careful (warning) and the
- *     blocks of the template, nothing else
+ *     blocks of the template, nothing else. One exception: a tip nested inside
+ *     a task of a Do block, indented 2 spaces, for what only some learners need
+ *     (another IDE, an older version, a way back after a mistake). Numbered, it
+ *     would read as a task for everybody; after the list, it would come too late
  *   - a code fence without an allowed title, or with the Under the hood title
  *     outside an Under the hood block
  *   - a bold run that is a sentence (it ends with a full stop, an exclamation
@@ -57,6 +60,7 @@ export function checkLab(content, locale) {
 
   // Steps, blocks and boxes, line by line
   let step = null;
+  let block = null;
   let inDetails = false;
   let fence = null;
   const closeStep = () => {
@@ -104,11 +108,22 @@ export function checkLab(content, locale) {
     if (/<\/details>/.test(line)) {
       inDetails = false;
     }
+    const nested = line.match(/^ +(!!!|\?\?\?\+?) (\w+)/);
+    if (nested && nested[2] !== "warning") {
+      if (nested[2] !== "tip") {
+        report(index, `"${nested[1]} ${nested[2]}" box: inside a task, only a tip`);
+      } else if (block !== "do" || !/^ {2}!!! tip "[^"]+"\s*$/.test(line)) {
+        // mdx_truly_sane_lists reads a task's blocks at 2 spaces: any other indent prints "!!! tip" as text
+        report(index, `nested tip: it goes inside a task of a "#### ${words.do}" block, as '  !!! tip "Title"' (2 spaces, body at 6)`);
+      }
+    }
     const box = line.match(/^(!!!|\?\?\?\+?) (\w+)/);
     if (box) {
       if (["note", "tip", "info", "danger"].includes(box[2])) {
-        report(index, `"${box[1]} ${box[2]}" box: use a Do, Why or Careful block (warning) instead`);
+        const hint = box[2] === "tip" ? "nest it inside the task it belongs to, indented 4 spaces" : "use a Do, Why or Careful block (warning) instead";
+        report(index, `"${box[1]} ${box[2]}" box: ${hint}`);
       }
+      block = null;
       if (step && step.checkLine !== null && !step.afterCheck) {
         step.afterCheck = index;
       }
@@ -116,6 +131,7 @@ export function checkLab(content, locale) {
     const heading = line.match(/^(#{1,4}) (.*)$/);
     if (heading) {
       const level = heading[1].length;
+      block = level === 4 && step ? blockKind(heading[2], words) : null;
       if (level <= 3) {
         closeStep();
       }

@@ -120,9 +120,12 @@ the profile visibility you kept in the wizard never travels.
 
 2. The panel picks **Lab 2.4 - the 12 Crew Capacity records** and **helios-dev** on its own, the
    only lab and the only org it offers here: answer **Yes** to **Create them?**
-3. If the panel says a field is missing, finish the object first, then run it again: it updates the
-   same twelve records rather than creating more
-4. Open the **See them in the org** link the panel ends with, or open the **Crew Capacity** tab of
+
+  !!! tip "If a field is missing"
+      If the panel says a field is missing, finish the object first, then run it again: it updates
+      the same twelve records rather than creating more.
+
+3. Open the **See them in the org** link the panel ends with, or open the **Crew Capacity** tab of
    the Helios Delivery app and pick the **All** list view
 
 #### Why the menu creates them
@@ -333,8 +336,9 @@ the class is there before it runs.
 
    ![The Edit Deployment Action dialog, with the Manual type selected](../../_assets/annotated/vscode/pipeline-edit-action-manual.png)
 
-2. If your dialog still lists three contexts under **Execution Contexts**, your extension is older:
-   pick **Validation and Deployment jobs**
+  !!! tip "With an older extension"
+      If your dialog still lists three contexts under **Execution Contexts**, your extension is
+      older: pick **Validation and Deployment jobs**.
 
 | Field              | Value                                   |
 |--------------------|-----------------------------------------|

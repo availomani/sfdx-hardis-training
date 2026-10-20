@@ -117,9 +117,9 @@ cannot do for you, which is step 3.
 
    ![The Files button of the validation job of Mariia's Pull Request, opened on its reports](../../_assets/annotated/vscode/pipeline-pr-window-review-files.png)
 
-4. If the window has no **Files** button, your sfdx-hardis is older than the feature: **Open job**
-   leads to the same files on GitHub, in the **Summary** of the run, under **Artifacts**,
-   **sfdx-hardis reports**
+  !!! tip "No Files button?"
+      Your sfdx-hardis is older than the feature: **Open job** leads to the same files on
+      GitHub, in the **Summary** of the run, under **Artifacts**, **sfdx-hardis reports**.
 
 #### Why the list
 

@@ -109,11 +109,13 @@ can genuinely review and merge it.
    | Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself on GitHub |
 
 3. With **Yes**, let the panel wait for the checks, two to four minutes: it merges the Pull Request
-   and writes **Pull Request merged into its base branch**
-4. With **No**, open the address it printed, have a look at **Files changed**, and merge it with
-   **Squash and merge** once the checks are green: the same clicks as
-   [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, where each one has its screenshot.
-   If you merge it on GitHub while the panel is still waiting, it notices and stops
+   and writes **Pull Request merged into its base branch**. If you merge it on GitHub while the
+   panel is still waiting, it notices and stops
+
+  !!! tip "If you answered No"
+      With **No**, open the address it printed, have a look at **Files changed**, and merge it
+      with **Squash and merge** once the checks are green: the same clicks as
+      [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, where each one has its screenshot.
 
 #### Why after your change
 

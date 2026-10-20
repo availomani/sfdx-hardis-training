@@ -56,9 +56,9 @@ Refresher: [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 
    ![The actions menu of the development org in Orgs Manager](../../_assets/annotated/vscode/orgs-manager-actions.png)
 
-3. In Agentforce Vibes, the org opens in a new tab of the same browser. VS Code may first ask
-   whether to open the external website: answer **Open**. If no tab appears at all, update the
-   extension
+  !!! tip "In Agentforce Vibes"
+      The org opens in a new tab of the same browser. VS Code may first ask whether to open the
+      external website: answer **Open**. If no tab appears at all, update the extension.
 
 #### Why
 

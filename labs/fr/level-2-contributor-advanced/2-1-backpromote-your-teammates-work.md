@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "ddeb9815617fa65a2b48ba2d696fc04ba6d3f1e4"
+source_rev: "84a07318efd31e0ff8781467d8b3b55da097376d"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -68,22 +68,27 @@ Pull Request que vous mergez.
 
    ![Le menu Training du Niveau 2 dans la liste des commandes sfdx-hardis](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-2. Si VS Code demande d'abord comment autoriser la commande Training, choisissez **Always allow**,
-   comme dans [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
-3. Un panneau de commande s'ouvre et pose trois questions. Répondez comme le dit le tableau
+  !!! tip "Si VS Code demande comment l'autoriser"
+      Si VS Code demande d'abord comment autoriser la commande Training, choisissez
+      **Always allow**, comme dans
+      [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+
+2. Un panneau de commande s'ouvre et pose trois questions. Répondez comme le dit le tableau
    ci-dessous
-4. Gardez l'adresse de la Pull Request que le panneau affiche : elle sert à l'étape 1b
-5. Avec **Yes** à la dernière question, attendez que le panneau écrive **Pull Request merged into
+3. Gardez l'adresse de la Pull Request que le panneau affiche : elle sert à l'étape 1b
+4. Avec **Yes** à la dernière question, attendez que le panneau écrive **Pull Request merged into
    its base branch**, puis **Done**. Vous pouvez alors sauter l'étape 1b et passer directement à
    l'étape 2
-6. S'il dit qu'un check a échoué, ou qu'il n'a pas pu merger, passez à l'étape 1b : rien n'est
-   perdu, la Pull Request est toujours ouverte
 
 | Question                               | Réponse                                                     |
 |----------------------------------------|-------------------------------------------------------------|
 | Which teammate work do you need?       | **US-017 Record who signed an installation off**            |
 | Create it?                             | **Yes**                                                     |
 | Merge it for you once its checks pass? | **Yes**, sauf si vous voulez la merger vous-même (étape 1b) |
+
+!!! warning "Si un check a échoué"
+    Si le panneau dit qu'un check a échoué, ou qu'il n'a pas pu merger, passez à l'étape 1b : rien
+    n'est perdu, la Pull Request est toujours ouverte.
 
 #### Pourquoi
 
@@ -144,8 +149,9 @@ Seulement si vous avez répondu **No**, ou si le panneau n'a pas pu merger.
 
    ![Le menu de méthode de merge d'une Pull Request, avec Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
 
-5. Si un check échoue ici, relancez **Simulate my teammates** : elle recrée la branche et la Pull
-   Request
+!!! warning "Si un check échoue"
+    Si un check échoue ici, relancez **Simulate my teammates** : elle recrée la branche et la Pull
+    Request.
 
 #### Pourquoi
 
@@ -159,10 +165,12 @@ check qui échoue ici n'est pas de votre faute et n'est pas à corriger.
 
 1. Dans `helios-dev`, ouvrez **Setup** > **Object Manager** > **Installation** > **Fields &
    Relationships**, et vérifiez que la liste contient **Panels Required** et **Crew Notes**
-2. S'ils n'y sont pas, ce qui est le cas quand vous avez rejoint la formation au Niveau 2,
-   mettez-les-y avant l'étape 2 : avec `integration` en checkout (son nom est dans le coin en bas à
-   gauche de VS Code), lancez **Training: Level 2** > **Set up one of my training orgs** sur
-   `helios-dev`
+
+  !!! tip "Si vous avez rejoint la formation au Niveau 2"
+      S'ils n'y sont pas, ce qui est le cas quand vous avez rejoint la formation au Niveau 2,
+      mettez-les-y avant l'étape 2 : avec `integration` en checkout (son nom est dans le coin en
+      bas à gauche de VS Code), lancez **Training: Level 2** > **Set up one of my training orgs**
+      sur `helios-dev`.
 
 #### Pourquoi
 
@@ -272,10 +280,11 @@ rapatrié.
 
    ![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles rapatrient](../../_assets/annotated/vscode/backpromote.png)
 
-4. Pour un fichier que les deux côtés ont modifié, le panneau propose une troisième réponse à côté
-   de **Overwrite** et **Keep org version** : **Merge**. Servez-vous-en quand les deux modifications
-   sont réelles et qu'il vous faut les deux, et choisissez entre les deux versions dans l'éditeur de
-   merge de VS Code
+  !!! tip "Un fichier modifié des deux côtés"
+      Pour un fichier que les deux côtés ont modifié, le panneau propose une troisième réponse à
+      côté de **Overwrite** et **Keep org version** : **Merge**. Servez-vous-en quand les deux
+      modifications sont réelles et qu'il vous faut les deux, et choisissez entre les deux
+      versions dans l'éditeur de merge de VS Code.
 
 | Ce que vous voyez                                  | Ce qu'il faut faire                                                |
 |----------------------------------------------------|--------------------------------------------------------------------|

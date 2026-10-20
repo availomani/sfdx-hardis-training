@@ -5,7 +5,7 @@ description: "Vous avez publié bien plus que votre story. Voyez ce que cela fai
 level: 2
 lab: 8
 lang: fr
-source_rev: "4a6e41a280ead6ee1636b06cc8fa8b478e988e83"
+source_rev: "4cbd6367dca9477dca65e6e9ce51d3b16f4f2085"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/metadata-retriever-recent-changes--pick-rows
@@ -71,10 +71,13 @@ Rappel : [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish
 
    ![Le Metadata Retriever, trié du plus récent au plus ancien, avec les cases à cocher et la recherche dans les résultats](../../_assets/annotated/vscode/metadata-retriever-recent-changes--pick-rows.png)
 
-6. Si l'une de vos lignes est un `GenOpAgentConfig`, au nom d'un de vos flows, décochez-la
-7. Récupérez-les ensuite. Le profil arrive entier, c'est donc un peu plus long que les
+  !!! tip "Si une ligne est un GenOpAgentConfig"
+      Si l'une de vos lignes est un `GenOpAgentConfig`, au nom d'un de vos flows, décochez-la
+      avant la récupération.
+
+6. Récupérez-les ensuite. Le profil arrive entier, c'est donc un peu plus long que les
    récupérations des labs précédents
-8. Commitez tout depuis **Source Control**, publiez, poussez, et ouvrez la Pull Request vers
+7. Commitez tout depuis **Source Control**, publiez, poussez, et ouvrez la Pull Request vers
    `integration`, comme pour toute story
 
 !!! warning "Attention"

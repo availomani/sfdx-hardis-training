@@ -75,21 +75,23 @@ open.
 
 #### Do: install Git
 
-1. In Agentforce Vibes, start at the extensions: skip the three downloads below and go straight to
-   [installing the extension pack](#install-the-extension-pack), near the end of this step.
-   Wherever this lab says to restart VS Code, reload the browser tab instead
-2. Open the [Git](https://git-scm.com/downloads) download page. It offers your operating system at
+1. Open the [Git](https://git-scm.com/downloads) download page. It offers your operating system at
    the top: on Windows take **Click here to download** **(1)**, the 64-bit standalone installer
+
+  !!! tip "In Agentforce Vibes"
+      Start at the extensions: skip the three downloads below and go straight to
+      [installing the extension pack](#install-the-extension-pack), near the end of this step.
+      Wherever this lab says to restart VS Code, reload the browser tab instead.
 
    ![The Git download page for Windows](../../_assets/annotated/web/git-download.png)
 
-3. Run the installer and accept every default it offers. If you already have Git, install it
+2. Run the installer and accept every default it offers. If you already have Git, install it
    anyway: the installer recognises an existing Git and offers to update it
-4. Read two screens rather than clicking through. On **Select Components**, leave **Open Git Bash
+3. Read two screens rather than clicking through. On **Select Components**, leave **Open Git Bash
    here** and **Open Git GUI here** ticked
-5. On **Adjusting your PATH environment**, keep the recommended middle option, **Git from the
+4. On **Adjusting your PATH environment**, keep the recommended middle option, **Git from the
    command line and also from 3rd-party software**, so VS Code can find Git
-6. On Windows, check that Git Bash is there: right-click any folder, and the menu should offer
+5. On Windows, check that Git Bash is there: right-click any folder, and the menu should offer
    **Open Git Bash here**. In VS Code you will also find **Git Bash** in the terminal's dropdown,
    next to PowerShell. If neither shows up, run the Git installer again and keep the defaults this
    time

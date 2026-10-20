@@ -121,8 +121,9 @@ Goal: your four components, and only them, written into `force-app/` as files.
 
    ![The Metadata Retriever with the four components of US-014 ticked](../../_assets/annotated/vscode/metadata-retriever-selected--us-014.png)
 
-4. If it says the retrieve failed because of source conflicts, **Failed to retrieve metadata due to
-   source conflicts**, take the option that overwrites the local files and retrieve again
+  !!! tip "Source conflicts?"
+      If the retrieve fails with **Failed to retrieve metadata due to source conflicts**, take the
+      option that overwrites the local files and retrieve again.
 
 #### Why
 
@@ -159,17 +160,21 @@ Goal: your four files committed on your branch, with a message the reviewer can 
 
    ![The Source Control panel with the four retrieved files](../../_assets/annotated/vscode/source-control-retrieved--commit.png)
 
-2. To read the list as a tree, open the **...** menu at the right of the **Changes** header and
-   pick **View as Tree**: the same files, folded into the folders they live in. Set it once and
-   VS Code remembers it
-3. Click each file. VS Code opens the file's *diff*, the before and the after side by side, with the
+  !!! tip "Long paths?"
+      Open the **...** menu at the right of the **Changes** header and pick **View as Tree**: the
+      same files, folded into the folders they live in. Set it once and VS Code remembers it.
+
+2. Click each file. VS Code opens the file's *diff*, the before and the after side by side, with the
    added lines in green and the removed ones in red. Read the four
-4. Put them in the commit one at a time. Point at a file: a row of small icons appears at the right
+3. Put them in the commit one at a time. Point at a file: a row of small icons appears at the right
    of its name. Click the **+**, **Stage Changes**. Do it for each of the four, and read the name as
    you click
-5. Leave a file you did not ask for unstaged. If you know what it is and you know it is rubbish,
-   right-click it and **Discard Changes**. If you do not know what it is, leave it alone and ask
-6. With the four files staged, type a message **(3)** for the person reviewing tomorrow, not for
+
+  !!! tip "A file you did not ask for?"
+      Leave it unstaged. If you know what it is and you know it is rubbish, right-click it and
+      **Discard Changes**. If you do not know what it is, leave it alone and ask.
+
+4. With the four files staged, type a message **(3)** for the person reviewing tomorrow, not for
    yourself today. First line short, then a blank line, then why:
 
    > US-014 Panels Required on Installation
@@ -178,7 +183,7 @@ Goal: your four files committed on your branch, with a message the reviewer can 
    > Read access for the crew on Helios_Delivery_Crew, edit access for planners on
    > Helios_Delivery_Manager, field added to the Installation layout.
 
-7. Click **Commit** **(4)**
+5. Click **Commit** **(4)**
 
 !!! warning "Never use Stage All Changes"
     The **+** on the **Changes** group header stages everything the panel can see, including files
@@ -403,7 +408,9 @@ Goal: your branch on your fork on GitHub.
 
 1. Answer **Yes** to the question the command asks before it pushes, the one marked **(1)** in the
    picture at step 6
-2. If you answered **No**, open the **Source Control** panel and click **Publish Branch**
+
+  !!! tip "If you answered No"
+      Open the **Source Control** panel and click **Publish Branch**.
 
 #### You should now see
 

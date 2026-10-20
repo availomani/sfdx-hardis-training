@@ -139,9 +139,8 @@ and you do not have to write XML to add them.
    ![The Add Metadata Type window of the package viewer](../../_assets/annotated/vscode/package-no-overwrite-add-type--type.png)
 
 4. On the new **RemoteSiteSetting** row, click **Add member**, type `Helios_Warehouse`, and click
-   **Add**
-5. If you want to see the file, **Edit File** opens it as text
-6. Click **Training: Level 3** > **Publish my pipeline configuration**, and merge its Pull Request
+   **Add**. If you want to see the file, **Edit File** opens it as text
+5. Click **Training: Level 3** > **Publish my pipeline configuration**, and merge its Pull Request
    once green, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 
 #### Why this list

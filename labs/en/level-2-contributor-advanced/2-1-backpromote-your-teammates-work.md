@@ -65,20 +65,24 @@ but his work does: the training replays it in your own fork, as a Pull Request y
 
    ![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-2. If VS Code first asks how to allow the Training command, choose **Always allow**, as in
-   [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
-3. A command panel opens and asks three questions. Answer them as the table below says
-4. Keep the address of the Pull Request the panel prints: you need it in step 1b
-5. With **Yes** to the last question, wait until the panel writes **Pull Request merged into its
+  !!! tip "If VS Code asks how to allow it"
+      If VS Code first asks how to allow the Training command, choose **Always allow**, as in
+      [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+
+2. A command panel opens and asks three questions. Answer them as the table below says
+3. Keep the address of the Pull Request the panel prints: you need it in step 1b
+4. With **Yes** to the last question, wait until the panel writes **Pull Request merged into its
    base branch**, then **Done**. You can then skip step 1b and go straight to step 2
-6. If it says a check failed, or that it could not merge, go to step 1b: nothing is lost, the Pull
-   Request is still open
 
 | Question                               | Answer                                                  |
 |----------------------------------------|---------------------------------------------------------|
 | Which teammate work do you need?       | **US-017 Record who signed an installation off**        |
 | Create it?                             | **Yes**                                                 |
 | Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself (step 1b) |
+
+!!! warning "If a check failed"
+    If the panel says a check failed, or that it could not merge, go to step 1b: nothing is lost,
+    the Pull Request is still open.
 
 #### Why
 
@@ -136,8 +140,9 @@ Only if you answered **No**, or if the panel could not merge.
 
    ![The merge method menu of a Pull Request, with Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
 
-5. If a check fails here, run **Simulate my teammates** again: it recreates the branch and the Pull
-   Request
+!!! warning "If a check fails"
+    If a check fails here, run **Simulate my teammates** again: it recreates the branch and the
+    Pull Request.
 
 #### Why
 
@@ -151,9 +156,11 @@ check that fails here is not your fault and not something to fix.
 
 1. In `helios-dev`, open **Setup** > **Object Manager** > **Installation** > **Fields &
    Relationships**, and check it lists **Panels Required** and **Crew Notes**
-2. If they are not there, which is the case when you joined at Level 2, put them there before
-   step 2: with `integration` checked out (its name is in the bottom left corner of VS Code), run
-   **Training: Level 2** > **Set up one of my training orgs** on `helios-dev`
+
+  !!! tip "If you joined at Level 2"
+      If they are not there, which is the case when you joined at Level 2, put them there before
+      step 2: with `integration` checked out (its name is in the bottom left corner of VS Code),
+      run **Training: Level 2** > **Set up one of my training orgs** on `helios-dev`.
 
 #### Why
 
@@ -255,9 +262,10 @@ Goal: Romain's story picked, and each item it brings checked before it comes dow
 
    ![The Backpromote panel, with the merged Pull Requests and the items they bring down](../../_assets/annotated/vscode/backpromote.png)
 
-4. For a file that both sides changed, the panel offers a third answer beside **Overwrite** and
-   **Keep org version**: **Merge**. Reach for it when both changes are real and you need both, and
-   pick between the two versions in the VS Code merge editor
+  !!! tip "A file both sides changed"
+      For a file that both sides changed, the panel offers a third answer beside **Overwrite** and
+      **Keep org version**: **Merge**. Reach for it when both changes are real and you need both,
+      and pick between the two versions in the VS Code merge editor.
 
 | What you see                                         | What to do                                                    |
 |------------------------------------------------------|---------------------------------------------------------------|

@@ -174,9 +174,9 @@ new element follows it.
 
 #### Do: test it
 
-1. Open an installation, set `Panels Required` to 40 and `Crew Size` to 2, save
-2. Click **Refresh** in the activity panel if the task is slow to show
-3. Save again
+1. Open an installation, set `Panels Required` to 40 and `Crew Size` to 2, save. If the task is
+   slow to show, click **Refresh** in the activity panel
+2. Save again
 
 #### Why
 

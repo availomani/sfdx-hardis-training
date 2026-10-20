@@ -5,7 +5,7 @@ description: "Installez Git, Node.js, VS Code et l'extension sfdx-hardis, puis l
 level: 1
 lab: 1
 lang: fr
-source_rev: "27ff02f0a4f53d44300d44497373ba758adeb829"
+source_rev: "5f5201a0e4d597ac17185340417d3bafe7b26599"
 screenshots:
   - annotated/web/git-download
   - annotated/web/vscode-download
@@ -79,23 +79,25 @@ Welcome ouvert.
 
 #### À faire : installer Git
 
-1. Dans Agentforce Vibes, commencez aux extensions : passez les trois téléchargements ci-dessous et
-   allez directement à [l'installation du pack d'extensions](#install-the-extension-pack), vers la
-   fin de cette étape. Partout où ce lab dit de redémarrer VS Code, rechargez l'onglet du navigateur
-2. Ouvrez la page de téléchargement de [Git](https://git-scm.com/downloads). Elle propose votre
+1. Ouvrez la page de téléchargement de [Git](https://git-scm.com/downloads). Elle propose votre
    système d'exploitation en haut : sous Windows, prenez **Click here to download** **(1)**,
    l'installeur autonome 64 bits
 
+  !!! tip "Dans Agentforce Vibes"
+      Commencez aux extensions : passez les trois téléchargements ci-dessous et allez directement
+      à [l'installation du pack d'extensions](#install-the-extension-pack), vers la fin de cette
+      étape. Partout où ce lab dit de redémarrer VS Code, rechargez l'onglet du navigateur.
+
    ![La page de téléchargement de Git pour Windows](../../_assets/annotated/web/git-download.png)
 
-3. Lancez l'installeur et acceptez toutes les valeurs par défaut qu'il propose. Si vous avez déjà
+2. Lancez l'installeur et acceptez toutes les valeurs par défaut qu'il propose. Si vous avez déjà
    Git, installez-le quand même : l'installeur reconnaît un Git existant et propose de le mettre à
    jour
-4. Lisez deux écrans plutôt que de les cliquer au pas de course. Sur **Select Components**, laissez
+3. Lisez deux écrans plutôt que de les cliquer au pas de course. Sur **Select Components**, laissez
    **Open Git Bash here** et **Open Git GUI here** cochés
-5. Sur **Adjusting your PATH environment**, gardez l'option du milieu, celle qui est recommandée,
+4. Sur **Adjusting your PATH environment**, gardez l'option du milieu, celle qui est recommandée,
    **Git from the command line and also from 3rd-party software**, pour que VS Code trouve Git
-6. Sous Windows, vérifiez que Git Bash est bien là : faites un clic droit sur n'importe quel
+5. Sous Windows, vérifiez que Git Bash est bien là : faites un clic droit sur n'importe quel
    dossier, le menu doit proposer **Open Git Bash here**. Dans VS Code, vous trouverez aussi
    **Git Bash** dans la liste déroulante du terminal, à côté de PowerShell. Si aucun des deux
    n'apparaît, relancez l'installeur Git et gardez les valeurs par défaut cette fois

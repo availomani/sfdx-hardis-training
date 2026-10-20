@@ -5,7 +5,7 @@ description: "Modifiez un flow Salesforce existant, puis lisez correctement un c
 level: 2
 lab: 2
 lang: fr
-source_rev: "65693e54d230b1a52c2656212c06bd90cacd5dde"
+source_rev: "483264362b49c8fe016d20e857465db2ddca299d"
 screenshots:
   - annotated/vscode/package-xml-filtered
   - annotated/vscode/editor-field-file
@@ -179,9 +179,9 @@ en avait déjà un, et votre nouvel élément le suit.
 
 #### À faire : tester
 
-1. Ouvrez une installation, mettez `Panels Required` à 40 et `Crew Size` à 2, enregistrez
-2. Cliquez sur **Refresh** dans le panneau d'activités si la tâche tarde à s'afficher
-3. Enregistrez à nouveau
+1. Ouvrez une installation, mettez `Panels Required` à 40 et `Crew Size` à 2, enregistrez. Si la
+   tâche tarde à s'afficher, cliquez sur **Refresh** dans le panneau d'activités
+2. Enregistrez à nouveau
 
 #### Pourquoi
 

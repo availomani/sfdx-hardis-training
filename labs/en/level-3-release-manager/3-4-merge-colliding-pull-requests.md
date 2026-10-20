@@ -215,8 +215,6 @@ Goal: `Helios_Delivery_Manager` in `helios-integration` carrying both new field 
 
 1. In `helios-integration`, check `Helios_Delivery_Manager` has both new field permissions:
    `Crew_Capacity_Cap__c` on Installation and `Quote_Pdf_Url__c` on Panel Batch
-2. If one is missing, something dropped it between the branch and the org: fix it with a follow-up
-   Pull Request, not an edit in the org
 
 #### You should now see
 
