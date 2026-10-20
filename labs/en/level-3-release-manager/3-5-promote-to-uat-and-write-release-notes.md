@@ -26,7 +26,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~50 min<!-- observed --> (observed: median 52 min, 5 learners, fastest 29 min)<!-- /observed -->
+**Time**: ~50 min<!-- observed --> (observed: median 52 min, 6 learners, fastest 28 min)<!-- /observed -->
 
 **You will**: protect a setting UAT keeps for itself, make your first promotion between two major
 branches, read the deployment actions it carries, and produce the document the business actually
