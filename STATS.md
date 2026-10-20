@@ -2,7 +2,7 @@
 
 # Course statistics
 
-Read every Monday and after every badge awarded, from the public repositories of the 71 learners who set up the course, and from the badges they claimed.
+Read every Monday and after every badge awarded, from the public repositories of the 72 learners who set up the course, and from the badges they claimed.
 Last update: 2026-10-20.
 
 ## Started and completed
@@ -11,9 +11,9 @@ A level is started when its first branch exists in the learner's repository, and
 
 | Level | Started | Share of learners | Completed | Share of started |
 |---|---|---|---|---|
-| Level 1 - Contributor basics | 71 | 100% | 45 | 63% |
+| Level 1 - Contributor basics | 72 | 100% | 46 | 64% |
 | Level 2 - Contributor advanced | 33 | 46% | 16 | 48% |
-| Level 3 - Release Manager | 16 | 23% | 9 | 56% |
+| Level 3 - Release Manager | 17 | 24% | 9 | 53% |
 
 ## Time spent
 
@@ -21,7 +21,7 @@ The median time of the learners who went through, next to the estimate each lab 
 
 | Level | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Level 1 - Contributor basics | 1 h 30 | 1 h 25 | 39 min | 40 |
+| Level 1 - Contributor basics | 1 h 30 | 1 h 25 | 39 min | 41 |
 | Level 2 - Contributor advanced | 4 h | 5 h 55 | 1 h 31 | 14 |
 | Level 3 - Release Manager | 6 h 55 | 11 h 02 | 7 h 36 | 6 |
 
@@ -29,8 +29,8 @@ The median time of the learners who went through, next to the estimate each lab 
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Labs 1.3 to 1.6 | 1 h 05 | 47 min | 17 min | 44 |
-| Lab 1.7 | 25 min | 28 min | 7 min | 46 |
+| Labs 1.3 to 1.6 | 1 h 05 | 46 min | 17 min | 45 |
+| Lab 1.7 | 25 min | 28 min | 7 min | 47 |
 
 ### Level 2 - Contributor advanced
 
@@ -49,15 +49,15 @@ The median time of the learners who went through, next to the estimate each lab 
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Lab 3.1 | 50 min | 56 min | 15 min | 11 |
-| Lab 3.2 | 25 min | 24 min | 6 min | 12 |
+| Lab 3.1 | 50 min | 47 min | 15 min | 12 |
+| Lab 3.2 | 25 min | 26 min | 10 min | 13 |
 | Lab 3.3 | 45 min | 38 min | 18 min | 11 |
 | Lab 3.4 | 35 min | 13 min | 6 min | 6 |
 | Lab 3.5 | 35 min | 52 min | 28 min | 6 |
-| Lab 3.6 | 35 min | 1 h 01 | 21 min | 9 |
-| Lab 3.7 | 35 min | 38 min | 16 min | 9 |
-| Labs 3.8 to 3.10 | 1 h 50 | 1 h 19 | 45 min | 9 |
-| Lab 3.11 | 45 min | 27 min | 9 min | 9 |
+| Lab 3.6 | 35 min | 51 min | 20 min | 10 |
+| Lab 3.7 | 35 min | 35 min | 16 min | 10 |
+| Labs 3.8 to 3.10 | 1 h 50 | 1 h 18 | 38 min | 10 |
+| Lab 3.11 | 45 min | 27 min | 9 min | 10 |
 
 ### Lab by lab
 
