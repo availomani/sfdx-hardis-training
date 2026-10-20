@@ -79,7 +79,10 @@ function alignTable(rows, indent) {
   }));
   const widths = [];
   for (let c = 0; c < columns; c++) {
-    let max = 3;
+    // A column can be one character wide: its dashes run pipe to pipe, so the
+    // delimiter still has the three dashes markdown needs. MegaLinter's table
+    // formatter writes "| # |" that way, and a wider minimum here fought it.
+    let max = 1;
     grid.forEach((row, r) => {
       if (r === 1) {
         return;
@@ -87,7 +90,7 @@ function alignTable(rows, indent) {
       max = Math.max(max, width(row[c] || ""));
     });
     const marks = (alignments[c] ? (alignments[c].left ? 1 : 0) + (alignments[c].right ? 1 : 0) : 0);
-    widths.push(Math.max(max, 3 + marks));
+    widths.push(Math.max(max, 1 + marks));
   }
   return grid.map((row, r) => {
     // The delimiter row is written the way the English labs write it, with the

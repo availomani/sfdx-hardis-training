@@ -5,7 +5,7 @@ description: "Livrez une User Story Salesforce de bout en bout sans pas-à-pas :
 level: 1
 lab: 7
 lang: fr
-source_rev: "149ddb8fe1dbeed7701b80e6022784d34bc4f16d"
+source_rev: "147fe81a558cd87506ce118dafd26bbcf4120364"
 screenshots:
   - annotated/web/github-star-sfdx-hardis
 depends_on:
@@ -50,10 +50,10 @@ Deuxième ticket, deuxième jour. Personne ne va vous tenir la main sur celui-ci
 
 Pas de clics numérotés cette fois. La boucle, dans l'ordre :
 
-1. **Démarrez la User Story.** Branche `US-016-crew-notes`, cible `integration`, puis **Scratch
+1. Démarrez la User Story. Branche `US-016-crew-notes`, cible `integration`, puis **Scratch
    org** et **Reuse scratch org helios-dev**. Votre org a déjà US-014, puisque vous l'y avez
    construite
-2. **Construisez-la dans `helios-dev`**
+2. Construisez-la dans `helios-dev`
    - Un champ **Long Text Area** `Crew_Notes__c` sur `Installation__c`, le type que l'assistant de
      champ liste sous **Text Area (Long)**, 4000 caractères, avec une description et un help text
    - Accordez-lui **Read** et **Edit** sur `Helios Delivery Crew`, parce que c'est un membre de
@@ -63,18 +63,18 @@ Pas de clics numérotés cette fois. La boucle, dans l'ordre :
    - Une vue de liste sur Installation appelée **Open Installations**, visible par tous les
      utilisateurs, avec **Filter by Owner** sur **All installations**, filtrée sur un statut autre
      que Completed, et affichant le compte, le statut, la date d'installation et Panels Required
-3. **Faites un retrieve.** **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
+3. Faites un retrieve. **Commit changes**, **Recent Changes**, **Search Metadata**, et prenez
    le champ, la présentation de page, la vue de liste et le permission set. Rien d'autre.
    Commitez-les
-4. **Publiez**, et lisez le rapport **Git Delta package.xml** avant de pousser. Quatre choses,
+4. Publiez, et lisez le rapport **Git Delta package.xml** avant de pousser. Quatre choses,
    toutes à vous
-5. **Ouvrez la Pull Request** vers `integration` dans votre propre fork, faites-la passer au vert,
+5. Ouvrez la Pull Request vers `integration` dans votre propre fork, faites-la passer au vert,
    mergez
-6. **Vérifiez l'org d'intégration** après le job de déploiement
+6. Vérifiez l'org d'intégration après le job de déploiement
 
 ## Attention aux pièges :)
 
-**Le permission set et le champ voyagent ensemble.** Si vous récupérez le champ et oubliez le
+Le permission set et le champ voyagent ensemble. Si vous récupérez le champ et oubliez le
 permission set, le déploiement réussit et personne ne voit le champ. Si vous récupérez le permission
 set et oubliez le champ, le déploiement échoue franchement, parce qu'un permission set ne peut pas
 accorder quelque chose qui n'existe pas. Prenez les deux, à chaque fois. C'est la même paire que vous
@@ -131,31 +131,29 @@ fork est public et que votre pseudo GitHub devient
 public dans le repository de formation, ce qui est une décision à propos de votre nom plutôt qu'une
 formalité.
 
-!!! tip "Si ce cours vous a servi"
-    [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis) est le projet open
-    source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme celui-ci de
-    rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du nom du repository. Donnez une étoile si
-    vous avez aimé ce cours !
+Si ce cours vous a servi : [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
+est le projet open source dont parle tout ce cours. Une étoile est ce qui permet à un projet comme
+celui-ci de rester visible : ouvrez sa page et cliquez sur **Star** **(1)**, à droite du nom du
+repository. Donnez une étoile si vous avez aimé ce cours !
 
-    ![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
+![Le bouton Star du repository sfdx-hardis sur GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
 Un job clone ensuite votre fork, rejoue sur lui tous
 les contrôles ci-dessus, et répond sur l'issue. Personne ne le relit à la main, cela prend donc
 généralement deux minutes. Si quelque chose ne se vérifie pas, le commentaire nomme le lab exact et
 ce qu'il a cherché, vous corrigez, et vous modifiez l'issue pour le relancer.
 
-Votre fork doit être **public** pour que l'audit
+Votre fork doit être public pour que l'audit
 puisse le lire. S'il est privé, la commande propose de le rendre public.
 
-!!! note "C'est un badge, pas une certification"
+!!! warning "C'est un badge, pas une certification"
     Il n'y a ici ni examen ni accréditation. Partagez-le dans *Featured* sur LinkedIn, pas dans
     *Licenses & certifications*.
 
-!!! tip "La mettre en bannière LinkedIn"
-    [Trailhead Banner](https://thb.nabondance.me/) dessine une image de couverture LinkedIn à partir
-    d'un nom d'utilisateur Trailblazer, et il y affiche le badge sfdx-hardis le plus élevé que vous
-    avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image, et mettez-la en bannière de
-    votre profil LinkedIn.
+Pour la mettre en bannière LinkedIn : [Trailhead Banner](https://thb.nabondance.me/) dessine une
+image de couverture LinkedIn à partir d'un nom d'utilisateur Trailblazer, et il y affiche le badge
+sfdx-hardis le plus élevé que vous avez réclamé ici. Tapez votre nom d'utilisateur, générez l'image,
+et mettez-la en bannière de votre profil LinkedIn.
 
 ## La suite
 
@@ -163,7 +161,7 @@ Le Niveau 1 vous a appris la boucle quand tout se passe bien. Le Niveau 2 est l'
 déploiement qui échoue sur une dépendance dont vous ignoriez l'existence, le champ qu'on ne peut pas
 rendre obligatoire, le collègue qui a modifié le même flow que vous.
 
-Il est recommandé pour tout contributeur, et **obligatoire** avant le Niveau 3.
+Il est recommandé pour tout contributeur, et obligatoire avant le Niveau 3.
 
 [Continuer vers le Niveau 2 - Contributeur avancé](../level-2-contributor-advanced/index.md){ .md-button .md-button--primary }
 

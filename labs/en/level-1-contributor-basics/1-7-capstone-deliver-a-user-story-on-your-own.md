@@ -50,9 +50,9 @@ Second ticket, second day. Nobody is going to walk you through this one.
 
 No numbered clicks this time. The loop, in order:
 
-1. **Start the User Story.** Branch `US-016-crew-notes`, target `integration`, then **Scratch org**
+1. Start the User Story. Branch `US-016-crew-notes`, target `integration`, then **Scratch org**
    and **Reuse scratch org helios-dev**. Your org already has US-014, because you built it there
-2. **Build it in `helios-dev`**
+2. Build it in `helios-dev`
    - A **Long Text Area** field `Crew_Notes__c` on `Installation__c`, the data type the field
      wizard lists as **Text Area (Long)**, 4000 characters, with a description and help text
    - Grant it **Read** and **Edit** on `Helios Delivery Crew`, because a crew member writes notes.
@@ -61,16 +61,16 @@ No numbered clicks this time. The loop, in order:
    - A list view on Installation called **Open Installations**, visible to all users, with
      **Filter by Owner** on **All installations**, filtered on a status that is not Completed, and
      showing the account, the status, the install date and Panels Required
-3. **Retrieve it.** **Commit changes**, **Recent Changes**, **Search Metadata**, and take the
+3. Retrieve it. **Commit changes**, **Recent Changes**, **Search Metadata**, and take the
    field, the layout, the list view and the permission set. Nothing else. Commit them
-4. **Publish**, and read the **Git Delta package.xml** report before pushing. Four things, all
+4. Publish, and read the **Git Delta package.xml** report before pushing. Four things, all
    yours
-5. **Open the Pull Request** into `integration` in your own fork, get it green, merge
-6. **Check the integration org** after the deployment job
+5. Open the Pull Request into `integration` in your own fork, get it green, merge
+6. Check the integration org after the deployment job
 
 ## The one thing that catches everybody
 
-**The permission set and the field travel together.** If you retrieve the field and forget the
+The permission set and the field travel together. If you retrieve the field and forget the
 permission set, the deployment succeeds and nobody can see the field. If you retrieve the
 permission set and forget the field, the deployment fails outright, because a permission set cannot
 grant something that is not there. Take both, every time. It is the same pair you took in [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md),
@@ -123,29 +123,28 @@ Those three boxes are yours to tick, and nothing ticks them for you. They say yo
 and your GitHub handle becomes public in the training repository, which is a decision about your
 name rather than a formality.
 
-!!! tip "If the course helped you"
-    [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis) is the open source
-    project this whole course is about. A star is how a project like it stays visible: open its
-    page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this course!
+If the course helped you: [hardisgroupcom/sfdx-hardis](https://github.com/hardisgroupcom/sfdx-hardis)
+is the open source project this whole course is about. A star is how a project like it stays
+visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a
+star if you liked this course!
 
-    ![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
+![The Star button of the sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-sfdx-hardis.png)
 
 A job then clones your fork, re-runs every check above against it, and answers on the issue. Nobody
 reviews it by hand, so it usually takes a couple of minutes. If something does not verify, the
 comment names the exact lab and what it looked for, you fix it, and you edit the issue to run it
 again.
 
-Your fork has to be **public** for the audit to read it. If it is private, the command offers to
+Your fork has to be public for the audit to read it. If it is private, the command offers to
 make it public.
 
-!!! note "It is a badge, not a certification"
+!!! warning "It is a badge, not a certification"
     There is no exam and no accreditation here. Share it under *Featured* on LinkedIn, not under
     *Licenses & certifications*.
 
-!!! tip "Put it on your LinkedIn banner"
-    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
-    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
-    username, generate the picture, and set it as your LinkedIn cover.
+To put it on your LinkedIn banner: [Trailhead Banner](https://thb.nabondance.me/) draws a
+LinkedIn cover image from a Trailblazer username, and it shows the highest sfdx-hardis training
+badge you claimed here. Type your username, generate the picture, and set it as your LinkedIn cover.
 
 ## What comes next
 
@@ -153,7 +152,7 @@ Level 1 taught you the loop when everything goes right. Level 2 is the other hal
 that fails on a dependency you did not know about, the field that cannot be made required, the
 teammate who edited the same flow as you.
 
-It is recommended for any contributor, and **required** before Level 3.
+It is recommended for any contributor, and required before Level 3.
 
 [Continue to Level 2 - Contributor advanced](../level-2-contributor-advanced/index.md){ .md-button .md-button--primary }
 

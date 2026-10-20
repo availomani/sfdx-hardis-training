@@ -5,7 +5,7 @@ description: "Livrez un hotfix Salesforce de preprod vers la production quand la
 level: 3
 lab: 7
 lang: fr
-source_rev: "d005b7990f6438d326d536d3074d32699f6a3e76"
+source_rev: "25091872d11af981f71cff624e8dd2c8c6a8e490"
 screenshots:
   - annotated/salesforce/validation-rule
   - annotated/vscode/welcome-custom-menu-3
@@ -38,7 +38,7 @@ ramener ce correctif dans la pipeline pour que rien ne le défasse.
 
 ## La situation
 
-**17h40, un vendredi.** Les planificateurs bouclent la semaine en annulant les installations que les
+17h40, un vendredi. Les planificateurs bouclent la semaine en annulant les installations que les
 équipes n'ont pas pu atteindre et en les antidatant au jour où le chantier a été décommandé. Chacun
 de ces enregistrements est refusé.
 
@@ -47,7 +47,7 @@ La formule de la règle de validation `Installation_Date_Not_Past` exempte les i
 voit donc opposer une règle sur sa planification. C'est une condition manquante, et cela empêche les
 planificateurs de boucler leur semaine.
 
-**Un hotfix ne saute pas la pipeline.** Il y entre plus loin. Une story ordinaire part
+Un hotfix ne saute pas la pipeline. Il y entre plus loin. Une story ordinaire part
 d'`integration` et voyage `integration` vers `uat` vers `preprod` vers `main`. Un hotfix part de
 `preprod`, la branche qui contient exactement ce que la production fait tourner, et voyage `preprod`
 vers `main`. Mêmes branches, même protection, mêmes contrôles, mêmes jobs de déploiement. Seul le
@@ -55,7 +55,7 @@ point d'entrée diffère, et c'est pourquoi le [Lab 3.1](3-1-configure-the-pipel
 
 Une chose en découle, et la Partie 3 en parle : `uat` et `integration` n'ont jamais vu le commit, la
 prochaine livraison depuis `integration` déploierait donc l'ancienne formule par-dessus le correctif
-et ramènerait l'incident. Ramener `main` vers le bas est le **retrofit**, et il n'est pas facultatif.
+et ramènerait l'incident. Ramener `main` vers le bas est le retrofit, et il n'est pas facultatif.
 
 ## Avant de commencer
 
@@ -67,21 +67,31 @@ et ramènerait l'incident. Ramener `main` vers le bas est le **retrofit**, et il
 
 ### 1. Voir ce qui est cassé, en production
 
-Ouvrez `helios-prod` depuis **Orgs Manager**, avec son action **Open**. Cela ne change pas votre
-org par défaut, il n'y a donc rien à basculer en bas de VS Code. Regardez la règle elle-même : **Setup > Object Manager > Installation >
-Validation Rules** **(1)**, puis `Installation_Date_Not_Past` **(2)**.
+Objectif : l'enregistrement refusé reproduit sur `helios-prod`, et la formule qui le cause lue.
 
-![Les règles de validation d'Installation dans Setup](../../_assets/annotated/salesforce/validation-rule.png)
+#### À faire
 
-Sa formule aujourd'hui :
+1. Ouvrez `helios-prod` depuis **Orgs Manager**, avec son action **Open**. Cela ne change pas votre
+   org par défaut, il n'y a donc rien à basculer en bas de VS Code
+2. Regardez la règle elle-même : **Setup > Object Manager > Installation > Validation Rules** **(1)**,
+   puis `Installation_Date_Not_Past` **(2)**
 
-```
-AND(
-  ISCHANGED(Install_Date__c),
-  Install_Date__c < TODAY(),
-  NOT(ISPICKVAL(Status__c, "Completed"))
-)
-```
+   ![Les règles de validation d'Installation dans Setup](../../_assets/annotated/salesforce/validation-rule.png)
+
+3. Lisez sa formule aujourd'hui :
+
+   ```text title="Résultat"
+   AND(
+     ISCHANGED(Install_Date__c),
+     Install_Date__c < TODAY(),
+     NOT(ISPICKVAL(Status__c, "Completed"))
+   )
+   ```
+
+4. Confirmez avant d'appeler cela un incident. Ouvrez n'importe quelle installation dans `helios-prod`
+5. Mettez son statut à `Cancelled`, mettez la date d'hier dans **Install Date**, et enregistrez
+
+#### Pourquoi
 
 Trois conditions, et deux d'entre elles ont déjà fait leur travail. `ISCHANGED` est la raison pour
 laquelle un ancien enregistrement peut encore être enregistré tant que personne ne touche à la date,
@@ -89,112 +99,183 @@ et l'exemption `Completed` est la raison pour laquelle un chantier terminé peut
 il l'a été. Celui qui a écrit cela y avait réfléchi. Il a simplement écrit la liste des exceptions
 avant que quiconque ait inventé une deuxième façon d'être une exception.
 
-**Confirmez avant d'appeler cela un incident.** Ouvrez n'importe quelle installation dans
-`helios-prod`, mettez son statut à `Cancelled`, mettez la date d'hier dans **Install Date**, et
-enregistrez. Le message d'erreur de l'image ci-dessus est ce que vous obtenez. C'est le signalement
-reproduit, sur la vraie org, en trente secondes.
+#### Vous devriez voir
+
+- Le message d'erreur de l'image ci-dessus, à l'enregistrement de l'installation annulée. C'est le
+  signalement reproduit, sur la vraie org, en trente secondes
 
 ### 2. Le développeur branche le correctif depuis preprod
 
-!!! danger "Ne branchez jamais un hotfix depuis integration"
+Objectif : le correctif de Romain ouvert en Pull Request vers `preprod`.
+
+Le correctif est à Romain de l'écrire, pas à vous : un release manager relit et livre ce que les
+contributeurs envoient, et n'écrit pas leurs fonctionnalités.
+
+#### À faire
+
+1. Ouvrez **Training: Level 3** > **Simulate my teammates**
+
+   ![Le menu Training du niveau 3 sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
+
+2. Choisissez **US-045 Hotfix: cancelled installations can be back-dated again**
+
+!!! warning "Ne branchez jamais un hotfix depuis integration"
     `integration` porte le travail de la semaine prochaine. Un correctif branché depuis elle livre le
     travail de la semaine prochaine en production ce soir, par-dessus un incident, sans que personne
     l'ait testé. C'est l'erreur la plus coûteuse disponible dans ce lab, et la raison d'être de
     `preprod`.
 
-Le correctif est à Romain de l'écrire, pas à vous : un release manager relit et livre ce que les
-contributeurs envoient, et n'écrit pas leurs fonctionnalités. **Training: Level 3** > **Simulate my
-teammates**, et choisissez **US-045 Hotfix: cancelled installations can be back-dated again**.
+#### Pourquoi
 
-![Le menu Training du niveau 3 sur la Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
+Sa branche a été tirée de `preprod`, ce que fait **New User Story** quand la cible est `preprod`.
 
-Cela ouvre sa Pull Request de `fix/US-045-installation-date-hotfix` vers **`preprod`**. Sa branche a
-été tirée de `preprod`, ce que fait **New User Story** quand la cible est `preprod`.
+#### Vous devriez voir
+
+- Sa Pull Request de `fix/US-045-installation-date-hotfix` vers `preprod`, ouverte par la simulation
 
 ### 3. Relire le correctif
 
-Ouvrez la Pull Request, **Files changed** **(1)**. Un fichier, la règle de validation **(2)**, et la
-modification est la ligne ajoutée **(3)** :
+Objectif : le correctif relu, et son rayon d'impact connu.
+Rappel : [Lab 3.2](3-2-review-a-contributor-pull-request.md)
 
-![L'onglet Files changed de la Pull Request du hotfix, une règle de validation et une ligne ajoutée](../../_assets/annotated/web/github-pr-files-hotfix.png)
+#### À faire
 
-```
-  NOT(ISPICKVAL(Status__c, "Cancelled"))
-```
+1. Ouvrez la Pull Request, puis **Files changed** **(1)**
+2. Vérifiez qu'il y a un fichier, la règle de validation **(2)**, et que la modification est la ligne
+   ajoutée **(3)** :
+
+   ![L'onglet Files changed de la Pull Request du hotfix, une règle de validation et une ligne ajoutée](../../_assets/annotated/web/github-pr-files-hotfix.png)
+
+   ```text title="Résultat"
+     NOT(ISPICKVAL(Status__c, "Cancelled"))
+   ```
+
+3. Lisez-la avec les questions du [Lab 3.2](3-2-review-a-contributor-pull-request.md) : elle correspond à la story, rien ne disparaît, et elle
+   est réversible en une ligne
+
+#### Pourquoi
 
 Une installation annulée est du travail terminé, exactement comme une installation achevée, et la
-description de la règle dit elle-même que le travail terminé est exempté. Lisez-la avec les questions
-du [Lab 3.2](3-2-review-a-contributor-pull-request.md) : elle correspond à la story, rien ne disparaît, et elle est réversible en une ligne.
+description de la règle dit elle-même que le travail terminé est exempté.
 
-Petite, et son rayon d'impact tient en une phrase : **les installations annulées peuvent à nouveau
-être datées dans le passé, et rien d'autre ne change.** C'est cela, un hotfix.
+Petite, et son rayon d'impact tient en une phrase : les installations annulées peuvent à nouveau
+être datées dans le passé, et rien d'autre ne change. C'est cela, un hotfix.
+
+#### Vous devriez voir
+
+- Un fichier modifié, et une ligne ajoutée : l'exemption `Cancelled`
 
 ## Partie 2 : vers la production
 
 ### 4. Le merger dans preprod
 
-Quand le contrôle est vert, mergez-la avec **Squash and merge**, depuis la flèche à côté du bouton
-vert **(1)** : la branche de Romain est un correctif, et un correctif se squashe comme
+Objectif : le correctif dans `preprod`, et en cours de déploiement vers `helios-preprod`.
+Rappel : [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)
+
+#### À faire
+
+1. Attendez que le contrôle soit vert
+2. Mergez-la avec **Squash and merge**, depuis la flèche à côté du bouton vert **(1)**
+
+   ![Merger une Pull Request sur GitHub](../../_assets/annotated/web/github-pr-merge.png)
+
+#### Pourquoi
+
+La branche de Romain est un correctif, et un correctif se squashe comme
 chaque User Story ([Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)), ce que dit aussi la ligne **How to merge** du commentaire vert du contrôle. La promotion vers `main` qui suit est mergée, pas squashée.
 
-![Merger une Pull Request sur GitHub](../../_assets/annotated/web/github-pr-merge.png)
+Le déploiement vers `helios-preprod` est la répétition, sur une org qui contient ce que contient la
+production, et elle vous coûte deux minutes.
 
-Le déploiement vers `helios-preprod` suit tout seul. C'est la répétition, sur une org qui contient ce
-que contient la production, et elle vous coûte deux minutes.
+#### Vous devriez voir
+
+- Le déploiement vers `helios-preprod` qui suit tout seul
 
 ### 5. Livrer preprod dans main
 
+Objectif : une Pull Request de `preprod` vers `main`, intitulée comme un hotfix, dont le contrôle
+valide contre la production.
+
 Une pastille **+ PR** est posée sur chaque flèche entre branches majeures dans le diagramme DevOps
-Pipeline. Cliquez sur celle de la flèche de `preprod` vers `main` **(1)** :
+Pipeline.
 
-![La pastille + PR sur la flèche de preprod vers main](../../_assets/annotated/vscode/devops-pipeline-level3--release-to-prod.png)
+#### À faire
 
-Intitulez-la simplement, et employez le mot **Hotfix** plutôt que **Release**, pour que dans un an la
-liste des Pull Requests vers `main` dise lesquelles ont pris le chemin court :
+1. Cliquez sur celle de la flèche de `preprod` vers `main` **(1)**
 
-> Hotfix US-045 to production
+   ![La pastille + PR sur la flèche de preprod vers main](../../_assets/annotated/vscode/devops-pipeline-level3--release-to-prod.png)
+
+2. Intitulez-la simplement, et employez le mot Hotfix plutôt que Release :
+
+   > Hotfix US-045 to production
+
+#### Pourquoi
+
+Le mot Hotfix dans le titre fait que dans un an la liste des Pull Requests vers `main` dit
+lesquelles ont pris le chemin court.
 
 Son contrôle déploie contre la production en mode validation, ce qui est exactement ce qu'on veut à
 17h40 : la même barrière, sur la vraie org, en deux minutes.
 
+#### Vous devriez voir
+
+- La Pull Request `Hotfix US-045 to production` vers `main`, avec son contrôle qui tourne contre la
+  production
+
 ### 6. Confirmer que c'est en ligne
 
-Mergez, et regardez l'exécution **Process Deployment (sfdx-hardis)** sur `main`. Quand elle se
-termine, le commentaire sfdx-hardis dit ce qui a atteint l'org : le verdict **✅ Deployed to `main`**
-**(1)**, la ligne **Metadata** **(2)**, qui dit comment il a été déployé, par exemple **Full Quick
-Deploy**, et ce qui a changé, et la ligne **Apex tests** **(3)**, **Already run during the
-validation** : le merge a déployé la validation que son contrôle avait déjà faite sur la production,
-au lieu de déployer à nouveau. L'image est le commentaire d'un
-déploiement précédent, vos compteurs sont donc différents.
+Objectif : le correctif déployé sur `helios-prod`, et vérifié dans l'org elle-même.
 
-![Le commentaire sfdx-hardis sur une Pull Request mergée](../../_assets/annotated/web/github-pr-deployed.png)
+#### À faire
 
-Confirmez ensuite comme vous avez reproduit : annulez une installation dans `helios-prod`,
-antidatez-la, et enregistrez. Cela s'enregistre. Les planificateurs peuvent boucler leur semaine.
+1. Mergez, et regardez l'exécution **Process Deployment (sfdx-hardis)** sur `main`
+2. Quand elle se termine, lisez ce que le commentaire sfdx-hardis dit avoir atteint l'org : le verdict
+   **✅ Deployed to `main`** **(1)**, la ligne **Metadata** **(2)**, qui dit comment il a été déployé,
+   par exemple **Full Quick Deploy**, et ce qui a changé, et la ligne **Apex tests** **(3)**,
+   **Already run during the validation**. L'image est le commentaire d'un déploiement précédent, vos
+   compteurs sont donc différents
 
-**Un log de déploiement n'est pas une confirmation.** Le log dit ce que Salesforce a accepté. Seule
+   ![Le commentaire sfdx-hardis sur une Pull Request mergée](../../_assets/annotated/web/github-pr-deployed.png)
+
+3. Confirmez ensuite comme vous avez reproduit : annulez une installation dans `helios-prod`,
+   antidatez-la, et enregistrez
+
+#### Pourquoi
+
+**Already run during the validation** veut dire que le merge a déployé la validation que son
+contrôle avait déjà faite sur la production, au lieu de déployer à nouveau.
+
+Un log de déploiement n'est pas une confirmation. Le log dit ce que Salesforce a accepté. Seule
 l'org dit si la chose dont les gens se plaignaient fonctionne maintenant.
+
+#### Vous devriez voir
+
+- Le verdict **✅ Deployed to `main`** sur le commentaire
+- L'installation annulée et antidatée s'enregistre. Les planificateurs peuvent boucler leur semaine
 
 ## Partie 3 : le retrofit
 
 ### 7. Démarrer la branche de retrofit
 
+Objectif : une branche de retrofit, tirée de la dernière `integration`.
+
 `main` et `preprod` portent le correctif. `uat` et `integration` non. Laissez-le là et la prochaine
 story venue d'`integration` qui touche à cette règle déploiera l'ancienne formule par-dessus, et
 l'incident reviendra un jour où personne ne l'attend.
 
-C'est à vous de le faire, pas à un contributeur : vous êtes celui qui sait ce qui est parti en ligne
-ce soir, et un conflit entre un hotfix et du travail en cours est une décision de release manager.
+#### À faire
 
-Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow** **(1)**, cliquez sur
-**New User Story** **(2)** :
+1. Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow** **(1)**, cliquez sur
+   **New User Story** **(2)**
 
-![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+   ![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
 
-Prenez le troisième type de branche, **Retrofit: merge production back down into the pipeline after
-a hotfix (release manager)** **(1)** :
+2. Prenez le troisième type de branche, **Retrofit: merge production back down into the pipeline after
+   a hotfix (release manager)** **(1)**
 
-![La question du type de branche, avec Retrofit](../../_assets/annotated/vscode/work-new-story-type--retrofit.png)
+   ![La question du type de branche, avec Retrofit](../../_assets/annotated/vscode/work-new-story-type--retrofit.png)
+
+3. Répondez aux questions avec le tableau ci-dessous
 
 | Question        | Votre réponse                                                              |
 |-----------------|----------------------------------------------------------------------------|
@@ -203,59 +284,90 @@ a hotfix (release manager)** **(1)** :
 | Nom             | `US-045-retrofit`, la story dont vous ramenez le hotfix                    |
 | Org de travail  | `helios-dev` : rien n'est construit ici, l'org n'a donc guère d'importance |
 
-Cela crée `retrofit/US-045-retrofit` depuis la dernière `integration`. Le préfixe est une ligne de
-`branchPrefixChoices`, et il dit à quiconque lit la liste des branches que c'est la production qui
-redescend, pas du travail nouveau.
+#### Pourquoi
+
+C'est à vous de le faire, pas à un contributeur : vous êtes celui qui sait ce qui est parti en ligne
+ce soir, et un conflit entre un hotfix et du travail en cours est une décision de release manager.
+
+Le préfixe est une ligne de `branchPrefixChoices`, et il dit à quiconque lit la liste des branches
+que c'est la production qui redescend, pas du travail nouveau.
+
+#### Vous devriez voir
+
+- `retrofit/US-045-retrofit`, créée depuis la dernière `integration`
 
 ### 8. Y merger main
 
-Assurez-vous d'abord que votre machine sait ce qui est parti en ligne. Ouvrez la **Command Palette**
-(**View > Command Palette**, ou `Ctrl+Shift+P`, `Cmd+Shift+P` sur un Mac), tapez `Git: Fetch` et
-choisissez **Git: Fetch** **(1)** :
+Objectif : ce que fait tourner la production mergé dans votre branche de retrofit.
+Rappel : [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md)
 
-![Git Fetch dans la Command Palette](../../_assets/annotated/vscode/git-palette-fetch--fetch.png)
+#### À faire
 
-Puis la Command Palette à nouveau, tapez `Git: Merge`, et choisissez **Git: Merge...** **(1)** :
+1. Assurez-vous d'abord que votre machine sait ce qui est parti en ligne. Ouvrez la **Command Palette**
+   (**View > Command Palette**, ou `Ctrl+Shift+P`, `Cmd+Shift+P` sur un Mac), tapez `Git: Fetch` et
+   choisissez **Git: Fetch** **(1)**
 
-![Git Merge dans la Command Palette](../../_assets/annotated/vscode/git-palette-merge--merge.png)
+   ![Git Fetch dans la Command Palette](../../_assets/annotated/vscode/git-palette-fetch--fetch.png)
 
-Elle demande quelle branche merger. Choisissez **origin/main** **(1)**, listée sous
-**remote branches** :
+2. Ouvrez la Command Palette à nouveau, tapez `Git: Merge`, et choisissez **Git: Merge...** **(1)**
 
-![Le sélecteur de branche, avec origin main](../../_assets/annotated/vscode/git-retrofit-pick--origin-main.png)
+   ![Git Merge dans la Command Palette](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-!!! danger "origin/main, pas main"
+3. Elle demande quelle branche merger. Choisissez **origin/main** **(1)**, listée sous
+   **remote branches**
+
+   ![Le sélecteur de branche, avec origin main](../../_assets/annotated/vscode/git-retrofit-pick--origin-main.png)
+
+4. Si le merge est en conflit, ouvrez chaque fichier sous **Merge Changes**, **Resolve in Merge
+   Editor**, et gardez les deux intentions, l'exception du hotfix et ce qu'`integration` a ajouté
+
+!!! warning "origin/main, pas main"
     `main` toute seule est la copie de votre machine, que vous n'avez pas mise à jour depuis avant le
     hotfix, et la merger ne ramène rien. `origin/main` est ce que la production vient de déployer. La
     liste marque les branches distantes, et c'est le clic autour duquel tout ce lab tourne.
 
+#### Pourquoi
+
 Ce soir, cela merge tout seul : personne d'autre n'a touché à cette règle de validation cette
 semaine. Quand il y a conflit, c'est que quelqu'un a modifié les mêmes lignes dans `integration`, et
-la réponse est celle du [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md) : ouvrez chaque fichier sous **Merge Changes**, **Resolve in Merge
-Editor**, et gardez les deux intentions, l'exception du hotfix **et** ce qu'`integration` a ajouté.
-Aucun des deux côtés ne perd son travail.
+la réponse est celle du [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), la tâche 4 ci-dessus. Aucun des deux côtés ne perd son travail.
+
+#### Vous devriez voir
+
+- `origin/main` mergée dans `retrofit/US-045-retrofit`, sans conflit ce soir
 
 ### 9. Le publier, et le merger dans integration
 
-**Save / Publish User Story**, comme au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). Quand la commande se termine, la barre d'actions du
-bas commence par **Create Pull Request** **(1)**. À côté se trouvent le `package.xml` généré par la
-commande **(2)** et les deployment actions de cette Pull Request **(3)** : sur un retrofit, les deux
-sont courts, parce qu'un retrofit transporte ce que la production a déjà et ne déclare rien de
-nouveau.
+Objectif : le retrofit mergé dans `integration`, qui porte maintenant tout ce que la production
+porte.
+Rappel : [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md)
 
-![La fin de Save / Publish, avec sa barre d'actions](../../_assets/annotated/vscode/work-save-completed.png)
+#### À faire
 
-Ouvrez la Pull Request vers `integration`, intitulez-la
-`Retrofit: US-045 back down into integration`, attendez ses contrôles, et mergez-la avec un merge commit
-(**Create a merge commit**, sous la flèche du bouton vert), jamais avec un squash. Le commentaire vert du contrôle dit pourquoi sur sa ligne **How to
-merge** : un retrofit rapporte des commits d'une autre branche majeure, qui doivent rester tels
-quels. `integration`
-porte maintenant tout ce que la production porte, et la prochaine story construite dessus ne peut
-plus emporter le correctif.
+1. **Save / Publish User Story**, comme au [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md)
+2. Quand la commande se termine, regardez la barre d'actions du bas : elle commence par **Create Pull
+   Request** **(1)**. À côté se trouvent le `package.xml` généré par la commande **(2)** et les
+   deployment actions de cette Pull Request **(3)**
+
+   ![La fin de Save / Publish, avec sa barre d'actions](../../_assets/annotated/vscode/work-save-completed.png)
+
+3. Ouvrez la Pull Request vers `integration`, et intitulez-la
+   `Retrofit: US-045 back down into integration`
+4. Attendez ses contrôles
+5. Mergez-la avec un merge commit (**Create a merge commit**, sous la flèche du bouton vert), jamais
+   avec un squash
+
+#### Pourquoi
+
+Sur un retrofit, le `package.xml` et les deployment actions sont courts tous les deux, parce qu'un
+retrofit transporte ce que la production a déjà et ne déclare rien de nouveau.
+
+Le commentaire vert du contrôle dit pourquoi jamais de squash, sur sa ligne **How to merge** : un
+retrofit rapporte des commits d'une autre branche majeure, qui doivent rester tels quels.
 
 <details markdown="1"><summary>Sous le capot : le hotfix et le retrofit, en commandes</summary>
 
-**Le hotfix** n'a rien utilisé de spécial. Romain a lancé `hardis:work:new` avec `preprod` comme
+Le hotfix n'a rien utilisé de spécial. Romain a lancé `hardis:work:new` avec `preprod` comme
 branche cible, ce qui tire sa branche de `preprod`, et `hardis:work:save` a calculé le package par
 rapport à `preprod`. La pipeline traite `preprod` comme n'importe quelle autre branche majeure. Ce
 qui en fait un hotfix est la cible, pas un mode.
@@ -266,7 +378,7 @@ de branche `hotfix/`, `fix/` ou `bugfix/`. Ce projet appelle ses branches de cor
 celle-ci compte donc, sur la branche dans laquelle elle a été mergée : `preprod`. La livraison qui
 l'emmène ensuite vers `main` vient de `preprod`, donc le **Rework** de `main` ne bouge pas.
 
-**Le retrofit** est du Git de bout en bout, et rien n'est récupéré d'aucune org :
+Le retrofit est du Git de bout en bout, et rien n'est récupéré d'aucune org :
 
     git checkout -b retrofit/US-045-retrofit origin/integration
     git fetch origin
@@ -274,12 +386,12 @@ l'emmène ensuite vers `main` vient de `preprod`, donc le **Rework** de `main` n
     # résoudre les conflits si git en signale, puis commiter
     git push -u origin retrofit/US-045-retrofit
 
-La direction est tout le sujet. Le travail remonte normalement **vers le haut**, d'une branche de
+La direction est tout le sujet. Le travail remonte normalement vers le haut, d'une branche de
 story vers `integration`, puis `uat`, puis `preprod`, puis `main`. Un retrofit est la seule chose qui
 descend, et il existe parce qu'un hotfix a rejoint la pipeline au-dessus des branches sur lesquelles
 l'équipe travaille.
 
-**Faites-le le soir même.** Un retrofit remis à lundi est un retrofit qui se heurte à une semaine de
+Faites-le le soir même. Un retrofit remis à lundi est un retrofit qui se heurte à une semaine de
 travail neuf, et le merge cesse d'être une formalité.
 
 <!-- command-links:start -->
@@ -288,13 +400,18 @@ Documentation des commandes : [hardis:work:new](https://sfdx-hardis.cloudity.com
 
 </details>
 
+#### Vous devriez voir
+
+- Le retrofit mergé : `integration` porte maintenant tout ce que la production porte, et la prochaine
+  story construite dessus ne peut plus emporter le correctif
+
 ## Ce que vous devez voir
 
-- `helios-prod` enregistre une installation annulée et antidatée
-- Trois Pull Requests dans votre fork, dans cet ordre : vers `preprod`, `preprod` vers `main`, et le
-  retrofit vers `integration`
-- La même ligne `NOT(ISPICKVAL(Status__c, "Cancelled"))` sur `preprod`, sur `main` et sur
-  `integration`
+- [ ] `helios-prod` enregistre une installation annulée et antidatée
+- [ ] Trois Pull Requests dans votre fork, dans cet ordre : vers `preprod`, `preprod` vers `main`, et le
+      retrofit vers `integration`
+- [ ] La même ligne `NOT(ISPICKVAL(Status__c, "Cancelled"))` sur `preprod`, sur `main` et sur
+      `integration`
 
 ## En cas de problème
 

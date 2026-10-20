@@ -40,12 +40,12 @@ nobody is going to tell you the order to do things in.
 
 ### Monday: take in what contributors sent you
 
-Two Pull Requests wait. **US-020**, open since [Lab 3.4](3-4-merge-colliding-pull-requests.md) and still failing. And a new one from Romain:
+Two Pull Requests wait. US-020, open since [Lab 3.4](3-4-merge-colliding-pull-requests.md) and still failing. And a new one from Romain:
 **Training: Level 3** > **Simulate my teammates**, and pick **US-055 Install Date says which day it
 means**.
 
-Two more things are waiting, and not in a Pull Request: **US-058**, the warranty term, and
-**US-060**, the scaffolding flag, sitting in `uat` since [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) because the promotion branch
+Two more things are waiting, and not in a Pull Request: US-058, the warranty term, and
+US-060, the scaffolding flag, sitting in `uat` since [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) because the promotion branch
 went around them. The wording was approved over the weekend and the crews were briefed on Monday.
 Nothing to do about them today, and Thursday is where it matters.
 
@@ -68,7 +68,7 @@ it skipped, and check the org afterwards.
 
 ### Wednesday: promote to UAT
 
-Create the promotion from `integration` into `uat`. Read the deployment actions it carries **before**
+Create the promotion from `integration` into `uat`. Read the deployment actions it carries before
 merging, and do the manual steps afterwards.
 
 Verify in `helios-uat` that the stories are usable, not only deployed.
@@ -84,7 +84,7 @@ it again. Read the **Metadata** row with that in mind: what goes out this week i
 the retrofits travelling up from `integration`, and US-058 and US-060, which have been waiting in
 `uat` since [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md). A `deleted` count in that row is still the thing to stop on.
 
-**That promotion is also what ends the exception.** US-057, US-059 and US-061 went to `preprod` on
+That promotion is also what ends the exception. US-057, US-059 and US-061 went to `preprod` on
 their own last week; this one carries US-058 and US-060 the ordinary way, and `uat` and `preprod`
 hold the same thing again. It merges without a conflict because [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) step 9 retrofitted the
 promotion into `integration` the same day: the two files solved on the promotion branch meet their
@@ -118,8 +118,8 @@ ask:
 
 ## What makes this the capstone
 
-Nothing here is new. Every step is a lab you have done. What is new is that **nobody told you the
-order**, and the order is the job.
+Nothing here is new. Every step is a lab you have done. What is new is that nobody told you the
+order, and the order is the job.
 
 Three decisions you had to make without a lab telling you:
 
@@ -182,7 +182,7 @@ Eleven checks.
 
 Welcome page > **Training: Level 3** > **Claim my badge**.
 
-A Level 3 claim re-runs the **Level 1 and Level 2 audits first**. That is how the prerequisite is
+A Level 3 claim re-runs the Level 1 and Level 2 audits first. That is how the prerequisite is
 enforced, because a Trailmix cannot gate anything. The command runs those same audits on your
 machine before it opens anything, so you find out here rather than on the issue.
 
@@ -190,37 +190,35 @@ Then, as for the two other levels: it asks for your Trailblazer username, the la
 address of your Trailhead profile, and opens the claim form filled in. Pick your level in the
 **Level** dropdown, which a link cannot prefill, then tick the three boxes and submit.
 
-!!! tip "If the course helped you"
-    [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
-    extension every click of this course went through. A star is how an open source project stays
-    visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
-    course!
+If the course helped you: [hardisgroupcom/vscode-sfdx-hardis](https://github.com/hardisgroupcom/vscode-sfdx-hardis) is the
+extension every click of this course went through. A star is how an open source project stays
+visible: open its page and click **Star** **(1)**, on the right of the repository name. Give it a star if you liked this
+course!
 
-    ![The Star button of the vscode-sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
+![The Star button of the vscode-sfdx-hardis repository on GitHub](../../_assets/annotated/web/github-star-vscode-sfdx-hardis.png)
 
 The badge is **sfdx-hardis Release Manager**.
 
-!!! tip "Put it on your LinkedIn banner"
-    [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
-    username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
-    username, generate the picture, and set it as your LinkedIn cover.
+Put it on your LinkedIn banner: [Trailhead Banner](https://thb.nabondance.me/) draws a LinkedIn cover image from a Trailblazer
+username, and it shows the highest sfdx-hardis training badge you claimed here. Type your
+username, generate the picture, and set it as your LinkedIn cover.
 
 ## What to do with all this
 
 Three things worth doing in the week after you finish, in order of usefulness:
 
-**One: take the setup checklist to your own project.** The
+One: take the setup checklist to your own project. The
 [setup checklist](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-checklist/) is the list
 of everything a real pipeline needs. You have now done most of it once. Go through it against
 whatever project you actually work on and count what is missing.
 
-**Two: delete your training orgs, or keep them deliberately.** The scratch orgs delete themselves
+Two: delete your training orgs, or keep them deliberately. The scratch orgs delete themselves
 after 30 days. The two Developer Edition orgs holding a fictional solar company are fine to keep as a
 place to try things, and `helios-prod` stays a Dev Hub you can create scratch orgs from. If you keep
 them, delete the `SFDX_AUTH_URL_INTEGRATION` and `SFDX_AUTH_URL_UAT` secrets, which [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) left in
 place, and remember the JWT certificates in your fork (your own copy of the course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`) are real credentials to real orgs.
 
-**Three: keep promotion branches as the exception.** [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) had you assemble one, and this
+Three: keep promotion branches as the exception. [Lab 3.10](3-10-promote-a-subset-with-promotion-branches.md) had you assemble one, and this
 week put the pipeline back. On a real project the pressure runs the other way: the first subset is
 agreed for a good reason, the second because the first one worked, and after a quarter nobody can
 say what any org contains. If you find yourself assembling one every week, the thing to fix is the

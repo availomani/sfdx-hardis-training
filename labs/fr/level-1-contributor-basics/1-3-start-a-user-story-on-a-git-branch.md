@@ -5,7 +5,7 @@ description: "Prenez votre premier ticket du backlog et créez sa branche Git et
 level: 1
 lab: 3
 lang: fr
-source_rev: "72b009752f452901510664252eb41d67dca46b3d"
+source_rev: "01b7b1a0b45c309e427328f0ac5d16321ea653f5"
 screenshots:
   - annotated/vscode/pipeline-cards-level1--new-user-story
   - annotated/vscode/work-new-story-type
@@ -49,13 +49,12 @@ Le backlog est dans [BACKLOG.md](../../../BACKLOG.md). Votre première story est
 Petite exprès. Ce qui compte dans ce lab n'est pas le champ, c'est la boucle que vous êtes sur le
 point d'apprendre et de répéter pendant tout le reste de votre carrière sur ce projet.
 
-!!! info "La branche, en une phrase"
-    Une branche est une ligne de travail nommée à l'intérieur du repository. La vôtre démarre comme une
-    copie exacte de ce que l'équipe a en ce moment. Vous y changez ce que votre story demande, et la
-    version de l'équipe reste telle quelle jusqu'à ce que votre Pull Request y remerge la vôtre :
-    c'est ainsi que deux personnes travaillent sur deux stories en même temps sans se marcher
-    dessus. L'extension crée la branche, vous bascule dessus et la pousse plus tard, vous ne tapez
-    donc jamais une commande Git.
+La branche, en une phrase : une branche est une ligne de travail nommée à l'intérieur du
+repository. La vôtre démarre comme une copie exacte de ce que l'équipe a en ce moment. Vous y changez
+ce que votre story demande, et la version de l'équipe reste telle quelle jusqu'à ce que votre Pull
+Request y remerge la vôtre : c'est ainsi que deux personnes travaillent sur deux stories en même
+temps sans se marcher dessus. L'extension crée la branche, vous bascule dessus et la pousse plus
+tard, vous ne tapez donc jamais une commande Git.
 
 ## Avant de commencer
 
@@ -68,105 +67,165 @@ point d'apprendre et de répéter pendant tout le reste de votre carrière sur c
 
 ### 1. Démarrer la User Story
 
-Sur la Welcome page, ouvrez le panneau **DevOps Pipeline** et faites défiler au-delà du diagramme
-jusqu'au **Project Contribution Workflow** **(1)**. Cliquez sur la carte **New User Story** **(2)**.
+Objectif : la commande New User Story lancée, sur son premier écran.
 
-![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards-level1--new-user-story.png)
+#### À faire
 
-!!! tip "Vous ne voyez pas les cartes ?"
-    Elles sont sous le diagramme des branches. Faites défiler vers le bas dans le panneau.
+1. Sur la Welcome page, ouvrez le panneau **DevOps Pipeline**
+2. Faites défiler au-delà du diagramme jusqu'au **Project Contribution Workflow** **(1)**. Vous ne
+   voyez pas les cartes ? Elles sont sous le diagramme des branches : faites défiler vers le bas
+   dans le panneau
+3. Cliquez sur la carte **New User Story** **(2)**
+
+   ![Les cartes de contribution du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards-level1--new-user-story.png)
+
+#### Pourquoi
 
 L'extension pose quatre questions, un écran à la fois. Chacune apparaît dans son propre panneau, et
 chaque réponse que vous donnez reste visible au-dessus de la question suivante : vous voyez donc
-toujours ce que vous lui avez dit. Avant la première, elle vous dit quelque chose au lieu de
-demander.
+toujours ce que vous lui avez dit.
+
+#### Vous devriez voir
+
+- Le premier écran de la commande. Avant la première question, elle vous dit quelque chose au lieu
+  de demander
 
 ### 2. Où va le travail
 
-La première ligne sous l'en-tête indique **Automatically selected target branch is integration**
-**(1)**. Ce n'est pas une question, parce qu'il n'y a rien à choisir : ce projet déclare
-`integration` comme seule branche qu'un contributeur a le droit de cibler, dans
-`availableTargetBranches`. Le [Lab 3.1](../level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md) ajoute `preprod`, là où démarrent les correctifs urgents, et à
-partir de là la commande demande, en proposant les deux. Sous cette ligne, la première vraie question
-attend déjà. Deux de ses réponses, **(2)** et **(3)**, sont celles entre lesquelles vous choisissez :
-l'étape suivante parle d'elles.
+Objectif : vous savez où va votre travail, `integration`, avant de répondre à quoi que ce soit.
 
-![La première question de New User Story, sous la ligne qui nomme la branche cible](../../_assets/annotated/vscode/work-new-story-type.png)
+#### À faire
+
+1. Lisez la première ligne sous l'en-tête : **Automatically selected target branch is integration**
+   **(1)**
+
+   ![La première question de New User Story, sous la ligne qui nomme la branche cible](../../_assets/annotated/vscode/work-new-story-type.png)
+
+#### Pourquoi
+
+Ce n'est pas une question, parce qu'il n'y a rien à choisir : ce projet déclare `integration` comme
+seule branche qu'un contributeur a le droit de cibler, dans `availableTargetBranches`. Le [Lab 3.1](../level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md) ajoute `preprod`, là où démarrent les correctifs urgents, et à
+partir de là la commande demande, en proposant les deux.
 
 Vous ne devinez jamais où va votre travail : la commande le dit d'abord, l'écrit, et chaque étape
 suivante le relit.
 
+#### Vous devriez voir
+
+- Sous cette ligne, la première vraie question qui attend déjà. Deux de ses réponses, **(2)** et
+  **(3)**, sont celles entre lesquelles vous choisissez : l'étape suivante parle d'elles
+
 ### 3. De quel genre de travail il s'agit
 
-**What type of User Story do you want to create?** Prenez **Feature: a new capability or an
-improvement** **(2)** : US-014 ajoute quelque chose qui n'était pas là. **Fix: correct something that
-is broken** **(3)** sert à corriger quelque chose de déjà livré. Les deux réponses sont formulées par
-ce projet, dans `branchPrefixChoices`.
+Objectif : la User Story typée comme Feature.
+
+#### À faire
+
+1. À **What type of User Story do you want to create?**, prenez **Feature: a new capability or an
+   improvement** **(2)** : US-014 ajoute quelque chose qui n'était pas là
+2. Ne touchez pas à la troisième réponse, **Retrofit**
+
+#### Pourquoi
+
+**Fix: correct something that is broken** **(3)** sert à corriger quelque chose de déjà livré. Les
+deux réponses sont formulées par ce projet, dans `branchPrefixChoices`.
 
 La troisième réponse, **Retrofit**, est celle du release manager. Elle fait redescendre un hotfix de
 production dans la pipeline, et le [Lab 3.7](../level-3-release-manager/3-7-hotfix-and-retrofit.md)
-est l'endroit où elle sert. Ici, n'y touchez pas.
+est l'endroit où elle sert.
 
 La réponse devient la première partie du nom de votre branche, `features/` ou `fix/`, pour que
 quiconque regarde la liste des branches voie d'un coup d'œil quel genre de travail est en cours.
 
+#### Vous devriez voir
+
+- Votre réponse gardée au-dessus de la question suivante, qui demande un nom
+
 ### 4. Comment l'appeler
 
-**What is the name of your new User Story?** Tapez-le dans la zone **(1)** et cliquez sur
-**Validate** **(2)** :
+Objectif : la User Story nommée `US-014-panels-required`.
 
-```
-US-014-panels-required
-```
+#### À faire
 
-![La question demandant le nom de la User Story](../../_assets/annotated/vscode/work-new-story-name.png)
+1. À **What is the name of your new User Story?**, tapez le nom dans la zone **(1)** :
+
+   ```text title="À taper"
+   US-014-panels-required
+   ```
+
+   ![La question demandant le nom de la User Story](../../_assets/annotated/vscode/work-new-story-name.png)
+
+2. Cliquez sur **Validate** **(2)**
+
+#### Pourquoi
 
 L'exemple grisé à l'intérieur de la zone n'est pas de la décoration : ce projet déclare un motif
 auquel les noms doivent correspondre, et l'exemple est un nom qui y correspond. Tapez autre chose,
 `Panels Required` par exemple, et la commande vous dit ce qu'elle attendait et redemande.
 
+#### Vous devriez voir
+
+- Le nom accepté, et la question suivante, sur l'org
+
 ### 5. L'org dans laquelle vous allez construire
 
-**Which Salesforce org do you want to work in?** Prenez **Scratch org** **(1)** : `helios-dev` en est
-une, créée au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+Objectif : `helios-dev` attachée à la User Story, comme l'org où vous construisez.
+Rappel : [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 
-![La question demandant dans quel genre d'org cette User Story se construit](../../_assets/annotated/vscode/work-new-org-type.png)
+#### À faire
 
-Les autres réponses sont pour d'autres projets. **Sandbox org with source tracking** **(2)** est ce
-qu'utilisent la plupart des équipes, une sandbox de développeur distribuée par le release manager.
-Le source tracking veut dire que l'org tient à jour une note de ce qui y a changé depuis votre
-dernière synchronisation, ce qui vous évite de chercher. **Current org** **(3)** désigne l'org vers
-laquelle votre projet pointe, par son adresse : c'est `helios-dev` aujourd'hui, mais une adresse ne
-vous dit rien, ne comptez donc pas dessus. La dernière réponse sert à éditer directement les fichiers
-du projet, sans org du tout.
+1. À **Which Salesforce org do you want to work in?**, prenez **Scratch org** **(1)** :
+   `helios-dev` en est une, créée au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 
-Puis la liste des orgs qu'elle pourrait attacher. Prenez **Reuse scratch org helios-dev** **(1)**.
+   ![La question demandant dans quel genre d'org cette User Story se construit](../../_assets/annotated/vscode/work-new-org-type.png)
 
-![La commande New User Story demandant dans quelle scratch org construire](../../_assets/annotated/vscode/work-new-org.png)
+2. Puis vient la liste des orgs qu'elle pourrait attacher. Prenez **Reuse scratch org helios-dev**
+   **(1)**
 
-C'est l'org que le [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) a remplie avec l'application Helios, et celle que vous allez modifier à la
-main dans Setup. La liste ne propose ni `helios-integration` ni `helios-uat` : la commande sait que
-ces deux-là appartiennent à des branches majeures, et construire directement dans une org partagée
-est exactement ce que toute cette façon de travailler existe pour empêcher.
+   ![La commande New User Story demandant dans quelle scratch org construire](../../_assets/annotated/vscode/work-new-org.png)
 
-La réponse du milieu, **Reuse current org**, atterrirait sur la même org ici, par son adresse plutôt
-que par son nom. Prenez celle qui est nommée : une adresse ne vous dit rien sur l'org dont il s'agit.
-
-!!! danger "Ne prenez jamais Create new scratch org ici"
+!!! warning "Ne prenez jamais Create new scratch org ici"
     C'est la première réponse, et sur un vrai projet c'est souvent la bonne. Ici, elle demanderait
     une quatrième scratch org à votre Dev Hub, et un Dev Hub Developer Edition n'en garde que trois
     vivantes : la commande échoue après une longue attente, sans rien à montrer.
 
+#### Pourquoi
+
+Les autres réponses de la première question sont pour d'autres projets. **Sandbox org with source
+tracking** **(2)** est ce qu'utilisent la plupart des équipes, une sandbox de développeur distribuée
+par le release manager. Le source tracking veut dire que l'org tient à jour une note de ce qui y a
+changé depuis votre dernière synchronisation, ce qui vous évite de chercher. **Current org** **(3)**
+désigne l'org vers laquelle votre projet pointe, par son adresse : c'est `helios-dev` aujourd'hui,
+mais une adresse ne vous dit rien, ne comptez donc pas dessus. La dernière réponse sert à éditer
+directement les fichiers du projet, sans org du tout.
+
+`helios-dev` est l'org que le [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) a remplie avec l'application Helios, et celle que vous allez modifier à la
+main dans Setup. La liste ne propose ni `helios-integration` ni `helios-uat` : la commande sait que
+ces deux-là appartiennent à des branches majeures, et construire directement dans une org partagée
+est exactement ce que toute cette façon de travailler existe pour empêcher.
+
+La réponse du milieu de la liste, **Reuse current org**, atterrirait sur la même org ici, par son
+adresse plutôt que par son nom. Prenez celle qui est nommée : une adresse ne vous dit rien sur l'org
+dont il s'agit.
+
+#### Vous devriez voir
+
+- `helios-dev` choisie, et la commande qui continue toute seule
+
 ### 6. Lire ce qu'elle vous dit à la fin
 
-La commande ouvre `helios-dev` dans votre navigateur : vous pouvez laisser cet onglet pour le
-[Lab 1.4](1-4-build-a-custom-field-in-your-org.md). Puis elle se termine et affiche ce qu'elle a fait. Lisez-le plutôt que de le fermer.
+Objectif : la branche et l'org qu'annonce la commande, vérifiées avant de construire quoi que ce
+soit.
 
-![La commande New User Story, terminée, avec son résumé](../../_assets/annotated/vscode/work-new-completed.png)
+#### À faire
 
-- la branche qu'elle a créée et sur laquelle elle vous a basculé **(1)**
-- la confirmation que vous êtes prêt à travailler dessus **(2)**
-- l'org qu'elle a attachée à cette User Story, par nom d'utilisateur et par URL **(3)**
+1. La commande ouvre `helios-dev` dans votre navigateur : laissez cet onglet pour le
+   [Lab 1.4](1-4-build-a-custom-field-in-your-org.md)
+2. Attendez qu'elle se termine et affiche ce qu'elle a fait. Lisez-le plutôt que de le fermer
+
+   ![La commande New User Story, terminée, avec son résumé](../../_assets/annotated/vscode/work-new-completed.png)
+
+#### Pourquoi
 
 Ces trois lignes méritent un coup d'œil à chaque fois. Un nom de branche qui n'est pas celui que vous
 attendiez, ou une org qui n'est pas celle que vous vouliez, c'est un problème qui coûte trente
@@ -180,10 +239,10 @@ Le panneau a lancé :
 
 qui a fait six choses, dans cet ordre :
 
-1. **Choisi la branche cible.** Avec une seule entrée dans `availableTargetBranches` elle prend
+1. **Choisi la branche cible**. Avec une seule entrée dans `availableTargetBranches` elle prend
    celle-là sans demander ; avec plusieurs elle demande, et elle retient la réponse pour cette
    branche
-2. **Récupéré et mis à jour la branche cible.** `git fetch`, puis `git checkout integration` et
+2. **Récupéré et mis à jour la branche cible**. `git fetch`, puis `git checkout integration` et
    `git pull`, pour que votre branche parte de ce que l'équipe a maintenant plutôt que de ce que vous
    aviez la semaine dernière. C'est l'étape que les gens sautent à la main et regrettent une semaine
    plus tard
@@ -217,21 +276,27 @@ Documentation de la commande : [hardis:work:new](https://sfdx-hardis.cloudity.co
 
 </details>
 
+#### Vous devriez voir
+
+- La branche qu'elle a créée et sur laquelle elle vous a basculé **(1)**
+- La confirmation que vous êtes prêt à travailler dessus **(2)**
+- L'org qu'elle a attachée à cette User Story, par nom d'utilisateur et par URL **(3)**
+
 ## Ce que vous devez voir
 
 Trois choses, toutes visibles sans quitter VS Code :
 
-1. **En bas à gauche de la barre d'état** : la branche est maintenant
-   `features/US-014-panels-required`
-2. **Le panneau sfdx-hardis, section Status** : *Current Org* nomme la scratch org que vous avez
-   choisie. Il affiche l'adresse et le nom d'utilisateur de l'org, ceux que Salesforce a inventés,
-   et jamais l'alias `helios-dev`. Pour être sûr que c'est la bonne org, comparez ce nom
-   d'utilisateur avec celui de la ligne `helios-dev` d'**Orgs Manager**
-3. **Le panneau DevOps Pipeline** : `integration` et `uat`, inchangés. **Votre nouvelle branche
-   n'y est pas, et c'est normal.** Le diagramme dessine les branches majeures et les Pull Requests
-   ouvertes vers elles, et votre branche n'a encore ni Pull Request ni org à elle. Elle apparaîtra
-   au [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md), au moment où vous ouvrirez la
-   Pull Request
+- [ ] En bas à gauche de la barre d'état : la branche est maintenant
+      `features/US-014-panels-required`
+- [ ] Le panneau sfdx-hardis, section **Status** : *Current Org* nomme la scratch org que vous avez
+      choisie. Il affiche l'adresse et le nom d'utilisateur de l'org, ceux que Salesforce a inventés,
+      et jamais l'alias `helios-dev`. Pour être sûr que c'est la bonne org, comparez ce nom
+      d'utilisateur avec celui de la ligne `helios-dev` d'**Orgs Manager**
+- [ ] Le panneau **DevOps Pipeline** : `integration` et `uat`, inchangés. Votre nouvelle branche
+      n'y est pas, et c'est normal. Le diagramme dessine les branches majeures et les Pull Requests
+      ouvertes vers elles, et votre branche n'a encore ni Pull Request ni org à elle. Elle apparaîtra
+      au [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md), au moment où vous ouvrirez la
+      Pull Request
 
 Si les deux premières se contredisent, arrêtez-vous et corrigez-le maintenant plutôt qu'après avoir
 construit quelque chose.
@@ -278,11 +343,10 @@ Il cherche votre branche de story, `features/US-014-...`, la seule chose que ce 
 lui. Votre travail n'a pas encore atteint `integration`, et rien ici ne s'y attend : c'est le
 [Lab 1.6](1-6-pull-request-deployment-check-and-merge.md).
 
-!!! tip "Dans Agentforce Vibes, si le panneau dit que le contenu est bloqué"
-    Un IDE dans le navigateur perd parfois le cadre dans lequel tourne un panneau, et affiche *the
-    content is blocked* à la place de la commande. Rien ne cloche dans votre travail : rechargez
-    l'onglet du navigateur et recliquez sur **Check my work**. Cela arrive à n'importe quel
-    panneau, pas seulement à celui-ci.
+Dans Agentforce Vibes, si le panneau dit que le contenu est bloqué : un IDE dans le navigateur perd
+parfois le cadre dans lequel tourne un panneau, et affiche *the content is blocked* à la place de la
+commande. Rien ne cloche dans votre travail : rechargez l'onglet du navigateur et recliquez sur
+**Check my work**. Cela arrive à n'importe quel panneau, pas seulement à celui-ci.
 
 ## Pour aller plus loin
 

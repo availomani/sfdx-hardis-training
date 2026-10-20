@@ -41,21 +41,21 @@ Monitoring is the part of the release manager job that happens when nothing is b
 
 What it gives you, every night, is three things, and none of them is a log file to dig through:
 
-| What                  | Where you read it                                                                                          |
-|-----------------------|------------------------------------------------------------------------------------------------------------|
-| **A metadata backup** | The git history of the monitoring repository: every change made to the setup of production, dated          |
-| **Indicators**        | One per check: a count and a severity, with a report file behind it. Inactive users, limits, failing tests |
-| **Alerts**            | The indicators that crossed a severity you chose, sent to you: a message in a team channel, or an email    |
+| What              | Where you read it                                                                                          |
+|-------------------|------------------------------------------------------------------------------------------------------------|
+| A metadata backup | The git history of the monitoring repository: every change made to the setup of production, dated          |
+| Indicators        | One per check: a count and a severity, with a report file behind it. Inactive users, limits, failing tests |
+| Alerts            | The indicators that crossed a severity you chose, sent to you: a message in a team channel, or an email    |
 
-The backup is a backup of **metadata**: objects, fields, flows, Apex, permission sets, layouts, the
-way the org is built. It is **not a backup of data**. No account, no contact, no installation
+The backup is a backup of metadata: objects, fields, flows, Apex, permission sets, layouts, the
+way the org is built. It is not a backup of data. No account, no contact, no installation
 record is in it, and it will never restore one. Losing records is a different risk, covered by a
 data backup tool, and a team that hears "production is backed up every night" has to know which of
 the two was meant.
 
 The alerts are how monitoring is read day to day: nobody opens a report every morning, and a
-message that arrives gets read. On a real project they go to **Slack, Microsoft Teams or Google
-Chat**, in a channel the whole team sees. This lab uses **email**, because it needs nothing but
+message that arrives gets read. On a real project they go to Slack, Microsoft Teams or Google
+Chat, in a channel the whole team sees. This lab uses email, because it needs nothing but
 an address you already have. The indicators can also be sent to Grafana, which is where they
 become curves over months. That is out of scope here.
 
@@ -71,9 +71,36 @@ become curves over months. That is out of scope here.
 
 ### 1. Create the second repository yourself, first
 
-Monitoring **always** lives in its own repository, separate from the one your pipeline deploys
-from. Not usually, not by preference: always. This is the part people get wrong, and it is the part
-that is expensive to undo once a year of nightly commits has piled up in the wrong place.
+Goal: an empty private `sfdx-hardis-training-monitoring` repository of your own, cloned and open in
+VS Code.
+Refresher: [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+
+Monitoring always lives in its own repository, separate from the one your pipeline deploys
+from. Not usually, not by preference: always.
+
+#### Do
+
+1. Create an empty private repository called `sfdx-hardis-training-monitoring` on GitHub
+2. Clone it the way [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) cloned this one: **File > Open Folder** on an empty folder
+3. In the **Source Control** panel, **Clone Repository**, and paste the address from the green
+   **Code** button of your new repository
+
+!!! warning "Careful"
+    This is the part people get wrong, and it is the part that is expensive to undo once a year of
+    nightly commits has piled up in the wrong place.
+
+#### Why two repositories
+
+It is the same reason real projects do it:
+
+| Reason                | Detail                                                                                                                         |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| Different permissions | Monitoring holds credentials for production. Every contributor has access to the source repository, and does not need this one |
+| Different rhythm      | Monitoring commits every night. Mixing that history with your source history makes both unreadable                             |
+| Different content     | Monitoring stores nightly org backups. It grows, and it should not grow inside the repository people clone every day           |
+
+Your source repository and your monitoring repository are two different things with two different
+audiences.
 
 `sf hardis:org:configure:monitoring` does not create that repository for you. It checks the name of
 the one it is standing in, and if that name does not contain `monitoring` it asks
@@ -83,34 +110,29 @@ the one it is standing in, and if that name does not contain `monitoring` it ask
 - *Mmmmm no, let me create another repo with the word "monitoring" in its name !*, which stops the
   command
 
-**Take the second one.** The question exists because the command cannot be certain from a name
+Take the second one. The question exists because the command cannot be certain from a name
 alone, not because the two are alternatives. In a repository whose name does contain `monitoring`
-the question is never asked at all, which is the state you want to be in before you start.
+the question is never asked at all, which is the state you want to be in before you start. If you
+ever find yourself about to answer yes to that question, the right move is to stop and create the
+second repository, however late it feels.
 
-So, before anything else: create an empty private repository called
-`sfdx-hardis-training-monitoring` on GitHub. Then clone it the way [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md) cloned this
-one: **File > Open Folder** on an empty folder, **Source Control** panel, **Clone Repository**,
-and paste the address from the green **Code** button of your new repository. Nothing in this lab
-happens in the repository you have been working in all course.
+#### You should now see
 
-Why two repositories, and it is the same reason real projects do it:
-
-| Reason                | Detail                                                                                                                         |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| Different permissions | Monitoring holds credentials for production. Every contributor has access to the source repository, and does not need this one |
-| Different rhythm      | Monitoring commits every night. Mixing that history with your source history makes both unreadable                             |
-| Different content     | Monitoring stores nightly org backups. It grows, and it should not grow inside the repository people clone every day           |
-
-Your source repository and your monitoring repository are two different things with two different
-audiences. If you ever find yourself about to answer yes to that question, the right move is to stop
-and create the second repository, however late it feels.
+- The new, empty monitoring repository open in VS Code. Nothing in this lab happens in the
+  repository you have been working in all course
 
 ### 2. Run the configuration
 
-From the monitoring repository, open the **Org Monitoring Workbench** from the Welcome page and click
-**Install Org Monitoring**.
+Goal: monitoring configured for `helios-prod` on a `monitoring_` branch, and its workflow written on
+`main`.
+Refresher: [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 
-!!! note "No such button?"
+#### Do: start the command
+
+1. From the monitoring repository, open the **Org Monitoring Workbench** from the Welcome page
+2. Click **Install Org Monitoring**
+
+!!! warning "No such button?"
     Then you are in the wrong folder. Open the same panel from the repository you have been working
     in all course and you get this instead:
 
@@ -121,6 +143,8 @@ From the monitoring repository, open the **Org Monitoring Workbench** from the W
     its monitoring repository lives gets an **Open Monitoring Repository** button beside it. The
     install button only exists where the thing it installs belongs.
 
+#### Do: answer its questions
+
 It runs in a command panel and asks its questions one at a time, the way [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) did:
 
 1. **Did you configure the sfdx-hardis monitoring pre-requisites on your Git server ?** The second
@@ -129,116 +153,167 @@ It runs in a command panel and asks its questions one at a time, the way [Lab 3.
 2. **Please select or connect to the org that you want to monitor** - `helios-prod`. The command makes it your default org. If it asks for the org a second time,
    pick `helios-prod` again
 3. **What is the address of the CI/CD repository that deploys to this org? (optional)** - the
-   address of your fork, `https://github.com/<your-handle>/sfdx-hardis-training`. It is the mirror
-   of step 8: the monitoring repository records where the pipeline lives, so that a coding agent
-   opened in it can search your fork and its workflow runs too
+   address of your fork, `https://github.com/<your-handle>/sfdx-hardis-training`
 4. **Branch monitoring_... does not exist on the remote server. Do you want to push it?** - yes.
    This one comes before the certificate, not after, and it only appears the first time
 5. Then the certificate questions from [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), unchanged and in the same order: self-signed,
    let sfdx-hardis configure the External Client App, encrypted certificate as a file, then the same
-   stop while you store the two secrets, this time in the **monitoring** repository, then the name,
+   stop while you store the two secrets, this time in the monitoring repository, then the name,
    the contact email and the profile of the app. The profile list is in the language of the org's
    user, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 6. **Do you want to save the configuration on the remote server (auto-commit)?** - yes
 
-Last, it writes the workflow on `main` and says so: *The monitoring workflow on main now runs
-monitoring_...*. GitHub only schedules the workflows of the default branch, and only offers **Run
-workflow** for those, so the workflow that runs every monitored org lives on `main` and lists each
-monitoring branch.
+!!! warning "Careful"
+    If GitHub refuses a push on the way, the command says *GitHub refused this push* and names the
+    `workflow` scope: the first entry of **If it goes wrong** below is the way out. Do not get past it by
+    merging the monitoring branch into `main`, even through a Pull Request. `main` carries the workflow
+    and nothing else, each monitored org lives on its own branch, and such a merge brings the example
+    workflow of the branch to `main`, whose jobs fail on branches called `monitoring_myclient`.
 
-If GitHub refuses a push on the way, the command says *GitHub refused this push* and names the
-`workflow` scope: the first entry of **If it goes wrong** below is the way out. Do not get past it by
-merging the monitoring branch into `main`, even through a Pull Request. `main` carries the workflow
-and nothing else, each monitored org lives on its own branch, and such a merge brings the example
-workflow of the branch to `main`, whose jobs fail on branches called `monitoring_myclient`.
+#### Why
+
+The address of your fork is the mirror of step 8: the monitoring repository records where the
+pipeline lives, so that a coding agent opened in it can search your fork and its workflow runs too.
+
+Last, it writes the workflow on `main`. GitHub only schedules the workflows of the default branch,
+and only offers **Run workflow** for those, so the workflow that runs every monitored org lives on
+`main` and lists each monitoring branch.
 
 It never asks for a repository name to create or for a git provider, because it creates neither: the one address it asks for, your fork, it only records. The authentication is the same code as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): External Client App, JWT, two secrets to store,
-this time in the **monitoring** repository. The key lands in `./.ssh/` rather than
+this time in the monitoring repository. The key lands in `./.ssh/` rather than
 `config/branches/.jwt/`, and the configuration in a `.sfdx-hardis.yml` at the repository root, on a
 branch called `monitoring_` plus the org's domain, cut from `main`. The repository was empty, so it
 first gives `main` an empty commit to start from. One branch per monitored org is how one repository
 watches several.
 
+#### You should now see
+
+- The last message of the command: *The monitoring workflow on main now runs monitoring_...*
+
 ### 3. Choose what it watches
 
-Open the **Monitoring Config Workbench** panel. One row per check, and six columns: **Command**
-**(1)**, **Frequency** **(2)**, then **Messaging**, **Email** and **API** **(3)**, which are the
-severity each channel is sent at, and a last column of per-row actions.
+Goal: every check on for a first run, and the org limits check set to email you, published to
+GitHub.
+Refresher: [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
 
-![The Monitoring Config Workbench, with the list of checks, their frequency and their per-channel routing](../../_assets/annotated/vscode/monitoring-config--what-it-watches.png)
+#### Do: read the checks
+
+1. Open the **Monitoring Config Workbench** panel. One row per check, and six columns: **Command**
+   **(1)**, **Frequency** **(2)**, then **Messaging**, **Email** and **API** **(3)**, which are the
+   severity each channel is sent at, and a last column of per-row actions
+
+   ![The Monitoring Config Workbench, with the list of checks, their frequency and their per-channel routing](../../_assets/annotated/vscode/monitoring-config--what-it-watches.png)
+
+2. For a first run, leave it all on
+
+#### Why all of them
 
 There are around thirty checks, they come from the product rather than from your configuration file,
 and they are all on by default at frequencies the product chose: some daily, some weekly, some
 monthly. That is the right default and the wrong long-term setting.
 
-For a first run, leave it all on. You are about to find out which of them say something useful about
-**this** org, and that is not knowable in advance.
+You are about to find out which of them say something useful about this org, and that is not
+knowable in advance.
 
-Now give the run somewhere to send its alerts, before it runs. Two things, and it takes both:
+#### Do: give the alerts an address and a severity
 
-**An address.** On GitHub, in the **monitoring** repository: **Settings > Secrets and variables >
-Actions**, then **New repository secret**, the same form as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) step 6. Name it
-`NOTIF_EMAIL_ADDRESS` and give it your email address as its value. Several addresses go in the same
-secret, separated by commas. The workflow already reads that secret: it was written to.
+Now give the run somewhere to send its alerts, before it runs. Two things, and it takes both: an
+address and a severity.
 
-**A severity.** An address alone may bring you nothing. Look at the **Email** column: most checks
-read **Disabled** or **Error** there, so an org with nothing wrong sends no email at all, which is
-the right setting for a team and the wrong one for a first run. On the row **Detect if org limits
-are close to be reached**, set **Email** to **All**. That check will now write to you every night,
-whatever it found.
+1. On GitHub, in the monitoring repository: **Settings > Secrets and variables > Actions**, then
+   **New repository secret**, the same form as [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) step 6
+2. Name it `NOTIF_EMAIL_ADDRESS` and give it your email address as its value. Several addresses go
+   in the same secret, separated by commas
+3. Back in the panel, look at the **Email** column: most checks read **Disabled** or **Error** there
+4. On the row **Detect if org limits are close to be reached**, set **Email** to **All**
+5. In the **Source Control** panel, stage `.sfdx-hardis.yml` with the **+** on its row
+6. Type a message such as `Email me the org limits`, **Commit**, then **Sync Changes**
+
+#### Why
+
+The workflow already reads that secret: it was written to.
+
+An address alone may bring you nothing. With **Disabled** or **Error** in the **Email** column, an
+org with nothing wrong sends no email at all, which is the right setting for a team and the wrong
+one for a first run. With **All**, that check will now write to you every night, whatever it found.
 
 The panel saves as you click, into `.sfdx-hardis.yml` at the root of the monitoring repository, and
-the nightly job reads that file from GitHub, not from your computer. So publish it: in the **Source
-Control** panel, stage `.sfdx-hardis.yml` with the **+** on its row, type a message such as
-`Email me the org limits`, **Commit**, then **Sync Changes**.
+the nightly job reads that file from GitHub, not from your computer. So publish it.
 
-!!! note "Why email, and what a real project does"
-    Email is the channel that needs no workspace, no channel and no webhook, which is why this lab
-    uses it. A real project sends its alerts to **Slack, Microsoft Teams or Google Chat**, where the
-    whole team sees them and can answer in a thread, and often keeps email for one person or one
-    check: the security team and the audit trail, say. The **Messaging** column is the same setting
-    for those three, and the links under Go deeper set each of them up.
+#### Why email, and what a real project does
+
+Email is the channel that needs no workspace, no channel and no webhook, which is why this lab
+uses it. A real project sends its alerts to Slack, Microsoft Teams or Google Chat, where the
+whole team sees them and can answer in a thread, and often keeps email for one person or one
+check: the security team and the audit trail, say. The **Messaging** column is the same setting
+for those three, and the links under Go deeper set each of them up.
+
+#### You should now see
+
+- `NOTIF_EMAIL_ADDRESS` in the secrets of the monitoring repository
+- **All** in the **Email** column of the org limits row, committed and pushed
 
 ### 4. Run it once by hand
 
+Goal: the first monitoring run, started now rather than tonight.
+
 Do not wait for tonight. The workflow, **Org Monitoring sfdx-hardis**, is scheduled at `0 0 * * *`
-(midnight UTC) and also accepts a manual run. In the monitoring repository, open **Actions**, click
-**Org Monitoring sfdx-hardis** **(1)** in the list on the left, then **Run workflow** **(2)**. Leave
-the branch on `main` **(3)** and click the green **Run workflow** **(4)**.
+(midnight UTC) and also accepts a manual run.
 
-![The Run workflow menu of the Org Monitoring workflow on GitHub](../../_assets/annotated/web/github-run-workflow.png)
+#### Do
 
-The run appears in the list a few seconds later: click it to follow it.
+1. In the monitoring repository, open **Actions**
+2. Click **Org Monitoring sfdx-hardis** **(1)** in the list on the left, then **Run workflow** **(2)**
+3. Leave the branch on `main` **(3)** and click the green **Run workflow** **(4)**
 
-It takes a while, most of it the org backup. When it finishes, the repository holds a full source
-backup of production, its metadata and none of its records, and a set of reports.
+   ![The Run workflow menu of the Org Monitoring workflow on GitHub](../../_assets/annotated/web/github-run-workflow.png)
+
+4. The run appears in the list a few seconds later: click it to follow it
+
+#### Why
+
+It takes a while, most of it the org backup.
+
+#### You should now see
+
+- When it finishes, the repository holds a full source backup of production, its metadata and none
+  of its records, and a set of reports
 
 ### 5. Read the first report
 
-Start with your mailbox, because that is where monitoring finds you from now on. The run sent an
-email whose subject starts with `[sfdx-hardis]`, from your own org: look in the spam folder if it is
-not in the inbox. It holds what a release manager needs before the first coffee: which org, what
-the check found, the list of what is wrong when something is, the full report attached as a
-spreadsheet, and a link to the job that produced it.
+Goal: the first report read, in your mailbox and in the panel.
 
-That email is one indicator, on one day. Each check produces one like it, and the **Email** and
-**Messaging** columns of step 3 decide which of them are worth interrupting somebody for.
+#### Do: start with your mailbox
 
-Then the whole picture. Open the **Org Monitoring Workbench** panel in VS Code, pointed at the
-monitoring repository.
+1. Open your mailbox: the run sent an email whose subject starts with `[sfdx-hardis]`, from your own
+   org. Look in the spam folder if it is not in the inbox
+2. Read it. It holds what a release manager needs before the first coffee: which org, what the check
+   found, the list of what is wrong when something is, the full report attached as a spreadsheet,
+   and a link to the job that produced it
 
-![The Org Monitoring Workbench, opened on the CI/CD repository instead of the monitoring one](../../_assets/annotated/vscode/org-monitoring--first-report.png)
+#### Why the mailbox first
 
-Check the banner first **(1)**. **Org Monitoring Not Present (CI/CD Repo)** means you opened the
-wrong folder: this panel reads the monitoring repository, not the one you have been working in all
-course. Open the monitoring repository and the banner goes.
+That is where monitoring finds you from now on. That email is one indicator, on one day. Each check
+produces one like it, and the **Email** and **Messaging** columns of step 3 decide which of them are
+worth interrupting somebody for.
 
-Under the monitored org, the panel shows the **Deployment repository** you gave the command in
-step 2: click it to open your fork in a new VS Code window. Had you left that question empty, the
-panel would offer **Set deployment repository** instead. It is optional either way.
+#### Do: then the whole picture
 
-Each check is a card, and the two worth opening first are **Detect calls to deprecated API versions**
-**(2)** and **Detect unsecured Connected Apps in an org** **(3)**.
+1. Open the **Org Monitoring Workbench** panel in VS Code, pointed at the monitoring repository
+
+   ![The Org Monitoring Workbench, opened on the CI/CD repository instead of the monitoring one](../../_assets/annotated/vscode/org-monitoring--first-report.png)
+
+2. Check the banner first **(1)**. **Org Monitoring Not Present (CI/CD Repo)** means you opened the
+   wrong folder: this panel reads the monitoring repository, not the one you have been working in all
+   course. Open the monitoring repository and the banner goes
+3. Under the monitored org, the panel shows the **Deployment repository** you gave the command in
+   step 2: click it to open your fork in a new VS Code window. Had you left that question empty, the
+   panel would offer **Set deployment repository** instead. It is optional either way
+4. Each check is a card. Open the two worth opening first: **Detect calls to deprecated API versions**
+   **(2)** and **Detect unsecured Connected Apps in an org** **(3)**
+5. Read **Detect if org limits are close to be reached** too
+
+#### Why it is nearly clean
 
 Be honest about what you are looking at. `helios-prod` is a Developer Edition org that is a few days
 old, with one user in it and an app you deployed yourself. Nothing seeds it with the findings a
@@ -246,95 +321,137 @@ two-year-old org has, and a report that comes back nearly clean is not a broken 
 
 Nearly clean, not clean. The run itself is green, and that says nothing about the org: a monitoring
 job that ran to its end stays green even when it found issues, and turns red only when the job
-itself could not run. The findings are in the report. **Detect if org limits are close to be reached** has
-one limit at 100%: `ActiveScratchOrgs`, 3 of 3. `helios-prod`
-is also your Dev Hub, and your three training scratch orgs use every slot it has. That is a true
-finding, the kind a limit check exists for: on a real Dev Hub it means nobody on the team can create
-a scratch org until one expires.
+itself could not run. The findings are in the report.
 
-And **Detect unsecured Connected Apps** has one too: **Salesforce CLI**, marked *Unsecured*. It is the
-app every `sf org login` goes through, yours included, and on a Developer Edition org it is open to
-any user who can log in. On a production org that is the first finding to take to the security team:
-an admin can restrict it to approved users, and the CLI keeps working for them.
+The org limits check has one limit at 100% because `helios-prod` is also your Dev Hub, and your
+three training scratch orgs use every slot it has. That is a true finding, the kind a limit check
+exists for: on a real Dev Hub it means nobody on the team can create a scratch org until one
+expires.
+
+**Salesforce CLI** is the app every `sf org login` goes through, yours included, and on a Developer
+Edition org it is open to any user who can log in. On a production org that is the first finding to
+take to the security team: an admin can restrict it to approved users, and the CLI keeps working for
+them.
 
 The same report may list a second one, `orgfarm_app_1`. It is not yours: it belongs to the Salesforce
 service that created your Developer Edition org, and a production org does not have it.
 
-What you are reading for is the **shape** of each finding, so that you recognise it on a real org:
+What you are reading for is the shape of each finding, so that you recognise it on a real org:
 
-| Finding on a real org           | What it actually means                                                     |
-|---------------------------------|----------------------------------------------------------------------------|
-| **Inactive users still active** | Licences being paid for, and accounts that can still log in                |
-| **An unsecured Connected App**  | Something can reach your production data and nobody remembers approving it |
-| **Apex on an old API version**  | It will break at a Salesforce release, on a date you do not control        |
+| Finding on a real org       | What it actually means                                                     |
+|-----------------------------|----------------------------------------------------------------------------|
+| Inactive users still active | Licences being paid for, and accounts that can still log in                |
+| An unsecured Connected App  | Something can reach your production data and nobody remembers approving it |
+| Apex on an old API version  | It will break at a Salesforce release, on a date you do not control        |
 
-The one finding you should genuinely expect here is in the **backup** rather than in a check: the
+The one finding you should genuinely expect here is in the backup rather than in a check: the
 validation rule [Lab 3.7](3-7-hotfix-and-retrofit.md) hotfixed is in the org with its new formula, and now it is in the monitoring
 repository's git history, dated. That is the answer to "when did that change", and it is the part of
 monitoring that pays for itself first.
 
+#### You should now see
+
+- In **Detect if org limits are close to be reached**, one limit at 100%: `ActiveScratchOrgs`, 3 of 3
+- In **Detect unsecured Connected Apps**, **Salesforce CLI**, marked *Unsecured*
+- The validation rule of [Lab 3.7](3-7-hotfix-and-retrofit.md), with its new formula, dated in the git history of the
+  monitoring repository
+
 ### 6. Decide what is noise, which is the actual skill
+
+Goal: every finding of the first report in one of three buckets.
 
 This is the step that decides whether monitoring survives six months.
 
-Go through every finding and put it in one of three buckets:
+#### Do
 
-| Bucket                     | What you do                                                 | Example                                 |
-|----------------------------|-------------------------------------------------------------|-----------------------------------------|
-| **Act now**                | Fix it this week                                            | The unsecured Connected App             |
-| **Track**                  | Put it in the backlog as a story                            | The old API version                     |
-| **Silence, with a reason** | Turn it off in the configuration, with a comment saying why | A check that does not apply to this org |
+1. Go through every finding and put it in one of three buckets:
 
-On `helios-prod`, `ActiveScratchOrgs` goes in **Track**: it is real, it is expected for as long as
-the course runs, and it expires with the scratch orgs. Silencing the whole limits check for it would
-hide every other limit with it, which is exactly the inconvenient kind of silencing.
+   | Bucket                 | What you do                                                 | Example                                 |
+   |------------------------|-------------------------------------------------------------|-----------------------------------------|
+   | Act now                | Fix it this week                                            | The unsecured Connected App             |
+   | Track                  | Put it in the backlog as a story                            | The old API version                     |
+   | Silence, with a reason | Turn it off in the configuration, with a comment saying why | A check that does not apply to this org |
 
-**Silencing is legitimate.** A monitoring report with forty findings that nobody acts on is worse
+2. On `helios-prod`, put `ActiveScratchOrgs` in Track
+3. For anything you silence, write the reason in the configuration file
+
+#### Why
+
+`ActiveScratchOrgs` is real, it is expected for as long as the course runs, and it expires with the
+scratch orgs. Silencing the whole limits check for it would hide every other limit with it, which is
+exactly the inconvenient kind of silencing.
+
+Silencing is legitimate. A monitoring report with forty findings that nobody acts on is worse
 than no monitoring, because it teaches the team that the report is noise. A report with four
 findings that all matter gets read every morning.
 
-What is not legitimate is silencing something because it is inconvenient. Write the reason in the
-configuration file, and the next person can disagree with you knowingly.
+What is not legitimate is silencing something because it is inconvenient. With the reason in the
+configuration file, the next person can disagree with you knowingly.
+
+#### You should now see
+
+- Every finding in a bucket, and `ActiveScratchOrgs` in Track
 
 ### 7. Route one notification
+
+Goal: the org limits check writing to you only when a limit is nearly reached.
 
 A report nobody opens is not monitoring, and you have just seen the other half: the email of
 step 5 reached you without you opening anything.
 
-It was also set the wrong way for the long run, on purpose. **All** on the limits check means a
+#### Do
+
+1. Back in the **Monitoring Config Workbench**, put the **Email** of the org limits row back to
+   **Error**
+2. Publish the file as in step 3
+
+#### Why
+
+It was set the wrong way for the long run, on purpose. **All** on the limits check means a
 message every night saying nothing is wrong, and a nightly "everything is fine" message is read for
-a week and filtered forever after. Back in the **Monitoring Config Workbench**, put the **Email** of
-that row back to **Error**, and publish the file as in step 3. From tonight you are written to when
-a limit is nearly reached, and only then.
+a week and filtered forever after.
 
 That is the rule for every row: the **Messaging**, **Email** and **API** columns hold the severity
 each channel is sent at, per check, and they should let through the failures and the critical
 findings only. **Disabled** is a legitimate value.
 
-Keep **one** channel. On a real project that channel is Slack, Microsoft Teams or Google Chat rather
+Keep one channel. On a real project that channel is Slack, Microsoft Teams or Google Chat rather
 than email, and one is enough: two on day one means the same message arriving twice and being
 ignored in both places.
 
 Those settings are written as `notificationConfig` in the monitoring repository's `.sfdx-hardis.yml`,
 one entry per notification type, merged over the product's defaults.
 
+#### You should now see
+
+- **Error** in the **Email** column of the org limits row, committed and pushed. From tonight you
+  are written to when a limit is nearly reached, and only then
+
 ### 8. Make it findable
 
+Goal: the address of the monitoring repository published in the pipeline configuration.
+Refresher: [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md), [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md)
+
 The next release manager will need the monitoring repository on their first day, and the one place
-they will look is the project. Back in the source repository: **DevOps Pipeline** > gear menu >
-**Configure Pipeline Settings**, scope **Global Settings**, tab **Salesforce Project**. **Monitoring
-repository**: **Edit**, paste the address of your monitoring repository,
-`https://github.com/<your-handle>/sfdx-hardis-training-monitoring`, and **Save**. Then **Training:
-Level 3** > **Publish my pipeline configuration**: it is pipeline configuration, like the rest.
+they will look is the project.
+
+#### Do
+
+1. Back in the source repository: **DevOps Pipeline** > gear menu > **Configure Pipeline Settings**,
+   scope **Global Settings**, tab **Salesforce Project**
+2. **Monitoring repository**: **Edit**, paste the address of your monitoring repository,
+   `https://github.com/<your-handle>/sfdx-hardis-training-monitoring`, and **Save**
+3. **Training: Level 3** > **Publish my pipeline configuration**: it is pipeline configuration, like
+   the rest
+4. Wait for its checks, and merge it with **Squash and merge**, as its **How to merge** line says and
+   as in [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md)
+5. **Pull** in the **Source Control** panel
+
+#### Why
 
 That command does the whole trip on its own, as in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md): it creates a branch, commits the
 configuration, pushes it and opens the Pull Request. You have nothing to commit and no Pull
-Request to create: wait for its checks, merge it with **Squash and merge**, as its **How to merge**
-line says and as in [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md), then **Pull** in the
-**Source Control** panel.
-
-From then on, the **Org Monitoring Workbench** opened from the source repository offers **Open
-Monitoring Repository** instead of a dead end.
+Request to create.
 
 <details markdown="1"><summary>Under the hood: what runs every night</summary>
 
@@ -342,7 +459,7 @@ The command was:
 
     sf hardis:org:configure:monitoring
 
-and it copied in the CI files for **every** git provider at once, not only GitHub. The workflow it
+and it copied in the CI files for every git provider at once, not only GitHub. The workflow it
 generated for GitHub has four jobs:
 
 1. **Backup** runs first, on its own: `sf hardis:org:monitor:backup` retrieves the whole org in
@@ -356,7 +473,7 @@ generated for GitHub has four jobs:
 per check, then applies the thresholds and sends the notifications. You will not find them listed in
 the workflow.
 
-`monitoringCommands` in the monitoring repository's `.sfdx-hardis.yml` is **not** the list of checks:
+`monitoringCommands` in the monitoring repository's `.sfdx-hardis.yml` is not the list of checks:
 the list is built into the product, around thirty of them, and this key only overrides entries by key
 or appends new ones. Leaving it empty still runs everything. `monitoringDisable` is the per-check
 off switch, by the check's key rather than its label, and setting a check's `frequency` to `off`
@@ -384,19 +501,24 @@ Command documentation: [hardis:org:configure:monitoring](https://sfdx-hardis.clo
 
 </details>
 
+#### You should now see
+
+- From then on, the **Org Monitoring Workbench** opened from the source repository offers **Open
+  Monitoring Repository** instead of a dead end
+
 ## What you should see
 
-- A second repository, created by you, with an **Org Monitoring sfdx-hardis** workflow run: the
-  backup, the Apex tests, MegaLinter and the Monitoring job all green
-- The `ActiveScratchOrgs` limit at 100% in the report, which the green run did not tell you
-- A full metadata backup of `helios-prod` committed in it: its sources, not its records
-- A first report you have read and triaged, however short it is
-- An email from the first run in your mailbox, subject starting with `[sfdx-hardis]`, with the org
-  limits report attached
-- The **Email** of the limits check back on **Error**, committed and pushed
-- `monitoringRepository` in `config/.sfdx-hardis.yml` on `integration`, pointing at it
-- `deploymentRepository` in the monitoring branch's `.sfdx-hardis.yml`, pointing back at your fork,
-  and an `AGENTS.md` at the root of that branch
+- [ ] A second repository, created by you, with an **Org Monitoring sfdx-hardis** workflow run: the
+      backup, the Apex tests, MegaLinter and the Monitoring job all green
+- [ ] The `ActiveScratchOrgs` limit at 100% in the report, which the green run did not tell you
+- [ ] A full metadata backup of `helios-prod` committed in it: its sources, not its records
+- [ ] A first report you have read and triaged, however short it is
+- [ ] An email from the first run in your mailbox, subject starting with `[sfdx-hardis]`, with the org
+      limits report attached
+- [ ] The **Email** of the limits check back on **Error**, committed and pushed
+- [ ] `monitoringRepository` in `config/.sfdx-hardis.yml` on `integration`, pointing at it
+- [ ] `deploymentRepository` in the monitoring branch's `.sfdx-hardis.yml`, pointing back at your fork,
+      and an `AGENTS.md` at the root of that branch
 
 ## If it goes wrong
 

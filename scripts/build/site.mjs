@@ -23,6 +23,7 @@ import { fileURLToPath } from "url";
 import { PILL_PALETTE } from "./annotate.mjs";
 import { strings, universeText, fill } from "../lib/strings.mjs";
 import { backlogPage, storyPage, badgesPage, badgePage, statsPage } from "../lib/pages.mjs";
+import { applyLabTemplate, markLongBold, templateWords } from "../lib/lab-template.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..");
@@ -226,8 +227,16 @@ function prepareLab(locale) {
       '"If it goes wrong" sections cannot be folded. Add the translated heading there.'
     );
   }
+  // Fails now, not halfway through the pages, when the locale has no template words
+  templateWords(locale);
+  // The step template first, on the markdown as written; the pills next, then the long
+  // bold runs, which must not reach into a pill already painted
   return (content, source, target) =>
-    colorPillReferences(foldTroubleshooting(rewriteEscapingLinks(content, source, target), heading));
+    markLongBold(
+      colorPillReferences(
+        foldTroubleshooting(applyLabTemplate(rewriteEscapingLinks(content, source, target), locale), heading)
+      )
+    );
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });

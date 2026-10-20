@@ -144,8 +144,15 @@ and a learner meets it as a step that points at a picture which is not there.
 node scripts/i18n/check-structure.mjs
 ```
 
-It compares headings, images, code fences, `<details>` blocks, `**(n)**` pill references,
-admonitions and tables, and says nothing about the words. It reports and never fails, because a
+It compares headings, the `####` blocks of the step template, task items, images, code fences,
+`<details>` blocks, `**(n)**` pill references, admonitions and tables, and says nothing about the
+words.
+
+The step template has words of its own, translated once in `scripts/lib/lab-template.mjs`
+(`LAB_TEMPLATE`): the block headings (`#### À faire`, `#### Pourquoi`, `#### Vous devriez voir`), the
+`Objectif :` and `Rappel :` lines under a step heading, and the titles of code blocks (`À taper`,
+`Résultat`, `Configuration`, `À modifier dans le fichier`). A new locale adds its words there, and
+`node scripts/verify/check-lab-template.mjs <locale>` says what a translated lab still misses. It reports and never fails, because a
 deliberate difference is allowed: today the French home page carries one admonition more than the
 English one, the note saying the product stays in English. Read the list rather than silencing it.
 

@@ -51,17 +51,28 @@ contributor accidentally undoes a teammate's work.
 
 ### 1. Bring your teammate's work in
 
+Goal: Romain's story merged into the `integration` of your fork, and your Level 1 stories in
+`helios-dev`.
+Refresher: [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)
+
 The two weeks you were away have to exist before you can catch up on them. Romain does not exist,
-but his work does: the training replays it in **your own** fork, as a Pull Request you merge.
+but his work does: the training replays it in your own fork, as a Pull Request you merge.
 
-#### 1a. Run Simulate my teammates
+#### Do 1a: run Simulate my teammates
 
-In the sfdx-hardis command list, expand **Training: Level 2** **(1)** and click **Simulate my
-teammates** **(2)**. The same entry is on the Welcome page, under **Training: Level 2**.
+1. In the sfdx-hardis command list, expand **Training: Level 2** **(1)** and click **Simulate my
+   teammates** **(2)**. The same entry is on the Welcome page, under **Training: Level 2**
 
-![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
+   ![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-A command panel opens and asks three questions. Answer them this way:
+2. If VS Code first asks how to allow the Training command, choose **Always allow**, as in
+   [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+3. A command panel opens and asks three questions. Answer them as the table below says
+4. Keep the address of the Pull Request the panel prints: you need it in step 1b
+5. With **Yes** to the last question, wait until the panel writes **Pull Request merged into its
+   base branch**, then **Done**. You can then skip step 1b and go straight to step 2
+6. If it says a check failed, or that it could not merge, go to step 1b: nothing is lost, the Pull
+   Request is still open
 
 | Question                               | Answer                                                  |
 |----------------------------------------|---------------------------------------------------------|
@@ -69,21 +80,14 @@ A command panel opens and asks three questions. Answer them this way:
 | Create it?                             | **Yes**                                                 |
 | Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself (step 1b) |
 
-If VS Code first asks how to allow the Training command, choose **Always allow**, as in
-[Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+#### Why
 
 The command creates the branch `training/mate-us-017-sign-off` from your current `integration`,
 commits Romain's change under his name, pushes it to your fork on GitHub and opens the Pull Request.
-The panel prints its address: keep it, you need it in step 1b.
 
 With **Yes** to the last question, the panel then waits for the two checks of the Pull Request,
-about two to four minutes, and merges it as soon as both are green. It writes
-**Pull Request merged into its base branch**, then **Done**. You can skip step 1b and go straight to
-step 2. If you merge it yourself on GitHub while the panel is still waiting, it notices and stops
-there too.
-
-If it says a check failed, or that it could not merge, nothing is lost: the Pull Request is still
-open, and step 1b is the way to finish.
+about two to four minutes, and merges it as soon as both are green. If you merge it yourself on
+GitHub while the panel is still waiting, it notices and stops there too.
 
 <details markdown="1"><summary>Under the hood: what Simulate my teammates did</summary>
 
@@ -103,7 +107,7 @@ merge while a check is red or running.
 
 </details>
 
-#### 1b. Or review and merge it yourself on GitHub
+#### Do 1b: or review and merge it yourself on GitHub
 
 Only if you answered **No**, or if the panel could not merge.
 
@@ -112,9 +116,8 @@ Only if you answered **No**, or if the panel could not merge.
    **US-017 Record who signed an installation off**
 2. Click **Files changed** **(1)**. The file list on the left **(2)** has three files: the new field
    `Signed_Off_By__c`, the permission set `Helios_Delivery_Manager` and the `Installation` layout.
-   Each line of the diff **(3)** is one change, green when added and red when removed. Romain only
-   adds: the field, read and edit access on it, and the field on the layout. That is the review: you
-   are checking that the Pull Request does what its title says, and nothing else
+   Each line of the diff **(3)** is one change, green when added and red when removed. Check that
+   Romain only adds: the field, read and edit access on it, and the field on the layout
 
    ![The Files changed tab of a teammate Pull Request](../../_assets/annotated/web/github-pr-files.png)
 
@@ -133,11 +136,26 @@ Only if you answered **No**, or if the panel could not merge.
 
    ![The merge method menu of a Pull Request, with Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
 
-This is the same merge as [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), step 4. A
-check that fails here is not your fault and not something to fix: run **Simulate my teammates**
-again, it recreates the branch and the Pull Request.
+5. If a check fails here, run **Simulate my teammates** again: it recreates the branch and the Pull
+   Request
 
-#### 1c. Where you are now
+#### Why
+
+Reading the files is the review: you are checking that the Pull Request does what its title says,
+and nothing else.
+
+This is the same merge as [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), step 4. A
+check that fails here is not your fault and not something to fix.
+
+#### Do 1c: check where you are now
+
+1. In `helios-dev`, open **Setup** > **Object Manager** > **Installation** > **Fields &
+   Relationships**, and check it lists **Panels Required** and **Crew Notes**
+2. If they are not there, which is the case when you joined at Level 2, put them there before
+   step 2: with `integration` checked out (its name is in the bottom left corner of VS Code), run
+   **Training: Level 2** > **Set up one of my training orgs** on `helios-dev`
+
+#### Why
 
 Romain's Pull Request is the newest merge into `integration` on GitHub. It is the only work your org
 does not have: the backpromote brings it, and nothing else.
@@ -150,108 +168,150 @@ Under it, how your own Level 1 stories show depends on how you reached Level 2:
 | **Reset this level**   | One commit, **chore: the state a level 2 learner starts from**, usually followed by **Keep my pipeline configuration**, which keeps your org names |
 
 Either way, `helios-dev` must already hold them, because Romain's layout places his field next to
-`Crew_Notes__c`, and a deployment to an org without that field fails. Check it now: in
-`helios-dev`, **Setup** > **Object Manager** > **Installation** > **Fields & Relationships** lists
-**Panels Required** and **Crew Notes**.
+`Crew_Notes__c`, and a deployment to an org without that field fails. They are there if you built
+Level 1 in this org. **Set up one of my training orgs** deploys the app from the branch you have
+checked out, and that branch holds Level 1.
 
-They are there if you built Level 1 in this org. If they are not, which is the case when you joined
-at Level 2, put them there before step 2: with `integration` checked out (its name is in the bottom
-left corner of VS Code), run **Training: Level 2** > **Set up one of my training orgs** on
-`helios-dev`. It deploys the app from the branch you have checked out, and that branch holds Level 1.
+#### You should now see
+
+- Romain's Pull Request merged, the newest merge into `integration` on GitHub
+- **Panels Required** and **Crew Notes** in the fields of Installation, in `helios-dev`
 
 ### 2. Open Backpromote
 
-In the **DevOps Pipeline** panel, under **Project Contribution Workflow**, click the
-**Backpromote (Beta)** card **(1)**.
+Goal: the Backpromote panel open on `helios-dev`, computing its plan.
 
-![The Backpromote card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--backpromote.png)
+#### Do
 
-It computes its plan before it shows you anything:
+1. In the **DevOps Pipeline** panel, under **Project Contribution Workflow**, click the
+   **Backpromote (Beta)** card **(1)**
 
-1. **Target sandbox** **(1)** is the org the work comes down into, `helios-dev`
-2. **Parent branch** **(2)** is where it comes from, `integration` as it is on GitHub: the panel
-   fetches it, so there is no need to pull first
-3. The lines **(3)** read your org, list the Pull Requests merged in `integration`, work out what
-   changed there, and compare it with what your org holds
+   ![The Backpromote card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--backpromote.png)
 
-![The Backpromote panel computing its plan](../../_assets/annotated/vscode/backpromote-loading.png)
+2. Read what it shows while it computes its plan, before it shows you anything else:
 
-"Backpromote" is the direction that matters: work normally flows **up**, from your branch to
-integration to uat to production. A backpromote brings it **down** again, from a major branch into
+   1. **Target sandbox** **(1)** is the org the work comes down into, `helios-dev`
+   2. **Parent branch** **(2)** is where it comes from, `integration` as it is on GitHub: the panel
+      fetches it, so there is no need to pull first
+   3. The lines **(3)** read your org, list the Pull Requests merged in `integration`, work out what
+      changed there, and compare it with what your org holds
+
+   ![The Backpromote panel computing its plan](../../_assets/annotated/vscode/backpromote-loading.png)
+
+#### Why
+
+"Backpromote" is the direction that matters: work normally flows up, from your branch to
+integration to uat to production. A backpromote brings it down again, from a major branch into
 your own environment, so you are building on what the team has rather than on what you remember.
+
+#### You should now see
+
+- **Target sandbox** reading `helios-dev`, **Parent branch** reading `integration`, and the lines
+  of the plan running
 
 ### 3. See how far behind you are
 
-The **WHERE** block at the top of the panel answers that, and it is the only place that does. It
-counts the rows from the one you pick in step 4 up to the newest: for Romain's story alone, it reads
-**1 Pull Request in the window**.
+Goal: you know how many Pull Requests your org is behind `integration`.
+
+#### Do
+
+1. Read the **WHERE** block at the top of the panel
+
+#### Why
+
+The **WHERE** block answers that question, and it is the only place that does. It counts the rows
+from the one you pick in step 4 up to the newest.
 
 This first time, nothing is picked for you, because nothing ever came down into `helios-dev`. Once
 a backpromote has run, the panel remembers it and picks the row merged right after it, so the count
 is exactly how far behind your org is. That count, not your memory, is what tells you whether a
 refresh is needed. On a Monday after a week off it is worth reading before anything else.
 
+#### You should now see
+
+- For Romain's story alone, **WHERE** reads **1 Pull Request in the window**
+
 ### 4. Choose what comes down
 
-When the plan is ready the panel fills in. What was merged into `integration` is listed newest first
-**(1)**: pick the top row, Romain's **US-017 Record who signed an installation off**. Everything
-from the row you pick to the head of `integration` **(2)** is brought back, so this one row is
-exactly what your org lacks.
+Goal: Romain's story picked, and each item it brings checked before it comes down.
 
-Only a row that starts with a number, a Pull Request of your fork, can be picked. Clicking any
-other row does nothing:
+#### Do
 
-- **chore: the state a level 2 learner starts from** and **Keep my pipeline configuration**, if you
-  reset: commits, not Pull Requests
-- **Point the pipeline at my training orgs**, if you did Level 1: the commit **Set up my training
-  environment** made in [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
-- dozens of commits of the course itself, which your `integration` inherited when you made your
-  copy of the repository. Some end with a number in brackets, like **(#77)**: that is a Pull
-  Request of the course repository, not of your fork. Your org has them already
+1. When the plan is ready the panel fills in. What was merged into `integration` is listed newest
+   first **(1)**: pick the top row, Romain's **US-017 Record who signed an installation off**
+2. Pick only a row that starts with a number, a Pull Request of your fork. Clicking any other row
+   does nothing:
 
-Below the list, the metadata your pick brings is listed by type, each item with its own tick
-**(3)**. It is what changed in `integration` from that row to its head, not a comparison with your
+   - **chore: the state a level 2 learner starts from** and **Keep my pipeline configuration**, if
+     you reset: commits, not Pull Requests
+   - **Point the pipeline at my training orgs**, if you did Level 1: the commit **Set up my training
+     environment** made in [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+   - dozens of commits of the course itself, which your `integration` inherited when you made your
+     copy of the repository. Some end with a number in brackets, like **(#77)**: that is a Pull
+     Request of the course repository, not of your fork. Your org has them already
+
+3. Below the list, the metadata your pick brings is listed by type, each item with its own tick
+   **(3)**. Go through the list with the table below rather than clicking "all"
+
+   ![The Backpromote panel, with the merged Pull Requests and the items they bring down](../../_assets/annotated/vscode/backpromote.png)
+
+4. For a file that both sides changed, the panel offers a third answer beside **Overwrite** and
+   **Keep org version**: **Merge**. Reach for it when both changes are real and you need both, and
+   pick between the two versions in the VS Code merge editor
+
+| What you see                                         | What to do                                                    |
+|------------------------------------------------------|---------------------------------------------------------------|
+| Metadata from Romain's story                         | Take it. That is the whole point                              |
+| Something you are half way through building yourself | Leave it. A backpromote would overwrite your work in progress |
+| Something you do not recognise at all                | Take it. If it is on `integration`, it is the team's truth    |
+
+#### Why
+
+Everything from the row you pick to the head of `integration` **(2)** is brought back, so this one
+row is exactly what your org lacks.
+
+The items are what changed in `integration` from that row to its head, not a comparison with your
 org: for Romain's story, three items, the field, the layout and the permission set.
 
 The picture was taken on a fork that did Level 1 without a reset, starting from **#1 US-014**, so
 its window holds three Pull Requests and more items. Yours, started from Romain's, holds one.
 
-![The Backpromote panel, with the merged Pull Requests and the items they bring down](../../_assets/annotated/vscode/backpromote.png)
-
-Go through the list rather than clicking "all":
-
-| What you see                                         | What to do                                                        |
-|------------------------------------------------------|-------------------------------------------------------------------|
-| Metadata from Romain's story                         | **Take it.** That is the whole point                              |
-| Something you are half way through building yourself | **Leave it.** A backpromote would overwrite your work in progress |
-| Something you do not recognise at all                | **Take it.** If it is on `integration`, it is the team's truth    |
-
-For a file that both sides changed, the panel offers a third answer beside **Overwrite** and **Keep
-org version**: **Merge**. It writes the file with both versions in it, marked, and you pick between
-them in the VS Code merge editor, the same way [Lab 2.7](2-7-resolve-a-git-merge-conflict.md) has you resolve a Pull Request conflict.
-Reach for it when both changes are real and you need both.
+**Merge** writes the file with both versions in it, marked, and you pick between them in the VS
+Code merge editor, the same way [Lab 2.7](2-7-resolve-a-git-merge-conflict.md) has you resolve a Pull Request conflict.
 
 The rule when you hesitate: `integration` wins. It is the shared reality, and your org is a copy of
 it that you are allowed to modify temporarily.
 
+#### You should now see
+
+- Romain's story picked, and three items ticked: the field, the layout and the permission set
+
 ### 5. Run it and read the result
 
-Click **Backpromote to helios-dev** **(1)**. The panel works through the run step by step **(2)**,
-and when it finishes it tells you what happened **(3)**.
+Goal: Romain's story in `helios-dev`, and you back on your own branch.
 
-![The Backpromote panel, finished, with its summary](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
+#### Do
 
-Read the summary rather than the colour:
+1. Click **Backpromote to helios-dev** **(1)**. The panel works through the run step by step **(2)**,
+   and when it finishes it tells you what happened **(3)**
 
-- how many items reached your org, and how many were deleted from it
-- which Pull Requests it wrote its history onto, so the next backpromote knows where to start
+   ![The Backpromote panel, finished, with its summary](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
+
+2. Read the summary rather than the colour:
+
+   - how many items reached your org, and how many were deleted from it
+   - which Pull Requests it wrote its history onto, so the next backpromote knows where to start
+
+3. Click **Back to `<your branch>`** **(4)**. It is the last button of the panel and the one
+   people miss
+
+#### Why
 
 Romain's story carries no deployment action. When the ones you bring down do, the summary also
-says how many ran, were skipped or failed, and **how many manual actions are waiting for you in the
-sandbox**, which nothing can do for you.
+says how many ran, were skipped or failed, and how many manual actions are waiting for you in the
+sandbox, which nothing can do for you.
 
-Then click **Back to `<your branch>`** **(4)**. It is the last button of the panel and the one
-people miss, and the next note explains why it matters.
+The warning in the Under the hood block below explains why **Back to `<your branch>`** matters.
 
 <details markdown="1"><summary>Under the hood: what Backpromote just did</summary>
 
@@ -270,13 +330,13 @@ which:
 
 Three things it deliberately does **not** do, and knowing them saves an afternoon:
 
-- **It does not bring records on its own.** It deploys metadata, and it runs the deployment actions
+- **It does not bring records on its own**. It deploys metadata, and it runs the deployment actions
   the merged Pull Requests declared, which is where a data load would live. If a teammate's story
   needed reference data and nobody declared an action for it, that data is not in your org, and no
   deployment will ever put it there. [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) is about that exact problem
-- **It does not undo what you did by hand.** If you changed something in your org that
+- **It does not undo what you did by hand**. If you changed something in your org that
   `integration` also changed, the deployment overwrites it. That is why you read the list
-- **It does not touch the shared orgs.** A backpromote refuses a production org, and any org a
+- **It does not touch the shared orgs**. A backpromote refuses a production org, and any org a
   major branch deploys to. It only ever writes to a developer sandbox, a scratch org or a Developer
   Edition org
 
@@ -317,11 +377,18 @@ Command documentation: [hardis:work:backpromote](https://sfdx-hardis.cloudity.co
 
 </details>
 
+#### You should now see
+
+- The summary: the items that reached your org, and the Pull Request it wrote its history onto
+- The name of your own branch back in the bottom left corner of VS Code
+
 ## What you should see
 
-Open `helios-dev` and check that Romain's story is there: open an installation, his **Signed Off
-By** field is at the bottom of the field column. The layout places it under **Crew Notes**, which
-you do not see on the record yourself: [Lab 1.7](../level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md) granted that field to the crew only.
+Open `helios-dev` and check that Romain's story is there:
+
+- [ ] On an installation, his **Signed Off By** field at the bottom of the field column. The layout
+      places it under **Crew Notes**, which you do not see on the record yourself: [Lab 1.7](../level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md)
+      granted that field to the crew only
 
 ## If it goes wrong
 

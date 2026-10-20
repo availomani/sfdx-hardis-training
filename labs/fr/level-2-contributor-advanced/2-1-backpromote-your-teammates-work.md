@@ -5,7 +5,7 @@ description: "Votre org de développement est en retard sur integration. Faites-
 level: 2
 lab: 1
 lang: fr
-source_rev: "eb2dbe45ce5a68897e74b735973318bb445612b5"
+source_rev: "ddeb9815617fa65a2b48ba2d696fc04ba6d3f1e4"
 screenshots:
   - annotated/vscode/sidebar-commands-custom-menu-2--training-menu
   - annotated/web/github-pr-files
@@ -52,19 +52,32 @@ plus courante pour un contributeur de défaire par accident le travail d'un coll
 
 ### 1. Rapatrier le travail de votre collègue
 
+Objectif : la story de Romain mergée dans l'`integration` de votre fork, et vos stories du Niveau 1
+dans `helios-dev`.
+Rappel : [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)
+
 Les deux semaines d'absence doivent exister avant que vous puissiez les rattraper. Romain n'existe
-pas, mais son travail si : la formation le rejoue dans **votre propre** fork, sous la forme d'une
+pas, mais son travail si : la formation le rejoue dans votre propre fork, sous la forme d'une
 Pull Request que vous mergez.
 
-#### 1a. Lancer Simulate my teammates
+#### À faire 1a : lancer Simulate my teammates
 
-Dans la liste des commandes sfdx-hardis, dépliez **Training: Level 2** **(1)** et cliquez sur
-**Simulate my teammates** **(2)**. La même entrée se trouve sur la page Welcome, sous
-**Training: Level 2**.
+1. Dans la liste des commandes sfdx-hardis, dépliez **Training: Level 2** **(1)** et cliquez sur
+   **Simulate my teammates** **(2)**. La même entrée se trouve sur la page Welcome, sous
+   **Training: Level 2**
 
-![Le menu Training du Niveau 2 dans la liste des commandes sfdx-hardis](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
+   ![Le menu Training du Niveau 2 dans la liste des commandes sfdx-hardis](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-Un panneau de commande s'ouvre et pose trois questions. Répondez ainsi :
+2. Si VS Code demande d'abord comment autoriser la commande Training, choisissez **Always allow**,
+   comme dans [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+3. Un panneau de commande s'ouvre et pose trois questions. Répondez comme le dit le tableau
+   ci-dessous
+4. Gardez l'adresse de la Pull Request que le panneau affiche : elle sert à l'étape 1b
+5. Avec **Yes** à la dernière question, attendez que le panneau écrive **Pull Request merged into
+   its base branch**, puis **Done**. Vous pouvez alors sauter l'étape 1b et passer directement à
+   l'étape 2
+6. S'il dit qu'un check a échoué, ou qu'il n'a pas pu merger, passez à l'étape 1b : rien n'est
+   perdu, la Pull Request est toujours ouverte
 
 | Question                               | Réponse                                                     |
 |----------------------------------------|-------------------------------------------------------------|
@@ -72,21 +85,15 @@ Un panneau de commande s'ouvre et pose trois questions. Répondez ainsi :
 | Create it?                             | **Yes**                                                     |
 | Merge it for you once its checks pass? | **Yes**, sauf si vous voulez la merger vous-même (étape 1b) |
 
-Si VS Code demande d'abord comment autoriser la commande Training, choisissez **Always allow**,
-comme dans [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+#### Pourquoi
 
 La commande crée la branche `training/mate-us-017-sign-off` à partir de votre `integration` actuelle,
 commite la modification de Romain sous son nom, la pousse sur votre fork GitHub et ouvre la Pull
-Request. Le panneau affiche son adresse : gardez-la, elle sert à l'étape 1b.
+Request.
 
 Avec **Yes** à la dernière question, le panneau attend ensuite les deux checks de la Pull Request,
-deux à quatre minutes environ, et la merge dès qu'ils sont verts tous les deux. Il écrit
-**Pull Request merged into its base branch**, puis **Done**. Vous pouvez sauter l'étape 1b et passer
-directement à l'étape 2. Si vous la mergez vous-même sur GitHub pendant que le panneau attend, il
-s'en aperçoit et s'arrête là aussi.
-
-S'il dit qu'un check a échoué, ou qu'il n'a pas pu merger, rien n'est perdu : la Pull Request est
-toujours ouverte, et l'étape 1b permet de terminer.
+deux à quatre minutes environ, et la merge dès qu'ils sont verts tous les deux. Si vous la mergez
+vous-même sur GitHub pendant que le panneau attend, il s'en aperçoit et s'arrête là aussi.
 
 <details markdown="1"><summary>Sous le capot : ce que Simulate my teammates a fait</summary>
 
@@ -107,7 +114,7 @@ protégée, et GitHub refuserait le merge tant qu'un check est rouge ou en cours
 
 </details>
 
-#### 1b. Ou la relire et la merger vous-même sur GitHub
+#### À faire 1b : ou la relire et la merger vous-même sur GitHub
 
 Seulement si vous avez répondu **No**, ou si le panneau n'a pas pu merger.
 
@@ -117,9 +124,8 @@ Seulement si vous avez répondu **No**, ou si le panneau n'a pas pu merger.
 2. Cliquez sur **Files changed** **(1)**. La liste des fichiers à gauche **(2)** en contient trois :
    le nouveau champ `Signed_Off_By__c`, le permission set `Helios_Delivery_Manager` et le layout
    `Installation`. Chaque ligne du diff **(3)** est une modification, verte quand elle est ajoutée et
-   rouge quand elle est supprimée. Romain ne fait qu'ajouter : le champ, l'accès en lecture et en
-   modification dessus, et le champ sur le layout. C'est cela, la relecture : vérifier que la Pull
-   Request fait ce que dit son titre, et rien d'autre
+   rouge quand elle est supprimée. Vérifiez que Romain ne fait qu'ajouter : le champ, l'accès en
+   lecture et en modification dessus, et le champ sur le layout
 
    ![L'onglet Files changed d'une Pull Request d'un collègue](../../_assets/annotated/web/github-pr-files.png)
 
@@ -138,11 +144,27 @@ Seulement si vous avez répondu **No**, ou si le panneau n'a pas pu merger.
 
    ![Le menu de méthode de merge d'une Pull Request, avec Squash and merge](../../_assets/annotated/web/github-pr-merge-squash.png)
 
-C'est le même merge qu'au [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), étape 4. Un
-check qui échoue ici n'est pas de votre faute et n'est pas à corriger : relancez **Simulate my
-teammates**, elle recrée la branche et la Pull Request.
+5. Si un check échoue ici, relancez **Simulate my teammates** : elle recrée la branche et la Pull
+   Request
 
-#### 1c. Où vous en êtes
+#### Pourquoi
+
+Lire les fichiers, c'est cela, la relecture : vérifier que la Pull Request fait ce que dit son
+titre, et rien d'autre.
+
+C'est le même merge qu'au [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md), étape 4. Un
+check qui échoue ici n'est pas de votre faute et n'est pas à corriger.
+
+#### À faire 1c : vérifier où vous en êtes
+
+1. Dans `helios-dev`, ouvrez **Setup** > **Object Manager** > **Installation** > **Fields &
+   Relationships**, et vérifiez que la liste contient **Panels Required** et **Crew Notes**
+2. S'ils n'y sont pas, ce qui est le cas quand vous avez rejoint la formation au Niveau 2,
+   mettez-les-y avant l'étape 2 : avec `integration` en checkout (son nom est dans le coin en bas à
+   gauche de VS Code), lancez **Training: Level 2** > **Set up one of my training orgs** sur
+   `helios-dev`
+
+#### Pourquoi
 
 La Pull Request de Romain est le dernier merge dans `integration` sur GitHub. C'est le seul travail
 que votre org n'a pas : le backpromote l'apporte, et rien d'autre.
@@ -156,43 +178,61 @@ arrivé au Niveau 2 :
 | **Reset this level**            | Un seul commit, **chore: the state a level 2 learner starts from**, en général suivi de **Keep my pipeline configuration**, qui garde les noms de vos orgs |
 
 Dans les deux cas, `helios-dev` doit déjà les contenir, parce que le layout de Romain place son champ
-à côté de `Crew_Notes__c`, et un déploiement vers une org qui n'a pas ce champ échoue. Vérifiez-le
-maintenant : dans `helios-dev`, **Setup** > **Object Manager** > **Installation** > **Fields &
-Relationships** liste **Panels Required** et **Crew Notes**.
+à côté de `Crew_Notes__c`, et un déploiement vers une org qui n'a pas ce champ échoue. Ils y sont si
+vous avez construit le Niveau 1 dans cette org. **Set up one of my training orgs** déploie
+l'application depuis la branche sur laquelle vous êtes, et cette branche contient le Niveau 1.
 
-Ils y sont si vous avez construit le Niveau 1 dans cette org. S'ils n'y sont pas, ce qui est le cas
-quand vous avez rejoint la formation au Niveau 2, mettez-les-y avant l'étape 2 : avec `integration`
-en checkout (son nom est dans le coin en bas à gauche de VS Code), lancez **Training: Level 2** >
-**Set up one of my training orgs** sur `helios-dev`. Il déploie l'application depuis la branche sur
-laquelle vous êtes, et cette branche contient le Niveau 1.
+#### Vous devriez voir
+
+- La Pull Request de Romain mergée, le dernier merge dans `integration` sur GitHub
+- **Panels Required** et **Crew Notes** dans les champs d'Installation, dans `helios-dev`
 
 ### 2. Ouvrir Backpromote
 
-Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow**, cliquez sur la carte
-**Backpromote (Beta)** **(1)**.
+Objectif : le panneau Backpromote ouvert sur `helios-dev`, en train de calculer son plan.
 
-![La carte Backpromote du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--backpromote.png)
+#### À faire
 
-Il calcule son plan avant de vous montrer quoi que ce soit :
+1. Dans le panneau **DevOps Pipeline**, sous **Project Contribution Workflow**, cliquez sur la carte
+   **Backpromote (Beta)** **(1)**
 
-1. **Target sandbox** **(1)** est l'org dans laquelle le travail est rapatrié, `helios-dev`
-2. **Parent branch** **(2)** est l'endroit d'où il vient, `integration` telle qu'elle est sur
-   GitHub : le panneau fait le fetch lui-même, inutile de faire un pull avant
-3. Les lignes **(3)** lisent votre org, listent les Pull Requests mergées dans `integration`,
-   calculent ce qui y a changé, et le comparent avec ce que contient votre org
+   ![La carte Backpromote du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--backpromote.png)
 
-![Le panneau Backpromote calculant son plan](../../_assets/annotated/vscode/backpromote-loading.png)
+2. Lisez ce qu'il affiche pendant qu'il calcule son plan, avant de vous montrer quoi que ce soit
+   d'autre :
+
+   1. **Target sandbox** **(1)** est l'org dans laquelle le travail est rapatrié, `helios-dev`
+   2. **Parent branch** **(2)** est l'endroit d'où il vient, `integration` telle qu'elle est sur
+      GitHub : le panneau fait le fetch lui-même, inutile de faire un pull avant
+   3. Les lignes **(3)** lisent votre org, listent les Pull Requests mergées dans `integration`,
+      calculent ce qui y a changé, et le comparent avec ce que contient votre org
+
+   ![Le panneau Backpromote calculant son plan](../../_assets/annotated/vscode/backpromote-loading.png)
+
+#### Pourquoi
 
 "Backpromote" désigne la direction, et c'est elle qui compte : le travail remonte normalement
-**vers le haut**, de votre branche vers integration, puis uat, puis production. Un backpromote le
-fait **redescendre**, d'une branche majeure vers votre propre environnement, pour que vous
+vers le haut, de votre branche vers integration, puis uat, puis production. Un backpromote le
+fait redescendre, d'une branche majeure vers votre propre environnement, pour que vous
 construisiez sur ce que l'équipe a et non sur ce dont vous vous souvenez.
+
+#### Vous devriez voir
+
+- **Target sandbox** qui indique `helios-dev`, **Parent branch** qui indique `integration`, et les
+  lignes du plan qui avancent
 
 ### 3. Voir à quel point vous êtes en retard
 
-Le bloc **WHERE** en haut du panneau y répond, et c'est le seul endroit qui le fasse. Il compte les
-lignes, de celle que vous choisissez à l'étape 4 jusqu'à la plus récente : pour la seule story de
-Romain, il indique **1 Pull Request in the window**.
+Objectif : vous savez de combien de Pull Requests votre org est en retard sur `integration`.
+
+#### À faire
+
+1. Lisez le bloc **WHERE** en haut du panneau
+
+#### Pourquoi
+
+Le bloc **WHERE** répond à cette question, et c'est le seul endroit qui le fasse. Il compte les
+lignes, de celle que vous choisissez à l'étape 4 jusqu'à la plus récente.
 
 Cette première fois, rien n'est choisi pour vous, parce que rien n'a jamais été rapatrié dans
 `helios-dev`. Une fois qu'un backpromote a tourné, le panneau s'en souvient et choisit la ligne
@@ -200,27 +240,55 @@ mergée juste après, et le compteur dit alors exactement le retard de votre org
 pas votre mémoire, qui vous dit si un rafraîchissement est nécessaire. Un lundi après une semaine
 d'absence, il mérite d'être lu avant toute chose.
 
+#### Vous devriez voir
+
+- Pour la seule story de Romain, **WHERE** qui indique **1 Pull Request in the window**
+
 ### 4. Choisir ce qu'on rapatrie
 
-Quand le plan est prêt, le panneau se remplit. Ce qui a été mergé dans `integration` est listé du
-plus récent au plus ancien **(1)** : choisissez la ligne du haut, celle de Romain, **US-017 Record
-who signed an installation off**. Tout ce qui va de la ligne choisie jusqu'à la tête
-d'`integration` **(2)** est rapatrié : cette seule ligne est donc exactement ce qui manque à votre
-org.
+Objectif : la story de Romain choisie, et chaque élément qu'elle apporte vérifié avant qu'il soit
+rapatrié.
 
-Seule une ligne qui commence par un numéro, une Pull Request de votre fork, peut être choisie. Un
-clic sur une autre ligne ne fait rien :
+#### À faire
 
-- **chore: the state a level 2 learner starts from** et **Keep my pipeline configuration**, si vous
-  avez fait un reset : des commits, pas des Pull Requests
-- **Point the pipeline at my training orgs**, si vous avez fait le Niveau 1 : le commit que **Set up
-  my training environment** a créé dans le [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
-- des dizaines de commits du cours lui-même, dont votre `integration` a hérité quand vous avez fait
-  votre copie du repository. Certains se terminent par un numéro entre parenthèses, comme
-  **(#77)** : c'est une Pull Request du repository du cours, pas de votre fork. Votre org les a déjà
+1. Quand le plan est prêt, le panneau se remplit. Ce qui a été mergé dans `integration` est listé du
+   plus récent au plus ancien **(1)** : choisissez la ligne du haut, celle de Romain, **US-017
+   Record who signed an installation off**
+2. Ne choisissez qu'une ligne qui commence par un numéro, une Pull Request de votre fork. Un clic
+   sur une autre ligne ne fait rien :
 
-Sous la liste, la métadonnée que votre choix rapatrie est listée par type, chaque élément avec sa
-propre case **(3)**. C'est ce qui a changé dans `integration` entre cette ligne et sa tête, pas une
+   - **chore: the state a level 2 learner starts from** et **Keep my pipeline configuration**, si
+     vous avez fait un reset : des commits, pas des Pull Requests
+   - **Point the pipeline at my training orgs**, si vous avez fait le Niveau 1 : le commit que
+     **Set up my training environment** a créé dans le [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
+   - des dizaines de commits du cours lui-même, dont votre `integration` a hérité quand vous avez
+     fait votre copie du repository. Certains se terminent par un numéro entre parenthèses, comme
+     **(#77)** : c'est une Pull Request du repository du cours, pas de votre fork. Votre org les a
+     déjà
+
+3. Sous la liste, la métadonnée que votre choix rapatrie est listée par type, chaque élément avec sa
+   propre case **(3)**. Parcourez la liste avec le tableau ci-dessous plutôt que de cliquer sur
+   "tout"
+
+   ![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles rapatrient](../../_assets/annotated/vscode/backpromote.png)
+
+4. Pour un fichier que les deux côtés ont modifié, le panneau propose une troisième réponse à côté
+   de **Overwrite** et **Keep org version** : **Merge**. Servez-vous-en quand les deux modifications
+   sont réelles et qu'il vous faut les deux, et choisissez entre les deux versions dans l'éditeur de
+   merge de VS Code
+
+| Ce que vous voyez                                  | Ce qu'il faut faire                                                |
+|----------------------------------------------------|--------------------------------------------------------------------|
+| De la métadonnée de la story de Romain             | Prenez-la. C'est tout l'objet de la manœuvre                       |
+| Quelque chose que vous êtes en train de construire | Laissez-le. Un backpromote écraserait votre travail en cours       |
+| Quelque chose que vous ne reconnaissez pas du tout | Prenez-le. Si c'est sur `integration`, c'est la vérité de l'équipe |
+
+#### Pourquoi
+
+Tout ce qui va de la ligne choisie jusqu'à la tête d'`integration` **(2)** est rapatrié : cette
+seule ligne est donc exactement ce qui manque à votre org.
+
+Les éléments sont ce qui a changé dans `integration` entre cette ligne et sa tête, pas une
 comparaison avec votre org : pour la story de Romain, trois éléments, le champ, le layout et le
 permission set.
 
@@ -228,44 +296,45 @@ L'image a été prise sur un fork qui a fait le Niveau 1 sans reset, en partant 
 fenêtre contient donc trois Pull Requests et plus d'éléments. La vôtre, partie de celle de Romain,
 en contient une.
 
-![Le panneau Backpromote, avec les Pull Requests mergées et ce qu'elles rapatrient](../../_assets/annotated/vscode/backpromote.png)
-
-Parcourez la liste plutôt que de cliquer sur "tout" :
-
-| Ce que vous voyez                                  | Ce qu'il faut faire                                                    |
-|----------------------------------------------------|------------------------------------------------------------------------|
-| De la métadonnée de la story de Romain             | **Prenez-la.** C'est tout l'objet de la manœuvre                       |
-| Quelque chose que vous êtes en train de construire | **Laissez-le.** Un backpromote écraserait votre travail en cours       |
-| Quelque chose que vous ne reconnaissez pas du tout | **Prenez-le.** Si c'est sur `integration`, c'est la vérité de l'équipe |
-
-Pour un fichier que les deux côtés ont modifié, le panneau propose une troisième réponse à côté de
-**Overwrite** et **Keep org version** : **Merge**. Il écrit le fichier avec les deux versions
-dedans, balisées, et vous choisissez entre elles dans l'éditeur de merge de VS Code, exactement
-comme le [Lab 2.7](2-7-resolve-a-git-merge-conflict.md) vous fait résoudre un conflit de Pull Request. Servez-vous-en quand les deux
-modifications sont réelles et qu'il vous faut les deux.
+**Merge** écrit le fichier avec les deux versions dedans, balisées, et vous choisissez entre elles
+dans l'éditeur de merge de VS Code, exactement comme le [Lab 2.7](2-7-resolve-a-git-merge-conflict.md) vous fait résoudre un conflit de
+Pull Request.
 
 La règle en cas d'hésitation : `integration` gagne. C'est la réalité partagée, et votre org en est
 une copie que vous avez le droit de modifier temporairement.
 
+#### Vous devriez voir
+
+- La story de Romain choisie, et trois éléments cochés : le champ, le layout et le permission set
+
 ### 5. Le lancer et lire le résultat
 
-Cliquez sur **Backpromote to helios-dev** **(1)**. Le panneau déroule l'exécution étape par étape
-**(2)**, et quand il a fini il vous dit ce qui s'est passé **(3)**.
+Objectif : la story de Romain dans `helios-dev`, et vous de retour sur votre propre branche.
 
-![Le panneau Backpromote, terminé, avec son résumé](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
+#### À faire
 
-Lisez le résumé plutôt que la couleur :
+1. Cliquez sur **Backpromote to helios-dev** **(1)**. Le panneau déroule l'exécution étape par étape
+   **(2)**, et quand il a fini il vous dit ce qui s'est passé **(3)**
 
-- combien d'éléments ont atteint votre org, et combien en ont été supprimés
-- sur quelles Pull Requests il a écrit son historique, pour que le backpromote suivant sache où
-  commencer
+   ![Le panneau Backpromote, terminé, avec son résumé](../../_assets/annotated/vscode/backpromote-result--what-it-did.png)
+
+2. Lisez le résumé plutôt que la couleur :
+
+   - combien d'éléments ont atteint votre org, et combien en ont été supprimés
+   - sur quelles Pull Requests il a écrit son historique, pour que le backpromote suivant sache où
+     commencer
+
+3. Cliquez sur **Back to `<votre branche>`** **(4)**. C'est le dernier bouton du panneau et celui
+   que les gens ratent
+
+#### Pourquoi
 
 La story de Romain ne porte aucune deployment action. Quand celles que vous ramenez en portent, le
-résumé dit aussi combien ont tourné, ont été sautées ou ont échoué, et **combien d'actions manuelles
-vous attendent dans la sandbox**, ce que rien ne peut faire à votre place.
+résumé dit aussi combien ont tourné, ont été sautées ou ont échoué, et combien d'actions manuelles
+vous attendent dans la sandbox, ce que rien ne peut faire à votre place.
 
-Cliquez ensuite sur **Back to `<votre branche>`** **(4)**. C'est le dernier bouton du panneau et
-celui que les gens ratent, et la note suivante explique pourquoi il compte.
+L'avertissement du bloc Sous le capot ci-dessous explique pourquoi **Back to `<votre branche>`**
+compte.
 
 <details markdown="1"><summary>Sous le capot : ce que Backpromote vient de faire</summary>
 
@@ -285,15 +354,15 @@ qui a :
 
 Trois choses qu'il ne fait délibérément **pas**, et les connaître économise un après-midi :
 
-- **Il n'apporte pas d'enregistrements tout seul.** Il déploie de la métadonnée, et il lance les
+- **Il n'apporte pas d'enregistrements tout seul**. Il déploie de la métadonnée, et il lance les
   deployment actions que les Pull Requests mergées ont déclarées, ce qui est l'endroit où vivrait un
   chargement de données. Si la story d'un collègue avait besoin de données de référence et que
   personne n'a déclaré d'action pour cela, ces données ne sont pas dans votre org, et aucun
   déploiement ne les y mettra jamais. Le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) traite exactement de ce problème
-- **Il n'annule pas ce que vous avez fait à la main.** Si vous avez modifié dans votre org quelque
+- **Il n'annule pas ce que vous avez fait à la main**. Si vous avez modifié dans votre org quelque
   chose qu'`integration` a aussi modifié, le déploiement l'écrase. C'est pour cela que vous lisez la
   liste
-- **Il ne touche pas aux orgs partagées.** Un backpromote refuse une org de production, et toute org
+- **Il ne touche pas aux orgs partagées**. Un backpromote refuse une org de production, et toute org
   dans laquelle déploie une branche majeure. Il n'écrit jamais que dans une sandbox de développeur,
   une scratch org ou une org Developer Edition
 
@@ -338,11 +407,19 @@ Documentation de la commande : [hardis:work:backpromote](https://sfdx-hardis.clo
 
 </details>
 
+#### Vous devriez voir
+
+- Le résumé : les éléments qui ont atteint votre org, et la Pull Request sur laquelle il a écrit son
+  historique
+- Le nom de votre propre branche de retour dans le coin en bas à gauche de VS Code
+
 ## Ce que vous devez voir
 
-Ouvrez `helios-dev` et vérifiez que la story de Romain y est : ouvrez une installation, son champ
-**Signed Off By** est en bas de la colonne des champs. Le layout le place sous **Crew Notes**, que
-vous ne voyez pas vous-même sur l'enregistrement : le [Lab 1.7](../level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md) n'a accordé ce champ qu'aux équipes.
+Ouvrez `helios-dev` et vérifiez que la story de Romain y est :
+
+- [ ] Sur une installation, son champ **Signed Off By** en bas de la colonne des champs. Le layout le
+      place sous **Crew Notes**, que vous ne voyez pas vous-même sur l'enregistrement : le [Lab 1.7](../level-1-contributor-basics/1-7-capstone-deliver-a-user-story-on-your-own.md)
+      n'a accordé ce champ qu'aux équipes
 
 ## En cas de problème
 

@@ -528,3 +528,256 @@ html .md-footer-meta.md-typeset .md-footer-cloudity a:not(:focus, :hover) {
 [data-md-color-scheme="slate"] .md-typeset a.md-button--primary:hover {
   color: #0A0620;
 }
+
+/* ---------------------------------------------------------------- step template
+   Every numbered step reads the same way: a header (goal, refresher), Do, Careful
+   when needed, Why, Under the hood, You should now see. The markdown keeps plain
+   headings; scripts/lib/lab-template.mjs turns them into these blocks. A block is
+   told apart by its label and its border before its colour. */
+:root {
+  --lab-do: #4A0BB0;
+  --lab-do-bg: rgb(102 15 242 / 6%);
+  --lab-why: #4B5459;
+  --lab-why-bg: rgb(100 110 115 / 8%);
+  --lab-check: #17703F;
+  --lab-check-bg: rgb(23 112 63 / 8%);
+  --lab-careful: #8A5300;
+  --lab-careful-bg: #FFF4DE;
+  --lab-chip-bg: rgb(102 15 242 / 9%);
+  --lab-chip-fg: #4A0BB0;
+}
+
+[data-md-color-scheme="slate"] {
+  --lab-do: #C4A4FF;
+  --lab-do-bg: rgb(168 123 255 / 9%);
+  --lab-why: #C2B8D9;
+  --lab-why-bg: rgb(255 255 255 / 5%);
+  --lab-check: #6FD69A;
+  --lab-check-bg: rgb(111 214 154 / 9%);
+  --lab-careful: #F0B95C;
+  --lab-careful-bg: rgb(240 185 92 / 12%);
+  --lab-chip-bg: rgb(168 123 255 / 16%);
+  --lab-chip-fg: #DCCBFF;
+}
+
+/* The three lines at the top of a lab */
+.md-typeset .lab-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.9rem;
+  border-left: 3px solid var(--md-primary-fg-color);
+  background: var(--lab-do-bg);
+  border-radius: 0 0.3rem 0.3rem 0;
+}
+
+.md-typeset .lab-meta p {
+  margin: 0;
+}
+
+/* The header under a step heading */
+/* Two columns: the keys as wide as the longest one of the step, the text wrapping in its own column */
+.md-typeset .step-head {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 0.8rem;
+  margin: -0.4rem 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .step-head-line {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  margin: 0.15rem 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .step-head-key {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .step-head-refresher a {
+  display: inline-block;
+  margin: 0.1rem 0.15rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-decoration: none;
+}
+
+/* The blocks */
+.md-typeset .blk {
+  margin: 1rem 0;
+  padding: 0.2rem 1rem 0.4rem;
+  border-radius: 0.3rem;
+}
+
+.md-typeset .blk > .blk-label {
+  margin: 0.5rem 0 0.3rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.md-typeset .blk-do {
+  border: 2px solid var(--lab-do);
+  background: var(--md-default-bg-color);
+}
+
+.md-typeset .blk-do > .blk-label {
+  color: var(--lab-do);
+}
+
+/* Do is the only block with numbers: they become round counters */
+.md-typeset .blk-do > ol {
+  list-style: none;
+  counter-reset: lab-task;
+  margin-left: 0;
+}
+
+.md-typeset .blk-do > ol > li {
+  counter-increment: lab-task;
+  position: relative;
+  margin-left: 2.2em;
+}
+
+.md-typeset .blk-do > ol > li::before {
+  content: counter(lab-task);
+  position: absolute;
+  left: -2.2em;
+  top: 0.05em;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: 50%;
+  background: var(--lab-do);
+  color: var(--md-default-bg-color);
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 1.55em;
+  text-align: center;
+}
+
+.md-typeset .blk-why {
+  border-left: 3px solid var(--md-default-fg-color--lighter);
+  background: var(--lab-why-bg);
+  color: var(--lab-why);
+  font-size: 0.74rem;
+}
+
+.md-typeset .blk-why > .blk-label {
+  color: var(--lab-why);
+}
+
+.md-typeset .blk-check {
+  border: 1px solid var(--lab-check);
+  background: var(--lab-check-bg);
+}
+
+.md-typeset .blk-check > .blk-label {
+  color: var(--lab-check);
+}
+
+/* Careful: the warning box, amber, kept for what fails or is hard to undo */
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-color: var(--lab-careful);
+  background-color: var(--lab-careful-bg);
+}
+
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary {
+  background-color: rgb(240 160 40 / 16%);
+}
+
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before {
+  background-color: var(--lab-careful);
+}
+
+/* Bold is what the learner sees on a screen. A short run is a button or a menu
+   entry, painted as a chip; a long one (a question a command asks) stays plain bold.
+   Only on lab pages: the home page and the badge pages keep ordinary bold. */
+article:has(.lab-meta) strong:not(.ui-text) {
+  padding: 0.05em 0.4em;
+  border-radius: 0.25em;
+  background: var(--lab-chip-bg);
+  color: var(--lab-chip-fg);
+  font-weight: 600;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+article:has(.lab-meta) .lab-meta strong,
+article:has(.lab-meta) .admonition-title strong,
+article:has(.lab-meta) summary strong,
+article:has(.lab-meta) th strong {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+/* Figure captions, added by lab-page.js from the alt text of each screenshot */
+.md-typeset .lab-figure {
+  margin: 0.8rem 0 1.2rem;
+}
+
+.md-typeset .lab-figure > figcaption {
+  margin-top: 0.3rem;
+  max-width: none;
+  font-size: 0.68rem;
+  font-style: normal;
+  color: var(--md-default-fg-color--light);
+  text-align: left;
+}
+
+.md-typeset .lab-figure > figcaption b {
+  color: var(--md-default-fg-color);
+}
+
+/* The titles of code blocks: Type this, Output, Config, Edit this file */
+.md-typeset .highlight > .filename {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The ticks, saved per browser by lab-page.js */
+.md-typeset .task-list-control input[type="checkbox"]:not([disabled]) + .task-list-indicator {
+  cursor: pointer;
+}
+
+.md-typeset .lab-tick {
+  width: 1.05em;
+  height: 1.05em;
+  accent-color: var(--lab-check);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.md-typeset .blk-check .lab-step-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0.2rem 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--lab-check);
+  cursor: pointer;
+}
+
+.md-nav__link.lab-step-is-done::after {
+  content: " ✓";
+  color: var(--lab-check);
+  font-weight: 700;
+}

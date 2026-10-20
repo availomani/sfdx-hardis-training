@@ -37,27 +37,16 @@ feature of sfdx-hardis you should hope never to need twice in a row.
 
 ## The situation
 
-Five stories landed this week and all five are in UAT.
+Five stories landed this week and all five are in UAT. The release is Thursday and the date does
+not move: the warehouse cutover depends on the new status being in production before the weekend.
 
-**US-058**, Romain's, stores the warranty term on a panel batch. It works. Nobody has approved the
-wording, because the person who approves wording is away until the middle of next week.
-
-**US-057**, Mariia's, gives planners an *Awaiting Parts* status for an installation held up by a
-missing part. The operations lead tested it on Tuesday and signed it off in writing.
-
-**US-059**, Romain's again, stores the supplier on a panel batch. He wrote it the day after US-058,
-and put the new field right under the warranty term on the layout, because both come off the same
-invoice. The buyer signed it off on Wednesday.
-
-**US-060**, Mariia's, flags an installation that needs scaffolding. It works too, and the operations
-lead is holding it: the crews have not been told what to do with a flagged site, and a flag nobody
-acts on is worse than no flag.
-
-**US-061**, Mariia's, puts the gate code of the site on the installation. The crew leads tested it
-on Tuesday and want it before the weekend.
-
-The release is Thursday and the date does not move: the warehouse cutover depends on the new status
-being in production before the weekend.
+| Story  | Author | What it does                                                                                                                                                                                                            | State        |
+|--------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| US-058 | Romain | Stores the warranty term on a panel batch. It works. Nobody has approved the wording, because the person who approves wording is away until the middle of next week                                                     | Not approved |
+| US-057 | Mariia | Gives planners an *Awaiting Parts* status for an installation held up by a missing part. The operations lead tested it on Tuesday and signed it off in writing                                                          | Approved     |
+| US-059 | Romain | Stores the supplier on a panel batch. He wrote it the day after US-058, and put the new field right under the warranty term on the layout, because both come off the same invoice. The buyer signed it off on Wednesday | Approved     |
+| US-060 | Mariia | Flags an installation that needs scaffolding. It works too, and the operations lead is holding it: the crews have not been told what to do with a flagged site, and a flag nobody acts on is worse than no flag         | On hold      |
+| US-061 | Mariia | Puts the gate code of the site on the installation. The crew leads tested it on Tuesday and want it before the weekend                                                                                                  | Approved     |
 
 So you have a release window holding three approved stories and two stories nobody has said yes to,
 and the ordinary promotion is all or nothing. It carries `uat` as it stands, US-058 and US-060
@@ -87,27 +76,36 @@ included.
 
 ### 1. Check the feature is on, and where it is allowed
 
+Goal: the two promotion settings checked before you rely on them.
+Refresher: [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md)
+
 The two settings this lab needs were published in [Lab 3.1](3-1-configure-the-pipeline-up-to-production.md) and have been travelling up the
-pipeline with every promotion since. Look at them before you rely on them.
+pipeline with every promotion since.
 
-Open the **DevOps Pipeline** panel, the gear menu, **Configure Pipeline Settings**, scope **Global Settings**,
-and the **Danger Zone** tab.
+#### Do
 
-![The Danger Zone of the Global Pipeline Settings, with the two promotion branch settings](../../_assets/annotated/vscode/pipeline-config-danger--promotion-branches.png)
+1. Open the **DevOps Pipeline** panel, the gear menu, then **Configure Pipeline Settings**
+2. Choose the scope **Global Settings**, and open the **Danger Zone** tab
 
-Read the line at the top of that tab before anything else: *Use these settings with caution, be
-sure to understand their impact as they drift from DevOps best practices.* The product puts this
-feature in the same drawer as delta deployments between major branches, and for the same reason.
+   ![The Danger Zone of the Global Pipeline Settings, with the two promotion branch settings](../../_assets/annotated/vscode/pipeline-config-danger--promotion-branches.png)
 
-**Enable promotion branches (Beta)** **(1)** reads **Enabled**: the feature is on for the whole
-project. **Allowed promotion steps (Beta)** **(2)** holds one row, source `uat` and target
-`preprod`, and says that is the only step a release manager here may assemble a promotion on.
+3. Read the line at the top of that tab before anything else: *Use these settings with caution, be
+   sure to understand their impact as they drift from DevOps best practices.*
+4. Check that **Enable promotion branches (Beta)** **(1)** reads **Enabled**: the feature is on for
+   the whole project
+5. Check that **Allowed promotion steps (Beta)** **(2)** holds one row, source `uat` and target
+   `preprod`: the only step a release manager here may assemble a promotion on
 
-That second setting is not paperwork. It is why the button you are about to use exists on `uat` and
-not on `integration`: a subset is a decision about what goes to the stage in front of production,
-and nobody needs to make it on the way into an integration org that is rebuilt from the branch
-anyway. `sf hardis:project:promotion:create` refuses to run at all while the list is missing,
-rather than guessing that every major branch may promote into every other one.
+#### Why
+
+The product puts this feature in the same drawer as delta deployments between major branches, and
+for the same reason.
+
+The allowed steps are not paperwork. They are why the button you are about to use exists on `uat`
+and not on `integration`: a subset is a decision about what goes to the stage in front of
+production, and nobody needs to make it on the way into an integration org that is rebuilt from the
+branch anyway. `sf hardis:project:promotion:create` refuses to run at all while the list is
+missing, rather than guessing that every major branch may promote into every other one.
 
 <details markdown="1"><summary>Under the hood: why a switch published in Lab 3.1 matters now</summary>
 
@@ -119,7 +117,7 @@ Both settings are project level, in `config/.sfdx-hardis.yml`:
         target: preprod
 
 The deployment job of a promotion Pull Request runs on the promotion branch, and a promotion branch
-is cut from its **target**, so the configuration it reads is the one `preprod` carries. A switch
+is cut from its target, so the configuration it reads is the one `preprod` carries. A switch
 turned on today in `integration` would not be in `preprod` until a promotion put it there, and until
 then the job would treat the promotion Pull Request as an ordinary feature branch: it would still
 deploy, and it would quietly ignore the stories the branch declares.
@@ -130,36 +128,52 @@ on behaves exactly like a project with it off.
 
 </details>
 
+#### You should now see
+
+- The feature **Enabled**, and exactly one allowed step: `uat` to `preprod`
+
 ### 2. Take in the five stories, in order, and promote them the usual way
 
-Nothing here is new, so it is written short. If a step does not ring a bell, the lab that taught it
-is linked.
+Goal: all five stories in `uat`, deployed to `helios-uat`.
+Refresher: [Lab 3.2](3-2-review-a-contributor-pull-request.md), [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md)
 
-**Welcome page** > **Training: Level 3** > **Simulate my teammates**, and take the five **one at a
-time, in this order, merging each one into `integration` before you take the next**:
+Nothing here is new, so it is written short.
 
-1. **US-058 Record the warranty term on a panel batch**
-2. **US-057 Park an installation that is waiting for parts**
-3. **US-059 Record the supplier of a panel batch**
-4. **US-060 Flag an installation that needs scaffolding**
-5. **US-061 Record the gate code of a site**
+#### Do
 
-![The Level 3 training menu on the Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
+1. Open **Welcome page** > **Training: Level 3** > **Simulate my teammates**
+
+   ![The Level 3 training menu on the Welcome page](../../_assets/annotated/vscode/welcome-custom-menu-3.png)
+
+2. Take the five stories of the table below one at a time, from top to bottom. For each one, do
+   tasks 3 and 4 before you take the next
+3. Review it with the four questions of [Lab 3.2](3-2-review-a-contributor-pull-request.md)
+4. Merge it into `integration` with **Squash and merge**, as every feature Pull Request of this
+   course. You do not have to wait for its deployment before you take the next one: they queue on
+   `integration`
+5. When the last one is green, promote `integration` into `uat` the way [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) did: the **+ PR**
+   chip on the arrow, a title a human can read, then a merge commit (**Create a merge commit**,
+   under the arrow of the green button)
+
+| # | Story                                                 | Needs first             | Merged |
+|---|-------------------------------------------------------|-------------------------|--------|
+| 1 | US-058 Record the warranty term on a panel batch      | -                       | [ ]    |
+| 2 | US-057 Park an installation that is waiting for parts | -                       | [ ]    |
+| 3 | US-059 Record the supplier of a panel batch           | US-058 in `integration` | [ ]    |
+| 4 | US-060 Flag an installation that needs scaffolding    | -                       | [ ]    |
+| 5 | US-061 Record the gate code of a site                 | -                       | [ ]    |
+
+!!! warning "Careful"
+    The feature Pull Requests use **Squash and merge**. The promotion of `integration` into `uat`
+    uses a merge commit, never a squash.
+
+#### Why this order
 
 The order is the week as it happened, and it matters twice. US-059 was written on top of US-058:
 Romain cut his branch after the warranty term was merged, and put the supplier field right under
 it. The simulation refuses to build US-059 while US-058 is not in `integration`, and tells you so.
 And the order the stories were merged in is the order the `uat` window lists them in, which step 4
 reads from top to bottom.
-
-Review each one with the four questions of [Lab 3.2](3-2-review-a-contributor-pull-request.md) and merge it with **Squash and merge**, as every
-feature Pull Request of this course. You do not have to wait for each deployment before merging the
-next one: they queue on `integration`. When the last one is green, promote `integration` into `uat`
-the way [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) did: the **+ PR** chip on the arrow, a title a human can read, a merge commit
-(**Create a merge commit**, under the arrow of the green button) and never a squash.
-
-The five stories are now in `uat`, deployed to `helios-uat`, and this is the moment a real week
-reaches: everything is testable, and only part of it is approved.
 
 <details markdown="1"><summary>Under the hood: how the simulation knows US-059 needs US-058</summary>
 
@@ -175,51 +189,72 @@ The check turns a cryptic "cannot be placed" into a sentence naming the story to
 
 </details>
 
+#### You should now see
+
+- The five stories in `uat`, deployed to `helios-uat`
+
+This is the moment a real week reaches: everything is testable, and only part of it is approved.
+
 ### 3. Decide, before you touch anything
+
+Goal: an option chosen, and its reason written down.
 
 You have three options and the tool only helps with one of them. Know why you picked it.
 
-| Option                                       | What it costs                                                                                                                                                                                                  | When it is right                                                                                          |
-|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| **Wait for the approvals**                   | The release slips by a week                                                                                                                                                                                    | Almost always. It is the only option that keeps the orgs aligned                                          |
-| **Take US-058 and US-060 back out of `uat`** | Two reverts, each on a feature branch of its own that goes through `integration` and then `uat` like any story, never a commit on `uat` itself, and both stories have to come back later, rebased and retested | When a story is genuinely wrong, not merely unapproved                                                    |
-| **Carry US-057, US-059 and US-061 alone**    | `uat` and `preprod` drift apart until the next full promotion, and US-059 has to be pulled off US-058                                                                                                          | When the date is fixed, the approvals are not coming, and the stories left behind are fine where they are |
+| Option                                   | What it costs                                                                                                                                                                                                  | When it is right                                                                                          |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| Wait for the approvals                   | The release slips by a week                                                                                                                                                                                    | Almost always. It is the only option that keeps the orgs aligned                                          |
+| Take US-058 and US-060 back out of `uat` | Two reverts, each on a feature branch of its own that goes through `integration` and then `uat` like any story, never a commit on `uat` itself, and both stories have to come back later, rebased and retested | When a story is genuinely wrong, not merely unapproved                                                    |
+| Carry US-057, US-059 and US-061 alone    | `uat` and `preprod` drift apart until the next full promotion, and US-059 has to be pulled off US-058                                                                                                          | When the date is fixed, the approvals are not coming, and the stories left behind are fine where they are |
 
 This week it is the third one, and the reason is written down: the warehouse cutover.
 
-Write that reason somewhere a successor will find it. The Pull Request you are about to create is a
-good place, and step 7 comes back to it.
+#### Do
+
+1. Write that reason somewhere a successor will find it. The Pull Request you are about to create is
+   a good place, and step 7 comes back to it
+
+#### You should now see
+
+- The third option chosen, and its reason, the warehouse cutover, ready to paste
 
 ### 4. Pick what goes
 
-Open the **DevOps Pipeline** panel and click the `uat` node. The window that opens is the one
-[Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) used to read a promotion window, with two things on it that were doing nothing until
-now.
+Goal: a promotion branch assembled with three stories, and the conflict it knows is coming committed
+for later.
+Refresher: [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md)
 
-![The uat branch window, with the checkboxes and the Create promotion button](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
+#### Do: select the stories
 
-A **checkbox** on each User Story row **(1)**, and **Create promotion from uat (Beta)** in the
-footer **(2)**. Both appear because `uat` is the source of an allowed promotion step and `preprod`
-is where it goes.
+1. Open the **DevOps Pipeline** panel and click the `uat` node. The window that opens is the one
+   [Lab 3.5](3-5-promote-to-uat-and-write-release-notes.md) used to read a promotion window, with two things on it that were doing nothing until
+   now: a checkbox on each User Story row **(1)**, and **Create promotion from uat (Beta)** in the
+   footer **(2)**
 
-The window lists the five stories newest first: US-061, US-060, US-059, US-057, US-058. Tick the
-**first, the third and the fourth**, US-061, US-059 and US-057, and leave US-060 and US-058 alone.
-The Pull Requests under them, the retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of [Lab 3.8](3-8-monitor-your-production-org.md),
-are older: leave them unticked too.
-The button label counts what you ticked: **Create promotion from uat (3 selected) (Beta)**. Click
-it.
+   ![The uat branch window, with the checkboxes and the Create promotion button](../../_assets/annotated/vscode/pipeline-branch-modal-promotion--pick-what-goes.png)
 
-A command execution tab opens. It lists what is waiting in `uat`, then asks one question, **Select
-the Pull Requests to carry in the promotion branch**, with your three stories already ticked **(1)**:
-the panel passed your choice to the command, and the command asks you to confirm it rather than
-taking it on trust. Read the list once more and confirm **(2)**.
+2. The window lists the five stories newest first: US-061, US-060, US-059, US-057, US-058. Tick the
+   first, the third and the fourth, US-061, US-059 and US-057, and leave US-060 and US-058 alone
+3. Leave the older Pull Requests under them unticked too: the retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the
+   configuration of [Lab 3.8](3-8-monitor-your-production-org.md)
+4. The button label counts what you ticked: **Create promotion from uat (3 selected) (Beta)**. Click
+   it
+5. A command execution tab opens. It lists what is waiting in `uat`, then asks one question,
+   **Select the Pull Requests to carry in the promotion branch**, with your three stories already
+   ticked **(1)**. Read the list once more and confirm **(2)**
 
-![The command execution panel, stopped on the selection to confirm, with the three stories ticked](../../_assets/annotated/vscode/promotion-create-select--confirm.png)
+   ![The command execution panel, stopped on the selection to confirm, with the three stories ticked](../../_assets/annotated/vscode/promotion-create-select--confirm.png)
+
+#### Why
+
+Both the checkboxes and the button appear because `uat` is the source of an allowed promotion step
+and `preprod` is where it goes. The panel passed your choice to the command, and the command asks
+you to confirm it rather than taking it on trust.
 
 Then read the log, because it is doing something you would otherwise be doing by hand, and this
 time it does not get to the end on its own:
 
-```
+```text title="Output"
 3 Pull Request(s) selected for the promotion
 Creating promotion branch promotion/uat/preprod/2026-09-24-0930 from origin/preprod...
 Cherry-picking #62 US-057 Park an installation that is waiting for parts (my-username) [7c41ab9]...
@@ -232,24 +267,30 @@ force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta
 
 The numbers are those of the course's own fork; yours differ, and the story names are what to read.
 The cherry-picks go oldest first, so US-057 went in cleanly, and US-059 stopped: it was written on
-top of US-058, and `preprod` has never seen US-058. The command asks what to do with it, and offers
-four answers **(1)**:
+top of US-058, and `preprod` has never seen US-058.
 
-![The command execution panel, stopped on the conflict question, with the recommended answer first](../../_assets/annotated/vscode/promotion-create-conflict--recommended.png)
+#### Do: answer the conflict question
 
-Take the first one, **Recommended: commit this User Story and every following conflict with their
-conflict markers, without asking again**. The promotion is assembled whole, conflict included, and
-you solve it in one pass on the branch afterwards, in step 6. The other three are for other weeks:
-leave the story out, commit this one with its markers but ask again on the next conflict, or stop
-and undo everything.
+1. The command asks what to do with US-059, and offers four answers **(1)**. Take the first one,
+   **Recommended: commit this User Story and every following conflict with their conflict markers,
+   without asking again**
 
-Do not pick **leave this User Story out** because it looks cleaner. The buyer signed US-059 off, and
-a promotion that quietly drops an approved story because git found it awkward is a promotion whose
-Pull Request lies about the week.
+   ![The command execution panel, stopped on the conflict question, with the recommended answer first](../../_assets/annotated/vscode/promotion-create-conflict--recommended.png)
+
+!!! warning "Careful"
+    Do not pick **leave this User Story out** because it looks cleaner. The buyer signed US-059 off,
+    and a promotion that quietly drops an approved story because git found it awkward is a promotion
+    whose Pull Request lies about the week.
+
+#### Why this answer
+
+The promotion is assembled whole, conflict included, and you solve it in one pass on the branch
+afterwards, in step 6. The other three answers are for other weeks: leave the story out, commit this
+one with its markers but ask again on the next conflict, or stop and undo everything.
 
 The log goes on to the end:
 
-```
+```text title="Output"
 Conflict handling: commit-with-markers-all
 #63 US-059 Record the supplier of a panel batch (my-username) [d1e90e9] committed with conflict markers in: force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml, force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml. Solve them on the branch before merging
 Cherry-picking #65 US-061 Record the gate code of a site (my-username) [5b7e2c1]...
@@ -264,12 +305,6 @@ A prompt to solve the committed conflicts with a coding agent (Claude Code, Code
 US-061 went in cleanly after the conflict, although it touches the same Installation layout as
 US-060, the other story left behind: a conflict needs both changes in the same lines of the same
 file, and Mariia put the gate code at the top of the layout and the scaffolding flag further down.
-
-When the run ends, the two last warnings **(1)** say what is left to do, and the bar along the
-bottom holds the two things you need next: the prompt for a coding agent, saved as a report file
-**(2)**, and **Open the promotion Pull Request** **(3)**.
-
-![The end of the run, with the two warnings about the markers and the prompt file next to the Pull Request button](../../_assets/annotated/vscode/promotion-create-completed--prompt.png)
 
 <details markdown="1"><summary>Under the hood: what the button ran, what the branch name means, and what a conflict is here</summary>
 
@@ -314,109 +349,139 @@ Command documentation: [hardis:project:promotion:create](https://sfdx-hardis.clo
 
 </details>
 
+#### You should now see
+
+- The two last warnings of the run **(1)** saying what is left to do
+- In the bar along the bottom, the two things you need next: the prompt for a coding agent, saved as
+  a report file **(2)**, and **Open the promotion Pull Request** **(3)**
+
+![The end of the run, with the two warnings about the markers and the prompt file next to the Pull Request button](../../_assets/annotated/vscode/promotion-create-completed--prompt.png)
+
 ### 5. Read what it created
 
-Open the Pull Request. It is titled `Promotion uat to preprod (2026-09-24-0930)`, and its
-description holds the only thing that makes any of this work, plus, this week, a warning:
+Goal: you know what the promotion Pull Request declares, why its check is red, and where the
+promotion shows in the pipeline.
 
-````markdown
-Promotion branch `promotion/uat/preprod/2026-09-24-0930` carrying 3 User Stories approved in `uat`,
-cherry-picked for `preprod`.
+#### Do: read the Pull Request
 
-> ⚠️ **Conflicts to solve before merging.** 1 User Story was committed with git conflict markers
-> (`<<<<<<<`, `=======`, `>>>>>>>`) left in the files listed below. Solve them on this branch, by hand
-> or with a coding agent, and push: the validation job fails until they are gone.
+1. Click **Open the promotion Pull Request**. It is titled
+   `Promotion uat to preprod (2026-09-24-0930)`, and its description holds the only thing that
+   makes any of this work, plus, this week, a warning:
 
-```yaml
-promotionPullRequests: [62, 63, 65]
-```
+   ````markdown title="Output"
+   Promotion branch `promotion/uat/preprod/2026-09-24-0930` carrying 3 User Stories approved in `uat`,
+   cherry-picked for `preprod`.
 
-## Carried Pull Requests
+   > ⚠️ **Conflicts to solve before merging.** 1 User Story was committed with git conflict markers
+   > (`<<<<<<<`, `=======`, `>>>>>>>`) left in the files listed below. Solve them on this branch, by hand
+   > or with a coding agent, and push: the validation job fails until they are gone.
 
-| Pull Request | Title                                                 | Author      | Source branch                         | Commit    |
-|--------------|-------------------------------------------------------|-------------|---------------------------------------|-----------|
-| #62          | US-057 Park an installation that is waiting for parts | my-username | `training/mate-us-057-awaiting-parts` | `7c41ab9` |
-| #63          | US-059 Record the supplier of a panel batch           | my-username | `training/mate-us-059-supplier`       | `d1e90e9` |
-| #65          | US-061 Record the gate code of a site                 | my-username | `training/mate-us-061-gate-code`      | `5b7e2c1` |
+   ```yaml
+   promotionPullRequests: [62, 63, 65]
+   ```
 
-Tickets: US-057, US-059, US-061
+   ## Carried Pull Requests
 
-## Committed with conflict markers
+   | Pull Request | Title                                                 | Author      | Source branch                         | Commit    |
+   |--------------|-------------------------------------------------------|-------------|---------------------------------------|-----------|
+   | #62          | US-057 Park an installation that is waiting for parts | my-username | `training/mate-us-057-awaiting-parts` | `7c41ab9` |
+   | #63          | US-059 Record the supplier of a panel batch           | my-username | `training/mate-us-059-supplier`       | `d1e90e9` |
+   | #65          | US-061 Record the gate code of a site                 | my-username | `training/mate-us-061-gate-code`      | `5b7e2c1` |
 
-- US-059 Record the supplier of a panel batch (#63)
-  - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
-  - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+   Tickets: US-057, US-059, US-061
 
-<details>
-<summary>Prompt for a coding agent (Claude Code, Codex, Copilot...) to solve the conflicts</summary>
-...
-</details>
+   ## Committed with conflict markers
 
-_Created with `sf hardis:project:promotion:create`. Do not squash this Pull Request when merging it._
-````
+   - US-059 Record the supplier of a panel batch (#63)
+     - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
+     - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
 
-![The description of the promotion Pull Request on GitHub, with the warning, the declaration block, the carried table and the folded prompt](../../_assets/annotated/web/github-pr-promotion-description.png)
+   <details>
+   <summary>Prompt for a coding agent (Claude Code, Codex, Copilot...) to solve the conflicts</summary>
+   ...
+   </details>
 
-The **Author** column is the GitHub account that opened the Pull Request, so on this course it is
-your own handle rather than Mariia's or Romain's: the teammate wrote the commit, `Simulate my
-teammates` opened the Pull Request with your account. The branch window of the panel shows the
-commit author, which is why the two disagree.
+   _Created with `sf hardis:project:promotion:create`. Do not squash this Pull Request when merging it._
+   ````
 
-The **Title** comes from the Pull Request, read through the git provider API. The command requires
+   ![The description of the promotion Pull Request on GitHub, with the warning, the declaration block, the carried table and the folded prompt](../../_assets/annotated/web/github-pr-promotion-description.png)
+
+2. Read the description with the table below
+3. Open the **Checks** of the Pull Request. The **Simulate Deployment to Major Org** check is red,
+   and the sfdx-hardis comment says why: its verdict reads **❌ Cannot merge into `preprod`: Git
+   conflict markers in the promotion branch**, and one paragraph under it names the files:
+
+   > Nothing was deployed: the promotion branch `promotion/uat/preprod/2026-09-24-0930` still
+   > contains git conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in 2 file(s). Solve them on the
+   > branch, by hand or with the prompt for a coding agent embedded in this Pull Request description
+   > (also saved in `hardis-report/`), then commit and push: the job runs again from there.
+   >
+   > - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
+   > - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+
+   ![The sfdx-hardis comment of the red check, naming the two files that still hold conflict markers](../../_assets/annotated/web/github-pr-promotion-markers.png)
+
+| Part of the description         | What it is                                                                                                                                                               | What to do with it                                                                                                                      |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| The warning                     | 1 story was committed with conflict markers in the files listed                                                                                                          | Step 6 solves them                                                                                                                      |
+| The yaml block                  | The declaration, and every job that runs on this Pull Request reads it                                                                                                   | Keep it, and do not hand-edit the numbers: the command wrote what it actually cherry-picked                                             |
+| Carried Pull Requests           | The stories it carries. The Author column is the GitHub account that opened each Pull Request, the Title comes from the Pull Request itself                              | Read it                                                                                                                                 |
+| Committed with conflict markers | US-059 and its two files                                                                                                                                                 | The files of step 6                                                                                                                     |
+| The folded prompt               | The whole conflict, written up for a coding agent: the branch to check out, the story and its origin commit, the two files, and the rules of a Salesforce metadata merge | Step 6 uses it, or the same text in `hardis-report/promotion-conflicts-prompt-<date>.md`, the report file the command panel offered you |
+| The last line                   | Do not squash this Pull Request when merging it                                                                                                                          | Step 7 merges with a merge commit                                                                                                       |
+
+#### Why
+
+The yaml block is how the three stories keep, in `preprod`, everything they would have had in an
+ordinary promotion: their deployment actions run, their Apex test classes are selected, their
+tickets are updated, and the release notes of `preprod` name the stories rather than the promotion
+that carried them. Delete that block and you have a branch with some commits on it and no idea what
+they are for.
+
+The Author column is your own handle rather than Mariia's or Romain's: the teammate wrote the
+commit, `Simulate my teammates` opened the Pull Request with your account. The branch window of the
+panel shows the commit author, which is why the two disagree.
+
+The Title comes from the Pull Request, read through the git provider API. The command requires
 that connection and refuses to start without it, so a promotion behaves the same on GitHub, GitLab,
 Bitbucket and Azure DevOps and every carried row names its real story. You never see the refusal
 here: the extension passes its own GitHub connection, signed in since
 [Lab 1.2](../level-1-contributor-basics/1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md). Outside VS Code, an agent or a job has to be given the token
 (`GITHUB_TOKEN`, in the environment or in a `.env` file at the repository root).
 
-**That yaml block is the declaration**, and every job that runs on this Pull Request reads it. It is
-how the three stories keep, in `preprod`, everything they would have had in an ordinary promotion:
-their deployment actions run, their Apex test classes are selected, their tickets are updated, and
-the release notes of `preprod` name the stories rather than the promotion that carried them.
+The red check is the safety net: a marker in an XML file is sometimes tolerated by git and always
+fatal to Salesforce, so the job stops before it deploys anything, and says so where you are looking
+rather than failing silently in a log.
 
-Delete that block and you have a branch with some commits on it and no idea what they are for. Keep
-it, and do not hand-edit the numbers: the command wrote what it actually cherry-picked.
+#### Do: read the pipeline
 
-**The folded prompt** at the end is the whole conflict, written up for a coding agent: the branch to
-check out, the story and its origin commit, the two files, and the rules of a Salesforce metadata
-merge. The same text sits in `hardis-report/promotion-conflicts-prompt-<date>.md`, the report file
-the command panel offered you. Step 6 uses one or the other.
+1. Go back to the **DevOps Pipeline** panel and look at the diagram. The promotion in flight is
+   drawn on the arrow between `uat` and `preprod` **(1)**, with its Pull Request number and its red
+   check, where the **+ PR** chip used to be
+2. Read the counter on the `uat` node **(2)**: it still reads seven
 
-Now look at the **Checks** of the Pull Request. The **Simulate Deployment to Major Org** check is red, and the
-sfdx-hardis comment says why: its verdict reads **❌ Cannot merge into `preprod`: Git conflict
-markers in the promotion branch**, and one paragraph under it names the files:
+   ![The open promotion drawn on the arrow from uat to preprod](../../_assets/annotated/vscode/devops-pipeline-promotion--in-flight.png)
 
-> Nothing was deployed: the promotion branch `promotion/uat/preprod/2026-09-24-0930` still
-> contains git conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in 2 file(s). Solve them on the
-> branch, by hand or with the prompt for a coding agent embedded in this Pull Request description
-> (also saved in `hardis-report/`), then commit and push: the job runs again from there.
->
-> - `force-app/main/default/layouts/Panel_Batch__c-Panel Batch Layout.layout-meta.xml`
-> - `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+#### Why seven
 
-![The sfdx-hardis comment of the red check, naming the two files that still hold conflict markers](../../_assets/annotated/web/github-pr-promotion-markers.png)
-
-That is the safety net: a marker in an XML file is sometimes tolerated by git and always fatal to
-Salesforce, so the job stops before it deploys anything, and says so where you are looking rather
-than failing silently in a log.
-
-Then go back to the **DevOps Pipeline** panel and look at the diagram.
-
-![The open promotion drawn on the arrow from uat to preprod](../../_assets/annotated/vscode/devops-pipeline-promotion--in-flight.png)
-
-The promotion in flight is drawn on the arrow between `uat` and `preprod` **(1)**, with its Pull
-Request number and its red check, where the **+ PR** chip used to be: it is not a branch of your
-pipeline, it is something moving between two of them, and it lives exactly as long as its Pull
-Request.
-
-The counter on the `uat` node **(2)** still reads seven, and that is right: nothing has moved yet.
-It counts Pull Requests, so the five stories, plus the retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of
+The promotion is not a branch of your pipeline, it is something moving between two of them, and it
+lives exactly as long as its Pull Request. Nothing has moved yet. The counter counts Pull Requests,
+so the five stories, plus the retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of
 [Lab 3.8](3-8-monitor-your-production-org.md) that sit under them in the window. A promotion that is open is a proposal. Merge it, come
-back, and the counter reads four, because **a Pull Request appears in one place only**: from then on
+back, and the counter reads four, because a Pull Request appears in one place only: from then on
 US-057, US-059 and US-061 are listed in the window of `preprod`, the branch they reached, and no
 longer in the window of `uat`, the branch they left.
 
+#### You should now see
+
+- A red check on the promotion Pull Request, naming the two files that hold markers
+- The promotion drawn on the arrow from `uat` to `preprod`, and seven on the `uat` node
+
 ### 6. Solve the conflict on the promotion branch
+
+Goal: in both files, the Supplier entry kept and the Warranty Years entry left out, and the check
+green.
+Refresher: [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md), [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md)
 
 The command left you on the promotion branch: the status bar, bottom left of VS Code, reads
 `promotion/uat/preprod/2026-09-24-0930`. That is where the fix goes.
@@ -430,95 +495,114 @@ gives a coding agent is the rule you apply by hand:
 
 The intent of US-059 is a Supplier field, on the layout and granted to managers. What it needs from
 US-058 is nothing: a supplier row does not need a warranty row above it to work. So in both files
-the answer is the same: **keep the Supplier entry, and leave the Warranty Years entry out**. Taking
-the Warranty Years entries in would be worse than a wrong merge: `preprod` has no
-`Warranty_Years__c` field, so a layout or a permission set naming it fails to deploy.
+the answer is the same: keep the Supplier entry, and leave the Warranty Years entry out.
+
+| File                                     | Keep                                    | Leave out                     |
+|------------------------------------------|-----------------------------------------|-------------------------------|
+| Panel Batch layout                       | the Supplier row, after Cost            | the Warranty Years row        |
+| `Helios_Delivery_Manager` permission set | the Supplier grant, after Serial Prefix | the `Warranty_Years__c` grant |
+
+!!! warning "Careful"
+    Taking the Warranty Years entries in would be worse than a wrong merge: `preprod` has no
+    `Warranty_Years__c` field, so a layout or a permission set naming it fails to deploy.
 
 Two ways to do it. The first is what the product recommends, the second works on any machine.
 
-**With a coding agent.** Click the report file **Prompt for a coding agent to solve the promotion
-conflicts** in the bar of the command panel: it opens
-`hardis-report/promotion-conflicts-prompt-2026-09-24-0931.md`. Select everything in it and copy.
-Open the chat of your coding agent in VS Code, Claude Code, GitHub Copilot Chat in agent mode, Codex
-or another, paste the prompt, and send it. It checks out the branch, reads the origin commit of the
-story, edits the two files, runs the marker search the prompt asks for, commits with a message that
-says what it kept, and pushes. Read its report, then open the commit on the Pull Request and check
-that it did what the paragraph above says: Supplier in, Warranty Years out, nothing else touched.
-An agent that brought Warranty Years in, or kept both sides, is corrected the same way you would
+#### Do: with a coding agent
+
+1. Click the report file **Prompt for a coding agent to solve the promotion conflicts** in the bar of
+   the command panel: it opens `hardis-report/promotion-conflicts-prompt-2026-09-24-0931.md`
+2. Select everything in it and copy
+3. Open the chat of your coding agent in VS Code, Claude Code, GitHub Copilot Chat in agent mode,
+   Codex or another, paste the prompt, and send it
+4. Read its report, then open the commit on the Pull Request and check that it did what the table
+   above says: Supplier in, Warranty Years out, nothing else touched
+
+The agent checks out the branch, reads the origin commit of the story, edits the two files, runs the
+marker search the prompt asks for, commits with a message that says what it kept, and pushes. An
+agent that brought Warranty Years in, or kept both sides, is corrected the same way you would
 correct a teammate: tell it, and read again.
 
-**By hand, in the editor.** Open the layout: in the **Explorer**, `force-app` > `main` > `default` >
-`layouts` > `Panel_Batch__c-Panel Batch Layout.layout-meta.xml`. VS Code colours the conflict block
-and draws four small links above it: **Accept Current Change**, **Accept Incoming Change**, **Accept
-Both Changes**, **Compare Changes**.
+#### Do: by hand, in the editor
 
-![The Panel Batch layout open in the editor, with the conflict block and its Accept links](../../_assets/annotated/vscode/promotion-conflict-editor--accept-incoming.png)
+1. Open the layout: in the **Explorer**, `force-app` > `main` > `default` > `layouts` >
+   `Panel_Batch__c-Panel Batch Layout.layout-meta.xml`. VS Code colours the conflict block and draws
+   four small links above it: **Accept Current Change**, **Accept Incoming Change**, **Accept Both
+   Changes**, **Compare Changes**
 
-Click **Accept Incoming Change** **(1)**: the current side, `preprod`, had nothing at that spot, and
-the incoming side is the story. That leaves two rows where there was one conflict, Warranty Years
-then Supplier. Delete the four lines of the Warranty Years row **(2)**, so the block reads:
+   ![The Panel Batch layout open in the editor, with the conflict block and its Accept links](../../_assets/annotated/vscode/promotion-conflict-editor--accept-incoming.png)
 
-```xml
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Cost__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Supplier__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>External_Id__c</field>
-            </layoutItems>
-```
+2. Click **Accept Incoming Change** **(1)**: the current side, `preprod`, had nothing at that spot,
+   and the incoming side is the story. That leaves two rows where there was one conflict, Warranty
+   Years then Supplier
+3. Delete the four lines of the Warranty Years row **(2)**, so the block reads as below, and save.
+   Copy it from here rather than typing it: nobody is asked to write XML from memory
 
-Save, and do the same in `permissionsets` > `Helios_Delivery_Manager.permissionset-meta.xml`:
-**Accept Incoming Change**, then delete the five lines of the `Panel_Batch__c.Warranty_Years__c`
-grant, so that the Supplier grant follows the Serial Prefix one:
+   ```xml title="Edit this file"
+               <layoutItems>
+                   <behavior>Edit</behavior>
+                   <field>Cost__c</field>
+               </layoutItems>
+               <layoutItems>
+                   <behavior>Edit</behavior>
+                   <field>Supplier__c</field>
+               </layoutItems>
+               <layoutItems>
+                   <behavior>Edit</behavior>
+                   <field>External_Id__c</field>
+               </layoutItems>
+   ```
 
-```xml
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Panel_Batch__c.Serial_Prefix__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Panel_Batch__c.Supplier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
-```
+4. Do the same in `permissionsets` > `Helios_Delivery_Manager.permissionset-meta.xml`: **Accept
+   Incoming Change**, then delete the five lines of the `Panel_Batch__c.Warranty_Years__c` grant, so
+   that the Supplier grant follows the Serial Prefix one:
 
-Copy both blocks from here rather than typing them: nobody is asked to write XML from memory. Then
-search the two files for `<<<<<<<` once more, and commit from the **Source Control** panel, the way
-[Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md) taught: stage the two files with their **+**, and write a message that says what you kept,
-because the reviewer of this Pull Request reads the resolution from the commit, not from the diff:
+   ```xml title="Edit this file"
+       <fieldPermissions>
+           <editable>true</editable>
+           <field>Panel_Batch__c.Serial_Prefix__c</field>
+           <readable>true</readable>
+       </fieldPermissions>
+       <fieldPermissions>
+           <editable>true</editable>
+           <field>Panel_Batch__c.Supplier__c</field>
+           <readable>true</readable>
+       </fieldPermissions>
+       <hasActivationRequired>false</hasActivationRequired>
+   ```
 
-```
-fix: solve cherry-pick conflicts of promotion/uat/preprod/2026-09-24-0930
+5. Search the two files for `<<<<<<<` once more
+6. Commit from the **Source Control** panel, the way [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md) taught: stage the two files with
+   their **+**, and write a message that says what you kept, because the reviewer of this Pull
+   Request reads the resolution from the commit, not from the diff:
 
-Panel Batch layout (#63): preprod had no Warranty Years row; the story added Supplier under it; kept Supplier after Cost, left Warranty Years out
-Helios_Delivery_Manager (#63): preprod had no Warranty Years grant; the story added the Supplier grant next to it; kept Supplier, left Warranty Years out
-```
+   ```text title="Type this"
+   fix: solve cherry-pick conflicts of promotion/uat/preprod/2026-09-24-0930
 
-**Commit**, then **Sync Changes** to push.
+   Panel Batch layout (#63): preprod had no Warranty Years row; the story added Supplier under it; kept Supplier after Cost, left Warranty Years out
+   Helios_Delivery_Manager (#63): preprod had no Warranty Years grant; the story added the Supplier grant next to it; kept Supplier, left Warranty Years out
+   ```
 
-Whichever route you took, the push starts the check again. It is green this time. Open the folded
-**ℹ️ Where the deployment actions and test classes come from** at the bottom of the sfdx-hardis
-comment: its first line is the one from an ordinary promotion,
+7. **Commit**, then **Sync Changes** to push
 
-> ℹ️ `promotion/uat/preprod/2026-09-24-0930` is a promotion branch carrying 3 Pull Request(s)
-> declared in its description.
+#### Do: check the green run, whichever route you took
 
-followed by what the job collected from them. The folded **🎫** section next to it lists the three
-Pull Requests, those of US-057, US-059 and US-061. On the course's own fork they are Pull Requests 62, 63 and 65;
-yours carry other numbers.
+1. The push starts the check again. Wait for it to turn green
+2. Open the folded **ℹ️ Where the deployment actions and test classes come from** at the bottom of
+   the sfdx-hardis comment. Its first line is the one from an ordinary promotion,
 
-If that line is missing, or says none of the declared Pull Requests could be used, **stop and fix it
-before merging**. It means the job did not read the declaration, and the deployment about to run is
-the metadata without anything that goes with it.
+   > ℹ️ `promotion/uat/preprod/2026-09-24-0930` is a promotion branch carrying 3 Pull Request(s)
+   > declared in its description.
+
+   followed by what the job collected from them
+3. Open the folded **🎫** section next to it. It lists the three Pull Requests, those of US-057,
+   US-059 and US-061. On the course's own fork they are Pull Requests 62, 63 and 65; yours carry
+   other numbers
+
+!!! warning "Careful"
+    If that line is missing, or says none of the declared Pull Requests could be used, stop and fix
+    it before merging. It means the job did not read the declaration, and the deployment about to run
+    is the metadata without anything that goes with it.
 
 <details markdown="1"><summary>Under the hood: what the links do, what the job greps, and what the prompt asks of an agent</summary>
 
@@ -544,37 +628,53 @@ shape, written by hand.
 
 </details>
 
+#### You should now see
+
+- The check green, with the promotion branch line and the three Pull Requests listed
+
 ### 7. Add the reason, merge, and verify the selectivity in the org
 
-**Edit the description** and put your reason above the generated text, in a sentence the person
-reading this in six months can use:
+Goal: the reason on the Pull Request, the promotion merged, and only the three chosen stories in
+`helios-preprod`.
 
-> Warehouse cutover on Monday needs the Awaiting Parts status in production. US-058 stays in UAT
-> until the wording is approved, expected Wednesday next week, and US-060 until the crews have
-> been briefed.
+#### Do
 
-Then merge with a merge commit: **Create a merge commit**, under the arrow of the green button.
-Never a squash: the cherry-picked commits and their trailers
-are what the next promotion, the retrofit and the release notes all read. The **How to merge** line
-of the green check comment says it too.
+1. **Edit the description** and put your reason above the generated text, in a sentence the person
+   reading this in six months can use:
 
-The **Process Deployment (sfdx-hardis)** run starts on `preprod`. When it is green, open
-`helios-preprod` and check both halves of what you did:
+   > Warehouse cutover on Monday needs the Awaiting Parts status in production. US-058 stays in UAT
+   > until the wording is approved, expected Wednesday next week, and US-060 until the crews have
+   > been briefed.
 
-- **Setup > Object Manager > Installation > Fields & Relationships**: **Status** offers **Awaiting
-  Parts**, and there is a **Gate Code** field. US-057 and US-061 are there. There is no
-  **Scaffolding Required** field: US-060 is not
-- **Setup > Object Manager > Panel Batch > Fields & Relationships**: there is a **Supplier** field.
-  US-059 is there. There is no **Warranty Years** field: US-058 is not, and that is the point
-- **Setup > Object Manager > Panel Batch > Page Layouts > Panel Batch Layout**: Supplier sits right
-  after Cost, where you put it
+2. Merge with a merge commit: **Create a merge commit**, under the arrow of the green button
+3. Wait for the **Process Deployment (sfdx-hardis)** run on `preprod` to turn green
+4. Open `helios-preprod` and check both halves of what you did, with the table below
+
+| Where, in Setup                                                                  | There                                                                                       | Not there                                                         |
+|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| **Object Manager** > **Installation** > **Fields & Relationships**               | **Status** offers **Awaiting Parts**, and there is a **Gate Code** field: US-057 and US-061 | No **Scaffolding Required** field: US-060 is not                  |
+| **Object Manager** > **Panel Batch** > **Fields & Relationships**                | A **Supplier** field: US-059                                                                | No **Warranty Years** field: US-058 is not, and that is the point |
+| **Object Manager** > **Panel Batch** > **Page Layouts** > **Panel Batch Layout** | Supplier right after Cost, where you put it                                                 | -                                                                 |
+
+!!! warning "Careful"
+    Never a squash. The cherry-picked commits and their trailers are what the next promotion, the
+    retrofit and the release notes all read. The **How to merge** line of the green check comment
+    says it too.
+
+#### Why two checks
 
 Deployed and *only* what you chose deployed are two different checks, and this lab is the one where
 the second one matters.
 
+#### You should now see
+
+- A green deployment on `preprod`, and the table above true in `helios-preprod`
+
 ### 8. Count what it cost
 
-Look at the pipeline now, and say out loud what is true:
+Goal: you can say out loud what is now true. This step has no clicks.
+
+Look at the pipeline now:
 
 - `uat` holds five stories. `preprod` holds three of them
 - `helios-uat` and `helios-preprod` are no longer the same org, and they will stay different until
@@ -584,48 +684,62 @@ Look at the pipeline now, and say out loud what is true:
 - The two files you solved in step 6 now say different things on `preprod` and on `uat`, and git
   will notice again
 
+#### Why
+
 None of those is a bug. They are the price, and you paid it deliberately for a fixed date. The
 failure mode is not paying it once: it is paying it every week, quietly, until nobody can say what
 any of the four orgs contains.
 
 Three habits keep it honest:
 
-1. **The promotion Pull Request says why.** You did that in step 7
-2. **The promotion is retrofitted right away.** Step 9, and it is not optional this week
-3. **The exception ends.** The next ordinary promotion of `uat` carries US-058 and US-060 up, and
-   the pipeline is aligned again. [Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) is that promotion: both stories are still waiting
-   in `uat` on Monday morning, and they go out with everything else
+1. The promotion Pull Request says why. You did that in step 7
+2. The promotion is retrofitted right away. Step 9, and it is not optional this week
+3. The exception ends. The next ordinary promotion of `uat` carries US-058 and US-060 up, and the
+   pipeline is aligned again. [Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) is that promotion: both stories are still waiting in
+   `uat` on Monday morning, and they go out with everything else
+
+#### You should now see
+
+- The four facts above, and the three habits, in your own words
 
 ### 9. Retrofit the promotion into integration, right away
+
+Goal: `preprod` merged back down into `integration`, while the conflict is small and you still
+remember what you decided.
+Refresher: [Lab 3.7](3-7-hotfix-and-retrofit.md), [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md)
 
 The last bullet of step 8 is the reason for this step. On `uat`, the layout says "Cost, Warranty
 Years, Supplier". On `preprod`, since your fix, it says "Cost, Supplier". When [Lab 3.11](3-11-capstone-run-a-weekly-release-cycle.md) promotes
 `uat` into `preprod` whole, git meets those two lines again and reports the same two files as
 conflicting, on a Pull Request between two major branches that nobody may push to. The way out is
 the one the promotion branches documentation prescribes after every promotion, and the one
-[Lab 3.7](3-7-hotfix-and-retrofit.md) taught after the hotfix: bring `preprod` back down into `integration` now, while the
-conflict is small and you still remember what you decided.
+[Lab 3.7](3-7-hotfix-and-retrofit.md) taught after the hotfix.
 
-**New User Story**, as in [Lab 3.7](3-7-hotfix-and-retrofit.md) step 7: type **Retrofit**, name `US-059-retrofit`, target
-`integration`, org `helios-dev`. Then **Git: Fetch** and **Git: Merge...** from the Command Palette,
-as in [Lab 3.7](3-7-hotfix-and-retrofit.md) step 8, and pick **origin/preprod** this time, under **remote branches**.
+#### Do
 
-The merge stops on the same two files, which appear under **Merge Changes** in the **Source
-Control** panel. Open each one with **Resolve in Merge Editor**, the editor of [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), and read
-the two panes: **Current** is `integration`, with the Warranty Years entry, **Incoming** is
-`preprod`, with nothing at that spot. This time the answer is the opposite of step 6: click **Accept
-Current** on the block, in both files, then **Complete Merge**. `integration` is where US-058 lives
-and where it will be approved from, so its lines stay. Nothing else conflicts, because the three
-promoted stories are the same content on both sides.
+1. **New User Story**, as in [Lab 3.7](3-7-hotfix-and-retrofit.md) step 7: type **Retrofit**, name `US-059-retrofit`, target
+   `integration`, org `helios-dev`
+2. **Git: Fetch** then **Git: Merge...** from the Command Palette, as in [Lab 3.7](3-7-hotfix-and-retrofit.md) step 8, and
+   pick **origin/preprod** this time, under **remote branches**
+3. The merge stops on the same two files, which appear under **Merge Changes** in the **Source
+   Control** panel. Open each one with **Resolve in Merge Editor**, the editor of [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md), and
+   read the two panes: **Current** is `integration`, with the Warranty Years entry, **Incoming** is
+   `preprod`, with nothing at that spot
+4. Click **Accept Current** on the block, in both files, then **Complete Merge**. This time the
+   answer is the opposite of step 6
+5. Both files land under **Staged Changes** with the message
+   `Merge remote-tracking branch 'origin/preprod' into retrofit/US-059-retrofit` already written,
+   and the blue button under it reads **Continue** while a merge is in progress, as in
+   [Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md). Click it
+6. **Save / Publish User Story** as in [Lab 3.7](3-7-hotfix-and-retrofit.md) step 9, and open the Pull Request into
+   `integration`, titled `Retrofit: the promotion of US-057, US-059 and US-061 back down into integration`
+7. Wait for its check, and merge it with a merge commit (**Create a merge commit**), as the **How to
+   merge** line of its comment asks
 
-Both files land under **Staged Changes** with the message
-`Merge remote-tracking branch 'origin/preprod' into retrofit/US-059-retrofit` already written, and
-the blue button under it reads **Continue** while a merge is in progress, as in
-[Lab 2.7](../level-2-contributor-advanced/2-7-resolve-a-git-merge-conflict.md). Click it, then **Save / Publish User Story** as in [Lab 3.7](3-7-hotfix-and-retrofit.md)
-step 9, and open the Pull Request into `integration`, titled `Retrofit: the promotion of US-057,
-US-059 and US-061 back down into integration`. Its **Files changed** tab is empty, and that is
-right: read the block below. Wait for its check, and merge it with a merge commit (**Create a merge commit**), as the
-**How to merge** line of its comment asks.
+#### Why Accept Current
+
+`integration` is where US-058 lives and where it will be approved from, so its lines stay. Nothing
+else conflicts, because the three promoted stories are the same content on both sides.
 
 <details markdown="1"><summary>Under the hood: a Pull Request that changes no file, and why it still matters</summary>
 
@@ -658,7 +772,7 @@ Nothing special. US-058 and US-060 are User Stories merged into `uat` that have 
 exactly like every other story the day before a release, and the next `uat` into `preprod` Pull
 Request carries them the ordinary way.
 
-What sfdx-hardis has to be careful about is the three others, which are in **both** branches by
+What sfdx-hardis has to be careful about is the three others, which are in both branches by
 different routes: merged into `uat`, cherry-picked into `preprod`. The next promotion of `uat` will
 bring the original commits up too, and git will merge them cleanly because the content is already
 there, and because the retrofit of step 9 told it where the two branches last agreed. The pipeline
@@ -673,20 +787,25 @@ production too.
 
 </details>
 
+#### You should now see
+
+- A merged retrofit Pull Request into `integration`. Its **Files changed** tab is empty, and that is
+  right: the block above says why
+
 ## What you should see
 
-- A merged Pull Request titled `Promotion uat to preprod (<date>-<time>)`, from a branch named
-  `promotion/uat/preprod/<date>-<time>`, with a red check turned green by one commit
-- A `promotionPullRequests` block in its description naming US-057, US-059 and US-061 and nothing
-  else, with your reason written above it
-- A green **Process Deployment (sfdx-hardis)** run on `preprod`
-- **Awaiting Parts** in the Status picklist, a **Gate Code** field on Installation and a
-  **Supplier** field on Panel Batch in `helios-preprod`, and neither **Warranty Years** nor
-  **Scaffolding Required** there
-- No `<<<<<<<` left in the two files on `preprod`
-- A merged retrofit Pull Request into `integration` with no changed file
-- The `uat` node of the diagram counting four Pull Requests still waiting: US-058, US-060, the
-  retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of [Lab 3.8](3-8-monitor-your-production-org.md)
+- [ ] A merged Pull Request titled `Promotion uat to preprod (<date>-<time>)`, from a branch named
+      `promotion/uat/preprod/<date>-<time>`, with a red check turned green by one commit
+- [ ] A `promotionPullRequests` block in its description naming US-057, US-059 and US-061 and
+      nothing else, with your reason written above it
+- [ ] A green **Process Deployment (sfdx-hardis)** run on `preprod`
+- [ ] **Awaiting Parts** in the Status picklist, a Gate Code field on Installation and a Supplier
+      field on Panel Batch in `helios-preprod`, and neither Warranty Years nor Scaffolding Required
+      there
+- [ ] No `<<<<<<<` left in the two files on `preprod`
+- [ ] A merged retrofit Pull Request into `integration` with no changed file
+- [ ] The `uat` node of the diagram counting four Pull Requests still waiting: US-058, US-060, the
+      retrofit of [Lab 3.7](3-7-hotfix-and-retrofit.md) and the configuration of [Lab 3.8](3-8-monitor-your-production-org.md)
 
 ## If it goes wrong
 

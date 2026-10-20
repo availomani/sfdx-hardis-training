@@ -48,8 +48,11 @@ const count = (text, pattern) => (text.match(pattern) || []).length;
 const SHAPE = {
   "## headings": /^## /gm,
   "### headings": /^### /gm,
-  images: /^!\[/gm,
-  "code fences": /^```/gm,
+  "step blocks (####)": /^#### /gm,
+  "task items": /^\s*- \[ \]/gm,
+  // Indented too: on the step template a picture or a fence sits inside the task it belongs to
+  images: /^\s*!\[/gm,
+  "code fences": /^\s*```/gm,
   "Under the hood blocks": /<details/g,
   "pill references": /\*\*\(\d+\)\*\*/g,
   admonitions: /^!!! /gm,

@@ -31,7 +31,7 @@ check it against real records.
 ## The situation
 
 You have a branch and an org. Now do the actual work. Nothing in this lab is specific to CI/CD:
-this is ordinary Salesforce configuration. The only rule is **where** you do it: in `helios-dev`,
+this is ordinary Salesforce configuration. The only rule is where you do it: in `helios-dev`,
 your own org, never in the shared one.
 
 ## Before you start
@@ -44,37 +44,63 @@ your own org, never in the shared one.
 
 ### 1. Open your org
 
-In **Orgs Manager**, find the row whose **ALIAS** column says `helios-dev`. Read the alias, not the
-address: none of the addresses says what the org is for. The Developer Edition org has an
-`orgfarm-` string Salesforce invented, and the scratch orgs have two random words and a number, so
-your four orgs look alike everywhere except in that column.
+Goal: `helios-dev` open in your browser, already logged in.
+Refresher: [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 
-At the end of that row, click the chevron. It opens everything you can do to that org, and the first
-entry is **Open** **(1)**.
+#### Do
 
-![The actions menu of the development org in Orgs Manager](../../_assets/annotated/vscode/orgs-manager-actions.png)
+1. In **Orgs Manager**, find the row whose **ALIAS** column says `helios-dev`. Read the alias, not
+   the address
+2. At the end of that row, click the chevron. It opens everything you can do to that org, and the
+   first entry is **Open** **(1)**. Click it
 
-Your browser opens the org, already logged in. No password, no login page: the extension used the
-credential it stored when you connected the org in [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+   ![The actions menu of the development org in Orgs Manager](../../_assets/annotated/vscode/orgs-manager-actions.png)
 
-!!! tip "In Agentforce Vibes, the org opens in a new tab"
-    VS Code runs in your browser, so the org cannot open next to it: it opens in a new tab of the
-    same browser. VS Code may first ask whether to open the external website: answer **Open**. If
-    no tab appears at all, update the extension: older versions ran the open command inside the
-    tab's own environment, where no browser can be opened, and showed nothing.
+3. In Agentforce Vibes, the org opens in a new tab of the same browser. VS Code may first ask
+   whether to open the external website: answer **Open**. If no tab appears at all, update the
+   extension
+
+#### Why
+
+None of the addresses says what the org is for. The Developer Edition org has an `orgfarm-` string
+Salesforce invented, and the scratch orgs have two random words and a number, so your four orgs look
+alike everywhere except in the **ALIAS** column.
+
+No password, no login page: the extension used the credential it stored when you connected the org
+in [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+
+In Agentforce Vibes, VS Code runs in your browser, so the org cannot open next to it. Older versions
+of the extension ran the open command inside the tab's own environment, where no browser can be
+opened, and showed nothing.
 
 Opening the org from this panel rather than from a bookmark is a habit worth forming. It is the
 difference between "the org I meant" and "the org that happened to be open in that tab".
 
+#### You should now see
+
+- Your browser on the org, already logged in
+
 ### 2. Create the field
 
-In Salesforce: **Setup > Object Manager > Installation**, then **Fields & Relationships** **(1)**
-in the left column, then **New** **(2)**.
+Goal: a `Panels Required` number field on Installation, on its layout, and visible to no profile.
 
-![The Fields and Relationships page of the Installation object in Setup](../../_assets/annotated/salesforce/object-manager-fields.png)
+#### Do
 
-The list you see is the object before your change. `Panels Required` is what you are about to add
-to it.
+1. In Salesforce: **Setup > Object Manager > Installation**, then **Fields & Relationships** **(1)**
+   in the left column, then **New** **(2)**
+
+   ![The Fields and Relationships page of the Installation object in Setup](../../_assets/annotated/salesforce/object-manager-fields.png)
+
+   The list you see is the object before your change. `Panels Required` is what you are about to add
+   to it.
+
+2. Fill in the settings of the table below, Description and Help Text included
+3. The field-level security screen arrives with **Visible** already ticked for nearly every profile.
+   Clear them: the checkbox in the **Visible** column header toggles the whole column, so click it
+   once to tick everything and again to leave nothing ticked
+4. Click **Next**
+5. On the page layout screen, **Installation Layout** is already ticked. Leave it
+6. Click **Save**
 
 | Setting        | Value                                                         |
 |----------------|---------------------------------------------------------------|
@@ -85,95 +111,127 @@ to it.
 | Field Name     | `Panels_Required` (Salesforce fills this from the label)      |
 | Description    | `How many panels the crew has to load for this installation.` |
 | Help Text      | `Ask the planner if this is empty.`                           |
-| Required       | **no**                                                        |
+| Required       | no                                                            |
+
+#### Why
 
 The **Field Name** box is what Salesforce calls the API name, and it fills it from the label as you
 type. It shows `Panels_Required`, without the `__c`: Salesforce adds that suffix to every custom
 field when it saves, and the rest of this course, the metadata files included, calls the field
 `Panels_Required__c`.
 
-The field-level security screen arrives with **Visible** already ticked for nearly every profile.
-Clear them: the checkbox in the **Visible** column header toggles the whole column, so click it once
-to tick everything and again to leave nothing ticked. Then click **Next**. You are going to grant
-this through a permission set, not a profile, and [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) is about why that
+Fill in Description and Help Text: two seconds now, and the generated project documentation at
+[Lab 3.9](../level-3-release-manager/3-9-generate-the-project-documentation.md) reads like something written by a person. Empty descriptions are the most common reason
+that documentation is useless.
+
+You clear the profiles because you are going to grant this through a permission set, not a profile,
+and [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md) is about why that
 distinction matters more than it looks.
 
-On the page layout screen, **Installation Layout** is already ticked, which is what puts the field on
-the record. Leave it.
+**Installation Layout** ticked is what puts the field on the record.
 
-Click **Save**.
+#### You should now see
 
-!!! tip "Fill in Description and Help Text"
-    Two seconds now, and the generated project documentation at Lab 3.9 reads like something
-    written by a person. Empty descriptions are the most common reason that documentation is
-    useless.
+- The field saved, and `Panels Required` in the **Fields & Relationships** list of Installation
 
 ### 3. Grant it to the crew, and to the planners
+
+Goal: `Panels Required` readable by the crew and editable by the planners, through their permission
+sets.
 
 The acceptance criteria say the crew must see it, and planners must fill it in. Nobody has it yet,
 not even you: you granted nothing, and a field that no permission grants is invisible to everybody,
 the administrator who created it included.
 
-**Setup > Permission Sets > Helios Delivery Crew**, then **Object Settings** **(1)** and
-**Installations**, then **Edit**.
+#### Do
 
-![Object Settings for Installations on the Helios Delivery Crew permission set](../../_assets/annotated/salesforce/permission-set-object-settings.png)
+1. **Setup > Permission Sets > Helios Delivery Crew**, then **Object Settings** **(1)** and
+   **Installations**, then **Edit**
 
-**Field Permissions** is the table that matters, one row per field, and **Read Access** **(2)** is
-the column you are here for. This picture was taken before the field existed, so `Panels Required`
-is not in it yet: after your change it appears in that list, in alphabetical order.
+   ![Object Settings for Installations on the Helios Delivery Crew permission set](../../_assets/annotated/salesforce/permission-set-object-settings.png)
 
-Find `Panels Required` and tick **Read Access**. Leave **Edit Access** unticked: a crew member
-reads how many panels to load, they do not decide the number.
+2. In **Field Permissions**, find `Panels Required` and tick **Read Access** **(2)**. This picture
+   was taken before the field existed, so `Panels Required` is not in it yet: after your change it
+   appears in that list, in alphabetical order
+3. Leave **Edit Access** unticked, and click **Save**
+4. Open the same screens on **Helios Delivery Manager**, the planners' permission set
+5. Tick both **Read Access** and **Edit Access** on `Panels Required`, and click **Save**
 
-**Save**.
+!!! warning "Careful"
+    Skip this and step 4 shows you nothing: you would be looking for a field your own permission set
+    does not grant.
 
-Then the same screens on **Helios Delivery Manager**, the planners' permission set. It is also the
-one **Set up my training environment** gave you, which is how you see the Helios app at all. Tick
-both **Read Access** and **Edit Access** on `Panels Required`: planners are the people who decide
-the number. **Save**.
+#### Why
 
-Skip this and step 4 shows you nothing: you would be looking for a field your own permission set
-does not grant.
+**Field Permissions** is the table that matters, one row per field, and **Read Access** is the
+column you are here for. A crew member reads how many panels to load, they do not decide the number.
+
+**Helios Delivery Manager** is also the one **Set up my training environment** gave you, which is
+how you see the Helios app at all. Planners are the people who decide the number.
+
+#### You should now see
+
+- On **Helios Delivery Crew**, **Read Access** ticked on `Panels Required`, and on **Helios Delivery
+  Manager**, both **Read Access** and **Edit Access**
 
 ### 4. Put it where people will look
+
+Goal: `Panels Required` on the Installation record page, with nothing more to build.
 
 The field is on the layout, which is what old-style Salesforce pages use. The Installation record
 page is a Lightning record page, and the column of fields on its left is that layout, so you are
 already done.
 
-Open any installation (**App Launcher > Helios Delivery > Installations**, pick `INST-00001`) and
-look at the bottom of that column. `Panels Required` is there, empty, with the small **i** of the
-help text you wrote next to its name.
+#### Do
+
+1. Open any installation: **App Launcher > Helios Delivery > Installations**, pick `INST-00001`
+2. Look at the bottom of the column of fields
+
+#### You should now see
+
+- `Panels Required` there, empty, with the small **i** of the help text you wrote next to its name
 
 ### 5. Test it against real data
 
+Goal: a `Panels Required` value saved on three installations.
+
 Empty fields prove nothing. Put a number in.
 
-![An installation record in the Helios Delivery app](../../_assets/annotated/salesforce/installation-record.png)
+#### Do
 
-The **Installations** tab **(1)** is how you get back to this list from anywhere in the app. On the
-right of the record sits the **Panel delivery timeline** **(2)**, which lists the pallets booked for
-this installation with their quantities. The picture was taken before this story existed, so
-there is no Panels Required in its column yet. The installation it shows has two pallets, 23 and 16
-panels: 39 is the number you would type there. Most installations have two or three.
+1. On `INST-00001`, read the **Panel delivery timeline** **(2)** on the right of the record. It lists
+   the pallets booked for this installation with their quantities
 
-1. On `INST-00001`, click the pencil at the right of **Panels Required**, type the number the
-   timeline adds up to, and click **Save** at the bottom of the page. This page has no **Edit**
-   button: every field is edited in place, with its own pencil
-2. Look at the two numbers side by side. On a real story you would ask the planner whether this
-   field should be typed in or worked out from the pallets. Here, typed in is the story, and that
-   question is exactly the one a good contributor asks before building anything
+   ![An installation record in the Helios Delivery app](../../_assets/annotated/salesforce/installation-record.png)
 
-Do the same on two more installations, so you have something to look at after the deployment.
+   The picture was taken before this story existed, so there is no Panels Required in its column
+   yet. The installation it shows has two pallets, 23 and 16 panels: 39 is the number you would type
+   there.
+
+2. Click the pencil at the right of **Panels Required**, type the number the timeline adds up to,
+   and click **Save** at the bottom of the page. This page has no **Edit** button: every field is
+   edited in place, with its own pencil
+3. Look at the two numbers side by side
+4. Do the same on two more installations, so you have something to look at after the deployment.
+   The **Installations** tab **(1)** is how you get back to the list from anywhere in the app
+
+#### Why
+
+Most installations have two or three pallets. On a real story you would ask the planner whether this
+field should be typed in or worked out from the pallets. Here, typed in is the story, and that
+question is exactly the one a good contributor asks before building anything.
+
+#### You should now see
+
+- On three installations, a `Panels Required` value that matches their timeline, saved without
+  error
 
 ## What you should see
 
-On three installations: a `Panels Required` value, visible in the column of fields, saved without
-error.
-
-And in VS Code, **nothing at all**. The repository does not know about any of this yet. Your
-changes live in one org and nowhere else, which is exactly the state [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md) exists to end.
+- [ ] On three installations: a `Panels Required` value, visible in the column of fields, saved
+      without error
+- [ ] And in VS Code, nothing at all. The repository does not know about any of this yet. Your
+      changes live in one org and nowhere else, which is exactly the state [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md) exists to end
 
 ## If it goes wrong
 

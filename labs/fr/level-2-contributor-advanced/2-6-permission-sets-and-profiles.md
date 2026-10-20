@@ -5,7 +5,7 @@ description: "Une permission accordée sur un profil s'évapore après un déplo
 level: 2
 lab: 6
 lang: fr
-source_rev: "9f06884649177b15444d55f4ed57d19da3fc210d"
+source_rev: "99d0efd1a5a5426d92e8955789b2eb8428751b17"
 screenshots:
   - annotated/vscode/pipeline-cards--new-user-story
   - annotated/vscode/pipeline-packages-menu--package-xml
@@ -49,71 +49,112 @@ entièrement.
 
 ### 1. Prendre la story et la faire comme un admin le ferait
 
-**New User Story** **(2)**, sous **Project Contribution Workflow** **(1)** du panneau DevOps
-Pipeline. Nom `US-033-batch-cost-visibility`, org `helios-dev`.
+Objectif : l'accès à Cost accordé sur le profil Helios Crew, publié et mergé.
+Rappel : [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md)
 
-![La carte New User Story du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+#### À faire
+
+1. Cliquez sur **New User Story** **(2)**, sous **Project Contribution Workflow** **(1)** du panneau
+   DevOps Pipeline. Nom `US-033-batch-cost-visibility`, org `helios-dev`
+
+   ![La carte New User Story du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+
+2. Trouvez le profil avec lequel les équipes de pose se connectent : dans le panneau **DevOps
+   Pipeline**, ouvrez le menu **Deployment packages** **(1)**, l'icône d'une boîte avec une flèche
+   dans l'en-tête, qui n'affiche son nom qu'au survol, puis **Package XML** **(2)**, comme au
+   [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). La ligne
+   **Profile** liste les deux, `Admin` et `Helios Crew`
+
+   ![Le menu Deployment packages du panneau DevOps Pipeline, avec Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
+
+3. Dans `helios-dev`, la voie rapide : **Setup > Object Manager > Panel Batch > Fields & Relationships >
+   Cost > Set Field-Level Security**, cochez **Visible** pour le profil **Helios Crew**, **Save**
+4. Faites-en un retrieve comme d'habitude : **Commit changes**, **Recent Changes**, **Search Metadata**,
+   cochez le profil `Helios Crew`, récupérez, et commitez-le depuis **Source Control**
+5. Puis **Save / Publish**, poussez, Pull Request, vert, merge
+
+#### Pourquoi
 
 Les équipes de pose se connectent avec le profil **Helios Crew**. C'est l'un des deux profils que
-porte ce repository, à côté d'`Admin`, le profil System Administrator : dans le panneau **DevOps
-Pipeline**, ouvrez le menu **Deployment packages** **(1)**, l'icône d'une boîte avec une flèche dans
-l'en-tête, qui n'affiche son nom qu'au survol, puis **Package XML** **(2)**, comme au
-[Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md). La ligne
-**Profile** liste les deux.
-
-![Le menu Deployment packages du panneau DevOps Pipeline, avec Package XML](../../_assets/annotated/vscode/pipeline-packages-menu--package-xml.png)
-
-Dans `helios-dev`, la voie rapide : **Setup > Object Manager > Panel Batch > Fields & Relationships >
-Cost > Set Field-Level Security**, cochez **Visible** pour le profil **Helios Crew**, **Save**.
+porte ce repository, à côté d'`Admin`, le profil System Administrator.
 
 C'est ainsi que la plupart des gens accordent une permission, et c'est là-dessus que ce lab est
 construit.
-
-Faites-en un retrieve comme d'habitude : **Commit changes**, **Recent Changes**, **Search Metadata**,
-cochez le profil `Helios Crew`, récupérez, et commitez-le depuis **Source Control**. Puis
-**Save / Publish**, poussez, Pull Request, vert, merge.
 
 Le fichier est bien plus long que celui du repository. Le **Retrieve mode** du Metadata Retriever
 indique **Auto** : il récupère un profil en entier, toutes les permissions qu'il accorde dans
 `helios-dev`, donc votre nouvel accès à `Cost` s'y trouve, avec tout ce que le profil peut faire
 d'autre.
 
+#### Vous devriez voir
+
+- Le profil `Helios Crew`, bien plus long qu'avant, commité et mergé avec un contrôle vert
+
 ### 2. Découvrir qu'il ne s'est rien passé
 
-Ouvrez `helios-integration` et vérifiez la sécurité au niveau du champ de **Panel Batch > Cost** : la
-colonne **Helios Crew** n'est pas cochée. La permission n'y est pas.
+Objectif : l'accès absent de `helios-integration`, après un déploiement qui dit avoir réussi.
 
-Retournez à la Pull Request. Le commentaire de déploiement dit **✅ Deployed to `integration`**, et
-son tableau replié **📋** compte un **Profile** parmi les composants qui ont changé. Sauf que ce qui a été déployé n'est pas ce que vous avez commité.
+#### À faire
+
+1. Ouvrez `helios-integration` et vérifiez la sécurité au niveau du champ de **Panel Batch > Cost**
+2. Retournez à la Pull Request et lisez le commentaire de déploiement, et son tableau replié **📋**
+
+#### Pourquoi
+
+Sauf que ce qui a été déployé n'est pas ce que vous avez commité.
+
+#### Vous devriez voir
+
+- La colonne **Helios Crew** non cochée : la permission n'y est pas
+- Le commentaire de déploiement qui dit **✅ Deployed to `integration`**, et son tableau replié
+  **📋** qui compte un **Profile** parmi les composants qui ont changé
 
 ### 3. Lire votre propre diff
 
+Objectif : le commit qui a ressorti votre accès, et le réglage qui l'a fait.
+
 Votre commit contenait la permission. Vous l'avez vue dans le diff avant de cliquer sur Commit.
 
-Ouvrez le panneau **Source Control**, regardez l'historique de votre branche, et lisez le commit que
-**Save / Publish** a fait après le vôtre, `chore(sfdx-hardis): clean sfdx project`. Il ressort
-aussitôt la permission que vous aviez ajoutée, avec toutes les autres sections du fichier qu'un
-permission set pourrait porter. Ce qui reste est ce que seul un profil peut contenir.
+#### À faire
 
-C'est un réglage de projet appelé **minimizeProfiles**, l'une des règles de nettoyage que ce projet a
+1. Ouvrez le panneau **Source Control** et regardez l'historique de votre branche
+2. Lisez le commit que **Save / Publish** a fait après le vôtre, `chore(sfdx-hardis): clean sfdx project`
+3. Trouvez le réglage dans le panneau **Pipeline Settings**, onglet **Salesforce Project**
+
+#### Pourquoi
+
+Ce commit ressort aussitôt la permission que vous aviez ajoutée, avec toutes les autres sections du
+fichier qu'un permission set pourrait porter. Ce qui reste est ce que seul un profil peut contenir.
+
+C'est un réglage de projet appelé `minimizeProfiles`, l'une des règles de nettoyage que ce projet a
 activées, et vous pouvez le voir dans le panneau **Pipeline Settings**, onglet **Salesforce
 Project**.
 
+#### Vous devriez voir
+
+- Le commit de nettoyage qui retire votre accès du profil
+- `minimizeProfiles` listé dans l'onglet **Salesforce Project**
+
 ### 4. Comprendre pourquoi un projet ferait une chose pareille
+
+Objectif : vous savez dire pourquoi la pipeline tient les permissions à l'écart des profils. Cette
+étape n'a aucun clic.
+
+#### Pourquoi
 
 Les profils sont le pire type de métadonnée à versionner, pour trois raisons qui mordent toutes en
 même temps :
 
-1. **Ils sont énormes et ils sont partagés.** Un seul fichier de profil liste toutes les permissions
+1. Ils sont énormes et ils sont partagés. Un seul fichier de profil liste toutes les permissions
    d'objet, de champ, d'onglet, d'application et de classe de l'org. Deux personnes qui travaillent
    sur deux stories sans rapport produisent chacune un diff de mille lignes du même fichier, et elles
    entrent en conflit à chaque fois
-2. **Un profil récupéré peut dire non à ce qu'il n'avait pas.** Récupéré de la façon standard, il
+2. Un profil récupéré peut dire non à ce qu'il n'avait pas. Récupéré de la façon standard, il
    liste les champs et objets de votre package avec `false` partout où le profil n'avait pas accès
    au moment de la récupération. Si un collègue en a accordé un depuis, déployer votre fichier
-   **le lui éteint**, en silence. Le mode **Auto** du Metadata Retriever laisse ces lignes `false`
+   le lui éteint, en silence. Le mode **Auto** du Metadata Retriever laisse ces lignes `false`
    de côté
-3. **Ce que vous récupérez dépend de la façon, et de l'org.** Récupéré de la façon standard, un
+3. Ce que vous récupérez dépend de la façon, et de l'org. Récupéré de la façon standard, un
    profil ne porte que les permissions des composants récupérés avec lui. Récupéré en entier, comme
    le fait le Metadata Retriever en **Auto**, il porte tout ce que le profil a dans l'org d'où il
    vient. Dans les deux cas, le même profil a une tête différente selon qui l'a récupéré, depuis
@@ -127,62 +168,86 @@ affectations de présentation de page.
 La pipeline n'a donc pas perdu votre travail. Elle a refusé de le transporter, parce que le
 transporter finirait par supprimer celui de quelqu'un d'autre.
 
-!!! note "Pourquoi les profils restent quand même dans le repository"
-    Retirer les profils des sources serait la mauvaise conclusion. Un utilisateur se connecte avec un
-    profil, et ce que seul un profil contient, l'application par défaut, la présentation de page de
-    chaque objet, les réglages d'onglets, les plages horaires de connexion, doit être identique dans
-    chaque org. `Admin` et `Helios Crew` restent donc dans `force-app/main/default/profiles/`,
-    restent dans `manifest/package.xml`, et sont déployés avec tout le reste.
+#### Pourquoi les profils restent quand même dans le repository
 
-    Ils ne portent **aucune permission de champ, d'objet, de classe ou de flow**, exprès, et aucune
-    permission utilisateur sauf sur `Admin`. Un profil récupéré en entier liste des centaines de
-    permissions utilisateur, et Salesforce en ajoute et en retire à chaque release, trois fois par an :
-    un profil complet commité au printemps peut échouer au déploiement à l'automne sur une permission
-    qui n'existe plus. `minimizeProfiles` retire ces permissions à chaque fois que quelqu'un publie un
-    profil. Ce qui reste peut quand même être long, car un profil récupéré en entier liste le réglage
-    d'onglet et la présentation de page de chaque objet de l'org : c'est exactement ce que seul un
-    profil peut porter.
+Retirer les profils des sources serait la mauvaise conclusion. Un utilisateur se connecte avec un
+profil, et ce que seul un profil contient, l'application par défaut, la présentation de page de
+chaque objet, les réglages d'onglets, les plages horaires de connexion, doit être identique dans
+chaque org. `Admin` et `Helios Crew` restent donc dans `force-app/main/default/profiles/`,
+restent dans `manifest/package.xml`, et sont déployés avec tout le reste.
 
-    Ces lignes sont aussi ce qui garde un profil attaché à l'org d'où il vient. Il nomme chaque
-    présentation de page et chaque onglet, objets standard compris, et une org à qui il en manque
-    un refuse le profil entier. Il se déploie partout dans ce cours parce que vos orgs sont
-    construites pour contenir les mêmes objets, sous les mêmes noms. **En cas de problème**, plus
-    bas, montre comment trouver quelle org diffère quand ce n'est pas le cas.
+Ils ne portent aucune permission de champ, d'objet, de classe ou de flow, exprès, et aucune
+permission utilisateur sauf sur `Admin`. Un profil récupéré en entier liste des centaines de
+permissions utilisateur, et Salesforce en ajoute et en retire à chaque release, trois fois par an :
+un profil complet commité au printemps peut échouer au déploiement à l'automne sur une permission
+qui n'existe plus. `minimizeProfiles` retire ces permissions à chaque fois que quelqu'un publie un
+profil. Ce qui reste peut quand même être long, car un profil récupéré en entier liste le réglage
+d'onglet et la présentation de page de chaque objet de l'org : c'est exactement ce que seul un
+profil peut porter.
+
+Ces lignes sont aussi ce qui garde un profil attaché à l'org d'où il vient. Il nomme chaque
+présentation de page et chaque onglet, objets standard compris, et une org à qui il en manque
+un refuse le profil entier. Il se déploie partout dans ce cours parce que vos orgs sont
+construites pour contenir les mêmes objets, sous les mêmes noms. *En cas de problème*, plus
+bas, montre comment trouver quelle org diffère quand ce n'est pas le cas.
+
+#### Vous devriez voir
+
+- Les trois raisons, et ce qu'un profil contient encore, dans vos propres mots
 
 ### 5. Le faire comme le projet l'attend
 
+Objectif : `Cost` lisible grâce au permission set **Helios Delivery Crew** dans `helios-integration`.
+
 Refaites l'autorisation là où elle a sa place. Votre première Pull Request est mergée, celle-ci est
-donc une deuxième pour la même story : **New User Story**, nom `US-033-crew-permission-set`, org
-`helios-dev`.
+donc une deuxième pour la même story.
 
-Dans `helios-dev` : **Setup > Permission Sets > Helios Delivery Crew > Object Settings > Panel
-Batches > Edit**, cochez **Read Access** sur `Cost`, **Save**.
+#### À faire
 
-Récupérez le **permission set** cette fois, commitez-le, **Save / Publish**, et ouvrez la Pull
-Request. Le rapport **Git Delta package.xml** nomme `Helios_Delivery_Crew`.
+1. **New User Story**, nom `US-033-crew-permission-set`, org `helios-dev`
+2. Dans `helios-dev` : **Setup > Permission Sets > Helios Delivery Crew > Object Settings > Panel
+   Batches > Edit**, cochez **Read Access** sur `Cost`, **Save**
+3. Récupérez le **permission set** cette fois, commitez-le, **Save / Publish**, et ouvrez la Pull
+   Request
+4. Attendez que le contrôle passe au vert, et mergez
+5. Vérifiez `helios-integration` : **Setup > Permission Sets > Helios Delivery Crew > Object
+   Settings > Panel Batches**
+
+#### Pourquoi
 
 Rien à ranger : le profil que vous avez publié à l'étape 1 reste dans le repository, nettoyé, et il
 continue d'être déployé comme il l'a toujours été.
 
-Le contrôle passe au vert. Mergez, et vérifiez `helios-integration` : **Setup > Permission Sets >
-Helios Delivery Crew > Object Settings > Panel Batches**, `Cost` est lisible. Chaque membre d'équipe
-de pose porte ce permission set, quel que soit son profil.
+Chaque membre d'équipe de pose porte ce permission set, quel que soit son profil.
+
+#### Vous devriez voir
+
+- Le rapport **Git Delta package.xml** qui nomme `Helios_Delivery_Crew`
+- Dans `helios-integration`, `Cost` lisible sur le permission set
 
 ### 6. Regarder l'autre protection, tant que vous y êtes
 
-Ouvrez le panneau **DevOps Pipeline**, puis **Configure Pipeline Settings** dans le menu engrenage. Laissez le
-sélecteur de portée **(1)** sur **Global Settings** : ce sont des règles de projet, identiques pour
-chaque branche.
+Objectif : vous savez quel réglage nettoie quoi, et dans quel onglet des réglages chacun se trouve.
 
-![Le panneau Global Pipeline Settings, sur son onglet Deployment](../../_assets/annotated/vscode/pipeline-config.png)
+#### À faire
 
-Les réglages sont groupés en onglets. Deux d'entre eux font le travail que vous venez de rencontrer,
-et il vaut la peine de savoir lequel fait quoi :
+1. Ouvrez le panneau **DevOps Pipeline**, puis **Configure Pipeline Settings** dans le menu engrenage
+2. Laissez le sélecteur de portée **(1)** sur **Global Settings** : ce sont des règles de projet,
+   identiques pour chaque branche
+
+   ![Le panneau Global Pipeline Settings, sur son onglet Deployment](../../_assets/annotated/vscode/pipeline-config.png)
+
+3. Trouvez les deux réglages du tableau ci-dessous dans l'onglet **Salesforce Project** **(2)**
 
 | Réglage                            | Onglet                         | Ce dont il protège                                                                                        |
 |------------------------------------|--------------------------------|-----------------------------------------------------------------------------------------------------------|
 | `autoCleanTypes: minimizeProfiles` | **Salesforce Project** **(2)** | Un profil qui porte des permissions dont la place est sur un permission set                               |
 | `autoRemoveUserPermissions`        | **Salesforce Project** **(2)** | Des permissions utilisateur précises qui ne doivent jamais voyager entre orgs, quel qu'en soit le porteur |
+
+#### Pourquoi
+
+Les réglages sont groupés en onglets. Deux d'entre eux font le travail que vous venez de rencontrer,
+et il vaut la peine de savoir lequel fait quoi.
 
 Les deux tournent sur votre machine, au moment où vous publiez : ils décident de ce que votre commit
 transporte. L'onglet voisin, **Deployment** **(3)**, décide comment la pipeline l'envoie dans chaque
@@ -206,19 +271,19 @@ set ne sait pas exprimer :
 |---------------------------|---------------------------------------------------------------------------------------------------|
 | `recordTypeVisibilities`  | seulement les entrées marquées `default` (ou `personAccountDefault`)                              |
 | `applicationVisibilities` | seulement l'application par défaut, et les applications explicitement cachées (`visible` à false) |
-| `userPermissions`         | seulement les permissions explicitement **désactivées**, plus tout ce qui est sur le profil Admin |
+| `userPermissions`         | seulement les permissions explicitement désactivées, plus tout ce qui est sur le profil Admin     |
 
 Et certaines sections ne sont jamais touchées, parce que rien d'autre ne peut les contenir :
 `loginHours`, `loginIpRanges`, `layoutAssignments`, `tabVisibilities`, `custom`, `userLicense`.
 
 Un profil a donc toujours un rôle dans cette pipeline. Simplement beaucoup plus petit.
 
-Rien n'a été retiré de votre org. Le nettoyage change **ce que le repository transporte**, jamais ce
+Rien n'a été retiré de votre org. Le nettoyage change ce que le repository transporte, jamais ce
 que Salesforce contient. Votre autorisation à la mode admin est toujours dans `helios-dev`, et c'est
 exactement pour cela que le lab vous demande de la refaire sur le permission set plutôt que de
 réparer le fichier à la main.
 
-La règle à retenir : **si une permission peut vivre sur un permission set, mettez-la là.** Ce n'est
+La règle à retenir : si une permission peut vivre sur un permission set, mettez-la là. Ce n'est
 pas une opinion de sfdx-hardis, c'est ce que Salesforce recommande depuis des années, et cette pipeline
 l'impose au lieu d'espérer.
 
@@ -228,11 +293,16 @@ Documentation de la commande : [hardis:work:save](https://sfdx-hardis.cloudity.c
 
 </details>
 
+#### Vous devriez voir
+
+- `minimizeProfiles` et `autoRemoveUserPermissions` dans l'onglet **Salesforce Project** **(2)**,
+  et l'onglet **Deployment** **(3)** à côté
+
 ## Ce que vous devez voir
 
-- `Cost` accordé sur le permission set **Helios Delivery Crew** dans `helios-integration`
-- `Admin` et `Helios Crew` toujours dans `force-app/main/default/profiles/`, sans aucune permission
-  de champ dedans
+- [ ] `Cost` accordé sur le permission set **Helios Delivery Crew** dans `helios-integration`
+- [ ] `Admin` et `Helios Crew` toujours dans `force-app/main/default/profiles/`, sans aucune permission
+      de champ dedans
 
 ## En cas de problème
 
@@ -266,11 +336,11 @@ cible n'a pas. Le message la nomme, sous la forme `Objet-Nom de la présentation
 2. **Pourquoi une org l'a et pas l'autre ?** Ouvrez **Setup > Object Manager** dans les deux orgs,
    cherchez l'objet, puis ses **Page Layouts**. Il y a trois réponses habituelles :
 
-    | Ce que vous trouvez dans l'org cible                | La cause                                                                                                                                          |
-    |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-    | L'objet n'y est pas                                 | Une fonctionnalité Salesforce est active dans une org et pas dans l'autre. `ServiceAppointment` et ses voisins viennent avec Field Service        |
-    | L'objet y est, sa présentation porte un nom traduit | La présentation a été créée par un utilisateur travaillant dans une autre langue : `Présentation Crew Capacity` au lieu de `Crew Capacity Layout` |
-    | L'objet y est, sans présentation ou avec une autre  | Les deux orgs n'ont pas été créées au même moment, ou quelqu'un a renommé ou supprimé la présentation à la main                                   |
+   | Ce que vous trouvez dans l'org cible                | La cause                                                                                                                                          |
+   |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+   | L'objet n'y est pas                                 | Une fonctionnalité Salesforce est active dans une org et pas dans l'autre. `ServiceAppointment` et ses voisins viennent avec Field Service        |
+   | L'objet y est, sa présentation porte un nom traduit | La présentation a été créée par un utilisateur travaillant dans une autre langue : `Présentation Crew Capacity` au lieu de `Crew Capacity Layout` |
+   | L'objet y est, sans présentation ou avec une autre  | Les deux orgs n'ont pas été créées au même moment, ou quelqu'un a renommé ou supprimé la présentation à la main                                   |
 
 3. **Corrigez la cause, pas le message.** Une fonctionnalité : mettez les orgs d'accord, en
    l'activant dans l'org cible avant le déploiement, ce qui est une action manuelle pour le release

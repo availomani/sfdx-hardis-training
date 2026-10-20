@@ -53,59 +53,77 @@ flow and the same permission set as you. She merged this morning. You did not.
 
 ### 1. Start your own change
 
-**New User Story** **(2)**, under **Project Contribution Workflow** **(1)**. Name
-`US-034-crew-override`, org `helios-dev`.
+Goal: your flow rule and your field grant committed on `US-034-crew-override`, not published yet.
+Refresher: [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md)
 
-![The New User Story card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+#### Do
 
-In `helios-dev`:
+1. **New User Story** **(2)**, under **Project Contribution Workflow** **(1)**. Name
+   `US-034-crew-override`, org `helios-dev`
 
-1. Open the flow `Installation Assign Crew` and add a decision so that an installation whose roof
-   type is `Flat` gets a crew of at least 3, whatever else the flow decided. Connect it to the
-   **same assignment** the flow already ends on, so the new rule runs after the status change.
-   **Save**, then **Activate**: each save of a flow is a new version, and only the active one runs
-2. On the permission set `Helios Delivery Manager`, grant edit access on
+   ![The New User Story card of the DevOps Pipeline panel](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+
+2. In `helios-dev`, open the flow `Installation Assign Crew` and add a decision so that an
+   installation whose roof type is `Flat` gets a crew of at least 3, whatever else the flow decided
+3. Connect it to the same assignment the flow already ends on, so the new rule runs after the
+   status change
+4. **Save**, then **Activate**: each save of a flow is a new version, and only the active one runs
+5. On the permission set `Helios Delivery Manager`, grant edit access on
    `Installation__c.Crew_Notes__c`, so a planner can say why a crew was raised
+6. Retrieve the flow and the permission set, and commit them
 
-In Flow Builder, with the canvas in **Auto-Layout**, the flow then reads: the assignment it already
-ended on, **Move To Scheduled** **(1)**, your new decision **(2)**, and on its flat roof branch the
-assignment that raises the crew to three **(3)**.
+!!! warning "Careful"
+    Stop there: do not publish yet. The next step needs your change to exist before Mariia's work
+    lands.
+
+#### You should now see
+
+- In Flow Builder, with the canvas in **Auto-Layout**, the flow reads: the assignment it already
+  ended on, **Move To Scheduled** **(1)**, your new decision **(2)**, and on its flat roof branch the
+  assignment that raises the crew to three **(3)**
+- Your commit on the branch, and nothing published
 
 ![The Installation Assign Crew flow with the flat roof decision after Move To Scheduled](../../_assets/annotated/salesforce/flow-builder-assign-crew.png)
 
-Retrieve the flow and the permission set, commit them, and **stop there**: do not publish yet.
-
 ### 2. While you were building it, Mariia merged
 
-Mariia does not exist. Her work does, and the training reproduces it inside **your own** fork so you
-can genuinely review and merge it. Do this **after** your own change exists, because that is the
-situation the lab is about: you branched, she merged, and neither of you knew about the other.
+Goal: Mariia's US-018 merged into `integration`, and your branch behind it.
+Refresher: [Lab 2.1](2-1-backpromote-your-teammates-work.md)
 
-**Training: Level 2** **(1)** > **Simulate my teammates** **(2)**, from the Welcome page or from the
-sfdx-hardis command list.
+Mariia does not exist. Her work does, and the training reproduces it inside your own fork so you
+can genuinely review and merge it.
 
-![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
+#### Do
 
-The command panel asks three questions:
+1. Once your own change exists, open **Training: Level 2** **(1)** > **Simulate my teammates**
+   **(2)**, from the Welcome page or from the sfdx-hardis command list
 
-| Question                               | Answer                                                  |
-|----------------------------------------|---------------------------------------------------------|
-| Which teammate work do you need?       | **US-018 Cap the crew size a planner can assign**       |
-| Create it?                             | **Yes**                                                 |
-| Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself on GitHub |
+   ![The Level 2 Training menu of the sfdx-hardis command list](../../_assets/annotated/vscode/sidebar-commands-custom-menu-2--training-menu.png)
 
-It creates the branch `training/mate-us-018-crew-capacity` from your current `integration`, commits
-Mariia's changes under her name, pushes it to your fork (your own copy of the course repository on
-GitHub, for example `github.com/my-username/sfdx-hardis-training`), opens the Pull Request and
-prints its address.
+2. The command panel asks three questions. Answer them as below
 
-With **Yes**, the panel waits for the checks, two to four minutes, merges the Pull Request and
-writes **Pull Request merged into its base branch**. With **No**, open the address it printed, have
-a look at **Files changed**, and merge it with **Squash and merge** once the checks are green: the
-same clicks as [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, where each one has its
-screenshot. If you merge it on GitHub while the panel is still waiting, it notices and stops.
+   | Question                               | Answer                                                  |
+   |----------------------------------------|---------------------------------------------------------|
+   | Which teammate work do you need?       | **US-018 Cap the crew size a planner can assign**       |
+   | Create it?                             | **Yes**                                                 |
+   | Merge it for you once its checks pass? | **Yes**, unless you want to merge it yourself on GitHub |
 
-Either way, Mariia is now in `integration`, and you are behind.
+3. With **Yes**, let the panel wait for the checks, two to four minutes: it merges the Pull Request
+   and writes **Pull Request merged into its base branch**
+4. With **No**, open the address it printed, have a look at **Files changed**, and merge it with
+   **Squash and merge** once the checks are green: the same clicks as
+   [Lab 2.1](2-1-backpromote-your-teammates-work.md), step 1b, where each one has its screenshot.
+   If you merge it on GitHub while the panel is still waiting, it notices and stops
+
+#### Why after your change
+
+Do this after your own change exists, because that is the situation the lab is about: you
+branched, she merged, and neither of you knew about the other.
+
+The command creates the branch `training/mate-us-018-crew-capacity` from your current
+`integration`, commits Mariia's changes under her name, pushes it to your fork (your own copy of the
+course repository on GitHub, for example `github.com/my-username/sfdx-hardis-training`), opens the
+Pull Request and prints its address.
 
 <details markdown="1"><summary>Under the hood: why the teammate is replayed rather than pre-existing</summary>
 
@@ -114,7 +132,7 @@ The command ran:
     node scripts/training.mjs simulate
 
 which copied the files from `scripts/simulate/us-018-crew-capacity/files/` over your working tree,
-committed them with Mariia's name and email, pushed the branch to **your** fork and opened the Pull
+committed them with Mariia's name and email, pushed the branch to your fork and opened the Pull
 Request there with `gh pr create`.
 
 It has to work this way. A Pull Request lives in one repository: you cannot review one that exists
@@ -127,15 +145,20 @@ what you are reviewing is byte for byte what the screenshots show.
 
 </details>
 
+#### You should now see
+
+- Either way, Mariia is now in `integration`, and you are behind
+
 ### 3. Publish, and watch the Pull Request refuse to merge
 
-Now publish your own change: **Save / Publish**, push, and open the Pull Request into `integration`.
+Goal: your Pull Request open into `integration`, and GitHub naming the two files that conflict.
 
-GitHub shows:
+#### Do
 
-> This branch has conflicts that must be resolved
-> `force-app/main/default/flows/Installation_Assign_Crew.flow-meta.xml`
-> `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+1. Now publish your own change: **Save / Publish**, push, and open the Pull Request into
+   `integration`
+
+#### Why
 
 Two files, two completely different kinds of problem.
 
@@ -144,38 +167,49 @@ two of you wrote in the same place: Mariia granted a field on the permission set
 you granted yours, and she connected the same assignment element in the flow to a decision of her
 own. A merge tool cannot know which of two connectors should win. You can.
 
+#### You should now see
+
+- GitHub showing:
+
+  > This branch has conflicts that must be resolved
+  > `force-app/main/default/flows/Installation_Assign_Crew.flow-meta.xml`
+  > `force-app/main/default/permissionsets/Helios_Delivery_Manager.permissionset-meta.xml`
+
 ### 4. Merge integration into your branch
 
-Open the **Source Control** panel, the icon of three small circles joined by lines in the left bar.
+Goal: the merge of `origin/integration` in progress on your branch, with two files in conflict.
 
-First make sure your machine knows what Mariia merged. Open the **Command Palette**: **View >
-Command Palette** in the menu bar, or `Ctrl+Shift+P` (`Cmd+Shift+P` on a Mac). Type `Git: Fetch` and
-pick **Git: Fetch** **(1)**. Nothing changes in your files: fetching only downloads what is new on
-GitHub.
+#### Do
 
-![The Command Palette filtered on Git: Fetch](../../_assets/annotated/vscode/git-palette-fetch--fetch.png)
+1. Open the **Source Control** panel, the icon of three small circles joined by lines in the left
+   bar
+2. Open the **Command Palette**: **View > Command Palette** in the menu bar, or `Ctrl+Shift+P`
+   (`Cmd+Shift+P` on a Mac). Type `Git: Fetch` and pick **Git: Fetch** **(1)**
 
-Then the Command Palette again, type `Git: Merge`, and pick **Git: Merge...** **(1)**. The same
-command is in the **...** menu at the top of the Source Control panel, under **Branch**.
+   ![The Command Palette filtered on Git: Fetch](../../_assets/annotated/vscode/git-palette-fetch--fetch.png)
 
-![The Command Palette filtered on Git: Merge](../../_assets/annotated/vscode/git-palette-merge--merge.png)
+3. Then the Command Palette again, type `Git: Merge`, and pick **Git: Merge...** **(1)**. The same
+   command is in the **...** menu at the top of the Source Control panel, under **Branch**
 
-VS Code asks which branch to merge. Type `integration` and pick **origin/integration** **(1)**,
-listed under **remote branches**: the copy of `integration` that is on GitHub, with Mariia's work in
-it. Not the plain `integration` if it is listed too: that is the copy on your machine, which you
-have not updated since you branched.
+   ![The Command Palette filtered on Git: Merge](../../_assets/annotated/vscode/git-palette-merge--merge.png)
 
-![The branch picker of Git: Merge..., with origin/integration](../../_assets/annotated/vscode/git-merge-pick--origin-integration.png)
+4. VS Code asks which branch to merge. Type `integration` and pick **origin/integration** **(1)**,
+   listed under **remote branches**. Not the plain `integration` if it is listed too
 
-Two files come back marked as conflicting. They appear in the panel under **Merge Changes** **(1)**,
-each with a **!** **(2)**, and the status bar says a merge is in progress.
+   ![The branch picker of Git: Merge..., with origin/integration](../../_assets/annotated/vscode/git-merge-pick--origin-integration.png)
 
-![The Source Control panel with the conflicting files under Merge Changes](../../_assets/annotated/vscode/git-merge-conflicts--merge-changes.png)
+5. Leave the files under **Staged Changes** where they are: they are part of the merge
 
-The picture lists only the permission set. Yours also lists the flow `Installation_Assign_Crew`,
-with its own **!**: two files, as GitHub said. Under **Staged Changes**, two more files wait, the
-field Mariia created and the layout she changed: git merged those on its own. Leave them there, they
-are part of the merge.
+#### Why fetch, then origin/integration
+
+The fetch first makes sure your machine knows what Mariia merged. Nothing changes in your files:
+fetching only downloads what is new on GitHub.
+
+**origin/integration** is the copy of `integration` that is on GitHub, with Mariia's work in it. The
+plain `integration` is the copy on your machine, which you have not updated since you branched.
+
+Under **Staged Changes**, two more files wait, the field Mariia created and the layout she changed:
+git merged those on its own.
 
 <details markdown="1"><summary>Under the hood: what Merge Branch ran</summary>
 
@@ -187,50 +221,74 @@ guess which one meant it.
 
 </details>
 
+#### You should now see
+
+- Two files come back marked as conflicting. They appear in the panel under **Merge Changes**
+  **(1)**, each with an exclamation mark **(2)**, and the status bar says a merge is in progress
+- The picture lists only the permission set. Yours also lists the flow `Installation_Assign_Crew`,
+  with its own exclamation mark: two files, as GitHub said
+- Under **Staged Changes**, the field Mariia created and the layout she changed
+
+![The Source Control panel with the conflicting files under Merge Changes](../../_assets/annotated/vscode/git-merge-conflicts--merge-changes.png)
+
 ### 5. Resolve the permission set: take both
 
-Click the permission set file under **Merge Changes**, then **Resolve in Merge Editor** at the
-bottom right of the file. VS Code opens its merge editor: **Incoming** **(1)**, Mariia's version
-from `integration`, on the left, **Current** **(2)**, yours, on the right, and the **Result** **(3)**
-you are building at the bottom, which starts from the version you both branched from.
+Goal: both grants in the permission set, as two complete blocks, and the file out of **Merge
+Changes**.
 
-![The merge editor on the Helios Delivery Manager permission set](../../_assets/annotated/vscode/git-merge-editor--parts.png)
+#### Do: take both sides
 
-This one is mechanical, and you can decide it without understanding the XML: **both entries
-belong**. Mariia granted one field, you granted another, and a permission set holds as many as it
-needs. Keep both sides: click **Accept Incoming** **(1)** above the highlighted line of the
-**Incoming** pane, then **Accept Current** **(2)** above the one of the **Current** pane.
+1. Click the permission set file under **Merge Changes**, then **Resolve in Merge Editor** at the
+   bottom right of the file. VS Code opens its merge editor: **Incoming** **(1)**, Mariia's version
+   from `integration`, on the left, **Current** **(2)**, yours, on the right, and the **Result**
+   **(3)** you are building at the bottom, which starts from the version you both branched from
 
-![The merge editor, with Accept Incoming and Accept Current](../../_assets/annotated/vscode/git-merge-editor--accept-both.png)
+   ![The merge editor on the Helios Delivery Manager permission set](../../_assets/annotated/vscode/git-merge-editor--parts.png)
 
-Now read the **Result** **(1)** before anything else:
+2. Click **Accept Incoming** **(1)** above the highlighted line of the **Incoming** pane
+3. Click **Accept Current** **(2)** above the one of the **Current** pane
 
-![The merge editor after both sides were accepted, with Complete Merge](../../_assets/annotated/vscode/git-merge-editor-accepted--result.png)
+   ![The merge editor, with Accept Incoming and Accept Current](../../_assets/annotated/vscode/git-merge-editor--accept-both.png)
+
+#### Why both
+
+This one is mechanical, and you can decide it without understanding the XML: both entries
+belong. Mariia granted one field, you granted another, and a permission set holds as many as it
+needs.
+
+#### Do: make two blocks of the result
+
+1. Now read the **Result** **(1)** before anything else
+
+   ![The merge editor after both sides were accepted, with Complete Merge](../../_assets/annotated/vscode/git-merge-editor-accepted--result.png)
+
+2. Type it in the **Result** pane: after the first `<field>` line, add the four lines that close the
+   first block and open the second. Copy them from here: nobody is asked to write XML from memory
+
+   ```xml title="Edit this file"
+           <readable>true</readable>
+       </fieldPermissions>
+       <fieldPermissions>
+           <editable>true</editable>
+   ```
+
+3. Then click **Complete Merge** **(2)**
+
+#### Why two blocks
 
 The editor kept both lines, and put them in the same block: one `<fieldPermissions>` with two
 `<field>` lines, which Salesforce refuses. Git merges lines, not permissions. You want two complete
-blocks, one per field, Mariia's `Crew_Capacity_Cap__c` first and your `Crew_Notes__c` second. Type
-it in the **Result** pane: after the first `<field>` line, add the four lines that close the first
-block and open the second:
+blocks, one per field, Mariia's `Crew_Capacity_Cap__c` first and your `Crew_Notes__c` second. The
+under the hood section below shows the result you are aiming at.
 
-```xml
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-```
-
-Copy them from here: nobody is asked to write XML from memory. The under the hood section below
-shows the result you are aiming at. Then click **Complete Merge** **(2)**.
-
-**Take both** is the right answer for almost every permission set conflict. Choosing one side is how
+Take both is the right answer for almost every permission set conflict. Choosing one side is how
 a teammate's permission quietly disappears, and nobody notices until somebody cannot see a field.
 
 <details markdown="1"><summary>Under the hood: what the conflict actually looked like</summary>
 
 Git conflicts on lines, not on XML, so the markers landed inside one block rather than around two:
 
-```xml
+```xml title="Output"
     <fieldPermissions>
         <editable>true</editable>
 <<<<<<< HEAD
@@ -245,7 +303,7 @@ Git conflicts on lines, not on XML, so the markers landed inside one block rathe
 Once you added the four lines, the result holds two complete blocks, in alphabetical order, which is
 how Salesforce writes them anyway:
 
-```xml
+```xml title="Edit this file"
     <fieldPermissions>
         <editable>true</editable>
         <field>Installation__c.Crew_Capacity_Cap__c</field>
@@ -260,25 +318,37 @@ how Salesforce writes them anyway:
 
 </details>
 
+#### You should now see
+
+- The permission set under **Staged Changes**, with two complete `<fieldPermissions>` blocks:
+  `Crew_Capacity_Cap__c` first, `Crew_Notes__c` second
+
 ### 6. Resolve the flow: understand both, then decide
+
+Goal: the flow rebuilt in Flow Builder, your minimum first and Mariia's cap last, retrieved and
+staged next to the permission set.
+Refresher: [Lab 2.5](2-5-pass-code-quality-and-apex-test-coverage.md)
 
 This one you cannot resolve by taking both, because the two changes are in the same decision path.
 
-- **Mariia's change** caps the crew at what the installation allows: never more than N
-- **Your change** raises the crew to at least 3 on flat roofs: never fewer than 3
+- Mariia's change caps the crew at what the installation allows: never more than N
+- Your change raises the crew to at least 3 on flat roofs: never fewer than 3
 
 Read on their own, both are correct. Together, they can contradict each other on a flat roof whose
 cap is 2.
 
-This is the moment that matters, and the answer is not technical: **go and ask Mariia**. On a real
+This is the moment that matters, and the answer is not technical: go and ask Mariia. On a real
 project, a conflict in business logic is a conversation, not a merge strategy.
 
-For this lab, the decision has been made for you: **the cap wins**. A crew larger than the
+For this lab, the decision has been made for you: the cap wins. A crew larger than the
 installation allows is a safety problem; a crew of 2 on a flat roof is a slow day. Resolve so that
-your minimum applies **only when it does not exceed Mariia's cap**.
+your minimum applies only when it does not exceed Mariia's cap.
 
-Do it in Flow Builder, not in the file. A flow is stored as XML that nobody can read reliably,
-developers included, and a flow that deploys but behaves wrongly is worse than one that fails.
+!!! warning "Careful"
+    Do it in Flow Builder, not in the file. A flow is stored as XML that nobody can read reliably,
+    developers included, and a flow that deploys but behaves wrongly is worse than one that fails.
+
+#### Do
 
 1. Open the flow file under **Merge Changes** in the merge editor, the same way. Click **Accept
    Incoming** above each conflict of the **Incoming** pane, then **Complete Merge**: Mariia's whole
@@ -292,19 +362,24 @@ developers included, and a flow that deploys but behaves wrongly is worse than o
    **Push from local files to Salesforce org** command would send your org every change git has
    seen since the last sync, deletions included, which is more than this step needs
 
-3. Open Mariia's version of the flow, which is the **latest** one. Opening the flow from its name
-   can land on an older version, without her **Crew Over Cap** decision: in Setup, **Flows**, open
-   the menu at the end of the `Installation Assign Crew` row, **View Details and Versions**, and
-   open the version at the top of the list. Add your flat-roof rule again, **before** her cap: the
-   flow raises a flat roof crew to three first, and her cap, which now runs last, has the final
-   word. Your decision **(1)** comes first, her **Crew Over Cap** decision **(2)** last. **Save**,
-   then **Activate**
+3. Open Mariia's version of the flow, which is the latest one: in Setup, **Flows**, open the menu at
+   the end of the `Installation Assign Crew` row, **View Details and Versions**, and open the
+   version at the top of the list. Opening the flow from its name can land on an older version,
+   without her **Crew Over Cap** decision
+4. Add your flat-roof rule again, before her cap. Your decision **(1)** comes first, her **Crew Over
+   Cap** decision **(2)** last
 
-    ![The rebuilt flow: the flat roof minimum first, the cap last](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
+   ![The rebuilt flow: the flat roof minimum first, the cap last](../../_assets/annotated/salesforce/flow-builder-assign-crew-full.png)
 
-4. Come back to VS Code, retrieve the rebuilt flow with **Commit changes**, and stage it in
+5. **Save**, then **Activate**
+6. Come back to VS Code, retrieve the rebuilt flow with **Commit changes**, and stage it in
    **Source Control**, next to the permission set. Do not commit yet: a merge ends with one commit,
    and the next step makes it
+
+#### Why this order
+
+The flow raises a flat roof crew to three first, and her cap, which now runs last, has the final
+word.
 
 Slower to describe, much faster to do, and you can see what you are building.
 
@@ -319,22 +394,46 @@ not intend, which no check catches and no test in this project covers.
 
 </details>
 
+#### You should now see
+
+- In `helios-dev`, the active flow with your flat roof decision first and **Crew Over Cap** last
+- The flow and the permission set both under **Staged Changes**, nothing committed yet
+
 ### 7. Finish the merge and re-validate
 
-**Complete Merge** moved each file from **Merge Changes** to **Staged Changes**. When both are
-there, the message box already reads `Merge remote-tracking branch 'origin/integration' into
-features/US-034-crew-override`, and the blue button under it reads **Continue** while a merge is in
-progress: click it, then **Sync Changes** to push.
+Goal: the merge committed and pushed, your branch published again, and the Pull Request merged.
 
-Then **re-publish**: **Save / Publish User Story**. This matters. The merge produced XML by hand,
-and publishing re-runs the cleaning rules over it and rebuilds `manifest/package.xml` from what your
-branch now changes. Skipping it is how a stray conflict marker reaches a deployment.
+#### Do
 
-Watch the check go green, then merge.
+1. When both files are under **Staged Changes**, the message box already reads `Merge
+   remote-tracking branch 'origin/integration' into features/US-034-crew-override`, and the blue
+   button under it reads **Continue** while a merge is in progress: click it
+2. Then **Sync Changes** to push
+3. Then re-publish: **Save / Publish User Story**
+4. Watch the check go green, then merge
+
+#### Why publish again
+
+**Complete Merge** moved each file from **Merge Changes** to **Staged Changes**.
+
+Publishing again matters. The merge produced XML by hand, and publishing re-runs the cleaning rules
+over it and rebuilds `manifest/package.xml` from what your branch now changes. Skipping it is how a
+stray conflict marker reaches a deployment.
+
+#### You should now see
+
+- A green check on your Pull Request, then the Pull Request merged into `integration`
 
 ### 8. Verify both changes survived
 
-In `helios-integration`:
+Goal: Mariia's rule and yours both working in `helios-integration`.
+
+#### Do
+
+1. In `helios-integration`, open the flow `Installation Assign Crew` and the permission set
+   `Helios Delivery Manager`
+
+#### You should now see
 
 - The flow caps the crew, Mariia's rule
 - The flow raises flat-roof crews, your rule, without breaking the cap
@@ -344,9 +443,9 @@ If either side is missing, the resolution lost work, and the badge audit will sa
 
 ## What you should see
 
-- No conflict markers anywhere: search the repository for `<<<<<<<`
-- Both field permissions in `Helios_Delivery_Manager`
-- Both behaviours in the flow
+- [ ] No conflict markers anywhere: search the repository for `<<<<<<<`
+- [ ] Both field permissions in `Helios_Delivery_Manager`
+- [ ] Both behaviours in the flow
 
 ## If it goes wrong
 
@@ -380,7 +479,7 @@ merging something you do not understand.
 
 Welcome page > **Training: Level 2** > **Check my work**, then pick **Lab 2.7**.
 
-The check asserts **outcomes, not procedure**: both changes present and correct on `integration`,
+The check asserts outcomes, not procedure: both changes present and correct on `integration`,
 no markers left. However you got there, including resolving in the GitHub web editor or redoing the
 work in the Flow Builder, passes.
 

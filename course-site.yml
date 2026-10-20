@@ -128,6 +128,9 @@ extra_javascript:
   # it, so a click used to leave the lab and land on a bare PNG. This opens it
   # over the page instead. See site-theme/javascripts/lightbox.js.
   - theme/javascripts/lightbox.js
+  # Lab pages only: numbered captions under the screenshots, and the ticks a
+  # learner sets as they go, saved in their browser. See lab-page.js.
+  - theme/javascripts/lab-page.js
   # A guard: the template puts nothing after the footer, so anything found
   # there came from a page swap that went wrong. See after-footer.js.
   - theme/javascripts/after-footer.js

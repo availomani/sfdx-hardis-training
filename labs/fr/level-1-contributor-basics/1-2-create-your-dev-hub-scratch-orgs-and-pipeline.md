@@ -5,7 +5,7 @@ description: "Inscrivez-vous à une org Salesforce Developer Edition gratuite, p
 level: 1
 lab: 2
 lang: fr
-source_rev: "b36716a872d1f64f594410d19a203737fae38195"
+source_rev: "b9ff8125578d4c1a045ad7469430181b705376f3"
 screenshots:
   - annotated/web/sf-signup
   - annotated/web/gh-cli-download
@@ -36,7 +36,7 @@ pipeline câblé dessus.
 
 ## La situation
 
-**Ce lab n'est pas le métier, et rien de tout cela n'arrive sur un vrai projet.**
+Ce lab n'est pas le métier, et rien de tout cela n'arrive sur un vrai projet.
 
 Là-bas, tout cela existe avant votre arrivée : les orgs ont été créées par celui ou celle qui a
 monté le projet, le repository est là depuis des années, et sa pipeline déploie depuis des mois.
@@ -53,116 +53,137 @@ fait le reste pendant que vous lisez. Le travail commence au [Lab 1.3](1-3-start
 - [ ] Un compte GitHub
 - [ ] Une adresse e-mail que vous pouvez consulter
 
-!!! info "Si vous n'avez pas de compte GitHub"
-    En créer un prend deux minutes et ne coûte rien. Ouvrez
-    [github.com/signup](https://github.com/signup) et donnez une adresse e-mail, un mot de passe et
-    un nom d'utilisateur. GitHub vous envoie un code par e-mail pour confirmer l'adresse, et c'est
-    tout : le plan gratuit fait tout ce dont ce cours a besoin, et il ne demande jamais de carte.
+Si vous n'avez pas de compte GitHub, en créer un prend deux minutes et ne coûte rien. Ouvrez
+[github.com/signup](https://github.com/signup) et donnez une adresse e-mail, un mot de passe et
+un nom d'utilisateur. GitHub vous envoie un code par e-mail pour confirmer l'adresse, et c'est
+tout : le plan gratuit fait tout ce dont ce cours a besoin, et il ne demande jamais de carte.
 
-    Choisissez le nom d'utilisateur avec un minimum de soin. Il devient une partie de l'adresse de
-    tout ce que vous mettrez là-bas, `github.com/<votre-nom-utilisateur>/sfdx-hardis-training` dans
-    quelques minutes, et les gens le lisent. Votre nom, ou le pseudo que vous utilisez déjà
-    ailleurs, vaut mieux que tout ce que vous voudrez changer plus tard.
+Choisissez le nom d'utilisateur avec un minimum de soin. Il devient une partie de l'adresse de
+tout ce que vous mettrez là-bas, `github.com/<votre-nom-utilisateur>/sfdx-hardis-training` dans
+quelques minutes, et les gens le lisent. Votre nom, ou le pseudo que vous utilisez déjà
+ailleurs, vaut mieux que tout ce que vous voudrez changer plus tard.
 
-    **Si vous avez déjà un compte, servez-vous-en.** Personnel ou professionnel, ancien ou nouveau,
-    cela ne change rien ici. La seule chose à savoir sur un compte professionnel : certaines
-    entreprises restreignent ce que leurs membres ont le droit de forker. Si le fork de l'étape 5
-    est refusé, c'est pour cela, et un compte personnel vous débloque.
+Si vous avez déjà un compte, servez-vous-en. Personnel ou professionnel, ancien ou nouveau,
+cela ne change rien ici. La seule chose à savoir sur un compte professionnel : certaines
+entreprises restreignent ce que leurs membres ont le droit de forker. Si le fork de l'étape 5
+est refusé, c'est pour cela, et un compte personnel vous débloque.
 
 ## Les étapes
 
 ### 1. Créer votre org Developer Edition
 
-Allez sur [developer.salesforce.com/signup](https://developer.salesforce.com/signup) et
-inscrivez-vous. C'est gratuit, cela n'expire jamais tant que vous l'utilisez, et aucune carte
-bancaire n'est demandée.
+Objectif : une org Developer Edition gratuite, avec son nom d'utilisateur et un mot de passe que vous
+avez défini.
 
-Le formulaire demande vos prénom, nom, intitulé de poste, entreprise et pays ou région, puis trois
-choses qui décident si l'inscription aboutit :
+#### À faire
 
-1. **Work email** **(1)**, une vraie adresse que vous pouvez consulter, parce que l'inscription est
-   confirmée par e-mail
-2. la case qui accepte le **Main Services Agreement** **(2)**. La case de pixel de suivi en dessous
-   est facultative, vous pouvez la laisser tranquille
-3. **Sign me up** **(3)**
+1. Allez sur [developer.salesforce.com/signup](https://developer.salesforce.com/signup) et
+   inscrivez-vous
+2. Remplissez vos prénom, nom, intitulé de poste, entreprise et pays ou région
+3. Dans **Work email** **(1)**, donnez une vraie adresse que vous pouvez consulter, parce que
+   l'inscription est confirmée par e-mail
+4. Cochez la case qui accepte le **Main Services Agreement** **(2)**. La case de pixel de suivi en
+   dessous est facultative, vous pouvez la laisser tranquille
+5. Cliquez sur **Sign me up** **(3)**
 
-![Le formulaire d'inscription Salesforce Developer Edition](../../_assets/annotated/web/sf-signup.png)
+   ![Le formulaire d'inscription Salesforce Developer Edition](../../_assets/annotated/web/sf-signup.png)
 
-Vous ne choisissez pas de nom d'utilisateur : il est généré et vous est envoyé. Ouvrez l'e-mail de
-confirmation et définissez un mot de passe. L'e-mail porte aussi ce nom d'utilisateur. Il ressemble
-à une adresse e-mail mais n'en est pas une, et c'est avec lui que vous vous connectez. Gardez-le
-quelque part.
+6. Ouvrez l'e-mail de confirmation et définissez un mot de passe
+7. Gardez quelque part le nom d'utilisateur que porte l'e-mail : c'est avec lui que vous vous
+   connectez
+
+!!! warning "Attention"
+    Une org Developer Edition est désactivée après une longue période d'inactivité. Terminez un
+    niveau en quelques semaines et vous ne rencontrerez jamais ce cas.
+
+#### Pourquoi
+
+L'org est gratuite, elle n'expire jamais tant que vous l'utilisez, et aucune carte bancaire n'est
+demandée. L'e-mail, l'acceptation et le bouton sont les trois choses du formulaire qui décident si
+l'inscription aboutit.
+
+Vous ne choisissez pas de nom d'utilisateur : il est généré et vous est envoyé. Il ressemble à une
+adresse e-mail mais n'en est pas une.
 
 C'est la seule org à laquelle vous vous inscrivez, et elle a deux rôles dans ce cours :
 
-| Quand          | Ce qu'est cette org                                                                    |
-|----------------|----------------------------------------------------------------------------------------|
-| Niveaux 1 et 2 | Votre **Dev Hub** : l'org qui crée les trois autres, et rien de plus                   |
-| Niveau 3       | La **production**, dernier arrêt de la pipeline que vous aurez fini de monter d'ici là |
+| Quand          | Ce qu'est cette org                                                                |
+|----------------|------------------------------------------------------------------------------------|
+| Niveaux 1 et 2 | Votre Dev Hub : l'org qui crée les trois autres, et rien de plus                   |
+| Niveau 3       | La production, dernier arrêt de la pipeline que vous aurez fini de monter d'ici là |
 
-!!! info "Les scratch orgs, en un paragraphe"
-    Une **scratch org** est une org Salesforce temporaire qu'une commande crée en deux minutes, à
-    partir d'une org appelée **Dev Hub**. Elle démarre vide, vit jusqu'à 30 jours, et se jette quand
-    vous avez fini. Les équipes s'en servent parce qu'une org neuve que personne n'a touchée est
-    l'endroit le plus honnête où tester un déploiement. Une org Developer Edition gratuite peut
-    jouer le rôle de Dev Hub et garder **trois scratch orgs** vivantes à la fois, ce qui est
-    exactement le nombre qu'utilise ce cours.
+Les scratch orgs, en un paragraphe. Une scratch org est une org Salesforce temporaire qu'une
+commande crée en deux minutes, à partir d'une org appelée Dev Hub. Elle démarre vide, vit jusqu'à
+30 jours, et se jette quand vous avez fini. Les équipes s'en servent parce qu'une org neuve que
+personne n'a touchée est l'endroit le plus honnête où tester un déploiement. Une org Developer
+Edition gratuite peut jouer le rôle de Dev Hub et garder trois scratch orgs vivantes à la fois, ce
+qui est exactement le nombre qu'utilise ce cours.
 
-!!! note "Une org Developer Edition est désactivée après une longue période d'inactivité. Terminez un niveau en quelques semaines et vous ne rencontrerez jamais ce cas."
+#### Vous devriez voir
+
+- Un mot de passe défini sur votre org Developer Edition, et son nom d'utilisateur gardé quelque
+  part
 
 ### 2. La connecter dans Orgs Manager
 
-De retour dans VS Code, sur la Welcome page, cliquez sur **Orgs Manager**.
+Objectif : votre org Developer Edition connectée dans VS Code, nommée `helios-prod`, et définie
+comme org par défaut.
 
-![Le tableau Orgs Manager, avec les orgs de formation et leur état de connexion](../../_assets/annotated/vscode/orgs-manager.png)
+#### À faire
 
-L'image a été prise à la fin de ce lab. Pour l'instant votre tableau est vide.
+1. De retour dans VS Code, sur la Welcome page, cliquez sur **Orgs Manager**
 
-!!! info "Org connectée, org par défaut"
-    Une org est **connectée** quand la CLI Salesforce de votre machine détient un token pour elle :
-    VS Code peut l'ouvrir et y travailler sans vous demander de mot de passe. Vous pouvez avoir
-    plusieurs orgs connectées en même temps, et ce tableau les liste toutes.
+   ![Le tableau Orgs Manager, avec les orgs de formation et leur état de connexion](../../_assets/annotated/vscode/orgs-manager.png)
 
-    L'**org par défaut** est celle d'entre elles sur laquelle une commande travaille quand personne
-    ne lui dit quelle org utiliser. Il n'y en a qu'une à la fois, la section Status du panneau
-    sfdx-hardis la nomme, et c'est dans ce panneau-ci que vous en changez.
+   L'image a été prise à la fin de ce lab. Pour l'instant votre tableau est vide.
 
-1. Cliquez sur **Add Org** **(1)**. S'il vous demande **Do you want to set the selected org as
+2. Cliquez sur **Add Org** **(1)**. S'il vous demande **Do you want to set the selected org as
    your default org?**, répondez **Yes** : c'est ce qui pointe la suite du cours sur cette org
    sans redemander
-2. Choisissez **🌍 Login to another org**, la première entrée de la liste qui s'ouvre
-3. On vous demande à quelle adresse vous connecter, et la sandbox est proposée. **Changez-la** :
+3. Choisissez **🌍 Login to another org**, la première entrée de la liste qui s'ouvre
+4. On vous demande à quelle adresse vous connecter, et la sandbox est proposée. Changez-la :
    prenez **☢️ Other: Dev org, Production org or DevHub org (login.salesforce.com)**, parce qu'une
    org Developer Edition n'est pas une sandbox. Choisissez la réponse sandbox ici et la page de
    connexion refuse votre nom d'utilisateur
-4. Votre navigateur ouvre la page de connexion Salesforce. Si elle propose déjà des noms
+5. Votre navigateur ouvre la page de connexion Salesforce. Si elle propose déjà des noms
    d'utilisateur enregistrés, cliquez d'abord sur **Log In with Different Username**, puis
    utilisez celui reçu par e-mail
-5. Salesforce affiche **Allow Access?** pour la CLI Salesforce. Cliquez sur **Allow**. C'est cet
+6. Salesforce affiche **Allow Access?** pour la CLI Salesforce. Cliquez sur **Allow**. C'est cet
    écran qui remet à la CLI le token qu'elle range sur votre machine : le refuser laisse l'org
    non connectée
+7. De retour dans VS Code, le panneau vous demande encore une chose : **What name do you want to
+   give this org?**
 
-De retour dans VS Code, le panneau vous demande encore une chose :
+   ![Le panneau demandant quel nom donner à l'org qui vient d'être connectée](../../_assets/annotated/vscode/org-select-alias.png)
 
-![Le panneau demandant quel nom donner à l'org qui vient d'être connectée](../../_assets/annotated/vscode/org-select-alias.png)
+8. La zone **(1)** est déjà remplie avec une suggestion. Remplacez-la par `helios-prod`, puis
+   cliquez sur **Validate** **(2)**
 
-**What name do you want to give this org?** La zone **(1)** est déjà remplie avec une suggestion,
-tirée de l'adresse web de l'org elle-même. Sur une Developer Edition, cette adresse est une chaîne
-inventée par Salesforce, `orgfarm-9f2a1c7e4b` ou quelque chose d'approchant, qui ne vous dit rien de
-ce à quoi sert l'org.
+#### Pourquoi
 
-**Remplacez-la par `helios-prod`**, puis cliquez sur **Validate** **(2)**.
+Une org est connectée quand la CLI Salesforce de votre machine détient un token pour elle : VS Code
+peut l'ouvrir et y travailler sans vous demander de mot de passe. Vous pouvez avoir plusieurs orgs
+connectées en même temps, et le tableau d'Orgs Manager les liste toutes.
+
+L'org par défaut est celle d'entre elles sur laquelle une commande travaille quand personne ne lui
+dit quelle org utiliser. Il n'y en a qu'une à la fois, la section Status du panneau sfdx-hardis la
+nomme, et c'est dans ce panneau-ci que vous en changez.
+
+La suggestion de la zone de nom est tirée de l'adresse web de l'org elle-même. Sur une Developer
+Edition, cette adresse est une chaîne inventée par Salesforce, `orgfarm-9f2a1c7e4b` ou quelque chose
+d'approchant, qui ne vous dit rien de ce à quoi sert l'org.
 
 Production peut sembler un bien grand nom pour une org vide. C'est le rôle qu'aura cette org à la fin
 du cours, et lui donner son nom définitif maintenant évite d'avoir à renommer quoi que ce soit plus
 tard.
 
-Ce nom s'appelle un **alias**, et c'est lui que vous verrez et cliquerez désormais : dans ce panneau,
+Ce nom s'appelle un alias, et c'est lui que vous verrez et cliquerez désormais : dans ce panneau,
 dans le diagramme de la pipeline, partout où le cours nomme une org. Les trois orgs créées à l'étape 5
 reçoivent le leur automatiquement, et elles apparaissent dans le tableau d'Orgs Manager sous ces noms,
-chacune avec un **Connected** vert : **(2)** et **(3)** sur la première image de cette étape. **C'est par ce panneau que vous vous connectez à une org
-pour tout le reste du cours**, et c'est aussi là que vous vérifiez sur quelle org vous êtes pointé,
-ce qui évite plus de confusions que n'importe quoi d'autre dans cette formation.
+chacune avec un **Connected** vert : **(2)** et **(3)** sur la première image de cette étape. C'est
+par ce panneau que vous vous connectez à une org pour tout le reste du cours, et c'est aussi là que
+vous vérifiez sur quelle org vous êtes pointé, ce qui évite plus de confusions que n'importe quoi
+d'autre dans cette formation.
 
 <details markdown="1"><summary>Sous le capot : ce que connecter une org vient de faire</summary>
 
@@ -185,41 +206,48 @@ Documentation de la commande : [hardis:org:select](https://sfdx-hardis.cloudity.
 
 </details>
 
+#### Vous devriez voir
+
+- `helios-prod` dans le tableau d'Orgs Manager, avec un **Connected** vert
+
 ### 3. Récupérer le repository
+
+Objectif : le projet de formation cloné sur votre machine et ouvert dans VS Code.
 
 Il vous faut le projet de formation sur votre machine avant que la commande de l'étape 5 puisse en
 construire quoi que ce soit. Prenez la copie de l'équipe pour l'instant : elle est en lecture seule,
 et l'étape 5 la transforme en la vôtre.
 
-Dans VS Code, sans dossier ouvert, cliquez sur l'icône **Source Control** **(1)** dans la barre
-étroite de gauche. Elle propose deux boutons. Prenez **Clone Repository** **(2)**.
+#### À faire
 
-![Le panneau Source Control de VS Code avant l'ouverture d'un dossier](../../_assets/annotated/vscode/clone-repository.png)
+1. Dans VS Code, sans dossier ouvert, cliquez sur l'icône **Source Control** **(1)** dans la barre
+   étroite de gauche. Elle propose deux boutons. Prenez **Clone Repository** **(2)**. Vous n'avez
+   pas besoin d'un dossier vide au préalable : **Clone Repository** demande où mettre le projet, il
+   n'y a donc rien à préparer
 
-Puis :
+   ![Le panneau Source Control de VS Code avant l'ouverture d'un dossier](../../_assets/annotated/vscode/clone-repository.png)
 
-1. Collez `https://github.com/hardisgroupcom/sfdx-hardis-training.git` et appuyez sur Entrée
-2. Choisissez le dossier où le mettre. VS Code crée un dossier `sfdx-hardis-training` à l'intérieur
-   de celui que vous choisissez : choisissez donc l'endroit où vous voulez que vivent **tous** vos
+2. Collez `https://github.com/hardisgroupcom/sfdx-hardis-training.git` et appuyez sur Entrée
+3. Choisissez le dossier où le mettre. VS Code crée un dossier `sfdx-hardis-training` à l'intérieur
+   de celui que vous choisissez : choisissez donc l'endroit où vous voulez que vivent tous vos
    repositories désormais. Si vous n'avez pas encore un tel endroit, créez-en un : `C:\git` sous Windows,
    `~/git` sous macOS et Linux. Chemin court, pas d'espaces, et pas dans OneDrive ni dans un dossier
    qui se synchronise, parce qu'un client de synchronisation et un repository git se disputent les mêmes
    fichiers
-3. Quand on vous le demande, cliquez sur **Open** pour travailler dans le clone
+4. Dans Agentforce Vibes, gardez le dossier proposé : prenez le dossier que la boîte de dialogue
+   propose plutôt que de saisir un chemin
+5. Quand on vous le demande, cliquez sur **Open** pour travailler dans le clone
+6. Si GitHub vous demande de vous connecter, laissez VS Code s'en charger : **Sign in with your
+   browser** suffit
 
-Si GitHub vous demande de vous connecter, laissez VS Code s'en charger : **Sign in with your
-browser** suffit.
+#### Pourquoi
 
-!!! note "Vous n'avez pas besoin d'un dossier vide au préalable"
-    **Clone Repository** demande où mettre le projet, il n'y a donc rien à préparer. Les deux boutons
-    de l'image n'apparaissent que tant qu'aucun dossier n'est ouvert : dès qu'il y en a un, le
-    panneau Source Control affiche les modifications de ce dossier à la place.
+Les deux boutons de l'image n'apparaissent que tant qu'aucun dossier n'est ouvert : dès qu'il y en a
+un, le panneau Source Control affiche les modifications de ce dossier à la place.
 
-!!! tip "Dans Agentforce Vibes, gardez le dossier proposé"
-    L'onglet ouvre son propre espace de travail, déjà court, déjà hors de tout client de
-    synchronisation. Prenez le dossier que la boîte de dialogue propose plutôt que de saisir un
-    chemin : il n'y a pas de `C:\git` à créer, et un chemin que vous inventez là est un endroit
-    que l'onglet ne gardera pas forcément.
+Dans Agentforce Vibes, l'onglet ouvre son propre espace de travail, déjà court, déjà hors de tout
+client de synchronisation. Il n'y a pas de `C:\git` à créer, et un chemin que vous inventez là est
+un endroit que l'onglet ne gardera pas forcément.
 
 <details markdown="1"><summary>Sous le capot : ce que l'ouverture du dossier a appris à l'extension</summary>
 
@@ -237,70 +265,128 @@ remplis.
 
 </details>
 
+#### Vous devriez voir
+
+- Le dossier `sfdx-hardis-training` ouvert dans VS Code
+
 ### 4. Installer la CLI GitHub
 
-!!! tip "Dans Agentforce Vibes, sautez cette étape"
-    `gh` est déjà installé dans l'onglet. Passez directement à l'étape 5 : la première commande qui
-    en a besoin vous connecte, et il ne manque rien ici.
-
-    `gh` ne sert pas qu'à cette étape, et c'est pour cela qu'il vaut la peine de savoir qu'il est
-    là. Les commandes derrière **Publish my work**, **Simulate my teammates**, **Check my work** et
-    **Claim my badge** l'appellent toutes : il ouvre vos Pull Requests, joue les merges de vos
-    collègues, lit les secrets de votre fork pour vérifier un niveau, et regarde votre étoile et la
-    visibilité de votre repository au moment de la réclamation.
+Objectif : la CLI GitHub installée, et VS Code rouvert sur le projet pour qu'il la voie.
 
 Un outil d'abord, et uniquement pour cela. La commande de l'étape 5 utilise la [CLI
 GitHub](https://cli.github.com/), appelée `gh`, pour faire votre copie du repository et mettre en
-place son automatisation. Sur sa page d'accueil, ouvrez la liste d'installation **(1)** et prenez le
-téléchargement de votre machine : **Windows - Download MSI** **(2)**, ou **macOS - Download
-binary**. Acceptez les valeurs par défaut de l'installeur.
+place son automatisation.
 
-![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
+#### À faire
+
+1. Dans Agentforce Vibes, sautez cette étape : `gh` est déjà installé dans l'onglet. Passez
+   directement à l'étape 5
+2. Sur la page d'accueil de la [CLI GitHub](https://cli.github.com/), ouvrez la liste
+   d'installation **(1)** et prenez le téléchargement de votre machine : **Windows - Download MSI**
+   **(2)**, ou **macOS - Download binary**
+
+   ![La page d'accueil de la CLI GitHub, avec la liste d'installation ouverte sur le MSI Windows](../../_assets/annotated/web/gh-cli-download.png)
+
+3. Lancez l'installeur et acceptez ses valeurs par défaut
 
 !!! warning "Redémarrez VS Code après l'avoir installée"
-    L'installeur ajoute `gh` au **PATH**, et un VS Code déjà ouvert ne voit pas le changement avant
+    L'installeur ajoute `gh` au PATH, et un VS Code déjà ouvert ne voit pas le changement avant
     de redémarrer. Fermez VS Code complètement, toutes fenêtres comprises, et rouvrez-le sur le
     projet. Sautez cette étape et l'étape 5 s'arrête aussitôt en disant que la CLI GitHub n'est pas
     installée.
 
+#### Pourquoi
+
 Vous n'aurez jamais à lancer `gh` vous-même. La commande de l'étape 5 s'en sert et vous connecte via
 votre navigateur la première fois qu'elle en a besoin.
 
-!!! note "Celle-ci est pour le cours, et pour GitHub"
-    Elle est là pour qu'un seul clic puisse vous remettre une pipeline qui marche au lieu d'une
-    douzaine de formulaires. Rien d'autre dans le cours n'en a besoin, et rien dans sfdx-hardis non
-    plus : ce projet vit sur GitHub, et les projets GitLab, Azure DevOps et Bitbucket fonctionnent
-    exactement pareil sans elle. Sur un vrai projet vous rejoindriez un repository qui existe déjà, avec
-    son automatisation déjà en marche, et vous n'installeriez jamais ceci.
+Celle-ci est pour le cours, et pour GitHub. Elle est là pour qu'un seul clic puisse vous remettre
+une pipeline qui marche au lieu d'une douzaine de formulaires. Rien d'autre dans le cours n'en a
+besoin, et rien dans sfdx-hardis non plus : ce projet vit sur GitHub, et les projets GitLab, Azure
+DevOps et Bitbucket fonctionnent exactement pareil sans elle. Sur un vrai projet vous rejoindriez un
+repository qui existe déjà, avec son automatisation déjà en marche, et vous n'installeriez jamais
+ceci.
+
+Dans Agentforce Vibes, il ne manque rien ici : la première commande qui a besoin de `gh` vous
+connecte. `gh` ne sert pas qu'à cette étape, et c'est pour cela qu'il vaut la peine de savoir qu'il
+est là. Les commandes derrière **Publish my work**, **Simulate my teammates**, **Check my work** et
+**Claim my badge** l'appellent toutes : il ouvre vos Pull Requests, joue les merges de vos
+collègues, lit les secrets de votre fork pour vérifier un niveau, et regarde votre étoile et la
+visibilité de votre repository au moment de la réclamation.
+
+#### Vous devriez voir
+
+- La CLI GitHub installée, et VS Code rouvert sur le projet
 
 ### 5. Mettre en place votre environnement de formation
 
-Rouvrez la Welcome page. Au-dessus des cartes intégrées se trouve un titre **CUSTOM MENUS** **(1)**,
-qui contient trois cartes **(2)**, une par niveau.
+Objectif : votre fork sur GitHub, un Dev Hub, trois scratch orgs qui contiennent l'application
+Helios, et une pipeline câblée dessus, le tout construit par une seule commande.
 
-![La Welcome page, avec le groupe CUSTOM MENUS et les trois cartes Training](../../_assets/annotated/vscode/welcome--training-menu.png)
+#### À faire
 
-!!! note "D'où viennent ces cartes"
-    Elles ne font pas partie du produit. N'importe quel projet peut déclarer ses propres menus dans
-    son `config/.sfdx-hardis.yml`, et l'extension les affiche ici, marqués `(custom)`, pour que vous
-    puissiez toujours distinguer les commandes d'un projet de celles que sfdx-hardis livre. Ce projet
-    déclare un menu par niveau, et chacun ne contient que les commandes de ce niveau.
+1. Rouvrez la Welcome page. Au-dessus des cartes intégrées se trouve un titre **CUSTOM MENUS**
+   **(1)**, qui contient trois cartes **(2)**, une par niveau
 
-Cliquez sur **Training: Level 1**, puis sur **Set up my training environment** **(1)**.
+   ![La Welcome page, avec le groupe CUSTOM MENUS et les trois cartes Training](../../_assets/annotated/vscode/welcome--training-menu.png)
 
-La première fois que vous cliquez sur une carte Training, VS Code ne la lance pas. Il demande comment
-vous voulez l'autoriser **(2)**, et affiche la commande qu'il s'apprête à lancer. Un menu
-personnalisé lance quelque chose que le projet a écrit, pas quelque chose que l'extension livre :
-l'extension refuse donc de le lancer dans votre dos. Lisez la ligne, vérifiez qu'elle dit
-`node scripts/training.mjs`, puis cliquez sur **Always allow** **(3)**.
+2. Cliquez sur **Training: Level 1**, puis sur **Set up my training environment** **(1)**
+3. La première fois que vous cliquez sur une carte Training, VS Code ne la lance pas. Il demande
+   comment vous voulez l'autoriser **(2)**, et affiche la commande qu'il s'apprête à lancer. Lisez la
+   ligne, vérifiez qu'elle dit `node scripts/training.mjs`, puis cliquez sur **Always allow** **(3)**
 
-![VS Code demandant comment autoriser la commande Training, avec Always allow](../../_assets/annotated/vscode/training-menu-authorization.png)
+   ![VS Code demandant comment autoriser la commande Training, avec Always allow](../../_assets/annotated/vscode/training-menu-authorization.png)
 
-**Always allow** répond pour tout le menu, pas seulement pour cette carte. Les entrées Training des
-trois niveaux cessent de demander, et rien d'autre ne cesse : l'extension reconnaît une commande
-Training à sa forme et au repository que vous avez cloné, donc une commande personnalisée de
-n'importe quel autre projet vous demandera toujours d'abord, dans ce dossier comme dans tous les
-autres.
+4. Elle nomme l'org qu'elle prend, `helios-prod`, et ne demande qu'un oui avant de changer quoi que
+   ce soit. Répondez oui
+5. Elle s'arrête sur une ligne du genre `Your one-time code is 5989-F9D9` et ouvre
+   [github.com/login/device](https://github.com/login/device) dans votre navigateur. Saisissez le
+   code là-bas, puis acceptez tout ce que github.com demande : l'écran d'autorisation et chacune
+   des permissions listées. Si le navigateur ne s'est pas ouvert, l'adresse est affichée juste sous
+   le code. Dans Agentforce Vibes il ne s'ouvre pas tout seul : cliquez sur le lien affiché
+6. Revenez dans VS Code : la commande repart toute seule et ne redemandera plus rien
+7. Elle ouvre ensuite l'onglet **Actions** de votre fork dans votre navigateur, et attend. Cliquez
+   sur **I understand my workflows, go ahead and enable them**, et revenez dans VS Code : la
+   commande continue toute seule
+8. Laissez-la dérouler ses huit étapes. Elle vous tient au courant au fur et à mesure :
+
+   ```text title="Résultat"
+   Developer Edition org: helios-prod
+
+   1 of 8  Your own copy of the repository
+   OK  origin is now your-handle/sfdx-hardis-training, and the shared repository is upstream.
+
+   2 of 8  Actions turned on
+   OK  Actions are on.
+
+   3 of 8  Your Dev Hub
+   OK  helios-prod is a Dev Hub now.
+
+   4 of 8  Your three scratch orgs
+   OK  helios-dev is created, for 30 days.
+   OK  helios-integration is created, for 30 days.
+   OK  helios-uat is created, for 30 days.
+
+   5 of 8  The Helios app in each of them
+   OK  helios-dev holds the app, your permission set and the sample data.
+   ...
+
+   6 of 8  The credentials the CI jobs use
+   OK  SFDX_AUTH_URL_INTEGRATION is set on your-handle/sfdx-hardis-training.
+   OK  SFDX_AUTH_URL_UAT is set on your-handle/sfdx-hardis-training.
+
+   7 of 8  Which org each branch deploys to
+   OK  integration now names the org of every branch, and is pushed.
+
+   8 of 8  Changes through a Pull Request, merged once green
+   OK  integration now takes changes through a Pull Request only, merged once its checks are green.
+   OK  uat now takes changes through a Pull Request only, merged once its checks are green.
+   OK  A branch is now deleted once its Pull Request is merged. integration and uat stay: a protected branch cannot be deleted.
+   ```
+
+9. Attendez. Comptez quinze à vingt minutes, presque entièrement sur les étapes 4 et 5, quand
+   Salesforce crée les orgs et que l'application est déployée dans les trois à la fois. Rien ne
+   s'affiche pendant ce temps-là. Ce n'est pas bloqué
 
 !!! warning "Lisez la ligne avant d'autoriser"
     **Allow once** ne lance que cette fois-ci, **Always allow** s'en souvient. Les deux conviennent
@@ -308,71 +394,37 @@ autres.
     par quelqu'un d'autre, lisez d'abord cette ligne. C'est le seul moment où quoi que ce soit vous
     montre ce que fait vraiment un menu personnalisé.
 
-!!! tip "La première chose qu'elle fait, c'est vous connecter à GitHub"
-    L'étape 1 des huit ci-dessous fait votre copie du repository, et cela demande votre compte
-    GitHub. La commande s'arrête sur une ligne du genre `Your one-time code is 5989-F9D9` et ouvre
-    [github.com/login/device](https://github.com/login/device) dans votre navigateur. Saisissez le
-    code là-bas, puis **acceptez tout ce que github.com demande** : l'écran d'autorisation et
-    chacune des permissions listées. Il demande à créer un repository dans votre compte et à écrire
-    les secrets que lisent les jobs CI, c'est-à-dire exactement ce que fait cette étape. Revenez
-    dans VS Code, la commande repart toute seule et ne redemandera plus rien.
+#### Pourquoi
 
-    Si le navigateur ne s'est pas ouvert, l'adresse est affichée juste sous le code. Dans
-    Agentforce Vibes il ne s'ouvre pas tout seul : cliquez sur le lien affiché.
+D'où viennent ces cartes : elles ne font pas partie du produit. N'importe quel projet peut déclarer
+ses propres menus dans son `config/.sfdx-hardis.yml`, et l'extension les affiche ici, marqués
+`(custom)`, pour que vous puissiez toujours distinguer les commandes d'un projet de celles que
+sfdx-hardis livre. Ce projet déclare un menu par niveau, et chacun ne contient que les commandes de
+ce niveau.
 
-!!! tip "Puis il vous demande un clic sur GitHub"
-    GitHub désactive les workflows de chaque nouveau fork, derrière une bannière qu'aucune commande
-    ne peut presser. L'étape 2 des huit ouvre l'onglet **Actions** de votre fork dans votre
-    navigateur, et attend. Cliquez sur **I understand my workflows, go ahead and enable them**,
-    revenez dans VS Code, et la commande continue toute seule. Sans ce clic, rien ne vérifierait ni
-    ne déploierait jamais votre travail.
+Un menu personnalisé lance quelque chose que le projet a écrit, pas quelque chose que l'extension
+livre : l'extension refuse donc de le lancer dans votre dos. **Always allow** répond pour tout le
+menu, pas seulement pour cette carte. Les entrées Training des trois niveaux cessent de demander, et
+rien d'autre ne cesse : l'extension reconnaît une commande Training à sa forme et au repository que
+vous avez cloné, donc une commande personnalisée de n'importe quel autre projet vous demandera
+toujours d'abord, dans ce dossier comme dans tous les autres.
 
 La commande ne demande pas quelle org utiliser : vous en avez connecté une, nommée `helios-prod`,
-elle prend donc celle-là, le dit, et ne demande qu'un oui avant de changer quoi que ce soit. Puis
-elle déroule huit étapes et vous tient au courant au fur et à mesure :
+elle prend donc celle-là, et le dit.
 
-```text
-Developer Edition org: helios-prod
+La première chose qu'elle fait, c'est vous connecter à GitHub. L'étape 1 des huit fait votre copie
+du repository, et cela demande votre compte GitHub. Il demande à créer un repository dans votre
+compte et à écrire les secrets que lisent les jobs CI, c'est-à-dire exactement ce que fait cette
+étape.
 
-1 of 8  Your own copy of the repository
-OK  origin is now your-handle/sfdx-hardis-training, and the shared repository is upstream.
+Puis elle vous demande un clic sur GitHub. GitHub désactive les workflows de chaque nouveau fork,
+derrière une bannière qu'aucune commande ne peut presser. Sans ce clic, rien ne vérifierait ni ne
+déploierait jamais votre travail.
 
-2 of 8  Actions turned on
-OK  Actions are on.
-
-3 of 8  Your Dev Hub
-OK  helios-prod is a Dev Hub now.
-
-4 of 8  Your three scratch orgs
-OK  helios-dev is created, for 30 days.
-OK  helios-integration is created, for 30 days.
-OK  helios-uat is created, for 30 days.
-
-5 of 8  The Helios app in each of them
-OK  helios-dev holds the app, your permission set and the sample data.
-...
-
-6 of 8  The credentials the CI jobs use
-OK  SFDX_AUTH_URL_INTEGRATION is set on your-handle/sfdx-hardis-training.
-OK  SFDX_AUTH_URL_UAT is set on your-handle/sfdx-hardis-training.
-
-7 of 8  Which org each branch deploys to
-OK  integration now names the org of every branch, and is pushed.
-
-8 of 8  Changes through a Pull Request, merged once green
-OK  integration now takes changes through a Pull Request only, merged once its checks are green.
-OK  uat now takes changes through a Pull Request only, merged once its checks are green.
-OK  A branch is now deleted once its Pull Request is merged. integration and uat stay: a protected branch cannot be deleted.
-```
-
-Comptez quinze à vingt minutes, presque entièrement sur les étapes 4 et 5, quand Salesforce crée les
-orgs et que l'application est déployée dans les trois à la fois. Rien ne s'affiche pendant ce
-temps-là. Ce n'est pas bloqué.
-
-!!! tip "Dans Agentforce Vibes, c'est beaucoup plus rapide"
-    Les mêmes huit étapes ont pris environ trois minutes dans l'onglet, parce que la machine qui
-    les exécute est à côté de Salesforce et non au bout de votre connexion. Quinze à vingt minutes,
-    c'est le chiffre à prévoir sur un portable ; plus rapide est une bonne surprise.
+Dans Agentforce Vibes, c'est beaucoup plus rapide. Les mêmes huit étapes ont pris environ trois
+minutes dans l'onglet, parce que la machine qui les exécute est à côté de Salesforce et non au bout
+de votre connexion. Quinze à vingt minutes, c'est le chiffre à prévoir sur un portable ; plus rapide
+est une bonne surprise.
 
 La lancer deux fois est sans danger : chaque étape vérifie avant d'agir, et une org qui existe déjà
 est conservée. Si l'une des étapes ne peut pas être faite depuis ici, elle le dit et vous indique sur
@@ -454,20 +506,27 @@ Documentation de la commande : [hardis:org:data:import](https://sfdx-hardis.clou
 
 </details>
 
+#### Vous devriez voir
+
+- Les huit étapes de l'exécution, chacune avec ses lignes `OK`, comme dans le résultat ci-dessus
+
 ### 6. Ce qu'elle vient de faire
+
+Objectif : vous savez nommer les huit choses que la mise en place a faites pour vous. Cette étape
+n'a aucun clic.
 
 Huit choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vous-même :
 
-- **Votre propre copie du repository**, son *fork*, sous votre compte GitHub. Votre clone pousse là-bas
+- Votre propre copie du repository, son *fork*, sous votre compte GitHub. Votre clone pousse là-bas
   désormais, et continue de tirer depuis le repository de l'équipe. Le fork porte les deux branches
   qu'utilise la pipeline aujourd'hui, `integration` et `uat`, plus `main`. Vous ajouterez `preprod`
   vous-même au [Lab 3.1](../level-3-release-manager/3-1-configure-the-pipeline-up-to-production.md)
-- **Actions activées.** GitHub désactive les workflows sur chaque nouveau fork jusqu'à ce que le
+- Actions activées. GitHub désactive les workflows sur chaque nouveau fork jusqu'à ce que le
   propriétaire dise le contraire, et un fork où ils sont éteints ressemble exactement à une formation
   cassée
-- **`helios-prod` est devenue un Dev Hub**, ce qui est un seul interrupteur dans Setup, et ne se
+- `helios-prod` est devenue un Dev Hub, ce qui est un seul interrupteur dans Setup, et ne se
   rebascule pas
-- **Trois scratch orgs**, chacune contenant l'application Helios, votre permission set et les données
+- Trois scratch orgs, chacune contenant l'application Helios, votre permission set et les données
   d'exemple :
 
 | Org                  | À quoi elle sert                                                                      |
@@ -476,20 +535,20 @@ Huit choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vo
 | `helios-integration` | L'org d'intégration partagée, où le travail de l'équipe est mergé et déployé          |
 | `helios-uat`         | La recette utilisateur, où le métier teste ce que l'intégration a rassemblé           |
 
-- **Dans quelle org déploie chaque branche**, écrit dans l'unique fichier de configuration par
+- Dans quelle org déploie chaque branche, écrit dans l'unique fichier de configuration par
   branche du projet, dans `config/branches/`, commité sur `integration` et poussé sur votre fork. Le repository ne pouvait pas le savoir : vos orgs
   n'existaient pas quand il a été écrit. C'est poussé parce que le contrôle du badge clone votre fork et lit
   ce qui s'y trouve réellement. `uat` reçoit
   les mêmes fichiers avec sa première promotion, au [Lab 3.5](../level-3-release-manager/3-5-promote-to-uat-and-write-release-notes.md), comme tout changement qui l'atteint
-- **`integration` et `uat` protégées.** Une Pull Request vers l'une ou l'autre ne peut être mergée
+- `integration` et `uat` protégées. Une Pull Request vers l'une ou l'autre ne peut être mergée
   qu'une fois que tous les contrôles que GitHub lance dessus sont terminés et verts, et cette règle
   vaut aussi pour vous, propriétaire du fork. Sur un vrai projet, quelqu'un a mis cela en place dès
   le premier jour : un merge sur un contrôle rouge ne déploie rien, ou la moitié de quelque chose, et
   c'est la personne suivante qui s'en aperçoit
-- **Les branches mergées supprimées par GitHub.** Une fois une Pull Request mergée, la branche
+- Les branches mergées supprimées par GitHub. Une fois une Pull Request mergée, la branche
   dont elle vient n'a plus rien à dire, et votre fork la supprime. `integration` et `uat` ne sont
   jamais supprimées : elles sont protégées
-- **Un identifiant par job de CI.** Les jobs de CI sont les jobs automatisés que GitHub lance pour
+- Un identifiant par job de CI. Les jobs de CI sont les jobs automatisés que GitHub lance pour
   vous, sur ses machines plutôt que sur les vôtres, et ces machines ne peuvent pas atteindre une org
   Salesforce sans identifiant. Ils sont gardés comme secrets du repository, nommés
   `SFDX_AUTH_URL_INTEGRATION` et `SFDX_AUTH_URL_UAT`
@@ -503,8 +562,8 @@ Huit choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vo
     Ne les supprimez pas pour le plaisir : un Dev Hub Developer Edition ne peut créer que quelques
     nouvelles scratch orgs par jour.
 
-!!! danger "À propos de ces identifiants, et pourquoi ils sont une exception assumée"
-    Une auth URL SFDX embarque un **refresh token OAuth de longue durée**. Quiconque le lit a votre
+!!! warning "À propos de ces identifiants, et pourquoi ils sont une exception assumée"
+    Une auth URL SFDX embarque un refresh token OAuth de longue durée. Quiconque le lit a votre
     org jusqu'à sa révocation, et il ne peut pas être renouvelé sans se réauthentifier. La
     documentation sfdx-hardis le dit clairement : [ne l'utilisez jamais pour une org
     majeure](https://sfdx-hardis.cloudity.com/salesforce-devops-setup-auth/).
@@ -514,53 +573,76 @@ Huit choses, chacune du vrai travail sur un vrai projet, et aucune à refaire vo
     une formation. Le marché est le suivant : un débutant atteint une pipeline qui marche dès sa
     première heure au lieu de son deuxième jour.
 
-    **Le Lab 3.1 met JWT en place proprement pour `preprod` et la production**, et explique pourquoi
+    Le Lab 3.1 met JWT en place proprement pour `preprod` et la production, et explique pourquoi
     chaque org d'un vrai projet en a besoin. Ces deux secrets restent jusqu'à la fin du cours :
     supprimez-les quand vous en avez terminé, quel que soit le niveau où vous vous arrêtez. Les
     scratch orgs, elles, se suppriment toutes seules.
 
+#### Vous devriez voir
+
+- Les huit choses ci-dessus, et à quoi sert chacune, dans vos propres mots
+
 ### 7. Laisser l'extension parler à GitHub
 
-La commande que vous venez de lancer a utilisé la CLI GitHub. L'**extension** a sa propre connexion à
+Objectif : l'extension connectée à GitHub, et l'icône GitHub du panneau DevOps Pipeline en couleur.
+
+La commande que vous venez de lancer a utilisé la CLI GitHub. L'extension a sa propre connexion à
 GitHub, et il lui en faut une aussi : sans elle, le diagramme de la pipeline sait dessiner vos branches
 mais ne sait rien de vos Pull Requests.
 
-Sur la Welcome page, cliquez sur **DevOps Pipeline**. En haut du panneau se trouve une **icône
-GitHub** **(1)**. Elle est **grise** tant que l'extension n'est pas connectée, et son infobulle dit
-**Connect to GitHub**.
+#### À faire
 
-![Le panneau DevOps Pipeline, avec l'icône GitHub dans son en-tête](../../_assets/annotated/vscode/devops-pipeline-disconnected--github-auth.png)
+1. Sur la Welcome page, cliquez sur **DevOps Pipeline**
+2. Repérez l'icône GitHub **(1)** en haut du panneau. Elle est grise tant que l'extension n'est pas
+   connectée, et son infobulle dit **Connect to GitHub**
 
-Cliquez dessus. VS Code demande **How would you like to authenticate to GitHub?** et propose deux
-réponses :
+   ![Le panneau DevOps Pipeline, avec l'icône GitHub dans son en-tête](../../_assets/annotated/vscode/devops-pipeline-disconnected--github-auth.png)
+
+3. Cliquez dessus. VS Code demande **How would you like to authenticate to GitHub?**
+4. Prenez **Sign in with VS Code** et approuvez la demande dans le navigateur
+
+#### Pourquoi
+
+VS Code propose deux réponses :
 
 - **Sign in with VS Code**, qui ouvre votre navigateur et qui est ce qu'il vous faut ici
 - **Use Personal Access Token (PAT)**, pour un hébergeur auquel VS Code ne sait pas se connecter, ou
   un compte que vous gardez à part
 
-Prenez **Sign in with VS Code** et approuvez la demande dans le navigateur. L'icône passe du gris à
-la couleur, son infobulle devient **Connected to GitHub**, et le panneau gagne ce qu'il ne pouvait
-pas montrer avant : les Pull Requests sur vos branches, et le commutateur **Show feature branches**.
+#### Vous devriez voir
+
+- L'icône passée du gris à la couleur, et son infobulle **Connected to GitHub**
+- Ce que le panneau ne pouvait pas montrer avant : les Pull Requests sur vos branches, et le
+  commutateur **Show feature branches**
 
 ### 8. Regarder la pipeline avant de toucher à quoi que ce soit
 
-![Le panneau DevOps Pipeline après la mise en place : deux branches, chacune avec son org](../../_assets/annotated/vscode/devops-pipeline-fresh--read-it.png)
+Objectif : vous savez lire le diagramme de la pipeline : deux branches, deux orgs, et les flèches
+entre elles.
 
 Deux branches, deux orgs, et des flèches. C'est tout votre pipeline aujourd'hui, et il mérite une
 minute parce que tous les diagrammes que vous rencontrerez plus tard sont celui-ci avec plus de
 choses dedans.
 
-1. **`integration`** et **`uat`** **(1)** sont des branches git, les deux branches *majeures* que ce
-   projet a pour l'instant. Majeure veut dire que l'équipe les partage : le travail de chacun finit
-   là, et personne ne construit directement dessus
-2. Les deux boîtes de droite **(2)** sont les orgs Salesforce que ces branches possèdent, celles que
-   la mise en place a nommées `helios-integration` et `helios-uat`. Le diagramme les étiquette
-   d'après leur branche, on lit donc **Integration** et **Uat**. Une branche, une org, et cet
-   appariement est ce que la mise en place que vous venez de lancer a écrit
-3. Les **flèches** **(3)** sont les déploiements, et le chemin que prend le travail. Tout ce qui
-   atteint `integration` est déployé dans son org par un robot, sans que personne ne clique sur quoi
-   que ce soit. Faire avancer le travail d'`integration` vers `uat` est une **promotion**, et c'est
+#### À faire
+
+1. Regardez le panneau DevOps Pipeline
+
+   ![Le panneau DevOps Pipeline après la mise en place : deux branches, chacune avec son org](../../_assets/annotated/vscode/devops-pipeline-fresh--read-it.png)
+
+2. Repérez **`integration`** et **`uat`** **(1)** : ce sont des branches git, les deux branches
+   *majeures* que ce projet a pour l'instant. Majeure veut dire que l'équipe les partage : le
+   travail de chacun finit là, et personne ne construit directement dessus
+3. Repérez les deux boîtes de droite **(2)** : les orgs Salesforce que ces branches possèdent,
+   celles que la mise en place a nommées `helios-integration` et `helios-uat`. Le diagramme les
+   étiquette d'après leur branche, on lit donc **Integration** et **Uat**. Une branche, une org, et
+   cet appariement est ce que la mise en place que vous venez de lancer a écrit
+4. Suivez les flèches **(3)** : ce sont les déploiements, et le chemin que prend le travail. Tout ce
+   qui atteint `integration` est déployé dans son org par un robot, sans que personne ne clique sur
+   quoi que ce soit. Faire avancer le travail d'`integration` vers `uat` est une promotion, et c'est
    le travail du release manager, ce que le Niveau 3 fait de vous
+
+#### Pourquoi rien d'autre n'est dessiné
 
 Rien d'autre n'est dessiné, parce que rien d'autre n'existe encore. Vous n'avez aucune branche à vous
 en cours et aucune Pull Request ouverte, le diagramme n'a donc rien à ajouter. Le [Lab 1.3](1-3-start-a-user-story-on-a-git-branch.md) pose la
@@ -569,21 +651,27 @@ première boîte à gauche de cette image, et à partir de là elle se remplit.
 Votre `helios-dev` n'est pas dans le diagramme non plus, et c'est correct : le diagramme montre où le
 travail est déployé, et rien n'est jamais déployé dans l'org où vous construisez.
 
-!!! note "`preprod` et `main` manquent exprès"
-    Votre fork a une branche `main`, et pas encore de
-    `preprod`, et le diagramme ne montre ni l'une ni l'autre : une branche ne fait partie de la pipeline
-    qu'à partir du moment où quelqu'un dit dans quelle org elle déploie, et personne ne l'a fait.
+`preprod` et `main` manquent exprès. Votre fork a une branche `main`, et pas encore de `preprod`, et
+le diagramme ne montre ni l'une ni l'autre : une branche ne fait partie de la pipeline qu'à partir du
+moment où quelqu'un dit dans quelle org elle déploie, et personne ne l'a fait.
 
-    C'est la forme de ce cours. Les niveaux 1 et 2 sont le travail d'un contributeur, qui se passe
-    entre une branche de feature et `integration`. Le niveau 3 est le travail d'un release manager,
-    et son premier lab câble `preprod` et `main` dans ce même diagramme, avec `helios-prod` en
-    production.
+C'est la forme de ce cours. Les niveaux 1 et 2 sont le travail d'un contributeur, qui se passe
+entre une branche de feature et `integration`. Le niveau 3 est le travail d'un release manager,
+et son premier lab câble `preprod` et `main` dans ce même diagramme, avec `helios-prod` en
+production.
+
+#### Vous devriez voir
+
+- `integration` et `uat`, chacune avec son org, reliées par des flèches, et rien d'autre
 
 ## Ce que vous devez voir
 
-De retour dans le panneau DevOps Pipeline, cliquez sur **Refresh**. `integration` et `uat`, chacune
-avec son org, et l'icône GitHub en haut en couleur plutôt qu'en gris. Dans **Orgs Manager**, quatre
-orgs : `helios-prod`, `helios-dev`, `helios-integration` et `helios-uat`, toutes **Connected**.
+De retour dans le panneau DevOps Pipeline, cliquez sur **Refresh**.
+
+- [ ] `integration` et `uat`, chacune avec son org
+- [ ] L'icône GitHub en haut en couleur plutôt qu'en gris
+- [ ] Dans **Orgs Manager**, quatre orgs : `helios-prod`, `helios-dev`, `helios-integration` et
+      `helios-uat`, toutes **Connected**
 
 C'est toute la plomberie, et la dernière que vous verrez. À partir du [Lab 1.3](1-3-start-a-user-story-on-a-git-branch.md) vous faites le métier
 au lieu de vous préparer à le faire : un ticket, une branche, une modification, une Pull Request, un

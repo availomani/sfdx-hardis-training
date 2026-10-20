@@ -5,7 +5,7 @@ description: "Rendre un champ obligatoire se déploie au vert et casse les enreg
 level: 2
 lab: 3
 lang: fr
-source_rev: "8775e127def6163d5be25fb8dc14d7e392f80c9e"
+source_rev: "0e7831b42eb06361c17f8cca55cd89381959a1c1"
 screenshots:
   - annotated/vscode/pipeline-cards--my-pull-request
   - annotated/vscode/pipeline-cards--new-user-story
@@ -58,64 +58,101 @@ Ce lab parle de l'écart entre un déploiement vert et un déploiement sûr.
 
 ### 1. Prendre la story et faire la chose évidente
 
-**New User Story** **(2)**, sous **Project Contribution Workflow** **(1)** du panneau DevOps
-Pipeline. Nom `US-024-crew-size-required`, org `helios-dev`.
+Objectif : Crew Size obligatoire dans `helios-dev`, et le champ publié sur une Pull Request.
+Rappel : [Lab 1.3](../level-1-contributor-basics/1-3-start-a-user-story-on-a-git-branch.md), [Lab 1.5](../level-1-contributor-basics/1-5-retrieve-commit-and-publish-your-changes.md)
 
-![La carte New User Story du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
+#### À faire
 
-Dans `helios-dev` : **Setup > Object Manager > Installation > Fields & Relationships > Crew Size >
-Edit**, cochez **Required**.
+1. **New User Story** **(2)**, sous **Project Contribution Workflow** **(1)** du panneau DevOps
+   Pipeline. Nom `US-024-crew-size-required`, org `helios-dev`
 
-Dès que la case est cochée, Salesforce vous avertit au sujet des appels API et Apex et vous demande
-de confirmer. Cliquez sur **Confirm**, puis **Save**. Pas un mot sur vos données, alors que la plupart des installations de votre org n'ont pas de
-crew size. Retenez-le : c'est tout ce lab.
+   ![La carte New User Story du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--new-user-story.png)
 
-Faites un retrieve du champ avec **Commit changes** (le champ, rien d'autre), commitez-le, **Save /
-Publish**, poussez, et ouvrez la Pull Request.
+2. Dans `helios-dev` : **Setup > Object Manager > Installation > Fields & Relationships > Crew Size >
+   Edit**, cochez **Required**
+3. Dès que la case est cochée, Salesforce vous avertit au sujet des appels API et Apex et vous demande
+   de confirmer. Cliquez sur **Confirm**, puis **Save**
+4. Faites un retrieve du champ avec **Commit changes** (le champ, rien d'autre), et commitez-le
+5. **Save / Publish**, poussez, et ouvrez la Pull Request
+
+#### Pourquoi
+
+Salesforce ne dit pas un mot sur vos données, alors que la plupart des installations de votre org
+n'ont pas de crew size. Retenez-le : c'est tout ce lab.
+
+#### Vous devriez voir
+
+- Crew Size obligatoire dans `helios-dev`
+- Une Pull Request ouverte pour le champ, avec son contrôle en cours
 
 ### 2. Lire le premier échec
 
-```
+Objectif : les permission sets corrigés et publiés à nouveau.
+
+Le contrôle échoue, et le commentaire sfdx-hardis nomme deux composants :
+
+```text title="Résultat"
 Helios_Delivery_Crew     You cannot deploy to a required field: Installation__c.Crew_Size__c
 Helios_Delivery_Manager  You cannot deploy to a required field: Installation__c.Crew_Size__c
 ```
 
 Pas un mot sur vos données. Le problème vient des permission sets.
 
-Un champ **universally required** n'a pas de sécurité au niveau du champ à accorder : il est visible
+#### À faire
+
+1. Faites un retrieve des permission sets : **Commit changes**, cochez `Helios_Delivery_Crew` et
+   `Helios_Delivery_Manager`, récupérez. Source Control montre chacun d'eux perdant son entrée
+   `Crew_Size__c` et rien d'autre
+2. Commitez
+3. **Save / Publish** à nouveau
+
+#### Pourquoi
+
+Un champ *universally required* n'a pas de sécurité au niveau du champ à accorder : il est visible
 et obligatoire pour tout le monde, par définition. Donc à l'instant où le champ devient obligatoire,
 chaque entrée de sécurité au niveau du champ qui le mentionne devient invalide, et le déploiement
 refuse les permission sets plutôt que le champ.
 
 La correction prend une minute, et l'org l'a déjà faite : dans `helios-dev` les entrées ont disparu
-des deux permission sets à l'instant où le champ est devenu obligatoire. Faites-en un retrieve :
-**Commit changes**, cochez `Helios_Delivery_Crew` et `Helios_Delivery_Manager`, récupérez. Source
-Control montre chacun d'eux perdant son entrée `Crew_Size__c` et rien d'autre. Commitez, **Save /
-Publish** à nouveau. Le commentaire sfdx-hardis le disait même, dans l'astuce repliée sous chaque
-erreur, avec un lien vers la règle.
+des deux permission sets à l'instant où le champ est devenu obligatoire. Le commentaire sfdx-hardis
+le disait même, dans l'astuce repliée sous chaque erreur, avec un lien vers la règle.
 
-!!! note "C'est une bonne erreur"
-    Elle est précise, elle nomme les deux composants fautifs, et la correction est évidente une fois
-    la règle connue. La plupart des erreurs de déploiement Salesforce sont ainsi : elles ont l'air de
-    parler de ce que vous avez modifié, et elles parlent de quelque chose qui y faisait référence.
+#### Pourquoi c'est une bonne erreur
+
+Elle est précise, elle nomme les deux composants fautifs, et la correction est évidente une fois
+la règle connue. La plupart des erreurs de déploiement Salesforce sont ainsi : elles ont l'air de
+parler de ce que vous avez modifié, et elles parlent de quelque chose qui y faisait référence.
+
+#### Vous devriez voir
+
+- Les deux permission sets sans leur entrée `Crew_Size__c`, publiés sur la Pull Request
 
 ### 3. Le regarder passer au vert, et comprendre pourquoi c'est le problème
 
-Le contrôle passe. **Ne mergez pas encore.**
+Objectif : vous avez vu, dans `helios-dev`, les enregistrements qu'un contrôle vert s'apprête à casser.
 
-Ouvrez `helios-dev`, trouvez une installation sans crew size, changez n'importe quoi dessus, et
-enregistrez. L'enregistrement refuse :
+Le contrôle passe.
 
-```
-We hit a snag.
-Review the following fields
-  • Crew Size
-```
+!!! warning "Attention"
+    Ne mergez pas encore.
+
+#### À faire
+
+1. Ouvrez `helios-dev`, trouvez une installation sans crew size
+2. Changez n'importe quoi dessus, et enregistrez. L'enregistrement refuse :
+
+   ```text title="Résultat"
+   We hit a snag.
+   Review the following fields
+     • Crew Size
+   ```
+
+#### Pourquoi
 
 Le même refus s'écrit `Required fields are missing: [Crew_Size__c]` quand il vient d'Apex ou de
 l'API, et c'est ainsi qu'un script le rencontre.
 
-**Salesforce impose un champ obligatoire à l'enregistrement, pas sur les données déjà présentes.** Il
+Salesforce impose un champ obligatoire à l'enregistrement, pas sur les données déjà présentes. Il
 a parfaitement accepté de rendre le champ obligatoire alors que la plupart des installations
 l'avaient vide, et le contrôle vert dit la même chose : `helios-integration` a trente installations
 sans crew size, et le déploiement rendrait chacune d'elles impossible à enregistrer. Pas seulement
@@ -125,10 +162,17 @@ mette un crew size.
 Rien n'a échoué. Aucun contrôle n'est passé au rouge. Mergez maintenant, et la première personne à
 l'apprendre est un planificateur qui n'arrive pas à enregistrer un enregistrement.
 
-**Tout ce que vous devez faire à la main dans une org, vous devrez le faire dans toutes les orgs.**
+Tout ce que vous devez faire à la main dans une org, vous devrez le faire dans toutes les orgs.
 C'est à cela que sert une deployment action.
 
+#### Vous devriez voir
+
+- Un contrôle vert sur la Pull Request, et une installation de `helios-dev` impossible à enregistrer
+
 ### 4. Découper la story en deux mouvements
+
+Objectif : la correction prévue en deux mouvements, tous deux dans cette Pull Request. Cette étape
+n'a pas de clic.
 
 La forme de la correction, et c'est la forme de la plupart des problèmes du type "les données sont
 en travers" :
@@ -136,68 +180,99 @@ en travers" :
 1. Rendre les données valides
 2. Rendre le champ obligatoire
 
+#### Pourquoi
+
 Les deux peuvent voyager dans la même Pull Request, tant que la première tourne dans chaque org que
-la story atteint. C'est exactement ce qu'est une **deployment action** : quelque chose que le
+la story atteint. C'est exactement ce qu'est une deployment action : quelque chose que le
 pipeline lance autour du déploiement, dans chaque org, sans que personne ouvre Setup.
 
+#### Vous devriez voir
+
+- Les deux mouvements, dans cet ordre : les données d'abord, le champ obligatoire ensuite
+
 ### 5. Ajouter le remplissage
+
+Objectif : le batch, son test et le script qui le démarre, dans votre projet.
+
+Vous n'avez pas à l'écrire.
+
+#### À faire
+
+1. Dans l'Explorer, par copier-coller, copiez ces quatre fichiers depuis `scripts/apex/samples/` du
+   repository dans `force-app/main/default/classes/` :
+
+   - `CrewSizeBackfillBatch.cls` et `CrewSizeBackfillBatch.cls-meta.xml` : le batch. Il donne l'équipe
+     par défaut de deux personnes à toute installation qui n'en a pas
+   - `CrewSizeBackfillBatchTest.cls` et `CrewSizeBackfillBatchTest.cls-meta.xml` : son test. Salesforce
+     ne déploie pas d'Apex sans test, et le [Lab 2.5](2-5-pass-code-quality-and-apex-test-coverage.md) parle de cette barrière
+
+2. Puis le script que l'action lance : créez le fichier `scripts/apex/backfill-crew-size.apex` et
+   copiez-y ceci
+
+   ```apex title="À modifier dans le fichier"
+   // Starts the backfill as a batch: the script returns at once, and Salesforce
+   // works through the installations without a crew size, 200 at a time.
+   Id jobId = Database.executeBatch(new CrewSizeBackfillBatch(), 200);
+   System.debug('Crew size backfill started, batch job ' + jobId);
+   ```
+
+!!! warning "Attention"
+    Ces quatre-là et aucun autre, et copiés, pas déplacés. Le dossier contient aussi `CrewCapacityBatch`
+    et son test, qui sont pour le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) : ils ont besoin d'un objet que cette story n'apporte pas,
+    le check de votre Pull Request échoue dessus, et le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) les copie depuis ce dossier.
+
+#### Pourquoi un batch
 
 Trente installations dans `helios-integration`, mais une org de production peut en contenir des
 millions, et une deployment action tourne aussi en production. Un script qui met à jour tous les
 enregistrements d'un coup s'arrête à la première limite de gouverneur Salesforce rencontrée :
 10 000 enregistrements mis à jour dans une transaction, dix secondes de traitement. Le travail part
-donc dans un **batch**, que Salesforce déroule par lots de 200 enregistrements, chacun dans sa propre
+donc dans un batch, que Salesforce déroule par lots de 200 enregistrements, chacun dans sa propre
 transaction, quelle que soit la taille de la table.
-
-Vous n'avez pas à l'écrire. Depuis `scripts/apex/samples/` du repository, copiez ces quatre fichiers
-dans `force-app/main/default/classes/`, dans l'Explorer, par copier-coller :
-
-- `CrewSizeBackfillBatch.cls` et `CrewSizeBackfillBatch.cls-meta.xml` : le batch. Il donne l'équipe
-  par défaut de deux personnes à toute installation qui n'en a pas
-- `CrewSizeBackfillBatchTest.cls` et `CrewSizeBackfillBatchTest.cls-meta.xml` : son test. Salesforce
-  ne déploie pas d'Apex sans test, et le [Lab 2.5](2-5-pass-code-quality-and-apex-test-coverage.md) parle de cette barrière
-
-Ces quatre-là et aucun autre, et copiés, pas déplacés. Le dossier contient aussi `CrewCapacityBatch`
-et son test, qui sont pour le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) : ils ont besoin d'un objet que cette story n'apporte pas,
-le check de votre Pull Request échoue dessus, et le [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md) les copie depuis ce dossier.
-
-Puis le script que l'action lance : créez le fichier `scripts/apex/backfill-crew-size.apex` et
-copiez-y ceci.
-
-```apex
-// Starts the backfill as a batch: the script returns at once, and Salesforce
-// works through the installations without a crew size, 200 at a time.
-Id jobId = Database.executeBatch(new CrewSizeBackfillBatch(), 200);
-System.debug('Crew size backfill started, batch job ' + jobId);
-```
 
 Deux choses à remarquer, parce que ce sont elles qui rendent cela sûr à lancer en production :
 
 - Le batch ne touche que les enregistrements réellement faux (`WHERE Crew_Size__c = null`)
 - Le script dit ce qu'il a démarré, pour que le log de déploiement soit lisible après coup
 
+#### Vous devriez voir
+
+- Les quatre fichiers de classe sous `force-app/main/default/classes/`, et `scripts/apex/backfill-crew-size.apex`
+
 ### 6. Le déclarer comme deployment action
+
+Objectif : le remplissage déclaré comme deployment action de votre Pull Request.
 
 Ouvrez le panneau **DevOps Pipeline**. Il y a deux chemins vers votre Pull Request, et les deux
 arrivent au même endroit.
 
-Dans le diagramme : activez **Show feature branches** en haut à droite, désactivé tant que vous ne le
-demandez pas, et votre propre branche apparaît à côté des branches majeures. Votre branche de feature
-**(1)**, et sur la flèche qui en part la pastille numérotée **(2)**. Cliquez sur la pastille.
+#### À faire : ouvrir votre Pull Request
 
-![Le panneau DevOps Pipeline, avec la branche de feature et la pastille de sa Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
+1. Dans le diagramme : activez **Show feature branches** en haut à droite, désactivé tant que vous ne
+   le demandez pas, et votre propre branche apparaît à côté des branches majeures. Votre branche de
+   feature **(1)**, et sur la flèche qui en part la pastille numérotée **(2)**. Cliquez sur la pastille
 
-Ou faites défiler jusqu'à **Project Contribution Workflow** et cliquez sur la carte **My Pull
-Request** **(1)**, qui pointe toujours vers la Pull Request de la branche sur laquelle vous êtes.
+   ![Le panneau DevOps Pipeline, avec la branche de feature et la pastille de sa Pull Request](../../_assets/annotated/vscode/pipeline-workflow-cards.png)
 
-![La carte My Pull Request du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
+2. Ou, au lieu du diagramme, faites défiler jusqu'à **Project Contribution Workflow** et cliquez sur
+   la carte **My Pull Request** **(1)**, qui pointe toujours vers la Pull Request de la branche sur
+   laquelle vous êtes
 
-La Pull Request s'ouvre. Allez sur son onglet **Deployment Actions**, cliquez sur **Add New Action**,
-et dans la boîte **Edit Deployment Action** mettez le **Type** **(1)** sur **Apex**.
+   ![La carte My Pull Request du panneau DevOps Pipeline](../../_assets/annotated/vscode/pipeline-cards--my-pull-request.png)
 
-![La boîte Edit Deployment Action, remplie pour un script Apex](../../_assets/annotated/vscode/pipeline-edit-action-apex.png)
+#### À faire : ajouter l'action
 
-Remplissez-la :
+1. La Pull Request s'ouvre. Allez sur son onglet **Deployment Actions**, et cliquez sur **Add New
+   Action**
+2. Dans la boîte **Edit Deployment Action**, mettez le **Type** **(1)** sur **Apex**
+
+   ![La boîte Edit Deployment Action, remplie pour un script Apex](../../_assets/annotated/vscode/pipeline-edit-action-apex.png)
+
+3. Remplissez-la avec le tableau ci-dessous. **Apex Script** **(2)** est une liste déroulante de ce
+   qu'il a trouvé sous `scripts/apex/`, pas un chemin en texte libre : le fichier doit donc exister
+   dans votre branche avant d'y apparaître. **Run Only Once By Org** **(3)** est le commutateur juste
+   en dessous
+4. **Save**
 
 | Champ                | Valeur                                         |
 |----------------------|------------------------------------------------|
@@ -208,31 +283,38 @@ Remplissez-la :
 | Target orgs          | **All target orgs**                            |
 | Run Only Once By Org | **oui**                                        |
 
-**Apex Script** **(2)** est une liste déroulante de ce qu'il a trouvé sous `scripts/apex/`, pas un
-chemin en texte libre : le fichier doit donc exister dans votre branche avant d'y apparaître.
-**Run Only Once By Org** **(3)** est le commutateur juste en dessous.
+#### Pourquoi Deployment job only
 
 **Deployment job only**, parce que le contrôle de Pull Request est une répétition : il valide la
 métadonnée et ne change rien dans l'org. Un script qui met à jour trente enregistrements le fait pour
 de vrai, il attend donc le merge. Le contrôle liste quand même l'action dans son commentaire, marquée
 sautée, pour que le relecteur la voie venir.
 
-**Save**. L'action rejoint la liste de l'onglet **Deployment Actions**, dont le compteur **(1)**
-augmente d'une unité. **Add New Action** **(2)** reste là pour la suivante, et votre ligne **(3)**
-porte une pastille **Post-Deploy** sous son libellé.
+#### Pourquoi Run Only Once By Org
+
+Cochez-le dès que le script est une correction ponctuelle plutôt que quelque chose qui doit se
+produire à chaque déploiement. sfdx-hardis note ce qu'il a lancé dans chaque org : le remplissage
+part donc une fois en intégration, une fois en UAT, une fois en production, et plus jamais.
+Laissez-le décoché pour un script qui ne fait aucun mal s'il tourne deux fois et qui est censé
+tourner à chaque déploiement.
+
+#### Vous devriez voir
+
+- L'action dans la liste de l'onglet **Deployment Actions**, dont le compteur **(1)** a augmenté
+  d'une unité
+- **Add New Action** **(2)** toujours là pour la suivante, et votre ligne **(3)** qui porte une
+  pastille **Post-Deploy** sous son libellé
 
 ![L'onglet Deployment Actions de la Pull Request, listant les actions qu'elle porte](../../_assets/annotated/vscode/pipeline-pr-actions-list.png)
 
-!!! tip "Run Only Once By Org"
-    Cochez-le dès que le script est une correction ponctuelle plutôt que quelque chose qui doit se
-    produire à chaque déploiement. sfdx-hardis note ce qu'il a lancé dans chaque org : le remplissage
-    part donc une fois en intégration, une fois en UAT, une fois en production, et plus jamais.
-    Laissez-le décoché pour un script qui ne fait aucun mal s'il tourne deux fois et qui est censé
-    tourner à chaque déploiement.
-
 ### 7. Vérifier l'ordre
 
-L'action tourne **après** le déploiement, et ici ce n'est pas un détail. Le script démarre
+Objectif : vous savez pourquoi le remplissage tourne après le déploiement, et ce que cela coûte.
+Cette étape n'a pas de clic.
+
+#### Pourquoi après
+
+L'action tourne après le déploiement, et ici ce n'est pas un détail. Le script démarre
 `CrewSizeBackfillBatch`, et cette classe voyage dans le déploiement même auquel l'action est
 attachée : avant le déploiement, l'org cible ne l'a pas, et un script qui s'en sert ne compile pas.
 
@@ -241,34 +323,46 @@ enregistrées, comme vous l'avez vu dans `helios-dev`. Puis le batch leur en a d
 est le prix de l'ordre, et sur une table de plusieurs millions de lignes, elle mérite d'être annoncée
 aux planificateurs avant la mise en production.
 
-!!! tip "Comment décider pre ou post, à chaque fois"
-    Demandez-vous ce que l'action a besoin de trouver déjà présent. Une action qui utilise une
-    classe, un objet ou un champ que la story apporte est post-deploy : ils n'existent qu'une fois le
-    déploiement fait, et c'est le cas de ce lab et du Lab 2.4. Le pre-deploy est pour ce qui doit
-    arriver avec l'org telle qu'elle était, avant que quoi que ce soit change : désactiver un job
-    planifié avec lequel le déploiement entrerait en collision, par exemple. La réponse n'est jamais
-    une habitude, c'est cette question.
+#### Pourquoi : comment décider pre ou post, à chaque fois
+
+Demandez-vous ce que l'action a besoin de trouver déjà présent. Une action qui utilise une
+classe, un objet ou un champ que la story apporte est post-deploy : ils n'existent qu'une fois le
+déploiement fait, et c'est le cas de ce lab et du [Lab 2.4](2-4-ship-reference-data-and-a-batch-with-deployment-actions.md). Le pre-deploy est pour ce qui doit
+arriver avec l'org telle qu'elle était, avant que quoi que ce soit change : désactiver un job
+planifié avec lequel le déploiement entrerait en collision, par exemple. La réponse n'est jamais
+une habitude, c'est cette question.
+
+#### Vous devriez voir
+
+- Votre action réglée sur **After Metadata Deployment**, avec la pastille **Post-Deploy** de l'étape 6
 
 ### 8. Le commiter, et le regarder tourner
 
+Objectif : la Pull Request mergée, et chaque installation de `helios-integration` qui porte un crew size.
+Rappel : [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)
+
 Des fichiers attendent dans **Source Control**, aucun commité : les quatre fichiers de classe et le
 script Apex que vous avez créés à l'étape 5, et l'action que l'éditeur a écrite sous
-`scripts/actions/`, dans un fichier nommé d'après votre Pull Request. Commitez-les tous, puis
-**Save / Publish**.
+`scripts/actions/`, dans un fichier nommé d'après votre Pull Request.
 
-Le contrôle repasse, et son commentaire a maintenant une ligne **Deployment actions** dans son
-tableau : votre remplissage, **🕒 1 after the merge**, parce que c'est le job de validation et qu'il
-ne change rien dans l'org. Ouvrez la section repliée **🛠️ Deployment actions of this job (1)** en
-dessous : le remplissage, **after** le déploiement, avec la raison **Runs after the merge only**.
+#### À faire
 
-**Mergez maintenant la Pull Request.** Sur sa page GitHub, choisissez **Squash and merge**, puis
-cliquez sur **Squash and merge** et **Confirm squash and merge**, comme au [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md).
+1. Commitez-les tous, puis **Save / Publish**
+2. Le contrôle repasse, et son commentaire a maintenant une ligne **Deployment actions** dans son
+   tableau : votre remplissage, **🕒 1 after the merge**. Ouvrez la section repliée **🛠️ Deployment
+   actions of this job (1)** en dessous : le remplissage, **after** le déploiement, avec la raison
+   **Runs after the merge only**
+3. Mergez la Pull Request : sur sa page GitHub, choisissez **Squash and merge**, puis cliquez sur
+   **Squash and merge** et **Confirm squash and merge**, comme au [Lab 1.6](../level-1-contributor-basics/1-6-pull-request-deployment-check-and-merge.md)
+4. Ouvrez le log du job de déploiement vers `integration` dans l'onglet **Actions** : vous y trouvez
+   le déploiement, puis l'action qui démarre, puis la ligne `System.debug` de votre script,
+   `Crew size backfill started, batch job ...`
 
-Le job de déploiement vers `integration` le lance, pour de vrai, juste **après** le déploiement :
-ouvrez son log dans l'onglet **Actions** et vous y trouvez le déploiement, puis l'action qui démarre,
-puis la ligne `System.debug` de votre script, `Crew size backfill started, batch job ...`. Une minute
-plus tard, chaque installation de `helios-integration` porte un crew size, et personne n'a ouvert
-Setup.
+#### Pourquoi
+
+Le contrôle montre le remplissage en attente, parce que c'est le job de validation et qu'il ne
+change rien dans l'org. Le job de déploiement vers `integration` le lance, pour de vrai, juste après
+le déploiement.
 
 `helios-dev` a toujours ses crew sizes vides, et c'est normal : le prochain backpromote lance les
 actions des Pull Requests qu'il rapatrie, celle-ci comprise.
@@ -306,8 +400,8 @@ sandbox" nomme d'habitude ses branches.
 
 Parce que les actions vivent dans le repository et voyagent avec la Pull Request, la même séquence
 se rejoue en UAT et en production des mois plus tard, sans que personne se souvienne qu'elle
-existait. C'est toute la valeur de la chose : **la connaissance est dans le repository, pas dans la
-tête de quelqu'un.**
+existait. C'est toute la valeur de la chose : la connaissance est dans le repository, pas dans la
+tête de quelqu'un.
 
 <!-- command-links:start -->
 Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis.cloudity.com/hardis/project/deploy/smart/)
@@ -315,13 +409,18 @@ Documentation de la commande : [hardis:project:deploy:smart](https://sfdx-hardis
 
 </details>
 
+#### Vous devriez voir
+
+- Une minute après le déploiement, chaque installation de `helios-integration` qui porte un crew
+  size, et personne n'a ouvert Setup
+
 ## Ce que vous devez voir
 
-- Le commentaire de la Pull Request listant la deployment action qu'il a lancée, au-dessus du
-  résultat du déploiement
-- `Crew Size` obligatoire dans `helios-integration`, avec les trente installations portant une valeur
-- Une installation que vous pouvez toujours enregistrer, ce qui est tout l'objectif
-- Aucune étape manuelle effectuée par qui que ce soit dans quelque org que ce soit
+- [ ] Le commentaire de la Pull Request listant la deployment action qu'il a lancée, au-dessus du
+      résultat du déploiement
+- [ ] `Crew Size` obligatoire dans `helios-integration`, avec les trente installations portant une valeur
+- [ ] Une installation que vous pouvez toujours enregistrer, ce qui est tout l'objectif
+- [ ] Aucune étape manuelle effectuée par qui que ce soit dans quelque org que ce soit
 
 ## En cas de problème
 

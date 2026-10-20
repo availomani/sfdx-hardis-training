@@ -5,7 +5,7 @@ description: "Créez un champ personnalisé, accordez-le par un permission set e
 level: 1
 lab: 4
 lang: fr
-source_rev: "fa953f7c16ce184ea26633a4d1bd678b6ed2e405"
+source_rev: "39e8b91e871b09d3da546a717fbae20d0a920427"
 screenshots:
   - annotated/vscode/orgs-manager-actions
   - annotated/salesforce/object-manager-fields
@@ -31,7 +31,7 @@ Salesforce Setup, et le vérifier sur de vrais enregistrements.
 ## La situation
 
 Vous avez une branche et une org. Passez maintenant au vrai travail. Rien dans ce lab n'est propre au
-CI/CD : c'est de la configuration Salesforce ordinaire. La seule règle est **où** vous le faites :
+CI/CD : c'est de la configuration Salesforce ordinaire. La seule règle est où vous le faites :
 dans `helios-dev`, votre propre org, jamais dans l'org partagée.
 
 ## Avant de commencer
@@ -44,38 +44,64 @@ dans `helios-dev`, votre propre org, jamais dans l'org partagée.
 
 ### 1. Ouvrir votre org
 
-Dans **Orgs Manager**, trouvez la ligne dont la colonne **ALIAS** dit `helios-dev`. Lisez l'alias,
-pas l'adresse : aucune des adresses ne dit à quoi sert l'org. L'org Developer Edition a une chaîne
-`orgfarm-` inventée par Salesforce, et les scratch orgs ont deux mots au hasard et un nombre : vos
-quatre orgs se ressemblent donc partout sauf dans cette colonne.
+Objectif : `helios-dev` ouverte dans votre navigateur, déjà connectée.
+Rappel : [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md)
 
-Au bout de cette ligne, cliquez sur le chevron. Il ouvre tout ce que vous pouvez faire sur cette org,
-et la première entrée est **Open** **(1)**.
+#### À faire
 
-![Le menu d'actions de l'org de développement dans Orgs Manager](../../_assets/annotated/vscode/orgs-manager-actions.png)
+1. Dans **Orgs Manager**, trouvez la ligne dont la colonne **ALIAS** dit `helios-dev`. Lisez
+   l'alias, pas l'adresse
+2. Au bout de cette ligne, cliquez sur le chevron. Il ouvre tout ce que vous pouvez faire sur cette
+   org, et la première entrée est **Open** **(1)**. Cliquez dessus
 
-Votre navigateur ouvre l'org, déjà connecté. Pas de mot de passe, pas de page de connexion :
-l'extension a utilisé l'identifiant qu'elle a rangé quand vous avez connecté l'org au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+   ![Le menu d'actions de l'org de développement dans Orgs Manager](../../_assets/annotated/vscode/orgs-manager-actions.png)
 
-!!! tip "Dans Agentforce Vibes, l'org s'ouvre dans un nouvel onglet"
-    VS Code tourne dans votre navigateur, l'org ne peut donc pas s'ouvrir à côté : elle s'ouvre
-    dans un nouvel onglet du même navigateur. VS Code peut d'abord demander s'il peut ouvrir le
-    site externe : répondez **Open**. Si aucun onglet n'apparaît du tout, mettez l'extension à
-    jour : les anciennes versions lançaient la commande d'ouverture dans l'environnement de
-    l'onglet, où aucun navigateur ne peut s'ouvrir, et n'affichaient rien.
+3. Dans Agentforce Vibes, l'org s'ouvre dans un nouvel onglet du même navigateur. VS Code peut
+   d'abord demander s'il peut ouvrir le site externe : répondez **Open**. Si aucun onglet n'apparaît
+   du tout, mettez l'extension à jour
+
+#### Pourquoi
+
+Aucune des adresses ne dit à quoi sert l'org. L'org Developer Edition a une chaîne `orgfarm-`
+inventée par Salesforce, et les scratch orgs ont deux mots au hasard et un nombre : vos quatre orgs
+se ressemblent donc partout sauf dans la colonne **ALIAS**.
+
+Pas de mot de passe, pas de page de connexion : l'extension a utilisé l'identifiant qu'elle a rangé
+quand vous avez connecté l'org au [Lab 1.2](1-2-create-your-dev-hub-scratch-orgs-and-pipeline.md).
+
+Dans Agentforce Vibes, VS Code tourne dans votre navigateur, l'org ne peut donc pas s'ouvrir à côté.
+Les anciennes versions de l'extension lançaient la commande d'ouverture dans l'environnement de
+l'onglet, où aucun navigateur ne peut s'ouvrir, et n'affichaient rien.
 
 Ouvrir l'org depuis ce panneau plutôt que depuis un favori est une habitude à prendre. C'est la
 différence entre "l'org que je voulais" et "l'org qui se trouvait ouverte dans cet onglet".
 
+#### Vous devriez voir
+
+- Votre navigateur sur l'org, déjà connecté
+
 ### 2. Créer le champ
 
-Dans Salesforce : **Setup > Object Manager > Installation**, puis **Fields & Relationships** **(1)**
-dans la colonne de gauche, puis **New** **(2)**.
+Objectif : un champ nombre `Panels Required` sur Installation, sur sa présentation de page, et
+visible d'aucun profil.
 
-![La page Fields and Relationships de l'objet Installation dans Setup](../../_assets/annotated/salesforce/object-manager-fields.png)
+#### À faire
 
-La liste que vous voyez est l'objet avant votre modification. `Panels Required` est ce que vous êtes
-sur le point d'y ajouter.
+1. Dans Salesforce : **Setup > Object Manager > Installation**, puis **Fields & Relationships**
+   **(1)** dans la colonne de gauche, puis **New** **(2)**
+
+   ![La page Fields and Relationships de l'objet Installation dans Setup](../../_assets/annotated/salesforce/object-manager-fields.png)
+
+   La liste que vous voyez est l'objet avant votre modification. `Panels Required` est ce que vous
+   êtes sur le point d'y ajouter.
+
+2. Remplissez les paramètres du tableau ci-dessous, Description et Help Text compris
+3. L'écran de sécurité au niveau des champs arrive avec **Visible** déjà coché pour presque tous les
+   profils. Décochez-les : la case dans l'en-tête de la colonne **Visible** bascule toute la
+   colonne, donc cliquez une fois pour tout cocher et une seconde fois pour ne rien laisser coché
+4. Cliquez sur **Next**
+5. Sur l'écran de présentation de page, **Installation Layout** est déjà coché. Laissez-le tel quel
+6. Cliquez sur **Save**
 
 | Paramètre      | Valeur                                                        |
 |----------------|---------------------------------------------------------------|
@@ -86,101 +112,137 @@ sur le point d'y ajouter.
 | Field Name     | `Panels_Required` (Salesforce le remplit depuis le label)     |
 | Description    | `How many panels the crew has to load for this installation.` |
 | Help Text      | `Ask the planner if this is empty.`                           |
-| Required       | **non**                                                       |
+| Required       | non                                                           |
+
+#### Pourquoi
 
 La case **Field Name** est ce que Salesforce appelle le nom d'API, et il la remplit depuis le label
 au fur et à mesure que vous tapez. Elle affiche `Panels_Required`, sans le `__c` : Salesforce
 ajoute ce suffixe à chaque champ personnalisé au moment de l'enregistrement, et la suite de ce
 cours, fichiers de métadonnées compris, appelle le champ `Panels_Required__c`.
 
-L'écran de sécurité au niveau des champs arrive avec **Visible** déjà coché pour presque tous les
-profils. Décochez-les : la case dans l'en-tête de la colonne **Visible** bascule toute la colonne,
-donc cliquez une fois pour tout cocher et une seconde fois pour ne rien laisser coché. Cliquez
-ensuite sur **Next**. Vous allez accorder ce champ par un permission set, pas par un profil, et le [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
+Remplissez Description et Help Text : deux secondes maintenant, et la documentation de projet
+générée au [Lab 3.9](../level-3-release-manager/3-9-generate-the-project-documentation.md) se lit comme quelque chose écrit par un être humain. Les descriptions vides sont
+la raison la plus fréquente pour laquelle cette documentation ne sert à rien.
+
+Vous décochez les profils parce que vous allez accorder ce champ par un permission set, pas par un
+profil, et le [Lab 2.6](../level-2-contributor-advanced/2-6-permission-sets-and-profiles.md)
 explique pourquoi cette distinction compte plus qu'il n'y paraît.
 
-Sur l'écran de présentation de page, **Installation Layout** est déjà coché, et c'est ce qui met le
-champ sur l'enregistrement. Laissez-le tel quel.
+**Installation Layout** coché, c'est ce qui met le champ sur l'enregistrement.
 
-Cliquez sur **Save**.
+#### Vous devriez voir
 
-!!! tip "Remplissez Description et Help Text"
-    Deux secondes maintenant, et la documentation de projet générée au Lab 3.9 se lit comme quelque
-    chose écrit par un être humain. Les descriptions vides sont la raison la plus fréquente pour
-    laquelle cette documentation ne sert à rien.
+- Le champ enregistré, et `Panels Required` dans la liste **Fields & Relationships** d'Installation
 
 ### 3. L'accorder à l'équipe de pose, et aux planificateurs
+
+Objectif : `Panels Required` lisible par l'équipe de pose et modifiable par les planificateurs, par
+leurs permission sets.
 
 Les critères d'acceptation disent que l'équipe de pose doit le voir, et que les planificateurs
 doivent pouvoir le renseigner. Personne ne l'a encore, pas même vous : vous n'avez rien accordé, et
 un champ qu'aucune permission n'accorde est invisible pour tout le monde, y compris l'administrateur
 qui l'a créé.
 
-**Setup > Permission Sets > Helios Delivery Crew**, puis **Object Settings** **(1)** et
-**Installations**, puis **Edit**.
+#### À faire
 
-![Object Settings pour Installations sur le permission set Helios Delivery Crew](../../_assets/annotated/salesforce/permission-set-object-settings.png)
+1. **Setup > Permission Sets > Helios Delivery Crew**, puis **Object Settings** **(1)** et
+   **Installations**, puis **Edit**
 
-**Field Permissions** est le tableau qui compte, une ligne par champ, et **Read Access** **(2)** est
-la colonne pour laquelle vous êtes là. Cette image a été prise avant que le champ existe,
-`Panels Required` n'y est donc pas encore : après votre modification il apparaît dans cette liste,
-par ordre alphabétique.
+   ![Object Settings pour Installations sur le permission set Helios Delivery Crew](../../_assets/annotated/salesforce/permission-set-object-settings.png)
 
-Trouvez `Panels Required` et cochez **Read Access**. Laissez **Edit Access** décoché : un membre de
-l'équipe de pose lit combien de panneaux charger, il ne décide pas du nombre.
+2. Dans **Field Permissions**, trouvez `Panels Required` et cochez **Read Access** **(2)**. Cette
+   image a été prise avant que le champ existe, `Panels Required` n'y est donc pas encore : après
+   votre modification il apparaît dans cette liste, par ordre alphabétique
+3. Laissez **Edit Access** décoché, et cliquez sur **Save**
+4. Ouvrez les mêmes écrans sur **Helios Delivery Manager**, le permission set des planificateurs
+5. Cochez à la fois **Read Access** et **Edit Access** sur `Panels Required`, et cliquez sur
+   **Save**
 
-**Save**.
+!!! warning "Attention"
+    Sautez cette étape et l'étape 4 ne vous montre rien : vous chercheriez un champ que votre propre
+    permission set n'accorde pas.
 
-Puis les mêmes écrans sur **Helios Delivery Manager**, le permission set des planificateurs. C'est
-aussi celui que **Set up my training environment** vous a donné, et c'est ce qui vous permet de voir
-l'application Helios tout court. Cochez à la fois **Read Access** et **Edit Access** sur
-`Panels Required` : les planificateurs sont ceux qui décident du nombre. **Save**.
+#### Pourquoi
 
-Sautez cette étape et l'étape 4 ne vous montre rien : vous chercheriez un champ que votre propre
-permission set n'accorde pas.
+**Field Permissions** est le tableau qui compte, une ligne par champ, et **Read Access** est la
+colonne pour laquelle vous êtes là. Un membre de l'équipe de pose lit combien de panneaux charger,
+il ne décide pas du nombre.
+
+**Helios Delivery Manager** est aussi celui que **Set up my training environment** vous a donné, et
+c'est ce qui vous permet de voir l'application Helios tout court. Les planificateurs sont ceux qui
+décident du nombre.
+
+#### Vous devriez voir
+
+- Sur **Helios Delivery Crew**, **Read Access** coché sur `Panels Required`, et sur **Helios
+  Delivery Manager**, à la fois **Read Access** et **Edit Access**
 
 ### 4. Le mettre là où les gens regarderont
+
+Objectif : `Panels Required` sur la page d'enregistrement Installation, sans rien de plus à
+construire.
 
 Le champ est sur la présentation de page, celle qu'utilisent les pages Salesforce à l'ancienne. La
 page d'enregistrement Installation est une page Lightning, et la colonne de champs à sa gauche est
 cette présentation de page : vous avez donc déjà fini.
 
-Ouvrez n'importe quelle installation (**App Launcher > Helios Delivery > Installations**, prenez
-`INST-00001`) et regardez le bas de cette colonne. `Panels Required` est là, vide, avec à côté de
-son nom le petit **i** du texte d'aide que vous avez écrit.
+#### À faire
+
+1. Ouvrez n'importe quelle installation : **App Launcher > Helios Delivery > Installations**, prenez
+   `INST-00001`
+2. Regardez le bas de la colonne de champs
+
+#### Vous devriez voir
+
+- `Panels Required` là, vide, avec à côté de son nom le petit **i** du texte d'aide que vous avez
+  écrit
 
 ### 5. Le tester sur de vraies données
 
+Objectif : une valeur `Panels Required` enregistrée sur trois installations.
+
 Un champ vide ne prouve rien. Mettez-y un nombre.
 
-![Un enregistrement Installation dans l'application Helios Delivery](../../_assets/annotated/salesforce/installation-record.png)
+#### À faire
 
-L'onglet **Installations** **(1)** est la façon de revenir à cette liste depuis n'importe où dans
-l'application. À droite de l'enregistrement se trouve le **Panel delivery timeline** **(2)**, qui
-liste les palettes réservées pour cette installation avec leurs quantités. L'image a été prise avant
-que cette story existe : il n'y a donc pas encore de Panels Required dans sa colonne. L'installation
-qu'elle montre a deux palettes, de 23 et 16 panneaux : 39 est le nombre à y saisir. La plupart des
-installations en ont deux ou trois.
+1. Sur `INST-00001`, lisez le **Panel delivery timeline** **(2)** à droite de l'enregistrement. Il
+   liste les palettes réservées pour cette installation avec leurs quantités
 
-1. Sur `INST-00001`, cliquez sur le crayon à droite de **Panels Required**, tapez le nombre auquel
-   la timeline aboutit, et cliquez sur **Save** en bas de la page. Cette page n'a pas de bouton
-   **Edit** : chaque champ se modifie sur place, avec son propre crayon
-2. Regardez les deux nombres côte à côte. Sur une vraie story, vous demanderiez au planificateur si
-   ce champ doit être saisi ou calculé à partir des palettes. Ici, la saisie est ce que demande la
-   story, et cette question est exactement celle qu'un bon contributeur pose avant de construire quoi
-   que ce soit
+   ![Un enregistrement Installation dans l'application Helios Delivery](../../_assets/annotated/salesforce/installation-record.png)
 
-Faites de même sur deux autres installations, pour avoir quelque chose à regarder après le
-déploiement.
+   L'image a été prise avant que cette story existe : il n'y a donc pas encore de Panels Required
+   dans sa colonne. L'installation qu'elle montre a deux palettes, de 23 et 16 panneaux : 39 est le
+   nombre à y saisir.
+
+2. Cliquez sur le crayon à droite de **Panels Required**, tapez le nombre auquel la timeline
+   aboutit, et cliquez sur **Save** en bas de la page. Cette page n'a pas de bouton **Edit** :
+   chaque champ se modifie sur place, avec son propre crayon
+3. Regardez les deux nombres côte à côte
+4. Faites de même sur deux autres installations, pour avoir quelque chose à regarder après le
+   déploiement. L'onglet **Installations** **(1)** est la façon de revenir à la liste depuis
+   n'importe où dans l'application
+
+#### Pourquoi
+
+La plupart des installations ont deux ou trois palettes. Sur une vraie story, vous demanderiez au
+planificateur si ce champ doit être saisi ou calculé à partir des palettes. Ici, la saisie est ce
+que demande la story, et cette question est exactement celle qu'un bon contributeur pose avant de
+construire quoi que ce soit.
+
+#### Vous devriez voir
+
+- Sur trois installations, une valeur `Panels Required` qui correspond à leur timeline, enregistrée
+  sans erreur
 
 ## Ce que vous devez voir
 
-Sur trois installations : une valeur `Panels Required`, visible dans la colonne de champs,
-enregistrée sans erreur.
-
-Et dans VS Code, **rien du tout**. Le repository ne sait encore rien de tout cela. Vos modifications
-vivent dans une org et nulle part ailleurs, et c'est exactement l'état auquel le [Lab
-1.5](1-5-retrieve-commit-and-publish-your-changes.md) existe pour mettre fin.
+- [ ] Sur trois installations : une valeur `Panels Required`, visible dans la colonne de champs,
+      enregistrée sans erreur
+- [ ] Et dans VS Code, rien du tout. Le repository ne sait encore rien de tout cela. Vos
+      modifications vivent dans une org et nulle part ailleurs, et c'est exactement l'état auquel le
+      [Lab 1.5](1-5-retrieve-commit-and-publish-your-changes.md) existe pour mettre fin
 
 ## En cas de problème
 

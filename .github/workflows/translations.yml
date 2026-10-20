@@ -72,6 +72,12 @@ jobs:
       - name: The generated files match what the sources say
         run: node scripts/build/universe.mjs --check
 
+      # Every numbered step of every lab, in every locale: a Goal line, a "You
+      # should now see" block last, only Careful boxes, titled code blocks, and
+      # bold kept for what a screen shows. See scripts/lib/lab-template.mjs.
+      - name: Every lab follows the step template
+        run: node scripts/verify/check-lab-template.mjs
+
       # Reports, never fails: a deliberate difference is allowed, and the French
       # home page has one. It is here to be read on the Pull Request, because a
       # translation that lost an image or an "Under the hood" block shows up
