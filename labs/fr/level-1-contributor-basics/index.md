@@ -4,12 +4,12 @@ description: "Formation Salesforce DevOps gratuite et pratique pour admins et d�
 id: l1-home
 level: 1
 lang: fr
-source_rev: "70de8214f4a950a5cb5d5df7ad127aed3b4a44a6"
+source_rev: "665f92c958306c1afc97df4b287dd2ebd3465aa4"
 ---
 
 # Niveau 1 - Contributeur Salesforce DevOps, les bases
 
-**Durée** : environ 2 h 15, en une fois ou en sept.<!-- observed --> Observé sur les Labs 1.3 à 1.7 : médiane 1 h 26, 42 participants, le plus rapide 39 min.<!-- /observed -->
+**Durée** : environ 2 h 15, en une fois ou en sept.<!-- observed --> Observé sur les Labs 1.3 à 1.7 : médiane 1 h 25, 43 participants, le plus rapide 39 min.<!-- /observed -->
 
 **Prérequis** : aucun. C'est le premier niveau.
 
@@ -51,7 +51,7 @@ s'en charge.
 | [1.4](1-4-build-a-custom-field-in-your-org.md)              | Construire un champ personnalisé dans votre org Salesforce         | 10 min |
 | [1.5](1-5-retrieve-commit-and-publish-your-changes.md)      | Récupérer, commiter et publier vos modifications Salesforce        | 15 min |
 | [1.6](1-6-pull-request-deployment-check-and-merge.md)       | Ouvrir une Pull Request, passer le contrôle de déploiement, merger | 15 min |
-| [1.7](1-7-capstone-deliver-a-user-story-on-your-own.md)     | Épreuve finale : livrer une User Story tout seul                   | 30 min |
+| [1.7](1-7-capstone-deliver-a-user-story-on-your-own.md)     | Épreuve finale : livrer une User Story tout seul                   | 25 min |
 
 ## Le menu Training
 
