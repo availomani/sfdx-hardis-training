@@ -43,6 +43,11 @@ const BASE_PATH = (() => {
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
+    // theme/ holds the assets, not course pages: its only page is Guinea Run's
+    // play.html, the game alone for the VS Code panel, which has no menu
+    if (entry.isDirectory() && path.relative(SITE, full) === "theme") {
+      continue;
+    }
     if (entry.isDirectory()) {
       walk(full, out);
     } else if (entry.name.endsWith(".html")) {
