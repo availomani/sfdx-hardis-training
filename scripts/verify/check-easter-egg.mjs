@@ -449,6 +449,9 @@ try {
         /^https:\/\/github\.com\/hardisgroupcom\/sfdx-hardis-training\/issues\/new\?/.test(href) && href.length < 8000 && sent && sent.h === "wasd-dev" && sent.r.length === 1 && sent.sg,
         `the issue link carries the signed scores of the handle (${href.length} characters)`
       );
+      // The GitHub mobile app drops the form and keeps the body: it must hold the same scores
+      const body = href ? new URL(href).searchParams.get("body") || "" : "";
+      expect(sent && body.includes(JSON.stringify(sent)), "the body of the issue link holds the same scores, for the GitHub mobile app");
       await page.context().close();
     }
     const page = await newPage({ viewport: { width: 1280, height: 860 } });

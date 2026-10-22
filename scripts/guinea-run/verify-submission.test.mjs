@@ -179,3 +179,11 @@ test("a world number changed after the game signed the result is refused", async
   const s = await submission([{ ...signed, w: 5 }]);
   assert.equal((await check(s)).reason, "bad-result-signature");
 });
+
+test("the body of the issue link reads as the form field: the GitHub mobile app keeps only the title and the body", async () => {
+  const { submissionUrl } = await import("../../site-theme/javascripts/guinea-run/core/hof.js");
+  const url = new URL(await submissionUrl("Jane-Doe", [{ w: 0, sc: 10, st: 1, legacy: true }], Date.now()));
+  const body = url.searchParams.get("body");
+  assert.ok(url.searchParams.get("title").startsWith("[Guinea Run] "), "the title the workflow knows a score issue by");
+  assert.equal(extractField(body, "Scores"), url.searchParams.get("scores"));
+});

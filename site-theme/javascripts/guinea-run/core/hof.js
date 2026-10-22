@@ -19,6 +19,8 @@ export const GAME_VERSION = "2026.10.22";
 // Best scores saved before results were signed count until this day (UTC), under a lower cap
 export const LEGACY_UNTIL = "2026-12-31";
 export const WORLD_COUNT = 10;
+// The title of a score issue starts with it: the workflow also knows an issue by it, when the label is missing
+export const ISSUE_PREFIX = "[Guinea Run] ";
 const HANDLE = /^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/;
 
 /** Whether a text is a possible GitHub handle. */
@@ -107,10 +109,15 @@ export function collectResults(progress, now) {
 export async function submissionUrl(handle, results, now) {
   const submission = { f: 1, h: handle, hr: Math.floor(now / 3600000), k: TALLY_SET, r: results };
   submission.sg = await seal(submission);
+  const scores = JSON.stringify(submission);
+  // The form fills its field from "scores". The GitHub mobile app ignores
+  // forms and opens a plain issue with the title and the body: the body holds
+  // the same text the form writes, so the workflow reads either one.
   const query = new URLSearchParams({
     template: "guinea-run-score.yml",
-    title: "[Guinea Run] " + handle,
-    scores: JSON.stringify(submission)
+    title: ISSUE_PREFIX + handle,
+    scores,
+    body: "### Scores\n\n```json\n" + scores + "\n```\n"
   });
   return "https://github.com/" + REPOSITORY + "/issues/new?" + query.toString();
 }
