@@ -29,7 +29,7 @@ depends_on:
 
 **Level**: 1 Contributor basics
 
-**Time**: ~15 min<!-- observed --> (observed: median 18 min, 25 learners, fastest 8 min)<!-- /observed -->
+**Time**: ~10 min<!-- observed --> (Labs 1.3 to 1.6 observed together: median 35 min, 36 learners, fastest 13 min)<!-- /observed -->
 
 **You will**: bring your org changes into the repository, decide which of them belong to your story,
 and push a branch that is ready to be reviewed.

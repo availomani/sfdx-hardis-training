@@ -5,7 +5,7 @@ description: "Transportez trois User Stories approuvées sur cinq de uat vers pr
 level: 3
 lab: 10
 lang: fr
-source_rev: "a79bd9f0bc8b0355a1143003a59de2639e2c7573"
+source_rev: "755fef20b7fb2fe35484f01d301acd5639d7158f"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config-danger--promotion-branches
@@ -29,7 +29,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~55 min<!-- observed --> (observé : médiane 57 min, 7 participants, le plus rapide 39 min)<!-- /observed -->
+**Durée** : ~30 min<!-- observed --> (Labs 3.8 à 3.10 observés ensemble : médiane 1 h 08, 10 participants, le plus rapide 35 min)<!-- /observed -->
 
 **Vous allez** : livrer en preprod trois User Stories approuvées pendant que deux autres restent en
 UAT, résoudre le conflit que l'une d'elles traîne avec elle, et remettre la pipeline d'aplomb

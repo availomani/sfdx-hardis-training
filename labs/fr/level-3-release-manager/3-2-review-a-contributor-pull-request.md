@@ -5,7 +5,7 @@ description: "Relisez la Pull Request Salesforce d'une collègue en release mana
 level: 3
 lab: 2
 lang: fr
-source_rev: "5857347c68ff10403235cbdbd9bb0a0e9c8569bd"
+source_rev: "1db37c806415e3cc0dba3ee40b270a4c9e771285"
 screenshots:
   - annotated/web/github-pr-files
   - annotated/vscode/pipeline-review-pr
@@ -23,7 +23,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~20 min<!-- observed --> (observé : médiane 22 min, 7 participants, le plus rapide 13 min)<!-- /observed -->
+**Durée** : ~20 min<!-- observed --> (observé : médiane 24 min, 12 participants, le plus rapide 6 min)<!-- /observed -->
 
 **Vous allez** : relire le travail de quelqu'un d'autre, trouver ce que le robot n'a pas vu, demander
 une correction, et merger.

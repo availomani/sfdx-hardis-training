@@ -27,7 +27,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~30 min<!-- observed --> (observed: median 31 min, 8 learners, fastest 16 min)<!-- /observed -->
+**Time**: ~15 min<!-- observed --> (Labs 2.1 and 2.2 observed together: median 48 min, 28 learners, fastest 13 min)<!-- /observed -->
 
 **You will**: bring a teammate's merged story into your own dev org, decide what to keep when the
 tool asks, and learn what a backpromote will never do for you.

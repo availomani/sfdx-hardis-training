@@ -23,7 +23,7 @@ depends_on:
 
 **Level**: 3 Release Manager
 
-**Time**: ~20 min<!-- observed --> (observed: median 22 min, 7 learners, fastest 13 min)<!-- /observed -->
+**Time**: ~20 min<!-- observed --> (observed: median 24 min, 12 learners, fastest 6 min)<!-- /observed -->
 
 **You will**: review somebody else's work, find the thing the robot did not, ask for a change, and
 merge.

@@ -5,7 +5,7 @@ description: "Revoyez l'ordre de merge de deux Pull Requests qui ont modifié le
 level: 3
 lab: 4
 lang: fr
-source_rev: "0132bca99d99c451fd8bc45cf2f683db520e2fff"
+source_rev: "d7920c3aa606420e6754bc49fbccccf9b62fb638"
 screenshots:
   - annotated/vscode/welcome-custom-menu-3
   - annotated/vscode/pipeline-config--cleaning-overwrite
@@ -21,7 +21,7 @@ depends_on:
 
 **Niveau** : 3 Release Manager
 
-**Durée** : ~5 min<!-- observed --> (observé : médiane 9 min, 7 participants, le plus rapide 6 min)<!-- /observed -->
+**Durée** : ~35 min
 
 **Vous allez** : revenir sur l'ordre dans lequel deux Pull Requests sur le même fichier sont
 passées, vérifier qu'aucune n'a rien perdu, et renvoyer une troisième qui ne marche pas.
