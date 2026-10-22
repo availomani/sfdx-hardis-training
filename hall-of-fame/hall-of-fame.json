@@ -1,22 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-22T20:11:42.000Z",
+  "updatedAt": "2026-10-22T21:20:50.000Z",
   "banned": [],
   "players": {
     "nvuillam": {
       "handle": "nvuillam",
       "badge": 3,
       "firstSubmittedAt": "2026-10-22T19:27:29.000Z",
-      "submittedAt": "2026-10-22T20:11:42.000Z",
-      "issue": 258,
+      "submittedAt": "2026-10-22T21:20:50.000Z",
+      "issue": 259,
       "worlds": {
         "0": {
-          "score": 8720,
-          "stars": 2,
-          "bossMs": null,
-          "mode": "easy",
-          "legacy": true,
-          "at": "2026-10-22T19:27:29.000Z"
+          "score": 16592,
+          "stars": 1,
+          "bossMs": 66108,
+          "mode": "hard",
+          "legacy": false,
+          "at": "2026-10-22T21:20:29.421Z"
         },
         "1": {
           "score": 7995,
@@ -91,8 +91,8 @@
           "at": "2026-10-22T19:27:29.000Z"
         }
       },
-      "total": 71496,
-      "stars": 20
+      "total": 79368,
+      "stars": 19
     }
   }
 }
