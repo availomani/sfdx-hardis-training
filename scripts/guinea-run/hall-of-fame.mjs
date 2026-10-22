@@ -125,7 +125,7 @@ export function ranksMessage(board, handle) {
     }
     const list = rankWorld(board, w);
     const place = rankOf(list, handle);
-    lines.push(`| ${w + 1}. ${t(`w${w}_name`)} | ${one.score} | ${place > 0 ? `#${place} of ${list.length}` : "-"} |`);
+    lines.push(`| ${w}. ${t(`w${w}_name`)} | ${one.score} | ${place > 0 ? `#${place} of ${list.length}` : "-"} |`);
   }
   lines.push(
     "",

@@ -109,10 +109,11 @@ test("the message gives the overall rank and the rank in each world", () => {
   send(board, "Jane", [world(0, 4000, 3), world(2, 100, 1)], 1);
   send(board, "Bob", [world(0, 5000, 3)], 2);
   const message = ranksMessage(board, "jane");
-  assert.match(message, /\*\*#2\*\* of 2 overall, with 4100 points and 4 stars/);
-  assert.match(message, /\| 1\. Get set up \| 4000 \| #2 of 2 \|/);
-  assert.match(message, /\| 3\. Retrieve and commit \| 100 \| #1 of 1 \|/);
-  assert.match(message, /hall-of-fame\//);
+  assert.match(message, /| 2. Retrieve and commit| 0. Get set up\*\*#2\*\* of 2 overall, with 4100 points and 4 stars/);
+  // Worlds are numbered from 0, as in the game
+  assert.match(message, /\| 0\. Get set up \| 4000 \| #2 of 2 \|/);
+  assert.match(message, /\| 2\. Retrieve and commit \| 100 \| #1 of 1 \|/);
+  assert.match(message, /| 2. Retrieve and commit| 0. Get set uphall-of-fame\//);
 });
 
 test("a board is written as 2-space JSON with a final newline, and read back", () => {
