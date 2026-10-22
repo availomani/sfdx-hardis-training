@@ -147,7 +147,10 @@ export async function verifySubmission({ body, author, createdAt, keys, limits, 
     return refuse("unknown-key");
   }
   if (!sameText(await hmac(sealKey, submissionText(s)), s.sg)) {
-    return refuse("bad-seal");
+    // Signed as the game did before the s2 format: the page runs an old copy
+    // of the game (a tab left open, a cached file). Refused all the same, the
+    // old format let the unsigned scores be edited, but the player is told why.
+    return refuse(sameText(await hmac(sealKey, oldSubmissionText(s)), s.sg) ? "old-game" : "bad-seal");
   }
 
   // Each result
@@ -228,6 +231,12 @@ export async function verifySubmission({ body, author, createdAt, keys, limits, 
 }
 
 /** Compares two signatures in constant time. */
+/** The submission text of the game before the s2 format, only to recognize an old game. */
+function oldSubmissionText(s) {
+  const sigs = (s.r || []).filter((r) => r && r.sg).map((r) => r.sg).sort();
+  return ["s1", String(s.h).toLowerCase(), s.hr, s.k, sigs.join(",")].join("|");
+}
+
 function sameText(a, b) {
   const one = Buffer.from(String(a), "utf8");
   const other = Buffer.from(String(b), "utf8");

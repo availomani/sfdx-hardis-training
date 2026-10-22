@@ -199,3 +199,10 @@ test("an old unsigned score added to the issue is refused", async () => {
   const added = { ...s, r: s.r.concat([{ w: 1, sc: 500, st: 1, legacy: true }]) };
   assert.equal((await check(added)).reason, "bad-seal");
 });
+
+test("a submission signed by the game before the s2 format is told apart: old-game", async () => {
+  const s = await submission([{ w: 0, sc: 900, st: 2, legacy: true }]);
+  const sigs = s.r.filter((r) => r.sg).map((r) => r.sg).sort();
+  const old = { ...s, sg: await hmac(KEY, ["s1", s.h.toLowerCase(), s.hr, s.k, sigs.join(",")].join("|")) };
+  assert.equal((await check(old)).reason, "old-game");
+});

@@ -99,8 +99,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           ISSUE: ${{ github.event.issue.number }}
+          REASON: ${{ steps.verify.outputs.reason }}
         run: |
-          echo "This submission could not be verified. Play again and send your scores from the game, without editing the issue." > /tmp/comment.md
+          # Rule 3: the reason stays in the log, except an old copy of the game,
+          # which the player fixes alone and which says nothing about a limit
+          if [ "$REASON" = "old-game" ]; then
+            echo "Your page is running an older version of the game, and its scores cannot be verified any more. Close the tab of the course, open the course again, and send your scores again from the Hall of Fame of the game." > /tmp/comment.md
+          else
+            echo "This submission could not be verified. Play again and send your scores from the game, without editing the issue." > /tmp/comment.md
+          fi
           gh issue comment "$ISSUE" --body-file /tmp/comment.md
           gh issue close "$ISSUE" --reason "not planned"
 
