@@ -419,14 +419,16 @@ function hexOf(css) {
 export function createMusicalRun(ctx, def) {
   const { THREE, root, pig, paint, hud, engine, sound, t } = ctx;
   const camera = ctx.camera;
-  const music = createMusic(sound, def.song);
+  // The mode makes the song faster, and the whole run with it: everything here is counted in beats
+  const song = Object.assign({}, def.song, { bpm: def.song.bpm * ctx.speed });
+  const music = createMusic(sound, song);
   // The tempo climbs (tempo events), so a beat is not always as long: a jump
   // lasts one beat at the tempo of the moment, and so does everything placed on the beat
   const spbNow = () => music.secondsPerBeat;
   const U = UNITS_PER_BEAT;
   const gravity = () => (8 * JUMP_H) / (spbNow() * spbNow());
   const jumpSpeed = () => (4 * JUMP_H) / spbNow();
-  const pace = () => music.bpm / def.song.bpm;
+  const pace = () => music.bpm / song.bpm;
   // Faster means a beat is shorter: the hit boxes and the edges of the gaps
   // forgive more, so the windows to jump stay as long in seconds
   const forgiveness = () => Math.max(0.7, 1 - 0.6 * (pace() - 1));
@@ -1587,7 +1589,7 @@ export function createMusicalRun(ctx, def) {
     // Mercy: back at the checkpoint, the tempo drops a step for a few bars, then climbs again
     run.pace = paceAt(run.cp.at);
     const mercy = withMercy === false ? run.pace : Math.max(1, paces.filter((x) => x < run.pace - 0.001).pop() || 1);
-    music.setTempo(def.song.bpm * mercy, run.rewindUntil);
+    music.setTempo(song.bpm * mercy, run.rewindUntil);
     run.mercyUntil = mercy < run.pace ? run.rewindUntil + MERCY_BEATS : -1;
     if (run.mercyUntil > 0) {
       hud.toast(t("mu_mercy"), "good");
@@ -1811,7 +1813,7 @@ export function createMusicalRun(ctx, def) {
           const before = run.pace;
           run.pace = e.pace;
           run.mercyUntil = -1;
-          music.setTempo(def.song.bpm * e.pace, Math.round((e.at + run.offset) / 4) * 4);
+          music.setTempo(song.bpm * e.pace, Math.round((e.at + run.offset) / 4) * 4);
           if (e.pace > before + 0.001) {
             hud.toast(t("mu_faster"), "power");
           }
@@ -2354,7 +2356,7 @@ export function createMusicalRun(ctx, def) {
         run.section = cp.section;
         music.setSection(cp.section, 0);
         run.pace = paceAt(cp.at);
-        music.setTempo(def.song.bpm * run.pace, 0);
+        music.setTempo(song.bpm * run.pace, 0);
         for (const c of checkpoints) {
           c.passed = c.at <= cp.at;
         }
@@ -2405,7 +2407,7 @@ export function createMusicalRun(ctx, def) {
       }
       // The end of the mercy: the tempo of the part comes back on a bar
       if (run.mercyUntil > 0 && music.beat >= run.mercyUntil - 1) {
-        music.setTempo(def.song.bpm * run.pace, run.mercyUntil);
+        music.setTempo(song.bpm * run.pace, run.mercyUntil);
         run.mercyUntil = -1;
         hud.toast(t("mu_faster"), "power");
       }

@@ -1642,6 +1642,7 @@ export function createWorld(ctx) {
   }
 
   function beatBoss() {
+    ctx.bossBeaten();
     boss.state = "beaten";
     boss.leave = 0;
     bossRetry = null;
@@ -1670,6 +1671,7 @@ export function createWorld(ctx) {
     if (boss.state === "arriving") {
       if (boss.clock >= ARRIVAL) {
         boss.state = "fight";
+        ctx.bossStarted();
         ctx.setData("boss", "fight");
       }
       return;

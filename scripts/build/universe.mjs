@@ -354,8 +354,8 @@ emit("training-manifest.json", manifest());
 // from the pages, so there is one source of truth for them; these few words
 // have no page to take them from.
 const NAV_LABELS = {
-  en: { home: "Home", start: "Start here", help: "Help", backlog: "Backlog", badges: "Badges", stats: "Statistics" },
-  fr: { home: "Accueil", start: "Commencer ici", help: "Aide", backlog: "Backlog", badges: "Badges", stats: "Statistiques" }
+  en: { home: "Home", start: "Start here", help: "Help", backlog: "Backlog", badges: "Badges", stats: "Statistics", hallOfFame: "Hall of Fame" },
+  fr: { home: "Accueil", start: "Commencer ici", help: "Aide", backlog: "Backlog", badges: "Badges", stats: "Statistiques", hallOfFame: "Hall of Fame" }
 };
 
 // The product documentation, which is not part of this site and is written once,
@@ -411,6 +411,7 @@ function nav() {
     lines.push(`  - ${labels.backlog}: ${prefix}BACKLOG.md`);
     lines.push(`  - ${labels.badges}: ${prefix}badges/index.md`);
     lines.push(`  - ${labels.stats || NAV_LABELS.en.stats}: ${prefix}stats/index.md`);
+    lines.push(`  - ${labels.hallOfFame || NAV_LABELS.en.hallOfFame}: ${prefix}hall-of-fame/index.md`);
     lines.push(`  - Cloudity: ${CLOUDITY_SITES[locale] || CLOUDITY_SITES.en}?${CLOUDITY_TRACKING}`);
   }
   lines.push(DOC_SITE_ENTRY);

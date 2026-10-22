@@ -122,6 +122,40 @@
       ]
     }
   },
+  "hallOfFame": {
+    "title": "Guinea Run Hall of Fame",
+    "description": "The best players of Guinea Run, the game hidden in the free Salesforce DevOps training with sfdx-hardis: overall and world by world.",
+    "heading": "Hall of Fame",
+    "intro": [
+      "Guinea Run is a game hidden in this site. Find the guinea pig at the end of the footer of any page, and play.",
+      "",
+      "Each world keeps the best score a player sent. Send yours from the Hall of Fame of the game: it opens a GitHub issue with your scores filled in, and a job adds them here within a few minutes."
+    ],
+    "updated": "Last update: {date}.",
+    "empty": "Nobody here yet. Send your scores from the game and be the first.",
+    "general": {
+      "heading": "All worlds",
+      "intro": "The best score of each world, added up. The top {count} players."
+    },
+    "worlds": {
+      "heading": "World by world",
+      "intro": "The top {count} players of each world. A tie goes to the most stars, then to the fastest boss."
+    },
+    "world": "World {n} - {name}",
+    "worldEmpty": "Nobody finished this world yet.",
+    "generalColumns": ["Rank", "", "Player", "Badge", "Total", "Stars"],
+    "worldColumns": [
+      "Rank",
+      "",
+      "Player",
+      "Score",
+      "Mode",
+      "Stars",
+      "Boss time"
+    ],
+    "seconds": "{value} s",
+    "badgeAlt": "Level {level} badge"
+  },
   "badges": {
     "title": "Salesforce DevOps training badges",
     "description": "The learners who finished a level of the free Salesforce DevOps training with sfdx-hardis, checked by a job that read their public repository.",

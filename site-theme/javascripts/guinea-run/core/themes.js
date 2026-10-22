@@ -22,6 +22,7 @@ const SIXTEENTHS = "xxxxxxxxxxxxxxxx";
 // Lo-fi drums: a lazy kick and a soft backbeat
 const LOFI_KICK = "x......x..x.....";
 const LOFI_CLAP = "....o.......o...";
+export const MOTIF = "3q7u3uqzedwgw";
 
 export const THEMES = {
   // The map: a music box, no drums

@@ -2046,6 +2046,7 @@ export function createWorld(ctx) {
       fight.z += (BOSS_Z - fight.z) * Math.min(1, dt * 2.2);
       if (fight.time > bossTalkS) {
         fight.state = "fight";
+        ctx.bossStarted();
         fight.time = 0;
         fight.next = 1.2;
         coach("coachFight", 2400);
@@ -2206,6 +2207,7 @@ export function createWorld(ctx) {
   }
 
   function beatBoss() {
+    ctx.bossBeaten();
     bossRetryAt = 0;
     fight.state = "beaten";
     fight.slump = 0;

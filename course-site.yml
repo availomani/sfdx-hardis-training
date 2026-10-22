@@ -262,6 +262,7 @@ nav:
   - Backlog: BACKLOG.md
   - Badges: badges/index.md
   - Statistics: stats/index.md
+  - Hall of Fame: hall-of-fame/index.md
   - Cloudity: https://cloudity.com/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=menu
   - Accueil: fr/index.md
   - "Niveau 1 - Contributeur Salesforce DevOps, les bases":
@@ -301,5 +302,6 @@ nav:
   - Backlog: fr/BACKLOG.md
   - Badges: fr/badges/index.md
   - Statistiques: fr/stats/index.md
+  - Hall of Fame: fr/hall-of-fame/index.md
   - Cloudity: https://cloudity.com/fr/?utm_source=sfdx-hardis-training&utm_medium=referral&utm_campaign=menu
   - sfdx-hardis documentation: https://sfdx-hardis.cloudity.com/

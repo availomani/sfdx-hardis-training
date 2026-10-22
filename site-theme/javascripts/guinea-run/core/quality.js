@@ -7,6 +7,8 @@
  * than one that stays a little lower.
  */
 
+export const SAMPLE_WEIGHTS = [143, 25, 65, 61, 45, 116, 163, 168];
+
 export const TIERS = [
   // 0: weak phones
   { name: "low", pixelRatio: 1, shadows: false, drawDistance: 70, antialias: false, bloom: false },

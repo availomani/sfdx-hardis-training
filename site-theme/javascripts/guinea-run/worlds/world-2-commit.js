@@ -1559,6 +1559,7 @@ export function createWorld(ctx) {
       }
       if (fight.time >= BOSS_ENTER_S) {
         fight.state = "fight";
+        ctx.bossStarted();
         fight.next = 0.2;
         setData();
       }
@@ -1896,6 +1897,7 @@ export function createWorld(ctx) {
   }
 
   function beatBoss() {
+    ctx.bossBeaten();
     bossRetryAt = 0;
     fight.state = "beaten";
     fight.endAt = fight.time + BOSS_BEATEN_S;

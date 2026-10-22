@@ -27,6 +27,8 @@ import { SLDS } from "../core/painter.js";
 import { readingMs } from "../hud.js";
 
 export const PADS = ["jump"];
+// The mode is the tempo of the song (musical.js): the shell leaves the time as it is
+export const OWN_SPEED = true;
 // The salesforce items (components, checks, runners, orgs, the rocket, the Cloudity logo and the
 // badge), the Kenney springs, trees and bushes far behind, the bonus vegetables, and the boss
 export const MODELS = ["salesforce", "platform", "nature", "vegetables", "data-cloud"];
@@ -775,6 +777,7 @@ export function createWorld(ctx) {
   }
 
   function enterBoss() {
+    ctx.bossStarted();
     boss.state = "fight";
     boss.rise = 0;
     rabbit.visible = true;
@@ -861,6 +864,7 @@ export function createWorld(ctx) {
   }
 
   function defeatBoss() {
+    ctx.bossBeaten();
     boss.state = "down";
     boss.down = 0;
     // It sinks once its last line has been read

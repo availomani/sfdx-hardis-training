@@ -14,6 +14,7 @@
  *   training-universe.json stories -> site-src/[<locale>/]BACKLOG/US-nnn.md, and US-nnn.json once
  *   badges/<trailblazer>.json      -> site-src/[<locale>/]badges/<trailblazer>.md, built from the record
  *   badges/<trailblazer>.json      -> site-src/badges/<trailblazer>.json (read by other sites)
+ *   hall-of-fame/hall-of-fame.json -> site-src/[<locale>/]hall-of-fame/index.md, and the JSON once (read by the game)
  *
  *   node scripts/build/site.mjs
  */
@@ -22,7 +23,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { PILL_PALETTE } from "./annotate.mjs";
 import { strings, universeText, fill } from "../lib/strings.mjs";
-import { backlogPage, storyPage, badgesPage, badgePage, statsPage } from "../lib/pages.mjs";
+import { backlogPage, storyPage, badgesPage, badgePage, statsPage, hallOfFamePage } from "../lib/pages.mjs";
 import { applyLabTemplate, markLongBold, templateWords } from "../lib/lab-template.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -694,4 +695,63 @@ function statsPages() {
 }
 const statsPageCount = statsPages();
 
-console.log(`site-src assembled: ${pages} lab page(s), ${backlogs} backlog page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePageCount} badge page(s), ${statsPageCount} statistics page(s), ${badgeRecords} badge record(s), ${locales.length} locale(s)`);
+/**
+ * The Guinea Run Hall of Fame, in every language, and the board itself.
+ *
+ * hall-of-fame/hall-of-fame.json is written by the hall-of-fame workflow. The
+ * game reads it from GitHub first and from the copy published here second, so
+ * the copy is written even when the board cannot be read: an empty one then.
+ */
+function hallOfFamePages() {
+  let board = { version: 1, updatedAt: null, banned: [], players: {} };
+  try {
+    board = JSON.parse(fs.readFileSync(path.join(ROOT, "hall-of-fame", "hall-of-fame.json"), "utf8"));
+  } catch (error) {
+    console.warn(`hall-of-fame/hall-of-fame.json could not be read, the Hall of Fame page is empty: ${error.message}`);
+  }
+  fs.mkdirSync(path.join(OUT, "hall-of-fame"), { recursive: true });
+  fs.writeFileSync(path.join(OUT, "hall-of-fame", "hall-of-fame.json"), JSON.stringify(board, null, 2) + "\n", "utf8");
+
+  // The badge page of a player: the record of their GitHub handle with the highest badge
+  const byHandle = new Map();
+  for (const holder of holders) {
+    const handle = String(holder.recipient || "").toLowerCase();
+    const level = holder.highest ? holder.highest.level : 0;
+    if (handle && level > 0 && (!byHandle.has(handle) || byHandle.get(handle).highest.level < level)) {
+      byHandle.set(handle, holder);
+    }
+  }
+  for (const locale of locales) {
+    const s = strings(locale);
+    const dir = path.join(OUT, localePrefix(locale), "hall-of-fame");
+    fs.mkdirSync(dir, { recursive: true });
+    const alternates = {};
+    for (const other of locales) {
+      alternates[other] = `${localePrefix(other)}hall-of-fame/`;
+    }
+    // The badge images are published once, under the site language
+    const images = locale === SITE_LANG ? "../badges/img" : "../../badges/img";
+    const page = hallOfFamePage({
+      s,
+      board,
+      badgeHref: (handle) => {
+        const holder = byHandle.get(handle.toLowerCase());
+        return holder ? `../badges/${holder.key}.md` : null;
+      },
+      badgeImage: (handle, level) => {
+        const holder = byHandle.get(handle.toLowerCase());
+        const file = holder ? `${holder.key}-level-${level}.svg` : null;
+        return file && fs.existsSync(path.join(badgesDir, "img", file)) ? `${images}/${file}` : null;
+      }
+    });
+    fs.writeFileSync(
+      path.join(dir, "index.md"),
+      withAlternates(frontMatter({ title: s.hallOfFame.title, description: s.hallOfFame.description }) + page, alternates, locale),
+      "utf8"
+    );
+  }
+  return locales.length;
+}
+const hallOfFamePageCount = hallOfFamePages();
+
+console.log(`site-src assembled: ${pages} lab page(s), ${backlogs} backlog page(s), ${stories} story page(s), ${assets} asset(s), ${themeFiles} theme file(s), ${badgePageCount} badge page(s), ${statsPageCount} statistics page(s), ${hallOfFamePageCount} Hall of Fame page(s), ${badgeRecords} badge record(s), ${locales.length} locale(s)`);

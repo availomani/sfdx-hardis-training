@@ -41,6 +41,14 @@ function isControl(element) {
   return tag === "button" || tag === "a" || tag === "input" || tag === "select" || tag === "textarea";
 }
 
+function isTyping(element) {
+  if (!element || !element.tagName) {
+    return false;
+  }
+  const tag = element.tagName.toLowerCase();
+  return tag === "textarea" || (tag === "input" && !["checkbox", "radio", "button", "submit"].includes(element.type));
+}
+
 /**
  * Listens on the overlay and the window and calls onAction(name, element) for
  * every action. Returns a function that removes every listener.
@@ -63,6 +71,11 @@ export function createInput(overlay, canvas, onAction, options = {}) {
       }
       // A focused menu button takes Enter and Space itself, as any button does
       const focused = document.activeElement;
+      // A text box takes every key but Escape: WASD are letters of a GitHub handle
+      if (action !== "quit" && isTyping(focused) && overlay.contains(focused)) {
+        event.stopPropagation();
+        return;
+      }
       if ((event.code === "Enter" || event.code === "Space" || event.code === "NumpadEnter") && isControl(focused) && overlay.contains(focused)) {
         event.stopPropagation();
         return;

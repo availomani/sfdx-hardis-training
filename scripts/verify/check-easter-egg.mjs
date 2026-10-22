@@ -378,6 +378,94 @@ try {
   // blocks across the lanes, the tools caught fly to his laptop until his
   // excuses run out, he installs VS Code himself and the world ends. A small
   // window, so the software renderer plays the fight at about its real speed
+  // 4b. The Hall of Fame: the boards read from GitHub (answered here by a
+  // fixture), the handle typed without moving the guinea pig, and the issue
+  // link built with the scores. A test link never sends anything.
+  {
+    const board = {
+      version: 1,
+      banned: ["cheater"],
+      players: {
+        "octo-cat": { handle: "Octo-Cat", badge: 2, submittedAt: "2026-10-20T10:00:00Z", worlds: { 0: { score: 3100, stars: 3, bossMs: 41200 } }, total: 3100, stars: 3 },
+        "jane-doe": { handle: "Jane-Doe", badge: 0, submittedAt: "2026-10-21T10:00:00Z", worlds: { 0: { score: 900, stars: 1, bossMs: null } }, total: 900, stars: 1 },
+        cheater: { handle: "Cheater", badge: 0, submittedAt: "2026-10-21T10:00:00Z", worlds: { 0: { score: 99999, stars: 3 } }, total: 99999, stars: 3 }
+      }
+    };
+    for (const viewport of [{ width: 1280, height: 860 }, { width: 390, height: 844, mobile: true }]) {
+      const options = viewport.mobile ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } : { viewport };
+      const page = await newPage(options);
+      await page.route(/raw\.githubusercontent\.com/, (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(board) }));
+      await page.goto(`${site.base}en/`, { waitUntil: "load" });
+      await page.evaluate((key) => {
+        // A result as the game keeps it once signed: the check does not hold the key, the issue link only carries it
+        const record = { w: 0, sc: 1500, st: 2, bm: 30000, at: Date.now(), v: "check", k: 1, sg: "check-signature" };
+        window.localStorage.setItem(key, JSON.stringify({ v: 1, unlocked: 1, worlds: { 0: { best: 1500, stars: 2, record } }, badges: [], notes: {}, plan: null, finished: false }));
+      }, PROGRESS_KEY);
+      await typeKeys(page, KONAMI_ARROWS);
+      await waitState(page, "map");
+      if (!viewport.mobile) {
+        await page.click('.guinea-run [data-action="mode"][data-mode="hard"]');
+        const hard = await settles(page, () => page.locator('.guinea-run [data-mode="hard"].is-active').count(), 1);
+        const saved = await page.evaluate((key) => JSON.parse(window.localStorage.getItem(key) || "{}").mode, PROGRESS_KEY);
+        expect(hard && saved === "hard", `the map switches to Hard mode and the browser remembers it (${saved})`);
+        await page.click('.guinea-run [data-action="play"][data-world="0"]');
+        await waitState(page, "intro");
+        const line = (await page.textContent(".guinea-run .gr-mode-line").catch(() => "")) || "";
+        expect(/twice|2 times/.test(line) || /x2/.test(line), `the card of a world says it plays in Hard mode (${line})`);
+        await page.click('.guinea-run [data-action="map"]');
+        await waitState(page, "map");
+        await page.click('.guinea-run [data-action="mode"][data-mode="easy"]');
+        await settles(page, () => page.locator('.guinea-run [data-mode="easy"].is-active').count(), 1);
+      }
+      await page.click('.guinea-run .gr-map-meta [data-action="hof"]');
+      expect(await waitState(page, "hof"), `the map opens the Hall of Fame (${viewport.mobile ? "phone" : "desktop"})`);
+      expect(await settles(page, () => page.locator(".guinea-run .gr-hof-row").count(), 2, 15000), "the general board lists its players and leaves out a banned handle");
+      const first = await page.textContent(".guinea-run .gr-hof-row .gr-hof-handle");
+      expect(first === "Octo-Cat", `the best total comes first (${first})`);
+      const wide = await page.evaluate(() => {
+        const panel = document.querySelector(".guinea-run .gr-panel");
+        return { page: document.documentElement.scrollWidth - window.innerWidth, panel: panel ? panel.scrollWidth - panel.clientWidth : 0 };
+      });
+      expect(wide.page <= 0 && wide.panel <= 1, `the Hall of Fame scrolls nowhere sideways (page ${wide.page} px, card ${wide.panel} px)`);
+      await page.click('.guinea-run [data-action="hof-tab"][data-tab="0"]');
+      expect(await settles(page, () => page.locator(".guinea-run .gr-hof-time").count().then((n) => n > 0 || viewport.mobile), true), "the board of a world shows the boss times");
+      await page.click(".guinea-run .gr-hof-field input");
+      await page.keyboard.type("wasd-dev", { delay: 30 });
+      const typed = await page.inputValue(".guinea-run .gr-hof-field input");
+      expect(typed === "wasd-dev" && (await state(page)) === "hof", `the handle box takes W, A, S and D as letters (${typed})`);
+      const href = await page
+        .waitForFunction(() => document.querySelector(".guinea-run .gr-hof-link")?.getAttribute("href") || null, null, { timeout: 10000 })
+        .then(
+          (h) => h.jsonValue(),
+          () => ""
+        );
+      let sent = null;
+      try {
+        sent = JSON.parse(new URL(href).searchParams.get("scores"));
+      } catch {
+        sent = null;
+      }
+      expect(
+        /^https:\/\/github\.com\/hardisgroupcom\/sfdx-hardis-training\/issues\/new\?/.test(href) && href.length < 8000 && sent && sent.h === "wasd-dev" && sent.r.length === 1 && sent.sg,
+        `the issue link carries the signed scores of the handle (${href.length} characters)`
+      );
+      await page.context().close();
+    }
+    const page = await newPage({ viewport: { width: 1280, height: 860 } });
+    await page.route(/raw\.githubusercontent\.com/, (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(board) }));
+    await page.goto(`${site.base}fr/?guinea-test=1`, { waitUntil: "load" });
+    await typeKeys(page, KONAMI_ARROWS);
+    await waitState(page, "map");
+    await page.click('.guinea-run .gr-map-meta [data-action="hof"]');
+    await waitState(page, "hof");
+    const texts = await page.evaluate(() => ({
+      input: Boolean(document.querySelector(".guinea-run .gr-hof-field input")),
+      send: document.querySelector(".guinea-run .gr-hof-send")?.textContent || ""
+    }));
+    expect(!texts.input && /lien de test/.test(texts.send), "a test link sends nothing, and says so in French");
+    await page.context().close();
+  }
+
   {
     const page = await newPage({ viewport: { width: 640, height: 430 } });
     // guinea-at=860: past the Re-check door, 20 m before the admin
@@ -517,6 +605,8 @@ try {
     const [dumped, back, staged] = await Promise.all(["dumped", "thrownback", "staged"].map((name) => data(page, name).then(Number)));
     expect(dumped > 0 && back > 0 && staged === 4, `he threw crates, the guinea pig threw the junk back and kept its 4 files (${dumped} thrown, ${back} back, ${staged} staged)`);
     expect(await waitState(page, "done"), `the commit cards follow and world 2 ends (${await data(page, "bosstime")} s of game time for the fight)`);
+    const bonuses = (await page.textContent(".guinea-run .gr-bonuses").catch(() => "")) || "";
+    expect(/mistake/.test(bonuses) && /Boss beaten in \d+ s/.test(bonuses), `the end card lists the bonuses, mistakes and boss time included (${bonuses})`);
     await page.context().close();
   }
 

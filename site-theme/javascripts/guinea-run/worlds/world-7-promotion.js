@@ -811,6 +811,7 @@ export function createWorld(ctx) {
         g.position.z = ADMIN_Z - 34 * (1 - u) * (1 - u);
         if (u >= 1) {
           fight.phase = "fight";
+          ctx.bossStarted();
           fight.time = 0;
           fight.next = 0.8;
           fight.vegNext = 0.4;
@@ -1131,6 +1132,7 @@ export function createWorld(ctx) {
 
   /** Back to the run: the promotion question is next. */
   function endBosses() {
+    ctx.bossBeaten();
     clearTrack();
     for (const admin of admins) {
       admin.group.visible = false;

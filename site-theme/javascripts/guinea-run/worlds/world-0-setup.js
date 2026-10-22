@@ -1123,6 +1123,7 @@ export function createWorld(ctx) {
         // His line is read before the first throw, then the coach says what to catch
         if (fight.time > 1.2) {
           fight.phase = "fight";
+          ctx.bossStarted();
           fight.time = 0;
           fight.next = 0.5;
           fight.toolNext = 0.2;
@@ -1491,6 +1492,7 @@ export function createWorld(ctx) {
 
   /** Back to the run: what is left of the track, with him rolling ahead, VS Code open. */
   function endBoss() {
+    ctx.bossBeaten();
     fight.phase = "done";
     fight.over = true;
     runner.hold(false);

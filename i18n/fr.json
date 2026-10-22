@@ -128,6 +128,40 @@
       ]
     }
   },
+  "hallOfFame": {
+    "title": "Hall of Fame de Guinea Run",
+    "description": "Les meilleurs joueurs de Guinea Run, le jeu caché dans la formation Salesforce DevOps gratuite avec sfdx-hardis : au général et monde par monde.",
+    "heading": "Hall of Fame",
+    "intro": [
+      "Guinea Run est un jeu caché dans ce site. Trouvez le cochon d'Inde à la fin du pied de page de n'importe quelle page, et jouez.",
+      "",
+      "Chaque monde garde le meilleur score envoyé par un joueur. Envoyez les vôtres depuis le Hall of Fame du jeu : il ouvre une issue GitHub avec vos scores déjà remplis, et un job les ajoute ici en quelques minutes."
+    ],
+    "updated": "Dernière mise à jour : {date}.",
+    "empty": "Personne pour l'instant. Envoyez vos scores depuis le jeu, et soyez le premier.",
+    "general": {
+      "heading": "Tous les mondes",
+      "intro": "Le meilleur score de chaque monde, additionné. Les {count} premiers joueurs."
+    },
+    "worlds": {
+      "heading": "Monde par monde",
+      "intro": "Les {count} premiers joueurs de chaque monde. À égalité, le plus d'étoiles passe devant, puis le boss le plus rapide."
+    },
+    "world": "Monde {n} - {name}",
+    "worldEmpty": "Personne n'a encore terminé ce monde.",
+    "generalColumns": ["Rang", "", "Joueur", "Badge", "Total", "Étoiles"],
+    "worldColumns": [
+      "Rang",
+      "",
+      "Joueur",
+      "Score",
+      "Mode",
+      "Étoiles",
+      "Temps du boss"
+    ],
+    "seconds": "{value} s",
+    "badgeAlt": "Badge de niveau {level}"
+  },
   "badges": {
     "title": "Badges de la formation Salesforce DevOps",
     "description": "Les personnes qui ont terminé un niveau de la formation Salesforce DevOps gratuite avec sfdx-hardis, vérifiées par un job qui a lu leur repository public.",
@@ -506,5 +540,5 @@
       }
     }
   },
-  "source_rev": "e544edd329b9a2f207db755b3bc05fe16fbaf678"
+  "source_rev": "3f6cd5c0c8f6530c7486b2d3600f040365dfa7fa"
 }

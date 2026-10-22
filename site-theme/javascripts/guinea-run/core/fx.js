@@ -10,6 +10,7 @@
 
 const POOL = 220;
 const HAPPY = [0xffb400, 0x1b96ff, 0x2e844a, 0xe3066a, 0x9050e9, 0xff5d2d, 0x06a59a];
+export const SPARK_TINTS = [0xc787c2, 0x7ca263, 0xdf019b];
 
 export function createFx(THREE, scene, reduced) {
   const geometry = new THREE.PlaneGeometry(0.12, 0.07);

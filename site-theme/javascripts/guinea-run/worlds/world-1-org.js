@@ -2170,6 +2170,7 @@ export function createWorld(ctx) {
   }
 
   function startFight(firstThrow) {
+    ctx.bossStarted();
     setPhase("fight");
     resetAdmin(firstThrow);
     coach("c_axe", true);
@@ -2450,6 +2451,7 @@ export function createWorld(ctx) {
 
   /** The axe: it cuts the chain, and the bridge goes from this end. */
   function touchAxe() {
+    ctx.bossBeaten();
     ending = clock;
     setPhase("axe");
     if (boss.state === "windup" || boss.state === "crouch" || boss.state === "walk") {

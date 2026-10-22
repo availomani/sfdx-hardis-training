@@ -1,6 +1,7 @@
 /**
  * The pages this site generates rather than writes: the backlog, one page per
- * User Story, the badges index, one page per badge holder and the statistics.
+ * User Story, the badges index, one page per badge holder, the statistics and
+ * the Guinea Run Hall of Fame.
  *
  * They are built here, once, and called with the words of a locale, so the
  * French backlog cannot drift from the English one: what differs between them
@@ -14,6 +15,11 @@
  */
 import { fill } from "./strings.mjs";
 import { duration } from "../stats/lab-times.mjs";
+import { rankGeneral, rankWorld, avatarUrl, isHandle, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
+import { translator } from "../../site-theme/javascripts/guinea-run/texts.js";
+
+// How many players each table of the Hall of Fame shows
+const HALL_OF_FAME_TOP = 50;
 
 const separator = (columns) => `|${columns.map(() => "---").join("|")}|`;
 const row = (cells) => `| ${cells.join(" | ")} |`;
@@ -258,6 +264,76 @@ export function statsPage({ s, text, universe, stats }) {
     lines.push("");
   }
   lines.push(`## ${w.method.heading}`, "", ...w.method.body.map((line) => fill(line, { cutoff: stats.idleCutoffMinutes, minSample: stats.minSample })), "");
+  return lines.join("\n");
+}
+
+/**
+ * The Guinea Run Hall of Fame: the overall top, then the top of each world.
+ *
+ * board is hall-of-fame/hall-of-fame.json, which the hall-of-fame workflow
+ * writes. The rankings come from the game's own core/hof.js, so the page, the
+ * game and the answer on the issue agree. The world names are the game's.
+ *
+ * badgeHref(handle) is the badge page of a player, or null. badgeImage(handle,
+ * level) is the picture of that badge, or null for a text mark.
+ */
+export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
+  const w = s.hallOfFame;
+  const t = translator(s.lang || "en");
+  const seconds = new Intl.NumberFormat(s.lang || "en", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  // A handle the board holds is checked again: it is printed into HTML
+  const top = (list) => list.filter((p) => isHandle(p.handle)).slice(0, HALL_OF_FAME_TOP);
+  const avatar = (handle) =>
+    `<img src="${avatarUrl(handle, 48)}" width="24" height="24" alt="" loading="lazy" referrerpolicy="no-referrer"/>`;
+  const player = (handle) => `[${handle}](https://github.com/${handle})`;
+  const badge = (p) => {
+    if (!(p.badge > 0)) {
+      return "";
+    }
+    const alt = fill(w.badgeAlt, { level: p.badge });
+    const image = badgeImage ? badgeImage(p.handle, p.badge) : null;
+    const mark = image ? `<img src="${image}" width="24" height="24" alt="${alt}" title="${alt}"/>` : alt;
+    const href = badgeHref ? badgeHref(p.handle) : null;
+    return href ? `[${mark}](${href})` : mark;
+  };
+  const boss = (ms) => (typeof ms === "number" ? fill(w.seconds, { value: seconds.format(ms / 1000) }) : "-");
+
+  const lines = [`# ${w.heading}`, "", ...w.intro, ""];
+  const general = top(rankGeneral(board));
+  if (general.length === 0) {
+    lines.push(w.empty, "");
+    return lines.join("\n");
+  }
+  if (board.updatedAt) {
+    lines.push(fill(w.updated, { date: String(board.updatedAt).slice(0, 10) }), "");
+  }
+  lines.push(
+    `## ${w.general.heading}`,
+    "",
+    fill(w.general.intro, { count: HALL_OF_FAME_TOP }),
+    "",
+    row(w.generalColumns),
+    separator(w.generalColumns),
+    ...general.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), badge(p), p.total, p.stars])),
+    "",
+    `## ${w.worlds.heading}`,
+    "",
+    fill(w.worlds.intro, { count: HALL_OF_FAME_TOP }),
+    ""
+  );
+  for (let n = 0; n < WORLD_COUNT; n++) {
+    const title = fill(w.world, { n, name: t(`w${n}_name`) }).replace(/"/g, "'");
+    const list = top(rankWorld(board, n));
+    lines.push(`??? note "${title}"`, "");
+    const body = list.length === 0
+      ? [w.worldEmpty]
+      : [
+          row(w.worldColumns),
+          separator(w.worldColumns),
+          ...list.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), p.score, t(`mode_${p.mode}`), p.stars, boss(p.bossMs)]))
+        ];
+    lines.push(...body.map((line) => `    ${line}`), "");
+  }
   return lines.join("\n");
 }
 

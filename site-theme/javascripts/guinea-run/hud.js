@@ -7,13 +7,15 @@
  * - toasts, the chat of the cast, Victor's notes, the log ticker
  * - the pads at the bottom of the screen
  * - the level-complete animation with the Cloudity logo and the badge
+ * - the Hall of Fame: the boards, and sending one's scores
  *
  * A world draws its own HTML in `layer`, between the 3D view and this HUD.
  * Buttons carry data-action, which input.js turns into actions; pads carry
  * data-pad and react on pointerdown.
  */
-import { WORLDS } from "./core/story.js";
+import { WORLDS, MODES } from "./core/story.js";
 import { SPECIAL_THANKS, CONTACT_URLS } from "./credits.js";
+import { avatarUrl, rankGeneral, rankOf, rankWorld } from "./core/hof.js";
 
 /**
  * The guinea pig of the cards: a picture of the 3D model
@@ -90,6 +92,9 @@ const CAST = {
   victor: { name: "Victor Squeeker", initials: "VS", color: "#DD7A01" },
   you: { name: "You", initials: "US", color: "#0176D3" }
 };
+
+// The rows of a board in the game; the site page shows more
+const HOF_ROWS = 10;
 
 const CELEBRATION_MS = 3800;
 const FLY_MS = 650;
@@ -337,6 +342,139 @@ export function createHud(t, options) {
     }
   }
 
+  /* ---------- The Hall of Fame ---------- */
+
+  /* ---------- The modes ---------- */
+
+  function modeSwitch(body, current) {
+    const box = element("div", "gr-modes", body);
+    box.setAttribute("role", "radiogroup");
+    box.setAttribute("aria-label", t("modeTitle"));
+    element("span", "gr-small-title", box, t("modeTitle"));
+    for (const mode of MODES) {
+      const node = button(box, "mode", t("mode_" + mode.id), "gr-small" + (mode.id === current ? " is-active" : ""));
+      node.setAttribute("data-mode", mode.id);
+      node.setAttribute("role", "radio");
+      node.setAttribute("aria-checked", String(mode.id === current));
+    }
+    element("span", "gr-muted gr-mode-hint", box, t("modeHint_" + current));
+  }
+
+  let hofDraft = null;
+
+  function hofList(body, view) {
+    const general = view.tab === "all";
+    const list = general ? rankGeneral(view.board) : rankWorld(view.board, view.tab);
+    if (!list.length) {
+      element("p", "gr-muted", body, view.ok ? t("hofEmpty") : t("hofOffline"));
+      return;
+    }
+    const rows = element("ol", "gr-hof-list", body);
+    const mine = String(view.handle || "").toLowerCase();
+    list.slice(0, HOF_ROWS).forEach((p, i) => {
+      const row = element("li", "gr-hof-row" + (mine && p.handle.toLowerCase() === mine ? " is-you" : ""), rows);
+      element("span", "gr-hof-rank", row, String(i + 1));
+      const face = image(row, "gr-hof-avatar", avatarUrl(p.handle, 48), "");
+      face.loading = "lazy";
+      face.referrerPolicy = "no-referrer";
+      face.width = 24;
+      face.height = 24;
+      face.addEventListener("error", () => (face.style.visibility = "hidden"));
+      element("span", "gr-hof-handle", row, p.handle);
+      if (p.badge > 0) {
+        const pill = element("span", "gr-hof-badge", row, "L" + p.badge);
+        pill.title = BADGE_NAMES[p.badge];
+        pill.setAttribute("aria-label", BADGE_NAMES[p.badge]);
+      }
+      const stars = element("span", "gr-hof-stars", row, general ? "★ " + p.stars : starsText(p.stars));
+      stars.setAttribute("aria-label", t("starsLabel", { n: p.stars }));
+      if (!general && p.bossMs !== null) {
+        element("span", "gr-hof-time", row, t("hofBossTime", { s: (p.bossMs / 1000).toFixed(1) }));
+      }
+      if (!general && p.mode && p.mode !== "easy") {
+        const tag = element("span", "gr-hof-mode gr-hof-mode--" + p.mode, row, t("mode_" + p.mode).charAt(0));
+        tag.title = t("mode_" + p.mode);
+        tag.setAttribute("aria-label", t("mode_" + p.mode));
+      }
+      element("span", "gr-hof-score", row, String(general ? p.total : p.score));
+    });
+    const rank = mine ? rankOf(list, mine) : 0;
+    if (rank > HOF_ROWS) {
+      element("p", "gr-muted", body, t("hofYou", { rank, total: list.length }));
+    }
+  }
+
+  /** The handle box and the link that opens the GitHub issue with the scores. */
+  function hofSend(body, view) {
+    const box = element("div", "gr-hof-send", body);
+    element("p", "gr-small-title", box, t("hofSendTitle"));
+    if (!view.canSend) {
+      element("p", "gr-muted", box, t("hofTestMode"));
+      return;
+    }
+    const label = element("label", "gr-hof-field", box);
+    element("span", "", label, t("hofHandle"));
+    const input = element("input", "", label);
+    input.type = "text";
+    // What was typed survives a change of tab, which draws the card again
+    input.value = hofDraft !== null ? hofDraft : view.handle || "";
+    input.maxLength = 39;
+    input.autocomplete = "username";
+    input.spellcheck = false;
+    input.setAttribute("autocapitalize", "none");
+    input.setAttribute("autocorrect", "off");
+    input.placeholder = "octocat";
+    // A real link: a new tab opened after a wait is blocked by some browsers
+    const link = element("a", "gr-button gr-primary gr-small gr-hof-link", box, t("hofSubmit"));
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.setAttribute("aria-disabled", "true");
+    const message = element("p", "gr-muted gr-hof-message", box);
+    message.setAttribute("aria-live", "polite");
+    element("p", "gr-muted gr-hof-privacy", box, t("hofPrivacy"));
+    let ready = null;
+    let asked = 0;
+    async function refresh() {
+      const handle = input.value.trim();
+      const mine = ++asked;
+      ready = null;
+      link.setAttribute("aria-disabled", "true");
+      link.removeAttribute("href");
+      if (!handle) {
+        message.textContent = "";
+        return;
+      }
+      const answer = await view.prepare(handle);
+      if (mine !== asked) {
+        return;
+      }
+      if (answer.error) {
+        message.textContent = t(answer.error);
+        return;
+      }
+      ready = { handle, count: answer.count };
+      link.href = answer.url;
+      link.removeAttribute("aria-disabled");
+      message.textContent = t("hofReady", { n: answer.count });
+    }
+    let timer = 0;
+    input.addEventListener("input", () => {
+      hofDraft = input.value;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(refresh, 250);
+    });
+    link.addEventListener("click", (event) => {
+      if (!ready) {
+        event.preventDefault();
+        input.focus();
+        return;
+      }
+      view.onSent(ready.handle, ready.count);
+      message.textContent = t("hofSent");
+    });
+    refresh();
+  }
+
   /* ---------- The end credits ---------- */
 
   let creditsArgs = null;
@@ -562,6 +700,7 @@ export function createHud(t, options) {
           // A world added after a player finished the game is not done yet
           const allDone = progress.finished && progress.world(WORLDS[WORLDS.length - 1].id).stars > 0;
           element("p", "gr-muted gr-map-hint", body, allDone ? t("allDone") : t("mapHint"));
+          modeSwitch(body, progress.mode);
           const grid = element("ol", "gr-map", body);
           let focus = null;
           for (const world of WORLDS) {
@@ -593,6 +732,7 @@ export function createHud(t, options) {
           }
           const meta = element("div", "gr-map-meta", body);
           badgesRow(meta, progress.badges);
+          button(meta, "hof", t("hofButton"), "gr-small gr-hof-open");
           element("p", "gr-muted", meta, t("notesFound", { n: progress.notesFound(), total: WORLDS.length }));
           const reset = element("button", "gr-link", meta, t("resetProgress"));
           reset.type = "button";
@@ -617,10 +757,13 @@ export function createHud(t, options) {
     },
 
     /** The card of a world, before it starts. */
-    intro(world, record, story, how, pads) {
+    intro(world, record, story, how, pads, mode) {
       worldPads = pads || null;
       screen("intro", t("world", { n: world.id }) + " · " + t("w" + world.id + "_name"), (body, footer) => {
         element("p", "", body, story || t("w" + world.id + "_pitch"));
+        if (mode && mode.id !== "easy") {
+          element("p", "gr-mode-line", body, t("modeLine", { mode: t("mode_" + mode.id), speed: mode.speed, mult: mode.mult }));
+        }
         if (how && how.length) {
           element("p", "gr-small-title", body, t("howToPlay"));
           const steps = element("ol", "gr-how", body);
@@ -636,6 +779,7 @@ export function createHud(t, options) {
         keysHelp(body);
         element("p", "gr-small-title", body, t("labs"));
         labLinks(body, world.labs);
+        button(body, "hof", t("hofSeeWorld"), "gr-small gr-hof-open").setAttribute("data-world", String(world.id));
         button(footer, "map", t("backToMap"));
         button(footer, "start", t("start"), "gr-primary");
       });
@@ -661,6 +805,12 @@ export function createHud(t, options) {
         if (result.ok) {
           element("p", "gr-result-stars", body, starsText(result.stars));
           element("p", "gr-score", body, t("score") + ": " + result.score);
+          if (result.bonuses && result.bonuses.length) {
+            const list = element("ul", "gr-bonuses", body);
+            for (const bonus of result.bonuses) {
+              element("li", bonus.key === "speedLine" ? "gr-speed" : "", list, t(bonus.key, bonus));
+            }
+          }
           element("p", "gr-muted", body, result.newBest ? t("newBest") : t("best") + ": " + result.best);
           if (result.missed) {
             const missed = element("div", "gr-rule gr-rule--info", body);
@@ -684,6 +834,47 @@ export function createHud(t, options) {
           button(footer, "start", result.ok ? t("replay") : t("retry"), "gr-primary");
         }
       });
+    },
+
+    /**
+     * The Hall of Fame. view: { tab ("all" or a world id), from (the world
+     * whose card opened it, or null), loading, board, ok, handle, canSend,
+     * prepare(handle) -> Promise<{ url, count } | { error }>, onSent(handle, count) }.
+     */
+    hallOfFame(view) {
+      screen(
+        "hof",
+        t("hofTitle"),
+        (body, footer) => {
+          const tabs = element("div", "gr-hof-tabs gr-scroll", body);
+          tabs.setAttribute("role", "tablist");
+          for (const tab of ["all"].concat(WORLDS.map((w) => w.id))) {
+            const label = tab === "all" ? t("hofGeneral") : t("w" + tab + "_name");
+            const node = button(tabs, "hof-tab", label, "gr-small" + (tab === view.tab ? " is-active" : ""), tab === "all" ? t("hofAllTab") : String(tab));
+            node.setAttribute("data-tab", String(tab));
+            node.setAttribute("role", "tab");
+            node.setAttribute("aria-selected", String(tab === view.tab));
+          }
+          element("p", "gr-small-title", body, view.tab === "all" ? t("hofGeneralTitle") : t("world", { n: view.tab }) + " · " + t("w" + view.tab + "_name"));
+          if (view.loading) {
+            element("p", "gr-muted", body, t("hofLoading"));
+          } else {
+            hofList(body, view);
+          }
+          hofSend(body, view);
+          if (view.from === null || view.from === undefined) {
+            button(footer, "map", t("backToMap"), "gr-primary");
+          } else {
+            button(footer, "map", t("backToMap"));
+            button(footer, "play", t("hofBackToWorld"), "gr-primary").setAttribute("data-world", String(view.from));
+          }
+        },
+        true
+      );
+      const active = panel.querySelector(".gr-hof-tabs .is-active");
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
     },
 
     /** The end of the game, after the last world: the credits roll, then the final card. */

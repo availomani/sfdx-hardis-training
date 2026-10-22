@@ -22,6 +22,7 @@
 #     badge: one commit per badge, not a badge commit then a statistics commit.
 #     They read only the public GitHub API and the badges/ folder (the three
 #     rules of course-stats.yml), and a failure there never holds a badge back.
+#     The badge mark of the Guinea Run Hall of Fame goes in the same commit.
 #
 # The learner's code is never checked out into the workspace: it is cloned into a
 # temporary directory and read. That is what keeps this simple, and it is why the
@@ -200,7 +201,8 @@ jobs:
               git checkout -- stats STATS.md labs 2>/dev/null || true
             fi
           }
-          git add badges
+          node scripts/guinea-run/hall-of-fame.mjs refresh-badges || true
+          git add badges hall-of-fame
           if git diff --cached --quiet; then
             echo "Nothing changed in badges/"
           else
@@ -221,7 +223,8 @@ jobs:
               git fetch origin "${GITHUB_REF_NAME}"
               git reset --hard "origin/${GITHUB_REF_NAME}"
               git checkout "$BADGE_COMMIT" -- badges
-              git add badges
+              node scripts/guinea-run/hall-of-fame.mjs refresh-badges || true
+              git add badges hall-of-fame
               recalculate_stats
               git commit -m "$BADGE_MESSAGE"
               sleep $((attempt * 5))

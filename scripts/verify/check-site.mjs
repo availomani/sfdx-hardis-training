@@ -214,6 +214,15 @@ for (const locale of labLocales) {
   if (!fs.existsSync(path.join(SITE, page))) {
     problems.push(`/${page.replace(/\\/g, "/")} (the statistics page of ${locale} was not built)`);
   }
+  // The Hall of Fame is generated and in the menu the same way
+  const hall = path.join(locale === "en" ? "" : locale, "hall-of-fame", "index.html");
+  if (!fs.existsSync(path.join(SITE, hall))) {
+    problems.push(`/${hall.replace(/\\/g, "/")} (the Hall of Fame page of ${locale} was not built)`);
+  }
+}
+// The copy of the board the game falls back to when GitHub does not answer
+if (!fs.existsSync(path.join(SITE, "hall-of-fame", "hall-of-fame.json"))) {
+  problems.push("/hall-of-fame/hall-of-fame.json (the copy of the board the game reads was not published)");
 }
 
 console.log(

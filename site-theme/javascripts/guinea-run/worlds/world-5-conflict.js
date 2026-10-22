@@ -1946,6 +1946,7 @@ export function createWorld(ctx) {
 
   function startBoss(retry) {
     round = 4;
+    ctx.bossStarted();
     step = "boss";
     boss.on = true;
     boss.startedAt = clock;
@@ -2461,6 +2462,7 @@ export function createWorld(ctx) {
   }
 
   function rejectPush() {
+    ctx.bossBeaten();
     // How long the fight took, in game time, for playtests
     ctx.setData("bosstime", (clock - boss.startedAt).toFixed(1));
     boss.state = "beaten";

@@ -1979,6 +1979,7 @@ export function createWorld(ctx) {
       // He talks first: nothing comes down the lanes before his line is read
       if (dev.time >= DEV_ENTER_S && !speech.reading) {
         dev.state = "fight";
+        ctx.bossStarted();
         dev.nextShot = 0.4;
         setDevData();
       }
@@ -2033,6 +2034,7 @@ export function createWorld(ctx) {
     ctx.sound.play("bossHit");
     renderDevBar();
     if (dev.hp <= 0) {
+      ctx.bossBeaten();
       beatDev();
       return;
     }

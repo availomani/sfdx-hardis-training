@@ -1727,3 +1727,216 @@ html.guinea-run-open body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- The Hall of Fame ---------- */
+
+.guinea-run .gr-hof-open {
+  margin-top: 4px;
+}
+
+.guinea-run .gr-hof-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  margin-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.guinea-run .gr-hof-tabs .gr-button {
+  flex: 0 0 auto;
+  min-width: 36px;
+}
+
+.guinea-run .gr-hof-tabs .gr-button.is-active {
+  background: var(--gr-brand);
+  border-color: var(--gr-brand);
+  color: #ffffff;
+}
+
+.guinea-run .gr-hof-list {
+  list-style: none;
+  text-align: left;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+.guinea-run .gr-hof-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--gr-light);
+  font-size: 14px;
+}
+
+.guinea-run .gr-hof-row.is-you {
+  background: #eef4ff;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.guinea-run .gr-hof-rank {
+  width: 22px;
+  text-align: right;
+  color: var(--gr-weak);
+  font-variant-numeric: tabular-nums;
+}
+
+.guinea-run .gr-hof-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gr-light);
+  flex: 0 0 auto;
+}
+
+.guinea-run .gr-hof-handle {
+  flex: 1 1 auto;
+  text-align: left;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.guinea-run .gr-hof-badge {
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--gr-purple);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.guinea-run .gr-hof-stars,
+.guinea-run .gr-hof-time {
+  color: var(--gr-weak);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.guinea-run .gr-hof-stars {
+  color: #dd7a01;
+}
+
+.guinea-run .gr-hof-score {
+  min-width: 52px;
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.guinea-run .gr-hof-send {
+  border-top: 1px solid var(--gr-border);
+  padding-top: 8px;
+}
+
+.guinea-run .gr-hof-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.guinea-run .gr-hof-field input {
+  flex: 1 1 160px;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--gr-border);
+  border-radius: 4px;
+  font: inherit;
+  /* 16px: a phone does not zoom into a box it can read */
+  font-size: 16px;
+}
+
+.guinea-run .gr-hof-link[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.guinea-run .gr-hof-message:empty {
+  display: none;
+}
+
+.guinea-run .gr-hof-privacy {
+  font-size: 12px;
+}
+
+.guinea-run .gr-bonuses {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 14px;
+  color: var(--gr-weak);
+}
+
+.guinea-run .gr-bonuses li {
+  margin: 1px 0;
+}
+
+.guinea-run .gr-speed {
+  color: var(--gr-success);
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .guinea-run .gr-hof-time {
+    display: none;
+  }
+
+  .guinea-run .gr-hof-row {
+    gap: 6px;
+    padding: 5px 4px;
+  }
+}
+
+/* ---------- The modes ---------- */
+
+.guinea-run .gr-modes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 8px;
+  margin: 0 0 10px;
+}
+
+.guinea-run .gr-modes .gr-small-title {
+  margin: 0 4px 0 0;
+}
+
+.guinea-run .gr-modes .gr-button.is-active {
+  background: var(--gr-brand);
+  border-color: var(--gr-brand);
+  color: #ffffff;
+}
+
+.guinea-run .gr-mode-hint {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 13px;
+}
+
+.guinea-run .gr-mode-line {
+  font-weight: 700;
+  color: var(--gr-error);
+}
+
+.guinea-run .gr-hof-mode {
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.guinea-run .gr-hof-mode--normal {
+  background: var(--gr-warning);
+}
+
+.guinea-run .gr-hof-mode--hard {
+  background: var(--gr-error);
+}

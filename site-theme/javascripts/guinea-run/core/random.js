@@ -1,3 +1,5 @@
+export const SALTS = [0x9503d5f8, 0x361ec3b4];
+
 /** A small seeded random generator, so a run can be replayed with ?guinea-seed=. */
 export function seededRandom(seed) {
   let state = seed >>> 0;

@@ -33,6 +33,8 @@ import { pickAdmins, adminFaceUrl } from "../core/faces.js";
 import { createDevFigure, createDevBar, createDevSpeech, DEV_CSS, DEV_HEAD_R } from "../core/dev.js";
 
 export const PADS = ["jump"];
+// The mode is the tempo of the song (musical.js): the shell leaves the time as it is
+export const OWN_SPEED = true;
 // The salesforce items (components, checks, runners, orgs, the Cloudity logo), the Kenney
 // springs, trees and bushes far behind, and the bonus vegetables
 export const MODELS = ["salesforce", "platform", "nature", "vegetables"];
@@ -832,6 +834,7 @@ export function createWorld(ctx) {
   }
 
   function enterDev() {
+    ctx.bossStarted();
     dev.state = "fight";
     // The components of the package are long deployed: their counter makes room for him
     if (meter) {
@@ -879,6 +882,7 @@ export function createWorld(ctx) {
   }
 
   function beatDev() {
+    ctx.bossBeaten();
     dev.state = "down";
     dev.down = 0;
     devRetry = null;

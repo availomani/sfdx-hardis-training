@@ -10,18 +10,40 @@
  * When a lab listed here is reworded, re-read the world that names it.
  */
 
+// par: the seconds of game time to beat the boss for the full speed bonus.
+// 1.3 times the median of the boss's own autoplay (3 seeds on a computer, one
+// on a phone, measured on 2026-10-22), except world 1, whose autoplay jumps
+// straight over the admin to the axe in 4 s (12 s leaves a human the time to
+// get past him), and world 9, which has no autoplay (45 s for 32 hits).
+// A change to a boss changes its par: measure it again.
 export const WORLDS = [
-  { id: 0, module: "world-0-setup.js", style: "runner", glyph: "gear", labs: ["1.1"] },
-  { id: 1, module: "world-1-org.js", style: "platformer", glyph: "org", labs: ["1.3", "1.4"] },
-  { id: 2, module: "world-2-commit.js", style: "sorting", glyph: "box", labs: ["1.5", "2.8"] },
-  { id: 3, module: "world-3-pull-request.js", style: "puzzle", glyph: "branch", labs: ["1.6", "2.2", "2.3", "2.4"], badge: 1 },
-  { id: 4, module: "world-4-checks.js", style: "defense", glyph: "shield", labs: ["2.5", "3.2"] },
-  { id: 5, module: "world-5-conflict.js", style: "merge", glyph: "fork", labs: ["2.7", "3.4"], badge: 2 },
-  { id: 6, module: "world-6-integration.js", style: "musical", glyph: "bolt", labs: ["3.3"] },
-  { id: 7, module: "world-7-promotion.js", style: "runner", glyph: "delta", labs: ["3.5", "3.10"] },
-  { id: 8, module: "world-8-production.js", style: "musical", glyph: "star", labs: ["3.6"], badge: 3 },
-  { id: 9, module: "world-9-monitoring.js", style: "shooter", glyph: "eye", labs: ["3.8"] }
+  { id: 0, module: "world-0-setup.js", style: "runner", glyph: "gear", labs: ["1.1"], par: 54 },
+  { id: 1, module: "world-1-org.js", style: "platformer", glyph: "org", labs: ["1.3", "1.4"], par: 12 },
+  { id: 2, module: "world-2-commit.js", style: "sorting", glyph: "box", labs: ["1.5", "2.8"], par: 37 },
+  { id: 3, module: "world-3-pull-request.js", style: "puzzle", glyph: "branch", labs: ["1.6", "2.2", "2.3", "2.4"], badge: 1, par: 35 },
+  { id: 4, module: "world-4-checks.js", style: "defense", glyph: "shield", labs: ["2.5", "3.2"], par: 19 },
+  { id: 5, module: "world-5-conflict.js", style: "merge", glyph: "fork", labs: ["2.7", "3.4"], badge: 2, par: 29 },
+  { id: 6, module: "world-6-integration.js", style: "musical", glyph: "bolt", labs: ["3.3"], par: 26 },
+  { id: 7, module: "world-7-promotion.js", style: "runner", glyph: "delta", labs: ["3.5", "3.10"], par: 64 },
+  { id: 8, module: "world-8-production.js", style: "musical", glyph: "star", labs: ["3.6"], badge: 3, par: 24 },
+  { id: 9, module: "world-9-monitoring.js", style: "shooter", glyph: "eye", labs: ["3.8"], par: 45 }
 ];
+
+/**
+ * How fast the game runs, and what its points are worth. Easy is the pace of
+ * the course. A world runs speed times faster (the musical runs take it as
+ * the tempo of their song), and its score at the end is multiplied by mult.
+ */
+export const MODES = [
+  { id: "easy", speed: 1, mult: 1 },
+  { id: "normal", speed: 1.5, mult: 1.5 },
+  { id: "hard", speed: 2, mult: 2 }
+];
+
+/** A mode by its id, Easy for anything else. */
+export function modeOf(id) {
+  return MODES.find((m) => m.id === id) || MODES[0];
+}
 
 /** The deployment actions of Labs 2.3 and 2.4, and where each belongs. */
 export const DEPLOYMENT_ACTIONS = [
