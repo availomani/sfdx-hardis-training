@@ -18,10 +18,12 @@ export function recordText(r) {
   return ["r2", r.w, r.sc, r.st, r.bm === null || r.bm === undefined ? "" : r.bm, r.m, r.at, r.v, r.k].join("|");
 }
 
-/** The text a submission stands for: the handle, the hour, and its signed results. */
+/** The text a submission stands for: the handle, the hour, and every result it carries. */
 export function submissionText(s) {
-  const sigs = (s.r || []).filter((r) => r && r.sg).map((r) => r.sg).sort();
-  return ["s1", String(s.h).toLowerCase(), s.hr, s.k, sigs.join(",")].join("|");
+  // Every result counts, so no number of the issue can be edited: a signed
+  // result by its signature, an old unsigned best by its world, score and stars
+  const parts = (s.r || []).filter(Boolean).map((r) => (r.legacy === true ? ["L", r.w, r.sc, r.st].join(":") : String(r.sg)));
+  return ["s2", String(s.h).toLowerCase(), s.hr, s.k, parts.sort().join(",")].join("|");
 }
 
 /** HMAC-SHA256 of a text with raw key bytes, as base64url without padding. */

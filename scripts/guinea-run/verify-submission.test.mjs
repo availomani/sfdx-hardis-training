@@ -187,3 +187,15 @@ test("the body of the issue link reads as the form field: the GitHub mobile app 
   assert.ok(url.searchParams.get("title").startsWith("[Guinea Run] "), "the title the workflow knows a score issue by");
   assert.equal(extractField(body, "Scores"), url.searchParams.get("scores"));
 });
+
+test("an old unsigned score edited in the issue is refused: the issue signature covers it", async () => {
+  const s = await submission([{ w: 0, sc: 900, st: 2, legacy: true }]);
+  const edited = { ...s, r: [{ w: 0, sc: 999, st: 2, legacy: true }] };
+  assert.equal((await check(edited)).reason, "bad-seal");
+});
+
+test("an old unsigned score added to the issue is refused", async () => {
+  const s = await submission([{ w: 0, sc: 900, st: 2, legacy: true }]);
+  const added = { ...s, r: s.r.concat([{ w: 1, sc: 500, st: 1, legacy: true }]) };
+  assert.equal((await check(added)).reason, "bad-seal");
+});
