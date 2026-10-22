@@ -20,7 +20,7 @@ depends_on:
 
 **Level**: 2 Contributor advanced
 
-**Time**: ~1 h<!-- observed --> (observed: median 1 h, 17 learners, fastest 20 min)<!-- /observed -->
+**Time**: ~45 min<!-- observed --> (observed: median 48 min, 9 learners, fastest 23 min)<!-- /observed -->
 
 **You will**: deliver one story that contains a dependency to check, a data deployment action and a
 teammate working on the same permission set, with no step-by-step.

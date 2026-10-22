@@ -11,7 +11,7 @@ A level is started when its first branch exists in the learner's repository, and
 
 | Level | Started | Share of learners | Completed | Share of started |
 |---|---|---|---|---|
-| Level 1 - Contributor basics | 74 | 100% | 49 | 66% |
+| Level 1 - Contributor basics | 74 | 100% | 50 | 68% |
 | Level 2 - Contributor advanced | 34 | 46% | 17 | 50% |
 | Level 3 - Release Manager | 17 | 23% | 10 | 59% |
 
@@ -21,43 +21,75 @@ The median time of the learners who went through, next to the estimate each lab 
 
 | Level | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Level 1 - Contributor basics | 1 h 30 | 54 min | 19 min | 30 |
+| Level 1 - Contributor basics | 1 h 30 | 1 h 25 | 33 min | 44 |
 | Level 2 - Contributor advanced | 4 h | 6 h 45 | 1 h 54 | 16 |
-| Level 3 - Release Manager | 6 h 55 | not enough data yet |  | 0 |
+| Level 3 - Release Manager | 6 h 55 | 9 h 52 | 2 h 56 | 7 |
 
 ### Level 1 - Contributor basics
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Labs 1.3 to 1.6 | 1 h 05 | 35 min | 13 min | 36 |
-| Lab 1.7 | 25 min | 28 min | 7 min | 48 |
+| Labs 1.3 to 1.6 | 1 h 05 | 44 min | 17 min | 48 |
+| Lab 1.7 | 25 min | 27 min | 7 min | 50 |
 
 ### Level 2 - Contributor advanced
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Labs 2.1 and 2.2 | 40 min | 48 min | 13 min | 28 |
-| Lab 2.3 | 30 min | 39 min | 11 min | 27 |
-| Lab 2.4 | 30 min | 51 min | 17 min | 23 |
-| Lab 2.5 | 30 min | 24 min | 9 min | 19 |
-| Lab 2.6 | 25 min | 28 min | 11 min | 19 |
-| Lab 2.7 | 35 min | 42 min | 11 min | 18 |
+| Labs 2.1 and 2.2 | 40 min | 55 min | 26 min | 28 |
+| Lab 2.3 | 30 min | 47 min | 15 min | 27 |
+| Lab 2.4 | 30 min | 50 min | 17 min | 23 |
+| Lab 2.5 | 30 min | 24 min | 6 min | 19 |
+| Lab 2.6 | 25 min | 30 min | 10 min | 19 |
+| Lab 2.7 | 35 min | 41 min | 11 min | 18 |
 | Lab 2.8 | 20 min | 27 min | 7 min | 17 |
-| Lab 2.9 | 30 min | 1 h | 20 min | 17 |
+| Lab 2.9 | 30 min | 1 h | 23 min | 17 |
 
 ### Level 3 - Release Manager
 
 | Labs | First estimate | Median | Fastest | Learners |
 |---|---|---|---|---|
-| Lab 3.1 | 50 min | 37 min | 10 min | 11 |
-| Lab 3.2 | 25 min | 24 min | 6 min | 12 |
+| Lab 3.1 | 50 min | 47 min | 12 min | 12 |
+| Lab 3.2 | 25 min | 26 min | 10 min | 13 |
 | Lab 3.3 | 45 min | 45 min | 18 min | 12 |
-| Lab 3.4 | 35 min | not enough data yet |  | 0 |
-| Lab 3.5 | 35 min | not enough data yet |  | 0 |
-| Lab 3.6 | 35 min | 28 min | 12 min | 11 |
-| Lab 3.7 | 35 min | 41 min | 18 min | 11 |
-| Labs 3.8 to 3.10 | 1 h 50 | 1 h 08 | 35 min | 10 |
-| Lab 3.11 | 45 min | 23 min | 9 min | 10 |
+| Lab 3.4 | 35 min | 9 min | 6 min | 7 |
+| Lab 3.5 | 35 min | 52 min | 19 min | 7 |
+| Lab 3.6 | 35 min | 1 h 01 | 20 min | 11 |
+| Lab 3.7 | 35 min | 31 min | 16 min | 11 |
+| Labs 3.8 to 3.10 | 1 h 50 | 1 h 18 | 43 min | 10 |
+| Lab 3.11 | 45 min | 27 min | 9 min | 10 |
+
+### Lab by lab
+
+From the learners who ran **Check my work** at the end of each lab: their receipts say when each one passed.
+
+| Labs | First estimate | Median | Fastest | Learners |
+|---|---|---|---|---|
+| Lab 1.3 | 10 min | 13 min | 6 min | 26 |
+| Lab 1.4 | 15 min | 12 min | 6 min | 25 |
+| Lab 1.5 | 20 min | 18 min | 7 min | 26 |
+| Lab 1.6 | 20 min | 17 min | 5 min | 25 |
+| Lab 1.7 | 25 min | 27 min | 7 min | 27 |
+| Lab 2.1 | 15 min | 35 min | 16 min | 9 |
+| Lab 2.2 | 25 min | 25 min | 8 min | 9 |
+| Lab 2.3 | 30 min | 49 min | 15 min | 9 |
+| Lab 2.4 | 30 min | 50 min | 20 min | 9 |
+| Lab 2.5 | 30 min | 29 min | 13 min | 9 |
+| Lab 2.6 | 25 min | 34 min | 10 min | 9 |
+| Lab 2.7 | 35 min | 50 min | 25 min | 9 |
+| Lab 2.8 | 20 min | 27 min | 10 min | 9 |
+| Lab 2.9 | 30 min | 48 min | 23 min | 9 |
+| Lab 3.1 | 50 min | 2 h 09 | 2 h | 7 |
+| Lab 3.2 | 25 min | 22 min | 13 min | 7 |
+| Lab 3.3 | 45 min | 1 h 14 | 22 min | 7 |
+| Lab 3.4 | 35 min | 9 min | 6 min | 7 |
+| Lab 3.5 | 35 min | 52 min | 19 min | 7 |
+| Lab 3.6 | 35 min | 1 h 01 | 20 min | 7 |
+| Lab 3.7 | 35 min | 31 min | 16 min | 7 |
+| Lab 3.8 | 35 min | 13 min | 6 min | 7 |
+| Lab 3.9 | 20 min | 6 min | 5 min | 6 |
+| Lab 3.10 | 55 min | 57 min | 39 min | 7 |
+| Lab 3.11 | 45 min | 54 min | 20 min | 7 |
 
 ## How the time is measured
 
