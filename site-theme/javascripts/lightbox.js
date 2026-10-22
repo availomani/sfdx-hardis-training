@@ -97,7 +97,9 @@
         return;
       }
       var picture = event.target.closest && event.target.closest(".md-typeset img");
-      if (!picture) {
+      // the picture of a button is the button: the footer guinea pig counts its
+      // taps to open the game (easter-egg.js), it is not a screenshot
+      if (!picture || picture.closest("button, [data-guinea-egg]")) {
         return;
       }
       // an image the author made into a link of its own goes where it points
