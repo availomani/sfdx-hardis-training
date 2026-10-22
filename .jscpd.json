@@ -8,6 +8,7 @@
     "**/site/**",
     "**/site-src/**",
     "**/redirect-site/**",
+    "**/guinea-run/vendor/**",
     "scripts/simulate/**",
     "scripts/start-states/**",
     "scripts/apex/samples/**",

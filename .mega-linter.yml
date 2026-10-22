@@ -2,11 +2,12 @@
 EXTENDS:
   - https://raw.githubusercontent.com/hardisgroupcom/sfdx-hardis/main/config/sfdx-hardis.mega-linter-config.yml
 
-# Generated files. scripts/build/universe.mjs writes them from
+# Generated or copied files. scripts/build/universe.mjs writes most of them from
 # training-universe.json and the lab front matter, and CI fails when they drift
 # from what it produces. A formatter rewriting them would make that check fail
-# forever, for a difference nobody made.
-FILTER_REGEX_EXCLUDE: (\.vscode|staticresources/|^BACKLOG\.md$|^STATS\.md$|^stats/course-stats\.json$|^training-manifest\.json$|^labs/link-map\.[a-z]{2}(-[A-Z]{2})?\.md$|^mkdocs-nav\.yml$|^site-src/|^redirect-site/|^megalinter-reports/)
+# forever, for a difference nobody made. guinea-run/vendor/ holds Three.js
+# add-ons copied as they are by scripts/build/vendor-three.mjs.
+FILTER_REGEX_EXCLUDE: (\.vscode|guinea-run/vendor/|staticresources/|^BACKLOG\.md$|^STATS\.md$|^stats/course-stats\.json$|^training-manifest\.json$|^labs/link-map\.[a-z]{2}(-[A-Z]{2})?\.md$|^mkdocs-nav\.yml$|^site-src/|^redirect-site/|^megalinter-reports/)
 
 # The annotated pictures and their fingerprints. .stamps.json maps each picture to a short hash
 # of what was drawn on it, and betterleaks reads a hash next to a key such as "github-auth" as

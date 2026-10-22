@@ -141,6 +141,9 @@ extra_javascript:
   # Links to another site open in a new tab, so the lab stays open beside VS
   # Code. See external-links.js.
   - theme/javascripts/external-links.js
+  # Something small and furry. It only listens for its two triggers; the rest,
+  # Three.js included, loads the first time one fires. See easter-egg.js.
+  - theme/javascripts/easter-egg.js
 
 extra:
   # Google Analytics, on the course's own data stream inside the sfdx-hardis

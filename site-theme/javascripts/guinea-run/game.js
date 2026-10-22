@@ -1,0 +1,899 @@
+/*
+ * Guinea Run: the change of US-014 travels the pipeline, from a laptop with
+ * nothing installed to production, through the worlds of the course, and
+ * the last one keeps watch over production.
+ *
+ * Loaded by ../easter-egg.js the first time a reader finds the easter egg.
+ * Three.js comes from jsDelivr at a fixed version, only then: a reader who never
+ * finds the egg never downloads it. Each world is a module of worlds/, loaded
+ * when it is played and freed when it is left, so only one world is ever in
+ * memory.
+ *
+ * This file is the shell: the overlay, the map, the cards, the score, the
+ * attempts and the stars, the badges, and the `ctx` every world is given (see
+ * makeContext below, and worlds/runner.js for the runner worlds).
+ *
+ * Settings for checks, in the page URL: guinea-unlock=all opens every world
+ * and saves nothing, guinea-world=N opens world N directly (with
+ * guinea-unlock=all), guinea-seed=N replays the same track, guinea-at=M
+ * starts a runner M metres down its track, guinea-test=1 adds the test hooks
+ * of window.__guineaRun to a normal game.
+ */
+import { translator } from "./texts.js";
+import { createHud } from "./hud.js";
+import { createInput } from "./core/input.js";
+import { createEngine } from "./core/engine.js";
+import { createPainter, loadLogo } from "./core/painter.js";
+import { createProgress } from "./core/progress.js";
+import { createSound } from "./core/sound.js";
+import { seededRandom } from "./core/random.js";
+import { WORLDS, judgePlan } from "./core/story.js";
+import { createGuineaPig } from "./guinea-pig.js";
+import { createFx } from "./core/fx.js";
+import { createModels } from "./core/models.js";
+import { createMusic } from "./core/music.js";
+import { THEMES } from "./core/themes.js";
+
+// scripts/build/vendor-three.mjs copies the add-ons of this same version
+const THREE_VERSION = "0.186.1";
+// The WebGPU build: WebGPU where the browser has it, WebGL 2 otherwise
+const THREE_URL = "https://cdn.jsdelivr.net/npm/three@" + THREE_VERSION + "/build/three.webgpu.min.js";
+// Generous on purpose: the worlds teach, they are not meant to stop anyone
+const ATTEMPTS = 5;
+// A slow frame is played as several short steps, so a weak device keeps the
+// right speed and nothing passes through the guinea pig between two frames
+const STEP_DT = 1 / 30;
+const COMBO_WINDOW = 2.5;
+
+let active = null;
+
+/** Opens the game. Returns { stop } at once, while Three.js still loads. */
+export function start(options) {
+  if (active) {
+    return active;
+  }
+  active = createGame(options);
+  return active;
+}
+
+function createGame(options) {
+  const lang = options.lang === "fr" ? "fr" : "en";
+  const track = options.track || function () {};
+  const params = new URLSearchParams(window.location.search);
+  const unlockAll = params.get("guinea-unlock") === "all";
+  // The test hooks of window.__guineaRun, for scripts/verify/check-easter-egg.mjs
+  const testHooks = unlockAll || params.get("guinea-test") === "1";
+  const directWorld = unlockAll && params.has("guinea-world") ? Number(params.get("guinea-world")) : null;
+  const seedParam = params.get("guinea-seed");
+  const startAt = Number(params.get("guinea-at")) || 0;
+
+  // The Cloudity logo, the badges and the labs are the site's own files
+  const logoUrl = new URL("../../images/cloudity-text-logo-white.svg", options.base).href;
+  const siteRoot = new URL("../../../", options.base);
+  const badgeUrl = (level) => new URL("badges/img/banner-level-" + level + ".svg", siteRoot).href;
+
+  const shellT = translator(lang);
+  const progress = createProgress({ volatile: unlockAll, unlockAll });
+  // A world added after the last one opens for whoever already finished the one before it
+  for (const world of WORLDS) {
+    if (world.id > progress.unlocked && world.id > 0 && progress.world(world.id - 1).stars > 0) {
+      progress.complete(world.id - 1, 0, 0, world.id);
+    }
+  }
+  const sound = createSound();
+  const previousFocus = document.activeElement;
+  const cleanups = [];
+  // Filled once labs.js has loaded; the HUD reads it each time it draws a card
+  const labs = {};
+  let stopped = false;
+  let state = "loading";
+  let engine = null;
+  let fx = null;
+  let models = null;
+  let THREE = null;
+  let pig = null;
+  let showroom = null;
+
+  // The world being played, and the run of it
+  let current = null;
+  let run = null;
+
+  loadStylesheet(options.base + "guinea-run.css");
+  const hud = createHud(shellT, { logoUrl, badgeUrl, labs, lang });
+  const overlay = hud.overlay;
+  document.body.appendChild(overlay);
+  document.documentElement.classList.add("guinea-run-open");
+  hud.setMuted(sound.muted);
+  hud.loading();
+
+  function listen(target, type, handler, opts) {
+    target.addEventListener(type, handler, opts);
+    cleanups.push(() => target.removeEventListener(type, handler, opts));
+  }
+
+  // No scrolling or zooming the page behind the game on a phone
+  listen(
+    overlay,
+    "touchmove",
+    (event) => {
+      // The menus, and a world's own lists, may scroll on a small screen
+      if (!(event.target.closest && event.target.closest(".gr-panel, .gr-scroll"))) {
+        event.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+  listen(document, "visibilitychange", () => {
+    if (document.hidden) {
+      pause();
+    }
+  });
+  listen(window, "blur", pause);
+
+  const disposeInput = createInput(overlay, hud.canvas, onAction, {
+    tapOnDown: () => state === "playing" && Boolean(current) && String(current.module.PADS) === "jump"
+  });
+
+  function onAction(action, element) {
+    if (action === "quit") {
+      stop();
+      return;
+    }
+    if (action === "mute") {
+      hud.setMuted(sound.toggle());
+      return;
+    }
+    if (action === "retry-load") {
+      if (!engine) {
+        boot();
+      } else if (current) {
+        openWorld(current.info.id);
+      } else {
+        showMap();
+      }
+      return;
+    }
+    if (state === "loading" || state === "error") {
+      return;
+    }
+    if (state === "celebrating") {
+      if (action === "confirm" || action === "jump" || action === "skip" || action === "tap") {
+        hud.skipCelebration();
+      }
+      return;
+    }
+    switch (action) {
+      case "play":
+        if (element && element.hasAttribute("data-world")) {
+          openWorld(Number(element.getAttribute("data-world")));
+        }
+        return;
+      case "map":
+        showMap();
+        return;
+      case "start":
+        startWorld();
+        return;
+      case "next":
+        openWorld(current ? current.info.id + 1 : 0);
+        return;
+      case "resume":
+        resume();
+        return;
+      case "credits-card":
+        if (state === "credits") {
+          hud.creditsCard();
+        }
+        return;
+      case "credits-roll":
+        if (state === "credits") {
+          hud.creditsRoll();
+        }
+        return;
+      case "pause":
+        if (state === "playing") {
+          pause();
+        } else if (state === "paused") {
+          resume();
+        }
+        return;
+      default:
+        break;
+    }
+    if (action === "confirm") {
+      if (state === "paused") {
+        resume();
+        return;
+      }
+      if (state === "intro" || state === "failed") {
+        startWorld();
+        return;
+      }
+      if (state === "done") {
+        openWorld(current ? current.info.id + 1 : 0);
+        return;
+      }
+    }
+    if (state === "playing" && current && current.world) {
+      current.world.action(action);
+    }
+  }
+
+  function pause() {
+    if (state === "playing") {
+      state = "paused";
+      engine.setActive(false);
+      hud.paused({ renderer: engine.backend === "webgpu" ? "WebGPU" : "WebGL 2", fps: Math.round(engine.fps), tier: engine.tier });
+    }
+  }
+
+  function resume() {
+    if (state === "paused") {
+      state = "playing";
+      engine.setActive(true);
+      hud.playing();
+    }
+  }
+
+  async function boot() {
+    state = "loading";
+    hud.loading();
+    if (!webglAvailable()) {
+      state = "error";
+      hud.message(shellT("noWebgl"), false);
+      return;
+    }
+    try {
+      const [three, table] = await Promise.all([import(THREE_URL), loadLabs(options.base, lang)]);
+      THREE = three;
+      Object.assign(labs, table);
+    } catch {
+      if (!stopped) {
+        state = "error";
+        hud.message(shellT("loadFailed"), true);
+      }
+      return;
+    }
+    if (stopped) {
+      return;
+    }
+    loadLogo(logoUrl);
+    try {
+      engine = await createEngine(THREE, hud.canvas, overlay, frame, { forceWebGL: params.get("guinea-gl") === "1", noBloom: params.get("guinea-bloom") === "0" });
+    } catch {
+      if (!stopped) {
+        state = "error";
+        hud.message(shellT("noWebgl"), false);
+      }
+      return;
+    }
+    if (stopped) {
+      engine.dispose();
+      return;
+    }
+    overlay.setAttribute("data-renderer", engine.backend);
+    engine.onBigResize(pause);
+    pig = createGuineaPig(THREE, { furShells: [2, 4, 6][engine.tier], modelUrl: options.base + "models/guinea-pig.glb" });
+    pig.state = { running: false };
+    engine.scene.add(pig.object);
+    engine.scene.add(pig.shadow);
+    fx = createFx(THREE, engine.scene, hud.reduced);
+    models = createModels(THREE, options.base);
+    showroom = createShowroom(THREE);
+    engine.scene.add(showroom);
+    hud.setBadges(progress.badges);
+    engine.start();
+    if (testHooks) {
+      exposeTestHooks();
+    }
+    if (directWorld !== null && WORLDS[directWorld]) {
+      openWorld(directWorld);
+    } else {
+      showMap();
+    }
+  }
+
+  /* ---------- The map and the worlds ---------- */
+
+  function resetPig() {
+    pig.setGhost(false);
+    pig.setSitting(false);
+    pig.setRiders([]);
+    pig.object.position.set(0, 0, 0);
+    pig.object.rotation.set(0, 0, 0);
+    pig.object.visible = true;
+    pig.shadow.position.set(0, 0.012, 0.05);
+    pig.state = { running: false, airborne: false, ducking: false, speed: 0, height: 0 };
+  }
+
+  function showMap() {
+    closeWorld();
+    state = "map";
+    engine.setActive(false);
+    showroom.visible = true;
+    resetPig();
+    engine.resetLook();
+    hud.clearWorldUi();
+    hud.setPads([]);
+    overlay.removeAttribute("data-world");
+    hud.map(progress, () => {
+      progress.reset();
+      hud.setBadges([]);
+      showMap();
+    });
+  }
+
+  async function openWorld(id) {
+    const info = WORLDS[id];
+    if (!info || (id > progress.unlocked && !unlockAll)) {
+      showMap();
+      return;
+    }
+    closeWorld();
+    state = "loading";
+    hud.loading();
+    let module;
+    try {
+      module = await import("./worlds/" + info.module);
+    } catch {
+      state = "error";
+      hud.message(shellT("loadFailed"), true);
+      return;
+    }
+    if (stopped) {
+      return;
+    }
+    current = { info, module, world: null, t: translator(lang, [module.TEXTS || {}]) };
+    overlay.setAttribute("data-world", String(id));
+    // On a phone, messages go under the top bar unless the world's track runs
+    // up the middle of the screen (PHONE_MESSAGES = "bottom")
+    overlay.setAttribute("data-messages", module.PHONE_MESSAGES === "bottom" ? "bottom" : "top");
+    // A world's own styles live in its module, and leave with it
+    if (module.CSS) {
+      const style = document.createElement("style");
+      style.id = "guinea-run-world-css";
+      style.textContent = module.CSS;
+      document.head.appendChild(style);
+    }
+    // The models the world names, and the Salesforce items every world uses
+    // (its trophy too), loaded behind the loading card
+    await Promise.race([models.load(["salesforce"].concat(module.MODELS || [])), new Promise((resolve) => window.setTimeout(resolve, 15000))]);
+    if (stopped || !current) {
+      return;
+    }
+    try {
+      createCurrentWorld();
+    } catch (e) {
+      console.error(e);
+      state = "error";
+      hud.message(shellT("loadFailed"), true);
+      return;
+    }
+    // Shaders are built now, behind the loading card, not on the first frames
+    await engine.warm();
+    if (stopped || !current) {
+      return;
+    }
+    state = "intro";
+    engine.setActive(false);
+    // A world says how it is played in three short steps: how1, how2, how3
+    const how = ["how1", "how2", "how3"].map((key) => current.t(key)).filter((text, i) => text && text !== "how" + (i + 1));
+    hud.intro(info, progress.world(id), current.t("intro"), how, module.PADS);
+    track("easter_egg_world_open", { world: id });
+  }
+
+  /** Builds the world from its module, fresh: every attempt of a world starts clean. */
+  function createCurrentWorld() {
+    if (current.world) {
+      disposeWorldObjects();
+    }
+    showroom.visible = false;
+    engine.resetLook();
+    hud.clearWorldUi();
+    resetPig();
+    run = { score: 0, attempts: ATTEMPTS, lost: 0, note: false, tip: "", combo: 0, comboTime: -10, ended: false };
+    const root = new THREE.Group();
+    engine.scene.add(root);
+    const paint = createPainter(THREE);
+    current.root = root;
+    current.paint = paint;
+    hud.setPads(current.module.PADS || ["left", "right", "jump", "duck"]);
+    current.world = current.module.createWorld(makeContext(root, paint));
+    updateHud();
+  }
+
+  function startWorld() {
+    if (!current) {
+      showMap();
+      return;
+    }
+    if (state !== "intro") {
+      createCurrentWorld();
+    }
+    state = "playing";
+    hud.playing();
+    engine.setActive(true);
+    sound.play("hungry");
+    if (current.world.start) {
+      current.world.start();
+    }
+    sound.play("wheek");
+  }
+
+  function disposeWorldObjects() {
+    if (!current || !current.world) {
+      return;
+    }
+    try {
+      current.world.dispose();
+    } catch {
+      // A world that fails to clean up must not keep the player stuck
+    }
+    engine.scene.remove(current.root);
+    current.paint.dispose();
+    fx.clear();
+    current.world = null;
+    hud.clearWorldUi();
+  }
+
+  function closeWorld() {
+    if (current) {
+      disposeWorldObjects();
+      current = null;
+    }
+    const style = document.getElementById("guinea-run-world-css");
+    if (style) {
+      style.remove();
+    }
+  }
+
+  /**
+   * Everything a world can use. A world module exports TEXTS ({ en, fr }, with
+   * at least intro and note), QUOTES (the strings it takes from the labs),
+   * PADS (the pads it needs), and createWorld(ctx) returning
+   * { start(), update(dt, time), action(name), dispose() }.
+   *
+   * Actions are left, right, jump, duck, confirm and tap. A world calls
+   * ctx.collect / ctx.loseAttempt / ctx.foundNote while it plays, and
+   * ctx.finish() or ctx.fail(tip) once, at its end.
+   */
+  function makeContext(root, paint) {
+    const info = current.info;
+    return {
+      THREE,
+      engine,
+      scene: engine.scene,
+      camera: engine.camera,
+      root,
+      pig,
+      /** Confetti: fx.burst(x, y, z, { count, colors, speed, up, life }). */
+      fx,
+      /** The Kenney models of the packs the world named in MODELS: models.get(name, { height }). */
+      models,
+      paint,
+      t: current.t,
+      lang,
+      sound,
+      world: info,
+      params: { startAt },
+      random: seededRandom(seedParam ? Number(seedParam) + info.id : Date.now() & 0xffffffff),
+      get attempts() {
+        return run.attempts;
+      },
+      get plan() {
+        return progress.plan;
+      },
+      judgePlan() {
+        return judgePlan(progress.plan);
+      },
+      savePlan(plan) {
+        progress.setPlan(plan);
+      },
+      hud: {
+        layer: hud.layer,
+        extra: hud.extra,
+        touch: hud.touch,
+        reduced: hud.reduced,
+        toast: (text, tone) => hud.toast(text, tone),
+        chat: (who, text, ms) => hud.chat(who, text, ms),
+        tick: (line) => hud.tick(line),
+        clearTicker: () => hud.clearTicker(),
+        goal: (text) => hud.goal(text),
+        coach: (text, ms) => hud.coach(text, ms),
+        tip: (text, ms) => hud.tip(text, ms),
+        setPath: (steps, i) => hud.setPath(steps, i),
+        setPads: (list) => hud.setPads(list)
+      },
+      /** Points for something done right, multiplied by the streak of good moves. */
+      collect(points, label) {
+        const now = engine.time;
+        const at = pig.object.position;
+        fx.burst(at.x, at.y + 0.8, at.z, { count: 10, speed: 2.5, up: 3, life: 0.8 });
+        hud.hideTip();
+        run.combo = now - run.comboTime < COMBO_WINDOW ? Math.min(run.combo + 1, 8) : 1;
+        run.comboTime = now;
+        const multiplier = Math.min(1 + Math.floor((run.combo - 1) / 2), 4);
+        run.score += points * multiplier;
+        sound.play(multiplier > 1 && run.combo % 2 === 1 ? "combo" : "pickup");
+        if (label) {
+          hud.toast(multiplier > 1 ? label + "  x" + multiplier : label, "good");
+        }
+        updateHud();
+        return multiplier;
+      },
+      points(n) {
+        run.score = Math.max(0, run.score + n);
+        updateHud();
+      },
+      /** A mistake: one attempt less. The tip is what the lab says to do, shown if the world is lost. */
+      loseAttempt(title, tip) {
+        if (run.ended) {
+          return run.attempts;
+        }
+        run.attempts -= 1;
+        run.lost += 1;
+        run.combo = 0;
+        run.tip = tip || run.tip;
+        sound.play("hit");
+        if (title) {
+          hud.toast(title, "bad");
+        }
+        if (tip && tip !== title) {
+          hud.tip(tip, 0, title);
+        }
+        updateHud();
+        if (run.attempts <= 0) {
+          failWorld();
+        }
+        return run.attempts;
+      },
+      gainAttempt() {
+        if (run.attempts < ATTEMPTS) {
+          run.attempts += 1;
+          updateHud();
+          return true;
+        }
+        return false;
+      },
+      foundNote() {
+        if (run.note) {
+          return;
+        }
+        run.note = true;
+        sound.play("note");
+        hud.note(current.t("note"));
+      },
+      /** Ends the world in success. info, when given, is what the player missed: shown on the result, never a reason to fail. */
+      finish(bonus, info) {
+        succeedWorld(bonus || 0, info);
+      },
+      fail(tip) {
+        if (tip) {
+          run.tip = tip;
+        }
+        failWorld();
+      },
+      setData(name, value) {
+        overlay.setAttribute("data-" + name, String(value));
+      },
+      get playing() {
+        return state === "playing";
+      }
+    };
+  }
+
+  function succeedWorld(bonus, missed) {
+    if (!run || run.ended) {
+      return;
+    }
+    run.ended = true;
+    run.score += bonus;
+    fx.burst(pig.object.position.x, pig.object.position.y + 1, pig.object.position.z, { count: 70, speed: 5, up: 6, life: 1.6 });
+    pig.hop();
+    const info = current.info;
+    const stars = 1 + (run.lost === 0 ? 1 : 0) + (run.note ? 1 : 0);
+    if (run.note) {
+      progress.addNote(info.id);
+    }
+    const before = progress.world(info.id).best;
+    const last = info.id === WORLDS.length - 1;
+    const newBest = progress.complete(info.id, run.score, stars, last ? info.id : info.id + 1);
+    track("easter_egg_world_done", { world: info.id, stars, score: run.score, trigger: options.trigger });
+    engine.setActive(false);
+    const result = { ok: true, world: info, score: run.score, best: Math.max(before, run.score), newBest, stars, hasNext: !last, missed: missed || "" };
+    const show = () => {
+      if (last) {
+        progress.setFinished();
+        track("easter_egg_finished", { score: run.score, trigger: options.trigger });
+        state = "credits";
+        hud.credits(progress.badges, result);
+      } else {
+        state = "done";
+        hud.result(result);
+      }
+    };
+    if (info.badge) {
+      progress.addBadge(info.badge);
+      track("easter_egg_badge", { level: info.badge, trigger: options.trigger });
+      state = "celebrating";
+      sound.play("fanfare");
+      showTrophy();
+      hud.celebrate(info.badge, () => {
+        hideTrophy();
+        show();
+      });
+    } else {
+      sound.play("happy");
+      show();
+    }
+  }
+
+  function failWorld() {
+    if (!run || run.ended) {
+      return;
+    }
+    run.ended = true;
+    state = "failed";
+    engine.setActive(false);
+    sound.play("wrong");
+    track("easter_egg_world_failed", { world: current.info.id });
+    hud.result({ ok: false, world: current.info, tip: run.tip });
+  }
+
+  function updateHud() {
+    if (!current || !run) {
+      return;
+    }
+    hud.update({ world: current.info.id + " · " + shellT("w" + current.info.id + "_name"), score: run.score, attempts: run.attempts, maxAttempts: ATTEMPTS });
+  }
+
+  /* ---------- The trophy: the badge and the Cloudity logo, in 3D ---------- */
+
+  // They turn beside the celebration card, in front of the camera of the world
+  let trophy = null;
+  function showTrophy() {
+    if (!models || !models.has("sfdx-hardis-badge")) {
+      return;
+    }
+    if (!trophy) {
+      trophy = new THREE.Group();
+      const badge = models.get("sfdx-hardis-badge", { height: 1.3 });
+      const logo = models.get("cloudity-logo", { width: 1.5 });
+      trophy.add(badge, logo);
+      trophy.userData.items = [badge, logo];
+    }
+    trophy.visible = true;
+    trophy.userData.time = 0;
+    engine.scene.add(trophy);
+    fx.burst(engine.camera.position.x, engine.camera.position.y, engine.camera.position.z - 2, { count: 40, speed: 3, up: 3 });
+  }
+
+  function hideTrophy() {
+    if (trophy) {
+      trophy.visible = false;
+      engine.scene.remove(trophy);
+    }
+  }
+
+  // Placed from points of the screen, so a world's camera offset or zoom does
+  // not matter: on each side of the card, or above it on a phone
+  const trophyPoint = { x: 0, y: 0 };
+  function placeTrophy(dt) {
+    if (!trophy || !trophy.visible) {
+      return;
+    }
+    trophy.userData.time += dt;
+    const t = trophy.userData.time;
+    const camera = engine.camera;
+    const portrait = engine.portrait;
+    const distance = 4;
+    const height = 2 * distance * Math.tan((camera.fov * Math.PI) / 360) / (camera.zoom || 1);
+    const pop = Math.min(1, t * 2.5);
+    trophy.position.set(0, 0, 0);
+    trophy.quaternion.identity();
+    trophy.userData.items.forEach((item, i) => {
+      const side = i === 0 ? -1 : 1;
+      trophyPoint.x = portrait ? side * 0.5 : side * 0.62;
+      trophyPoint.y = portrait ? 0.5 : 0.05;
+      const at = new THREE.Vector3(trophyPoint.x, trophyPoint.y, 0.5).unproject(camera).sub(camera.position).normalize();
+      item.position.copy(camera.position).addScaledVector(at, distance);
+      item.quaternion.copy(camera.quaternion);
+      item.rotateY(Math.sin(t * 1.2 + i * 2) * 0.6);
+      item.position.y += Math.sin(t * 2 + i) * height * 0.012;
+      // About a fifth of the screen height, a little smaller on a phone
+      item.scale.setScalar(pop * height * (portrait ? 0.1 : 0.2) / 1.3);
+    });
+  }
+
+  /* ---------- The background music ---------- */
+
+  // A theme per world (core/themes.js), and a soft one on the map. It plays
+  // while a world is played, holds on pause, stops on the card, the
+  // celebration, the result and the close. A musical run plays its own song.
+  let backgroundMusic = null;
+
+  function wantedTheme() {
+    // The soft theme of the map plays under the credits too
+    if (state === "map" || state === "credits") {
+      return THEMES.map ? { key: "map", run: null } : null;
+    }
+    if (!current || !current.world || (state !== "playing" && state !== "paused")) {
+      return null;
+    }
+    const own = current.module.MUSIC;
+    if (own === false || current.info.style === "musical") {
+      return null;
+    }
+    const key = own !== undefined ? own : current.info.id;
+    return THEMES[key] ? { key, run } : null;
+  }
+
+  function updateBackgroundMusic(dt) {
+    const wanted = wantedTheme();
+    const same = backgroundMusic && wanted && backgroundMusic.key === wanted.key && backgroundMusic.run === wanted.run;
+    if (!same) {
+      stopBackgroundMusic();
+      if (wanted) {
+        const theme = THEMES[wanted.key];
+        backgroundMusic = { key: wanted.key, run: wanted.run, theme, music: createMusic(sound, theme), pace: Number(overlay.getAttribute("data-pace")) || 1 };
+        backgroundMusic.base = backgroundMusic.pace;
+        backgroundMusic.music.start();
+      }
+    }
+    if (!backgroundMusic || (state !== "playing" && state !== "map" && state !== "credits")) {
+      return;
+    }
+    // A world that speeds up (data-pace) takes its theme along, gently, on a bar line
+    const pace = Number(overlay.getAttribute("data-pace")) || backgroundMusic.base;
+    if (Math.abs(pace - backgroundMusic.pace) > 0.02) {
+      backgroundMusic.pace = pace;
+      const factor = 1 + (pace / backgroundMusic.base - 1) * 0.6;
+      backgroundMusic.music.setTempo(backgroundMusic.theme.bpm * factor, (backgroundMusic.music.bar + 1) * 4);
+    }
+    backgroundMusic.music.update(dt);
+  }
+
+  function stopBackgroundMusic() {
+    if (backgroundMusic) {
+      backgroundMusic.music.dispose();
+      backgroundMusic = null;
+    }
+  }
+
+  /* ---------- The frame ---------- */
+
+  function frame(dt, time) {
+    updateBackgroundMusic(dt);
+    if (state === "playing" && current && current.world) {
+      let left = dt;
+      while (left > 1e-6 && state === "playing") {
+        const slice = Math.min(left, STEP_DT);
+        current.world.update(slice, time);
+        left -= slice;
+      }
+    } else if (state === "map" || !current || !current.world || !current.world.idleCamera) {
+      idleCamera(time);
+    } else {
+      current.world.idleCamera(time);
+    }
+    pig.animate(dt, pig.state || { running: false });
+    fx.update(dt);
+    placeTrophy(dt);
+  }
+
+  /** Off the game, the camera turns slowly round the guinea pig. */
+  function idleCamera(time) {
+    const camera = engine.camera;
+    const target = pig.object.position;
+    const portrait = engine.portrait;
+    const angle = 0.9 + time * 0.25;
+    const radius = portrait ? 3.6 : 2.9;
+    camera.position.set(target.x + Math.sin(angle) * radius, target.y + 1.3, target.z - Math.cos(angle) * radius);
+    camera.lookAt(target.x, target.y + (portrait ? -0.75 : -0.45), target.z);
+    engine.aimSun(target.x, target.z);
+  }
+
+  function exposeTestHooks() {
+    window.__guineaRun = {
+      state: () => state,
+      world: () => (current ? current.info.id : null),
+      finish: () => current && current.world && succeedWorld(0),
+      fail: () => current && current.world && failWorld(),
+      action: (name) => onAction(name, null),
+      // The models stay loaded for the session: only what a world made itself counts
+      geometries: () => (engine ? engine.renderer.info.memory.geometries - (models ? models.geometryCount : 0) : 0),
+      textures: () => (engine ? engine.renderer.info.memory.textures : 0)
+    };
+  }
+
+  function stop() {
+    if (stopped) {
+      return;
+    }
+    stopped = true;
+    stopBackgroundMusic();
+    closeWorld();
+    if (fx) {
+      fx.dispose();
+    }
+    if (models) {
+      models.dispose();
+    }
+    if (engine) {
+      engine.dispose();
+    }
+    if (pig) {
+      pig.dispose();
+    }
+    disposeInput();
+    for (const cleanup of cleanups) {
+      cleanup();
+    }
+    sound.dispose();
+    hud.dispose();
+    document.documentElement.classList.remove("guinea-run-open");
+    if (window.__guineaRun) {
+      delete window.__guineaRun;
+    }
+    if (previousFocus && previousFocus.focus) {
+      previousFocus.focus({ preventScroll: true });
+    }
+    active = null;
+    if (options.onExit) {
+      options.onExit();
+    }
+  }
+
+  boot();
+  return { stop };
+}
+
+/** A small round Lightning stage for the map, under the guinea pig. */
+function createShowroom(THREE) {
+  const group = new THREE.Group();
+  const disc = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.7, 0.2, 48), new THREE.MeshStandardMaterial({ color: 0xf3f5f7, roughness: 0.8 }));
+  disc.position.y = -0.1;
+  disc.receiveShadow = true;
+  group.add(disc);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.65, 0.05, 8, 64), new THREE.MeshStandardMaterial({ color: 0x0176d3, roughness: 0.4 }));
+  rim.rotation.x = Math.PI / 2;
+  group.add(rim);
+  return group;
+}
+
+/** The lab links of a language, written at build time by scripts/build/site.mjs. */
+async function loadLabs(base, lang) {
+  try {
+    const module = await import(base + "labs.js");
+    const table = (module.LABS && (module.LABS[lang] || module.LABS.en)) || {};
+    const root = new URL("../../../", base);
+    const result = {};
+    for (const [id, lab] of Object.entries(table)) {
+      result[id] = { title: lab.title, url: new URL(lab.url, root).href };
+    }
+    return result;
+  } catch {
+    // A local copy built without labs.js still plays: its cards name the labs without a link
+    return {};
+  }
+}
+
+function loadStylesheet(href) {
+  if (document.getElementById("guinea-run-css")) {
+    return;
+  }
+  const link = document.createElement("link");
+  link.id = "guinea-run-css";
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
+
+function webglAvailable() {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}

@@ -93,6 +93,14 @@
         Salesforce consulting: Agentforce, Revenue Cloud, Field Service, Managed Services, DevOps.
         <a href="https://cloudity.com/services/?utm_source=sfdx-hardis-training&amp;utm_medium=referral&amp;utm_campaign=footer" target="_blank" rel="noopener">See what we do</a>
       {% endif %}
+      {#- A guinea pig lives here. Five taps within three seconds open the game
+          hidden in the course, which is also the way in on a phone: see
+          site-theme/javascripts/easter-egg.js. The drawing is the one of
+          site-theme/javascripts/guinea-run/hud.js. -#}
+      {% set egg_hint = "Psst. Cinq fois." if page_lang == "fr" else "Psst. Five times." %}
+      <button type="button" class="guinea-egg" data-guinea-egg aria-label="{{ egg_hint }}" title="{{ egg_hint }}">
+        <img src="{{ 'theme/images/guinea-pig-small.webp' | url }}" alt="" width="32" height="17">
+      </button>
     </div>
     <div class="md-footer-meta__inner md-grid">
       {% include "partials/copyright.html" %}
