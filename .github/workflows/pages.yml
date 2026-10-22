@@ -95,10 +95,8 @@ jobs:
       - name: The translate widget keeps the page
         run: node scripts/verify/check-language-switch.mjs
 
-      # The game hidden in the course opens from the keyboard and from a phone,
-      # plays and closes. Only a browser can say so.
-      - name: Guinea Run opens, plays and closes
-        run: node scripts/verify/check-easter-egg.mjs
+      # Guinea Run, the game hidden in the course, is checked by guinea-run.yml:
+      # it plays every world for about 45 minutes, which never holds up a deploy.
 
       # The host the course is served from. This runs before the Pages artifact
       # is uploaded on purpose: a failure here stops the old URL from publishing

@@ -1,0 +1,65 @@
+---
+# Guinea Run, the game hidden in every page of the course, plays every world:
+# scripts/verify/check-easter-egg.mjs opens it from the keyboard and from a
+# phone, plays each world and its boss with the world's own autoplay, and checks
+# that every sentence a world quotes is still in its lab, in English and French.
+#
+# It takes about 45 minutes, so it runs here, on its own, and never in the
+# Pages build (pages.yml): a deploy never waits for it. A Pull Request that
+# touches the game or the labs runs it before the merge.
+name: Guinea Run
+
+on:
+  pull_request:
+    paths:
+      - "site-theme/**"
+      - "site-overrides/**"
+      - "labs/**"
+      - "scripts/build/site.mjs"
+      - "scripts/verify/check-easter-egg.mjs"
+      - "course-site.yml"
+      - ".github/workflows/guinea-run.yml"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: read-all
+
+# A newer commit makes an older run of the same branch pointless
+concurrency:
+  group: guinea-run-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  play:
+    name: Guinea Run opens, plays and closes
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: 3.x
+
+      # The site the game lives in, built as pages.yml builds it
+      - name: Build the site
+        run: |
+          node scripts/build/site.mjs
+          pip install zensical mdx_truly_sane_lists
+          python -m zensical build -f course-site.yml
+
+      - name: Install a browser
+        run: |
+          npm install --no-save playwright-core
+          npx playwright-core install --with-deps chrome
+
+      - name: Play every world
+        run: node scripts/verify/check-easter-egg.mjs
