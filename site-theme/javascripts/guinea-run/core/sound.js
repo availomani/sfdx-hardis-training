@@ -13,8 +13,8 @@
  */
 
 const MUTE_KEY = "guinea-run-muted";
-// The wheeks of a jump: thirteen real ones, never the same twice in a row
-const WHEEKS = Array.from({ length: 13 }, (_, i) => "wheek-" + (i + 1));
+// The wheeks of a jump, never the same twice in a row: one per file in sounds/
+const WHEEKS = ["wheek-1", "wheek-2", "wheek-3", "wheek-4", "wheek-5", "wheek-7", "wheek-11", "wheek-12"];
 const CLIPS = [...WHEEKS, "hungry", "happy", "scared", "annoyed", "chirp"];
 // A wheek on every jump would be too much: at most one this often
 const WHEEK_GAP_S = 0.45;

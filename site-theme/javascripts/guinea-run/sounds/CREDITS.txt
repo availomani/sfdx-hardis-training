@@ -15,8 +15,6 @@ More wheeks, for the jumps, are cut from recordings on Freesound, all released u
 | Clip | Source |
 | --- | --- |
 | `wheek-4.mp3`, `wheek-5.mp3`, `wheek-7.mp3` | [Guineapig](https://freesound.org/s/435748/) by RICHERlandTV |
-| `wheek-6.mp3`, `wheek-8.mp3` | [Squeaking Guinea Pigs](https://freesound.org/s/583078/) by Breviceps |
-| `wheek-9.mp3`, `wheek-10.mp3`, `wheek-11.mp3`, `wheek-12.mp3` | [guinea_pig.wav](https://freesound.org/s/580283/) by Hatayde |
-| `wheek-13.mp3` | [Guinea Pigs](https://freesound.org/s/540477/) by Breviceps |
+| `wheek-11.mp3`, `wheek-12.mp3` | [guinea_pig.wav](https://freesound.org/s/580283/) by Hatayde |
 
 The other sounds of the game are played by the browser (`core/sound.js`).
