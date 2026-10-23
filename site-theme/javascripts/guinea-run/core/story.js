@@ -30,6 +30,13 @@ export const WORLDS = [
 ];
 
 /**
+ * The bonus table, Pipeline Pinball: it opens once every world is done. It is
+ * not one of WORLDS, so it never changes the world count, the credits or the
+ * total of the Hall of Fame: it has its own card, its own board.
+ */
+export const BONUS = { id: "pinball", module: "pinball/index.js", style: "pinball", glyph: "star", labs: ["1.6", "3.5", "3.6"] };
+
+/**
  * How fast the game runs, and what its points are worth. Easy is the pace of
  * the course. A world runs speed times faster (the musical runs take it as
  * the tempo of their song), and its score at the end is multiplied by mult.

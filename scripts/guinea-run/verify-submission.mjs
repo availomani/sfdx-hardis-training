@@ -18,14 +18,17 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { recordText, submissionText, hmac } from "../../site-theme/javascripts/guinea-run/core/tally.js";
+import { recordText, pinballText, submissionText, hmac } from "../../site-theme/javascripts/guinea-run/core/tally.js";
 import { isHandle, LEGACY_UNTIL, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
 import { MODES } from "../../site-theme/javascripts/guinea-run/core/story.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const FIELD_LABEL = "Scores";
 export const MAX_FIELD_BYTES = 16 * 1024;
-export const DEFAULT_LIMITS = { cap: 20000, legacyCap: 6000, minBossMs: 0, rateMinutes: 10 };
+export const DEFAULT_LIMITS = { cap: 20000, legacyCap: 6000, minBossMs: 0, rateMinutes: 10, pinballCap: 1000000000, pinballBase: 3000000, pinballPerMinute: 12000000 };
+// A Pipeline Pinball game lasts at least this, at most this (game time, pauses not counted)
+const PINBALL_MIN_MS = 30000;
+const PINBALL_MAX_MS = 8 * 3600000;
 const HOUR = 3600000;
 
 /** The value of one issue form field, addressed by its heading, without a code fence. */
@@ -89,7 +92,11 @@ export function parseLimits(text, warn = () => {}) {
     caps: perWorld(raw.caps, DEFAULT_LIMITS.cap),
     legacyCaps: perWorld(raw.legacyCaps, DEFAULT_LIMITS.legacyCap),
     minBossMs: perWorld(raw.minBossMs, DEFAULT_LIMITS.minBossMs),
-    rateMinutes: Number.isFinite(raw.rateMinutes) ? raw.rateMinutes : DEFAULT_LIMITS.rateMinutes
+    rateMinutes: Number.isFinite(raw.rateMinutes) ? raw.rateMinutes : DEFAULT_LIMITS.rateMinutes,
+    // Pipeline Pinball: a cap, and a ceiling of points per minute of play on top of a base
+    pinballCap: Number.isFinite(raw.pinballCap) ? raw.pinballCap : DEFAULT_LIMITS.pinballCap,
+    pinballBase: Number.isFinite(raw.pinballBase) ? raw.pinballBase : DEFAULT_LIMITS.pinballBase,
+    pinballPerMinute: Number.isFinite(raw.pinballPerMinute) ? raw.pinballPerMinute : DEFAULT_LIMITS.pinballPerMinute
   };
 }
 
@@ -157,9 +164,23 @@ export async function verifySubmission({ body, author, createdAt, keys, limits, 
   const seen = new Set();
   const results = [];
   const legacyEnd = Date.parse(LEGACY_UNTIL + "T23:59:59.999Z");
+  let pinball = false;
   for (const r of s.r) {
     if (!r || typeof r !== "object") {
       return refuse("bad-result");
+    }
+    // The best game of Pipeline Pinball, the bonus table: its own board
+    if (r.pin === 1) {
+      if (pinball) {
+        return refuse("duplicate-pinball");
+      }
+      pinball = true;
+      const checked = await checkPinball(r, keys, limits, created);
+      if (checked.reason) {
+        return refuse(checked.reason);
+      }
+      results.push(checked.result);
+      continue;
     }
     if (!Number.isInteger(r.w) || r.w < 0 || r.w >= WORLD_COUNT) {
       return refuse("bad-world");
@@ -227,7 +248,32 @@ export async function verifySubmission({ body, author, createdAt, keys, limits, 
     }
   }
 
-  return { valid: true, submission: { handle: String(author), results: results.sort((a, b) => a.w - b.w) } };
+  return { valid: true, submission: { handle: String(author), results: results.sort((a, b) => (a.pinball ? 99 : a.w) - (b.pinball ? 99 : b.w)) } };
+}
+
+/** Checks a Pipeline Pinball result: { result } or { reason }. */
+async function checkPinball(r, keys, limits, created) {
+  const resultKey = keys[String(r.k)];
+  if (!Number.isInteger(r.k) || !resultKey) {
+    return { reason: "unknown-result-key" };
+  }
+  if (typeof r.sg !== "string" || !sameText(await hmac(resultKey, pinballText(r)), r.sg)) {
+    return { reason: "bad-pinball-signature" };
+  }
+  const whole = (n, min, max) => Number.isInteger(n) && n >= min && n <= max;
+  if (!whole(r.sc, 0, Number.MAX_SAFE_INTEGER) || !whole(r.ms, PINBALL_MIN_MS, PINBALL_MAX_MS) || !whole(r.lv, 1, 1000) || !whole(r.mi, 0, 100000) || !whole(r.nt, 0, 100000)) {
+    return { reason: "bad-pinball" };
+  }
+  if (r.sc > limits.pinballCap) {
+    return { reason: "pinball-over-cap" };
+  }
+  if (r.sc > limits.pinballBase + (limits.pinballPerMinute * r.ms) / 60000) {
+    return { reason: "pinball-too-fast" };
+  }
+  if (!Number.isInteger(r.at) || r.at <= 0 || r.at > created + HOUR) {
+    return { reason: "bad-result-date" };
+  }
+  return { result: { pinball: true, score: r.sc, ms: r.ms, level: r.lv, missions: r.mi, notes: r.nt, at: new Date(r.at).toISOString() } };
 }
 
 /** Compares two signatures in constant time. */

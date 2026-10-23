@@ -30,10 +30,12 @@ on:
       - main
     paths:
       - site-theme/javascripts/guinea-run/core/**
+      - site-theme/javascripts/guinea-run/worlds/pinball/**
   # The tests, and the key check where the secret is readable (not from a fork)
   pull_request:
     paths:
       - site-theme/javascripts/guinea-run/core/**
+      - site-theme/javascripts/guinea-run/worlds/pinball/**
       - scripts/guinea-run/**
       - .github/workflows/hall-of-fame.yml
   workflow_dispatch:

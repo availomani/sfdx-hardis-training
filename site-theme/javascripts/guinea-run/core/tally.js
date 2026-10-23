@@ -18,6 +18,11 @@ export function recordText(r) {
   return ["r2", r.w, r.sc, r.st, r.bm === null || r.bm === undefined ? "" : r.bm, r.m, r.at, r.v, r.k].join("|");
 }
 
+/** The text a Pipeline Pinball game stands for: its score, its play time, its level, its missions and notes. */
+export function pinballText(r) {
+  return ["p1", r.sc, r.ms, r.lv, r.mi, r.nt, r.at, r.v, r.k].join("|");
+}
+
 /** The text a submission stands for: the handle, the hour, and every result it carries. */
 export function submissionText(s) {
   // Every result counts, so no number of the issue can be edited: a signed
@@ -40,6 +45,16 @@ export async function stamp(record) {
 /** The signature of a submission, or "" when this browser cannot sign. */
 export async function seal(submission) {
   return sign(submissionText(submission));
+}
+
+/** The signature of a Pipeline Pinball game, or "" when this browser cannot sign. */
+export async function stampPinball(record) {
+  return sign(pinballText(record));
+}
+
+/** The signature of a saved Pipeline Pinball game, or "": the same key, its own prefix. */
+export async function sealCheckpoint(text) {
+  return sign("c1|" + text);
 }
 
 let current = null;

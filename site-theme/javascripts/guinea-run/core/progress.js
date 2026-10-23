@@ -1,8 +1,10 @@
 /*
  * What a player has done, kept in their browser: which worlds are open, the
  * best score and stars of each (with the result the Hall of Fame receives),
- * the badges, Victor's notes found, the GitHub handle of the player, and the
- * deployment actions plan declared in world 3, which the runners read.
+ * the badges, Victor's notes found, the GitHub handle of the player and the
+ * scores they sent to the Hall of Fame, the deployment actions plan declared
+ * in world 3, which the runners read, and the best game of Pipeline Pinball, the bonus table. A pinball game in
+ * progress is saved apart, by core/checkpoint.js.
  *
  * Every access is wrapped: a browser that blocks storage still plays, it just
  * forgets between visits. With ?guinea-unlock=all every world is open and
@@ -114,6 +116,19 @@ export function createProgress(options) {
       state.handle = handle;
       save();
     },
+    /** The scores sent to the Hall of Fame so far, { worlds: { w: score }, pinball }: the board may not show them yet. */
+    get sent() {
+      return state.sent || { worlds: {}, pinball: 0 };
+    },
+    addSent(scores) {
+      const sent = this.sent;
+      for (const [w, score] of Object.entries(scores.worlds || {})) {
+        sent.worlds[w] = Math.max(sent.worlds[w] || 0, score);
+      }
+      sent.pinball = Math.max(sent.pinball || 0, scores.pinball || 0);
+      state.sent = sent;
+      save();
+    },
     addBadge(level) {
       if (!state.badges.includes(level)) {
         state.badges.push(level);
@@ -133,10 +148,45 @@ export function createProgress(options) {
       state.finished = true;
       save();
     },
+    /** Pipeline Pinball: its best score, the signed result of that game, whether its teaser was shown. */
+    get bonus() {
+      return Object.assign({ best: 0, record: null, teaserSeen: false }, state.bonus || {});
+    },
+    /** Every world done: the bonus table is open. */
+    bonusOpen(worlds) {
+      return worlds.every((w) => (state.worlds[w.id] || { stars: 0 }).stars > 0);
+    },
+    /** Records a finished pinball game, and returns whether it is a new best. record: as complete(). */
+    completeBonus(score, record) {
+      const bonus = this.bonus;
+      const newBest = score > bonus.best;
+      if (newBest) {
+        bonus.best = score;
+        bonus.record = record || null;
+      }
+      state.bonus = bonus;
+      save();
+      return newBest;
+    },
+    setBonusRecord(record) {
+      const bonus = this.bonus;
+      if (bonus.best === record.sc) {
+        bonus.record = record;
+        state.bonus = bonus;
+        save();
+      }
+    },
+    setTeaserSeen() {
+      state.bonus = Object.assign(this.bonus, { teaserSeen: true });
+      save();
+    },
     reset() {
-      // The handle and the mode are who the player is, not what they did: they stay
-      const { handle, mode } = state;
+      // The handle, the mode and what was sent are who the player is, not what they did: they stay
+      const { handle, mode, sent } = state;
       state = empty();
+      if (sent) {
+        state.sent = sent;
+      }
       if (handle) {
         state.handle = handle;
       }

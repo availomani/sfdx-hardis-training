@@ -5,7 +5,7 @@
  */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { recordText, submissionText, hmac } from "../../site-theme/javascripts/guinea-run/core/tally.js";
+import { recordText, pinballText, submissionText, hmac } from "../../site-theme/javascripts/guinea-run/core/tally.js";
 import { verifySubmission, extractField, parseLimits, parseKeys } from "./verify-submission.mjs";
 
 const KEY = Buffer.alloc(32, 7);
@@ -205,4 +205,51 @@ test("a submission signed by the game before the s2 format is told apart: old-ga
   const sigs = s.r.filter((r) => r.sg).map((r) => r.sg).sort();
   const old = { ...s, sg: await hmac(KEY, ["s1", s.h.toLowerCase(), s.hr, s.k, sigs.join(",")].join("|")) };
   assert.equal((await check(old)).reason, "old-game");
+});
+
+async function pinballGame(fields, key = KEY) {
+  const r = { pin: 1, sc: 2000000, ms: 600000, lv: 2, mi: 4, nt: 1, at: createdMs - 60000, v: "2026.10.22", k: 3, ...fields };
+  r.sg = await hmac(key, pinballText(r));
+  return r;
+}
+
+test("a signed Pipeline Pinball game is accepted beside the worlds", async () => {
+  const s = await submission([await result({}), await pinballGame({})]);
+  const out = await check(s);
+  assert.equal(out.valid, true, out.reason);
+  const game = out.submission.results.find((r) => r.pinball);
+  assert.deepEqual([game.score, game.ms, game.level, game.missions, game.notes], [2000000, 600000, 2, 4, 1]);
+  assert.equal(out.submission.results[0].w, 0, "the worlds come first");
+});
+
+test("a pinball game edited after it was signed is refused", async () => {
+  const game = await pinballGame({});
+  game.sc = 9000000;
+  const s = await submission([game]);
+  assert.equal((await check(s)).reason, "bad-pinball-signature");
+});
+
+test("a world signature cannot pass as a pinball one", async () => {
+  const game = await pinballGame({});
+  const world = await result({});
+  game.sg = world.sg;
+  const s = await submission([game]);
+  assert.equal((await check(s)).reason, "bad-pinball-signature");
+});
+
+test("a pinball score over the cap, or faster than the ceiling per minute, is refused", async () => {
+  const tight = parseLimits(JSON.stringify({ pinballCap: 10000000, pinballBase: 1000000, pinballPerMinute: 500000 }));
+  const over = await submission([await pinballGame({ sc: 20000000, ms: 3600000 })]);
+  assert.equal((await check(over, { limits: tight })).reason, "pinball-over-cap");
+  // 10 minutes: at most 1,000,000 + 10 x 500,000
+  const fast = await submission([await pinballGame({ sc: 6500000, ms: 600000 })]);
+  assert.equal((await check(fast, { limits: tight })).reason, "pinball-too-fast");
+  const fine = await submission([await pinballGame({ sc: 5900000, ms: 600000 })]);
+  assert.equal((await check(fine, { limits: tight })).valid, true);
+});
+
+test("a pinball game too short, sent twice, or with odd numbers is refused", async () => {
+  assert.equal((await check(await submission([await pinballGame({ ms: 5000 })]))).reason, "bad-pinball");
+  assert.equal((await check(await submission([await pinballGame({ lv: 0 })]))).reason, "bad-pinball");
+  assert.equal((await check(await submission([await pinballGame({}), await pinballGame({ sc: 10 })]))).reason, "duplicate-pinball");
 });

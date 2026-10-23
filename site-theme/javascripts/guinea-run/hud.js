@@ -8,6 +8,7 @@
  * - the pads at the bottom of the screen
  * - the level-complete animation with the Cloudity logo and the badge
  * - the Hall of Fame: the boards, and sending one's scores
+ * - the bonus table: its card on the map, its teaser, its start and end cards
  *
  * A world draws its own HTML in `layer`, between the 3D view and this HUD.
  * Buttons carry data-action, which input.js turns into actions; pads carry
@@ -15,7 +16,7 @@
  */
 import { WORLDS, MODES } from "./core/story.js";
 import { SPECIAL_THANKS, CONTACT_URLS } from "./credits.js";
-import { avatarUrl, rankGeneral, rankOf, rankWorld } from "./core/hof.js";
+import { avatarUrl, rankGeneral, rankOf, rankPinball, rankWorld } from "./core/hof.js";
 
 /**
  * The guinea pig of the cards: a picture of the 3D model
@@ -309,7 +310,9 @@ export function createHud(t, options) {
     const list = element("ul", "gr-keys", parent);
     const uses = { keysMove: ["left", "right"], keysJump: ["jump"], keysDuck: ["duck"], keysConfirm: ["confirm"] };
     const all = touch ? ["keysTouch", "keysMove", "keysJump", "keysConfirm"] : ["keysMove", "keysJump", "keysDuck", "keysConfirm", "keysOther"];
-    const lines = all.filter((key) => !worldPads || !uses[key] || uses[key].some((pad) => worldPads.includes(pad)));
+    // The bonus table has flippers, a plunger and a nudge instead
+    const flippers = Boolean(worldPads && worldPads.includes("flippers"));
+    const lines = flippers ? (touch ? ["keysFlipTouch"] : ["keysFlip", "keysPlunger", "keysOther"]) : all.filter((key) => !worldPads || !uses[key] || uses[key].some((pad) => worldPads.includes(pad)));
     for (const key of lines) {
       element("li", "", list, t(key));
     }
@@ -364,7 +367,8 @@ export function createHud(t, options) {
 
   function hofList(body, view) {
     const general = view.tab === "all";
-    const list = general ? rankGeneral(view.board) : rankWorld(view.board, view.tab);
+    const pinball = view.tab === "pinball";
+    const list = general ? rankGeneral(view.board) : pinball ? rankPinball(view.board) : rankWorld(view.board, view.tab);
     if (!list.length) {
       element("p", "gr-muted", body, view.ok ? t("hofEmpty") : t("hofOffline"));
       return;
@@ -386,6 +390,11 @@ export function createHud(t, options) {
         pill.title = BADGE_NAMES[p.badge];
         pill.setAttribute("aria-label", BADGE_NAMES[p.badge]);
       }
+      if (pinball) {
+        element("span", "gr-hof-stars", row, t("hofLevel", { n: p.level }));
+        element("span", "gr-hof-score", row, number(p.score));
+        return;
+      }
       const stars = element("span", "gr-hof-stars", row, general ? "★ " + p.stars : starsText(p.stars));
       stars.setAttribute("aria-label", t("starsLabel", { n: p.stars }));
       if (!general && p.bossMs !== null) {
@@ -402,6 +411,29 @@ export function createHud(t, options) {
     if (rank > HOF_ROWS) {
       element("p", "gr-muted", body, t("hofYou", { rank, total: list.length }));
     }
+  }
+
+  function number(n) {
+    return Math.round(n).toLocaleString(options.lang === "fr" ? "fr-FR" : "en-US");
+  }
+
+  /** The card of the bonus table on the map, under the worlds. */
+  function bonusCard(body, bonus) {
+    const card = element("div", "gr-card gr-bonus-card", body);
+    card.setAttribute("data-world", "pinball");
+    const head = element("div", "gr-card-head", card);
+    element("span", "gr-card-number", head, "★");
+    const titles = element("div", "gr-card-titles", head);
+    element("strong", "", titles, t("bonusName"));
+    element("span", "gr-card-style", titles, t("style_pinball"));
+    element("p", "gr-card-pitch", card, t("bonusPitch"));
+    const foot = element("div", "gr-card-foot", card);
+    if (bonus.best > 0) {
+      element("span", "gr-muted", foot, t("best") + ": " + number(bonus.best));
+    }
+    const play = button(foot, "bonus", t("bonusName"), "gr-primary gr-small", bonus.hasSave ? t("bonusResume") : t("play"));
+    play.setAttribute("data-world", "pinball");
+    return play;
   }
 
   /** The handle box and the link that opens the GitHub issue with the scores. */
@@ -473,6 +505,29 @@ export function createHud(t, options) {
       message.textContent = t("hofSent");
     });
     refresh();
+  }
+
+  // The invitation box of the end card on screen, and whether the map marks the Hall of Fame button
+  let inviteBox = null;
+  let hofMarked = false;
+
+  /** An empty invitation box on an end card, filled by invite() once the board is read. */
+  function invitePlace(body) {
+    inviteBox = element("div", "gr-hof-invite", body);
+    inviteBox.hidden = true;
+    inviteBox.setAttribute("aria-live", "polite");
+  }
+
+  /** Where the scores would rank: "#3 in Commit, #2 overall". */
+  function inviteList(invites) {
+    const parts = invites.map((i) =>
+      i.board === "all"
+        ? t("hofInviteAll", { rank: i.rank })
+        : i.board === "pinball"
+          ? t("hofInvitePinball", { rank: i.rank })
+          : t("hofInviteWorld", { rank: i.rank, world: t("w" + i.board + "_name") })
+    );
+    return parts.length > 1 ? parts.slice(0, -1).join(", ") + " " + t("hofAnd") + " " + parts[parts.length - 1] : parts[0];
   }
 
   /* ---------- The end credits ---------- */
@@ -595,6 +650,11 @@ export function createHud(t, options) {
       element("p", "", body, t("creditsText"));
       badgesRow(body, earned);
       element("p", "gr-teaser", body, t("teaser"));
+      // One more thing: the bonus table, open now
+      const bonus = element("div", "gr-rule gr-rule--info gr-bonus-cta", body);
+      element("strong", "", bonus, t("teaserTitle"));
+      element("span", "", bonus, t("bonusPitch"));
+      button(bonus, "bonus", t("teaserPlay"), "gr-small gr-primary");
       const cloudity = element("div", "gr-rule gr-rule--info gr-roll-cta", body);
       element("span", "", cloudity, t("rollCta"));
       contactLink(cloudity);
@@ -691,8 +751,8 @@ export function createHud(t, options) {
       });
     },
 
-    /** The map of the worlds. progress: the progress store. */
-    map(progress, onReset) {
+    /** The map of the worlds. progress: the progress store. bonus: { open, best, hasSave } for the bonus table. */
+    map(progress, onReset, bonus) {
       screen(
         "map",
         t("mapTitle"),
@@ -730,9 +790,20 @@ export function createHud(t, options) {
               element("span", "gr-lock", foot, t("locked"));
             }
           }
+          // The bonus table, once every world is done: nothing shows it before
+          if (bonus && bonus.open) {
+            const play = bonusCard(body, bonus);
+            if (!focus) {
+              focus = play;
+            }
+          }
           const meta = element("div", "gr-map-meta", body);
           badgesRow(meta, progress.badges);
-          button(meta, "hof", t("hofButton"), "gr-small gr-hof-open");
+          const hof = button(meta, "hof", t("hofButton"), "gr-small gr-hof-open");
+          hof.classList.toggle("is-marked", hofMarked);
+          if (hofMarked) {
+            hof.title = t("hofMarkTitle");
+          }
           element("p", "gr-muted", meta, t("notesFound", { n: progress.notesFound(), total: WORLDS.length }));
           const reset = element("button", "gr-link", meta, t("resetProgress"));
           reset.type = "button";
@@ -785,6 +856,67 @@ export function createHud(t, options) {
       });
     },
 
+    /** The card of the bonus table before it starts. view: { title, story, how, best, hasSave }. */
+    bonusIntro(view) {
+      worldPads = ["flippers"];
+      screen("intro", t("bonusName"), (body, footer) => {
+        element("div", "gr-logo gr-logo--happy", body).innerHTML = GUINEA_ART;
+        element("p", "", body, view.story);
+        element("p", "gr-mode-line", body, t("bonusOneDifficulty"));
+        if (view.how && view.how.length) {
+          element("p", "gr-small-title", body, t("howToPlay"));
+          const steps = element("ol", "gr-how", body);
+          view.how.forEach((step) => element("li", "", steps, step));
+        }
+        const rule = element("div", "gr-rule", body);
+        element("strong", "", rule, t("theRule"));
+        element("span", "", rule, t("bonusRule"));
+        if (view.best > 0) {
+          element("p", "gr-muted", body, t("best") + ": " + number(view.best));
+        }
+        button(body, "hof", t("hofSeeBonus"), "gr-small gr-hof-open").setAttribute("data-world", "pinball");
+        button(footer, "map", t("backToMap"));
+        if (view.hasSave) {
+          button(footer, "bonus-new", t("bonusNew"));
+          button(footer, "bonus-resume", t("bonusResume"), "gr-primary");
+        } else {
+          button(footer, "bonus-new", t("start"), "gr-primary");
+        }
+      });
+    },
+
+    /** The end of a pinball game: result = { score, best, newBest, level, missions, notes, ms }. */
+    bonusResult(result) {
+      screen("done", t("bonusOverTitle"), (body, footer) => {
+        element("div", "gr-logo gr-logo--happy", body).innerHTML = GUINEA_ART;
+        element("p", "gr-score", body, t("score") + ": " + number(result.score));
+        element("p", "gr-muted", body, result.newBest ? t("newBest") : t("best") + ": " + number(result.best));
+        const list = element("ul", "gr-bonuses", body);
+        element("li", "", list, t("bonusLevelLine", { n: result.level, m: result.missions, min: Math.max(1, Math.round(result.ms / 60000)) }));
+        if (result.notes > 0) {
+          element("li", "", list, t("bonusNotesLine", { n: result.notes }));
+        }
+        invitePlace(body);
+        const rule = element("div", "gr-rule", body);
+        element("strong", "", rule, t("theRule"));
+        element("span", "", rule, t("bonusRule"));
+        button(body, "hof", t("hofSeeBonus"), "gr-small gr-hof-open").setAttribute("data-world", "pinball");
+        button(footer, "map", t("backToMap"));
+        button(footer, "bonus-new", t("replay"), "gr-primary");
+      });
+    },
+
+    /** One more thing: the bonus table is open. fromCredits: shown at the end of the credits, else on the map. */
+    teaser(fromCredits) {
+      screen("credits", t("teaserTitle"), (body, footer) => {
+        element("div", "gr-logo gr-logo--happy", body).innerHTML = GUINEA_ART;
+        element("p", "gr-teaser", body, t("teaserBody"));
+        element("p", "gr-muted", body, t("bonusPitch"));
+        button(footer, fromCredits ? "credits-card" : "map", t("teaserLater"));
+        button(footer, "bonus", t("teaserPlay"), "gr-primary");
+      });
+    },
+
     /** The pause card; drawing = { renderer, fps, tier } says how the game is drawn here. */
     paused(drawing) {
       screen("paused", t("paused"), (body, footer) => {
@@ -795,6 +927,49 @@ export function createHud(t, options) {
         button(footer, "map", t("backToMap"));
         button(footer, "resume", t("resume"), "gr-primary");
       });
+    },
+
+    /**
+     * The invitation to send a top 5 score, on the end card on screen.
+     * view: { invites: [{ board, rank }], canSend, handle, url, count, onSent }:
+     * with a url, a link straight to the issue; otherwise the Hall of Fame card.
+     */
+    invite(view) {
+      if (!inviteBox || !inviteBox.isConnected) {
+        return;
+      }
+      const box = inviteBox;
+      box.textContent = "";
+      box.hidden = false;
+      element("strong", "gr-hof-invite-title", box, t("hofInviteTitle"));
+      element("span", "", box, t("hofInviteLine", { list: inviteList(view.invites) }));
+      const first = view.invites[0].board;
+      if (view.url) {
+        const link = element("a", "gr-button gr-primary gr-small gr-hof-link", box, t("hofSubmit"));
+        link.href = view.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        const message = element("p", "gr-muted gr-hof-message", box, t("hofInviteAs", { handle: view.handle }));
+        link.addEventListener("click", () => {
+          view.onSent(view.handle, view.count);
+          message.textContent = t("hofSent");
+        });
+      } else {
+        const open = button(box, "hof", t("hofSendTitle"), "gr-primary gr-small gr-hof-open");
+        if (first !== "all") {
+          open.setAttribute("data-world", String(first));
+        }
+      }
+    },
+
+    /** The mark on the Hall of Fame button of the map: a top 5 score waits to be sent. */
+    markHof(on) {
+      hofMarked = Boolean(on);
+      const node = overlay.querySelector(".gr-map-meta .gr-hof-open");
+      if (node) {
+        node.classList.toggle("is-marked", hofMarked);
+        node.title = hofMarked ? t("hofMarkTitle") : "";
+      }
     },
 
     /** After a world: result = { ok, world, score, best, newBest, stars, tip, hasNext }. */
@@ -817,6 +992,7 @@ export function createHud(t, options) {
             element("strong", "", missed, t("goodToKnow"));
             element("span", "", missed, result.missed);
           }
+          invitePlace(body);
           const rule = element("div", "gr-rule", body);
           element("strong", "", rule, t("theRule"));
           element("span", "", rule, t("w" + world.id + "_rule"));
@@ -848,14 +1024,15 @@ export function createHud(t, options) {
         (body, footer) => {
           const tabs = element("div", "gr-hof-tabs gr-scroll", body);
           tabs.setAttribute("role", "tablist");
-          for (const tab of ["all"].concat(WORLDS.map((w) => w.id))) {
-            const label = tab === "all" ? t("hofGeneral") : t("w" + tab + "_name");
-            const node = button(tabs, "hof-tab", label, "gr-small" + (tab === view.tab ? " is-active" : ""), tab === "all" ? t("hofAllTab") : String(tab));
+          for (const tab of ["all"].concat(WORLDS.map((w) => w.id), ["pinball"])) {
+            const label = tab === "all" ? t("hofGeneral") : tab === "pinball" ? t("bonusName") : t("w" + tab + "_name");
+            const short = tab === "all" ? t("hofAllTab") : tab === "pinball" ? t("hofPinballTab") : String(tab);
+            const node = button(tabs, "hof-tab", label, "gr-small" + (tab === view.tab ? " is-active" : ""), short);
             node.setAttribute("data-tab", String(tab));
             node.setAttribute("role", "tab");
             node.setAttribute("aria-selected", String(tab === view.tab));
           }
-          element("p", "gr-small-title", body, view.tab === "all" ? t("hofGeneralTitle") : t("world", { n: view.tab }) + " · " + t("w" + view.tab + "_name"));
+          element("p", "gr-small-title", body, view.tab === "all" ? t("hofGeneralTitle") : view.tab === "pinball" ? t("hofPinballTitle") : t("world", { n: view.tab }) + " · " + t("w" + view.tab + "_name"));
           if (view.loading) {
             element("p", "gr-muted", body, t("hofLoading"));
           } else {
@@ -932,14 +1109,15 @@ export function createHud(t, options) {
     },
 
     update(state) {
-      const key = [state.world, state.score, state.attempts, state.maxAttempts].join("|");
+      const key = [state.world, state.score, state.attempts, state.maxAttempts, state.label].join("|");
       if (key === lastUpdate) {
         return;
       }
       lastUpdate = key;
       worldPill.textContent = state.world;
       score.textContent = t("score") + ": " + state.score;
-      attempts.textContent = "❤".repeat(Math.max(state.attempts, 0)) + "♡".repeat(Math.max((state.maxAttempts || 3) - state.attempts, 0));
+      // The bonus table counts balls, not hearts
+      attempts.textContent = state.label !== undefined ? state.label : "❤".repeat(Math.max(state.attempts, 0)) + "♡".repeat(Math.max((state.maxAttempts || 3) - state.attempts, 0));
     },
 
     setBadges(earned) {

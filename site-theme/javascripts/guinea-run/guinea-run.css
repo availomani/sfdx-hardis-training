@@ -1734,6 +1734,59 @@ html.guinea-run-open body {
   margin-top: 4px;
 }
 
+/* A top 5 score to send: the box on the end card, the dot on the map button */
+.guinea-run .gr-hof-invite {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 2px solid #f2a900;
+  border-radius: 6px;
+  background: #fff8e1;
+  text-align: left;
+  font-size: 15px;
+  animation: gr-fade-in 0.4s ease-out;
+}
+
+.guinea-run .gr-hof-invite[hidden] {
+  display: none;
+}
+
+.guinea-run .gr-hof-invite-title {
+  color: #8a5a00;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guinea-run .gr-hof-invite .gr-hof-message {
+  margin: 0;
+}
+
+.guinea-run .gr-hof-open.is-marked {
+  position: relative;
+}
+
+.guinea-run .gr-hof-open.is-marked::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: #f2a900;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guinea-run .gr-hof-invite {
+    animation: none;
+  }
+}
+
 .guinea-run .gr-hof-tabs {
   display: flex;
   gap: 6px;
@@ -1939,4 +1992,24 @@ html.guinea-run-open body {
 
 .guinea-run .gr-hof-mode--hard {
   background: var(--gr-error);
+}
+
+/* The bonus table: its wide card under the worlds, and its line on the final card */
+.guinea-run .gr-card[data-world="pinball"] { --gr-card: #dd7a01; }
+
+.guinea-run .gr-bonus-card {
+  margin: 4px 0 8px;
+  text-align: left;
+  background: linear-gradient(120deg, color-mix(in srgb, #dd7a01 16%, #ffffff), #ffffff 55%, color-mix(in srgb, #9050e9 12%, #ffffff));
+}
+
+.guinea-run .gr-bonus-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.guinea-run .gr-bonus-cta strong {
+  flex-basis: 100%;
 }

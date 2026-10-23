@@ -3,8 +3,13 @@
 What changed in the course, for learners and trainers. The course has no versions: each section is
 a day, newest first, and a change goes under the date of the day it is made.
 
+## 2026-10-23
+
+- Guinea Run invites you to send your scores as soon as one would enter the top 5 of a world, of the overall total or of Pipeline Pinball.
+
 ## 2026-10-22
 
+- Guinea Run has a bonus table for those who finish all ten worlds: Pipeline Pinball, a pinball game with a mission per world and its own Hall of Fame board.
 - The Hall of Fame answer on a score issue numbers the worlds from 0, as the game does.
 - Sending your Guinea Run scores works from the GitHub mobile app too: it used to open a blank issue.
 - Guinea Run, the game hidden in every page, is online: the Konami code or five taps on the guinea pig in the footer open it, on a computer or a smartphone.

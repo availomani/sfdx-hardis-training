@@ -9,7 +9,9 @@
  *
  * apply merges a submission that scripts/guinea-run/verify-submission.mjs
  * accepted: each world keeps the best of what was stored and what was sent, so
- * sending lower scores never lowers a board entry. It also writes the message
+ * sending lower scores never lowers a board entry. The best game of Pipeline
+ * Pinball, the bonus table, is kept the same way, on its own board: it is not
+ * added to the total. It also writes the message
  * the workflow posts to the player, with their ranks (RANKS_FILE, default
  * /tmp/ranks.md).
  *
@@ -21,7 +23,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { rankGeneral, rankWorld, rankOf, isHandle, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
+import { rankGeneral, rankWorld, rankPinball, rankOf, isHandle, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
 import { translator } from "../../site-theme/javascripts/guinea-run/texts.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -34,7 +36,7 @@ export function emptyBoard() {
 
 /**
  * Merges an accepted submission into the board, in place, and returns the entry.
- * submission: { handle, results: [{ w, score, stars, bossMs, legacy, at }] }
+ * submission: { handle, results: [{ w, score, stars, bossMs, legacy, at } or { pinball: true, score, ms, level, missions, notes, at }] }
  */
 export function mergeSubmission(board, submission, { issue, author, at, badge }) {
   const key = String(author).toLowerCase();
@@ -46,6 +48,13 @@ export function mergeSubmission(board, submission, { issue, author, at, badge })
   entry.handle = author;
   entry.worlds = entry.worlds || {};
   for (const r of submission.results) {
+    if (r.pinball) {
+      const game = { score: r.score, ms: r.ms, level: r.level, missions: r.missions, notes: r.notes, at: r.at };
+      if (!entry.pinball || game.score > entry.pinball.score) {
+        entry.pinball = game;
+      }
+      continue;
+    }
     const next = { score: r.score, stars: r.stars, bossMs: r.bossMs ?? null, mode: r.mode || "easy", legacy: r.legacy === true, at: r.at };
     const stored = entry.worlds[String(r.w)];
     if (!stored || better(next, stored)) {
@@ -114,6 +123,8 @@ export function ranksMessage(board, handle) {
   const lines = ["## You are in the Hall of Fame", ""];
   if (rank > 0) {
     lines.push(`You are **#${rank}** of ${general.length} overall, with ${entry.total} points and ${entry.stars} stars.`);
+  } else if (entry.pinball) {
+    lines.push("Your Pipeline Pinball game is saved. Score points in a world to appear in the overall ranking too.");
   } else {
     lines.push("Your scores are saved. Score points in a world to appear in the overall ranking.");
   }
@@ -126,6 +137,11 @@ export function ranksMessage(board, handle) {
     const list = rankWorld(board, w);
     const place = rankOf(list, handle);
     lines.push(`| ${w}. ${t(`w${w}_name`)} | ${one.score} | ${place > 0 ? `#${place} of ${list.length}` : "-"} |`);
+  }
+  if (entry.pinball) {
+    const pinball = rankPinball(board);
+    const place = rankOf(pinball, handle);
+    lines.push(`| Bonus. ${t("bonusName").replace("Bonus · ", "")} | ${entry.pinball.score} | ${place > 0 ? `#${place} of ${pinball.length}` : "-"} |`);
   }
   lines.push(
     "",

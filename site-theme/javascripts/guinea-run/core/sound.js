@@ -224,6 +224,85 @@ export function createSound() {
     source.start(start);
   }
 
+  // One short noise buffer for every clack, made once
+  let clackNoise = null;
+
+  /**
+   * A solenoid, a coil slamming a plunger: a short burst of band-passed noise.
+   * freq: the colour of the metal, decay: how fast it dies.
+   */
+  function clack(delay, volume, freq, decay) {
+    const ctx = audio();
+    if (!ctx) {
+      return;
+    }
+    if (!clackNoise) {
+      clackNoise = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.2), ctx.sampleRate);
+      const data = clackNoise.getChannelData(0);
+      for (let i = 0; i < data.length; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+    }
+    const start = ctx.currentTime + (delay || 0);
+    const source = ctx.createBufferSource();
+    source.buffer = clackNoise;
+    source.playbackRate.value = 0.9 + Math.random() * 0.2;
+    const filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = freq;
+    filter.Q.value = 1.4;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(volume, start);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + decay);
+    source.connect(filter);
+    filter.connect(gain);
+    connect(gain, false);
+    source.start(start);
+    source.stop(start + decay + 0.02);
+  }
+
+  // The three chimes of an old score unit: tens, hundreds, thousands
+  const CHIMES = [523.3, 659.3, 784];
+
+  /** One chime struck: a bell bar with a long ring. which: 0 low, 1 middle, 2 high. */
+  function chime(which, delay) {
+    clack(delay, 0.08, 3000, 0.012);
+    bell(CHIMES[which] * 2, delay, 0.07, 1.1, 2.76);
+  }
+
+  /** The knocker: a hammer on the inside of the cabinet. */
+  function knock(delay) {
+    clack(delay, 0.9, 260, 0.12);
+    thump(delay, 0.3);
+  }
+
+  /** Score reels turning: quick ticks. */
+  function reel(delay, ticks) {
+    for (let i = 0; i < ticks; i++) {
+      clack((delay || 0) + i * 0.045, 0.12, 2600, 0.015);
+    }
+  }
+
+  /** The buzz of a tilt: a low square wave. */
+  function buzz(delay, volume, length) {
+    const ctx = audio();
+    if (!ctx) {
+      return;
+    }
+    const start = ctx.currentTime + (delay || 0);
+    const osc = ctx.createOscillator();
+    osc.type = "square";
+    osc.frequency.value = 110;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(volume, start);
+    gain.gain.setValueAtTime(volume, start + length - 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + length);
+    osc.connect(gain);
+    connect(gain, false);
+    osc.start(start);
+    osc.stop(start + length + 0.05);
+  }
+
   function pick(list) {
     return list[Math.floor(Math.random() * list.length)];
   }
@@ -485,6 +564,98 @@ export function createSound() {
       thump(0, 0.12);
       bell(880, 0, 0.06, 0.08, 3);
       bell(659.3, 0.04, 0.06, 0.1, 3);
+    },
+    // Pipeline Pinball, an electromechanical table: solenoid clacks, chimes, the knocker
+    pbFlipper() {
+      clack(0, 0.5, 1800, 0.05);
+      thump(0, 0.16);
+    },
+    pbFlipperDown() {
+      clack(0, 0.18, 1200, 0.035);
+    },
+    pbBumper() {
+      clack(0, 0.55, 900, 0.06);
+      thump(0, 0.14);
+      chime(2, 0.012);
+    },
+    pbSling() {
+      clack(0, 0.4, 1400, 0.045);
+      thump(0, 0.08);
+    },
+    pbDrop() {
+      clack(0, 0.3, 700, 0.07);
+      chime(1, 0.02);
+    },
+    pbTarget() {
+      clack(0, 0.22, 2400, 0.03);
+      chime(2, 0.01);
+    },
+    pbLane() {
+      chime(2, 0);
+    },
+    pbSpin() {
+      clack(0, 0.12, 3200, 0.018);
+    },
+    pbRamp() {
+      chime(2, 0);
+      chime(1, 0.12);
+      chime(0, 0.24);
+    },
+    pbOrbit() {
+      swish(0, 0.06, 900, 2600);
+      chime(1, 0.05);
+    },
+    pbKick() {
+      clack(0, 0.45, 600, 0.08);
+      thump(0, 0.16);
+    },
+    pbLock() {
+      clack(0, 0.4, 500, 0.09);
+      chime(0, 0.1);
+      chime(1, 0.22);
+    },
+    pbGate() {
+      [2, 1, 0, 2, 1, 0].forEach((c, i) => chime(c, i * 0.09));
+    },
+    pbMission() {
+      [0, 1, 2].forEach((c, i) => chime(c, i * 0.12));
+    },
+    pbCombo() {
+      chime(1, 0);
+      chime(2, 0.08);
+    },
+    pbJackpot() {
+      [0, 1, 2, 0, 1, 2, 2, 2].forEach((c, i) => chime(c, i * 0.075));
+      reel(0.1, 10);
+    },
+    pbMultiball() {
+      [0, 1, 2, 2, 1, 0, 0, 1, 2].forEach((c, i) => chime(c, i * 0.09));
+      swish(0.2, 0.08, 400, 3000);
+    },
+    // The knocker of a free game: one hard knock on the cabinet, then the chimes
+    pbExtra() {
+      knock(0);
+      clip("happy", 0.5, 0.25);
+      [0, 1, 2].forEach((c, i) => chime(c, 0.3 + i * 0.1));
+    },
+    pbSave() {
+      chime(1, 0);
+      chime(2, 0.1);
+    },
+    pbTiltWarn() {
+      buzz(0, 0.08, 0.25);
+    },
+    pbTilt() {
+      buzz(0, 0.12, 0.9);
+      thump(0, 0.2);
+    },
+    pbDrain() {
+      clip("scared", 0.45);
+      chime(0, 0.1);
+    },
+    // Score reels turning over, for a big award
+    pbReel() {
+      reel(0, 6);
     },
     // World 6: the Dev deploys a component from his sandbox, a terminal beep and a swish
     w6Deploy() {

@@ -45,6 +45,12 @@
  *   a swipe and a pad move the guinea pig, the page never scrolls sideways
  * - Esc closes it and gives the page its scroll back; a page change under it
  *   removes it
+ * - Pipeline Pinball, the bonus table, stays hidden until every world is done,
+ *   then its teaser shows once; it opens, its flippers follow the held keys
+ *   and the halves of the screen, Deploy to all orgs puts three balls on the
+ *   table, a ball reaches the Production floor, the bot plays it for two
+ *   minutes without a ball ever leaving the table, a game ends on its card,
+ *   and the Hall of Fame has its board
  *
  * Three.js comes from jsDelivr, so this needs the network, like the site does.
  */
@@ -103,6 +109,22 @@ for (const world of WORLDS) {
     }
   }
 }
+// The bonus table is a world module too, with its own card
+const { BONUS } = await import(pathToFileURL(path.join(GAME, "core", "story.js")).href);
+{
+  const module = await import(pathToFileURL(path.join(GAME, "worlds", BONUS.module)).href);
+  expect(typeof module.createWorld === "function" && module.KIND === "bonus", `the bonus table (${BONUS.module}) exports createWorld`);
+  const missingFr = Object.keys(module.TEXTS.en).filter((key) => !(module.TEXTS.fr && key in module.TEXTS.fr));
+  expect(missingFr.length === 0, `the bonus table has every key in French${missingFr.length ? ": missing " + missingFr.join(", ") : ""}`);
+  for (const quote of module.QUOTES || []) {
+    for (const locale of quote.locales || ["en", "fr"]) {
+      const file = labFile(locale, quote.lab);
+      if (!(file && fs.readFileSync(file, "utf8").includes(quote.text))) {
+        expect(false, `the bonus table quotes "${quote.text}" from Lab ${quote.lab}, and labs/${locale} no longer says it`);
+      }
+    }
+  }
+}
 console.log("ok   every quote of the worlds is still in its lab, in English and in French (or listed above)");
 
 const labsModule = path.join(SITE, "theme", "javascripts", "guinea-run", "labs.js");
@@ -111,7 +133,7 @@ if (fs.existsSync(labsModule)) {
   const { LABS } = await import(pathToFileURL(labsModule).href);
   for (const locale of ["en", "fr"]) {
     const dead = [];
-    for (const world of WORLDS) {
+    for (const world of WORLDS.concat([BONUS])) {
       for (const id of world.labs) {
         const lab = LABS[locale] && LABS[locale][id];
         if (!lab || !fs.existsSync(path.join(SITE, lab.url, "index.html"))) {
@@ -171,6 +193,13 @@ const waitState = (page, values) =>
       () => true,
       () => false
     );
+
+// Whether the invitation to send a top 5 score shows on the end card, and says this
+const invited = (page, pattern) =>
+  page.textContent(".guinea-run .gr-hof-invite:not([hidden])", { timeout: 500 }).then(
+    (text) => pattern.test(text || ""),
+    () => false
+  );
 
 async function typeKeys(page, keys, gap) {
   for (const key of keys) {
@@ -359,8 +388,12 @@ try {
     await waitState(page, "intro");
     await page.click('.guinea-run [data-action="start"]');
     await waitState(page, "playing");
+    // A board where any score of world 0 enters the top 5
+    await page.evaluate(() => window.__guineaRun.board({ players: {} }));
     await page.evaluate(() => window.__guineaRun.finish());
     await waitState(page, "done");
+    const invite = await settles(page, () => invited(page, /#1 in .*#1 overall/), true, 10000);
+    expect(invite, "the end card invites a score that enters the top 5 of its world and of the total");
     await page.click('.guinea-run [data-action="map"]');
     await waitState(page, "map");
     expect((await page.locator('.guinea-run [data-action="play"][data-world="1"]').count()) === 1, "finishing world 0 opens world 1");
@@ -403,6 +436,8 @@ try {
       }, PROGRESS_KEY);
       await typeKeys(page, KONAMI_ARROWS);
       await waitState(page, "map");
+      // 1500 on world 0 beats Jane-Doe's 900: second of that board, not sent yet
+      expect(await settles(page, () => page.locator(".guinea-run .gr-map-meta .gr-hof-open.is-marked").count(), 1, 15000), "the map marks the Hall of Fame button while a top 5 score waits to be sent");
       if (!viewport.mobile) {
         await page.click('.guinea-run [data-action="mode"][data-mode="hard"]');
         const hard = await settles(page, () => page.locator('.guinea-run [data-mode="hard"].is-active').count(), 1);
@@ -686,6 +721,138 @@ try {
     expect(Number(thrown) > 0 && Number(shots) > 0, `he threw his components and the pipeline fired back (${thrown} thrown, ${shots} fired)`);
     expect(await waitState(page, "done"), "the deployment from git reaches the integration org, and world 6 ends");
     await page.context().close();
+  }
+
+  // 5h. Pipeline Pinball, the bonus table
+  {
+    const allDone = (teaserSeen) => {
+      const worlds = {};
+      for (let w = 0; w < 10; w++) {
+        worlds[w] = { best: 1000, stars: 1 };
+      }
+      return JSON.stringify({ v: 1, unlocked: 9, worlds, badges: [1, 2, 3], notes: {}, plan: null, finished: true, bonus: { best: 0, record: null, teaserSeen } });
+    };
+    // Hidden while a world is still to do
+    {
+      const page = await newPage({ viewport: { width: 1280, height: 860 } });
+      await page.goto(`${site.base}en/`, { waitUntil: "load" });
+      await page.evaluate((key) => window.localStorage.setItem(key, JSON.stringify({ v: 1, unlocked: 3, worlds: { 0: { best: 10, stars: 1 } }, badges: [], notes: {}, plan: null, finished: false })), PROGRESS_KEY);
+      await typeKeys(page, KONAMI_ARROWS);
+      await waitState(page, "map");
+      expect((await page.locator(".guinea-run .gr-bonus-card").count()) === 0, "the bonus table stays hidden while a world is still to do");
+      // Every world done: the teaser shows once, then the card on the map
+      await page.evaluate((args) => window.localStorage.setItem(args[0], args[1]), [PROGRESS_KEY, allDone(false)]);
+      await page.reload({ waitUntil: "load" });
+      await typeKeys(page, KONAMI_ARROWS);
+      expect(await waitState(page, "credits"), "a player who finished every world gets the teaser of the bonus table");
+      const teaser = (await page.textContent(".guinea-run .gr-panel")) || "";
+      expect(/One more thing/.test(teaser) && (await page.locator('.guinea-run [data-action="bonus"]').count()) === 1, "the teaser offers to play Pipeline Pinball");
+      await page.click('.guinea-run [data-action="map"]');
+      expect(await waitState(page, "map"), "Later goes to the map");
+      expect((await page.locator(".guinea-run .gr-bonus-card").count()) === 1, "the map shows the card of the bonus table once every world is done");
+      await page.reload({ waitUntil: "load" });
+      await typeKeys(page, KONAMI_ARROWS);
+      expect(await waitState(page, "map"), "the teaser shows only once");
+      await page.click('.guinea-run .gr-bonus-card [data-action="bonus"]');
+      expect(await waitState(page, "intro"), "the card of the bonus table opens its intro");
+      await page.evaluate((key) => window.localStorage.removeItem(key), PROGRESS_KEY);
+      await page.context().close();
+    }
+    // Played: the flippers, the balls, the Production floor, the end
+    {
+      const page = await newPage({ viewport: { width: 1280, height: 860 } });
+      expect(await openWorld(page, "en", "pinball"), "the bonus table opens its card");
+      await page.click('.guinea-run [data-action="bonus-new"]');
+      expect(await waitState(page, "playing"), "a game of Pipeline Pinball starts");
+      await page.waitForFunction(() => window.__guineaRun && window.__guineaRun.pinball, null, { timeout: 20000 }).catch(() => {});
+      const flippers = () => page.evaluate(() => window.__guineaRun.pinball.flippers());
+      await page.keyboard.down("ShiftLeft");
+      const up = await settles(page, () => flippers().then((f) => f.left && !f.right), true, 3000);
+      await page.keyboard.up("ShiftLeft");
+      const down = await settles(page, () => flippers().then((f) => !f.left), true, 3000);
+      expect(up && down, "the left flipper is up while Shift is held, and down once it is let go");
+      // The ball waits on the plunger: while it is the only one, the right half pulls the plunger.
+      // Space launches it first, then the halves of the screen are the flippers, as fingers do
+      await page.keyboard.down("Space");
+      await page.waitForTimeout(500);
+      await page.keyboard.up("Space");
+      await page.waitForTimeout(800);
+      await page.mouse.move(1000, 500);
+      await page.mouse.down();
+      const right = await settles(page, () => flippers().then((f) => f.right && !f.left), true, 3000);
+      await page.mouse.up();
+      expect(right && (await settles(page, () => flippers().then((f) => !f.right), true, 3000)), "a press on the right half of the screen holds the right flipper");
+      // Straight to the big moments, before the bot plays: its game may end within two minutes
+      await page.evaluate(() => window.__guineaRun.pinball.jump(1));
+      expect(await settles(page, () => page.evaluate(() => window.__guineaRun.pinball.balls().length), 3, 30000), "Deploy to all orgs puts three balls on the table");
+      await page.evaluate(() => window.__guineaRun.pinball.jump(3));
+      expect(await settles(page, () => page.evaluate(() => window.__guineaRun.pinball.balls().some((b) => b.floor === 1 && b.mode === "table")), true, 30000), "the production ramp takes a ball up to the Production floor");
+      // Five players on its board, the fifth at 5 points: the game passes it
+      await page.evaluate(() => {
+        const players = {};
+        for (let i = 1; i <= 5; i++) {
+          players["p" + i] = { handle: "p" + i, worlds: {}, total: 0, stars: 0, pinball: { score: i, level: 1, at: "2026-10-20T10:00:00Z" } };
+        }
+        window.__guineaRun.board({ players });
+      });
+      expect(await settles(page, () => page.evaluate(() => window.__guineaRun.hofTarget()), 1, 5000), "the table knows the score of the fifth of its board");
+      await page.evaluate(() => window.__guineaRun.pinball.autoplay(true));
+      expect(await settles(page, () => data(page, "pb-top5"), "1", 30000), "the display flashes TOP 5 once the game passes the fifth of the board");
+      // Two minutes of the bot: the ball never leaves the table
+      let escaped = "";
+      let lost = false;
+      const until = Date.now() + 120000;
+      while (Date.now() < until && !escaped) {
+        await page.waitForTimeout(1000);
+        if ((await state(page)) !== "playing") {
+          lost = true;
+          break;
+        }
+        const balls = await page.evaluate(() => window.__guineaRun.pinball.balls());
+        for (const b of balls) {
+          // Past the walls: the top arc ends at 23.05, the arc of the Production floor at 33.5
+          const out = b.mode === "table" && (b.floor === 0 ? b.x < -5.6 || b.x > 6.7 || b.y > 23.4 : b.x < -4.1 || b.x > 4.1 || b.y > 33.8);
+          if (out) {
+            escaped = `${b.x.toFixed(2)},${b.y.toFixed(2)} on floor ${b.floor}`;
+          }
+        }
+      }
+      const hud = await page.evaluate(() => window.__guineaRun.pinball.hud());
+      expect(!escaped, `the bot played the table${lost ? " to the end of its game" : " for two minutes"} and no ball left it${escaped ? ": " + escaped : ""} (score ${hud.score})`);
+      expect(hud.score > 0, `the table scores (${hud.score} points)`);
+      if (!lost) {
+        await page.evaluate(() => window.__guineaRun.finish());
+      }
+      expect(await waitState(page, "done"), "a game of Pipeline Pinball ends on its card");
+      expect((await page.locator(".guinea-run .gr-score").count()) === 1, "the end card of the bonus table shows the score");
+      const pinInvite = await settles(page, () => invited(page, /#1 on Pipeline Pinball/), true, 10000);
+      expect(pinInvite, "the end card of the bonus table invites a game that enters its top 5");
+      await page.click('.guinea-run [data-action="map"]');
+      expect(await waitState(page, "map"), "the bonus table goes back to the map");
+      expect(await page.evaluate(() => !document.getElementById("guinea-run-world-css")), "the bonus table takes its styles away with it");
+      await page.context().close();
+    }
+    // Its board in the Hall of Fame
+    {
+      const board = {
+        version: 1,
+        banned: [],
+        players: {
+          "octo-cat": { handle: "Octo-Cat", badge: 0, submittedAt: "2026-10-20T10:00:00Z", worlds: {}, total: 0, stars: 0, pinball: { score: 12345678, ms: 900000, level: 2, missions: 11, notes: 0, at: "2026-10-20T10:00:00Z" } }
+        }
+      };
+      const page = await newPage({ viewport: { width: 1280, height: 860 } });
+      await page.route(/raw\.githubusercontent\.com/, (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(board) }));
+      await page.goto(`${site.base}en/?guinea-test=1`, { waitUntil: "load" });
+      await typeKeys(page, KONAMI_ARROWS);
+      await waitState(page, "map");
+      await page.click('.guinea-run .gr-map-meta [data-action="hof"]');
+      await waitState(page, "hof");
+      await page.click('.guinea-run [data-action="hof-tab"][data-tab="pinball"]');
+      const row = await settles(page, () => page.locator(".guinea-run .gr-hof-row .gr-hof-handle").first().textContent().catch(() => ""), "Octo-Cat", 15000);
+      expect(row, "the Hall of Fame has a Pinball board, with the best game of each player");
+      await page.context().close();
+    }
   }
 
   // 6. A phone: the footer guinea pig, the pads, swipes

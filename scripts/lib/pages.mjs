@@ -15,7 +15,7 @@
  */
 import { fill } from "./strings.mjs";
 import { duration } from "../stats/lab-times.mjs";
-import { rankGeneral, rankWorld, avatarUrl, isHandle, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
+import { rankGeneral, rankWorld, rankPinball, avatarUrl, isHandle, WORLD_COUNT } from "../../site-theme/javascripts/guinea-run/core/hof.js";
 import { translator } from "../../site-theme/javascripts/guinea-run/texts.js";
 
 // How many players each table of the Hall of Fame shows
@@ -268,7 +268,8 @@ export function statsPage({ s, text, universe, stats }) {
 }
 
 /**
- * The Guinea Run Hall of Fame: the overall top, then the top of each world.
+ * The Guinea Run Hall of Fame: the overall top, the top of each world, then
+ * the top of Pipeline Pinball, the bonus table.
  *
  * board is hall-of-fame/hall-of-fame.json, which the hall-of-fame workflow
  * writes. The rankings come from the game's own core/hof.js, so the page, the
@@ -300,7 +301,8 @@ export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
 
   const lines = [`# ${w.heading}`, "", ...w.intro, ""];
   const general = top(rankGeneral(board));
-  if (general.length === 0) {
+  const pinball = top(rankPinball(board));
+  if (general.length === 0 && pinball.length === 0) {
     lines.push(w.empty, "");
     return lines.join("\n");
   }
@@ -333,6 +335,18 @@ export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
           ...list.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), p.score, t(`mode_${p.mode}`), p.stars, boss(p.bossMs)]))
         ];
     lines.push(...body.map((line) => `    ${line}`), "");
+  }
+  const number = new Intl.NumberFormat(s.lang || "en");
+  lines.push(`## ${w.pinball.heading}`, "", fill(w.pinball.intro, { count: HALL_OF_FAME_TOP }), "");
+  if (pinball.length === 0) {
+    lines.push(w.pinball.empty, "");
+  } else {
+    lines.push(
+      row(w.pinball.columns),
+      separator(w.pinball.columns),
+      ...pinball.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), badge(p), number.format(p.score), p.level, p.missions, Math.max(1, Math.round(p.ms / 60000))])),
+      ""
+    );
   }
   return lines.join("\n");
 }

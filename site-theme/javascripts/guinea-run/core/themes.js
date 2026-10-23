@@ -304,6 +304,34 @@ export const THEMES = {
     ]
   },
 
+  // Pipeline Pinball: a bright arcade boogie, a walking bass under bells; the table counts its beat for mission 6
+  pinball: {
+    bpm: 124,
+    root: 62,
+    progression: [0, 3, 4, 4],
+    volume: 0.14,
+    leadVoice: "bell",
+    lead: {
+      a: melody("0.2.4.7.9...7... 4.5.7.9.b...9... 7.4.2.4.7...4... 2.4.5.4.2...1..."),
+      b: melody("7...9...b...9... 7.......4....... 5...7...9...7... 4.......2.......")
+    },
+    sections: {
+      intro: { kick: FOUR, bass: "x.......x......." },
+      verse: { kick: FOUR, hat: OFFBEATS, bass: "x.x.x.x.x.x.x.x.", stab: OFFBEATS },
+      chorus: { kick: FOUR, clap: BACKBEAT, hat: EIGHTHS, bass: "x.o.x.o.x.o.x.o.", arp: true, lead: "a" },
+      bridge: { kick: FOUR, clap: BACKBEAT, hat: SIXTEENTHS, bass: "x...x...x...x...", lead: "b" },
+      break: { pad: true, arp: true, bass: "x.......x......." }
+    },
+    form: [
+      ["intro", 2],
+      ["verse", 4],
+      ["chorus", 8],
+      ["bridge", 8],
+      ["break", 4],
+      ["chorus", 8]
+    ]
+  },
+
   // 9 Monitor production: an arcade march at night, a bass stomping down the chords under a square lead
   9: {
     bpm: 120,
