@@ -5,7 +5,7 @@ description: "Ouvrez une Pull Request GitHub, lisez le contrôle de déploiement
 level: 1
 lab: 6
 lang: fr
-source_rev: "e2305e4b37f703943e86ae9b2e0ac315aec0a094"
+source_rev: "ea6e05da9b24466dd6745ec36cbe61cd869fc9fd"
 screenshots:
   - annotated/web/github-pr-checks
   - annotated/web/github-pr-comment
@@ -30,7 +30,7 @@ depends_on:
 
 **Niveau** : 1 Contributeur, les bases
 
-**Durée** : ~15 min<!-- observed --> (observé : médiane 17 min, 25 participants, le plus rapide 5 min)<!-- /observed -->
+**Durée** : ~15 min<!-- observed --> (observé : médiane 18 min, 26 participants, le plus rapide 5 min)<!-- /observed -->
 
 **Vous allez** : faire contrôler votre travail par un robot avant qu'un humain le fasse, lire ce
 qu'il dit, et mettre US-014 dans l'org d'intégration partagée.
