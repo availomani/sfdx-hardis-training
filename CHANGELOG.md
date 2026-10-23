@@ -8,6 +8,7 @@ a day, newest first, and a change goes under the date of the day it is made.
 - Guinea Run invites you to send your scores as soon as one would enter the top 5 of a world, of the overall total or of Pipeline Pinball.
 - Pipeline Pinball on a phone: the upper Production floor shows whole, and the messages and buttons fade while the ball passes under them.
 - The Guinea Run Hall of Fame page is no longer in the site menu.
+- The Guinea Run Hall of Fame page fits a phone screen: the avatar, handle and badge of a player share one column, and the boards no longer scroll sideways. Pipeline Pinball now comes right after the total, before the world boards.
 
 ## 2026-10-22
 

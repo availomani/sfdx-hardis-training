@@ -285,18 +285,26 @@ export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
   // A handle the board holds is checked again: it is printed into HTML
   const top = (list) => list.filter((p) => isHandle(p.handle)).slice(0, HALL_OF_FAME_TOP);
   const avatar = (handle) =>
-    `<img src="${avatarUrl(handle, 48)}" width="24" height="24" alt="" loading="lazy" referrerpolicy="no-referrer"/>`;
-  const player = (handle) => `[${handle}](https://github.com/${handle})`;
+    `<img class="off-glb" src="${avatarUrl(handle, 48)}" width="24" height="24" alt="" loading="lazy" referrerpolicy="no-referrer"/>`;
   const badge = (p) => {
     if (!(p.badge > 0)) {
       return "";
     }
     const alt = fill(w.badgeAlt, { level: p.badge });
     const image = badgeImage ? badgeImage(p.handle, p.badge) : null;
-    const mark = image ? `<img src="${image}" width="24" height="24" alt="${alt}" title="${alt}"/>` : alt;
+    const mark = image ? `<img class="off-glb" src="${image}" width="24" height="24" alt="${alt}" title="${alt}"/>` : alt;
     const href = badgeHref ? badgeHref(p.handle) : null;
     return href ? `[${mark}](${href})` : mark;
   };
+  // The avatar, the handle and the badge share one cell: as separate columns
+  // they made every board too wide for a phone
+  const player = (p, withBadge) =>
+    [avatar(p.handle), `[${p.handle}](https://github.com/${p.handle})`, withBadge ? badge(p) : ""].filter(Boolean).join(" ");
+  // Numbers line up on the right, the other columns (named in `left`) on the left
+  const header = (columns, left = [0, 1]) => [
+    row(columns),
+    `|${columns.map((_, i) => (left.includes(i) ? "---" : "---:")).join("|")}|`
+  ];
   const boss = (ms) => (typeof ms === "number" ? fill(w.seconds, { value: seconds.format(ms / 1000) }) : "-");
 
   const lines = [`# ${w.heading}`, "", ...w.intro, ""];
@@ -310,19 +318,30 @@ export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
     lines.push(fill(w.updated, { date: String(board.updatedAt).slice(0, 10) }), "");
   }
   lines.push(
+    // The boards sit in one block the stylesheet makes compact on a phone
+    `<div class="gr-hof" markdown>`,
+    "",
     `## ${w.general.heading}`,
     "",
     fill(w.general.intro, { count: HALL_OF_FAME_TOP }),
     "",
-    row(w.generalColumns),
-    separator(w.generalColumns),
-    ...general.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), badge(p), p.total, p.stars])),
-    "",
-    `## ${w.worlds.heading}`,
-    "",
-    fill(w.worlds.intro, { count: HALL_OF_FAME_TOP }),
+    ...header(w.generalColumns),
+    ...general.map((p, i) => row([i + 1, player(p, true), p.total, p.stars])),
     ""
   );
+  // The bonus table right after the total: both are one board for the whole game
+  const number = new Intl.NumberFormat(s.lang || "en");
+  lines.push(`## ${w.pinball.heading}`, "", fill(w.pinball.intro, { count: HALL_OF_FAME_TOP }), "");
+  if (pinball.length === 0) {
+    lines.push(w.pinball.empty, "");
+  } else {
+    lines.push(
+      ...header(w.pinball.columns),
+      ...pinball.map((p, i) => row([i + 1, player(p, true), number.format(p.score), p.level, p.missions, Math.max(1, Math.round(p.ms / 60000))])),
+      ""
+    );
+  }
+  lines.push(`## ${w.worlds.heading}`, "", fill(w.worlds.intro, { count: HALL_OF_FAME_TOP }), "");
   for (let n = 0; n < WORLD_COUNT; n++) {
     const title = fill(w.world, { n, name: t(`w${n}_name`) }).replace(/"/g, "'");
     const list = top(rankWorld(board, n));
@@ -330,24 +349,12 @@ export function hallOfFamePage({ s, board, badgeHref, badgeImage }) {
     const body = list.length === 0
       ? [w.worldEmpty]
       : [
-          row(w.worldColumns),
-          separator(w.worldColumns),
-          ...list.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), p.score, t(`mode_${p.mode}`), p.stars, boss(p.bossMs)]))
+          ...header(w.worldColumns, [0, 1, 3]),
+          ...list.map((p, i) => row([i + 1, player(p, false), p.score, t(`mode_${p.mode}`), p.stars, boss(p.bossMs)]))
         ];
     lines.push(...body.map((line) => `    ${line}`), "");
   }
-  const number = new Intl.NumberFormat(s.lang || "en");
-  lines.push(`## ${w.pinball.heading}`, "", fill(w.pinball.intro, { count: HALL_OF_FAME_TOP }), "");
-  if (pinball.length === 0) {
-    lines.push(w.pinball.empty, "");
-  } else {
-    lines.push(
-      row(w.pinball.columns),
-      separator(w.pinball.columns),
-      ...pinball.map((p, i) => row([i + 1, avatar(p.handle), player(p.handle), badge(p), number.format(p.score), p.level, p.missions, Math.max(1, Math.round(p.ms / 60000))])),
-      ""
-    );
-  }
+  lines.push("</div>", "");
   return lines.join("\n");
 }
 

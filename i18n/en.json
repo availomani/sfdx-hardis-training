@@ -143,32 +143,15 @@
     },
     "world": "World {n} - {name}",
     "worldEmpty": "Nobody finished this world yet.",
-    "generalColumns": ["Rank", "", "Player", "Badge", "Total", "Stars"],
-    "worldColumns": [
-      "Rank",
-      "",
-      "Player",
-      "Score",
-      "Mode",
-      "Stars",
-      "Boss time"
-    ],
+    "generalColumns": ["#", "Player", "Total", "Stars"],
+    "worldColumns": ["#", "Player", "Score", "Mode", "Stars", "Boss time"],
     "seconds": "{value} s",
     "badgeAlt": "Level {level} badge",
     "pinball": {
       "heading": "Pipeline Pinball",
       "intro": "The bonus table, open to whoever finished the ten worlds. The best game of each player, on its own: it is not added to the total. The top {count} players.",
       "empty": "Nobody sent a game of the bonus table yet.",
-      "columns": [
-        "Rank",
-        "",
-        "Player",
-        "Badge",
-        "Score",
-        "Level",
-        "Missions",
-        "Minutes"
-      ]
+      "columns": ["#", "Player", "Score", "Level", "Missions", "Minutes"]
     }
   },
   "badges": {
