@@ -678,7 +678,9 @@ export function createView(THREE, ctx, table, options) {
     const max = Math.max(min, TABLE.top + 0.6 - above);
     let target;
     if (up && (!low || low.y > 9 || low.mode === "path")) {
-      target = Math.max(min, Math.min((TABLE.upperBottom + TABLE.upperTop) / 2 + below - span / 2, TABLE.upperTop + 0.6 - above));
+      const middle = (TABLE.upperBottom + TABLE.upperTop) / 2 + below - span / 2;
+      // A phone centres the upper floor a little low, under the goal line and the buttons, whole
+      target = portrait ? middle - span * 0.07 : Math.max(min, Math.min(middle, TABLE.upperTop + 0.6 - above));
     } else if (low) {
       // The ball a quarter of the way up the view
       target = Math.max(min, Math.min(max, low.y - span * 0.28 + below));
@@ -857,6 +859,11 @@ export function createView(THREE, ctx, table, options) {
   return {
     update,
     placeCamera,
+    /** Where ball i is in the scene, into out, or null when it is not on the table. */
+    ballPoint(i, out) {
+      const m = ballMeshes[i];
+      return m && m.group.visible ? m.group.getWorldPosition(out) : null;
+    },
     /** The point of the scene over a table point, for confetti. */
     worldPoint(x, y, floor, out) {
       out.set(x, floorY(floor || 0) + 0.6, -y);

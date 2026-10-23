@@ -554,6 +554,11 @@ export const TEXTS = {
   }
 };
 
+// The HUD pieces that can lie over the table, the margin around a ball (px) and how often it is checked
+const COVERS = ".gr-top > *, .gr-corner, .gr-toast, .gr-tipbar, .gr-chat, .gr-hint";
+const COVER_MARGIN = 34;
+const COVER_EVERY_S = 0.08;
+
 export const CSS = `
 .gr-dmd { display: flex; justify-content: center; pointer-events: none; margin: 4px auto 0; width: min(520px, 94vw); }
 @media (max-aspect-ratio: 1/1) { .gr-dmd { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); width: min(94vw, 460px); margin: 0; z-index: 2; } }
@@ -577,6 +582,8 @@ export const CSS = `
 .gr-pb-eob li { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
 .gr-pb-eob ul { margin: 0; padding: 0; list-style: none; }
 .gr-pb-eob .gr-pb-total { border-top: 1px solid #c9c9c9; margin-top: 6px; padding-top: 4px; font-weight: 800; }
+.guinea-run[data-world="pinball"] .gr-under-ball { filter: opacity(0.12); transition: filter 0.12s; }
+@media (max-aspect-ratio: 1/1) { .guinea-run[data-world="pinball"] .gr-bar { display: none; } }
 `;
 
 export function createWorld(ctx) {
@@ -593,6 +600,9 @@ export function createWorld(ctx) {
   const music = createMusic(sound, THEMES.pinball);
   const fmt = (n) => Math.round(n).toLocaleString(ctx.lang === "fr" ? "fr-FR" : "en-US");
   const point = new THREE.Vector3();
+  const overlay = hud.layer.closest(".guinea-run") || hud.layer;
+  const ballsOnScreen = new Float64Array(16);
+  let coverClock = 0;
   let lastWheek = -10;
   let clock = 0;
   let saveAt = SAVE_EVERY_S;
@@ -863,6 +873,7 @@ export function createWorld(ctx) {
       return;
     }
     ended = true;
+    clearCovers();
     ctx.bonus.clearCheckpoint();
     sound.play("happy");
     ctx.bonus.over(summary);
@@ -883,6 +894,43 @@ export function createWorld(ctx) {
     ctx.pig.object.scale.setScalar(0.65);
     ctx.pig.shadow.visible = false;
     ctx.pig.state = { running: false };
+  }
+
+  /* ---------- The HUD over the table: what the ball passes under fades, so nothing hides it ---------- */
+
+  function uncover(dt) {
+    coverClock += dt;
+    if (coverClock < COVER_EVERY_S) {
+      return;
+    }
+    coverClock = 0;
+    const frame = hud.layer.getBoundingClientRect();
+    let count = 0;
+    for (let i = 0; i < physics.balls.length; i++) {
+      if (view.ballPoint(i, point)) {
+        point.project(ctx.camera);
+        ballsOnScreen[count++] = frame.left + ((point.x + 1) / 2) * frame.width;
+        ballsOnScreen[count++] = frame.top + ((1 - point.y) / 2) * frame.height;
+      }
+    }
+    for (const el of overlay.querySelectorAll(COVERS)) {
+      const box = el.getBoundingClientRect();
+      let under = false;
+      // An empty box (no chat bubble yet) hides nothing
+      const shows = box.width > 0 && el.textContent.trim() !== "";
+      for (let k = 0; k < count && !under && shows; k += 2) {
+        const x = ballsOnScreen[k];
+        const y = ballsOnScreen[k + 1];
+        under = x > box.left - COVER_MARGIN && x < box.right + COVER_MARGIN && y > box.top - COVER_MARGIN && y < box.bottom + COVER_MARGIN;
+      }
+      el.classList.toggle("gr-under-ball", under);
+    }
+  }
+
+  function clearCovers() {
+    for (const el of overlay.querySelectorAll(".gr-under-ball")) {
+      el.classList.remove("gr-under-ball");
+    }
   }
 
   /* ---------- Checkpoint ---------- */
@@ -1067,6 +1115,7 @@ export function createWorld(ctx) {
       music.update(dt);
       view.update(dt, rules.lights, mood());
       placePig();
+      uncover(dt);
       drawPanel(dt);
       if (clock >= saveAt) {
         saveAt = clock + SAVE_EVERY_S;
@@ -1123,6 +1172,7 @@ export function createWorld(ctx) {
       music.dispose();
       view.dispose();
       dmd.dispose();
+      clearCovers();
       select.remove();
       eob.remove();
       ctx.pig.object.scale.setScalar(1);
