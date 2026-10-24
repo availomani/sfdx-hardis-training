@@ -11,6 +11,8 @@ projectName: HeliosEnergy
 # both their orgs.
 developmentBranch: integration
 productionBranch: main
+# Where production is monitored every night: its own repository, never this one
+monitoringRepository: https://github.com/availomani/sfdx-hardis-training-monitoring
 # How the CI job gets into an org. Levels 1 and 2 use auth URLs kept in
 # GitHub secrets, which is the shortcut, so there is no certificate to look for
 # and the pipeline is right not to ask for one. Lab 3.1 gives preprod and main a
