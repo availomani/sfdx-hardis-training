@@ -7,7 +7,7 @@ public with sharing class InstallationScheduler {
 
     // Returns the earliest date a crew can be sent to this installation.
     // The panels have to be in the warehouse, plus the preparation buffer.
-    public static Date earliestInstallDate(Id installationId) {
+    public static Datetime earliestInstallDate(Id installationId) {
         Date arrival = null;
         for (Panel_Batch__c batch : [
             SELECT Arrival_Date__c
@@ -22,7 +22,7 @@ public with sharing class InstallationScheduler {
         if (arrival == null) {
             return null;
         }
-        return arrival.addDays(PREPARATION_DAYS);
+        return Datetime.newInstance(arrival.addDays(PREPARATION_DAYS), Time.newInstance(8, 0, 0, 0));
     }
 
     /**
