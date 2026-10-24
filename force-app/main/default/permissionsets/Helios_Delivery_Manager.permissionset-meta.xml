@@ -86,6 +86,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Installation__c.Gate_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Installation__c.Install_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
