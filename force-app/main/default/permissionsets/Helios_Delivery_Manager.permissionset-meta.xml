@@ -151,6 +151,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Panel_Batch__c.Supplier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Panel_Batch__c.Warranty_Years__c</field>
         <readable>true</readable>
     </fieldPermissions>
