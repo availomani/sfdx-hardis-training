@@ -149,6 +149,19 @@
         <field>Panel_Batch__c.Serial_Prefix__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<<<<<<< HEAD
+=======
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Panel_Batch__c.Supplier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Panel_Batch__c.Warranty_Years__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+>>>>>>> 748d586 (US-059 Record the supplier of a panel batch (#34))
     <hasActivationRequired>false</hasActivationRequired>
     <label>Helios Delivery Manager</label>
     <objectPermissions>
