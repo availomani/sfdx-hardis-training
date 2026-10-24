@@ -67,6 +67,10 @@
         <name>Flow</name>
     </types>
     <types>
+        <members>Helios_Crew_Leads</members>
+        <name>Group</name>
+    </types>
+    <types>
         <members>Installation__c-Installation Layout</members>
         <members>Panel_Batch__c-Panel Batch Layout</members>
         <name>Layout</name>
