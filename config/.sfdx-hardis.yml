@@ -23,8 +23,17 @@ orgAuthenticationMode: secretsOnly
 # promotion, never by a User Story. Lab 3.1 adds preprod here, for hotfixes.
 availableTargetBranches:
   - integration
+  - preprod
 availableTargetBranchesLabels:
   - "The shared integration org, where every contributor merges"
+  - "Hotfixes on the production version, agreed with the release manager"
+# Promotion branches (Beta, Lab 3.10): promote a subset of uat into preprod only.
+# Turned on now because a promotion branch is cut from its target, so the setting
+# has to reach preprod through the pipeline promotions first.
+enablePromotionBranches: true
+allowedPromotionSteps:
+  - source: uat
+    target: preprod
 
 # Branch naming for new User Stories
 branchPrefixChoices:

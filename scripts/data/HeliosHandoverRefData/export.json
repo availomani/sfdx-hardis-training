@@ -1,0 +1,12 @@
+{
+  "sfdxHardisLabel": "Handover checklist reference items",
+  "sfdxHardisDescription": "The 10 template Handover Item records every org needs: the reference handover checklist.",
+  "excludeIdsFromCSVFiles": true,
+  "objects": [
+    {
+      "query": "SELECT External_Id__c, Label__c, Sequence__c, Is_Template__c, Is_Done__c FROM Handover_Item__c WHERE Is_Template__c = true",
+      "operation": "Upsert",
+      "externalId": "External_Id__c"
+    }
+  ]
+}
