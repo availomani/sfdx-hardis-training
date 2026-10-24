@@ -13,6 +13,7 @@
         <members>Installation__c.Account__c</members>
         <members>Installation__c.Crew_Notes__c</members>
         <members>Installation__c.Crew_Size__c</members>
+        <members>Installation__c.Crew_Warning_Sent__c</members>
         <members>Installation__c.External_Id__c</members>
         <members>Installation__c.Install_Date__c</members>
         <members>Installation__c.Panels_Required__c</members>
