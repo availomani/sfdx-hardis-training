@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Install_Date__c</fullName>
     <description>The day the crew is expected on site.</description>
+    <inlineHelpText>The day the crew goes on site, not the day the panels arrive.</inlineHelpText>
     <label>Install Date</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
