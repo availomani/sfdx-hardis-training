@@ -1,0 +1,4 @@
+mergeTargets:
+  - main
+targetUsername: availomani-preprod-m7x2@sfdx-training.dev
+instanceUrl: https://login.salesforce.com

@@ -7,8 +7,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Installation__c.Crew_Size__c</field>
+        <editable>true</editable>
+        <field>Installation__c.Crew_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19,6 +19,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Installation__c.Install_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Installation__c.Panels_Required__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -39,6 +44,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Panel_Batch__c.Arrival_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Panel_Batch__c.Cost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

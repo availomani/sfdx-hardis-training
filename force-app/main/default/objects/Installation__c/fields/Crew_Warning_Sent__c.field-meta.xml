@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Crew_Warning_Sent__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set by the Installation Crew Warning flow once it has warned the planner, so the warning is sent only once.</description>
+    <label>Crew Warning Sent</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

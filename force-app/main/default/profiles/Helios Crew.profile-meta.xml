@@ -13,6 +13,10 @@
         <layout>Panel_Batch__c-Panel Batch Layout</layout>
     </layoutAssignments>
     <tabVisibilities>
+        <tab>Crew_Capacity__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Installation__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

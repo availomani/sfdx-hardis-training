@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Template__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>A reference item of the checklist, not tied to an installation.</description>
+    <label>Is Template</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
