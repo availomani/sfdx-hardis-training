@@ -18,6 +18,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Installation__c.Gate_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Installation__c.Install_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29,6 +34,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Installation__c.Roof_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Installation__c.Scaffolding_Required__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
