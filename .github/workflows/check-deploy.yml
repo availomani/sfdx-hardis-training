@@ -48,6 +48,17 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0 # Fetch all branches
       # Login & check deploy with test classes & code coverage
+      # E2E ONLY (remove after the test): sfdx-hardis built from the branch under test
+      - name: Build sfdx-hardis from feat/agentforce-agents
+        run: |
+          git clone --depth 1 -b feat/agentforce-agents https://github.com/availomani/sfdx-hardis.git /tmp/sfdx-hardis
+          cd /tmp/sfdx-hardis
+          npx --yes yarn@1.22.22 install --frozen-lockfile --ignore-scripts --network-timeout 600000
+          npx tsc -p . --pretty
+          sf plugins link /tmp/sfdx-hardis
+          git log --oneline -1
+          cd "$GITHUB_WORKSPACE"
+          sf plugins
       - name: Login & Simulate deployment
         if: ${{ !startsWith(github.head_ref, 'auto-fix/') &&
           !startsWith(github.ref_name, 'auto-fix/') }}

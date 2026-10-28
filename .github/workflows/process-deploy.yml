@@ -60,6 +60,18 @@ jobs:
             echo "ready=false" >> "$GITHUB_OUTPUT"
             echo "::notice::${BRANCH} has no org in its configuration yet: nothing to deploy"
           fi
+      # E2E ONLY (remove after the test): sfdx-hardis built from the branch under test
+      - name: Build sfdx-hardis from feat/agentforce-agents
+        if: ${{ !startsWith(github.ref_name, 'auto-fix/') && steps.pipeline.outputs.ready == 'true' }}
+        run: |
+          git clone --depth 1 -b feat/agentforce-agents https://github.com/availomani/sfdx-hardis.git /tmp/sfdx-hardis
+          cd /tmp/sfdx-hardis
+          npx --yes yarn@1.22.22 install --frozen-lockfile --ignore-scripts --network-timeout 600000
+          npx tsc -p . --pretty
+          sf plugins link /tmp/sfdx-hardis
+          git log --oneline -1
+          cd "$GITHUB_WORKSPACE"
+          sf plugins
       # Login & check deploy with test classes & code coverage
       - name: Login & Process Deployment
         if: ${{ !startsWith(github.ref_name, 'auto-fix/') && steps.pipeline.outputs.ready == 'true' }}
