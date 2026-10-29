@@ -8,6 +8,8 @@ EXTENDS:
 # forever, for a difference nobody made. guinea-run/vendor/ holds Three.js
 # add-ons copied as they are by scripts/build/vendor-three.mjs.
 FILTER_REGEX_EXCLUDE: (\.vscode|guinea-run/vendor/|staticresources/|^BACKLOG\.md$|^STATS\.md$|^stats/course-stats\.json$|^training-manifest\.json$|^labs/link-map\.[a-z]{2}(-[A-Z]{2})?\.md$|^mkdocs-nav\.yml$|^site-src/|^redirect-site/|^megalinter-reports/)
+# Agent graphs of Agentforce agents (agentGraph/*_graph.json) are base64 text, not JSON
+JSON_FILTER_REGEX_EXCLUDE: (agentGraph/)
 
 # The annotated pictures and their fingerprints. .stamps.json maps each picture to a short hash
 # of what was drawn on it, and betterleaks reads a hash next to a key such as "github-auth" as
