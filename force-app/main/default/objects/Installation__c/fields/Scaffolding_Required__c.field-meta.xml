@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scaffolding_Required__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set by the planner when the roof cannot be reached without scaffolding, so the crew books it before the day.</description>
+    <externalId>false</externalId>
+    <label>Scaffolding Required</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

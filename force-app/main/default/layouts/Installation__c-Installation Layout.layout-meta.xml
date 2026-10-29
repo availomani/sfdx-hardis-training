@@ -12,6 +12,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Gate_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -29,6 +33,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Roof_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Scaffolding_Required__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
