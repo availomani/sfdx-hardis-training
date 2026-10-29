@@ -1,36 +1,41 @@
 {
-  "required" : [ "authenticationKey", "customerCode", "customerId", "customerType" ],
-  "unevaluatedProperties" : false,
-  "properties" : {
-    "authenticationKey" : {
-      "title" : "Authentication Key",
-      "description" : "The authentication key used to generate the verification code.",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
+  "required": [
+    "authenticationKey",
+    "customerCode",
+    "customerId",
+    "customerType"
+  ],
+  "unevaluatedProperties": false,
+  "properties": {
+    "authenticationKey": {
+      "title": "Authentication Key",
+      "description": "The authentication key used to generate the verification code.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
     },
-    "customerCode" : {
-      "title" : "Customer Code",
-      "description" : "The verification code the user received by email and entered in the conversation.",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : true
+    "customerCode": {
+      "title": "Customer Code",
+      "description": "The verification code the user received by email and entered in the conversation.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": true
     },
-    "customerId" : {
-      "title" : "Customer ID",
-      "description" : "The Salesforce user ID or contact ID.",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
+    "customerId": {
+      "title": "Customer ID",
+      "description": "The Salesforce user ID or contact ID.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
     },
-    "customerType" : {
-      "title" : "Customer Type",
-      "description" : "The type of customer ID, either a Salesforce user or a contact.",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
+    "customerType": {
+      "title": "Customer Type",
+      "description": "The type of customer ID, either a Salesforce user or a contact.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
     }
   },
-  "lightning:type" : "lightning__objectType",
-  "lightning:textIndexed" : true
+  "lightning:type": "lightning__objectType",
+  "lightning:textIndexed": true
 }
