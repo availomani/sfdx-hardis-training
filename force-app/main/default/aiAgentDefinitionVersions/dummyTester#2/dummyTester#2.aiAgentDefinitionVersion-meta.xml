@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiAgentDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <billingMode>ActionBased</billingMode>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition_1</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 1</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>This variable may also be referred to as VerifiedCustomerId</description>
+        <developerName>VerifiedCustomerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Verified Customer Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the authentication key that&apos;s used to generate the verification code.</description>
+        <developerName>authenticationKey</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Authentication Key</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce user ID or contact ID.</description>
+        <developerName>customerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Customer Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the customer ID type, whether it&apos;s a Salesforce user or a contact.</description>
+        <developerName>customerType</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Customer Type</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce Case ID created by an inbound email.</description>
+        <developerName>emailCaseId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Email Case Id</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce Contact ID associated with the end user who sent the inbound email.</description>
+        <developerName>endUserContactId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>End User Contact Id</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores email address of the end user who sent the inbound email.</description>
+        <developerName>endUserEmail</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>End User Email</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Stores a boolean value that indicates whether the customer code is verified.</description>
+        <developerName>isVerified</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>isVerified</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>en_US</copilotPrimaryLanguage>
+    <copilotSecondaryLanguages>en_GB</copilotSecondaryLanguages>
+    <genAiPlannerName>dummyTester_v2</genAiPlannerName>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <planner>
+        <fullName>dummyTester_v2</fullName>
+        <agentGraphRef>20Zaj00000Ipjqe</agentGraphRef>
+        <description>Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues.</description>
+        <localTopicLinks>
+            <genAiPluginName>AccountManagement</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>CaseManagement</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>DeliveryIssues</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>GeneralFAQ</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>OrderInquiries</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>ReservationManagement</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>ServiceCustomerVerification</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>agent_router</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>ambiguous_question</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>escalation</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>off_topic</genAiPluginName>
+        </localTopicLinks>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles customer inquiries about changing their contact information and resetting their password.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1d</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1d</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>ResetSecurePassword</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>UpdateVerifiedContact</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localActions>
+                <description>Send a password reset link to the email address associated with the given Contact ID.</description>
+                <invocationTarget>SvcCopilotTmpl__ResetScrPassword</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>ResetSecurePassword</localDeveloperName>
+                <masterLabel>Reset Secure Password</masterLabel>
+                <source>SvcCopilotTmpl__ResetSecurePassword</source>
+            </localActions>
+            <localActions>
+                <description>Updates fields on a customer’s contact record, such as the email address, phone number, or postal address.</description>
+                <invocationTarget>SvcCopilotTmpl__UpdateVrfyCtct</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>UpdateVerifiedContact</localDeveloperName>
+                <masterLabel>Update Verified Contact</masterLabel>
+                <source>SvcCopilotTmpl__UpdateVerifiedContact</source>
+            </localActions>
+            <localDeveloperName>AccountManagement</localDeveloperName>
+            <masterLabel>Account Management</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles customer inquiries and actions related to support cases, including providing case information, updating existing cases, and creating new cases.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1a</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1a</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>GetCaseByVerifiedCaseNumber</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>GetCasesForVerifiedContact</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>AddCaseComment</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>CreateCaseEnhancedData</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Let a customer add a comment to an existing case.</description>
+                <invocationTarget>SvcCopilotTmpl__AddCaseComment</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AddCaseComment</localDeveloperName>
+                <masterLabel>Add Case Comment</masterLabel>
+                <source>SvcCopilotTmpl__AddCaseComment</source>
+            </localActions>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localActions>
+                <description>Create a case for the customer that&apos;s transferred from the AI agent to a service rep. The case includes all information gathered from the customer, a summary of the progress made by the AI agent, a link to the conversation, and any attachments.</description>
+                <invocationTarget>SvcCopilotTmpl__CreateCaseEnhancedData</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>CreateCaseEnhancedData</localDeveloperName>
+                <masterLabel>Create Case with Enhanced Data</masterLabel>
+                <source>SvcCopilotTmpl__CreateCaseEnhancedData</source>
+            </localActions>
+            <localActions>
+                <description>Returns a case associated with a given contact ID and case number.</description>
+                <invocationTarget>SvcCopilotTmpl__GetCaseByVrfyCaseNbr</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetCaseByVerifiedCaseNumber</localDeveloperName>
+                <masterLabel>Get Case By Verified Case Number</masterLabel>
+                <source>SvcCopilotTmpl__GetCaseByVerifiedCaseNumber</source>
+            </localActions>
+            <localActions>
+                <description>Returns a list of cases related to a given Contact ID.</description>
+                <invocationTarget>SvcCopilotTmpl__GetCasesVrfyCtct</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetCasesForVerifiedContact</localDeveloperName>
+                <masterLabel>Get Cases For Verified Contact</masterLabel>
+                <source>SvcCopilotTmpl__GetCasesForVerifiedContact</source>
+            </localActions>
+            <localDeveloperName>CaseManagement</localDeveloperName>
+            <masterLabel>Case Management</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Addresses customer concerns related to delivery problems with an order, including late deliveries or scheduling changes.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1f</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1f</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>CancelOrder</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>FinalizeNewDeliveryTime</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>GetDeliveryTimeSlots</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>GetOrdersByContact</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>IdentifyCustomerByEmail</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localActions>
+                <description>Cancels a customer’s order.</description>
+                <invocationTarget>SvcCopilotTmpl__CancelOrder</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>CancelOrder</localDeveloperName>
+                <masterLabel>Cancel Order</masterLabel>
+                <source>SvcCopilotTmpl__CancelOrder</source>
+            </localActions>
+            <localActions>
+                <description>Updates the scheduled delivery time to the time slot selected by the customer.</description>
+                <invocationTarget>SvcCopilotTmpl__FinalizeDeliveryTime</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>FinalizeNewDeliveryTime</localDeveloperName>
+                <masterLabel>Finalize New Delivery Time</masterLabel>
+                <source>SvcCopilotTmpl__FinalizeNewDeliveryTime</source>
+            </localActions>
+            <localActions>
+                <description>Returns a list of available time slots to schedule a delivery.</description>
+                <invocationTarget>SvcCopilotTmpl__GetDeliveryTimeSlots</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetDeliveryTimeSlots</localDeveloperName>
+                <masterLabel>Get Delivery Time Slots</masterLabel>
+                <source>SvcCopilotTmpl__GetDeliveryTimeSlots</source>
+            </localActions>
+            <localActions>
+                <description>Returns a list of orders associated with a given contact record.</description>
+                <invocationTarget>SvcCopilotTmpl__GetOrdersByContact</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetOrdersByContact</localDeveloperName>
+                <masterLabel>Get Orders By Contact</masterLabel>
+                <source>SvcCopilotTmpl__GetOrdersByContact</source>
+            </localActions>
+            <localActions>
+                <description>Identify a customer by their email address and return their contact record.</description>
+                <invocationTarget>SvcCopilotTmpl__IdentifyCustomer</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>IdentifyCustomerByEmail</localDeveloperName>
+                <masterLabel>Identify Customer By Email</masterLabel>
+                <source>SvcCopilotTmpl__IdentifyCustomerByEmail</source>
+            </localActions>
+            <localDeveloperName>DeliveryIssues</localDeveloperName>
+            <masterLabel>Delivery Issues</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>This subagent is for helping answer customer&apos;s questions by searching through the knowledge articles and providing information from those articles. The questions can be about the company and its products, policies or business procedures</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1Z</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1Z</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localDeveloperName>GeneralFAQ</localDeveloperName>
+            <masterLabel>General FAQ</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles questions related to a user’s order, order status, or order updates.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1X</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1X</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>IdentifyCustomerByEmail</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>CancelOrder</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>GetOrderByOrderNumber</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>GetOrdersByContact</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localActions>
+                <description>Cancels a customer’s order.</description>
+                <invocationTarget>SvcCopilotTmpl__CancelOrder</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>CancelOrder</localDeveloperName>
+                <masterLabel>Cancel Order</masterLabel>
+                <source>SvcCopilotTmpl__CancelOrder</source>
+            </localActions>
+            <localActions>
+                <description>Returns the order information associated with a given contact ID and order number.</description>
+                <invocationTarget>SvcCopilotTmpl__GetOrderByOrderNumber</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetOrderByOrderNumber</localDeveloperName>
+                <masterLabel>Get Order By Order Number</masterLabel>
+                <source>SvcCopilotTmpl__GetOrderByOrderNumber</source>
+            </localActions>
+            <localActions>
+                <description>Returns a list of orders associated with a given contact record.</description>
+                <invocationTarget>SvcCopilotTmpl__GetOrdersByContact</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetOrdersByContact</localDeveloperName>
+                <masterLabel>Get Orders By Contact</masterLabel>
+                <source>SvcCopilotTmpl__GetOrdersByContact</source>
+            </localActions>
+            <localActions>
+                <description>Identify a customer by their email address and return their contact record.</description>
+                <invocationTarget>SvcCopilotTmpl__IdentifyCustomer</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>IdentifyCustomerByEmail</localDeveloperName>
+                <masterLabel>Identify Customer By Email</masterLabel>
+                <source>SvcCopilotTmpl__IdentifyCustomerByEmail</source>
+            </localActions>
+            <localDeveloperName>OrderInquiries</localDeveloperName>
+            <masterLabel>Order Inquiries</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles requests to create new reservations for customers at their desired time slots.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1e</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1e</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>GetReservationTimeSlots</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>FinalizeReservation</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>IdentifyCustomerByEmail</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>AnswerQuestionsWithKnowledge</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+                <invocationTarget>streamKnowledgeSearch</invocationTarget>
+                <invocationTargetType>standardInvocableAction</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+                <masterLabel>Answer Questions with Knowledge</masterLabel>
+                <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+                <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+            </localActions>
+            <localActions>
+                <description>Books and finalizes a reservation for the time designated by the customer.</description>
+                <invocationTarget>SvcCopilotTmpl__FinalizeReservation</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>FinalizeReservation</localDeveloperName>
+                <masterLabel>Finalize Reservation</masterLabel>
+                <source>SvcCopilotTmpl__FinalizeReservation</source>
+            </localActions>
+            <localActions>
+                <description>Returns a list of available time slots for the date specified by the customer.</description>
+                <invocationTarget>SvcCopilotTmpl__GetAvailableTimeSlots</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>GetReservationTimeSlots</localDeveloperName>
+                <masterLabel>Get Reservation Time Slots</masterLabel>
+                <source>SvcCopilotTmpl__GetReservationTimeSlots</source>
+            </localActions>
+            <localActions>
+                <description>Identify a customer by their email address and return their contact record.</description>
+                <invocationTarget>SvcCopilotTmpl__IdentifyCustomer</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>IdentifyCustomerByEmail</localDeveloperName>
+                <masterLabel>Identify Customer By Email</masterLabel>
+                <source>SvcCopilotTmpl__IdentifyCustomerByEmail</source>
+            </localActions>
+            <localDeveloperName>ReservationManagement</localDeveloperName>
+            <masterLabel>Reservation Management</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Verifies the customer&apos;s identity before granting access to sensitive data. Verification is required for inquiries related to orders and order status, deliveries, reservations, password resets, account management (e.g. contact information updates), or cases. Sensitive data includes confidential, private, or security-protected information, such as business-critical data or personally identifiable information (PII).</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1W</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1W</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>SendEmailVerificationCode</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>VerifyCustomer</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Sends a generated verification code to the user’s email address.</description>
+                <invocationTarget>SvcCopilotTmpl__SendVerificationCode</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>SendEmailVerificationCode</localDeveloperName>
+                <masterLabel>Send Email with Verification Code</masterLabel>
+                <source>SvcCopilotTmpl__SendEmailVerificationCode</source>
+            </localActions>
+            <localActions>
+                <description>Verifies whether the verification code entered by the user matches the code sent to the user&apos;s email address.</description>
+                <invocationTarget>SvcCopilotTmpl__VerifyCode</invocationTarget>
+                <invocationTargetType>flow</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>VerifyCustomer</localDeveloperName>
+                <masterLabel>Verify Customer</masterLabel>
+                <source>SvcCopilotTmpl__VerifyCustomer</source>
+            </localActions>
+            <localDeveloperName>ServiceCustomerVerification</localDeveloperName>
+            <masterLabel>Service Customer Verification</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Welcome the user and determine the appropriate subagent based on user input</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.
+
+{{state.AgentScriptInternal_agent_instructions}}</description>
+                <developerName>instruction0_179aj000005jM1Y</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1Y</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>agent_router</localDeveloperName>
+            <masterLabel>Agent Router</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1V</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1V</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>ambiguous_question</localDeveloperName>
+            <masterLabel>Ambiguous Question</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1b</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1b</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>escalation</localDeveloperName>
+            <masterLabel>Escalation</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+            <genAiPluginInstructions>
+                <description>You are an AI Agent.</description>
+                <developerName>instruction0_179aj000005jM1c</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179aj000005jM1c</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>off_topic</localDeveloperName>
+            <masterLabel>Off Topic</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <masterLabel>dummy tester</masterLabel>
+        <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+    </planner>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <status>Inactive</status>
+    <stopRecPrompts>false</stopRecPrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+    <version>2</version>
+    <welcomeMessage>Hi, I&apos;m an AI service assistant. How can I help you today? (v2)</welcomeMessage>
+</AiAgentDefinitionVersion>
