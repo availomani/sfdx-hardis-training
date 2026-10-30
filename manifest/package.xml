@@ -5,7 +5,10 @@
         <name>AiAgentDefinition</name>
     </types>
     <types>
-        <members>*</members>
+        <members>dummyTester#1</members>
+        <members>dummyTester#2</members>
+        <members>dummyTester#3</members>
+        <members>dummyTester#4</members>
         <name>AiAgentDefinitionVersion</name>
     </types>
     <types>
