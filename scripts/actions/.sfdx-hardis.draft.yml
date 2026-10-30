@@ -1,0 +1,21 @@
+commandsPreDeploy:
+  - id: 83196472-a9b5-4b50-a2ab-662406eaf1f5
+    label: Create the running user of agent draftTester when the org has none
+    type: agent-running-user
+    command: ""
+    context: all
+    parameters:
+      agentName: draftTester
+    allowFailure: false
+    runOnlyOnceByOrg: false
+commandsPostDeploy:
+  - id: cbb16a87-98ee-43ad-b236-04931ae56c5c
+    label: Activate agent draftTester version 1
+    type: agent-activate
+    command: ""
+    context: process-deployment-only
+    parameters:
+      agentName: draftTester
+      agentVersion: "1"
+    allowFailure: false
+    runOnlyOnceByOrg: false
