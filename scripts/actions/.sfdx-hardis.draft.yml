@@ -1,0 +1,11 @@
+commandsPostDeploy:
+  - id: 09a1ebb1-e535-461c-9475-4362846de96e
+    label: Activate agent dummyTester, latest version (dummyTester#3 when saved)
+    type: agent-activate
+    command: ""
+    context: process-deployment-only
+    parameters:
+      agentName: dummyTester
+      agentVersion: latest
+    allowFailure: false
+    runOnlyOnceByOrg: false
