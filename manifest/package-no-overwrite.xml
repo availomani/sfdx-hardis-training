@@ -82,5 +82,10 @@
     <members>*</members>
     <name>WaveXmd</name>
   </types>
+  <types>
+    <!-- A committed agent version never changes, and Salesforce refuses to deploy the active one: only new versions are deployed -->
+    <members>*</members>
+    <name>AiAgentDefinitionVersion</name>
+  </types>
   <version>59.0</version>
 </Package>
