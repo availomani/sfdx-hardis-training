@@ -7,11 +7,13 @@
     <types>
         <members>dummyTester#1</members>
         <members>dummyTester#2</members>
+        <members>dummyTester#3</members>
         <name>AiAgentDefinitionVersion</name>
     </types>
     <types>
         <members>dummyTester_1</members>
         <members>dummyTester_2</members>
+        <members>dummyTester_3</members>
         <name>AiAuthoringBundle</name>
     </types>
     <types>
