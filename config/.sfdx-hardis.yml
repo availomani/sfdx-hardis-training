@@ -78,6 +78,7 @@ promotionConflictMarkersIgnoredFiles:
 # Applied by hardis:work:save before the Pull Request. Lab 1.5 reads the
 # result, Lab 3.4 explains why each one is here.
 autoCleanTypes:
+  - autoAddAgentsDeploymentActions
   - destructivechanges
   - localfields
   - productrequest
