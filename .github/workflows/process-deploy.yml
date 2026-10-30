@@ -61,10 +61,10 @@ jobs:
             echo "::notice::${BRANCH} has no org in its configuration yet: nothing to deploy"
           fi
       # E2E ONLY (remove after the test): sfdx-hardis built from the branch under test
-      - name: Build sfdx-hardis from e2e/agentforce-agents
+      - name: Build sfdx-hardis from feat/agentforce-agents
         if: ${{ !startsWith(github.ref_name, 'auto-fix/') && steps.pipeline.outputs.ready == 'true' }}
         run: |
-          git clone --depth 1 -b e2e/agentforce-agents https://github.com/availomani/sfdx-hardis.git /tmp/sfdx-hardis
+          git clone --depth 1 -b feat/agentforce-agents https://github.com/availomani/sfdx-hardis.git /tmp/sfdx-hardis
           cd /tmp/sfdx-hardis
           npx --yes yarn@1.22.22 install --frozen-lockfile --ignore-scripts --network-timeout 600000
           npx tsc -p . --pretty
