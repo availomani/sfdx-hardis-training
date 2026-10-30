@@ -9,7 +9,7 @@ config:
     agent_label: "dummy tester"
     agent_template: "SvcCopilotTmpl__AgentforceServiceAgent"
     developer_name: "dummyTester"
-    description: "Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues."
+    description: "Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues. E2E version 3."
 
 access:
     default_agent_user: "dummyagent-0cbad9@sfdx-training.dev"
