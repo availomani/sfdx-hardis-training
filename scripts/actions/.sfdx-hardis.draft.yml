@@ -1,0 +1,20 @@
+commandsPreDeploy:
+  - id: 8ef0ead0-23cb-4214-bc8b-e5d619c7ea41
+    label: Create the running user of agent dummyTester when the org has none
+    type: agent-running-user
+    command: ""
+    context: all
+    parameters:
+      agentName: dummyTester
+    allowFailure: false
+    runOnlyOnceByOrg: false
+commandsPostDeploy:
+  - id: 09d71806-cb4f-462e-9d51-9b84dc682d8a
+    label: Publish agent dummyTester and activate the new version
+    type: agent-publish
+    command: ""
+    context: process-deployment-only
+    parameters:
+      agentName: dummyTester
+    allowFailure: false
+    runOnlyOnceByOrg: true
